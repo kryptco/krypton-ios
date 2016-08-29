@@ -20,7 +20,61 @@ class KeyPair {
         self.privateKey = priv
     }
     
-    class func generate(_ tag: String, keySize: Int, accessGroup:String?) throws -> KeyPair {
+    init(pub:PublicKey, priv:SecKey) {
+        self.publicKey = pub
+        self.privateKey = priv
+    }
+    
+    
+    class func load(_ tag: String, publicKeyDER:String, accessGroup:String? = nil) throws -> KeyPair? {
+    
+        guard let publicKey = try? PublicKey.importFrom(publicKeyDER: publicKeyDER) else {
+            return nil
+        }
+        
+        let privTag = "\(kPrivateKeyIdentifier).\(tag)"
+
+        var errorRef:Unmanaged<CFError>?
+        let aclOpt = SecAccessControlCreateWithFlags(
+            kCFAllocatorDefault,
+            kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+            SecAccessControlCreateFlags.privateKeyUsage, &errorRef)
+        
+        guard let acl = aclOpt , errorRef == nil else {
+            throw CryptoError.aclCreate
+        }
+
+        
+
+        var params = [String(kSecReturnRef): kCFBooleanTrue,
+                      String(kSecClass): kSecClassKey,
+                      String(kSecAttrType): kSecAttrKeyTypeEC,
+                      String(kSecAttrApplicationTag): privTag,
+                      String(kSecAttrAccessible): String(kSecAttrAccessibleAlwaysThisDeviceOnly),
+
+            ] as [String : Any]
+        
+
+        if TARGET_IPHONE_SIMULATOR == 0 {
+            print(" -- using secure enclave for key gen --")
+            
+            params[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
+            params[String(kSecAttrAccessControl)] = acl
+        }
+
+
+        var privKeyObject:AnyObject?
+        let status = SecItemCopyMatching(params as CFDictionary, &privKeyObject)
+        
+        guard let privKey = privKeyObject, status == noErr
+        else {
+            throw CryptoError.export(status)
+        }
+        
+        return KeyPair(pub: publicKey, priv: privKey as! SecKey)
+    }
+    
+    class func generate(_ tag: String, keySize: Int, accessGroup:String? = nil) throws -> KeyPair {
     
         let privTag = "\(kPrivateKeyIdentifier).\(tag)"
     
@@ -59,8 +113,8 @@ class KeyPair {
         keyParams[String(kSecAttrAccessible)] = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
         keyParams[String(kSecAttrCanSign)] = true
         keyParams[String(kSecPrivateKeyAttrs)] = privateAttributes
-
-        let genStatus =  SecKeyGeneratePair(keyParams as CFDictionary, &pubKey, &privKey)
+        
+        let genStatus = SecKeyGeneratePair(keyParams as CFDictionary, &pubKey, &privKey)
         
         guard let pub = pubKey, let priv = privKey , genStatus == noErr else {
             print(CryptoError.generate(genStatus).getError())
@@ -153,6 +207,34 @@ struct PublicKey {
         
         return pubData
     }
+    
+    static func importFrom(publicKeyDER:String) throws -> PublicKey {
+        
+        guard let data = publicKeyDER.fromBase64()
+        else {
+            throw CryptoError.encoding
+        }
+        
+        let params = [String(kSecReturnRef): kCFBooleanTrue,
+                      String(kSecClass): kSecClassKey,
+                      String(kSecValueData): data] as [String : Any]
+        
+        var publicKeyObject:AnyObject?
+        var status = SecItemAdd(params as CFDictionary, &publicKeyObject)
+        
+        if status == errSecDuplicateItem {
+            status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
+        }
+        
+        guard let pubKey = publicKeyObject, status == noErr
+        else {
+            throw CryptoError.export(status)
+        }
+            
+        return PublicKey(key: pubKey as! SecKey)
+
+    }
+    
 }
 
 

@@ -31,6 +31,22 @@ class KryptoTests: XCTestCase {
         }
     }
     
+    func testLoad() {
+        do {
+            let kp = try KeyPair.generate("testabcd", keySize: 256, accessGroup: nil)
+            let pub = try kp.publicKey.exportSecp()
+            
+            let _ = try KeyPair.load("testabcd", publicKeyDER: pub)
+
+        } catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+    }
+    
     func testGenSignVerify() {
         
         do {
@@ -71,6 +87,27 @@ class KryptoTests: XCTestCase {
             }
         }
     }
+    
+    func testPublicKeyImport() {
+        
+        let pkEC = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEkzVpXcGl9E9vaX5T42LwcqkQo7xnlofns8EwG_QHr6S9iivyO00G56oCny5GiD59_nPIdiPWMEmXq4vTpRxvJw=="
+        
+        let pkRSA = "MIIBCgKCAQEA2Ddg4jCLE7VPxLPjBaTPH3DSXpkJQP3J5KycZBUF4dyWJTeY8m5HyTrRj+Dm5t3ccpPJSd+OjupHdUj+BtL+8g+NOddmUCr0gmQsxsXx8ex+lS+wHgRBmH/Cb/5lZ1Ml7Omtysz8G/pw6LGYK9C0s0ZoUOAApv/rC9vQ1T8S0eJPJIB8rHsfnvrxkC9Cwkftu5pOIv5fqrjsDLqn0dLypWyT8AhHSdgRZn0658efTyPytfnu2/1XiOzzCbNxPExv+n8fq1kkzSIg9+gN7tvPz+gpbv1eQsDkArrGx838EqW8o5cUbGA3DtlGWAr4dKTe3yY40CA55AMz/lvmU0dnRwIDAQAB"
+
+
+        do {
+            let _ = try PublicKey.importFrom(publicKeyDER: pkEC)
+            let _ = try PublicKey.importFrom(publicKeyDER: pkRSA)
+
+        } catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+    }
+    
     
     func testExample() {
     }

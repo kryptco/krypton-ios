@@ -39,7 +39,7 @@
 
 /* Begin PBXFileReference section */
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
-		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = krSSH.entitlements; sourceTree = "<group>"; };
+		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
 		FA8141361D70B0F4004FE58C /* krSSH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = krSSH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA81413B1D70B0F4004FE58C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +100,6 @@
 		FA8141381D70B0F4004FE58C /* krSSH */ = {
 			isa = PBXGroup;
 			children = (
-				FA0322751D74F1B300CD7622 /* krSSH.entitlements */,
 				FA8141391D70B0F4004FE58C /* AppDelegate.swift */,
 				FA81413B1D70B0F4004FE58C /* ViewController.swift */,
 				FA0322721D74D39100CD7622 /* Globals.swift */,
@@ -143,6 +142,7 @@
 		FAEE048F1D736AE3002A7AFD /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				FA0322751D74F1B300CD7622 /* krSSH.entitlements */,
 				FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */,
 			);
 			name = Other;
