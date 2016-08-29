@@ -23,15 +23,15 @@ private let Secp521r1:ECASN1Header = (521, 25, [0x30, 0x81, 0x9B, 0x30, 0x10, 0x
 extension PublicKey {
     func exportSecp() throws -> String {
         
-        var publicKeyData:NSData
+        var publicKeyData:Data
         
         do {
-            publicKeyData = try self.export()
+            publicKeyData = try self.export() as Data
         } catch(let e) {
             throw e
         }
         
-        let keySize = SecKeyGetBlockSize(key)
+        let keySize = SecKeyGetBlockSize(key)*8
         
         let curveOIDHeader: [UInt8]
         let curveOIDHeaderLen: Int
@@ -46,12 +46,12 @@ extension PublicKey {
             curveOIDHeader = Secp521r1.header
             curveOIDHeaderLen = Secp521r1.headerLength
         default:
-            throw CryptoError.Export(nil)
+            throw CryptoError.export(nil)
         }
         
         let data = NSMutableData(bytes: curveOIDHeader, length: curveOIDHeaderLen)
-        data.appendData(publicKeyData)
-        return data.toBase64()
+        data.append(publicKeyData)
+        return (data as Data).toBase64()
     }
 }
 

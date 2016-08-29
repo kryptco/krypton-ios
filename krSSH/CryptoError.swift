@@ -9,11 +9,13 @@
 import Foundation
 
 //MARK: Crypto Error
-enum CryptoError : ErrorType {
-    case ACLCreate
-    case Generate(OSStatus?)
-    case Sign(OSStatus?)
-    case Export(OSStatus?)
+enum CryptoError : Error {
+    case aclCreate
+    case generate(OSStatus?)
+    case sign(OSStatus?)
+    case export(OSStatus?)
+    case encoding
+
 }
 
 
@@ -21,21 +23,24 @@ extension CryptoError {
     
     func getError() -> String {
         switch self {
-        case .ACLCreate:
+        case .aclCreate:
             return "error creating acl for keypair"
-        case .Generate(let s):
+        case .generate(let s):
             if let status = s {
                 return parseOSStatus(status)
             }
             
             return "unknown error: generating key"
-        case .Sign(let s):
+        case .sign(let s):
             if let status = s {
                 return parseOSStatus(status)
             }
             
             return "unknown error: signing"
-        case .Export(let s):
+        case .encoding:
+            return "encoding error"
+            
+        case .export(let s):
             if let status = s {
                 return parseOSStatus(status)
             }
@@ -47,7 +52,7 @@ extension CryptoError {
     }
 }
 
-func parseOSStatus(status: OSStatus) -> String {
+func parseOSStatus(_ status: OSStatus) -> String {
     switch status {
     case errSecSuccess:
         return "success"

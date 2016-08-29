@@ -20,94 +20,85 @@ class KeyPair {
         self.privateKey = priv
     }
     
-    class func generate(tag: String, keySize: Int, accessGroup:String?) throws -> KeyPair {
+    class func generate(_ tag: String, keySize: Int, accessGroup:String?) throws -> KeyPair {
     
-        let pubTag = tag + ".pub"
-        let privTag = tag + ".priv"
+        let privTag = "\(kPrivateKeyIdentifier).\(tag)"
     
-        var errorRef:Unmanaged<CFErrorRef>?
+        var errorRef:Unmanaged<CFError>?
         let aclOpt = SecAccessControlCreateWithFlags(
             kCFAllocatorDefault,
             kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-            SecAccessControlCreateFlags.PrivateKeyUsage, &errorRef)
+            SecAccessControlCreateFlags.privateKeyUsage, &errorRef)
         
-        guard let acl = aclOpt where errorRef == nil else {
-            throw CryptoError.ACLCreate
+        guard let acl = aclOpt , errorRef == nil else {
+            throw CryptoError.aclCreate
         }
         
         // specify key protection and identity attributes
         var pubKey:SecKey?
         var privKey:SecKey?
         
-        let privateAttributes = [
+        let privateAttributes:[String:Any] = [
                 String(kSecAttrIsPermanent): true,
                 String(kSecAttrApplicationTag): privTag,
                 String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly,
         ]
         
-        let publicAttributes = [
-                String(kSecAttrIsPermanent): true,
-                String(kSecAttrApplicationTag): pubTag,
-                String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly,
-        ]
-        
-        var keyParams:[String:AnyObject] = [
-                String(kSecAttrType): String(kSecAttrKeyTypeEC),
+        var keyParams:[String:Any] = [
+                String(kSecAttrType): kSecAttrKeyTypeEC,
                 String(kSecAttrKeySizeInBits): keySize,
-                String(kSecAttrTokenID): String(kSecAttrTokenIDSecureEnclave),
         ]
         
-        keyParams[String(kSecAttrAccessControl)] = acl
+        if TARGET_IPHONE_SIMULATOR == 0 {
+            print(" -- using secure enclave for key gen --")
+            
+            keyParams[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
+            keyParams[String(kSecAttrAccessControl)] = acl
+        }
+
         keyParams[String(kSecAttrAccessible)] = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
         keyParams[String(kSecAttrCanSign)] = true
-        keyParams[String(kSecPublicKeyAttrs)] = publicAttributes
         keyParams[String(kSecPrivateKeyAttrs)] = privateAttributes
 
-        let genStatus =  SecKeyGeneratePair(keyParams, &pubKey, &privKey)
+        let genStatus =  SecKeyGeneratePair(keyParams as CFDictionary, &pubKey, &privKey)
         
-        guard let pub = pubKey, priv = privKey where genStatus == noErr else {
-            throw CryptoError.Generate(genStatus)
+        guard let pub = pubKey, let priv = privKey , genStatus == noErr else {
+            print(CryptoError.generate(genStatus).getError())
+            throw CryptoError.generate(genStatus)
         }
         
         return KeyPair(pub: pub, priv: priv)
     }
     
     
-    func sign(message:String) throws -> String {
-
-
+    func sign(_ message:String) throws -> String {
         // convert to data
-        let messageData = message.dataUsingEncoding(NSUTF8StringEncoding)
-        let blockSize = SecKeyGetBlockSize(privateKey)
+        let messageData = message.data(using: String.Encoding.utf8)
         
-        guard let
-            result = NSMutableData(length: Int(blockSize)),
-            data = messageData,
-            hash = NSMutableData(length: Int(CC_SHA256_DIGEST_LENGTH))
+        guard let data = messageData
         else {
-            throw CryptoError.Sign(nil)
+            throw CryptoError.encoding
         }
-        
-        let hashDataLength = Int(hash.length)
-        let hashData = UnsafePointer<UInt8>(hash.bytes)
-        
+    
         // Create SHA256 hash of the message
-        CC_SHA256(data.bytes, CC_LONG(data.length), UnsafeMutablePointer(hash.mutableBytes))
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        CC_SHA256((data as NSData).bytes, CC_LONG(data.count), &hash)
         
         
-        let encryptedData = UnsafeMutablePointer<UInt8>(result.mutableBytes)
-        var encryptedDataLength = blockSize
+        // Create signature
+        var sigBufferSize = 2048
+        var result = [UInt8](repeating: 0, count: sigBufferSize)
         
-        let status = SecKeyRawSign(privateKey, SecPadding.SigRaw, hashData, hashDataLength, encryptedData, &encryptedDataLength)
+        let status = SecKeyRawSign(privateKey, SecPadding.PKCS1, hash, hash.count, &result, &sigBufferSize)
 
         guard status == noErr else {
-            throw CryptoError.Sign(status)
+            throw CryptoError.sign(status)
         }
         
-        
         // Create Base64 string of the result
-        result.length = encryptedDataLength
-        return result.toBase64()
+        
+        let resultData = Data(bytes: result[0..<sigBufferSize])
+        return resultData.toBase64()
     }
 }
 
@@ -115,37 +106,53 @@ struct PublicKey {
     var key:SecKey
     
     
-    func verify(message:String, signature:String) throws -> Bool {
+    func verify(_ message:String, signature:String) throws -> Bool {
         
+        guard let
+            data = message.data(using: String.Encoding.utf8),
+            let sigData = signature.fromBase64()
+        else {
+            throw CryptoError.encoding
+        }
+        
+        let sigBytes = sigData.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: sigData.count))
+        }
+        
+        // Create SHA256 hash of the message
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        CC_SHA256((data as NSData).bytes, CC_LONG(data.count), &hash)
+
+        let status = SecKeyRawVerify(key, SecPadding.PKCS1, hash, hash.count, sigBytes, sigBytes.count)
+        
+        guard status == noErr else {
+            return false
+        }
+        
+        return true
+
     }
-    func export() throws -> NSData {
+    
+    func export() throws -> Data {
         
         let params = [String(kSecReturnData): kCFBooleanTrue,
                       String(kSecClass): kSecClassKey,
-                      String(kSecValueRef): key]
+                      String(kSecValueRef): key] as [String : Any]
         
-        var     publicKeyObject:AnyObject?
-        let status = SecItemAdd(params, &publicKeyObject)
+        var publicKeyObject:AnyObject?
+        var status = SecItemAdd(params as CFDictionary, &publicKeyObject)
         
-        guard let pubData = publicKeyObject as? NSData where status == noErr else {
-            throw CryptoError.Export(status)
+        if status == errSecDuplicateItem {
+             status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
+        }
+
+        guard let pubData = (publicKeyObject as? Data), status == noErr
+        else {
+            throw CryptoError.export(status)
         }
         
         return pubData
     }
 }
-
-
-
-//        var sigBuffer = NSMutableData()
-//        sigBuffer.increaseLengthBy(2048)
-//        var sigLength = sigBuffer.length
-//        let signStatus  = SecKeyRawSign(sk, SecPadding.SigRaw, UnsafePointer<UInt8>(digest.bytes), digest.length, UnsafeMutablePointer<UInt8>(sigBuffer.bytes), &sigLength)
-//        printStatus(signStatus)
-//        let finalSig = NSData(bytes: sigBuffer.bytes, length: sigLength)
-//        print("sig...")
-//        print(finalSig.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithLineFeed))
-//        let verifyStatus =  SecKeyRawVerify(pk, SecPadding.SigRaw, UnsafePointer<UInt8>(digest.bytes), digest.length, UnsafeMutablePointer<UInt8>(sigBuffer.bytes), sigLength)
-//        printStatus(verifyStatus)
 
 

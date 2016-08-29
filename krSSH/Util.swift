@@ -8,18 +8,32 @@
 
 import Foundation
 
-extension NSData {
-    func toBase64(urlEncoded:Bool = true) -> String {
-        var result = self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+extension Data {
+    func toBase64(_ urlEncoded:Bool = true) -> String {
+        var result = self.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         if urlEncoded {
-            result = result.stringByReplacingOccurrencesOfString("/", withString: "_")
-            result = result.stringByReplacingOccurrencesOfString("+", withString: "-")
+            result = result.replacingOccurrences(of: "/", with: "_")
+            result = result.replacingOccurrences(of: "+", with: "-")
         }
         
         return result
     }
     
+    func byteArray() -> [String] {
+        var array:[String] = []
+        
+        for i in 0 ..< self.count  {
+            var byte: UInt8 = 0
+            (self as NSData).getBytes(&byte, range: NSMakeRange(i, 1))
+            array.append(NSString(format: "%d", byte) as String)
+        }
+        
+        return array
+    }
+}
+
+extension NSMutableData {
     func byteArray() -> [String] {
         var array:[String] = []
         
@@ -33,26 +47,12 @@ extension NSData {
     }
 }
 
-extension NSMutableData {
-    override func byteArray() -> [String] {
-        var array:[String] = []
-        
-        for i in 0 ..< self.length  {
-            var byte: UInt8 = 0
-            self.getBytes(&byte, range: NSMakeRange(i, 1))
-            array.append(NSString(format: "%d", byte) as String)
-        }
-        
-        return array
-    }
-}
-
 extension String {
-    func fromBase64() -> NSData? {
+    func fromBase64() -> Data? {
         var urlDecoded = self
-        urlDecoded = urlDecoded.stringByReplacingOccurrencesOfString("_", withString: "/")
-        urlDecoded = urlDecoded.stringByReplacingOccurrencesOfString("-", withString: "+")
+        urlDecoded = urlDecoded.replacingOccurrences(of: "_", with: "/")
+        urlDecoded = urlDecoded.replacingOccurrences(of: "-", with: "+")
         
-        return NSData(base64EncodedString: urlDecoded, options: NSDataBase64DecodingOptions(rawValue: 0))
+        return Data(base64Encoded: urlDecoded, options: NSData.Base64DecodingOptions(rawValue: 0))
     }
 }
