@@ -12,6 +12,13 @@
 		FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA81413D1D70B0F4004FE58C /* Main.storyboard */; };
 		FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
+		FA81414F1D7141E9004FE58C /* Heimdall.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81414E1D7141E9004FE58C /* Heimdall.swift */; };
+		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
+		FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* Crypto.swift */; };
+		FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */; };
+		FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */; };
+		FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
+		FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +29,13 @@
 		FA8141401D70B0F4004FE58C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA81414E1D7141E9004FE58C /* Heimdall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Heimdall.swift; sourceTree = "<group>"; };
+		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FAA97C061D71447C00DDB725 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
+		FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecKeyECASN1.swift; sourceTree = "<group>"; };
+		FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UsedSoftwareLicenses; sourceTree = "<group>"; };
+		FAEE04921D73CDD2002A7AFD /* CryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoError.swift; sourceTree = "<group>"; };
+		FAEE04941D73ECE2002A7AFD /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8141511D714203004FE58C /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,6 +54,8 @@
 			isa = PBXGroup;
 			children = (
 				FA8141381D70B0F4004FE58C /* krSSH */,
+				FAEE04871D7368C1002A7AFD /* Frameworks */,
+				FAEE048F1D736AE3002A7AFD /* Other */,
 				FA8141371D70B0F4004FE58C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,12 +73,49 @@
 			children = (
 				FA8141391D70B0F4004FE58C /* AppDelegate.swift */,
 				FA81413B1D70B0F4004FE58C /* ViewController.swift */,
-				FA81413D1D70B0F4004FE58C /* Main.storyboard */,
-				FA8141401D70B0F4004FE58C /* Assets.xcassets */,
-				FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */,
+				FAEE048A1D736972002A7AFD /* Krypto */,
+				FA81414B1D70B10F004FE58C /* UX */,
 				FA8141451D70B0F4004FE58C /* Info.plist */,
 			);
 			path = krSSH;
+			sourceTree = "<group>";
+		};
+		FA81414B1D70B10F004FE58C /* UX */ = {
+			isa = PBXGroup;
+			children = (
+				FA81413D1D70B0F4004FE58C /* Main.storyboard */,
+				FA8141401D70B0F4004FE58C /* Assets.xcassets */,
+				FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */,
+			);
+			name = UX;
+			sourceTree = "<group>";
+		};
+		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA8141501D714203004FE58C /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FAEE048A1D736972002A7AFD /* Krypto */ = {
+			isa = PBXGroup;
+			children = (
+				FA81414E1D7141E9004FE58C /* Heimdall.swift */,
+				FAA97C061D71447C00DDB725 /* Crypto.swift */,
+				FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */,
+				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
+				FAEE04941D73ECE2002A7AFD /* Util.swift */,
+			);
+			name = Krypto;
+			sourceTree = "<group>";
+		};
+		FAEE048F1D736AE3002A7AFD /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,6 +125,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "krSSH" */;
 			buildPhases = (
+				FA8141521D714250004FE58C /* CommonCrypto */,
 				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
 				FA8141341D70B0F4004FE58C /* Resources */,
@@ -124,18 +179,41 @@
 			files = (
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
+				FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		FA8141521D714250004FE58C /* CommonCrypto */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = CommonCrypto;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FA8141321D70B0F4004FE58C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */,
+				FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* ViewController.swift in Sources */,
+				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
+				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
+				FA81414F1D7141E9004FE58C /* Heimdall.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,6 +333,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.krSSH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
 			};
 			name = Debug;
 		};
@@ -266,6 +345,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.krSSH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
 			};
 			name = Release;
 		};
@@ -288,6 +368,7 @@
 				FA81414A1D70B0F4004FE58C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
