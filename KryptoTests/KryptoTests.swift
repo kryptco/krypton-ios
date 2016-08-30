@@ -36,7 +36,16 @@ class KryptoTests: XCTestCase {
             let kp = try KeyPair.generate("testabcd", keySize: 256, accessGroup: nil)
             let pub = try kp.publicKey.exportSecp()
             
-            let _ = try KeyPair.load("testabcd", publicKeyDER: pub)
+            guard let loadedKp = try KeyPair.load("testabcd", publicKeyDER: pub)
+            else {
+                XCTFail("test failed: no KeyPair loaded")
+                return
+            }
+            let sig = try loadedKp.sign("hellllo")
+
+            let resYes = try kp.publicKey.verify("hellllo", signature: sig)
+
+            XCTAssert(resYes, "sig is supposed to be correct!")
 
         } catch (let e) {
             if let ce = e as? CryptoError {

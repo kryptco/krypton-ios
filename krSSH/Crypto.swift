@@ -51,9 +51,8 @@ class KeyPair {
                       String(kSecAttrType): kSecAttrKeyTypeEC,
                       String(kSecAttrApplicationTag): privTag,
                       String(kSecAttrAccessible): String(kSecAttrAccessibleAlwaysThisDeviceOnly),
-
             ] as [String : Any]
-        
+
 
         if TARGET_IPHONE_SIMULATOR == 0 {
             print(" -- using secure enclave for key gen --")
