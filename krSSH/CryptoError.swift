@@ -10,10 +10,13 @@ import Foundation
 
 //MARK: Crypto Error
 enum CryptoError : Error {
-    case aclCreate
+    case paramCreate
     case generate(OSStatus?)
     case sign(OSStatus?)
     case export(OSStatus?)
+    case load(OSStatus?)
+    case destroy(OSStatus?)
+    case tagExists
     case encoding
 
 }
@@ -23,8 +26,8 @@ extension CryptoError {
     
     func getError() -> String {
         switch self {
-        case .aclCreate:
-            return "error creating acl for keypair"
+        case .paramCreate:
+            return "error creating params for keypair"
         case .generate(let s):
             if let status = s {
                 return parseOSStatus(status)
