@@ -49,9 +49,9 @@ class KeyPair {
 
     class func load(_ tag: String) throws -> KeyPair? {
     
-        guard let acl = KeyPair.getACL() else {
-            throw CryptoError.paramCreate
-        }
+ //       guard let acl = KeyPair.getACL() else {
+ //           throw CryptoError.paramCreate
+ //       }
         
         // get the private key
         let privTag = KeyIdentifier.Private.tag(tag)
@@ -68,7 +68,7 @@ class KeyPair {
             print(" -- using secure enclave for key gen --")
             
             params[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
-            params[String(kSecAttrAccessControl)] = acl
+            //params[String(kSecAttrAccessControl)] = acl
         }
 
         params[String(kSecAttrCanSign)] = kCFBooleanTrue
@@ -141,10 +141,6 @@ class KeyPair {
     
     class func destroy(_ tag: String) throws -> Bool {
         
-        guard let acl = KeyPair.getACL() else {
-            throw CryptoError.paramCreate
-        }
-        
         // delete the private key
         let privTag = KeyIdentifier.Private.tag(tag)
         
@@ -160,7 +156,6 @@ class KeyPair {
             print(" -- using secure enclave for key gen --")
             
             params[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
-            params[String(kSecAttrAccessControl)] = acl
         }
         
         params[String(kSecAttrCanSign)] = kCFBooleanTrue
