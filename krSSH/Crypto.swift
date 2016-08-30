@@ -93,7 +93,7 @@ class KeyPair {
         var privKey:SecKey?
         
         let privateAttributes:[String:Any] = [
-                String(kSecAttrIsPermanent): true,
+                String(kSecAttrIsPermanent): kCFBooleanTrue,
                 String(kSecAttrApplicationTag): privTag,
                 String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly,
         ]
