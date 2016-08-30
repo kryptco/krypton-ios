@@ -62,14 +62,20 @@ extension SecKey {
         var attrs : AnyObject?
         let copyStatus = SecItemCopyMatching([
             String(kSecReturnAttributes): kCFBooleanTrue,
-            String(kSecValuePersistentRef): self,
+            String(kSecValueRef): self,
             ] as CFDictionary, &attrs)
-        if copyStatus != noErr {
+        if !copyStatus.isSuccess() {
             throw CryptoError.export(copyStatus)
         }
         guard let presentAttrs = attrs else {
             return nil
         }
         return (presentAttrs as! CFDictionary)
+    }
+}
+
+extension OSStatus {
+    func isSuccess() -> Bool {
+        return self == noErr || self == errSecSuccess
     }
 }

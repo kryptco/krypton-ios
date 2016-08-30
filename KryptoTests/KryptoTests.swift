@@ -76,11 +76,11 @@ class KryptoTests: XCTestCase {
     
     func testLoadSignVerify() {
         do {
-            let kp = try KeyPair.generate("testabcd123", keySize: 256, accessGroup: nil)
+            let kp = try KeyPair.generate("testakkqwe1234", keySize: 256, accessGroup: nil)
             let pub = try kp.publicKey.exportSecp()
             print(pub)
             
-            guard let loadedKp = try KeyPair.load("testabcd123", publicKeyDER: pub)
+            guard let loadedKp = try KeyPair.load("testakkqwe1234", publicKeyDER: pub)
                 else {
                     XCTFail("test failed: no KeyPair loaded")
                     return
@@ -88,9 +88,11 @@ class KryptoTests: XCTestCase {
             
             let pub2 = try loadedKp.publicKey.exportSecp()
             print(pub2)
+
+            let pk2 = try PublicKey.importFrom("testakkqwe1234", publicKeyDER: pub2)
             
             let sig = try loadedKp.sign("hellllo")
-            let resYes = try kp.publicKey.verify("hellllo", signature: sig)
+            let resYes = try pk2.verify("hellllo", signature: sig)
         
             XCTAssert(resYes, "sig is supposed to be correct!")
             
@@ -146,13 +148,10 @@ class KryptoTests: XCTestCase {
     func testPublicKeyExportImport() {
         
         do {
-            let kp = try KeyPair.generate("sfdsfd", keySize: 256, accessGroup: nil)
+            let kp = try KeyPair.generate("11231231123231231231", keySize: 256, accessGroup: nil)
             
             let pub = try kp.publicKey.exportSecp()
-            let pub2 = try PublicKey.importFrom("234sfsdf", publicKeyDER: pub)
-            
-            //print("pub1: \(try kp.publicKey.key.getAttributes())")
-            //print("pub2: \(try pub2.key.getAttributes())")
+            let pub2 = try PublicKey.importFrom("11231231123231231231", publicKeyDER: pub)
             
             let pub2secp = try pub2.exportSecp()
             XCTAssert(pub == pub2secp, "public keys don't match after import export")

@@ -44,7 +44,7 @@ class KeyPair {
             throw CryptoError.aclCreate
         }
 
-        var params = [String(kSecReturnPersistentRef): kCFBooleanTrue,
+        var params = [String(kSecReturnRef): kCFBooleanTrue,
                       String(kSecClass): kSecClassKey,
                       String(kSecAttrType): kSecAttrKeyTypeEC,
                       String(kSecAttrApplicationTag): privTag,
@@ -64,7 +64,7 @@ class KeyPair {
         var privKeyObject:AnyObject?
         let status = SecItemCopyMatching(params as CFDictionary, &privKeyObject)
         
-        guard let privKey = privKeyObject, status == noErr
+        guard let privKey = privKeyObject, status.isSuccess()
         else {
             throw CryptoError.export(status)
         }
@@ -124,7 +124,7 @@ class KeyPair {
 
         let genStatus = SecKeyGeneratePair(keyParams as CFDictionary, &pubKey, &privKey)
         
-        guard let pub = pubKey, let priv = privKey , genStatus == noErr else {
+        guard let pub = pubKey, let priv = privKey , genStatus.isSuccess() else {
             throw CryptoError.generate(genStatus)
         }
         
@@ -207,7 +207,7 @@ struct PublicKey {
              status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
         }
 
-        guard let pubData = (publicKeyObject as? Data), status == noErr
+        guard let pubData = (publicKeyObject as? Data), status.isSuccess()
         else {
             throw CryptoError.export(status)
         }
@@ -223,35 +223,25 @@ struct PublicKey {
         else {
             throw CryptoError.encoding
         }
-        
-        // first add the persistent ref
-        var params = [String(kSecClass): kSecClassKey,
-                      String(kSecValueData): data,
-                      String(kSecAttrApplicationTag): pubTag,
-                      String(kSecReturnPersistentRef): kCFBooleanTrue,
-                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
-                      String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
-        
-        var publicKeyPersistentObject:AnyObject?
-        var status = SecItemAdd(params as CFDictionary, &publicKeyPersistentObject)
 
-        guard status == noErr || status == errSecDuplicateItem
-        else {
-            throw CryptoError.export(status)
-        }
-        
-        // next get the seckey ref from the persistent ref
-        params =   [String(kSecClass): kSecClassKey,
-                      //String(kSecValuePersistentRef): pubKeyPersistent,
+        let params = [String(kSecClass): kSecClassKey,
+                      String(kSecValueData): data,
                       String(kSecAttrApplicationTag): pubTag,
                       String(kSecReturnRef): kCFBooleanTrue,
                       String(kSecAttrKeyType): kSecAttrKeyTypeEC,
                       String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
         
         var publicKeyObject:AnyObject?
+        var status = SecItemAdd(params as CFDictionary, &publicKeyObject)
+
+        guard status.isSuccess() || status == errSecDuplicateItem
+        else {
+            throw CryptoError.export(status)
+        }
+
         status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
 
-        guard let pubKey = publicKeyObject, status == noErr
+        guard let pubKey = publicKeyObject, status.isSuccess()
         else {
             throw CryptoError.export(status)
         }
