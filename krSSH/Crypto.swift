@@ -215,14 +215,14 @@ struct PublicKey {
             throw CryptoError.encoding
         }
         
-        let params = [String(kSecReturnRef): kCFBooleanTrue,
-                      String(kSecClass): kSecClassKey,
+        var params = [String(kSecClass): kSecClassKey,
                       String(kSecValueData): data] as [String : Any]
         
         var publicKeyObject:AnyObject?
-        var status = SecItemAdd(params as CFDictionary, &publicKeyObject)
-        
-        if status == errSecDuplicateItem {
+        var status = SecItemAdd(params as CFDictionary, nil)
+
+        if status == errSecDuplicateItem || status == noErr {
+            params[String(kSecReturnRef)] = kCFBooleanTrue
             status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
         }
         
