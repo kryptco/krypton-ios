@@ -26,7 +26,7 @@ extension PublicKey {
         var publicKeyData:Data
         
         do {
-            publicKeyData = try self.export() as Data
+            publicKeyData = try export() as Data
         } catch(let e) {
             throw e
         }

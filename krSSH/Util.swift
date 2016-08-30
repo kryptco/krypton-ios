@@ -56,3 +56,20 @@ extension String {
         return Data(base64Encoded: urlDecoded, options: NSData.Base64DecodingOptions(rawValue: 0))
     }
 }
+
+extension SecKey {
+    func getAttributes() throws -> CFDictionary? {
+        var attrs : AnyObject?
+        let copyStatus = SecItemCopyMatching([
+            String(kSecReturnAttributes): kCFBooleanTrue,
+            String(kSecValuePersistentRef): self,
+            ] as CFDictionary, &attrs)
+        if copyStatus != noErr {
+            throw CryptoError.export(copyStatus)
+        }
+        guard let presentAttrs = attrs else {
+            return nil
+        }
+        return (presentAttrs as! CFDictionary)
+    }
+}

@@ -28,7 +28,7 @@ class KeyPair {
     
     class func load(_ tag: String, publicKeyDER:String, accessGroup:String? = nil) throws -> KeyPair? {
     
-        guard let publicKey = try? PublicKey.importFrom(publicKeyDER: publicKeyDER) else {
+        guard let publicKey = try? PublicKey.importFrom(tag, publicKeyDER: publicKeyDER) else {
             return nil
         }
         
@@ -44,13 +44,11 @@ class KeyPair {
             throw CryptoError.aclCreate
         }
 
-        
-
-        var params = [String(kSecReturnRef): kCFBooleanTrue,
+        var params = [String(kSecReturnPersistentRef): kCFBooleanTrue,
                       String(kSecClass): kSecClassKey,
                       String(kSecAttrType): kSecAttrKeyTypeEC,
                       String(kSecAttrApplicationTag): privTag,
-                      String(kSecAttrAccessible): String(kSecAttrAccessibleAlwaysThisDeviceOnly),
+                      String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
             ] as [String : Any]
 
 
@@ -61,6 +59,7 @@ class KeyPair {
             params[String(kSecAttrAccessControl)] = acl
         }
 
+        params[String(kSecAttrCanSign)] = kCFBooleanTrue
 
         var privKeyObject:AnyObject?
         let status = SecItemCopyMatching(params as CFDictionary, &privKeyObject)
@@ -76,7 +75,8 @@ class KeyPair {
     class func generate(_ tag: String, keySize: Int, accessGroup:String? = nil) throws -> KeyPair {
     
         let privTag = "\(kPrivateKeyIdentifier).\(tag)"
-    
+        let pubTag = "\(kPublicKeyIdentifier).\(tag)"
+
         var errorRef:Unmanaged<CFError>?
         let aclOpt = SecAccessControlCreateWithFlags(
             kCFAllocatorDefault,
@@ -97,6 +97,12 @@ class KeyPair {
                 String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly,
         ]
         
+        let publicAttributes:[String:Any] = [
+            String(kSecAttrIsPermanent): kCFBooleanTrue,
+            String(kSecAttrApplicationTag): pubTag,
+            String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly,
+        ]
+        
         var keyParams:[String:Any] = [
                 String(kSecAttrType): kSecAttrKeyTypeEC,
                 String(kSecAttrKeySizeInBits): keySize,
@@ -110,13 +116,15 @@ class KeyPair {
         }
 
         keyParams[String(kSecAttrAccessible)] = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
-        keyParams[String(kSecAttrCanSign)] = true
+        keyParams[String(kSecAttrCanSign)] = kCFBooleanTrue
+        keyParams[String(kSecAttrCanVerify)] = kCFBooleanTrue
+
         keyParams[String(kSecPrivateKeyAttrs)] = privateAttributes
-        
+        keyParams[String(kSecPublicKeyAttrs)] = publicAttributes
+
         let genStatus = SecKeyGeneratePair(keyParams as CFDictionary, &pubKey, &privKey)
         
         guard let pub = pubKey, let priv = privKey , genStatus == noErr else {
-            print(CryptoError.generate(genStatus).getError())
             throw CryptoError.generate(genStatus)
         }
         
@@ -207,26 +215,42 @@ struct PublicKey {
         return pubData
     }
     
-    static func importFrom(publicKeyDER:String) throws -> PublicKey {
+    static func importFrom(_ tag:String, publicKeyDER:String) throws -> PublicKey {
         
+        let pubTag = "\(kPublicKeyIdentifier).\(tag)"
+
         guard let data = publicKeyDER.fromBase64()
         else {
             throw CryptoError.encoding
         }
         
+        // first add the persistent ref
         var params = [String(kSecClass): kSecClassKey,
                       String(kSecValueData): data,
-                      String(kSecAttrIsPermanent): kCFBooleanTrue,
-                      String(kSecAttrCanVerify): kCFBooleanTrue] as [String : Any]
+                      String(kSecAttrApplicationTag): pubTag,
+                      String(kSecReturnPersistentRef): kCFBooleanTrue,
+                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                      String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
         
-        var publicKeyObject:AnyObject?
-        var status = SecItemAdd(params as CFDictionary, nil)
+        var publicKeyPersistentObject:AnyObject?
+        var status = SecItemAdd(params as CFDictionary, &publicKeyPersistentObject)
 
-        if status == errSecDuplicateItem || status == noErr {
-            params[String(kSecReturnRef)] = kCFBooleanTrue
-            status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
+        guard status == noErr || status == errSecDuplicateItem
+        else {
+            throw CryptoError.export(status)
         }
         
+        // next get the seckey ref from the persistent ref
+        params =   [String(kSecClass): kSecClassKey,
+                      //String(kSecValuePersistentRef): pubKeyPersistent,
+                      String(kSecAttrApplicationTag): pubTag,
+                      String(kSecReturnRef): kCFBooleanTrue,
+                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                      String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
+        
+        var publicKeyObject:AnyObject?
+        status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
+
         guard let pubKey = publicKeyObject, status == noErr
         else {
             throw CryptoError.export(status)

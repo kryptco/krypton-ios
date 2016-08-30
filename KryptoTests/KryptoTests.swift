@@ -33,19 +33,14 @@ class KryptoTests: XCTestCase {
     
     func testLoad() {
         do {
-            let kp = try KeyPair.generate("testabcd", keySize: 256, accessGroup: nil)
+            let kp = try KeyPair.generate("testabcd123", keySize: 256, accessGroup: nil)
             let pub = try kp.publicKey.exportSecp()
             
-            guard let loadedKp = try KeyPair.load("testabcd", publicKeyDER: pub)
+            guard let _ = try KeyPair.load("testabcd123", publicKeyDER: pub)
             else {
                 XCTFail("test failed: no KeyPair loaded")
                 return
             }
-            let sig = try loadedKp.sign("hellllo")
-
-            let resYes = try loadedKp.publicKey.verify("hellllo", signature: sig)
-
-            XCTAssert(resYes, "sig is supposed to be correct!")
 
         } catch (let e) {
             if let ce = e as? CryptoError {
@@ -55,6 +50,8 @@ class KryptoTests: XCTestCase {
             }
         }
     }
+    
+
     
     func testGenSignVerify() {
         
@@ -68,6 +65,35 @@ class KryptoTests: XCTestCase {
             let resNo = try kp.publicKey.verify("byyyye", signature: sig)
             XCTAssert(!resNo, "sig is supposed to be wrong!")
 
+        } catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+    }
+    
+    func testLoadSignVerify() {
+        do {
+            let kp = try KeyPair.generate("testabcd123", keySize: 256, accessGroup: nil)
+            let pub = try kp.publicKey.exportSecp()
+            print(pub)
+            
+            guard let loadedKp = try KeyPair.load("testabcd123", publicKeyDER: pub)
+                else {
+                    XCTFail("test failed: no KeyPair loaded")
+                    return
+            }
+            
+            let pub2 = try loadedKp.publicKey.exportSecp()
+            print(pub2)
+            
+            let sig = try loadedKp.sign("hellllo")
+            let resYes = try kp.publicKey.verify("hellllo", signature: sig)
+        
+            XCTAssert(resYes, "sig is supposed to be correct!")
+            
         } catch (let e) {
             if let ce = e as? CryptoError {
                 XCTFail("test failed: \(ce.getError())")
@@ -105,8 +131,31 @@ class KryptoTests: XCTestCase {
 
 
         do {
-            let _ = try PublicKey.importFrom(publicKeyDER: pkEC)
-            let _ = try PublicKey.importFrom(publicKeyDER: pkRSA)
+            let _ = try PublicKey.importFrom("test1", publicKeyDER: pkEC)
+            let _ = try PublicKey.importFrom("test2", publicKeyDER: pkRSA)
+
+        } catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+    }
+    
+    func testPublicKeyExportImport() {
+        
+        do {
+            let kp = try KeyPair.generate("sfdsfd", keySize: 256, accessGroup: nil)
+            
+            let pub = try kp.publicKey.exportSecp()
+            let pub2 = try PublicKey.importFrom("234sfsdf", publicKeyDER: pub)
+            
+            //print("pub1: \(try kp.publicKey.key.getAttributes())")
+            //print("pub2: \(try pub2.key.getAttributes())")
+            
+            let pub2secp = try pub2.exportSecp()
+            XCTAssert(pub == pub2secp, "public keys don't match after import export")
 
         } catch (let e) {
             if let ce = e as? CryptoError {

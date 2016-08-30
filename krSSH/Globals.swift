@@ -21,6 +21,7 @@ import Foundation
 
 //MARK: IDs
 let kPrivateKeyIdentifier          = "com.kryptco.private"
+let kPublicKeyIdentifier           = "com.kryptco.public"
 
 //MARK: Keys
 let KR_URL_SCHEME                  = "kr://"
