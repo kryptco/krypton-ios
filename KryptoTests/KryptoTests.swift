@@ -43,7 +43,7 @@ class KryptoTests: XCTestCase {
             }
             let sig = try loadedKp.sign("hellllo")
 
-            let resYes = try kp.publicKey.verify("hellllo", signature: sig)
+            let resYes = try loadedKp.publicKey.verify("hellllo", signature: sig)
 
             XCTAssert(resYes, "sig is supposed to be correct!")
 
