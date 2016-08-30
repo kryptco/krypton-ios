@@ -74,6 +74,32 @@ class KryptoTests: XCTestCase {
         }
     }
     
+    func testGenSignExportVerify() {
+        
+        do {
+            let kp = try KeyPair.generate("test", keySize: 256, accessGroup: nil)
+            let sig = try kp.sign("hellllo")
+            
+            let pub = try kp.publicKey.exportSecp()
+            let impPubKey = try PublicKey.importFrom("testx", publicKeyDER: pub)
+            
+            let resYes = try impPubKey.verify("hellllo", signature: sig)
+            XCTAssert(resYes, "sig is supposed to be correct!")
+            
+            let resNo = try impPubKey.verify("byyyye", signature: sig)
+            XCTAssert(!resNo, "sig is supposed to be wrong!")
+            
+        } catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+    }
+    
+    
+    
     func testLoadSignVerify() {
         do {
             let kp = try KeyPair.generate("testakkqwe1234", keySize: 256, accessGroup: nil)
