@@ -215,7 +215,9 @@ struct PublicKey {
         }
         
         var params = [String(kSecClass): kSecClassKey,
-                      String(kSecValueData): data] as [String : Any]
+                      String(kSecValueData): data,
+                      String(kSecAttrIsPermanent): kCFBooleanTrue,
+                      String(kSecAttrCanVerify): kCFBooleanTrue] as [String : Any]
         
         var publicKeyObject:AnyObject?
         var status = SecItemAdd(params as CFDictionary, nil)
