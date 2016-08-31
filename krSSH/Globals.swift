@@ -21,7 +21,7 @@ import Foundation
 
 
 //MARK: Keys
-let KR_URL_SCHEME                  = "kr://"
+let KR_URL_SCHEME = "kr://"
 
 
 //MARK: Functions
