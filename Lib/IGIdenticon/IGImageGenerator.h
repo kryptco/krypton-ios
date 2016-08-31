@@ -20,4 +20,5 @@
 
 - (UIImage *)imageFromString:(NSString *)string size:(CGSize)size;
 
+
 @end

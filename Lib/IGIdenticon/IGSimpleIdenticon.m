@@ -144,4 +144,11 @@ static UIImage *IGScaleImageToSize(UIImage *image, CGSize size)
     return scaledImage;
 }
 
++ (UIImage *)from:(NSString *)string size:(CGSize)size
+{
+    
+    IGImageGenerator *gen = [[IGImageGenerator alloc] initWithImageProducer:[IGSimpleIdenticon new] hashFunction: IGJenkinsHashFromData];
+    
+    return [gen imageFromString: string size: size];
+}
 @end

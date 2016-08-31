@@ -7,7 +7,11 @@
 //
 
 #import "IGImageProducing.h"
+#import "IGHashFunctions.h"
+#import "IGImageGenerator.h"
 
 @interface IGSimpleIdenticon : NSObject <IGImageProducing>
+
++ (UIImage *)from:(NSString *)string size:(CGSize)size;
 
 @end

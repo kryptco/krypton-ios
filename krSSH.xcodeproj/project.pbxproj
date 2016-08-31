@@ -50,6 +50,7 @@
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
 		FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* Crypto.swift */; };
+		FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFE81D77968D005D71B9 /* SessionCell.swift */; };
 		FADD714A1D772F8200DA5112 /* KR+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* KR+Date.swift */; };
 		FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */; };
 		FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */; };
@@ -110,7 +111,7 @@
 		FA16828B1D77811900A7ED53 /* IGSimpleIdenticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSimpleIdenticon.h; sourceTree = "<group>"; };
 		FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSimpleIdenticon.m; sourceTree = "<group>"; };
 		FA1682911D77868D00A7ED53 /* FAIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAIcon.swift; sourceTree = "<group>"; };
-		FA1682921D77868D00A7ED53 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		FA1682921D77868D00A7ED53 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../FontAwesome.ttf; sourceTree = "<group>"; };
 		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
@@ -124,6 +125,7 @@
 		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FAA97C061D71447C00DDB725 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Crypto.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FACBEFE81D77968D005D71B9 /* SessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCell.swift; sourceTree = "<group>"; };
 		FADD71491D772F8200DA5112 /* KR+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "KR+Date.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SecKeyECASN1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UsedSoftwareLicenses; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				FA1682801D77682C00A7ED53 /* MeController.swift */,
+				FACBEFE81D77968D005D71B9 /* SessionCell.swift */,
 			);
 			name = Me;
 			sourceTree = "<group>";
@@ -294,8 +297,8 @@
 			children = (
 				FA29779E1D7746CC003EB1F7 /* Resources.swift */,
 				FA81413D1D70B0F4004FE58C /* Main.storyboard */,
-				FA8141401D70B0F4004FE58C /* Assets.xcassets */,
 				FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */,
+				FA8141401D70B0F4004FE58C /* Assets.xcassets */,
 			);
 			name = UX;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */,
 				FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
+				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
 				FADD714A1D772F8200DA5112 /* KR+Date.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
