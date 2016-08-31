@@ -8,6 +8,7 @@
 
 import UIKit
 import AudioToolbox
+import AVFoundation
 
 protocol KRScanDelegate {
     func onFound(data:String) -> Bool
@@ -21,28 +22,22 @@ class KRScanController: RSCodeReaderViewController {
     var canScan:Bool {
         get { return _canScan }
         set(val) {
-            
-//            if val {
-//                self.session.startRunning()
-//            } else {
-//                self.session.stopRunning()
-//            }
             _canScan = val
         }
     }
         
     var presenter:UIViewController? {
-        return self.parentViewController
+        return self.parent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.focusMarkLayer.strokeColor = UIColor.redColor().CGColor
-        self.cornersLayer.strokeColor = UIColor.flatEmeraldColor().CGColor
+        self.focusMarkLayer.strokeColor = UIColor.red.cgColor
+        self.cornersLayer.strokeColor = UIColor(hex: 0x3FC380).cgColor
         self.cornersLayer.strokeWidth = 6.0
 
-        if self.output.availableMetadataObjectTypes.contains({$0 as? String ?? "" == AVMetadataObjectTypeQRCode}) {
+        if self.output.availableMetadataObjectTypes.contains(where: {$0 as? String ?? "" == AVMetadataObjectTypeQRCode}) {
             self.output.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
         }
         
@@ -52,7 +47,7 @@ class KRScanController: RSCodeReaderViewController {
             }
             
             if let data = barcodes.first?.stringValue {
-                let didDecode = self.delegate?.onFound(data) ?? false
+                let didDecode = self.delegate?.onFound(data: data) ?? false
                 self.canScan = !didDecode
                 
                 if didDecode {

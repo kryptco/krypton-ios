@@ -266,7 +266,9 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         NotificationCenter.default.addObserver(self, selector: #selector(RSCodeReaderViewController.onApplicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(RSCodeReaderViewController.onApplicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         
-        self.session.startRunning()
+        if TARGET_IPHONE_SIMULATOR == 0 {
+            self.session.startRunning()
+        }        
     }
     
     override open func viewDidDisappear(_ animated: Bool) {

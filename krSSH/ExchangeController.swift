@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 enum ExchangeState:Int {
     case Scan = 0, Key = 1
@@ -23,7 +24,6 @@ class ExchangeController: UIViewController, KRScanDelegate {
     
     // stored properties
 
-    
     @IBOutlet var segmentedControl:UISegmentedControl!
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,12 +35,12 @@ class ExchangeController: UIViewController, KRScanDelegate {
         self.showScanningMode()
 
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barTintColor = UIColor.appColor()
+        self.navigationController?.navigationBar.barTintColor = UIColor.app
 
         self.qrImage = nil
-        self.qrImageView.setBorder(UIColor.appColor(), cornerRadius: 20.0, borderWidth: 0)
+        self.qrImageView.setBorder(color: UIColor.app, cornerRadius: 20.0, borderWidth: 0)
         
         if self.segmentedControl.selectedSegmentIndex == ExchangeState.Scan.rawValue {
             self.scanViewController?.canScan = true
@@ -48,9 +48,9 @@ class ExchangeController: UIViewController, KRScanDelegate {
     }
     
     var shouldShowProfile = true
-    override func viewDidAppear(animated: Bool) {
-        let value = UIInterfaceOrientation.Portrait.rawValue
-        UIDevice.currentDevice().setValue(value, forKey: "orientation")
+    override func viewDidAppear(_ animated: Bool) {
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
         super.viewDidAppear(animated)
         
         if TARGET_IPHONE_SIMULATOR == 1 && shouldShowProfile {
@@ -58,8 +58,8 @@ class ExchangeController: UIViewController, KRScanDelegate {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let scanner = segue.destinationViewController as? KRScanController {
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let scanner = segue.destination as? KRScanController {
             self.scanViewController = scanner
             scanner.delegate = self
         }
@@ -69,12 +69,11 @@ class ExchangeController: UIViewController, KRScanDelegate {
         self.state = .Scan
         self.segmentedControl.selectedSegmentIndex = self.state.rawValue
 
-        self.scanViewController?.view.hidden = false
+        self.scanViewController?.view.isHidden = false
         self.scanViewController?.canScan = true
-        self.qrImageView.hidden = true
         
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.blurView.alpha = 0
+        UIView.animate(withDuration: 0.3) { () -> Void in
+            self.blurView.isHidden = true
         }
     }
     
@@ -86,31 +85,30 @@ class ExchangeController: UIViewController, KRScanDelegate {
         if let qr = self.qrImage {
             self.qrImageView.image = qr
         }
-        else if let img = RSCode128Generator(codeTable: .auto).generateCode("testing123", machineReadableCodeObjectType: AVMetadataObjectTypeCode128Code) {
-            self.qrImage = img
-            self.qrImageView.image = img
-
+        else if let img = RSUnifiedCodeGenerator.shared.generateCode("testing12testing123testing123testing123testing123testing123testing123testing123testing123testing1233", machineReadableCodeObjectType: AVMetadataObjectTypeQRCode) {
+            
+            let resized = RSAbstractCodeGenerator.resizeImage(img, targetSize: CGSize(width:280, height:280), contentMode: UIViewContentMode.scaleAspectFill)
+            self.qrImage = resized
+            self.qrImageView.image = resized
         }
         
-        self.qrImageView.hidden = false
-        
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.blurView.alpha = 1.0
+        UIView.animate(withDuration: 0.3) { () -> Void in
+            self.blurView.isHidden = false
         }
     }
-
-
-    @IBAction func changeModes(sender:UISegmentedControl) {
+    
+    
+    @IBAction func changeSegmentState(sender:UISegmentedControl) {
         if sender.selectedSegmentIndex == ExchangeState.Scan.rawValue {
             self.showScanningMode()
         } else if sender.selectedSegmentIndex == ExchangeState.Key.rawValue {
             self.showKeyMode()
         }
     }
+
     
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
-
         return false
     }
 

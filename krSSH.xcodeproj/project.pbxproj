@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
-		FA0322741D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
 		FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682501D774C3900A7ED53 /* ExchangeController.swift */; };
 		FA1682681D774D6000A7ED53 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1682541D774D6000A7ED53 /* Info.plist */; };
@@ -32,10 +31,16 @@
 		FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682661D774D6000A7ED53 /* StringExtension.swift */; };
 		FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682671D774D6000A7ED53 /* UIColorExtension.swift */; };
 		FA16827D1D774F3C00A7ED53 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA16827C1D774F3C00A7ED53 /* CoreImage.framework */; };
+		FA1682811D77682C00A7ED53 /* MeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682801D77682C00A7ED53 /* MeController.swift */; };
+		FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682841D77811900A7ED53 /* IGGitHubIdenticon.m */; };
+		FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682861D77811900A7ED53 /* IGHashFunctions.m */; };
+		FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682891D77811900A7ED53 /* IGImageGenerator.m */; };
+		FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */ = {isa = PBXBuildFile; fileRef = FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */; };
+		FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682911D77868D00A7ED53 /* FAIcon.swift */; };
+		FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1682921D77868D00A7ED53 /* FontAwesome.ttf */; };
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
-		FA2977A01D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
 		FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
 		FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8141391D70B0F4004FE58C /* AppDelegate.swift */; };
@@ -46,7 +51,6 @@
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
 		FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* Crypto.swift */; };
 		FADD714A1D772F8200DA5112 /* KR+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* KR+Date.swift */; };
-		FADD714B1D77308300DA5112 /* KR+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* KR+Date.swift */; };
 		FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */; };
 		FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */; };
 		FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
@@ -94,6 +98,20 @@
 		FA1682661D774D6000A7ED53 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		FA1682671D774D6000A7ED53 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		FA16827C1D774F3C00A7ED53 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		FA1682801D77682C00A7ED53 /* MeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeController.swift; sourceTree = "<group>"; };
+		FA1682831D77811900A7ED53 /* IGGitHubIdenticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGGitHubIdenticon.h; sourceTree = "<group>"; };
+		FA1682841D77811900A7ED53 /* IGGitHubIdenticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGGitHubIdenticon.m; sourceTree = "<group>"; };
+		FA1682851D77811900A7ED53 /* IGHashFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGHashFunctions.h; sourceTree = "<group>"; };
+		FA1682861D77811900A7ED53 /* IGHashFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGHashFunctions.m; sourceTree = "<group>"; };
+		FA1682871D77811900A7ED53 /* IGIdenticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGIdenticon.h; sourceTree = "<group>"; };
+		FA1682881D77811900A7ED53 /* IGImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGImageGenerator.h; sourceTree = "<group>"; };
+		FA1682891D77811900A7ED53 /* IGImageGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGImageGenerator.m; sourceTree = "<group>"; };
+		FA16828A1D77811900A7ED53 /* IGImageProducing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGImageProducing.h; sourceTree = "<group>"; };
+		FA16828B1D77811900A7ED53 /* IGSimpleIdenticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSimpleIdenticon.h; sourceTree = "<group>"; };
+		FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSimpleIdenticon.m; sourceTree = "<group>"; };
+		FA1682911D77868D00A7ED53 /* FAIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAIcon.swift; sourceTree = "<group>"; };
+		FA1682921D77868D00A7ED53 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -148,6 +166,8 @@
 		FA1682521D774C8000A7ED53 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				FA1682951D77869100A7ED53 /* FontAwesome */,
+				FA1682821D77811900A7ED53 /* IGIdenticon */,
 				FA1682531D774D6000A7ED53 /* RSBarCodes */,
 			);
 			path = Lib;
@@ -180,10 +200,53 @@
 			path = RSBarCodes;
 			sourceTree = "<group>";
 		};
+		FA16827E1D77666800A7ED53 /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				FA1682801D77682C00A7ED53 /* MeController.swift */,
+			);
+			name = Me;
+			sourceTree = "<group>";
+		};
+		FA16827F1D77666D00A7ED53 /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Keys;
+			sourceTree = "<group>";
+		};
+		FA1682821D77811900A7ED53 /* IGIdenticon */ = {
+			isa = PBXGroup;
+			children = (
+				FA1682831D77811900A7ED53 /* IGGitHubIdenticon.h */,
+				FA1682841D77811900A7ED53 /* IGGitHubIdenticon.m */,
+				FA1682851D77811900A7ED53 /* IGHashFunctions.h */,
+				FA1682861D77811900A7ED53 /* IGHashFunctions.m */,
+				FA1682871D77811900A7ED53 /* IGIdenticon.h */,
+				FA1682881D77811900A7ED53 /* IGImageGenerator.h */,
+				FA1682891D77811900A7ED53 /* IGImageGenerator.m */,
+				FA16828A1D77811900A7ED53 /* IGImageProducing.h */,
+				FA16828B1D77811900A7ED53 /* IGSimpleIdenticon.h */,
+				FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */,
+			);
+			path = IGIdenticon;
+			sourceTree = "<group>";
+		};
+		FA1682951D77869100A7ED53 /* FontAwesome */ = {
+			isa = PBXGroup;
+			children = (
+				FA1682911D77868D00A7ED53 /* FAIcon.swift */,
+				FA1682921D77868D00A7ED53 /* FontAwesome.ttf */,
+			);
+			name = FontAwesome;
+			sourceTree = "<group>";
+		};
 		FA29779A1D773A2F003EB1F7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
+				FA16827E1D77666800A7ED53 /* Me */,
+				FA16827F1D77666D00A7ED53 /* Keys */,
 				FA16824F1D774C2700A7ED53 /* Scan */,
 			);
 			name = Controllers;
@@ -221,6 +284,7 @@
 				FAEE048A1D736972002A7AFD /* Krypto */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
 				FA8141451D70B0F4004FE58C /* Info.plist */,
+				FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */,
 			);
 			path = krSSH;
 			sourceTree = "<group>";
@@ -291,8 +355,8 @@
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "krSSH" */;
 			buildPhases = (
 				FA8141521D714250004FE58C /* CommonCrypto */,
-				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
+				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141341D70B0F4004FE58C /* Resources */,
 			);
 			buildRules = (
@@ -375,6 +439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
+				FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
 				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
@@ -432,11 +497,13 @@
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
+				FA1682811D77682C00A7ED53 /* MeController.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */,
 				FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
+				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
@@ -448,7 +515,9 @@
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
+				FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */,
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
+				FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
@@ -458,6 +527,8 @@
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
+				FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */,
+				FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FADD714A1D772F8200DA5112 /* KR+Date.swift in Sources */,
 			);
@@ -470,11 +541,8 @@
 				FAEE04A61D74BD47002A7AFD /* SecKeyECASN1.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
 				FAEE04A51D74BD47002A7AFD /* Crypto.swift in Sources */,
-				FA0322741D74D39100CD7622 /* Globals.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
-				FA2977A01D7746CC003EB1F7 /* Resources.swift in Sources */,
-				FADD714B1D77308300DA5112 /* KR+Date.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,6 +682,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
+				SWIFT_OBJC_BRIDGING_HEADER = "krSSH/krSSH-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -633,6 +702,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
+				SWIFT_OBJC_BRIDGING_HEADER = "krSSH/krSSH-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
