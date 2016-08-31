@@ -152,7 +152,7 @@ class KryptoTests: XCTestCase {
             let _ = try KeyPair.destroy("test")
             let kp = try KeyPair.generate("test")
             let sig = try kp.sign("hellllo")
-            
+
             let pub = try kp.publicKey.exportSecp()
             let impPubKey = try PublicKey.importFrom("test", publicKeyDER: pub)
             
@@ -179,8 +179,10 @@ class KryptoTests: XCTestCase {
         let pkRSA = "MIIBCgKCAQEA2Ddg4jCLE7VPxLPjBaTPH3DSXpkJQP3J5KycZBUF4dyWJTeY8m5HyTrRj+Dm5t3ccpPJSd+OjupHdUj+BtL+8g+NOddmUCr0gmQsxsXx8ex+lS+wHgRBmH/Cb/5lZ1Ml7Omtysz8G/pw6LGYK9C0s0ZoUOAApv/rC9vQ1T8S0eJPJIB8rHsfnvrxkC9Cwkftu5pOIv5fqrjsDLqn0dLypWyT8AhHSdgRZn0658efTyPytfnu2/1XiOzzCbNxPExv+n8fq1kkzSIg9+gN7tvPz+gpbv1eQsDkArrGx838EqW8o5cUbGA3DtlGWAr4dKTe3yY40CA55AMz/lvmU0dnRwIDAQAB"
 
         do {
-            let _ = try PublicKey.importFrom("test1", publicKeyDER: pkEC)
-            let _ = try PublicKey.importFrom("test2", publicKeyDER: pkRSA)
+            let pub = try PublicKey.importFrom("test1", publicKeyDER: pkEC)
+            
+            
+            //let _ = try PublicKey.importFrom("test2", publicKeyDER: pkRSA)
 
         } catch (let e) {
             if let ce = e as? CryptoError {
