@@ -9,6 +9,29 @@
 /* Begin PBXBuildFile section */
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322741D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
+		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
+		FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682501D774C3900A7ED53 /* ExchangeController.swift */; };
+		FA1682681D774D6000A7ED53 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1682541D774D6000A7ED53 /* Info.plist */; };
+		FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682551D774D6000A7ED53 /* RSCode128Generator.swift */; };
+		FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682561D774D6000A7ED53 /* RSCode39Generator.swift */; };
+		FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682571D774D6000A7ED53 /* RSCode39Mod43Generator.swift */; };
+		FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682581D774D6000A7ED53 /* RSCode93Generator.swift */; };
+		FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682591D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift */; };
+		FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16825A1D774D6000A7ED53 /* RSCodeGenerator.swift */; };
+		FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16825B1D774D6000A7ED53 /* RSCodeLayer.swift */; };
+		FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16825C1D774D6000A7ED53 /* RSCodeReaderViewController.swift */; };
+		FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16825D1D774D6000A7ED53 /* RSCornersLayer.swift */; };
+		FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16825E1D774D6000A7ED53 /* RSEANGenerator.swift */; };
+		FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16825F1D774D6000A7ED53 /* RSExtendedCode39Generator.swift */; };
+		FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682601D774D6000A7ED53 /* RSFocusMarkLayer.swift */; };
+		FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682611D774D6000A7ED53 /* RSITF14Generator.swift */; };
+		FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682621D774D6000A7ED53 /* RSITFGenerator.swift */; };
+		FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682631D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift */; };
+		FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682641D774D6000A7ED53 /* RSUnifiedCodeValidator.swift */; };
+		FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682651D774D6000A7ED53 /* RSUPCEGenerator.swift */; };
+		FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682661D774D6000A7ED53 /* StringExtension.swift */; };
+		FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682671D774D6000A7ED53 /* UIColorExtension.swift */; };
+		FA16827D1D774F3C00A7ED53 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA16827C1D774F3C00A7ED53 /* CoreImage.framework */; };
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
@@ -46,27 +69,50 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
+		FA16824D1D774C2200A7ED53 /* KRScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRScanController.swift; sourceTree = "<group>"; };
+		FA1682501D774C3900A7ED53 /* ExchangeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeController.swift; sourceTree = "<group>"; };
+		FA1682541D774D6000A7ED53 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA1682551D774D6000A7ED53 /* RSCode128Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCode128Generator.swift; sourceTree = "<group>"; };
+		FA1682561D774D6000A7ED53 /* RSCode39Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCode39Generator.swift; sourceTree = "<group>"; };
+		FA1682571D774D6000A7ED53 /* RSCode39Mod43Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCode39Mod43Generator.swift; sourceTree = "<group>"; };
+		FA1682581D774D6000A7ED53 /* RSCode93Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCode93Generator.swift; sourceTree = "<group>"; };
+		FA1682591D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCodeDataMatrixGenerator.swift; sourceTree = "<group>"; };
+		FA16825A1D774D6000A7ED53 /* RSCodeGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCodeGenerator.swift; sourceTree = "<group>"; };
+		FA16825B1D774D6000A7ED53 /* RSCodeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCodeLayer.swift; sourceTree = "<group>"; };
+		FA16825C1D774D6000A7ED53 /* RSCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCodeReaderViewController.swift; sourceTree = "<group>"; };
+		FA16825D1D774D6000A7ED53 /* RSCornersLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCornersLayer.swift; sourceTree = "<group>"; };
+		FA16825E1D774D6000A7ED53 /* RSEANGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSEANGenerator.swift; sourceTree = "<group>"; };
+		FA16825F1D774D6000A7ED53 /* RSExtendedCode39Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSExtendedCode39Generator.swift; sourceTree = "<group>"; };
+		FA1682601D774D6000A7ED53 /* RSFocusMarkLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSFocusMarkLayer.swift; sourceTree = "<group>"; };
+		FA1682611D774D6000A7ED53 /* RSITF14Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSITF14Generator.swift; sourceTree = "<group>"; };
+		FA1682621D774D6000A7ED53 /* RSITFGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSITFGenerator.swift; sourceTree = "<group>"; };
+		FA1682631D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSUnifiedCodeGenerator.swift; sourceTree = "<group>"; };
+		FA1682641D774D6000A7ED53 /* RSUnifiedCodeValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSUnifiedCodeValidator.swift; sourceTree = "<group>"; };
+		FA1682651D774D6000A7ED53 /* RSUPCEGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSUPCEGenerator.swift; sourceTree = "<group>"; };
+		FA1682661D774D6000A7ED53 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		FA1682671D774D6000A7ED53 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		FA16827C1D774F3C00A7ED53 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
-		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8141361D70B0F4004FE58C /* krSSH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = krSSH.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FA81413B1D70B0F4004FE58C /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FA81413B1D70B0F4004FE58C /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA81413E1D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA8141401D70B0F4004FE58C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		FAA97C061D71447C00DDB725 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
-		FADD71491D772F8200DA5112 /* KR+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KR+Date.swift"; sourceTree = "<group>"; };
-		FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecKeyECASN1.swift; sourceTree = "<group>"; };
+		FAA97C061D71447C00DDB725 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Crypto.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FADD71491D772F8200DA5112 /* KR+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "KR+Date.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SecKeyECASN1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UsedSoftwareLicenses; sourceTree = "<group>"; };
-		FAEE04921D73CDD2002A7AFD /* CryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoError.swift; sourceTree = "<group>"; };
-		FAEE04941D73ECE2002A7AFD /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		FAEE04921D73CDD2002A7AFD /* CryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CryptoError.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAEE04941D73ECE2002A7AFD /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Util.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KryptoTests.swift; sourceTree = "<group>"; };
+		FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KryptoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE049E1D74BCC3002A7AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA16827D1D774F3C00A7ED53 /* CoreImage.framework in Frameworks */,
 				FA8141511D714203004FE58C /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,10 +136,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA16824F1D774C2700A7ED53 /* Scan */ = {
+			isa = PBXGroup;
+			children = (
+				FA16824D1D774C2200A7ED53 /* KRScanController.swift */,
+				FA1682501D774C3900A7ED53 /* ExchangeController.swift */,
+			);
+			name = Scan;
+			sourceTree = "<group>";
+		};
+		FA1682521D774C8000A7ED53 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				FA1682531D774D6000A7ED53 /* RSBarCodes */,
+			);
+			path = Lib;
+			sourceTree = SOURCE_ROOT;
+		};
+		FA1682531D774D6000A7ED53 /* RSBarCodes */ = {
+			isa = PBXGroup;
+			children = (
+				FA1682541D774D6000A7ED53 /* Info.plist */,
+				FA1682551D774D6000A7ED53 /* RSCode128Generator.swift */,
+				FA1682561D774D6000A7ED53 /* RSCode39Generator.swift */,
+				FA1682571D774D6000A7ED53 /* RSCode39Mod43Generator.swift */,
+				FA1682581D774D6000A7ED53 /* RSCode93Generator.swift */,
+				FA1682591D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift */,
+				FA16825A1D774D6000A7ED53 /* RSCodeGenerator.swift */,
+				FA16825B1D774D6000A7ED53 /* RSCodeLayer.swift */,
+				FA16825C1D774D6000A7ED53 /* RSCodeReaderViewController.swift */,
+				FA16825D1D774D6000A7ED53 /* RSCornersLayer.swift */,
+				FA16825E1D774D6000A7ED53 /* RSEANGenerator.swift */,
+				FA16825F1D774D6000A7ED53 /* RSExtendedCode39Generator.swift */,
+				FA1682601D774D6000A7ED53 /* RSFocusMarkLayer.swift */,
+				FA1682611D774D6000A7ED53 /* RSITF14Generator.swift */,
+				FA1682621D774D6000A7ED53 /* RSITFGenerator.swift */,
+				FA1682631D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift */,
+				FA1682641D774D6000A7ED53 /* RSUnifiedCodeValidator.swift */,
+				FA1682651D774D6000A7ED53 /* RSUPCEGenerator.swift */,
+				FA1682661D774D6000A7ED53 /* StringExtension.swift */,
+				FA1682671D774D6000A7ED53 /* UIColorExtension.swift */,
+			);
+			path = RSBarCodes;
+			sourceTree = "<group>";
+		};
 		FA29779A1D773A2F003EB1F7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
+				FA16824F1D774C2700A7ED53 /* Scan */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -102,6 +194,7 @@
 			children = (
 				FA8141381D70B0F4004FE58C /* krSSH */,
 				FAEE049B1D74BCC3002A7AFD /* KryptoTests */,
+				FA1682521D774C8000A7ED53 /* Lib */,
 				FAEE04871D7368C1002A7AFD /* Frameworks */,
 				FAEE048F1D736AE3002A7AFD /* Other */,
 				FA8141371D70B0F4004FE58C /* Products */,
@@ -154,6 +247,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA16827C1D774F3C00A7ED53 /* CoreImage.framework */,
 				FA8141501D714203004FE58C /* Security.framework */,
 			);
 			name = Frameworks;
@@ -237,7 +331,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = alexgrinman;
+				ORGANIZATIONNAME = KryptCo;
 				TargetAttributes = {
 					FA8141351D70B0F4004FE58C = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -282,6 +376,7 @@
 			files = (
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
+				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
 				FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
@@ -334,15 +429,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */,
+				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
+				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */,
+				FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */,
+				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
+				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
+				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
+				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
+				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
+				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
+				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
+				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
+				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
+				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
+				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
+				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
+				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
+				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
+				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
+				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
+				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FADD714A1D772F8200DA5112 /* KR+Date.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
