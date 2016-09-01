@@ -55,4 +55,15 @@ extension PublicKey {
     }
 }
 
+extension String {
+    var secp256Fingerprint:Data? {
+        guard let data = self.fromBase64() else {
+            return nil
+        }
+        
+        return data.SHA256
+    }
+    
+}
+
 

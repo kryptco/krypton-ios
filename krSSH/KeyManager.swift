@@ -40,6 +40,8 @@ class KeyManager {
         }
     }
     class func destroyKeyPair() -> Bool {
+        sharedManager = nil
+        
         guard let result = try? KeyPair.destroy(KeyTag.me.rawValue) else {
             return false
         }

@@ -15,23 +15,33 @@ class CreateController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     
+    @IBOutlet weak var fpIconView:UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Welcome!"
         self.navigationController?.navigationBar.tintColor = UIColor.white
         self.navigationController?.navigationBar.barTintColor = UIColor.app
-        
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        self.navigationItem.setKrLogo()
+        
+        fpIconView.layer.minificationFilter = kCAFilterTrilinear
+        fpIconView.layer.shouldRasterize = true
+        fpIconView.layer.allowsEdgeAntialiasing = true
+        fpIconView.layer.rasterizationScale = UIScreen.main.scale
 
         
-        self.createButton.setBorder(color: UIColor.app, cornerRadius: 8.0, borderWidth: 1.0)
+        self.createButton.setBorder(color: UIColor.app, cornerRadius: 10.0, borderWidth: 2.0)
     }
     
     
     @IBAction func createTapped(sender: AnyObject) {
         
         // Create a new identity identifier
+        let didDestroy = KeyManager.destroyKeyPair()
+        log("destroyed keypair: \(didDestroy)")
+        
         do {
             let kp = try KeyManager.sharedInstance().keyPair
             let pk = try kp.publicKey.exportSecp()

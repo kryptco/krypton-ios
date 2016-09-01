@@ -21,20 +21,23 @@ class SetupController: UITableViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Welcome!"
+        
+        self.navigationItem.setKrLogo()
 
         doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SetupController.done))
         doneButton.isEnabled = false
         self.navigationItem.rightBarButtonItem = doneButton
         
         keyIcon.FAIcon = FAType.FAKey
-        
+        identiconView.setBorder(color: UIColor.white, cornerRadius: 50.0, borderWidth: 0.0)
         
         do {
             let kp = try KeyManager.sharedInstance().keyPair
             let pk = try kp.publicKey.exportSecp()
             
-            keyLabel.text = pk
+            if let fp = pk.secp256Fingerprint?.hexPretty {
+                keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
+            }
             identiconView.image = IGSimpleIdenticon.from(pk, size: CGSize(width: 100, height: 100))
             
         } catch (let e) {

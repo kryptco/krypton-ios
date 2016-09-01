@@ -52,7 +52,8 @@
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9271D77B61F006372B4 /* Dispatch.swift */; };
-		FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* Crypto.swift */; };
+		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
+		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFE81D77968D005D71B9 /* SessionCell.swift */; };
 		FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFEA1D779D6E005D71B9 /* CreateController.swift */; };
 		FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFED1D77A2B7005D71B9 /* SetupController.swift */; };
@@ -62,7 +63,7 @@
 		FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
 		FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */; };
-		FAEE04A51D74BD47002A7AFD /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* Crypto.swift */; };
+		FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
 		FAEE04A61D74BD47002A7AFD /* SecKeyECASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */; };
 		FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
@@ -132,7 +133,8 @@
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FA92E9271D77B61F006372B4 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
-		FAA97C061D71447C00DDB725 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Crypto.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		FACBEFE81D77968D005D71B9 /* SessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCell.swift; sourceTree = "<group>"; };
 		FACBEFEA1D779D6E005D71B9 /* CreateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateController.swift; sourceTree = "<group>"; };
 		FACBEFED1D77A2B7005D71B9 /* SetupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupController.swift; sourceTree = "<group>"; };
@@ -346,7 +348,8 @@
 		FAEE048A1D736972002A7AFD /* Krypto */ = {
 			isa = PBXGroup;
 			children = (
-				FAA97C061D71447C00DDB725 /* Crypto.swift */,
+				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
+				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
@@ -527,7 +530,7 @@
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
 				FA1682811D77682C00A7ED53 /* MeController.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
-				FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */,
+				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
 				FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
@@ -553,6 +556,7 @@
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
+				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
@@ -572,7 +576,7 @@
 			files = (
 				FAEE04A61D74BD47002A7AFD /* SecKeyECASN1.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
-				FAEE04A51D74BD47002A7AFD /* Crypto.swift in Sources */,
+				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,

@@ -11,6 +11,9 @@ import UIKit
 
 class MainController: UITabBarController, UITabBarControllerDelegate {
 
+    var blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +26,15 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         self.tabBar.tintColor = UIColor.app
         self.delegate = self
+        
+        // add a blur view
+        view.addSubview(blurView)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        blurView.frame = view.frame
+        self.blurView.isHidden = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -31,9 +43,10 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         // temp delete
         let res = KeyManager.destroyKeyPair()
         log("destroy result: \(res)")
-
+        
         
         guard KeyManager.hasKey() else {
+            
             if let createNav = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "CreateNavigation") as? UINavigationController
             {
                 self.present(createNav, animated: true, completion: nil)
@@ -47,9 +60,14 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             let pk = try kp.publicKey.exportSecp()
             
             log("started with: \(pk)")
+            
+            UIView.animate(withDuration: 0.5, animations: { 
+                self.blurView.isHidden = true
+            })
         } catch (let e) {
             log("\(e)", LogType.error)
         }
+
         
         
     }

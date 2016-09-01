@@ -31,6 +31,32 @@ extension Data {
         
         return array
     }
+    
+    var hex:String {
+        let bytes = self.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
+        }
+        
+        var hexString = ""
+        for i in 0..<self.count {
+            hexString += String(format: "%02x", bytes[i])
+        }
+        return hexString
+    }
+    
+    var hexPretty:String {
+        let bytes = self.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
+        }
+        
+        
+        var hex = ""
+        for i in 0..<self.count {
+            hex += String(format: "%02x ", bytes[i])
+        }
+                
+        return hex.uppercased()
+    }
 }
 
 extension NSMutableData {
