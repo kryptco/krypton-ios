@@ -30,6 +30,8 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         // add a blur view
         view.addSubview(blurView)
         
+        let res = KeyManager.destroyKeyPair()
+        log("destroy result: \(res)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,8 +43,6 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidAppear(animated)
         
         // temp delete
-        let res = KeyManager.destroyKeyPair()
-        log("destroy result: \(res)")
         
         
         guard KeyManager.hasKey() else {

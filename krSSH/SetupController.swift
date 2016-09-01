@@ -53,6 +53,7 @@ class SetupController: UITableViewController, UITextFieldDelegate {
 
     dynamic func done () {
         // save everything...
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
