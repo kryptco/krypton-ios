@@ -35,7 +35,7 @@ class KeyPair {
         self.privateKey = priv
     }
     
-    class func loadOrGenerate(_ tag: String) throws -> KeyPair? {
+    class func loadOrGenerate(_ tag: String) throws -> KeyPair {
         do {
             if let kp = try KeyPair.load(tag) {
                 return kp

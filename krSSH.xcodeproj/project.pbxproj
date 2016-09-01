@@ -49,9 +49,14 @@
 		FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
+		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
+		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
+		FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9271D77B61F006372B4 /* Dispatch.swift */; };
 		FAA97C071D71447C00DDB725 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* Crypto.swift */; };
 		FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFE81D77968D005D71B9 /* SessionCell.swift */; };
-		FADD714A1D772F8200DA5112 /* KR+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* KR+Date.swift */; };
+		FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFEA1D779D6E005D71B9 /* CreateController.swift */; };
+		FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFED1D77A2B7005D71B9 /* SetupController.swift */; };
+		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */; };
 		FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */; };
 		FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
@@ -124,9 +129,14 @@
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
+		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
+		FA92E9271D77B61F006372B4 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		FAA97C061D71447C00DDB725 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Crypto.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FACBEFE81D77968D005D71B9 /* SessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCell.swift; sourceTree = "<group>"; };
-		FADD71491D772F8200DA5112 /* KR+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "KR+Date.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FACBEFEA1D779D6E005D71B9 /* CreateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateController.swift; sourceTree = "<group>"; };
+		FACBEFED1D77A2B7005D71B9 /* SetupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupController.swift; sourceTree = "<group>"; };
+		FADD71491D772F8200DA5112 /* Date+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Date+KR.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SecKeyECASN1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UsedSoftwareLicenses; sourceTree = "<group>"; };
 		FAEE04921D73CDD2002A7AFD /* CryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CryptoError.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -248,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
+				FACBEFEC1D779D71005D71B9 /* Setup */,
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16827F1D77666D00A7ED53 /* Keys */,
 				FA16824F1D774C2700A7ED53 /* Scan */,
@@ -282,6 +293,8 @@
 				FA8141391D70B0F4004FE58C /* AppDelegate.swift */,
 				FA0322721D74D39100CD7622 /* Globals.swift */,
 				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
+				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
+				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FA81414B1D70B10F004FE58C /* UX */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
@@ -303,10 +316,20 @@
 			name = UX;
 			sourceTree = "<group>";
 		};
+		FACBEFEC1D779D71005D71B9 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				FACBEFEA1D779D6E005D71B9 /* CreateController.swift */,
+				FACBEFED1D77A2B7005D71B9 /* SetupController.swift */,
+			);
+			name = Setup;
+			sourceTree = "<group>";
+		};
 		FADD71481D772F6E00DA5112 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FADD71491D772F8200DA5112 /* KR+Date.swift */,
+				FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */,
+				FADD71491D772F8200DA5112 /* Date+KR.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -497,7 +520,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
+				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
 				FA1682811D77682C00A7ED53 /* MeController.swift in Sources */,
@@ -509,11 +534,13 @@
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
+				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
+				FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
@@ -530,11 +557,12 @@
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
+				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
 				FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */,
 				FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
-				FADD714A1D772F8200DA5112 /* KR+Date.swift in Sources */,
+				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
