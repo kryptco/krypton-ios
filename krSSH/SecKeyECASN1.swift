@@ -55,15 +55,15 @@ extension PublicKey {
     }
 }
 
+
 extension String {
-    var secp256Fingerprint:Data? {
+    func fingerprint() throws -> Data {
         guard let data = self.fromBase64() else {
-            return nil
+            throw CryptoError.encoding
         }
         
         return data.SHA256
     }
-    
 }
 
 

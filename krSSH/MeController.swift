@@ -42,14 +42,10 @@ class MeController: UITableViewController {
     func updateCurrentUser() {
         do {
             let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
+            keyLabel.text = try publicKey.fingerprint().hexPretty
+            tagLabel.text = try KeyManager.sharedInstance().getMe()?.email
             
             identiconView.image = IGSimpleIdenticon.from(publicKey, size: CGSize(width: 100, height: 100))
-            
-            if let fp = publicKey.secp256Fingerprint?.hexPretty, fp.characters.count > 95 {
-                keyLabel.text = fp
-            }
-            
-            tagLabel.text = try KeyManager.sharedInstance().getMe()?.email
             
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)

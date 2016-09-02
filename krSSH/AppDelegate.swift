@@ -13,11 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
-    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: Any]?) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
         Resources.makeAppearences()
         
+        if !API.provision(accessKey: "AKIAJMZJ3X6MHMXRF7QQ", secretKey: "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") {
+            log("API provision failed.", LogType.error)
+        }
+
         return true
     }
 

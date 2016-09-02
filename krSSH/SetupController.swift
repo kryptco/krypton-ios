@@ -34,10 +34,9 @@ class SetupController: UITableViewController, UITextFieldDelegate {
         do {
             let kp = try KeyManager.sharedInstance().keyPair
             let pk = try kp.publicKey.exportSecp()
+            let fp = try pk.fingerprint().hexPretty
             
-            if let fp = pk.secp256Fingerprint?.hexPretty {
-                keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
-            }
+            keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
             identiconView.image = IGSimpleIdenticon.from(pk, size: CGSize(width: 100, height: 100))
             
         } catch (let e) {

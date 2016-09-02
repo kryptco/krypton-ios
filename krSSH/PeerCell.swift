@@ -29,10 +29,7 @@ class PeerCell: UITableViewCell {
     
     func set(peer:Peer) {
         identiconView.image = IGSimpleIdenticon.from(peer.publicKey, size: CGSize(width: 40, height: 40))
-        
-        if let fp = peer.publicKey.secp256Fingerprint?.hexPretty, fp.characters.count > 95 {
-            keyLabel.text = fp
-        }
+        keyLabel.text = try? peer.publicKey.fingerprint().hexPretty
         tagLabel.text = peer.email
     }
 

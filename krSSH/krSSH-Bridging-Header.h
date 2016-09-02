@@ -10,5 +10,7 @@
 #define krSSH_Bridging_Header_h
 
 #import "IGIdenticon.h"
+#import <AWSSNS/AWSSNS.h>
+#import <AWSSQS/AWSSQS.h>
 
 #endif /* krSSH_Bridging_Header_h */

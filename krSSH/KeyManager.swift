@@ -84,10 +84,7 @@ class KeyManager {
         do {
             let email = try KeychainStorage().get(key: KrMeDataKey)
             let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
-            guard let fp = publicKey.secp256Fingerprint?.toBase64() else {
-                log("fatal: cannot get fingerprint from public key.", LogType.error)
-                return nil
-            }
+            let fp = try publicKey.fingerprint().toBase64()
             
             return Peer(email: email, fingerprint: fp, publicKey: publicKey)
             

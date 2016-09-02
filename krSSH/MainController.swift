@@ -32,6 +32,17 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         //let res = KeyManager.destroyKeyPair()
         //log("destroy result: \(res)")
+        
+        /*API().send(to: "https://sqs.us-east-1.amazonaws.com/911777333295/q76vMVJ4altKsevcFyIKGpVmYSYMhLgeFUofMImHO5j", message: "hi kevdog") { (result) in
+            switch result {
+            case .failure(let e):
+                log("send error: \(e)", .error)
+            case .sent:
+                log("send success!")
+            default:
+                log("unknown")
+            }
+        }*/
     }
     
     override func viewWillAppear(_ animated: Bool) {

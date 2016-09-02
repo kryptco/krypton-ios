@@ -24,17 +24,20 @@ struct Peer:JSONConvertable {
         self.dateAdded = date
     }
     
-    init?(json:[String:AnyObject]) {
-        guard   let publicKey = json["public_key"] as? String,
-                let fingerprint = publicKey.secp256Fingerprint?.toBase64()
-        else {
-            return nil
-        }
+    init(json:JSON) throws {
+        
+        let publicKey:String = try json ~> "public_key"
+        let fingerprint = try publicKey.fingerprint().toBase64()
+        let email:String? = try json ~> "email"
         
         self.publicKey = publicKey
-        self.email = (json["email"] as? String) ?? KrUnknownEmailValue
+        self.email = email ?? KrUnknownEmailValue
         self.dateAdded = Date()
         self.fingerprint = fingerprint
+    }
+    
+    var jsonMap:JSON {
+        return ["email": email, "public_key": publicKey]
     }
     
     var hasEmail:Bool {

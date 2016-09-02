@@ -88,9 +88,10 @@ class PeerManager {
         
         for (_, peerDict) in peerDictList {
             
-            guard   let email = peerDict["email"] as? String,
-                    let fp = peerDict["fingerprint"] as? String,
-                    let seconds = peerDict["date_added"] as? Double
+            guard   let map = peerDict as? [String:AnyObject],
+                    let email = map["email"] as? String,
+                    let fp = map["fingerprint"] as? String,
+                    let seconds = map["date_added"] as? Double
             else {
                 log("could not parse: \(peerDict)", .error)
                 continue
@@ -101,9 +102,9 @@ class PeerManager {
             
             do {
                 publicKey = try KeychainStorage().get(key: fp)
-                guard
-                    let foundFingerprint = publicKey.secp256Fingerprint?.toBase64(),
-                    foundFingerprint == fp
+                let foundFingerprint = try publicKey.fingerprint().toBase64()
+
+                guard foundFingerprint == fp
                 else {
                     log("invalid public key found: \(publicKey)", .error)
                     continue

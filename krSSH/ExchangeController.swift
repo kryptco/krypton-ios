@@ -19,7 +19,7 @@ class ExchangeController: UIViewController, KRScanDelegate {
     @IBOutlet weak var qrImageView:UIImageView!
     @IBOutlet weak var blurView:UIView!
 
-    var scanViewController:KRScanController?
+    @IBOutlet var scanViewController:KRScanController?
     var qrImage:UIImage?
     
     // stored properties
@@ -58,7 +58,7 @@ class ExchangeController: UIViewController, KRScanDelegate {
         }
     }
     
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scanner = segue.destination as? KRScanController {
             self.scanViewController = scanner
             scanner.delegate = self
@@ -141,7 +141,8 @@ class ExchangeController: UIViewController, KRScanDelegate {
             return false
         }
         
-        if let peer = Peer(json: json) {
+        
+        if let peer = try? Peer(json: json) {
             PeerManager.sharedInstance().add(peer: peer)
             return true
         }
