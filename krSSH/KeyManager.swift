@@ -33,14 +33,29 @@ class KeyManager {
             return km
         }
         do {
-            let kp = try KeyPair.loadOrGenerate(KeyTag.me.rawValue)
+            guard let kp = try KeyPair.load(KeyTag.me.rawValue) else {
+                throw KeyManagerError.keyDoesNotExist
+            }
+            
             sharedManager = KeyManager(kp)
             return sharedManager!
-        } catch let e {
-            log("Crypto Load or Generate error -> \(e)", LogType.error)
+        }
+        catch let e {
+            log("Crypto Load error -> \(e)", LogType.warning)
             throw e
         }
     }
+    
+    class func generateKeyPair() throws {
+        do {
+            let _ = try KeyPair.generate(KeyTag.me.rawValue)
+        }
+        catch let e {
+            log("Crypto Generate error -> \(e)", LogType.warning)
+            throw e
+        }
+    }
+    
     class func destroyKeyPair() -> Bool {
         sharedManager = nil
         

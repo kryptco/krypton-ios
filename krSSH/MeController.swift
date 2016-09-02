@@ -28,15 +28,33 @@ class MeController: UITableViewController {
         // setup icons and borders
         keyIcon.FAIcon = FAType.FAKey
         tagIcon.FAIcon = FAType.FATag
-    
-        identiconView.image = IGSimpleIdenticon.from(keyLabel.text ?? "", size: CGSize(width: 100, height: 100))
         
-        identiconView.setBorder(color: UIColor.white, cornerRadius: 30)
+        identiconView.setBorder(color: UIColor.clear, cornerRadius: 25, borderWidth: 1.0)
+        
         //copyButton.setFAIcon(icon: FAType.FAShareAlt, forState: UIControlState.normal)
         //copyButton.setBorder(color: UIColor.app, borderWidth: 1.0)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateCurrentUser()
+    }
+    
+    func updateCurrentUser() {
+        do {
+            let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
+            
+            identiconView.image = IGSimpleIdenticon.from(publicKey, size: CGSize(width: 100, height: 100))
+            
+            if let fp = publicKey.secp256Fingerprint?.hexPretty, fp.characters.count > 95 {
+                keyLabel.text = fp
+            }
+            
+            tagLabel.text = try KeyManager.sharedInstance().getMe()?.email
+            
+        } catch (let e) {
+            log("error getting keypair: \(e)", LogType.error)
+            showWarning(title: "Error loading keypair", body: "\(e)")
+        }
     }
     
     //MARK: TableView
@@ -58,6 +76,6 @@ class MeController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90.0
+        return 64.0
     }
 }

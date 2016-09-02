@@ -30,8 +30,8 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         // add a blur view
         view.addSubview(blurView)
         
-        let res = KeyManager.destroyKeyPair()
-        log("destroy result: \(res)")
+        //let res = KeyManager.destroyKeyPair()
+        //log("destroy result: \(res)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,14 +61,17 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             
             log("started with: \(pk)")
             
-            UIView.animate(withDuration: 0.5, animations: { 
+            UIView.animate(withDuration: 0.2, animations: { 
                 self.blurView.isHidden = true
             })
+            
         } catch (let e) {
             log("\(e)", LogType.error)
+            showWarning(title: "Fatal Error", body: "\(e)")
+            return
         }
-
         
+        (self.viewControllers?.first as? MeController)?.updateCurrentUser()
         
     }
     

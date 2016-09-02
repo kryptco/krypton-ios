@@ -45,6 +45,11 @@ class SetupController: UITableViewController, UITextFieldDelegate {
         }
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        nameTextfield.becomeFirstResponder()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -52,7 +57,16 @@ class SetupController: UITableViewController, UITextFieldDelegate {
     }
 
     dynamic func done () {
-        // save everything...
+        nameTextfield.resignFirstResponder()
+        
+        do {
+            try KeyManager.sharedInstance().setMe(email: nameTextfield.text ?? "unknown")
+        } catch (let e) {
+            log("Error saving email for keypair: \(e)", LogType.error)
+            showWarning(title: "Error Saving", body: "Try again!")
+            return
+        }
+        
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
     

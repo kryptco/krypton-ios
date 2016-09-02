@@ -43,6 +43,8 @@ class CreateController: UIViewController {
         log("destroyed keypair: \(didDestroy)")
         
         do {
+            try KeyManager.generateKeyPair()
+            
             let kp = try KeyManager.sharedInstance().keyPair
             let pk = try kp.publicKey.exportSecp()
             

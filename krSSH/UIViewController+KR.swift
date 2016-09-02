@@ -11,10 +11,7 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    
-    
-    
-    
+
     func showWarning(title:String, body:String, then:(()->Void)? = nil) {
         dispatchMain {
             
