@@ -30,7 +30,6 @@ struct Request:JSONConvertable {
             self.me = try MeRequest(json: json)
         }
         
-        throw JSONParsingError.invalid
     }
     
     var jsonMap: JSON {
@@ -74,9 +73,7 @@ struct SignRequest:JSONConvertable {
         guard let hashName = HashName(rawValue: hn) else {
             throw JSONParsingError.invalidValue(k: "hash_name", v: hn)
         }
-        self.hashName = hashName
-        
-        throw JSONParsingError.invalid
+        self.hashName = hashName        
     }
     
     var jsonMap: JSON {
