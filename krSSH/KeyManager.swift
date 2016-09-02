@@ -14,6 +14,8 @@ enum KeyTag:String {
     case peer = "peer"
 }
 
+private let KrMeDataKey = "kr_me_data"
+
 enum KeyManagerError:Error {
     case keyDoesNotExist
 }
@@ -63,4 +65,31 @@ class KeyManager {
         return true
     }
     
+    func getMe() throws -> Peer? {
+        do {
+            let email = try KeychainStorage().get(key: KrMeDataKey)
+            let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
+            guard let fp = publicKey.secp256Fingerprint?.toBase64() else {
+                log("fatal: cannot get fingerprint from public key.", LogType.error)
+                return nil
+            }
+            
+            return Peer(email: email, fingerprint: fp, publicKey: publicKey)
+            
+        } catch (let e) {
+            throw e
+        }
+    }
+    
+    func setMe(email:String) {
+        let success = KeychainStorage().set(key: KrMeDataKey, value: email)
+        if !success {
+            log("failed to store `me` email.", LogType.error)
+        }
+        
+    }
+    
 }
+
+
+
