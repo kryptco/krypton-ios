@@ -85,12 +85,37 @@ class ExchangeController: UIViewController, KRScanDelegate {
         if let qr = self.qrImage {
             self.qrImageView.image = qr
         }
-        else if let img = RSUnifiedCodeGenerator.shared.generateCode("testing12testing123testing123testing123testing123testing123testing123testing123testing123testing1233", machineReadableCodeObjectType: AVMetadataObjectTypeQRCode) {
+        else {
+            do {
+                let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
+                
+                var params = ["public_key": publicKey]
+                
+                if let email = try KeyManager.sharedInstance().getMe()?.email {
+                    params["email"] = email
+                } else {
+                    log("error me doesn't exist", LogType.error)
+                }
+                
+                let jsonData = try JSONSerialization.data(withJSONObject: params)
+                let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
+                
+                
+                if let json = jsonString, let img = RSUnifiedCodeGenerator.shared.generateCode(json, machineReadableCodeObjectType: AVMetadataObjectTypeQRCode) {
+                    
+                    let resized = RSAbstractCodeGenerator.resizeImage(img, targetSize: CGSize(width:280, height:280), contentMode: UIViewContentMode.scaleAspectFill)
+                    self.qrImage = resized
+                    self.qrImageView.image = resized
+                }
+                
+            } catch (let e) {
+                log("error getting keypair: \(e)", LogType.error)
+                showWarning(title: "Error loading keypair", body: "\(e)")
+            }
             
-            let resized = RSAbstractCodeGenerator.resizeImage(img, targetSize: CGSize(width:280, height:280), contentMode: UIViewContentMode.scaleAspectFill)
-            self.qrImage = resized
-            self.qrImageView.image = resized
         }
+        
+     
         
         UIView.animate(withDuration: 0.3) { () -> Void in
             self.blurView.isHidden = false
@@ -109,6 +134,18 @@ class ExchangeController: UIViewController, KRScanDelegate {
     
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
+        
+        guard   let value = data.data(using: String.Encoding.utf8),
+                let json = (try? JSONSerialization.jsonObject(with: value, options: JSONSerialization.ReadingOptions.allowFragments)) as? [String:AnyObject]
+        else {
+            return false
+        }
+        
+        if let peer = Peer(json: json) {
+            PeerManager.sharedInstance().add(peer: peer)
+            return true
+        }
+        
         return false
     }
 

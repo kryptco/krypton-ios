@@ -55,6 +55,9 @@
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9271D77B61F006372B4 /* Dispatch.swift */; };
+		FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */; };
+		FAA6E1E81D79B863007D1B3A /* PeerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E71D79B863007D1B3A /* PeerCell.swift */; };
+		FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E91D79CF97007D1B3A /* JSON.swift */; };
 		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFE81D77968D005D71B9 /* SessionCell.swift */; };
@@ -139,6 +142,9 @@
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FA92E9271D77B61F006372B4 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
+		FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerController.swift; sourceTree = "<group>"; };
+		FAA6E1E71D79B863007D1B3A /* PeerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerCell.swift; sourceTree = "<group>"; };
+		FAA6E1E91D79CF97007D1B3A /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		FACBEFE81D77968D005D71B9 /* SessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCell.swift; sourceTree = "<group>"; };
@@ -229,11 +235,13 @@
 			name = Me;
 			sourceTree = "<group>";
 		};
-		FA16827F1D77666D00A7ED53 /* Keys */ = {
+		FA16827F1D77666D00A7ED53 /* Peer */ = {
 			isa = PBXGroup;
 			children = (
+				FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */,
+				FAA6E1E71D79B863007D1B3A /* PeerCell.swift */,
 			);
-			name = Keys;
+			name = Peer;
 			sourceTree = "<group>";
 		};
 		FA1682821D77811900A7ED53 /* IGIdenticon */ = {
@@ -268,7 +276,7 @@
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
 				FACBEFEC1D779D71005D71B9 /* Setup */,
 				FA16827E1D77666800A7ED53 /* Me */,
-				FA16827F1D77666D00A7ED53 /* Keys */,
+				FA16827F1D77666D00A7ED53 /* Peer */,
 				FA16824F1D774C2700A7ED53 /* Scan */,
 			);
 			name = Controllers;
@@ -312,6 +320,7 @@
 				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
 				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
+				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
 				FA6972991D78DD5B002F34D6 /* Data */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FA81414B1D70B10F004FE58C /* UX */,
@@ -574,9 +583,11 @@
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
 				FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
+				FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
+				FAA6E1E81D79B863007D1B3A /* PeerCell.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
@@ -590,6 +601,7 @@
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
+				FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

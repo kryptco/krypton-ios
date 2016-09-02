@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct Peer {
+private let KrUnknownEmailValue = "unknown"
+
+struct Peer:JSONConvertable {
     var email:String
     var fingerprint:String
     var publicKey:String
@@ -20,6 +22,23 @@ struct Peer {
         self.fingerprint = fingerprint
         self.publicKey = publicKey
         self.dateAdded = date
+    }
+    
+    init?(json:[String:AnyObject]) {
+        guard   let publicKey = json["public_key"] as? String,
+                let fingerprint = publicKey.secp256Fingerprint?.toBase64()
+        else {
+            return nil
+        }
+        
+        self.publicKey = publicKey
+        self.email = (json["email"] as? String) ?? KrUnknownEmailValue
+        self.dateAdded = Date()
+        self.fingerprint = fingerprint
+    }
+    
+    var hasEmail:Bool {
+        return email != KrUnknownEmailValue
     }
 }
 
