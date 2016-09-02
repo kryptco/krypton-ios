@@ -6,6 +6,15 @@
 //  Copyright © 2016 KryptCo Inc. All rights reserved.
 //
 
+//
+/*
+    - encryption layer
+        - libsodium (easy secret box)
+        - encrypt/decrypt functions for request/respone
+    - session persistance
+    - session communication
+ 
+ */
 import UIKit
 
 @UIApplicationMain

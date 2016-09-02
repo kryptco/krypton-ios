@@ -8,9 +8,6 @@
 
 import Foundation
 
-
-
-
 struct Response:JSONConvertable {
     
     var requestID:String
