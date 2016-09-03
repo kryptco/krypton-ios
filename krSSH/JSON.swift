@@ -34,9 +34,13 @@ protocol JSONConvertable {
 }
 
 extension JSONConvertable {
+    
+    func jsonData() throws -> Data {
+        return try JSONSerialization.data(withJSONObject: jsonMap)
+    }
     func jsonString() throws -> String {
-        let jsonData = try JSONSerialization.data(withJSONObject: jsonMap)
-
+        let jsonData = try self.jsonData()
+        
         guard let json = String(data: jsonData, encoding: String.Encoding.utf8)
         else {
             throw JSONParsingError.invalid

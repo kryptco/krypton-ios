@@ -13,4 +13,6 @@
 #import <AWSSNS/AWSSNS.h>
 #import <AWSSQS/AWSSQS.h>
 
+#import "NAChloride.h"
+
 #endif /* krSSH_Bridging_Header_h */

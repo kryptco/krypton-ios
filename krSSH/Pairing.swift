@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pair:JSONConvertable {
+struct Pairing:JSONConvertable {
     
     var queueName:QueueName
     var symmetricKey:String

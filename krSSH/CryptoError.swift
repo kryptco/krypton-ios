@@ -18,6 +18,7 @@ enum CryptoError : Error {
     case destroy(OSStatus?)
     case tagExists
     case encoding
+    case random
 
 }
 
