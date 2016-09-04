@@ -13,12 +13,16 @@ enum CryptoError : Error {
     case paramCreate
     case generate(OSStatus?)
     case sign(OSStatus?)
+    case encrypt
+    case decrypt
     case export(OSStatus?)
     case load(OSStatus?)
     case destroy(OSStatus?)
     case tagExists
     case encoding
     case random
+    case integrity
+    case fingerprint
 
 }
 

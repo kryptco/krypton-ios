@@ -42,7 +42,22 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             default:
                 log("unknown")
             }
-        }*/
+        }
+
+        do {
+            let peer = Peer(email: "blah", fingerprint: "sdfsdf", publicKey: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEkzVpXcGl9E9vaX5T42LwcqkQo7xnlofns8EwG_QHr6S9iivyO00G56oCny5GiD59_nPIdiPWMEmXq4vTpRxvJw==")
+            let key = try Data.random(size: 32).toBase64()
+            log(key)
+            let sealed = try peer.seal(key: key)
+            log(sealed)
+            let unsealedPeer = try Peer(key: key, sealed: sealed)
+            log("\(unsealedPeer)")
+            
+        } catch (let e) {
+            log("\(e)")
+        }
+         */
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

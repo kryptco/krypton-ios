@@ -214,6 +214,54 @@ class KryptoTests: XCTestCase {
         }
     }
     
+    func testSealUnseal() {
+        
+        do {
+            let key = try Data.random(size: 32).toBase64()
+            let c = try "hello friends".data(using: String.Encoding.utf8)!.seal(key: key)
+            
+            let d = try c.unseal(key: key)
+            let ds = String(data: d, encoding: String.Encoding.utf8)!
+            
+            XCTAssert(ds == "hello friends", "plaintexts don't match!")
+        } catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+    }
+    
+    func testSealUnsealIntegrity() {
+        
+        do {
+            let key = try Data.random(size: 32).toBase64()
+            let c = try "hello friends".data(using: String.Encoding.utf8)!.seal(key: key)
+            
+            let key2 = try Data.random(size: 32).toBase64()
+            let d = try c.unseal(key: key2)
+            
+            let ds = String(data: d, encoding: String.Encoding.utf8)!
+            
+            XCTAssert(ds == "hello friends", "plaintexts don't match!")
+            
+        }
+        catch CryptoError.integrity {
+            XCTAssert(true)
+        }
+        catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+    }
+    
+    
+
+    
     
     /*func testPerformanceExample() {
         self.measureBlock {

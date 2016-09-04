@@ -84,19 +84,11 @@
 		FAEE04A61D74BD47002A7AFD /* SecKeyECASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */; };
 		FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
-		FAF4DD111D7A818B008F1B1C /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* Seal.swift */; };
-		FAF4DD511D7B8895008F1B1C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAF4DD391D7B8895008F1B1C /* Info.plist */; };
-		FAF4DD521D7B8895008F1B1C /* NAAEAD.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD3B1D7B8895008F1B1C /* NAAEAD.m */; };
-		FAF4DD531D7B8895008F1B1C /* NAAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD3D1D7B8895008F1B1C /* NAAuth.m */; };
-		FAF4DD541D7B8895008F1B1C /* NABox.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD3F1D7B8895008F1B1C /* NABox.m */; };
-		FAF4DD551D7B8895008F1B1C /* NABoxKeypair.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD411D7B8895008F1B1C /* NABoxKeypair.m */; };
-		FAF4DD561D7B8895008F1B1C /* NAInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD441D7B8895008F1B1C /* NAInterface.m */; };
-		FAF4DD571D7B8895008F1B1C /* NAOneTimeAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD461D7B8895008F1B1C /* NAOneTimeAuth.m */; };
-		FAF4DD581D7B8895008F1B1C /* NARandom.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD481D7B8895008F1B1C /* NARandom.m */; };
-		FAF4DD591D7B8895008F1B1C /* NAScrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD4A1D7B8895008F1B1C /* NAScrypt.m */; };
-		FAF4DD5A1D7B8895008F1B1C /* NASecretBox.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD4C1D7B8895008F1B1C /* NASecretBox.m */; };
-		FAF4DD5B1D7B8895008F1B1C /* NASecureData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD4E1D7B8895008F1B1C /* NASecureData.m */; };
-		FAF4DD5C1D7B8895008F1B1C /* NAStream.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD501D7B8895008F1B1C /* NAStream.m */; };
+		FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
+		FAFE546F1D7B9C1400391FDD /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
+		FAFE54701D7BB19900391FDD /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
+		FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
+		FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,31 +198,8 @@
 		FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KryptoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE049E1D74BCC3002A7AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FAF4DD101D7A818B008F1B1C /* Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seal.swift; sourceTree = "<group>"; };
-		FAF4DD391D7B8895008F1B1C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FAF4DD3A1D7B8895008F1B1C /* NAAEAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAEAD.h; sourceTree = "<group>"; };
-		FAF4DD3B1D7B8895008F1B1C /* NAAEAD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAAEAD.m; sourceTree = "<group>"; };
-		FAF4DD3C1D7B8895008F1B1C /* NAAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAuth.h; sourceTree = "<group>"; };
-		FAF4DD3D1D7B8895008F1B1C /* NAAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAAuth.m; sourceTree = "<group>"; };
-		FAF4DD3E1D7B8895008F1B1C /* NABox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NABox.h; sourceTree = "<group>"; };
-		FAF4DD3F1D7B8895008F1B1C /* NABox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NABox.m; sourceTree = "<group>"; };
-		FAF4DD401D7B8895008F1B1C /* NABoxKeypair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NABoxKeypair.h; sourceTree = "<group>"; };
-		FAF4DD411D7B8895008F1B1C /* NABoxKeypair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NABoxKeypair.m; sourceTree = "<group>"; };
-		FAF4DD421D7B8895008F1B1C /* NAChloride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAChloride.h; sourceTree = "<group>"; };
-		FAF4DD431D7B8895008F1B1C /* NAInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAInterface.h; sourceTree = "<group>"; };
-		FAF4DD441D7B8895008F1B1C /* NAInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAInterface.m; sourceTree = "<group>"; };
-		FAF4DD451D7B8895008F1B1C /* NAOneTimeAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAOneTimeAuth.h; sourceTree = "<group>"; };
-		FAF4DD461D7B8895008F1B1C /* NAOneTimeAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAOneTimeAuth.m; sourceTree = "<group>"; };
-		FAF4DD471D7B8895008F1B1C /* NARandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NARandom.h; sourceTree = "<group>"; };
-		FAF4DD481D7B8895008F1B1C /* NARandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NARandom.m; sourceTree = "<group>"; };
-		FAF4DD491D7B8895008F1B1C /* NAScrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAScrypt.h; sourceTree = "<group>"; };
-		FAF4DD4A1D7B8895008F1B1C /* NAScrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAScrypt.m; sourceTree = "<group>"; };
-		FAF4DD4B1D7B8895008F1B1C /* NASecretBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NASecretBox.h; sourceTree = "<group>"; };
-		FAF4DD4C1D7B8895008F1B1C /* NASecretBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NASecretBox.m; sourceTree = "<group>"; };
-		FAF4DD4D1D7B8895008F1B1C /* NASecureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NASecureData.h; sourceTree = "<group>"; };
-		FAF4DD4E1D7B8895008F1B1C /* NASecureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NASecureData.m; sourceTree = "<group>"; };
-		FAF4DD4F1D7B8895008F1B1C /* NAStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAStream.h; sourceTree = "<group>"; };
-		FAF4DD501D7B8895008F1B1C /* NAStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAStream.m; sourceTree = "<group>"; };
+		FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Seal.swift"; sourceTree = "<group>"; };
+		FAFE546E1D7B9C1400391FDD /* Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,7 +237,6 @@
 		FA1682521D774C8000A7ED53 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				FAF4DD381D7B8895008F1B1C /* NAChloride */,
 				FA1682951D77869100A7ED53 /* FontAwesome */,
 				FA1682821D77811900A7ED53 /* IGIdenticon */,
 				FA1682531D774D6000A7ED53 /* RSBarCodes */,
@@ -400,7 +368,7 @@
 				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
 				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
-				FAF4DD101D7A818B008F1B1C /* Seal.swift */,
+				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FAA6E1EF1D79E3E3007D1B3A /* API */,
 				FA6972991D78DD5B002F34D6 /* Data */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
@@ -468,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
+				FAFE546E1D7B9C1400391FDD /* Seal.swift */,
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
@@ -494,37 +463,6 @@
 				FAEE049E1D74BCC3002A7AFD /* Info.plist */,
 			);
 			path = KryptoTests;
-			sourceTree = "<group>";
-		};
-		FAF4DD381D7B8895008F1B1C /* NAChloride */ = {
-			isa = PBXGroup;
-			children = (
-				FAF4DD391D7B8895008F1B1C /* Info.plist */,
-				FAF4DD3A1D7B8895008F1B1C /* NAAEAD.h */,
-				FAF4DD3B1D7B8895008F1B1C /* NAAEAD.m */,
-				FAF4DD3C1D7B8895008F1B1C /* NAAuth.h */,
-				FAF4DD3D1D7B8895008F1B1C /* NAAuth.m */,
-				FAF4DD3E1D7B8895008F1B1C /* NABox.h */,
-				FAF4DD3F1D7B8895008F1B1C /* NABox.m */,
-				FAF4DD401D7B8895008F1B1C /* NABoxKeypair.h */,
-				FAF4DD411D7B8895008F1B1C /* NABoxKeypair.m */,
-				FAF4DD421D7B8895008F1B1C /* NAChloride.h */,
-				FAF4DD431D7B8895008F1B1C /* NAInterface.h */,
-				FAF4DD441D7B8895008F1B1C /* NAInterface.m */,
-				FAF4DD451D7B8895008F1B1C /* NAOneTimeAuth.h */,
-				FAF4DD461D7B8895008F1B1C /* NAOneTimeAuth.m */,
-				FAF4DD471D7B8895008F1B1C /* NARandom.h */,
-				FAF4DD481D7B8895008F1B1C /* NARandom.m */,
-				FAF4DD491D7B8895008F1B1C /* NAScrypt.h */,
-				FAF4DD4A1D7B8895008F1B1C /* NAScrypt.m */,
-				FAF4DD4B1D7B8895008F1B1C /* NASecretBox.h */,
-				FAF4DD4C1D7B8895008F1B1C /* NASecretBox.m */,
-				FAF4DD4D1D7B8895008F1B1C /* NASecureData.h */,
-				FAF4DD4E1D7B8895008F1B1C /* NASecureData.m */,
-				FAF4DD4F1D7B8895008F1B1C /* NAStream.h */,
-				FAF4DD501D7B8895008F1B1C /* NAStream.m */,
-			);
-			path = NAChloride;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -622,7 +560,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAF4DD511D7B8895008F1B1C /* Info.plist in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
@@ -679,40 +616,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAF4DD531D7B8895008F1B1C /* NAAuth.m in Sources */,
 				FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */,
-				FAF4DD551D7B8895008F1B1C /* NABoxKeypair.m in Sources */,
 				FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
-				FAF4DD571D7B8895008F1B1C /* NAOneTimeAuth.m in Sources */,
 				FA1682811D77682C00A7ED53 /* MeController.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
-				FAF4DD561D7B8895008F1B1C /* NAInterface.m in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
 				FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */,
 				FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
-				FAF4DD5A1D7B8895008F1B1C /* NASecretBox.m in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
-				FAF4DD521D7B8895008F1B1C /* NAAEAD.m in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
+				FAFE546F1D7B9C1400391FDD /* Seal.swift in Sources */,
 				FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */,
 				FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
-				FAF4DD5C1D7B8895008F1B1C /* NAStream.m in Sources */,
-				FAF4DD111D7A818B008F1B1C /* Seal.swift in Sources */,
+				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
@@ -729,20 +660,16 @@
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
-				FAF4DD581D7B8895008F1B1C /* NARandom.m in Sources */,
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
 				FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
-				FAF4DD5B1D7B8895008F1B1C /* NASecureData.m in Sources */,
 				FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */,
 				FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
-				FAF4DD591D7B8895008F1B1C /* NAScrypt.m in Sources */,
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
-				FAF4DD541D7B8895008F1B1C /* NABox.m in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
 				FAA6E1F11D79E3ED007D1B3A /* API.swift in Sources */,
 				FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */,
@@ -758,6 +685,9 @@
 				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
+				FAFE54701D7BB19900391FDD /* Seal.swift in Sources */,
+				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
+				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -898,7 +828,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Lib/Sodium",
 					"$(PROJECT_DIR)",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
@@ -927,7 +856,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Lib/Sodium",
 					"$(PROJECT_DIR)",
 				);
 				OTHER_SWIFT_FLAGS = "";

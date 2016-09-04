@@ -1,59 +1,124 @@
 //
-//  Seal.swift
+//  AuthenticatedEncryption.swift
 //  krSSH
 //
-//  Created by Alex Grinman on 9/2/16.
+//  Created by Alex Grinman on 9/3/16.
 //  Copyright © 2016 KryptCo. All rights reserved.
 //
 
 import Foundation
+import CommonCrypto
 
-
-typealias Sealed = String
-extension JSONConvertable {
+extension Data {
     
-    func seal(key:String) throws -> Sealed {
+    static func random(size:Int) throws -> Data {
+        var result = [UInt8](repeating: 0, count: size)
+        let res = SecRandomCopyBytes(kSecRandomDefault, size, &result)
+        
+        guard res == 0 else {
+            throw CryptoError.random
+        }
+        
+        return Data(bytes: result)
+    }
+    
+    func HMAC(key:Data) throws -> Data {
+        
+        let keyBytes = key.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: key.count))
+        }
+        
+        let dataBytes = self.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
+        }
+        
+        var hmac = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+
+        CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), keyBytes, key.count, dataBytes, self.count, &hmac)
+        
+        return Data(bytes: hmac)
+    }
+    
+    func seal(key:String) throws -> Data {
+        let nonce = try Data.random(size: kCCBlockSizeAES128)
+        let nonceBytes = nonce.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: nonce.count))
+        }
+        
         guard let keyData = key.fromBase64()
         else {
             throw CryptoError.encoding
         }
         
-        guard let nonce = NARandom.randomData(UInt(NASecretBoxNonceSize)) else {
-            throw CryptoError.random
+        let keyBytes = keyData.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: keyData.count))
+        }
+        var ciphertext = [UInt8](repeating: 0, count: self.count + 2*Int(kCCBlockSizeAES128))
+        
+
+        let dataBytes = self.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
         }
 
-        let message = try self.jsonData()
+        var ciphertextAllLength = 0
         
-        let ciphertext = try NASecretBox().encrypt(message, nonce: nonce, key: keyData)
+        let status = CCCrypt(CCOperation(kCCEncrypt), CCAlgorithm(kCCAlgorithmAES128), CCOptions(kCCOptionPKCS7Padding), keyBytes, keyData.count, nonceBytes, dataBytes, self.count, &ciphertext, ciphertext.count, &ciphertextAllLength)
+        
+        guard UInt32(status) == UInt32(kCCSuccess) else {
+            throw CryptoError.encrypt
+        }
+        
         
         var nonceAndCiphertext = Data(capacity: nonce.count + ciphertext.count)
         nonceAndCiphertext.append(nonce)
-        nonceAndCiphertext.append(ciphertext)
+        nonceAndCiphertext.append(Data(bytes: ciphertext).subdata(in: 0 ..< ciphertextAllLength))
         
-        return nonceAndCiphertext.toBase64()
+        let hmac = try nonceAndCiphertext.HMAC(key: keyData)
+        nonceAndCiphertext.append(hmac)
+        
+        return nonceAndCiphertext
     }
     
-    init(key:String, sealed:Sealed) throws {
+    func unseal(key:String) throws -> Data {
         guard
             let keyData = key.fromBase64(),
-            let nonceAndCiphertext = sealed.fromBase64(),
-            let nonceIndex = nonceAndCiphertext.index(of: UInt8(NASecretBoxNonceSize))
+                count >= 2*Int(kCCBlockSizeAES128) + Int(CC_SHA256_DIGEST_LENGTH)
         else {
             throw CryptoError.encoding
         }
         
-        let nonce = nonceAndCiphertext.subdata(in: nonceAndCiphertext.startIndex ..< nonceIndex)
-        let ciphertext = nonceAndCiphertext.subdata(in: nonceIndex ..< nonceAndCiphertext.endIndex)
+        let keyBytes = keyData.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: keyData.count))
+        }
 
-        let jsonData = try NASecretBox().decrypt(ciphertext, nonce: nonce, key: keyData)
-        let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments)
-        
-        guard let json = jsonObject as? JSON
-        else {
-            throw CryptoError.encoding
+        let nonce = self.subdata(in: 0 ..< Int(kCCBlockSizeAES128))
+        let nonceBytes = nonce.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: nonce.count))
         }
         
-        self = try Self.init(json: json)
+        let ciphertext = self.subdata(in: Int(kCCBlockSizeAES128) ..< count - Int(CC_SHA256_DIGEST_LENGTH))
+        let ciphertextBytes = ciphertext.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: ciphertext.count))
+        }
+        
+        let taggedHMAC = self.subdata(in: count - Int(CC_SHA256_DIGEST_LENGTH) ..< count)
+        
+        let hmac = try self.subdata(in: 0 ..< count - Int(CC_SHA256_DIGEST_LENGTH)).HMAC(key: keyData)
+        
+        // check HMAC
+        guard taggedHMAC == hmac else {
+            throw CryptoError.integrity
+        }
+
+        var plaintext = [UInt8](repeating: 0, count: ciphertext.count)
+        var plaintextLength = 0
+        
+        let status = CCCrypt(CCOperation(kCCDecrypt), CCAlgorithm(kCCAlgorithmAES128), CCOptions(kCCOptionPKCS7Padding), keyBytes, keyData.count, nonceBytes, ciphertextBytes, ciphertext.count, &plaintext, ciphertext.count, &plaintextLength)
+        
+        guard UInt32(status) == UInt32(kCCSuccess) else {
+            throw CryptoError.decrypt
+        }
+        
+        return Data(bytes: plaintext).subdata(in: 0 ..< plaintextLength)
     }
-    
 }
