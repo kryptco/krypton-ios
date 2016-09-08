@@ -14,7 +14,7 @@ private var datastore = NSUbiquitousKeyValueStore()
 
 class PeerManager {
     
-    private static let PeerListKey = "kr_peer_list"
+    private static let ListKey = "kr_peer_list"
     
     private var peers:[String:Peer]
     init(_ peers:[String:Peer] = [:]) {
@@ -58,7 +58,7 @@ class PeerManager {
     }
     
     func destory() {
-        datastore.removeObject(forKey: PeerManager.PeerListKey)
+        datastore.removeObject(forKey: PeerManager.ListKey)
         sharedPeerManager = nil
         peers = [:]
     }
@@ -73,7 +73,7 @@ class PeerManager {
                                           "date_added": Double(peer.dateAdded.timeIntervalSince1970)] as AnyObject
         }
         
-        datastore.set(peerDict, forKey: PeerManager.PeerListKey)
+        datastore.set(peerDict, forKey: PeerManager.ListKey)
         datastore.synchronize()
     }
 
@@ -84,7 +84,7 @@ class PeerManager {
     
     
     private class func loadPeers() -> [String:Peer] {
-        guard let peerDictList = datastore.dictionary(forKey: PeerManager.PeerListKey) as? [String:AnyObject]
+        guard let peerDictList = datastore.dictionary(forKey: PeerManager.ListKey) as? [String:AnyObject]
         else {
             return [:]
         }

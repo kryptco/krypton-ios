@@ -22,6 +22,8 @@ class MeController: UITableViewController {
     @IBOutlet var copyButton:UIButton!
     @IBOutlet var linkButton:UIButton!
 
+    var sessions:[Session] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +39,9 @@ class MeController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateCurrentUser()
+        
+        sessions = SessionManager.sharedInstance().all.sorted(by: {$0.created > $1.created })
+        tableView.reloadData()
     }
     
     func updateCurrentUser() {
@@ -64,11 +69,13 @@ class MeController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return sessions.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        return tableView.dequeueReusableCell(withIdentifier: "SessionCell") as! SessionCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell") as! SessionCell
+        cell.set(session: sessions[indexPath.row])
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

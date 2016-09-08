@@ -142,6 +142,14 @@ class ExchangeController: UIViewController, KRScanDelegate {
             PeerManager.sharedInstance().add(peer: peer)
             return true
         } else if let pairing = try? Pairing(json: json) {
+            do {
+                let session = try Session(pairing: pairing)
+                SessionManager.sharedInstance().add(session: session)
+            }
+            catch let e {
+                log("error creating session: \(e)", .error)
+                return false
+            }
             dispatchAsync {
                 API().receive(with: pairing)
             }

@@ -26,7 +26,7 @@ struct Peer:JSONConvertable {
     
     init(json:JSON) throws {
         
-        let publicKey:String = try json ~> "public_key"
+        let publicKey:String = try json ~> "public_key_der"
         let fingerprint = try publicKey.fingerprint().toBase64()
         let email:String? = try json ~> "email"
         
@@ -37,7 +37,7 @@ struct Peer:JSONConvertable {
     }
     
     var jsonMap:JSON {
-        return ["email": email, "public_key": publicKey]
+        return ["email": email, "public_key_der": publicKey]
     }
     
     var hasEmail:Bool {

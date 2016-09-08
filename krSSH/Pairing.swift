@@ -9,16 +9,22 @@
 import Foundation
 
 struct Pairing:JSONConvertable {
-    
+    var name:String
     var queue:QueueName
     var key:String
     
+    init(name:String, queue:QueueName, key:String) {
+        self.name = name
+        self.queue = queue
+        self.key = key
+    }
     init(json: JSON) throws {
+        self.name = try json ~> "n"
         self.queue = try json ~> "q"
         self.key = try json ~> "k"
     }
     
     var jsonMap: JSON {
-        return ["q": queue, "k": key]
+        return ["n": name, "q": queue, "k": key]
     }
 }

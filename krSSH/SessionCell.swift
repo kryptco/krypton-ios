@@ -26,11 +26,10 @@ class SessionCell: UITableViewCell {
         dateIcon.FAIcon = FAType.FAClockO
         loginIcon.FAIcon = FAType.FASignIn
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func set(session:Session) {
+        deviceNameLabel.text = session.pairing.name
+        lastAccessLabel.text = session.created.toShortTimeString()
     }
 
 }

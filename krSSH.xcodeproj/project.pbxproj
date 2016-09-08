@@ -42,6 +42,7 @@
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
+		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729A1D78DD6D002F34D6 /* Peer.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
 		FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729E1D78E819002F34D6 /* PeerManager.swift */; };
@@ -162,6 +163,7 @@
 		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA69729A1D78DD6D002F34D6 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA69729E1D78E819002F34D6 /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
@@ -335,9 +337,10 @@
 			isa = PBXGroup;
 			children = (
 				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
+				FA61EF421D81D150009FD899 /* SessionManager.swift */,
 				FA0322CD1D7A72E800CD7622 /* Session.swift */,
-				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
 				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
+				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */,
+				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
