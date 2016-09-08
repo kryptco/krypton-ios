@@ -50,7 +50,7 @@ extension JSONConvertable {
     }
 }
 infix operator <~
-func ~><T>(map: JSON , key:String) throws -> T {
+func ~><T>(map: JSON, key:String) throws -> T {
     guard let value = map[key] as? T else {
         throw JSONParsingError.missingKey(key)
     }

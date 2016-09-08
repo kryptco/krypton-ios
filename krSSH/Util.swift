@@ -9,7 +9,7 @@
 import Foundation
 
 extension Data {
-    func toBase64(_ urlEncoded:Bool = true) -> String {
+    func toBase64(_ urlEncoded:Bool = false) -> String {
         var result = self.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         if urlEncoded {
