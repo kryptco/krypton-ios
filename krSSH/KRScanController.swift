@@ -48,6 +48,7 @@ class KRScanController: RSCodeReaderViewController {
             
             if let data = barcodes.first?.stringValue {
                 let didDecode = self.delegate?.onFound(data: data) ?? false
+                
                 self.canScan = !didDecode
                 
                 if didDecode {

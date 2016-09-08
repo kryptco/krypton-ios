@@ -16,6 +16,14 @@ struct Response:JSONConvertable {
     var list:ListResponse?
     var me:MeResponse?
     
+    init(requestID:String, endpoint:String, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil) {
+        self.requestID = requestID
+        self.snsEndpointARN = endpoint
+        self.sign = sign
+        self.list = list
+        self.me = me
+    }
+    
     init(json: JSON) throws {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
@@ -52,6 +60,7 @@ struct Response:JSONConvertable {
         
         return json
     }
+    
 }
 
 //MARK: Responses
@@ -59,17 +68,35 @@ struct Response:JSONConvertable {
 // Sign
 
 struct SignResponse:JSONConvertable {
-    var signature:String
-    var error:String
+    var signature:String?
+    var error:String?
+    
+    init(sig:String?, err:String? = nil) {
+        self.signature = sig
+        self.error = err
+    }
     
     init(json: JSON) throws {
-        self.signature = try json ~> "signature"
-        self.error = try json ~> "error"
+        
+        if let sig:String = try? json ~> "signature" {
+            self.signature = sig
+        }
+        
+        if let err:String = try? json ~> "error" {
+            self.error = err
+        }
     }
     
     var jsonMap: JSON {
-        return ["signature": signature,
-                "error": error]
+        var map = [String:Any]()
+        
+        if let sig = signature {
+            map["signature"] = sig
+        }
+        if let err = error {
+            map["error"] = err
+        }
+        return map
     }
 }
 
@@ -77,6 +104,10 @@ struct SignResponse:JSONConvertable {
 // List
 struct ListResponse:JSONConvertable {
     var peers:[Peer]
+    
+    init(peers:[Peer]) {
+        self.peers = peers
+    }
     init(json: JSON) throws {
         self.peers = try ((json ~> "profiles") as [JSON]).map({try Peer(json: $0)})
     }
@@ -88,6 +119,9 @@ struct ListResponse:JSONConvertable {
 // Me
 struct MeResponse:JSONConvertable {
     var me:Peer
+    init(me:Peer) {
+        self.me = me
+    }
     init(json: JSON) throws {
         self.me = try Peer(json: json ~> "me")
     }

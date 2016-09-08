@@ -88,14 +88,10 @@ class ExchangeController: UIViewController, KRScanDelegate {
         else {
             do {
                 let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
+                let email = try KeyManager.sharedInstance().getMe().email
                 
-                var params = ["public_key": publicKey]
-                
-                if let email = try KeyManager.sharedInstance().getMe()?.email {
-                    params["email"] = email
-                } else {
-                    log("error me doesn't exist", LogType.error)
-                }
+                let params = ["public_key": publicKey, "email": email]
+
                 
                 let jsonData = try JSONSerialization.data(withJSONObject: params)
                 let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
@@ -145,8 +141,17 @@ class ExchangeController: UIViewController, KRScanDelegate {
         if let peer = try? Peer(json: json) {
             PeerManager.sharedInstance().add(peer: peer)
             return true
+        } else if let pairing = try? Pairing(json: json) {
+            dispatchAsync {
+                API().receive(with: pairing)
+            }
+            dispatchAfter(delay: 1.0, task: { 
+                self.scanViewController?.canScan = true
+            })
+            return true
         }
         
+    
         return false
     }
 

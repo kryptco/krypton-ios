@@ -23,7 +23,7 @@ class PeerController: UITableViewController, UISearchBarDelegate {
         peers = PeerManager.sharedInstance().all
         peers = peers.sorted(by: { $0.dateAdded > $1.dateAdded })
         
-        if let peer = try? KeyManager.sharedInstance().getMe(), let me = peer {
+        if let me = try? KeyManager.sharedInstance().getMe() {
             peers.append(me)
         }
         

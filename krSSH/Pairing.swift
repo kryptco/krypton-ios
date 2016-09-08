@@ -10,15 +10,15 @@ import Foundation
 
 struct Pairing:JSONConvertable {
     
-    var queueName:QueueName
-    var symmetricKey:String
+    var queue:QueueName
+    var key:String
     
     init(json: JSON) throws {
-        self.queueName = try json ~> "q"
-        self.symmetricKey = try json ~> "k"
+        self.queue = try json ~> "q"
+        self.key = try json ~> "k"
     }
     
     var jsonMap: JSON {
-        return ["q": queueName, "k": symmetricKey]
+        return ["q": queue, "k": key]
     }
 }

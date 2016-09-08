@@ -80,7 +80,7 @@ class KeyManager {
         return true
     }
     
-    func getMe() throws -> Peer? {
+    func getMe() throws -> Peer {
         do {
             let email = try KeychainStorage().get(key: KrMeDataKey)
             let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()

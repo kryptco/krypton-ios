@@ -10,13 +10,13 @@ import Foundation
 
 struct Request:JSONConvertable {
     
-    var requestID:String
+    var id:String
     var sign:SignRequest?
     var list:ListRequest?
     var me:MeRequest?
     
     init(json: JSON) throws {
-        self.requestID = try json ~> "request_id"
+        self.id = try json ~> "request_id"
         
         if let json:JSON = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
@@ -34,7 +34,7 @@ struct Request:JSONConvertable {
     
     var jsonMap: JSON {
         var json:[String:Any] = [:]
-        json["request_id"] = requestID
+        json["request_id"] = id
         
         if let s = sign {
             json["sign_request"] = s.jsonMap

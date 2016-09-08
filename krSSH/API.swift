@@ -26,15 +26,19 @@ typealias QueueName = String
 
 extension QueueName {
     var url:String {
-        return self
+        return "https://sqs.us-east-1.amazonaws.com/911777333295/\(self)"
+    }
+    
+    var responder:String {
+        return "\(self)-responder"
     }
 }
 
 
 class API {
     
-    var snsClient = AWSSNS(forKey: AWSConfKey.sns.rawValue)
-    var sqsClient = AWSSQS(forKey: AWSConfKey.sqs.rawValue)
+    private var snsClient = AWSSNS(forKey: AWSConfKey.sns.rawValue)
+    private var sqsClient = AWSSQS(forKey: AWSConfKey.sqs.rawValue)
     
     class func provision(accessKey:String, secretKey:String) -> Bool {
         let snsCreds = AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
@@ -68,7 +72,7 @@ class API {
         }
         
         request.messageBody = message
-        request.queueUrl = to.url
+        request.queueUrl = to.responder.url
         
         sqsClient.sendMessage(request) { (result, err) in
             guard err == nil else {
@@ -119,8 +123,6 @@ class API {
                 self.sqsClient.deleteMessageBatch(batchDeleteRequest)
                 
             }
-            
-            
             handler(APIResult.message(messages))
         }
     }

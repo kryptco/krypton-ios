@@ -43,7 +43,7 @@ class MeController: UITableViewController {
         do {
             let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
             keyLabel.text = try publicKey.fingerprint().hexPretty
-            tagLabel.text = try KeyManager.sharedInstance().getMe()?.email
+            tagLabel.text = try KeyManager.sharedInstance().getMe().email
             
             identiconView.image = IGSimpleIdenticon.from(publicKey, size: CGSize(width: 100, height: 100))
             
