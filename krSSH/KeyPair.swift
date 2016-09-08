@@ -65,7 +65,7 @@ class KeyPair {
 
 
         if TARGET_IPHONE_SIMULATOR == 0 {
-            print(" -- using secure enclave for key gen --")
+            print(" -- using secure enclave for key load --")
             
             params[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
             //params[String(kSecAttrAccessControl)] = acl
@@ -218,7 +218,7 @@ class KeyPair {
         
         
         if TARGET_IPHONE_SIMULATOR == 0 {
-            print(" -- using secure enclave for key gen --")
+            print(" -- using secure enclave for key destroy --")
             
             params[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
         }
@@ -271,7 +271,7 @@ class KeyPair {
         
         
         if TARGET_IPHONE_SIMULATOR == 0 {
-            print("warning: using secure enclave for private key.")
+            print("-- using secure enclave for private key --")
             
             keyParams[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
             keyParams[String(kSecAttrAccessControl)] = acl
