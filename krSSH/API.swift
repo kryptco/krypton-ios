@@ -62,7 +62,7 @@ class API {
     
     
     //MARK: SQS
-    func send(to:QueueName, message:String, handler:((APIResult)->Void)) {
+    func send(to:QueueName, message:String, handler:@escaping ((APIResult)->Void)) {
         guard let request = AWSSQSSendMessageRequest() else {
             return
         }
@@ -80,7 +80,7 @@ class API {
         }
     }
     
-    func receive(_ on:QueueName, handler:((APIResult)->Void)) {
+    func receive(_ on:QueueName, handler:@escaping ((APIResult)->Void)) {
         guard let request = AWSSQSReceiveMessageRequest() else {
             log("Cannot create `receive request` for queue \(on)", LogType.error)
             handler(APIResult.failure(BadAWSRequestError()))

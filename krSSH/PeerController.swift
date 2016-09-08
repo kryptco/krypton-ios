@@ -26,6 +26,8 @@ class PeerController: UITableViewController, UISearchBarDelegate {
         if let peer = try? KeyManager.sharedInstance().getMe(), let me = peer {
             peers.append(me)
         }
+        
+        tableView.reloadData()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

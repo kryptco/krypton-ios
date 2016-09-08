@@ -43,6 +43,8 @@ class PeerManager {
             log("failed to save \(peer)", LogType.error)
         }
         peers[peer.fingerprint] = peer
+        
+        save()
     }
     
     func remove(peer:Peer) {
@@ -51,11 +53,14 @@ class PeerManager {
             log("failed to delete \(peer)", LogType.error)
         }
         peers.removeValue(forKey: peer.fingerprint)
+        
+        save()
     }
     
     func destory() {
         datastore.removeObject(forKey: PeerManager.PeerListKey)
         sharedPeerManager = nil
+        peers = [:]
     }
     
     

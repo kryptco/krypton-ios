@@ -27,7 +27,7 @@ extension UIViewController {
         }
     }
     
-    func askConfirmationIn(title:String, text:String, accept:String, cancel:String, handler: ((_ confirmed:Bool) -> Void)) {
+    func askConfirmationIn(title:String, text:String, accept:String, cancel:String, handler: @escaping ((_ confirmed:Bool) -> Void)) {
         
         let alertController:UIAlertController = UIAlertController(title: title, message: text, preferredStyle: UIAlertControllerStyle.alert)
         
