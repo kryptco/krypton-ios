@@ -22,9 +22,9 @@ class SessionCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        deviceIcon.FAIcon = FAType.FADesktop
-        dateIcon.FAIcon = FAType.FAClockO
-        loginIcon.FAIcon = FAType.FASignIn
+//        deviceIcon.FAIcon = FAType.FADesktop
+//        dateIcon.FAIcon = FAType.FAClockO
+//        loginIcon.FAIcon = FAType.FASignIn
     }
     
     func set(session:Session) {
