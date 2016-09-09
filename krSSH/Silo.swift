@@ -49,7 +49,7 @@ class Silo {
                         
                         do {
                             let req = try Request(key: to.pairing.key, sealed: msg)
-                            let resp = try Silo.handle(request: req).seal(key: to.pairing.key)
+                            let resp = try Silo.handle(request: req, id: to.id).seal(key: to.pairing.key)
                             
                             api.send(to: to.pairing.queue, message: resp, handler: { (sendResult) in
                                 switch sendResult {
@@ -113,7 +113,7 @@ class Silo {
 
     
     //MARK: Handle Logic
-    class func handle(request:Request) throws -> Response {
+    class func handle(request:Request, id:String) throws -> Response {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
@@ -127,7 +127,7 @@ class Silo {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
                 SessionManager.logMutex.lock {
-                    SessionManager.logs.append(SignatureLog(sig: sig!))
+                    SessionManager.logs.append(SignatureLog(session: id, signature: sig!))
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
             } catch let e {

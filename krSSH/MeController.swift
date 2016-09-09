@@ -105,8 +105,19 @@ class MeController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 64.0
+            return 60.0
         }
         return 30.0
     }
+    
+    
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == 1 {
+            return false
+        }
+
+        return true
+     }
+ 
 }

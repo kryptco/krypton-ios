@@ -72,11 +72,11 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="57" id="RVh-B0-d7Y" customClass="SessionCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="202" width="375" height="57"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="60" id="RVh-B0-d7Y" customClass="SessionCell" customModule="krSSH" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="202" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RVh-B0-d7Y" id="fIR-OJ-deh">
-                                    <frame key="frameInset" width="375" height="56"/>
+                                    <frame key="frameInset" width="375" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="3:32 PM 8/30/2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ki7-Le-PRW">
@@ -96,41 +96,33 @@
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vAE-JM-NZf" userLabel="color">
-                                            <color key="backgroundColor" red="0.31649094001162514" green="0.79434834183068992" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" id="gbz-nI-Nla"/>
-                                            </constraints>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7l-jh-Fpk">
                                             <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="2" id="h8W-1k-q9N"/>
+                                                <constraint firstAttribute="width" constant="4" id="gbz-nI-Nla"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="vAE-JM-NZf" secondAttribute="bottom" id="3ld-Lr-WuY"/>
                                         <constraint firstItem="ki7-Le-PRW" firstAttribute="centerY" secondItem="BtA-tN-ogm" secondAttribute="centerY" id="7rV-9w-UzN"/>
-                                        <constraint firstAttribute="bottom" secondItem="L7l-jh-Fpk" secondAttribute="bottom" constant="8" id="ACy-4q-OTU"/>
-                                        <constraint firstItem="BtA-tN-ogm" firstAttribute="top" secondItem="fIR-OJ-deh" secondAttribute="topMargin" id="CBH-sX-Hcj"/>
                                         <constraint firstItem="ki7-Le-PRW" firstAttribute="trailing" secondItem="fIR-OJ-deh" secondAttribute="trailingMargin" id="Ctt-Zu-CGo"/>
-                                        <constraint firstItem="vWX-7p-w5f" firstAttribute="leading" secondItem="vAE-JM-NZf" secondAttribute="trailing" constant="4" id="I3t-yD-2zM"/>
+                                        <constraint firstItem="vWX-7p-w5f" firstAttribute="centerY" secondItem="fIR-OJ-deh" secondAttribute="centerY" id="GQx-hX-x6v"/>
+                                        <constraint firstItem="vWX-7p-w5f" firstAttribute="leading" secondItem="vAE-JM-NZf" secondAttribute="trailing" constant="8" id="I3t-yD-2zM"/>
                                         <constraint firstItem="ki7-Le-PRW" firstAttribute="leading" secondItem="BtA-tN-ogm" secondAttribute="trailing" id="Po5-Pd-bHN"/>
-                                        <constraint firstItem="vWX-7p-w5f" firstAttribute="top" secondItem="fIR-OJ-deh" secondAttribute="topMargin" id="QfN-hL-MkH"/>
                                         <constraint firstItem="vAE-JM-NZf" firstAttribute="top" secondItem="fIR-OJ-deh" secondAttribute="top" id="YS6-9A-b0l"/>
                                         <constraint firstItem="vAE-JM-NZf" firstAttribute="leading" secondItem="fIR-OJ-deh" secondAttribute="leading" id="dgK-y0-NHZ"/>
-                                        <constraint firstAttribute="trailing" secondItem="L7l-jh-Fpk" secondAttribute="trailing" id="kwq-uE-eBi"/>
                                         <constraint firstItem="BtA-tN-ogm" firstAttribute="leading" secondItem="vWX-7p-w5f" secondAttribute="trailing" constant="8" id="tpr-iG-uEV"/>
-                                        <constraint firstItem="L7l-jh-Fpk" firstAttribute="leading" secondItem="fIR-OJ-deh" secondAttribute="leading" id="uOc-ah-Tvx"/>
+                                        <constraint firstItem="BtA-tN-ogm" firstAttribute="centerY" secondItem="vWX-7p-w5f" secondAttribute="centerY" id="z5Z-sw-34n"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="colorView" destination="vAE-JM-NZf" id="Prw-50-Bu3"/>
                                     <outlet property="deviceNameLabel" destination="BtA-tN-ogm" id="M2p-gF-yaD"/>
                                     <outlet property="lastAccessLabel" destination="ki7-Le-PRW" id="whh-FH-Pv5"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="30" id="Epk-eu-Cb3">
-                                <rect key="frame" x="0.0" y="259" width="375" height="30"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LogCell" rowHeight="30" id="Epk-eu-Cb3" customClass="LogCell" customModule="krSSH" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="262" width="375" height="30"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Epk-eu-Cb3" id="fpY-Td-qJk">
                                     <frame key="frameInset" width="375" height="29"/>
@@ -139,7 +131,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJX-sU-R3Y" userLabel="color">
                                             <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="10" id="3vV-TN-3hZ"/>
+                                                <constraint firstAttribute="width" constant="4" id="3vV-TN-3hZ"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="3:32 PM 8/30/2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="SfD-rN-T3i">
@@ -158,12 +150,17 @@
                                         <constraint firstItem="Saa-Pb-ack" firstAttribute="centerY" secondItem="fpY-Td-qJk" secondAttribute="centerY" id="IWC-gk-TKc"/>
                                         <constraint firstItem="jJX-sU-R3Y" firstAttribute="leading" secondItem="fpY-Td-qJk" secondAttribute="leading" id="MmR-Dv-nZd"/>
                                         <constraint firstAttribute="trailing" secondItem="SfD-rN-T3i" secondAttribute="trailing" constant="8" id="WZa-rH-2xl"/>
-                                        <constraint firstItem="Saa-Pb-ack" firstAttribute="leading" secondItem="jJX-sU-R3Y" secondAttribute="trailing" constant="4" id="YNc-ss-GHh"/>
+                                        <constraint firstItem="Saa-Pb-ack" firstAttribute="leading" secondItem="jJX-sU-R3Y" secondAttribute="trailing" constant="8" id="YNc-ss-GHh"/>
                                         <constraint firstAttribute="bottom" secondItem="jJX-sU-R3Y" secondAttribute="bottom" id="duI-ft-y4S"/>
                                         <constraint firstItem="jJX-sU-R3Y" firstAttribute="top" secondItem="fpY-Td-qJk" secondAttribute="top" id="fUO-T8-hpe"/>
                                         <constraint firstItem="SfD-rN-T3i" firstAttribute="centerY" secondItem="Saa-Pb-ack" secondAttribute="centerY" id="hSX-KE-e9j"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="colorView" destination="jJX-sU-R3Y" id="vRj-bQ-3lb"/>
+                                    <outlet property="signatureLabel" destination="Saa-Pb-ack" id="YFA-Th-VTl"/>
+                                    <outlet property="timeLabel" destination="SfD-rN-T3i" id="xfm-ZS-I0M"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

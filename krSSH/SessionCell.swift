@@ -10,24 +10,16 @@ import UIKit
 
 class SessionCell: UITableViewCell {
     
-    @IBOutlet var deviceIcon:UILabel!
-    @IBOutlet var dateIcon:UILabel!
-    @IBOutlet var loginIcon:UILabel!
-    
     @IBOutlet var deviceNameLabel:UILabel!
     @IBOutlet var lastAccessLabel:UILabel!
-    @IBOutlet var loginCountLabel:UILabel!
+    @IBOutlet var colorView:UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-//        deviceIcon.FAIcon = FAType.FADesktop
-//        dateIcon.FAIcon = FAType.FAClockO
-//        loginIcon.FAIcon = FAType.FASignIn
     }
     
     func set(session:Session) {
+        colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.7)
         deviceNameLabel.text = session.pairing.name
         lastAccessLabel.text = session.created.toShortTimeString()
     }

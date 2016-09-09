@@ -36,22 +36,15 @@ struct Session:JSONConvertable {
     }
 }
 
-struct SignatureLog:JSONConvertable {
+struct SignatureLog {
+    var session:String
     var signature:String
     var date:Date
     
-    init(sig:String) {
-        signature = sig
+    init(session:String, signature:String) {
+        self.session = session
+        self.signature = signature
         date = Date()
     }
     
-    init(json: JSON) throws {
-        signature = try json ~> "signature"
-        date = Date(timeIntervalSince1970: try json ~> "date")
-    }
-    
-    var jsonMap: JSON {
-        return ["signature": signature,
-                "date": date.timeIntervalSince1970]
-    }
 }
