@@ -285,15 +285,7 @@ class KeyPair {
     }
     
     
-    func sign(message:String) throws -> String {
-        // convert to data
-        let messageData = message.data(using: String.Encoding.utf8)
-        
-        guard let data = messageData
-        else {
-            throw CryptoError.encoding
-        }
-    
+    func sign(data:Data) throws -> String {
         // Create SHA256 hash of the message
         var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         CC_SHA256((data as NSData).bytes, CC_LONG(data.count), &hash)
@@ -317,9 +309,7 @@ class KeyPair {
     
     func sign(digest:String) throws -> String {
         // convert to data
-        let digestData = digest.data(using: String.Encoding.utf8)
-        
-        guard let data = digestData
+        guard let data = digest.fromBase64()
             else {
                 throw CryptoError.encoding
         }

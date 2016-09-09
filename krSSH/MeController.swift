@@ -23,7 +23,10 @@ class MeController: UITableViewController {
     @IBOutlet var linkButton:UIButton!
 
     var sessions:[Session] = []
+    var logs:[SignatureLog] = []
     
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,12 +38,19 @@ class MeController: UITableViewController {
         
         //copyButton.setFAIcon(icon: FAType.FAShareAlt, forState: UIControlState.normal)
         //copyButton.setBorder(color: UIColor.app, borderWidth: 1.0)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(MeController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateCurrentUser()
         
         sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
+        tableView.reloadData()
+    }
+    
+    dynamic func newLogLine() {
+        logs = [SignatureLog](SessionManager.logs)
         tableView.reloadData()
     }
     
@@ -61,24 +71,42 @@ class MeController: UITableViewController {
     //MARK: TableView
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if logs.isEmpty {
+            return 1
+        }
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Sessions"
+        if section == 0 {
+            return "Sessions"
+        }
+        return "Logs"
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sessions.count
+        if section == 0 {
+            return sessions.count
+        }
+        return logs.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell") as! SessionCell
-        cell.set(session: sessions[indexPath.row])
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell") as! SessionCell
+            cell.set(session: sessions[indexPath.row])
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") as! LogCell
+        cell.set(log: logs[indexPath.row])
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64.0
+        if indexPath.section == 0 {
+            return 64.0
+        }
+        return 30.0
     }
 }

@@ -7,11 +7,7 @@
 //
 
 //
-/*
-    - session persistance
-    - session communication
- 
- */
+
 import UIKit
 
 @UIApplicationMain

@@ -44,6 +44,7 @@
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
+		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
 		FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729A1D78DD6D002F34D6 /* Peer.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
 		FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729E1D78E819002F34D6 /* PeerManager.swift */; };
@@ -165,6 +166,7 @@
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
+		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
 		FA69729A1D78DD6D002F34D6 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA69729E1D78E819002F34D6 /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 			children = (
 				FA1682801D77682C00A7ED53 /* MeController.swift */,
 				FACBEFE81D77968D005D71B9 /* SessionCell.swift */,
+				FA61EF481D835EEB009FD899 /* LogCell.swift */,
 			);
 			name = Me;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
+				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
