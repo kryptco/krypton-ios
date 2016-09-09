@@ -20,7 +20,7 @@ class PeerController: UITableViewController, UISearchBarDelegate {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        peers = PeerManager.sharedInstance().all
+        peers = PeerManager.shared.all
         peers = peers.sorted(by: { $0.dateAdded > $1.dateAdded })
         
         if let me = try? KeyManager.sharedInstance().getMe() {

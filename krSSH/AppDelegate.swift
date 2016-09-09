@@ -26,7 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !API.provision(accessKey: "AKIAJMZJ3X6MHMXRF7QQ", secretKey: "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") {
             log("API provision failed.", LogType.error)
         }
-
+        
+        Silo.shared.add(sessions: SessionManager.shared.all)
+        
         return true
     }
 

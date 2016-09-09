@@ -40,7 +40,7 @@ class MeController: UITableViewController {
         super.viewWillAppear(animated)
         updateCurrentUser()
         
-        sessions = SessionManager.sharedInstance().all.sorted(by: {$0.created > $1.created })
+        sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
         tableView.reloadData()
     }
     

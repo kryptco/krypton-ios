@@ -29,4 +29,14 @@ extension Date {
         //Return Short Time String
         return timeString
     }
+    
+    func toLongTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .long
+        formatter.dateStyle = .short
+        let timeString = formatter.string(from: self)
+        
+        //Return Short Time String
+        return timeString
+    }
 }

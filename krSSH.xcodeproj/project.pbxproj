@@ -43,6 +43,7 @@
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
+		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729A1D78DD6D002F34D6 /* Peer.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
 		FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729E1D78E819002F34D6 /* PeerManager.swift */; };
@@ -57,7 +58,6 @@
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9271D77B61F006372B4 /* Dispatch.swift */; };
-		FAA1B9201D81AA3400FF37CC /* API+Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B91F1D81AA3400FF37CC /* API+Session.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
 		FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */; };
 		FAA6E1E81D79B863007D1B3A /* PeerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E71D79B863007D1B3A /* PeerCell.swift */; };
@@ -164,6 +164,7 @@
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA69729A1D78DD6D002F34D6 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA69729E1D78E819002F34D6 /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
@@ -179,7 +180,6 @@
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FA92E9271D77B61F006372B4 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
-		FAA1B91F1D81AA3400FF37CC /* API+Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+Session.swift"; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
 		FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerController.swift; sourceTree = "<group>"; };
 		FAA6E1E71D79B863007D1B3A /* PeerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerCell.swift; sourceTree = "<group>"; };
@@ -246,6 +246,7 @@
 				FA1682951D77869100A7ED53 /* FontAwesome */,
 				FA1682821D77811900A7ED53 /* IGIdenticon */,
 				FA1682531D774D6000A7ED53 /* RSBarCodes */,
+				FA61EF451D8319ED009FD899 /* Mutex.swift */,
 			);
 			path = Lib;
 			sourceTree = SOURCE_ROOT;
@@ -333,16 +334,27 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		FA6972991D78DD5B002F34D6 /* Data */ = {
+		FA61EF471D831A77009FD899 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				FA61EF421D81D150009FD899 /* SessionManager.swift */,
+				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
+				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
+				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
+				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
+				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		FA6972991D78DD5B002F34D6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
-				FA61EF421D81D150009FD899 /* SessionManager.swift */,
 				FA0322CD1D7A72E800CD7622 /* Session.swift */,
-				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
 				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
 			);
-			name = Data;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		FA81412D1D70B0F4004FE58C = {
@@ -373,12 +385,9 @@
 				FA81414B1D70B10F004FE58C /* UX */,
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
-				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
-				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
-				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
-				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
+				FA61EF471D831A77009FD899 /* Core */,
 				FAA6E1EF1D79E3E3007D1B3A /* API */,
-				FA6972991D78DD5B002F34D6 /* Data */,
+				FA6972991D78DD5B002F34D6 /* Models */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
@@ -412,7 +421,6 @@
 			isa = PBXGroup;
 			children = (
 				FAA6E1F01D79E3ED007D1B3A /* API.swift */,
-				FAA1B91F1D81AA3400FF37CC /* API+Session.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
 			);
@@ -639,12 +647,12 @@
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SecKeyECASN1.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
+				FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */,
 				FA1682811D77682C00A7ED53 /* MeController.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
 				FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */,
 				FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */,
-				FAA1B9201D81AA3400FF37CC /* API+Session.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,

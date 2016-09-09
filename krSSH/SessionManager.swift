@@ -20,7 +20,7 @@ class SessionManager {
         self.sessions = sessions
     }
     
-    class func sharedInstance() -> SessionManager {
+    class var shared:SessionManager {
         guard let sm = sharedSessionManager else {
             sharedSessionManager = SessionManager(SessionManager.load())
             return sharedSessionManager!
@@ -57,7 +57,8 @@ class SessionManager {
     
     
     func save() {
-        UserDefaults.standard.set(sessions.values.map({ $0.jsonMap }), forKey: SessionManager.ListKey)
+        let data = sessions.values.map({ $0.jsonMap }) as [[String:AnyObject]]
+        UserDefaults.standard.set(data, forKey: SessionManager.ListKey)
         UserDefaults.standard.synchronize()
     }
     

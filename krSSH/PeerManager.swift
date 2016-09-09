@@ -24,7 +24,7 @@ class PeerManager {
 
     }
     
-    class func sharedInstance() -> PeerManager {
+    class var shared:PeerManager {
         guard let pm = sharedPeerManager else {
             sharedPeerManager = PeerManager(PeerManager.loadPeers())
             return sharedPeerManager!

@@ -95,11 +95,12 @@ class API {
         request.waitTimeSeconds = 10
         
         sqsClient.receiveMessage(request) { (result, err) in
-            guard let sqsMsgs = result?.messages, err == nil else {
-                handler(APIResult.failure(err ?? UnknownAWSRequestError()))
+            guard err == nil else {
+                handler(APIResult.failure(err!))
                 return
             }
             
+            let sqsMsgs = result?.messages ?? []
             var messages = [String]()
             
             var receiptEntries = [AWSSQSDeleteMessageBatchRequestEntry]()
@@ -116,7 +117,7 @@ class API {
                 }
             }
             
-            if let batchDeleteRequest = AWSSQSDeleteMessageBatchRequest() {
+            if let batchDeleteRequest = AWSSQSDeleteMessageBatchRequest(), receiptEntries.count > 0 {
                 batchDeleteRequest.queueUrl = on.url
                 batchDeleteRequest.entries = receiptEntries
                 
