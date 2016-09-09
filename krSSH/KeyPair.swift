@@ -285,7 +285,7 @@ class KeyPair {
     }
     
     
-    func sign(_ message:String) throws -> String {
+    func sign(message:String) throws -> String {
         // convert to data
         let messageData = message.data(using: String.Encoding.utf8)
         
@@ -305,6 +305,35 @@ class KeyPair {
         
         let status = SecKeyRawSign(privateKey, SecPadding.PKCS1, hash, hash.count, &result, &sigBufferSize)
 
+        guard status.isSuccess() else {
+            throw CryptoError.sign(status)
+        }
+        
+        // Create Base64 string of the result
+        
+        let resultData = Data(bytes: result[0..<sigBufferSize])
+        return resultData.toBase64()
+    }
+    
+    func sign(digest:String) throws -> String {
+        // convert to data
+        let digestData = digest.data(using: String.Encoding.utf8)
+        
+        guard let data = digestData
+            else {
+                throw CryptoError.encoding
+        }
+        
+        let dataBytes = data.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: data.count))
+        }
+        
+        // Create signature
+        var sigBufferSize = 2048
+        var result = [UInt8](repeating: 0, count: sigBufferSize)
+        
+        let status = SecKeyRawSign(privateKey, SecPadding.PKCS1, dataBytes, dataBytes.count, &result, &sigBufferSize)
+        
         guard status.isSuccess() else {
             throw CryptoError.sign(status)
         }

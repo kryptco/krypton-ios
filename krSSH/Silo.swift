@@ -21,7 +21,7 @@ class Silo {
             var sig:String?
             var err:String?
             do {
-                sig = try kp.keyPair.sign(signRequest.message)
+                sig = try kp.keyPair.sign(digest: signRequest.digest)
 
             } catch let e {
                 guard e is CryptoError else {
