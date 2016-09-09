@@ -21,7 +21,11 @@ class LogCell: UITableViewCell {
     
     func set(log:SignatureLog) {
         colorView.backgroundColor = UIColor.colorFromString(string: log.session).withAlphaComponent(0.7)
-        signatureLabel.text = log.signature.uppercased()
+        if let fp = log.signature.fromBase64()?.hexPretty, fp.characters.count >= 16 {
+            signatureLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 16))
+        } else {
+            signatureLabel.text = ""
+        }
         timeLabel.text = log.date.toLongTimeString()
     }
     

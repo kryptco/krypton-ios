@@ -50,8 +50,10 @@ class MeController: UITableViewController {
     }
     
     dynamic func newLogLine() {
-        logs = [SignatureLog](SessionManager.logs)
-        tableView.reloadData()
+        dispatchMain {
+            self.logs = [SignatureLog](SessionManager.logs)
+            self.tableView.reloadData()
+        }
     }
     
     func updateCurrentUser() {
@@ -105,9 +107,9 @@ class MeController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 60.0
+            return 74.0
         }
-        return 30.0
+        return 36.0
     }
     
     
@@ -119,5 +121,21 @@ class MeController: UITableViewController {
 
         return true
      }
+    
+
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            SessionManager.shared.remove(session: sessions[indexPath.row])
+            Silo.shared.remove(session: sessions[indexPath.row])
+            sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
+            
+            tableView.deleteRows(at: [indexPath], with: .right)
+            tableView.reloadData()
+        } else if editingStyle == .insert {
+            return
+        }
+     }
+ 
  
 }

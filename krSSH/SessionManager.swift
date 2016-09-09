@@ -62,7 +62,7 @@ class SessionManager {
     
     
     func save() {
-        let data = sessions.values.map({ $0.jsonMap }) as [[String:AnyObject]]
+        let data = sessions.values.map({ $0.jsonMap }) as [Any]
         UserDefaults.standard.set(data, forKey: SessionManager.ListKey)
         UserDefaults.standard.synchronize()
     }
