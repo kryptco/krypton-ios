@@ -97,7 +97,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             return
         }
         
-        (self.viewControllers?.first as? MeController)?.updateCurrentUser()
+        //(self.viewControllers?.first as? MeController)?.updateCurrentUser()
         
     }
     

@@ -50,6 +50,7 @@ class Silo {
                         do {
                             let req = try Request(key: to.pairing.key, sealed: msg)
                             let resp = try Silo.handle(request: req, id: to.id).seal(key: to.pairing.key)
+                            SessionManager.shared.add(session: to)
                             
                             api.send(to: to.pairing.queue, message: resp, handler: { (sendResult) in
                                 switch sendResult {

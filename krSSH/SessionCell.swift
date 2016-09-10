@@ -21,7 +21,7 @@ class SessionCell: UITableViewCell {
     func set(session:Session) {
         colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.7)
         deviceNameLabel.text = session.pairing.name
-        lastAccessLabel.text = session.created.toShortTimeString()
+        lastAccessLabel.text = "used \(session.created.timeAgo())"
     }
 
 }
