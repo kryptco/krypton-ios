@@ -14,10 +14,11 @@ class SessionsController: UITableViewController {
 
     var sessions:[Session] = []
     
-    
+    //@IBOutlet weak var addButton:UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tableFooterView = UIView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(SessionsController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
     }
@@ -25,6 +26,7 @@ class SessionsController: UITableViewController {
         super.viewWillAppear(animated)
         updateCurrentUser()
         
+       // addButton.setBorder(color: UIColor.clear, cornerRadius: 10, borderWidth: 1.0)
         sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
         tableView.reloadData()
     }
@@ -42,7 +44,7 @@ class SessionsController: UITableViewController {
     //MARK: TableView
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -73,7 +75,7 @@ class SessionsController: UITableViewController {
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             SessionManager.shared.remove(session: sessions[indexPath.row])
-            Silo.shared.remove(session: sessions[indexPath.row])
+            Silo.shared.remove(session: sessions[0])
             sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
             
             tableView.deleteRows(at: [indexPath], with: .right)
