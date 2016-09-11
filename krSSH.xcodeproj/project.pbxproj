@@ -10,7 +10,7 @@
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
-		FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682501D774C3900A7ED53 /* ExchangeController.swift */; };
+		FA1682511D774C3900A7ED53 /* PairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682501D774C3900A7ED53 /* PairController.swift */; };
 		FA1682681D774D6000A7ED53 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1682541D774D6000A7ED53 /* Info.plist */; };
 		FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682551D774D6000A7ED53 /* RSCode128Generator.swift */; };
 		FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682561D774D6000A7ED53 /* RSCode39Generator.swift */; };
@@ -127,7 +127,7 @@
 		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA16824D1D774C2200A7ED53 /* KRScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRScanController.swift; sourceTree = "<group>"; };
-		FA1682501D774C3900A7ED53 /* ExchangeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeController.swift; sourceTree = "<group>"; };
+		FA1682501D774C3900A7ED53 /* PairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairController.swift; sourceTree = "<group>"; };
 		FA1682541D774D6000A7ED53 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA1682551D774D6000A7ED53 /* RSCode128Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCode128Generator.swift; sourceTree = "<group>"; };
 		FA1682561D774D6000A7ED53 /* RSCode39Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSCode39Generator.swift; sourceTree = "<group>"; };
@@ -235,13 +235,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FA16824F1D774C2700A7ED53 /* Scan */ = {
+		FA16824F1D774C2700A7ED53 /* Pair */ = {
 			isa = PBXGroup;
 			children = (
-				FA1682501D774C3900A7ED53 /* ExchangeController.swift */,
+				FA1682501D774C3900A7ED53 /* PairController.swift */,
 				FA16824D1D774C2200A7ED53 /* KRScanController.swift */,
 			);
-			name = Scan;
+			name = Pair;
 			sourceTree = "<group>";
 		};
 		FA1682521D774C8000A7ED53 /* Lib */ = {
@@ -286,9 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				FA61EF4C1D8492D5009FD899 /* MeController.swift */,
-				FA1682801D77682C00A7ED53 /* SessionsController.swift */,
-				FACBEFE81D77968D005D71B9 /* SessionCell.swift */,
-				FA61EF481D835EEB009FD899 /* LogCell.swift */,
 			);
 			name = Me;
 			sourceTree = "<group>";
@@ -334,8 +331,9 @@
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
 				FACBEFEC1D779D71005D71B9 /* Setup */,
 				FA16827E1D77666800A7ED53 /* Me */,
+				FA61EF501D85DB19009FD899 /* Devices */,
+				FA16824F1D774C2700A7ED53 /* Pair */,
 				FA16827F1D77666D00A7ED53 /* Peer */,
-				FA16824F1D774C2700A7ED53 /* Scan */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -351,6 +349,16 @@
 				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		FA61EF501D85DB19009FD899 /* Devices */ = {
+			isa = PBXGroup;
+			children = (
+				FA1682801D77682C00A7ED53 /* SessionsController.swift */,
+				FACBEFE81D77968D005D71B9 /* SessionCell.swift */,
+				FA61EF481D835EEB009FD899 /* LogCell.swift */,
+			);
+			name = Devices;
 			sourceTree = "<group>";
 		};
 		FA6972991D78DD5B002F34D6 /* Models */ = {
@@ -657,7 +665,7 @@
 				FA1682811D77682C00A7ED53 /* SessionsController.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
-				FA1682511D774C3900A7ED53 /* ExchangeController.swift in Sources */,
+				FA1682511D774C3900A7ED53 /* PairController.swift in Sources */,
 				FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
