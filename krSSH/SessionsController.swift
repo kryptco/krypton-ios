@@ -44,7 +44,7 @@ class SessionsController: UITableViewController {
     //MARK: TableView
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

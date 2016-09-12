@@ -245,7 +245,7 @@ class KeyPair {
         var errorRef:Unmanaged<CFError>?
         let aclOpt = SecAccessControlCreateWithFlags(
             kCFAllocatorDefault,
-            kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+            kSecAttrAccessibleAlwaysThisDeviceOnly,
             SecAccessControlCreateFlags.privateKeyUsage, &errorRef)
         
         return aclOpt

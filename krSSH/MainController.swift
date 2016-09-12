@@ -30,34 +30,55 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         // add a blur view
         view.addSubview(blurView)
         
-        //let res = KeyManager.destroyKeyPair()
-        //log("destroy result: \(res)")
+        NotificationCenter.default.addObserver(self, selector: #selector(MainController.didRegisterPush), name: NSNotification.Name(rawValue: "registered_push_notifications"), object: nil)
+
         
-        /*API().send(to: "https://sqs.us-east-1.amazonaws.com/911777333295/q76vMVJ4altKsevcFyIKGpVmYSYMhLgeFUofMImHO5j", message: "hi kevdog") { (result) in
-            switch result {
-            case .failure(let e):
-                log("send error: \(e)", .error)
-            case .sent:
-                log("send success!")
-            default:
-                log("unknown")
+//        let _ = KeyManager.destroyKeyPair()
+//        SessionManager.shared.destory()
+//        PeerManager.shared.destory()
+    }
+    
+    dynamic func didRegisterPush(note:Notification?) {
+        guard let token = note?.object as? String else {
+           showPushErrorAlert()
+            return
+        }
+        
+        
+        API().updateSNS(token: token) { (endpoint, err) in
+            guard let arn = endpoint else {
+                log("AWS SNS error: \(err)", .error)
+                dispatchMain { self.showPushErrorAlert() }
+                return
+            }
+            
+            let res = KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
+            if !res { log("Could not save push ARN", .error) }
+        }
+
+    }
+    
+    func showPushErrorAlert() {
+        if TARGET_IPHONE_SIMULATOR == 1 {
+            return
+        }
+
+        let alertController = UIAlertController(title: "Push Notifications",
+                                                message: "Push notifications are not enabled. Please enable push notifications to enable SSH login when the app is in the background. Tap `Settings` to continue.",
+                                                preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
+            
+            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.openURL(appSettings)
             }
         }
-
-        do {
-            let peer = Peer(email: "blah", fingerprint: "sdfsdf", publicKey: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEkzVpXcGl9E9vaX5T42LwcqkQo7xnlofns8EwG_QHr6S9iivyO00G56oCny5GiD59_nPIdiPWMEmXq4vTpRxvJw==")
-            let key = try Data.random(size: 32).toBase64()
-            log(key)
-            let sealed = try peer.seal(key: key)
-            log(sealed)
-            let unsealedPeer = try Peer(key: key, sealed: sealed)
-            log("\(unsealedPeer)")
-            
-        } catch (let e) {
-            log("\(e)")
-        }
-         */
-
+        alertController.addAction(settingsAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

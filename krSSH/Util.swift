@@ -57,6 +57,12 @@ extension Data {
                 
         return hex.uppercased()
     }
+    
+    var bytes:[UInt8] {
+        return self.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
+        }
+    }
 }
 
 extension NSMutableData {

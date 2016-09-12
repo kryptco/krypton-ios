@@ -24,6 +24,11 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan QR codes to pair and record peer's public keys.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

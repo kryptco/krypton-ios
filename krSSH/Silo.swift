@@ -13,7 +13,7 @@ typealias SessionLabel = String
 private var sharedSilo:Silo?
 class Silo {
     
-    var sessionLabels:[SessionLabel:Bool] = [:]
+    var sessionLabels:[SessionLabel:Session] = [:]
     var mutex = Mutex()
     
     class var shared:Silo {
@@ -24,8 +24,37 @@ class Silo {
         return ss
     }
     
+    var shouldPoll:Bool = true
     
-    private func listen(to: Session, queue:DispatchQueue) {
+    func startPolling() {
+        
+        var sessions:[SessionLabel:Session] = [:]
+        var canPoll:Bool = true
+        
+        mutex.lock {
+            sessions = sessionLabels
+            canPoll = shouldPoll
+        }
+ 
+        dispatchAsync {
+            while canPoll {
+                for (_, session) in sessions {
+                    let queue = DispatchQueue(label: "read-queue-\(session.id)")
+                    queue.async {
+                        self.listen(to: session, completion: nil)
+                    }
+                }
+                
+                self.mutex.lock {
+                    sessions = self.sessionLabels
+                    canPoll = self.shouldPoll
+                }
+            }
+        }
+
+    }
+    
+    func listen(to: Session, completion:((Bool, Error?)->Void)?) {
         
         // check session is still activee
         var isActive = false
@@ -34,49 +63,58 @@ class Silo {
         }
         
         guard isActive else {
+            completion?(false, nil)
             return
         }
         
-        queue.async {
-            let api = API()
+        
+        let api = API()
+        
+        log("listening with: \(to.id)", .warning)
+        
+        api.receive(to.pairing.queue) { (result) in
             
-            log("listening with: \(to.id)", .warning)
+            log("finished reading from queue")
             
-            api.receive(to.pairing.queue) { (result) in
-                switch result {
-                case .message(let msgs):
-                    for msg in msgs {
+            switch result {
+            case .message(let msgs):
+                for msg in msgs {
+                    
+                    do {
+                        let req = try Request(key: to.pairing.key, sealed: msg)
+                        let resp = try Silo.handle(request: req, id: to.id).seal(key: to.pairing.key)
+                        SessionManager.shared.add(session: to)
                         
-                        do {
-                            let req = try Request(key: to.pairing.key, sealed: msg)
-                            let resp = try Silo.handle(request: req, id: to.id).seal(key: to.pairing.key)
-                            SessionManager.shared.add(session: to)
-                            
-                            api.send(to: to.pairing.queue, message: resp, handler: { (sendResult) in
-                                switch sendResult {
-                                case .sent:
-                                    log("success! sent response.")
-                                case .failure(let e):
-                                    log("error sending response: \(e)", LogType.error)
-                                default:
-                                    break
-                                }
-                            })
-                        } catch (let e) {
-                            log("error responding: \(e)", LogType.error)
-                        }
-                    }
-                    break
-                case .sent:
-                    log("sent")
-                case .failure(let e):
-                    log("error recieving: \(e)", LogType.error)
-                }
-                
-                self.listen(to: to, queue: queue)
-            }
+                        log("created response")
 
+                        
+                        api.send(to: to.pairing.queue, message: resp, handler: { (sendResult) in
+                            switch sendResult {
+                            case .sent:
+                                log("success! sent response.")
+                            case .failure(let e):
+                                log("error sending response: \(e)", LogType.error)
+                            default:
+                                break
+                            }
+                        })
+                    } catch (let e) {
+                        log("error responding: \(e)", LogType.error)
+                    }
+                }
+                break
+            case .sent:
+                log("sent")
+                completion?(true, nil)
+
+            case .failure(let e):
+                log("error recieving: \(e)", LogType.error)
+                completion?(false, e)
+            }
+            
+            completion?(true, nil)
         }
+
     }
     
     
@@ -88,12 +126,8 @@ class Silo {
                 return
             }
             
-            sessionLabels[session.id] = true
+            sessionLabels[session.id] = session
         }
-        
-        let queue = DispatchQueue(label: session.id)
-
-        listen(to: session, queue: queue)
     }
     
     func remove(session:Session) {
@@ -109,6 +143,7 @@ class Silo {
     func stop() {
         mutex.lock {
             sessionLabels = [:]
+            shouldPoll = false
         }
     }
 
@@ -151,6 +186,8 @@ class Silo {
             me = MeResponse(me: try KeyManager.sharedInstance().getMe())
         }
         
-        return Response(requestID: request.id, endpoint: "", sign: sign, list: list, me: me)
+        let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
+        
+        return Response(requestID: request.id, endpoint: arn, sign: sign, list: list, me: me)
     }
 }

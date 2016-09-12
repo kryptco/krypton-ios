@@ -23,9 +23,97 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             log("API provision failed.", LogType.error)
         }
         
+        AWSLogger.default().logLevel = .none
         Silo.shared.add(sessions: SessionManager.shared.all)
+        //Silo.shared.startPolling()
+        
+        registerPushNotifications()
         
         return true
+    }
+    
+    func registerPushNotifications() {
+        DispatchQueue.main.async {
+            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+        }
+    }
+    
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != UIUserNotificationType() {
+            application.registerForRemoteNotifications()
+        }
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let chars = deviceToken.bytes
+        var token = ""
+        
+        for i in 0..<deviceToken.count {
+            token += String(format: "%02.2hhx", arguments: [chars[i]])
+        }
+        
+        log("Got token: \(token)")
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "registered_push_notifications"), object: token)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        
+        log("Push registration failed!", .warning)
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "registered_push_notifications"), object: nil)
+
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
+    {
+        
+        log("got background notification")
+        
+        guard   let queue = (userInfo["aps"] as? [String: Any])?["queue"] as? QueueName,
+                let sealed = (userInfo["aps"] as? [String: Any])?["c"] as? String
+        else {
+            log("invalid push notification: \(userInfo)", .error)
+            completionHandler(.failed)
+            return
+        }
+        
+        guard let session = SessionManager.shared.all.filter({ $0.pairing.queue == queue }).first else {
+            log("no session for queue name: \(queue)", .error)
+            completionHandler(.failed)
+            return
+
+        }
+        
+        do {
+            let req = try Request(key: session.pairing.key, sealed: sealed)
+            let resp = try Silo.handle(request: req, id: session.id).seal(key: session.pairing.key)
+            Silo.shared.add(session: session)
+
+            log("created response")
+            
+            
+            API().send(to: session.pairing.queue, message: resp, handler: { (sendResult) in
+                switch sendResult {
+                case .sent:
+                    log("success! sent response.")
+                case .failure(let e):
+                    log("error sending response: \(e)", LogType.error)
+                default:
+                    break
+                }
+                
+                completionHandler(.newData)
+
+            })
+        } catch let e {
+            log("error creating or sending response: \(e)")
+            completionHandler(.failed)
+
+        }
+    
+
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

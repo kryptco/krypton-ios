@@ -45,7 +45,7 @@ extension Date {
         let time = -self.timeIntervalSinceNow
         
         if time < 60 {
-            return "\(time)s ago"
+            return "\(Int(time))s ago"
         } else if time < 3600 {
             return "\(Int(time/60))m ago"
         } else if time < 86400 {

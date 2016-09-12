@@ -57,12 +57,35 @@ class API {
         return true
     }
     
-    init() {}
+    init() {
+    
+    }
     
     
     
     
     //MARK: SNS
+    func updateSNS(token:String, completionHandler:@escaping ((String?, Error?)->Void)) {
+        
+        guard let request = AWSSNSCreatePlatformEndpointInput() else {
+            return
+        }
+        
+        request.platformApplicationArn = "arn:aws:sns:us-east-1:911777333295:app/APNS_SANDBOX/alexgrinman-ios"
+        
+        request.token = token
+
+        snsClient.createPlatformEndpoint(request) { (resp, err) in
+            guard err == nil else {
+                log("error getting push: \(err!)", .error)
+                completionHandler(nil, err)
+                return
+            }
+            
+            completionHandler(resp?.endpointArn, nil)
+        }
+
+    }
     
     
     //MARK: SQS
