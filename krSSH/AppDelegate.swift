@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AWSLogger.default().logLevel = .none
         Silo.shared.add(sessions: SessionManager.shared.all)
-        //Silo.shared.startPolling()
+        Silo.shared.startPolling()
         
         registerPushNotifications()
         

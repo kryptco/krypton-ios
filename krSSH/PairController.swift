@@ -62,6 +62,7 @@ class PairController: UIViewController, KRScanDelegate {
                 let session = try Session(pairing: pairing)
                 SessionManager.shared.add(session: session)
                 Silo.shared.add(session: session)
+                Silo.shared.startPolling(session: session)
                 Silo.shared.listen(to: session, completion: nil)
             }
             catch let e {

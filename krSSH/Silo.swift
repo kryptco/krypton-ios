@@ -27,26 +27,32 @@ class Silo {
     var shouldPoll:Bool = true
     
     func startPolling() {
-        
-        var sessions:[SessionLabel:Session] = [:]
-        var canPoll:Bool = true
-        
         mutex.lock {
-            sessions = sessionLabels
-            canPoll = shouldPoll
+            sessionLabels.values.forEach({ self.startPolling(session: $0) })
         }
- 
-        dispatchAsync {
+    }
+    
+    func startPolling(session:Session) {
+        
+        let queue = DispatchQueue(label: "read-queue-\(session.id)")
+        queue.async {
+            
+            let pauseMutex = Mutex()
+            var canPoll:Bool = true
+
             while canPoll {
-                for (_, session) in sessions {
-                    let queue = DispatchQueue(label: "read-queue-\(session.id)")
-                    queue.async {
-                        self.listen(to: session, completion: nil)
+                
+                pauseMutex.lock()
+                
+                self.listen(to: session, completion: { (success, err) in
+                    if let e = err {
+                        log("listen error: \(e)", .error)
                     }
-                }
+                    
+                    pauseMutex.unlock()
+                })
                 
                 self.mutex.lock {
-                    sessions = self.sessionLabels
                     canPoll = self.shouldPoll
                 }
             }
