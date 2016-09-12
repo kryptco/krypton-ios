@@ -81,6 +81,10 @@ extension UIColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
     
+    var coreImageColor: CIColor {
+        return CIColor(color: self)
+    }
+    
     static func colorFromString(string: String) -> UIColor {
         let hash: Int = string.hashValue
         let r: Int = (hash & 0xFF0000) >> 16
