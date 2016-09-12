@@ -30,7 +30,7 @@ class SetupController: UITableViewController, UITextFieldDelegate {
         
         keyIcon.FAIcon = FAType.FAKey
         identiconView.setBorder(color: UIColor.white, cornerRadius: 50.0, borderWidth: 0.0)
-        
+
         do {
             let kp = try KeyManager.sharedInstance().keyPair
             let pk = try kp.publicKey.exportSecp()
@@ -42,12 +42,16 @@ class SetupController: UITableViewController, UITextFieldDelegate {
         } catch (let e) {
             self.showWarning(title: "Crypto Error", body: "\(e)")
         }
+
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        nameTextfield.becomeFirstResponder()
+        
+        dispatchAfter(delay: 1.0) { 
+            self.nameTextfield.becomeFirstResponder()
+        }
     }
 
     override func didReceiveMemoryWarning() {

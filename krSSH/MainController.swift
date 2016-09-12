@@ -112,6 +112,8 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
                 self.blurView.isHidden = true
             })
             
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
+
         } catch (let e) {
             log("\(e)", LogType.error)
             showWarning(title: "Fatal Error", body: "\(e)")

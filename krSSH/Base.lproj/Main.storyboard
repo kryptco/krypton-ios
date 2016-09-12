@@ -563,7 +563,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W2x-l9-By0">
+                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W2x-l9-By0">
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -605,9 +605,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="s5R-5f-PkA" firstAttribute="top" secondItem="W2x-l9-By0" secondAttribute="bottom" constant="10" id="7wl-ew-mvK"/>
+                            <constraint firstItem="s5R-5f-PkA" firstAttribute="top" secondItem="W2x-l9-By0" secondAttribute="bottom" constant="20" id="7wl-ew-mvK"/>
                             <constraint firstItem="8lm-Ye-OGM" firstAttribute="top" secondItem="rU4-X5-zzD" secondAttribute="bottom" id="8LS-HT-D6O"/>
-                            <constraint firstItem="5Qu-t0-iBL" firstAttribute="top" secondItem="s5R-5f-PkA" secondAttribute="bottom" constant="4" id="BRx-gX-Ljq"/>
+                            <constraint firstItem="5Qu-t0-iBL" firstAttribute="top" secondItem="s5R-5f-PkA" secondAttribute="bottom" id="BRx-gX-Ljq"/>
                             <constraint firstItem="W2x-l9-By0" firstAttribute="leading" secondItem="1nD-98-eKf" secondAttribute="leading" constant="20" id="FeL-1g-Tc3"/>
                             <constraint firstAttribute="trailing" secondItem="8lm-Ye-OGM" secondAttribute="trailing" id="Fnh-Kp-P0U"/>
                             <constraint firstItem="YfX-h2-UOh" firstAttribute="height" secondItem="W2x-l9-By0" secondAttribute="height" id="H8a-Uq-3Kh"/>
@@ -618,13 +618,13 @@
                             <constraint firstItem="dMT-fs-oaY" firstAttribute="height" secondItem="W2x-l9-By0" secondAttribute="height" multiplier="0.5" id="Tdt-tV-sUe"/>
                             <constraint firstItem="s5R-5f-PkA" firstAttribute="centerX" secondItem="1nD-98-eKf" secondAttribute="centerX" id="VIe-Ja-JY6"/>
                             <constraint firstAttribute="trailing" secondItem="YfX-h2-UOh" secondAttribute="trailing" constant="20" id="aWL-ZQ-yyy"/>
-                            <constraint firstItem="8lm-Ye-OGM" firstAttribute="top" secondItem="5Qu-t0-iBL" secondAttribute="bottom" constant="10" id="cGc-x0-4pr"/>
+                            <constraint firstItem="8lm-Ye-OGM" firstAttribute="top" secondItem="5Qu-t0-iBL" secondAttribute="bottom" constant="8" id="cGc-x0-4pr"/>
                             <constraint firstItem="YfX-h2-UOh" firstAttribute="width" secondItem="W2x-l9-By0" secondAttribute="width" id="fC5-Qf-boo"/>
                             <constraint firstItem="dMT-fs-oaY" firstAttribute="leading" secondItem="W2x-l9-By0" secondAttribute="trailing" constant="20" id="gws-O9-Zrz"/>
                             <constraint firstItem="dMT-fs-oaY" firstAttribute="centerY" secondItem="W2x-l9-By0" secondAttribute="centerY" id="j7x-wT-7ff"/>
                             <constraint firstAttribute="trailing" secondItem="rU4-X5-zzD" secondAttribute="trailing" id="kUn-5a-aeG"/>
                             <constraint firstItem="5Qu-t0-iBL" firstAttribute="centerX" secondItem="1nD-98-eKf" secondAttribute="centerX" id="ljP-Tb-hb6"/>
-                            <constraint firstItem="W2x-l9-By0" firstAttribute="top" secondItem="mRE-ow-Lhg" secondAttribute="bottom" constant="20" id="o2Y-nB-Ihl"/>
+                            <constraint firstItem="W2x-l9-By0" firstAttribute="top" secondItem="mRE-ow-Lhg" secondAttribute="bottom" constant="8" id="o2Y-nB-Ihl"/>
                             <constraint firstItem="aKk-ID-Wah" firstAttribute="top" secondItem="8lm-Ye-OGM" secondAttribute="bottom" id="sUQ-Zr-gUD"/>
                         </constraints>
                     </view>
