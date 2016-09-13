@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 struct Pairing:JSONConvertable {
     var name:String
@@ -26,5 +27,12 @@ struct Pairing:JSONConvertable {
     
     var jsonMap: JSON {
         return ["n": name, "q": queue, "k": key]
+    }
+
+    var bluetoothServiceUUID: CBUUID? {
+        guard let key = key.fromBase64() else {
+            return nil
+        }
+        return CBUUID.init(data: key.SHA256.subdata(in: 0 ..< 16))
     }
 }

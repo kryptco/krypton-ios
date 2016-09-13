@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Silo.shared.startPolling()
         
         registerPushNotifications()
-        
+
         return true
     }
     

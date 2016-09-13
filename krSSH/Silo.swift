@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 typealias SessionLabel = String
 
@@ -16,9 +17,42 @@ private var sharedSilo:Silo?
 class Silo {
     
     var sessionLabels:[SessionLabel:Session] = [:]
+    var sessionServiceUUIDS: [CBUUID: Session] = [:]
     var mutex = Mutex()
-    
-    
+
+    var bluetoothDelegate: BluetoothDelegate = BluetoothDelegate()
+    var centralManager: CBCentralManager
+
+    init() {
+        centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
+        bluetoothDelegate.mutex.lock {
+            bluetoothDelegate.silo = self
+        }
+    }
+
+    func onBluetoothReceive(serviceUUID: CBUUID, message: Data) {
+        mutex.lock()
+
+        guard let session = sessionServiceUUIDS[serviceUUID] else {
+            mutex.unlock()
+            return
+        }
+        mutex.unlock()
+
+        guard let req = try? Request(key: session.pairing.key, sealedData: message) else {
+            log("request from bluetooth did not parse correctly", .error)
+            return
+        }
+        guard let resp = try? Silo.handle(request: req, id: session.id).seal(key: session.pairing.key) else {
+            log("handling request from bluetooth failed", .error)
+            return
+        }
+        guard let sealedData = resp.fromBase64() else {
+            return
+        }
+        self.bluetoothDelegate.writeToServiceUUID(uuid: serviceUUID, data: sealedData)
+    }
+
     class var shared:Silo {
         guard let ss = sharedSilo else {
             sharedSilo = Silo()
@@ -149,12 +183,20 @@ class Silo {
             }
             
             sessionLabels[session.id] = session
+            if let cbuuid = session.pairing.bluetoothServiceUUID {
+                sessionServiceUUIDS[cbuuid] = session
+                bluetoothDelegate.addServiceUUID(uuid: cbuuid)
+            }
         }
     }
     
     func remove(session:Session) {
         mutex.lock {
             sessionLabels.removeValue(forKey: session.id)
+            if let cbuuid = session.pairing.bluetoothServiceUUID {
+                sessionServiceUUIDS.removeValue(forKey: cbuuid)
+                bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
+            }
         }
     }
     
@@ -169,7 +211,6 @@ class Silo {
         }
     }
 
-    
     //MARK: Handle Logic
     
     class func handle(request:Request, id:String) throws -> Response {

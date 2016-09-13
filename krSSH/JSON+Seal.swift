@@ -21,15 +21,18 @@ extension JSONConvertable {
         else {
             throw CryptoError.encoding
         }
-        
+        try self.init(key: key, sealedData: sealedData)
+    }
+
+    init(key:String, sealedData:Data) throws {
         let jsonData = try sealedData.unseal(key: key)
         let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments)
-        
+
         guard let json = jsonObject as? JSON
-        else {
-            throw CryptoError.encoding
+            else {
+                throw CryptoError.encoding
         }
-        
+
         self = try Self.init(json: json)
     }
     
