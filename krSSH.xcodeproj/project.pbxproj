@@ -76,6 +76,7 @@
 		FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
 		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
+		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFE81D77968D005D71B9 /* SessionCell.swift */; };
 		FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFEA1D779D6E005D71B9 /* CreateController.swift */; };
 		FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFED1D77A2B7005D71B9 /* SetupController.swift */; };
@@ -197,6 +198,7 @@
 		FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
+		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACBEFE81D77968D005D71B9 /* SessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCell.swift; sourceTree = "<group>"; };
 		FACBEFEA1D779D6E005D71B9 /* CreateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateController.swift; sourceTree = "<group>"; };
 		FACBEFED1D77A2B7005D71B9 /* SetupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupController.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				FAA6E1F51D79E4FC007D1B3A /* AWSCore.framework in Frameworks */,
 				FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */,
 				FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */,
+				FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */,
 				FA8141511D714203004FE58C /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,6 +465,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FACAA4AD1D87C44D000B9A01 /* MapKit.framework */,
 				FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */,
 				FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */,
 				FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */,
@@ -564,6 +568,9 @@
 								enabled = 1;
 							};
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
 							com.apple.Push = {

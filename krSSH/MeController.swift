@@ -13,6 +13,7 @@ import UIKit
 class MeController:UIViewController {
     @IBOutlet var qrImageView:UIImageView!
     @IBOutlet var tagLabel:UILabel!
+
     @IBOutlet var shareButton:UIButton!
 
     @IBOutlet var identiconImageView:UIImageView!
@@ -36,12 +37,9 @@ class MeController:UIViewController {
     
     dynamic func redrawMe() {
         //   qrImageView.setBorder(color: UIColor.black.withAlphaComponent(0.5), cornerRadius: qrImageView.frame.size.width/2, borderWidth: 2.0)
-        //  identiconImageView.setBorder(color: UIColor.black.withAlphaComponent(0.5), cornerRadius: identiconImageView.frame.size.width/2, borderWidth: 2.0)
+          identiconImageView.setBorder(color: UIColor.black.withAlphaComponent(0.2), cornerRadius: 0, borderWidth: 1.0)
         do {
             let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
-            // let fp = try publicKey.fingerprint().hexPretty
-            //keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
-            
             tagLabel.text = try KeyManager.sharedInstance().getMe().email
             
             if let ident = IGSimpleIdenticon.from(publicKey, size: CGSize(width: identiconImageView.frame.size.width, height: identiconImageView.frame.size.height))

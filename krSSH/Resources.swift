@@ -25,7 +25,7 @@ struct Resources {
             NSFontAttributeName: UIFont(name: "Avenir Next Ultra Light", size: 17)!
         ]
 
-        UIButton.appearance().tintColor = UIColor.app
+       // UIButton.appearance().tintColor = UIColor.app
         UISwitch.appearance().tintColor = UIColor.app
         UISegmentedControl.appearance().tintColor = UIColor.app
         

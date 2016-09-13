@@ -185,11 +185,11 @@ public class RSAbstractCodeGenerator : RSCodeGenerator {
                 
                 colorFilter.setDefaults()
                 colorFilter.setValue(filter.outputImage, forKey: "inputImage")
-                colorFilter.setValue(UIColor.app.coreImageColor, forKey: "inputColor0")
-                colorFilter.setValue(UIColor.white.coreImageColor, forKey: "inputColor1")
+                colorFilter.setValue(UIColor.white.coreImageColor, forKey: "inputColor0")
+                colorFilter.setValue(UIColor.app.coreImageColor, forKey: "inputColor1")
                 ///
                 
-                let outputImage = filter.outputImage
+                let outputImage = colorFilter.outputImage
                 let context = CIContext(options: nil)
                 if let outputImage = outputImage {
                     let cgImage = context.createCGImage(outputImage, from: outputImage.extent)
