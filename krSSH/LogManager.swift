@@ -14,13 +14,13 @@ class LogManager {
     
     private var mutex = Mutex()
     private var logs:[SignatureLog] = []
-    
+    private var sigs:[String:Bool] = [:]
+
     init() {
         self.logs = []
         
         let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
         
-        //3
         do {
             let results =
                 try self.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject]
@@ -28,13 +28,17 @@ class LogManager {
             for managedLog in (results ?? []) {
                 guard
                     let session = managedLog.value(forKey: "session") as? String,
+                    let digest = managedLog.value(forKey: "digest") as? String,
                     let signature = managedLog.value(forKey: "signature") as? String,
                     let date = managedLog.value(forKey: "date") as? Date
                 else {
                     continue
                 }
                 
-                logs.append(SignatureLog(session: session, signature: signature, date: date))
+                if sigs[digest] == nil {
+                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, date: date))
+                    sigs[digest] = true
+                }
                 
             }
             
@@ -61,6 +65,16 @@ class LogManager {
     }
     
     func save(theLog:SignatureLog) {
+        mutex.lock()
+        
+        guard sigs[theLog.digest] == nil else {
+            mutex.unlock()
+            return
+        }
+        
+        sigs[theLog.digest] = true
+        
+        mutex.unlock()
         
         guard
             let entity =  NSEntityDescription.entity(forEntityName: "SignatureLog", in: managedObjectContext)
@@ -133,4 +147,10 @@ class LogManager {
         }
     }
 
+}
+
+extension Session {
+    var lastAccessed:Date? {
+        return LogManager.shared.all.filter({ $0.session == self.id }).sorted(by: { $0.date < $1.date }).last?.date
+    }
 }

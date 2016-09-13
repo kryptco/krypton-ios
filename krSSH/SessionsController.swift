@@ -24,23 +24,22 @@ class SessionsController: UITableViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateCurrentUser()
         
        // addButton.setBorder(color: UIColor.clear, cornerRadius: 10, borderWidth: 1.0)
-        sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
+        dispatchAsync {
+            self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
+            dispatchMain{ self.tableView.reloadData() }
+        }
         tableView.reloadData()
     }
     
     dynamic func newLogLine() {
-        dispatchMain {
+        dispatchAsync {
             self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
-            self.tableView.reloadData()
+            dispatchMain{ self.tableView.reloadData() }
         }
     }
-    
-    func updateCurrentUser() {
-    }
-    
+ 
     //MARK: TableView
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,6 +64,11 @@ class SessionsController: UITableViewController {
 
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "showSignatureLogs", sender: sessions[indexPath.row])
+    }
+    
+    
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -85,5 +89,13 @@ class SessionsController: UITableViewController {
         }
      }
  
+    //MARK: Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if  let detailController = segue.destination as? SessionDetailController,
+            let session = sender as? Session  {
+            detailController.session = session
+        }
+    }
  
 }

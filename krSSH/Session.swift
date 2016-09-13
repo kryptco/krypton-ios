@@ -13,6 +13,7 @@ struct Session:JSONConvertable {
     var pairing:Pairing
     var created:Date
     
+    
     init(pairing:Pairing) throws {
         self.id = try Data.random(size: 32).toBase64()
         self.pairing = pairing

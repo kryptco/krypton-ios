@@ -10,43 +10,101 @@ import UIKit
 
 class SessionDetailController: UITableViewController {
 
+    @IBOutlet var deviceNameLabel:UILabel!
+    @IBOutlet var lastAccessLabel:UILabel!
+    @IBOutlet var colorView:UIView!
+
+    @IBOutlet var revokeButton:UIButton!
+
+    var logs:[SignatureLog] = []
+    var session:Session?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Details"
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SessionsController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        revokeButton.setBorder(color: UIColor(hex: 0xFC484C), cornerRadius: 8, borderWidth: 1.0)
+        revokeButton.setTitleColor(UIColor.white, for: UIControlState.selected)
+
+        if let session = session {
+            colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.7)
+            deviceNameLabel.text = session.pairing.name
+            
+            logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
+            lastAccessLabel.text = logs.first?.date.timeAgo() ?? session.created.timeAgo()
+
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    dynamic func newLogLine() {
+        guard let session = session else {
+            return
+        }
+        
+        dispatchAsync {
+            self.logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
+            dispatchMain {
+                self.lastAccessLabel.text = self.logs.first?.date.timeAgo() ?? session.created.timeAgo()
+                self.tableView.reloadData()
+            }
+        }
     }
 
+    //MARK: Revoke
+    
+    @IBAction func onRevokeSelected() {
+        revokeButton.backgroundColor = UIColor(hex: 0xFC484C)
+        revokeButton.titleLabel?.textColor = UIColor.white
+    }
+    
+    @IBAction func onRevokeUnselected() {
+        revokeButton.backgroundColor = UIColor.white
+        revokeButton.titleLabel?.textColor = UIColor(hex: 0xFC484C)
+    }
+    
+    @IBAction func revokeTapped() {
+        if let session = session {
+            SessionManager.shared.remove(session: session)
+            Silo.shared.remove(session: session)
+        }
+        let _ = self.navigationController?.popViewController(animated: true)
+    }
+
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return logs.count
     }
 
-    /*
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Access Logs"
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") as! LogCell
+        cell.set(log: logs[indexPath.row])
         return cell
     }
-    */
-
+ 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0
+        
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

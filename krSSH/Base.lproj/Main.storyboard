@@ -75,10 +75,150 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Devices" image="device" selectedImage="device_selected" id="eLQ-Y1-TXo"/>
+                    <connections>
+                        <segue destination="2XW-PV-xjB" kind="show" identifier="showSignatureLogs" id="7vA-4v-fA3"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fpc-NP-lYS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2366" y="271"/>
+        </scene>
+        <!--Session Detail Controller-->
+        <scene sceneID="Jb8-M5-3lO">
+            <objects>
+                <tableViewController id="2XW-PV-xjB" customClass="SessionDetailController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-7h-nCq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Ya7-35-a7q">
+                            <rect key="frame" x="0.0" y="64" width="375" height="168"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Alex Grinman's Mac Book Pro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="qdB-Gh-RQi">
+                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mac" translatesAutoresizingMaskIntoConstraints="NO" id="lG3-AI-Xgg">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="2iS-20-2Vx"/>
+                                        <constraint firstAttribute="height" constant="20" id="V2m-80-A61"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Last used 10m ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0B0-9Q-Yx6">
+                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcG-Ph-Zje">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="KWO-LK-Dcz"/>
+                                        <constraint firstAttribute="width" constant="160" id="faI-bk-avi"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" title="Delete Device">
+                                        <color key="titleColor" red="0.9882352941176471" green="0.28235294117647058" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="selected">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="focused">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onRevokeSelected" destination="2XW-PV-xjB" eventType="touchDown" id="4Ik-ZC-Xty"/>
+                                        <action selector="onRevokeSelected" destination="2XW-PV-xjB" eventType="touchDownRepeat" id="MVU-RZ-YZH"/>
+                                        <action selector="onRevokeUnselected" destination="2XW-PV-xjB" eventType="touchUpOutside" id="OD7-XQ-0xE"/>
+                                        <action selector="revokeTapped" destination="2XW-PV-xjB" eventType="touchUpInside" id="KZa-Kn-kRg"/>
+                                    </connections>
+                                </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="khU-I4-1gX">
+                                    <color key="backgroundColor" red="0.0" green="0.50196078430000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="10" id="ahO-SY-oe4"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Tap &quot;Delete Device&quot; to revoke this device's access to your private key" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="cb1-w3-cv3">
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="l1J-ka-qeK"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="11"/>
+                                    <color key="textColor" red="0.18112268431535999" green="0.076153255975904138" blue="0.23635416666666664" alpha="0.55945913461538466" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="qdB-Gh-RQi" firstAttribute="leading" secondItem="lG3-AI-Xgg" secondAttribute="trailing" constant="8" id="1iP-mD-YcV"/>
+                                <constraint firstItem="khU-I4-1gX" firstAttribute="leading" secondItem="Ya7-35-a7q" secondAttribute="leading" id="CBM-dl-r1Q"/>
+                                <constraint firstItem="cb1-w3-cv3" firstAttribute="leading" secondItem="Ya7-35-a7q" secondAttribute="leading" id="CPZ-Xn-K2r"/>
+                                <constraint firstItem="qdB-Gh-RQi" firstAttribute="top" secondItem="Ya7-35-a7q" secondAttribute="top" constant="30" id="H7t-qo-xJT"/>
+                                <constraint firstItem="cb1-w3-cv3" firstAttribute="top" secondItem="khU-I4-1gX" secondAttribute="bottom" id="Pnx-3v-QTz"/>
+                                <constraint firstItem="qdB-Gh-RQi" firstAttribute="centerX" secondItem="Ya7-35-a7q" secondAttribute="centerX" id="Q4R-cx-OJ2"/>
+                                <constraint firstItem="cb1-w3-cv3" firstAttribute="top" secondItem="BcG-Ph-Zje" secondAttribute="bottom" constant="8" id="VHA-OD-bZC"/>
+                                <constraint firstItem="qdB-Gh-RQi" firstAttribute="centerY" secondItem="lG3-AI-Xgg" secondAttribute="centerY" id="YPc-5c-Iwm"/>
+                                <constraint firstItem="0B0-9Q-Yx6" firstAttribute="leading" secondItem="qdB-Gh-RQi" secondAttribute="leading" id="ckW-FK-1ez"/>
+                                <constraint firstItem="BcG-Ph-Zje" firstAttribute="centerX" secondItem="Ya7-35-a7q" secondAttribute="centerX" id="dBe-XR-sag"/>
+                                <constraint firstItem="0B0-9Q-Yx6" firstAttribute="trailing" secondItem="qdB-Gh-RQi" secondAttribute="trailing" id="dWG-7u-5kt"/>
+                                <constraint firstItem="0B0-9Q-Yx6" firstAttribute="top" secondItem="qdB-Gh-RQi" secondAttribute="bottom" id="pDs-Lq-X8F"/>
+                                <constraint firstAttribute="trailing" secondItem="cb1-w3-cv3" secondAttribute="trailing" id="um9-Vs-xSQ"/>
+                                <constraint firstAttribute="bottom" secondItem="cb1-w3-cv3" secondAttribute="bottom" id="xLE-mn-c6w"/>
+                                <constraint firstItem="khU-I4-1gX" firstAttribute="top" secondItem="Ya7-35-a7q" secondAttribute="top" id="xtc-69-3lB"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LogCell" rowHeight="80" id="uTg-IR-NZZ" customClass="LogCell" customModule="krSSH" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="288" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
+                                    <frame key="frameInset" width="375" height="79"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="3/26 10:55 PM EST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="rpd-go-jFD">
+                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Last used 10m ago" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="NAO-b1-h2W">
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rpd-go-jFD" firstAttribute="leading" secondItem="IKn-4t-LnV" secondAttribute="leadingMargin" id="4UQ-0M-5ha"/>
+                                        <constraint firstItem="rpd-go-jFD" firstAttribute="top" secondItem="IKn-4t-LnV" secondAttribute="topMargin" id="MmM-ao-K0f"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="rpd-go-jFD" secondAttribute="trailing" id="ZEA-S7-108"/>
+                                        <constraint firstItem="NAO-b1-h2W" firstAttribute="top" secondItem="rpd-go-jFD" secondAttribute="bottom" id="dxw-SP-uFJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="NAO-b1-h2W" secondAttribute="bottom" constant="8" id="jkg-kD-bUU"/>
+                                        <constraint firstAttribute="trailing" secondItem="NAO-b1-h2W" secondAttribute="trailing" constant="8" id="nbU-fk-w9e"/>
+                                        <constraint firstItem="NAO-b1-h2W" firstAttribute="leading" secondItem="IKn-4t-LnV" secondAttribute="leading" constant="8" id="oUx-RE-IY8"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="signatureLabel" destination="NAO-b1-h2W" id="NJ8-1Y-F1c"/>
+                                    <outlet property="timeLabel" destination="rpd-go-jFD" id="lEl-xd-xeV"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2XW-PV-xjB" id="dAX-Mp-I6Q"/>
+                            <outlet property="delegate" destination="2XW-PV-xjB" id="lgM-pF-1C3"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="colorView" destination="khU-I4-1gX" id="5ZC-LJ-Qw5"/>
+                        <outlet property="deviceNameLabel" destination="qdB-Gh-RQi" id="mnK-W1-K91"/>
+                        <outlet property="lastAccessLabel" destination="0B0-9Q-Yx6" id="8MY-ey-Nm9"/>
+                        <outlet property="revokeButton" destination="BcG-Ph-Zje" id="glJ-1v-DLK"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5RS-2j-zVj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3196" y="295.50224887556226"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Atm-Dh-fQZ">

@@ -370,8 +370,8 @@
 			isa = PBXGroup;
 			children = (
 				FA1682801D77682C00A7ED53 /* SessionsController.swift */,
-				FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */,
 				FACBEFE81D77968D005D71B9 /* SessionCell.swift */,
+				FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */,
 				FA61EF481D835EEB009FD899 /* LogCell.swift */,
 			);
 			name = Devices;

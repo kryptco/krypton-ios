@@ -32,7 +32,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(MainController.didRegisterPush), name: NSNotification.Name(rawValue: "registered_push_notifications"), object: nil)
 
-        log("\(LogManager.shared.all.count)")
+//        log("\(LogManager.shared.all.count)")
 //        let _ = KeyManager.destroyKeyPair()
 //        SessionManager.shared.destory()
 //        PeerManager.shared.destory()

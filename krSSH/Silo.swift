@@ -10,6 +10,8 @@ import Foundation
 
 typealias SessionLabel = String
 
+struct SessionRemovedError:Error{}
+
 private var sharedSilo:Silo?
 class Silo {
     
@@ -44,6 +46,19 @@ class Silo {
                 
                 pauseMutex.lock()
                 
+                // check session is still active
+                var isActive = false
+                self.mutex.lock {
+                    isActive = (self.sessionLabels[session.id] != nil)
+                }
+                
+                guard isActive else {
+                    pauseMutex.unlock()
+                    return
+                }
+                
+                // otherwise listen
+                
                 self.listen(to: session, completion: { (success, err) in
                     if let e = err {
                         log("listen error: \(e)", .error)
@@ -62,25 +77,26 @@ class Silo {
     
     func listen(to: Session, completion:((Bool, Error?)->Void)?) {
         
-        // check session is still activee
-        var isActive = false
-        self.mutex.lock {
-            isActive = (self.sessionLabels[to.id] != nil)
-        }
-        
-        guard isActive else {
-            completion?(false, nil)
-            return
-        }
-        
         
         let api = API()
         
         log("listening with: \(to.id)", .warning)
         
         api.receive(to.pairing.queue) { (result) in
-            
+        
             log("finished reading from queue")
+            
+            // check again that the session has not responded
+            var isActive = false
+            self.mutex.lock {
+                isActive = (self.sessionLabels[to.id] != nil)
+            }
+            
+            guard isActive else {
+                completion?(false, SessionRemovedError())
+                return
+            }
+            
             
             switch result {
             case .message(let msgs):
@@ -89,10 +105,9 @@ class Silo {
                     do {
                         let req = try Request(key: to.pairing.key, sealed: msg)
                         let resp = try Silo.handle(request: req, id: to.id).seal(key: to.pairing.key)
-                        SessionManager.shared.add(session: to)
                         
                         log("created response")
-
+                        
                         
                         api.send(to: to.pairing.queue, message: resp, handler: { (sendResult) in
                             switch sendResult {
@@ -168,7 +183,7 @@ class Silo {
             do {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
-                LogManager.shared.save(theLog: SignatureLog(session: id, signature: sig ?? "<err>"))
+                LogManager.shared.save(theLog: SignatureLog(session: id, digest: signRequest.digest, signature: sig ?? "<err>"))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
                 
             } catch let e {
