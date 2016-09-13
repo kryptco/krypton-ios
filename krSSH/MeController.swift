@@ -16,7 +16,7 @@ class MeController:UIViewController {
 
     @IBOutlet var shareButton:UIButton!
 
-    @IBOutlet var identiconImageView:UIImageView!
+//    @IBOutlet var identiconImageView:UIImageView!
 
     
     override func viewDidLoad() {
@@ -37,17 +37,17 @@ class MeController:UIViewController {
     
     dynamic func redrawMe() {
         //   qrImageView.setBorder(color: UIColor.black.withAlphaComponent(0.5), cornerRadius: qrImageView.frame.size.width/2, borderWidth: 2.0)
-          identiconImageView.setBorder(color: UIColor.black.withAlphaComponent(0.2), cornerRadius: 0, borderWidth: 1.0)
+        //  identiconImageView.setBorder(color: UIColor.black.withAlphaComponent(0.2), cornerRadius: 0, borderWidth: 1.0)
         do {
             let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
             tagLabel.text = try KeyManager.sharedInstance().getMe().email
             
-            if let ident = IGSimpleIdenticon.from(publicKey, size: CGSize(width: identiconImageView.frame.size.width, height: identiconImageView.frame.size.height))
-            {
-                identiconImageView.image = ident
-                
-            }
-            
+//            if let ident = IGSimpleIdenticon.from(publicKey, size: CGSize(width: identiconImageView.frame.size.width, height: identiconImageView.frame.size.height))
+//            {
+//                identiconImageView.image = ident
+//                
+//            }
+//            
             
             let json = try KeyManager.sharedInstance().getMe().jsonString()
             
