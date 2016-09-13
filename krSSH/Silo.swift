@@ -168,10 +168,9 @@ class Silo {
             do {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
-                SessionManager.logMutex.lock {
-                    SessionManager.logs.append(SignatureLog(session: id, signature: sig!))
-                }
+                LogManager.shared.save(theLog: SignatureLog(session: id, signature: sig ?? "<err>"))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
+                
             } catch let e {
                 guard e is CryptoError else {
                     throw e

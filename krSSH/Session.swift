@@ -36,15 +36,4 @@ struct Session:JSONConvertable {
     }
 }
 
-struct SignatureLog {
-    var session:String
-    var signature:String
-    var date:Date
-    
-    init(session:String, signature:String) {
-        self.session = session
-        self.signature = signature
-        date = Date()
-    }
-    
-}
+

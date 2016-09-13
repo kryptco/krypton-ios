@@ -16,7 +16,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="t8M-YQ-ott">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="100" id="ykf-O1-Jwd" customClass="SessionCell" customModule="krSSH" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="100"/>
@@ -42,7 +42,7 @@
                                                 <constraint firstAttribute="width" constant="10" id="fOe-a6-MzF"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="used 10m ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="klp-2r-dPf">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="10m ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="klp-2r-dPf">
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="11"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -52,13 +52,13 @@
                                         <constraint firstItem="klp-2r-dPf" firstAttribute="leading" secondItem="AEr-V1-x9H" secondAttribute="leading" id="97Z-Rm-DUI"/>
                                         <constraint firstItem="aWo-xv-J1M" firstAttribute="leading" secondItem="bF3-Mb-Wuw" secondAttribute="leading" id="9Sq-cv-ube"/>
                                         <constraint firstItem="AEr-V1-x9H" firstAttribute="leading" secondItem="GFe-ZZ-BtW" secondAttribute="trailing" constant="8" id="9Xa-zh-1OJ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="AEr-V1-x9H" secondAttribute="trailing" constant="8" id="F3X-HD-81e"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="AEr-V1-x9H" secondAttribute="trailing" id="F3X-HD-81e"/>
                                         <constraint firstAttribute="bottom" secondItem="aWo-xv-J1M" secondAttribute="bottom" id="LfX-BT-FGq"/>
                                         <constraint firstItem="aWo-xv-J1M" firstAttribute="top" secondItem="bF3-Mb-Wuw" secondAttribute="top" id="R5i-nb-RIs"/>
-                                        <constraint firstItem="GFe-ZZ-BtW" firstAttribute="centerY" secondItem="bF3-Mb-Wuw" secondAttribute="centerY" id="Vvg-KZ-NWd"/>
                                         <constraint firstItem="AEr-V1-x9H" firstAttribute="centerY" secondItem="GFe-ZZ-BtW" secondAttribute="centerY" id="gfZ-Ta-FgF"/>
                                         <constraint firstItem="klp-2r-dPf" firstAttribute="top" secondItem="AEr-V1-x9H" secondAttribute="bottom" id="jP2-0t-K36"/>
                                         <constraint firstItem="klp-2r-dPf" firstAttribute="trailing" secondItem="AEr-V1-x9H" secondAttribute="trailing" id="mUP-o5-mKZ"/>
+                                        <constraint firstItem="GFe-ZZ-BtW" firstAttribute="top" secondItem="bF3-Mb-Wuw" secondAttribute="top" constant="10" id="ndA-OO-0B6"/>
                                         <constraint firstItem="GFe-ZZ-BtW" firstAttribute="leading" secondItem="aWo-xv-J1M" secondAttribute="trailing" constant="8" id="uCl-zf-h1p"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -78,7 +78,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fpc-NP-lYS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3081" y="-34"/>
+            <point key="canvasLocation" x="2366" y="271"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Atm-Dh-fQZ">
@@ -266,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2F5-g5-Ir9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3080.8000000000002" y="1423.5382308845578"/>
+            <point key="canvasLocation" x="2366" y="-523"/>
         </scene>
         <!--Scan Controller-->
         <scene sceneID="aiY-AW-sQa">
@@ -284,7 +284,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xbf-jV-jh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3921" y="1424"/>
+            <point key="canvasLocation" x="3225" y="-523"/>
         </scene>
         <!--Peers-->
         <scene sceneID="vxG-OB-Y37">
@@ -451,7 +451,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0bL-j3-3g5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3081" y="671"/>
+            <point key="canvasLocation" x="2366" y="1086"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5UD-B6-azR">
@@ -978,7 +978,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTa-oc-dXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3200.8000000000002" y="-812.74362818590714"/>
+            <point key="canvasLocation" x="2367" y="-1267"/>
         </scene>
     </scenes>
     <resources>

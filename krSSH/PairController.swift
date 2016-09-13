@@ -141,7 +141,7 @@ class PairController: UIViewController, KRScanDelegate {
             
             UIView.animate(withDuration: 1.0, animations: {
                 self.result.alpha = 0
-                self.blurView.alpha = 0
+                //self.blurView.alpha = 0
 
                 }, completion: { (_) in
                     self.result.isHidden = true

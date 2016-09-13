@@ -16,9 +16,6 @@ class SessionManager {
     private static let ListKey = "kr_session_list"
     
     
-    //temp
-    static var logMutex = Mutex()
-    static var logs:[SignatureLog] = []
     
     private var sessions:[String:Session]
     init(_ sessions:[String:Session] = [:]) {
