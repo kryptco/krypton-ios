@@ -88,16 +88,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let req = try Request(key: session.pairing.key, sealed: sealed)
-            let resp = try Silo.handle(request: req, id: session.id).seal(key: session.pairing.key)
+            let resp = try Silo.handle(request: req, id: session.id)
+            let sealedResp = try resp.seal(key: session.pairing.key)
             Silo.shared.add(session: session)
 
             log("created response")
             
             
-            API().send(to: session.pairing.queue, message: resp, handler: { (sendResult) in
+            API().send(to: session.pairing.queue, message: sealedResp, handler: { (sendResult) in
                 switch sendResult {
                 case .sent:
-                    self.sendLocalPush(session: session, success: true)
+                    if resp.sign != nil {
+                        self.sendLocalPush(session: session, success: true)
+                    }
                     log("success! sent response.")
                 case .failure(let e):
                     log("error sending response: \(e)", LogType.error)

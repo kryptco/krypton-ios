@@ -83,6 +83,7 @@
 		FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4B91D8887FA000B9A01 /* CoreData.framework */; };
 		FACAA4BC1D888AB9000B9A01 /* SessionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */; };
 		FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C31D897BC0000B9A01 /* LogGraph.swift */; };
+		FACAA4C61D89FEB5000B9A01 /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
 		FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFE81D77968D005D71B9 /* SessionCell.swift */; };
 		FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFEA1D779D6E005D71B9 /* CreateController.swift */; };
 		FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFED1D77A2B7005D71B9 /* SetupController.swift */; };
@@ -211,6 +212,7 @@
 		FACAA4B91D8887FA000B9A01 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDetailController.swift; sourceTree = "<group>"; };
 		FACAA4C31D897BC0000B9A01 /* LogGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogGraph.swift; path = ../Lib/LogGraph.swift; sourceTree = "<group>"; };
+		FACAA4C51D89FEB5000B9A01 /* Policy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Policy.swift; sourceTree = "<group>"; };
 		FACBEFE81D77968D005D71B9 /* SessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCell.swift; sourceTree = "<group>"; };
 		FACBEFEA1D779D6E005D71B9 /* CreateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateController.swift; sourceTree = "<group>"; };
 		FACBEFED1D77A2B7005D71B9 /* SetupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupController.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				FAA1B9231D81AF7C00FF37CC /* App */,
 				FA81414B1D70B10F004FE58C /* UX */,
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
+				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
 				FA61EF471D831A77009FD899 /* Core */,
 				FAA6E1EF1D79E3E3007D1B3A /* API */,
@@ -698,6 +701,7 @@
 				FA1682811D77682C00A7ED53 /* SessionsController.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
+				FACAA4C61D89FEB5000B9A01 /* Policy.swift in Sources */,
 				FA1682511D774C3900A7ED53 /* PairController.swift in Sources */,
 				FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,

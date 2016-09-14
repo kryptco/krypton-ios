@@ -18,6 +18,7 @@ class Silo {
     var sessionLabels:[SessionLabel:Session] = [:]
     var mutex = Mutex()
     
+    
     class var shared:Silo {
         guard let ss = sharedSilo else {
             sharedSilo = Silo()
@@ -170,6 +171,7 @@ class Silo {
 
     
     //MARK: Handle Logic
+    
     class func handle(request:Request, id:String) throws -> Response {
         var sign:SignResponse?
         var list:ListResponse?
@@ -196,6 +198,55 @@ class Silo {
             }
             
      
+            sign = SignResponse(sig: sig, err: err)
+        }
+        
+        if let _ = request.list {
+            list = ListResponse(peers: PeerManager.shared.all)
+        }
+        if let _ = request.me {
+            me = MeResponse(me: try KeyManager.sharedInstance().getMe())
+        }
+        
+        let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
+        
+        return Response(requestID: request.id, endpoint: arn, sign: sign, list: list, me: me)
+    }
+    
+    
+    // MARK: Silo -new
+
+    var sigMutex = Mutex()
+    var sigCache:[String:Bool] = [:]
+    
+    class func responseFor(request:Request, id:String) throws -> Response {
+        var sign:SignResponse?
+        var list:ListResponse?
+        var me:MeResponse?
+        
+        if let signRequest = request.sign {
+            
+        
+            let kp = try KeyManager.sharedInstance()
+            
+            var sig:String?
+            var err:String?
+            do {
+                sig = try kp.keyPair.sign(digest: signRequest.digest)
+                log("signed: \(sig)")
+                LogManager.shared.save(theLog: SignatureLog(session: id, digest: signRequest.digest, signature: sig ?? "<err>"))
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
+                
+            } catch let e {
+                guard e is CryptoError else {
+                    throw e
+                }
+                
+                err = "\(e)"
+                throw e
+            }
+            
+            
             sign = SignResponse(sig: sig, err: err)
         }
         

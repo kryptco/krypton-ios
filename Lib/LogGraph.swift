@@ -71,8 +71,6 @@ class LogGraph:UIView {
             }
         }
         
-        log("\(counts)")
-
         let sortedCounts = counts.sorted(by: { $0 < $1 })
         let maxCount = sortedCounts[bucketSize - 1]
         let minCount = sortedCounts[0]
