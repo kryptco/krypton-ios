@@ -97,6 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             API().send(to: session.pairing.queue, message: resp, handler: { (sendResult) in
                 switch sendResult {
                 case .sent:
+                    self.sendLocalPush(session: session, success: true)
                     log("success! sent response.")
                 case .failure(let e):
                     log("error sending response: \(e)", LogType.error)
@@ -110,12 +111,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch let e {
             log("error creating or sending response: \(e)")
             completionHandler(.failed)
-
         }
     
 
     }
+    
+    //MARK: Local Push
+    
+    func sendLocalPush(session:Session, success:Bool) {
+        let notification = UILocalNotification()
+        notification.fireDate = Date()
+        notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.shared.scheduleLocalNotification(notification)
+    }
 
+    
+    //MARK: App Lifecycle
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
