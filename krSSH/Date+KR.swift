@@ -8,6 +8,13 @@
 
 import Foundation
 
+enum TimeSeconds:Int {
+    case second = 1
+    case minute = 60
+    case hour = 3600
+    case day = 86400
+}
+
 extension Date {
     func hour() -> Int {
         //Return Hour

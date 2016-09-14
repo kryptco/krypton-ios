@@ -13,6 +13,7 @@ class SessionsController: UITableViewController {
     
 
     var sessions:[Session] = []
+    var timer:Timer?
     
     //@IBOutlet weak var addButton:UIButton!
 
@@ -20,24 +21,43 @@ class SessionsController: UITableViewController {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SessionsController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-       // addButton.setBorder(color: UIColor.clear, cornerRadius: 10, borderWidth: 1.0)
+        NotificationCenter.default.addObserver(self, selector: #selector(SessionsController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
+
+
         dispatchAsync {
             self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
             dispatchMain{ self.tableView.reloadData() }
         }
-        tableView.reloadData()
+        
+        //start timer
+        
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionsController.reloadTableViewTimer), userInfo: nil, repeats: true)
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "new_log"), object: nil)
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    dynamic func reloadTableViewTimer() {
+        log("time fired")
+        dispatchMain {
+            self.tableView.reloadData()
+        }
     }
     
     dynamic func newLogLine() {
-        dispatchAsync {
-            self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
-            dispatchMain{ self.tableView.reloadData() }
-        }
+//        dispatchAsync {
+//            self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
+//            dispatchMain{ self.tableView.reloadData() }
+//        }
     }
  
     //MARK: TableView
@@ -60,7 +80,7 @@ class SessionsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        return 120.0
 
     }
     
