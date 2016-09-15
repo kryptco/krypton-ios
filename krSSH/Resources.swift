@@ -100,10 +100,10 @@ extension UIColor {
 extension UINavigationItem {
     func setKrLogo() {
         
-        let logo = UIImageView(image: UIImage(named: "nav-logo")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate))
+        let logo = UIImageView(image: UIImage(named: "app-icon-nav"))
         
-        logo.tintColor = UIColor.black.withAlphaComponent(0.2)
-        logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 25, height: 30))
+        //logo.tintColor = UIColor.black.withAlphaComponent(0.2)
+        logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 30, height: 30))
 
     
         let title = UIView()

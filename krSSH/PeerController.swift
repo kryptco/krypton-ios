@@ -7,16 +7,23 @@
 //
 
 import UIKit
+import MapKit
 
 class PeerController: UITableViewController, UISearchBarDelegate {
 
     var peers:[Peer] = []
     
-    @IBOutlet weak var exportButton:UIButton!
     @IBOutlet weak var addButton:UIButton!
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //42.362169, -71.081203 -- cambridge, ma
+//        var region = MKCoordinateRegion()
+//        region.center = CLLocationCoordinate2D(latitude: 42.362169, longitude: -71.081203)
+//        region.span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+//        map.setRegion(region, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
