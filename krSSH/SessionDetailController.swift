@@ -13,18 +13,18 @@ class SessionDetailController: UITableViewController {
     @IBOutlet var deviceNameLabel:UILabel!
     @IBOutlet var lastAccessLabel:UILabel!
     @IBOutlet var colorView:UIView!
+    @IBOutlet var barView:LogGraph!
 
     @IBOutlet var revokeButton:UIButton!
 
     var logs:[SignatureLog] = []
     var session:Session?
     
+    var timer:Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Details"
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(SessionsController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
-
+        self.title = "Details"        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -40,24 +40,41 @@ class SessionDetailController: UITableViewController {
             lastAccessLabel.text = logs.first?.date.timeAgo() ?? session.created.timeAgo()
 
         }
+        
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionDetailController.reloadTableViewTimer), userInfo: nil, repeats: true)
+
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
+        timer = nil
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    dynamic func newLogLine() {
+    dynamic func reloadTableViewTimer() {
+        log("time fired")
         guard let session = session else {
             return
         }
         
         dispatchAsync {
             self.logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
+            
             dispatchMain {
+                self.barView.fillColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
+                self.barView.set(values: self.logs.map({$0.date}))
+                
                 self.lastAccessLabel.text = self.logs.first?.date.timeAgo() ?? session.created.timeAgo()
                 self.tableView.reloadData()
             }
         }
+
     }
+
 
     //MARK: Revoke
     
