@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QdC-wE-jq3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QdC-wE-jq3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -91,7 +91,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Ya7-35-a7q">
-                            <rect key="frame" x="0.0" y="64" width="375" height="168"/>
+                            <rect key="frame" x="0.0" y="64" width="375" height="247"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Alex Grinman's Mac Book Pro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="qdB-Gh-RQi">
@@ -148,22 +148,31 @@
                                     <color key="textColor" red="0.18112268431535999" green="0.076153255975904138" blue="0.23635416666666664" alpha="0.55945913461538466" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CMg-Ep-peW" customClass="LogGraph" customModule="krSSH" customModuleProvider="target">
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="64" id="von-aS-yfQ"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="lG3-AI-Xgg" firstAttribute="leading" secondItem="khU-I4-1gX" secondAttribute="trailing" constant="4" id="0Md-Ke-0bV"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="leading" secondItem="lG3-AI-Xgg" secondAttribute="trailing" constant="8" id="1iP-mD-YcV"/>
+                                <constraint firstItem="CMg-Ep-peW" firstAttribute="trailing" secondItem="qdB-Gh-RQi" secondAttribute="trailing" id="7JH-Q5-p6L"/>
                                 <constraint firstItem="khU-I4-1gX" firstAttribute="leading" secondItem="Ya7-35-a7q" secondAttribute="leading" id="CBM-dl-r1Q"/>
                                 <constraint firstItem="cb1-w3-cv3" firstAttribute="leading" secondItem="Ya7-35-a7q" secondAttribute="leading" id="CPZ-Xn-K2r"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="top" secondItem="Ya7-35-a7q" secondAttribute="top" constant="30" id="H7t-qo-xJT"/>
                                 <constraint firstItem="cb1-w3-cv3" firstAttribute="top" secondItem="khU-I4-1gX" secondAttribute="bottom" id="Pnx-3v-QTz"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="centerX" secondItem="Ya7-35-a7q" secondAttribute="centerX" id="Q4R-cx-OJ2"/>
+                                <constraint firstItem="CMg-Ep-peW" firstAttribute="leading" secondItem="0B0-9Q-Yx6" secondAttribute="leading" id="QKj-yF-X0Q"/>
                                 <constraint firstItem="cb1-w3-cv3" firstAttribute="top" secondItem="BcG-Ph-Zje" secondAttribute="bottom" constant="8" id="VHA-OD-bZC"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="centerY" secondItem="lG3-AI-Xgg" secondAttribute="centerY" id="YPc-5c-Iwm"/>
                                 <constraint firstItem="0B0-9Q-Yx6" firstAttribute="leading" secondItem="qdB-Gh-RQi" secondAttribute="leading" id="ckW-FK-1ez"/>
                                 <constraint firstItem="BcG-Ph-Zje" firstAttribute="centerX" secondItem="Ya7-35-a7q" secondAttribute="centerX" id="dBe-XR-sag"/>
                                 <constraint firstItem="0B0-9Q-Yx6" firstAttribute="trailing" secondItem="qdB-Gh-RQi" secondAttribute="trailing" id="dWG-7u-5kt"/>
                                 <constraint firstItem="0B0-9Q-Yx6" firstAttribute="top" secondItem="qdB-Gh-RQi" secondAttribute="bottom" id="pDs-Lq-X8F"/>
+                                <constraint firstItem="CMg-Ep-peW" firstAttribute="top" secondItem="0B0-9Q-Yx6" secondAttribute="bottom" constant="10" id="psf-vx-39z"/>
                                 <constraint firstAttribute="trailing" secondItem="cb1-w3-cv3" secondAttribute="trailing" id="um9-Vs-xSQ"/>
                                 <constraint firstAttribute="bottom" secondItem="cb1-w3-cv3" secondAttribute="bottom" id="xLE-mn-c6w"/>
                                 <constraint firstItem="khU-I4-1gX" firstAttribute="top" secondItem="Ya7-35-a7q" secondAttribute="top" id="xtc-69-3lB"/>
@@ -171,7 +180,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LogCell" rowHeight="80" id="uTg-IR-NZZ" customClass="LogCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="288" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="367" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
                                     <frame key="frameInset" width="375" height="79"/>
@@ -746,13 +755,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gac-zN-ead"/>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BZI-tN-Cgy">
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="elP-K7-igh">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gac-zN-ead">
+                                <frame key="frameInset" width="1000" height="1000"/>
+                            </mapView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BZI-tN-Cgy">
+                                <frame key="frameInset" width="1000" height="1000"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="elP-K7-igh">
                                     <frame key="frameInset"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YfX-h2-UOh">
+                                        <imageView userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YfX-h2-UOh">
+                                            <frame key="frameInset" width="1000" height="1000"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="150" id="6eT-Xr-tOD"/>
                                                 <constraint firstAttribute="height" constant="150" id="OHq-Nt-S2s"/>
@@ -766,7 +779,8 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="agrinman@mit.edu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qu-t0-iBL">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="agrinman@mit.edu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qu-t0-iBL">
+                                <frame key="frameInset" width="1000" height="1000"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="PG2-AX-rZL"/>
                                 </constraints>
@@ -774,14 +788,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tag" translatesAutoresizingMaskIntoConstraints="NO" id="s5R-5f-PkA">
+                            <imageView userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="tag" translatesAutoresizingMaskIntoConstraints="NO" id="s5R-5f-PkA">
+                                <frame key="frameInset" width="1000" height="1000"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="KfR-Hz-TFT"/>
                                     <constraint firstAttribute="width" constant="20" id="lV4-R7-uJm"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8lm-Ye-OGM">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lm-Ye-OGM">
+                                <frame key="frameInset" width="1000" height="1000"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Xn-kK-YfJ">
                                         <attributedString key="attributedText">
@@ -817,28 +833,32 @@
                                         </constraints>
                                         <state key="normal" image="text-icon"/>
                                     </button>
-                                    <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-SC-L3M" userLabel="github">
+                                    <view alpha="0.75" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-SC-L3M" userLabel="github">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="XgO-To-s2z"/>
                                         </constraints>
                                     </view>
-                                    <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eN-Re-pam" userLabel="heroku">
+                                    <view alpha="0.75" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0eN-Re-pam" userLabel="heroku">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <color key="backgroundColor" red="0.34509803921568627" green="0.28627450980392155" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="MEC-UM-vmP"/>
                                         </constraints>
                                     </view>
-                                    <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRf-i1-SBx" userLabel="digitalocean">
+                                    <view alpha="0.75" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yRf-i1-SBx" userLabel="digitalocean">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <color key="backgroundColor" red="0.0" green="0.50196078430000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="3lp-iO-ONr"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZr-3z-qdO">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZr-3z-qdO">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="6rh-6v-IL2"/>
                                             <constraint firstAttribute="width" constant="44" id="mkG-5V-151"/>
@@ -846,7 +866,8 @@
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="github-logo"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BtC-Tr-MfV">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BtC-Tr-MfV">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="Jks-cY-EE5"/>
                                             <constraint firstAttribute="height" constant="44" id="hsX-3Q-0ag"/>
@@ -854,7 +875,8 @@
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="digitalocean-logo"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogs-W4-ZgS">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogs-W4-ZgS">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="0Ik-Df-7u6"/>
                                             <constraint firstAttribute="width" constant="44" id="rPc-Lg-57r"/>
@@ -862,7 +884,8 @@
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="heroku-logo"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97N-xl-6B7">
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97N-xl-6B7">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Upload your ">
                                                 <attributes>
@@ -1072,7 +1095,8 @@
                                     <constraint firstItem="ogs-W4-ZgS" firstAttribute="centerX" secondItem="0eN-Re-pam" secondAttribute="centerX" id="zYe-S9-4jX"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rU4-X5-zzD" userLabel="line">
+                            <view alpha="0.20000000000000001" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rU4-X5-zzD" userLabel="line">
+                                <frame key="frameInset" width="1000" height="1000"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="39Q-m4-LLO"/>
