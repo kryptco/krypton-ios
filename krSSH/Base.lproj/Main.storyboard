@@ -159,13 +159,13 @@
                             <constraints>
                                 <constraint firstItem="lG3-AI-Xgg" firstAttribute="leading" secondItem="khU-I4-1gX" secondAttribute="trailing" constant="4" id="0Md-Ke-0bV"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="leading" secondItem="lG3-AI-Xgg" secondAttribute="trailing" constant="8" id="1iP-mD-YcV"/>
-                                <constraint firstItem="CMg-Ep-peW" firstAttribute="trailing" secondItem="qdB-Gh-RQi" secondAttribute="trailing" id="7JH-Q5-p6L"/>
+                                <constraint firstItem="CMg-Ep-peW" firstAttribute="leading" secondItem="khU-I4-1gX" secondAttribute="trailing" id="2xH-Ur-0Ad"/>
+                                <constraint firstAttribute="trailing" secondItem="CMg-Ep-peW" secondAttribute="trailing" id="5s0-Wc-uDJ"/>
                                 <constraint firstItem="khU-I4-1gX" firstAttribute="leading" secondItem="Ya7-35-a7q" secondAttribute="leading" id="CBM-dl-r1Q"/>
                                 <constraint firstItem="cb1-w3-cv3" firstAttribute="leading" secondItem="Ya7-35-a7q" secondAttribute="leading" id="CPZ-Xn-K2r"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="top" secondItem="Ya7-35-a7q" secondAttribute="top" constant="30" id="H7t-qo-xJT"/>
                                 <constraint firstItem="cb1-w3-cv3" firstAttribute="top" secondItem="khU-I4-1gX" secondAttribute="bottom" id="Pnx-3v-QTz"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="centerX" secondItem="Ya7-35-a7q" secondAttribute="centerX" id="Q4R-cx-OJ2"/>
-                                <constraint firstItem="CMg-Ep-peW" firstAttribute="leading" secondItem="0B0-9Q-Yx6" secondAttribute="leading" id="QKj-yF-X0Q"/>
                                 <constraint firstItem="cb1-w3-cv3" firstAttribute="top" secondItem="BcG-Ph-Zje" secondAttribute="bottom" constant="8" id="VHA-OD-bZC"/>
                                 <constraint firstItem="qdB-Gh-RQi" firstAttribute="centerY" secondItem="lG3-AI-Xgg" secondAttribute="centerY" id="YPc-5c-Iwm"/>
                                 <constraint firstItem="0B0-9Q-Yx6" firstAttribute="leading" secondItem="qdB-Gh-RQi" secondAttribute="leading" id="ckW-FK-1ez"/>
@@ -219,6 +219,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="barView" destination="CMg-Ep-peW" id="Wm5-wO-Ltc"/>
                         <outlet property="colorView" destination="khU-I4-1gX" id="5ZC-LJ-Qw5"/>
                         <outlet property="deviceNameLabel" destination="qdB-Gh-RQi" id="mnK-W1-K91"/>
                         <outlet property="lastAccessLabel" destination="0B0-9Q-Yx6" id="8MY-ey-Nm9"/>
@@ -1134,7 +1135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTa-oc-dXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2365.5999999999999" y="-1267.0164917541231"/>
+            <point key="canvasLocation" x="2286" y="-1670"/>
         </scene>
     </scenes>
     <resources>
