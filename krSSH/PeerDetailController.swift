@@ -52,4 +52,38 @@ class PeerDetailController: UIViewController {
 
     }
     
+    //MARK: Sharing
+    
+    @IBAction func shareTextTapped() {
+        guard let peer = peer else {
+            return
+        }
+        
+        present(Sharing.textDialogue(for: peer, with: nil), animated: true, completion: nil)
+    }
+    
+    @IBAction func shareEmailTapped() {
+        guard let peer = peer else {
+            return
+        }
+        
+        present(Sharing.emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+    }
+    
+    @IBAction func shareCopyTapped() {
+        guard let peer = peer else {
+            return
+        }
+        
+        present(Sharing.copyDialogue(for: peer), animated: true, completion: nil)
+    }
+    
+    @IBAction func shareOtherTapped() {
+        guard let peer = peer else {
+            return
+        }
+        
+        present(Sharing.otherDialogue(for: peer), animated: true, completion: nil)
+    }
+    
 }

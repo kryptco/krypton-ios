@@ -65,6 +65,9 @@
 		FAA536251D8F13E300549710 /* PeerDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536241D8F13E300549710 /* PeerDetailController.swift */; };
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA536291D8F2EB900549710 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536281D8F2EB900549710 /* HelpController.swift */; };
+		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
+		FAA5362F1D8F43D100549710 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362E1D8F43D100549710 /* Links.swift */; };
+		FAA536321D8F465600549710 /* SuccessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536311D8F465600549710 /* SuccessController.swift */; };
 		FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */; };
 		FAA6E1E81D79B863007D1B3A /* PeerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E71D79B863007D1B3A /* PeerCell.swift */; };
 		FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E91D79CF97007D1B3A /* JSON.swift */; };
@@ -201,6 +204,9 @@
 		FAA536241D8F13E300549710 /* PeerDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerDetailController.swift; sourceTree = "<group>"; };
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA536281D8F2EB900549710 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
+		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
+		FAA5362E1D8F43D100549710 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
+		FAA536311D8F465600549710 /* SuccessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessController.swift; sourceTree = "<group>"; };
 		FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerController.swift; sourceTree = "<group>"; };
 		FAA6E1E71D79B863007D1B3A /* PeerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerCell.swift; sourceTree = "<group>"; };
 		FAA6E1E91D79CF97007D1B3A /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -358,6 +364,7 @@
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
 				FAA536261D8F2EA800549710 /* AboutController.swift */,
 				FAA536281D8F2EB900549710 /* HelpController.swift */,
+				FAA5362B1D8F3FAE00549710 /* Integrations */,
 				FACBEFEC1D779D71005D71B9 /* Setup */,
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16824F1D774C2700A7ED53 /* Pair */,
@@ -433,12 +440,15 @@
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
 				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
+				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
+				FAA5362E1D8F43D100549710 /* Links.swift */,
 				FA61EF471D831A77009FD899 /* Core */,
 				FAA6E1EF1D79E3E3007D1B3A /* API */,
 				FA6972991D78DD5B002F34D6 /* Models */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
+				FAA536301D8F461300549710 /* UIUtil */,
 				FA8141451D70B0F4004FE58C /* Info.plist */,
 				FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */,
 			);
@@ -464,6 +474,21 @@
 				FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		FAA5362B1D8F3FAE00549710 /* Integrations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Integrations;
+			sourceTree = "<group>";
+		};
+		FAA536301D8F461300549710 /* UIUtil */ = {
+			isa = PBXGroup;
+			children = (
+				FAA536311D8F465600549710 /* SuccessController.swift */,
+			);
+			name = UIUtil;
 			sourceTree = "<group>";
 		};
 		FAA6E1EF1D79E3E3007D1B3A /* API */ = {
@@ -719,6 +744,7 @@
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
+				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
 				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
@@ -746,6 +772,7 @@
 				FAA6E1FE1D7A028F007D1B3A /* Pairing.swift in Sources */,
 				FAA536271D8F2EA800549710 /* AboutController.swift in Sources */,
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
+				FAA536321D8F465600549710 /* SuccessController.swift in Sources */,
 				FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */,
@@ -764,6 +791,7 @@
 				FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */,
 				FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
+				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
 				FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */,
 				FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */,

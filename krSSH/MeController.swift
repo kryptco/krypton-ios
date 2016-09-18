@@ -68,4 +68,38 @@ class MeController:UIViewController {
         }
     }
    
+    
+    //MARK: Sharing
+    
+    @IBAction func shareTextTapped() {
+        guard let peer = try? KeyManager.sharedInstance().getMe() else {
+            return
+        }
+        
+        present(textDialogue(for: peer, with: nil), animated: true, completion: nil)
+    }
+    
+    @IBAction func shareEmailTapped() {
+        guard let peer = try? KeyManager.sharedInstance().getMe() else {
+            return
+        }
+        
+        present(emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+    }
+    
+    @IBAction func shareCopyTapped() {
+        guard let peer = try? KeyManager.sharedInstance().getMe() else {
+            return
+        }
+        
+        present(copyDialogue(for: peer), animated: true, completion: nil)
+    }
+    
+    @IBAction func shareOtherTapped() {
+        guard let peer = try? KeyManager.sharedInstance().getMe() else {
+            return
+        }
+        
+        present(otherDialogue(for: peer), animated: true, completion: nil)
+    }
 }
