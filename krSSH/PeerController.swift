@@ -24,17 +24,29 @@ class PeerController: UITableViewController, UISearchBarDelegate {
 //        region.center = CLLocationCoordinate2D(latitude: 42.362169, longitude: -71.081203)
 //        region.span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
 //        map.setRegion(region, animated: true)
+        
+        //addButton.setBorder(color: UIColor.app, cornerRadius: 10, borderWidth: 0.0)
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
         peers = PeerManager.shared.all
         peers = peers.sorted(by: { $0.dateAdded > $1.dateAdded })
         
         if let me = try? KeyManager.sharedInstance().getMe() {
             peers.append(me)
         }
-        
+    
         tableView.reloadData()
+        
+        //animate plus button
+        //addButton.pulse(scale: 1.025, duration: 1.0)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -71,27 +83,29 @@ class PeerController: UITableViewController, UISearchBarDelegate {
         cell.set(peer: peers[indexPath.row])
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
+    }
 
 
-    /*
-    // Override to support conditional editing of the table view.
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+ 
 
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+
+            PeerManager.shared.remove(peer: peers[indexPath.row])
+            peers = PeerManager.shared.all
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
+            
+        }
     }
-    */
+ 
 
     /*
     // Override to support rearranging the table view.

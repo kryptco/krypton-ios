@@ -61,6 +61,8 @@
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9271D77B61F006372B4 /* Dispatch.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
+		FAA536231D8F072500549710 /* UIView+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536221D8F072500549710 /* UIView+KR.swift */; };
+		FAA536251D8F13E300549710 /* PeerDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536241D8F13E300549710 /* PeerDetailController.swift */; };
 		FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */; };
 		FAA6E1E81D79B863007D1B3A /* PeerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E71D79B863007D1B3A /* PeerCell.swift */; };
 		FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E91D79CF97007D1B3A /* JSON.swift */; };
@@ -193,6 +195,8 @@
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FA92E9271D77B61F006372B4 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
+		FAA536221D8F072500549710 /* UIView+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+KR.swift"; sourceTree = "<group>"; };
+		FAA536241D8F13E300549710 /* PeerDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerDetailController.swift; sourceTree = "<group>"; };
 		FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerController.swift; sourceTree = "<group>"; };
 		FAA6E1E71D79B863007D1B3A /* PeerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerCell.swift; sourceTree = "<group>"; };
 		FAA6E1E91D79CF97007D1B3A /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -312,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */,
+				FAA536241D8F13E300549710 /* PeerDetailController.swift */,
 				FAA6E1E71D79B863007D1B3A /* PeerCell.swift */,
 			);
 			name = Peer;
@@ -479,6 +484,7 @@
 			children = (
 				FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */,
 				FADD71491D772F8200DA5112 /* Date+KR.swift */,
+				FAA536221D8F072500549710 /* UIView+KR.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -723,10 +729,12 @@
 				FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
+				FAA536231D8F072500549710 /* UIView+KR.swift in Sources */,
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
+				FAA536251D8F13E300549710 /* PeerDetailController.swift in Sources */,
 				FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */,
 				FACAA4BC1D888AB9000B9A01 /* SessionDetailController.swift in Sources */,
 				FAA6E1FE1D7A028F007D1B3A /* Pairing.swift in Sources */,

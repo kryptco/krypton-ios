@@ -15,7 +15,7 @@ class PeerCell: UITableViewCell {
 
     @IBOutlet var identiconView:UIImageView!
 
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }

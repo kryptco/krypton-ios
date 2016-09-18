@@ -117,6 +117,54 @@ extension UINavigationItem {
 
 //MARK: Custom UI Class
 
+class KRButton:UIButton {
+    
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+        }
+    }
+
+    @IBInspectable var defaultColor:UIColor = UIColor.app {
+        didSet {
+            setTitleColor(defaultColor, for: UIControlState.normal)
+            layer.borderColor = defaultColor.cgColor
+            layer.borderWidth = 1.0
+        }
+    }
+    
+    @IBInspectable var altForegroundColor:UIColor = UIColor.white {
+        didSet {
+            setTitleColor(altForegroundColor, for: UIControlState.highlighted)
+            backgroundColor = UIColor.clear
+        }
+    }
+    
+    
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        backgroundColor = defaultColor
+
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        backgroundColor = UIColor.clear
+    }
+    
+
+}
+
+
 class StyleFilledButton:UIButton {}
 class StyleFilledView:UIView {}
 
