@@ -94,6 +94,9 @@ class PeerController: UITableViewController, UISearchBarDelegate {
         return true
     }
  
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "showPeerDetail", sender: peers[indexPath.row])
+    }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -103,6 +106,14 @@ class PeerController: UITableViewController, UISearchBarDelegate {
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.reloadData()
             
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if  let dest = segue.destination as? PeerDetailController,
+            let peer = sender as? Peer
+        {
+            dest.peer = peer
         }
     }
  
@@ -122,14 +133,5 @@ class PeerController: UITableViewController, UISearchBarDelegate {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  
 }

@@ -14,6 +14,15 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     var blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
 
     
+    lazy var aboutButton:UIBarButtonItem = {
+        return UIBarButtonItem(title: "i", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.aboutTapped))
+    }()
+    
+    lazy var helpButton:UIBarButtonItem = {
+        return UIBarButtonItem(title: "?", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.helpTapped))
+    }()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,7 +40,10 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         view.addSubview(blurView)
         
         NotificationCenter.default.addObserver(self, selector: #selector(MainController.didRegisterPush), name: NSNotification.Name(rawValue: "registered_push_notifications"), object: nil)
-
+        
+        self.navigationItem.leftBarButtonItem = aboutButton
+        self.navigationItem.rightBarButtonItem = helpButton
+        
 //        log("\(LogManager.shared.all.count)")
 //        let _ = KeyManager.destroyKeyPair()
 //        SessionManager.shared.destory()
@@ -129,5 +141,15 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    //MARK: Nav Bar Buttons
+    
+    dynamic func aboutTapped() {
+        
+    }
+    
+    dynamic func helpTapped() {
+        
+    }
 
 }

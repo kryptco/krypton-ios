@@ -30,7 +30,11 @@ struct Resources {
         UISegmentedControl.appearance().tintColor = UIColor.app
         
         UIBarButtonItem.appearance().tintColor = UIColor.white
-        
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSForegroundColorAttributeName: UIColor.white,
+            NSFontAttributeName: UIFont(name: "Avenir Next Demi Bold", size: 20)!
+            ], for: UIControlState.normal)
+
         // Custom Classes
         StyleFilledButton.appearance().backgroundColor = UIColor.app
         StyleFilledView.appearance().backgroundColor = UIColor.app

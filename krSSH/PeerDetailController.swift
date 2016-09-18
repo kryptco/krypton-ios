@@ -7,29 +7,49 @@
 //
 
 import UIKit
+import AVFoundation
 
 class PeerDetailController: UIViewController {
 
+    @IBOutlet var qrImageView:UIImageView!
+
+    @IBOutlet var tagLabel:UILabel!
+    @IBOutlet var dateLabel:UILabel!
+
+    
+    var peer:Peer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.title = peer?.email ?? "Detail"
+        drawPeer()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func delete() {
+        
     }
-    */
+    
+    
+    dynamic func drawPeer() {
+        tagLabel.text = peer?.email
+        dateLabel.text = peer?.dateAdded.toShortTimeString()
 
+        if  let p = peer,
+            let json = try? p.jsonString(),
+            let img = RSUnifiedCodeGenerator().generateCode(json, machineReadableCodeObjectType: AVMetadataObjectTypeQRCode)
+        {
+            
+            let resized = RSAbstractCodeGenerator.resizeImage(img, targetSize: qrImageView.frame.size, contentMode: UIViewContentMode.scaleAspectFill)
+            
+            self.qrImageView.image = resized//.withRenderingMode(.alwaysTemplate)
+        } else {
+            log("problem creating qr code for peer", .error)
+        }
+
+    }
+    
 }
