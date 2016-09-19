@@ -36,7 +36,7 @@ class PeerDetailController: UIViewController {
     
     dynamic func drawPeer() {
         tagLabel.text = peer?.email
-        dateLabel.text = peer?.dateAdded.toShortTimeString()
+        dateLabel.text = "Added " + (peer?.dateAdded.toShortTimeString() ?? "?")
 
         if  let p = peer,
             let json = try? p.jsonString(),
@@ -59,7 +59,9 @@ class PeerDetailController: UIViewController {
             return
         }
         
-        present(Sharing.textDialogue(for: peer, with: nil), animated: true, completion: nil)
+        dispatchMain {
+            self.present(self.textDialogue(for: peer, with: nil), animated: true, completion: nil)
+        }
     }
     
     @IBAction func shareEmailTapped() {
@@ -67,7 +69,9 @@ class PeerDetailController: UIViewController {
             return
         }
         
-        present(Sharing.emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+        dispatchMain {
+            self.present(self.emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+        }
     }
     
     @IBAction func shareCopyTapped() {
@@ -75,7 +79,7 @@ class PeerDetailController: UIViewController {
             return
         }
         
-        present(Sharing.copyDialogue(for: peer), animated: true, completion: nil)
+        copyDialogue(for: peer)
     }
     
     @IBAction func shareOtherTapped() {
@@ -83,7 +87,9 @@ class PeerDetailController: UIViewController {
             return
         }
         
-        present(Sharing.otherDialogue(for: peer), animated: true, completion: nil)
+        dispatchMain {
+            self.present(self.otherDialogue(for: peer), animated: true, completion: nil)
+        }
     }
     
 }

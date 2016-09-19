@@ -14,10 +14,6 @@ class MeController:UIViewController {
     @IBOutlet var qrImageView:UIImageView!
     @IBOutlet var tagLabel:UILabel!
 
-    @IBOutlet var shareButton:UIButton!
-
-//    @IBOutlet var identiconImageView:UIImageView!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,17 +32,8 @@ class MeController:UIViewController {
     
     
     dynamic func redrawMe() {
-        //   qrImageView.setBorder(color: UIColor.black.withAlphaComponent(0.5), cornerRadius: qrImageView.frame.size.width/2, borderWidth: 2.0)
-        //  identiconImageView.setBorder(color: UIColor.black.withAlphaComponent(0.2), cornerRadius: 0, borderWidth: 1.0)
         do {
             tagLabel.text = try KeyManager.sharedInstance().getMe().email
-            
-//            if let ident = IGSimpleIdenticon.from(publicKey, size: CGSize(width: identiconImageView.frame.size.width, height: identiconImageView.frame.size.height))
-//            {
-//                identiconImageView.image = ident
-//                
-//            }
-//            
             
             let json = try KeyManager.sharedInstance().getMe().jsonString()
             
@@ -76,7 +63,9 @@ class MeController:UIViewController {
             return
         }
         
-        present(textDialogue(for: peer, with: nil), animated: true, completion: nil)
+        dispatchMain {
+            self.present(self.textDialogue(for: peer, with: nil), animated: true, completion: nil)
+        }
     }
     
     @IBAction func shareEmailTapped() {
@@ -84,7 +73,9 @@ class MeController:UIViewController {
             return
         }
         
-        present(emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+        dispatchMain {
+            self.present(self.emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+        }
     }
     
     @IBAction func shareCopyTapped() {
@@ -92,14 +83,15 @@ class MeController:UIViewController {
             return
         }
         
-        present(copyDialogue(for: peer), animated: true, completion: nil)
+        copyDialogue(for: peer)
     }
     
     @IBAction func shareOtherTapped() {
         guard let peer = try? KeyManager.sharedInstance().getMe() else {
             return
         }
-        
-        present(otherDialogue(for: peer), animated: true, completion: nil)
+        dispatchMain {
+            self.present(self.otherDialogue(for: peer), animated: true, completion: nil)
+        }
     }
 }

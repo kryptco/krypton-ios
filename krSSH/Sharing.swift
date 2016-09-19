@@ -16,47 +16,43 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         case text(String?), email(String?), copy, other
     }
     
-    func dialogue(for peer:Peer, by kind:Kind) -> UIViewController {
-        switch kind {
-        case .text(let phone):
-            return textDialogue(for: peer, with: phone)
-        case .email(let address):
-            return emailDialogue(for: peer, with: address)
-        case .copy:
-            return copyDialogue(for: peer)
-        case .other:
-            return otherDialogue(for: peer)
-        }
-    }
-    
     func textDialogue(for peer:Peer, with phone:String?) -> UIViewController {
+        
+        UINavigationBar.appearance().tintColor = UIColor.app
+        UIBarButtonItem.appearance().tintColor = UIColor.app
+
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.app,
+            NSFontAttributeName: UIFont(name: "Avenir Next Ultra Light", size: 17)!
+        ]
+
         let msgDialogue = MFMessageComposeViewController()
         
         if let phone = phone {
             msgDialogue.recipients = [phone]
         }
         msgDialogue.body = "\(peer.publicKey) <\(peer.email)>"
-        msgDialogue.delegate = self
+        msgDialogue.messageComposeDelegate = self
+        
         return msgDialogue
     }
     
     func emailDialogue(for peer:Peer, with email:String?) -> UIViewController {
         let mailDialogue = MFMailComposeViewController()
-        
         if let email = email {
             mailDialogue.setToRecipients([email])
         }
     
         mailDialogue.setSubject("My SSH Public Key")
         mailDialogue.setMessageBody("\(peer.publicKey) <\(peer.email)>", isHTML: false)
-        mailDialogue.delegate = self
+        mailDialogue.mailComposeDelegate = self
 
         return mailDialogue
     }
     
-    func copyDialogue(for peer:Peer) -> UIViewController {
+    func copyDialogue(for peer:Peer) {
         UIPasteboard.general.string = "\(peer.publicKey) <\(peer.email)>"
-        return Resources.Storyboard.Main.instantiateViewController(withIdentifier: "SuccessController")
+        performSegue(withIdentifier: "showSuccess", sender: nil)
     }
     
     func otherDialogue(for peer:Peer) -> UIViewController {
@@ -69,6 +65,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }
+    
     
     public func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         controller.dismiss(animated: true, completion: nil)
