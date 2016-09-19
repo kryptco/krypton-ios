@@ -9,12 +9,10 @@
 import Foundation
 
 extension PublicKey {
-    
-    
-    init?(certData: Data) {
+    init?(certData: Data) throws {
         // first we create the certificate reference
         guard let certRef = SecCertificateCreateWithData(nil, certData as CFData) else {
-            return nil
+            throw CryptoError.certImport
         }
         log("Successfully generated a valid certificate reference from the data.")
         

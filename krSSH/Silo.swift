@@ -136,7 +136,7 @@ class Silo {
                 for msg in msgs {
                     
                     do {
-                        let req = try Request(key: to.pairing.key, sealed: msg)
+                        let req = try Request(key: to.pairing.key, sealedBase64: msg)
                         let resp = try Silo.handle(request: req, session: to).seal(key: to.pairing.key)
                         
                         log("created response")

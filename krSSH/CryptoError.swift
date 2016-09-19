@@ -23,7 +23,7 @@ enum CryptoError : Error {
     case random
     case integrity
     case fingerprint
-
+    case certImport
 }
 
 

@@ -9,6 +9,8 @@
 import Foundation
 import CommonCrypto
 
+typealias Key = Data
+
 extension Data {
     
     static func random(size:Int) throws -> Data {
@@ -22,7 +24,7 @@ extension Data {
         return Data(bytes: result)
     }
     
-    func HMAC(key:Data) throws -> Data {
+    func HMAC(key:Key) throws -> Data {
         
         let keyBytes = key.withUnsafeBytes {
             [UInt8](UnsafeBufferPointer(start: $0, count: key.count))

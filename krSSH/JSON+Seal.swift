@@ -16,8 +16,8 @@ extension JSONConvertable {
         return try self.jsonData().seal(key: key)
     }
     
-    init(key:Key, sealed:String) throws {
-        guard let sealedData = sealed.fromBase64()
+    init(key:Key, sealedBase64:String) throws {
+        guard let sealedData = sealedBase64.fromBase64()
         else {
             throw CryptoError.encoding
         }

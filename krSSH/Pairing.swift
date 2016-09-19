@@ -9,7 +9,6 @@
 import Foundation
 import CoreBluetooth
 
-typealias Key = Data
 struct Pairing:JSONConvertable {
     var name:String
     var queue:QueueName

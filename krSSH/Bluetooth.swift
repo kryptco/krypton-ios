@@ -60,13 +60,15 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             let characteristic = peripheralCharacteristics[peripheral] else {
             return
         }
-        if let messageBlocks = splitMessageForBluetooth(message: data, mtu: UInt(peripheral.maximumWriteValueLength(for: .withResponse))) {
+        do {
+            let messageBlocks = try splitMessageForBluetooth(message: data, mtu: UInt(peripheral.maximumWriteValueLength(for: .withResponse)))
             for block in messageBlocks {
                 peripheral.writeValue(block, for: characteristic, type: .withResponse)
             }
+            log("sent BT response")
+        } catch let e {
+            log("bluetooth message split failed: \(e)", .error)
         }
-
-        log("sent BT response")
     }
 
     func scanLogic() {
@@ -279,16 +281,19 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     }
 }
 
+struct BluetoothMessageTooLong : Error {
+    var messageLength : Int
+    var mtu : Int
+}
 /*
  *  Bluetooth packet protocol: first byte of message indicates number of 
  *  remaining packets. Packets must be <= mtu in length.
  */
-func splitMessageForBluetooth(message: Data, mtu: UInt) -> [Data]? {
+func splitMessageForBluetooth(message: Data, mtu: UInt) throws -> [Data] {
     let msgBlockSize = mtu - 1;
     let (intN, overflow) = UInt.divideWithOverflow(UInt(message.count), msgBlockSize)
     if overflow || intN > 255 {
-        log("message of size \(message.count) too large to send over bluetooth with mtu \(mtu)", .error)
-        return nil
+        throw BluetoothMessageTooLong(messageLength: message.count, mtu: Int(mtu))
     }
     var blocks : [Data] = []
     let n: UInt8 = UInt8(intN)
