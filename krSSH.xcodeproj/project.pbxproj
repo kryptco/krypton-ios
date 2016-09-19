@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA01D7751D90640000FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
+		FA01D7761D9065AE00FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
@@ -42,6 +44,7 @@
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
+		FA3185701D8F6E5D00B46536 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31856F1D8F6E5D00B46536 /* GitHub.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
@@ -138,6 +141,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA01D7741D90640000FF3543 /* Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import.swift; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		FA31856F1D8F6E5D00B46536 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
@@ -382,7 +387,6 @@
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
 				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
-				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
 				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
 			);
 			name = Core;
@@ -471,6 +475,7 @@
 			children = (
 				FA8141391D70B0F4004FE58C /* AppDelegate.swift */,
 				FA0322721D74D39100CD7622 /* Globals.swift */,
+				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
 				FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */,
 			);
 			name = App;
@@ -479,6 +484,7 @@
 		FAA5362B1D8F3FAE00549710 /* Integrations */ = {
 			isa = PBXGroup;
 			children = (
+				FA31856F1D8F6E5D00B46536 /* GitHub.swift */,
 			);
 			name = Integrations;
 			sourceTree = "<group>";
@@ -541,6 +547,7 @@
 				FAFE546E1D7B9C1400391FDD /* Seal.swift */,
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE048B1D7369C3002A7AFD /* SecKeyECASN1.swift */,
+				FA01D7741D90640000FF3543 /* Import.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
 				FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */,
@@ -761,6 +768,7 @@
 				FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
+				FA3185701D8F6E5D00B46536 /* GitHub.swift in Sources */,
 				FAA536231D8F072500549710 /* UIView+KR.swift in Sources */,
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
@@ -782,6 +790,7 @@
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
 				FAA536291D8F2EB900549710 /* HelpController.swift in Sources */,
+				FA01D7751D90640000FF3543 /* Import.swift in Sources */,
 				FAA6E1E81D79B863007D1B3A /* PeerCell.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
@@ -813,6 +822,7 @@
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
 				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
+				FA01D7761D9065AE00FF3543 /* Import.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FAFE54701D7BB19900391FDD /* Seal.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,

@@ -79,7 +79,7 @@ class KryptoTests: XCTestCase {
         do {
             let _ = try KeyPair.destroy("test")
             let kp = try KeyPair.generate("test")
-            let sig = try kp.sign("hellllo")
+            let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!)
             
             let resYes = try kp.publicKey.verify("hellllo", signature: sig)
             XCTAssert(resYes, "sig is supposed to be correct!")
@@ -110,7 +110,7 @@ class KryptoTests: XCTestCase {
                     return
             }
             
-            let sig = try loadedKp.sign("hellllo")
+            let sig = try loadedKp.sign(data: "hellllo".data(using: String.Encoding.utf8)!)
             let resYes = try loadedKp.publicKey.verify("hellllo", signature: sig)
         
             XCTAssert(resYes, "sig is supposed to be correct!")
@@ -151,7 +151,7 @@ class KryptoTests: XCTestCase {
         do {
             let _ = try KeyPair.destroy("test")
             let kp = try KeyPair.generate("test")
-            let sig = try kp.sign("hellllo")
+            let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!)
 
             let pub = try kp.publicKey.exportSecp()
             let impPubKey = try PublicKey.importFrom("test", publicKeyDER: pub)
@@ -174,11 +174,12 @@ class KryptoTests: XCTestCase {
     
     func testPublicKeyImport() {
         
-        let pkEC = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEkzVpXcGl9E9vaX5T42LwcqkQo7xnlofns8EwG_QHr6S9iivyO00G56oCny5GiD59_nPIdiPWMEmXq4vTpRxvJw=="
+        let pkEC = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEYCsv6QH9AH9lh4Eq3KewR9MhK5dQiRDFGrJaCwd0by0aMROTpmZ1ZTvfX+IAINebHF/umT4a20v7fZ29TbitVA=="
         
         let pkRSA = "MIIBCgKCAQEA2Ddg4jCLE7VPxLPjBaTPH3DSXpkJQP3J5KycZBUF4dyWJTeY8m5HyTrRj+Dm5t3ccpPJSd+OjupHdUj+BtL+8g+NOddmUCr0gmQsxsXx8ex+lS+wHgRBmH/Cb/5lZ1Ml7Omtysz8G/pw6LGYK9C0s0ZoUOAApv/rC9vQ1T8S0eJPJIB8rHsfnvrxkC9Cwkftu5pOIv5fqrjsDLqn0dLypWyT8AhHSdgRZn0658efTyPytfnu2/1XiOzzCbNxPExv+n8fq1kkzSIg9+gN7tvPz+gpbv1eQsDkArrGx838EqW8o5cUbGA3DtlGWAr4dKTe3yY40CA55AMz/lvmU0dnRwIDAQAB"
 
         do {
+
             let pub = try PublicKey.importFrom("test1", publicKeyDER: pkEC)
             
             
@@ -191,6 +192,17 @@ class KryptoTests: XCTestCase {
                 XCTFail(e.localizedDescription)
             }
         }
+    }
+    
+    
+    
+    
+    func testCertImport() {
+        
+        let pkEC = "MIIBejCCASACCQDSO7zy24AZ8jAKBggqhkjOPQQDAjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMB4XDTE2MDkxOTE4MjQ0MVoXDTE3MDkxOTE4MjQ0MVowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABGArL+kB/QB/ZYeBKtynsEfTISuXUIkQxRqyWgsHdG8tGjETk6ZmdWU731/iACDXmxxf7pk+GttL+32dvU24rVQwCgYIKoZIzj0EAwIDSAAwRQIhAN4LR6vRiVOPlDVyyVB96c7KU027fccHNntzJp5kuJ7GAiBF1A3e10odlauvR0EoIqiM2kax29G3JvJCM+VFX7PmCw==".fromBase64()!
+        
+        let pub = PublicKey(certData: pkEC)
+        log(pub)
     }
     
     func testPublicKeyExportImport() {
