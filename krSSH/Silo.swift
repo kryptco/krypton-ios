@@ -43,7 +43,7 @@ class Silo {
             log("request from bluetooth did not parse correctly", .error)
             return
         }
-        guard let resp = try? Silo.handle(request: req, id: session.id).seal(key: session.pairing.key) else {
+        guard let resp = try? Silo.handle(request: req, session: session).seal(key: session.pairing.key) else {
             log("handling request from bluetooth failed", .error)
             return
         }
@@ -137,7 +137,7 @@ class Silo {
                     
                     do {
                         let req = try Request(key: to.pairing.key, sealed: msg)
-                        let resp = try Silo.handle(request: req, id: to.id).seal(key: to.pairing.key)
+                        let resp = try Silo.handle(request: req, session: to).seal(key: to.pairing.key)
                         
                         log("created response")
                         
@@ -211,7 +211,7 @@ class Silo {
 
     //MARK: Handle Logic
     
-    class func handle(request:Request, id:String) throws -> Response {
+    class func handle(request:Request, session:Session) throws -> Response {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
@@ -224,7 +224,8 @@ class Silo {
             do {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
-                LogManager.shared.save(theLog: SignatureLog(session: id, digest: signRequest.digest, signature: sig ?? "<err>"))
+                AppDelegate.sendLocalPush(session: session, success: true)
+                LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>"))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
                 
             } catch let e {
