@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             log("created response")
             
             
-            API().send(to: session.pairing.queue, message: sealedResp, handler: { (sendResult) in
+            API().send(to: session.pairing.queue, message: sealedResp.toBase64(), handler: { (sendResult) in
                 switch sendResult {
                 case .sent:
                     if resp.sign != nil {

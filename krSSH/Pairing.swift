@@ -9,12 +9,13 @@
 import Foundation
 import CoreBluetooth
 
+typealias Key = Data
 struct Pairing:JSONConvertable {
     var name:String
     var queue:QueueName
-    var key:String
+    var key:Key
     
-    init(name:String, queue:QueueName, key:String) {
+    init(name:String, queue:QueueName, key:Key) {
         self.name = name
         self.queue = queue
         self.key = key
@@ -22,7 +23,12 @@ struct Pairing:JSONConvertable {
     init(json: JSON) throws {
         self.name = try json ~> "n"
         self.queue = try json ~> "q"
-        self.key = try json ~> "k"
+        
+        let keyB64 : String = try json ~> "k"
+        guard let key = keyB64.fromBase64() else {
+            throw CryptoError.encoding
+        }
+        self.key = key
     }
     
     var jsonMap: JSON {
@@ -30,9 +36,7 @@ struct Pairing:JSONConvertable {
     }
 
     var bluetoothServiceUUID: CBUUID? {
-        guard let key = key.fromBase64() else {
-            return nil
-        }
+
         return CBUUID.init(data: key.SHA256.subdata(in: 0 ..< 16))
     }
 }

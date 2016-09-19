@@ -39,7 +39,7 @@ class Silo {
         }
         mutex.unlock()
 
-        guard let req = try? Request(key: session.pairing.key, sealedData: message) else {
+        guard let req = try? Request(key: session.pairing.key, sealed: message) else {
             log("request from bluetooth did not parse correctly", .error)
             return
         }
@@ -47,10 +47,8 @@ class Silo {
             log("handling request from bluetooth failed", .error)
             return
         }
-        guard let sealedData = resp.fromBase64() else {
-            return
-        }
-        self.bluetoothDelegate.writeToServiceUUID(uuid: serviceUUID, data: sealedData)
+
+        self.bluetoothDelegate.writeToServiceUUID(uuid: serviceUUID, data: resp)
     }
 
     class var shared:Silo {
@@ -144,7 +142,7 @@ class Silo {
                         log("created response")
                         
                         
-                        api.send(to: to.pairing.queue, message: resp, handler: { (sendResult) in
+                        api.send(to: to.pairing.queue, message: resp.toBase64(), handler: { (sendResult) in
                             switch sendResult {
                             case .sent:
                                 log("success! sent response.")

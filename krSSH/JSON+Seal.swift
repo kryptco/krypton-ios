@@ -9,23 +9,23 @@
 import Foundation
 
 
-typealias Sealed = String
+typealias Sealed = Data
 extension JSONConvertable {
     
-    func seal(key:String) throws -> Sealed {
-        return try self.jsonData().seal(key: key).toBase64()
+    func seal(key:Key) throws -> Sealed {
+        return try self.jsonData().seal(key: key)
     }
     
-    init(key:String, sealed:Sealed) throws {
+    init(key:Key, sealed:String) throws {
         guard let sealedData = sealed.fromBase64()
         else {
             throw CryptoError.encoding
         }
-        try self.init(key: key, sealedData: sealedData)
+        try self.init(key: key, sealed: sealedData)
     }
 
-    init(key:String, sealedData:Data) throws {
-        let jsonData = try sealedData.unseal(key: key)
+    init(key:Key, sealed:Sealed) throws {
+        let jsonData = try sealed.unseal(key: key)
         let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments)
 
         guard let json = jsonObject as? JSON

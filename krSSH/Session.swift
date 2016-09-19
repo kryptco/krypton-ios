@@ -22,9 +22,12 @@ struct Session:JSONConvertable {
     
     init(json: JSON) throws {
         id      = try json ~> "id"
+        guard let key = try KeychainStorage().get(key: id).fromBase64() else {
+            throw KeychainStorageError.notFound
+        }
         pairing = try Pairing(name: json ~> "name",
                               queue: json ~> "queue",
-                              key: KeychainStorage().get(key: id))
+                              key: key)
         
         created = Date(timeIntervalSince1970: try json ~> "created")
     }
