@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FA01D7751D90640000FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
 		FA01D7761D9065AE00FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
+		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
@@ -142,6 +143,7 @@
 
 /* Begin PBXFileReference section */
 		FA01D7741D90640000FF3543 /* Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import.swift; sourceTree = "<group>"; };
+		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				FA61EF421D81D150009FD899 /* SessionManager.swift */,
+				8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */,
 				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
 				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
@@ -749,6 +752,7 @@
 				FA1682511D774C3900A7ED53 /* PairController.swift in Sources */,
 				FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
+				8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,

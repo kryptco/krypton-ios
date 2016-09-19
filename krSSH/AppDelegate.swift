@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Silo.shared.startPolling()
         
         registerPushNotifications()
-        
+
         return true
     }
     
@@ -87,20 +87,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         do {
-            let req = try Request(key: session.pairing.key, sealed: sealed)
-            let resp = try Silo.handle(request: req, id: session.id)
+            let req = try Request(key: session.pairing.key, sealedBase64: sealed)
+            let resp = try Silo.handle(request: req, session: session)
             let sealedResp = try resp.seal(key: session.pairing.key)
             Silo.shared.add(session: session)
 
             log("created response")
             
             
-            API().send(to: session.pairing.queue, message: sealedResp, handler: { (sendResult) in
+            API().send(to: session.pairing.queue, message: sealedResp.toBase64(), handler: { (sendResult) in
                 switch sendResult {
                 case .sent:
-                    if resp.sign != nil {
-                        self.sendLocalPush(session: session, success: true)
-                    }
                     log("success! sent response.")
                 case .failure(let e):
                     log("error sending response: \(e)", LogType.error)
@@ -121,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //MARK: Local Push
     
-    func sendLocalPush(session:Session, success:Bool) {
+    class func sendLocalPush(session:Session, success:Bool) {
         let notification = UILocalNotification()
         notification.fireDate = Date()
         notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"

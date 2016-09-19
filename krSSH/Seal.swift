@@ -9,6 +9,8 @@
 import Foundation
 import CommonCrypto
 
+typealias Key = Data
+
 extension Data {
     
     static func random(size:Int) throws -> Data {
@@ -22,7 +24,7 @@ extension Data {
         return Data(bytes: result)
     }
     
-    func HMAC(key:Data) throws -> Data {
+    func HMAC(key:Key) throws -> Data {
         
         let keyBytes = key.withUnsafeBytes {
             [UInt8](UnsafeBufferPointer(start: $0, count: key.count))
@@ -39,19 +41,14 @@ extension Data {
         return Data(bytes: hmac)
     }
     
-    func seal(key:String) throws -> Data {
+    func seal(key:Key) throws -> Data {
         let nonce = try Data.random(size: kCCBlockSizeAES128)
         let nonceBytes = nonce.withUnsafeBytes {
             [UInt8](UnsafeBufferPointer(start: $0, count: nonce.count))
         }
         
-        guard let keyData = key.fromBase64()
-        else {
-            throw CryptoError.encoding
-        }
-        
-        let keyBytes = keyData.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: keyData.count))
+        let keyBytes = key.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: key.count))
         }
         var ciphertext = [UInt8](repeating: 0, count: self.count + 2*Int(kCCBlockSizeAES128))
         
@@ -62,7 +59,7 @@ extension Data {
 
         var ciphertextAllLength = 0
         
-        let status = CCCrypt(CCOperation(kCCEncrypt), CCAlgorithm(kCCAlgorithmAES128), CCOptions(kCCOptionPKCS7Padding), keyBytes, keyData.count, nonceBytes, dataBytes, self.count, &ciphertext, ciphertext.count, &ciphertextAllLength)
+        let status = CCCrypt(CCOperation(kCCEncrypt), CCAlgorithm(kCCAlgorithmAES128), CCOptions(kCCOptionPKCS7Padding), keyBytes, key.count, nonceBytes, dataBytes, self.count, &ciphertext, ciphertext.count, &ciphertextAllLength)
         
         guard UInt32(status) == UInt32(kCCSuccess) else {
             throw CryptoError.encrypt
@@ -73,22 +70,20 @@ extension Data {
         nonceAndCiphertext.append(nonce)
         nonceAndCiphertext.append(Data(bytes: ciphertext).subdata(in: 0 ..< ciphertextAllLength))
         
-        let hmac = try nonceAndCiphertext.HMAC(key: keyData)
+        let hmac = try nonceAndCiphertext.HMAC(key: key)
         nonceAndCiphertext.append(hmac)
         
         return nonceAndCiphertext
     }
     
-    func unseal(key:String) throws -> Data {
-        guard
-            let keyData = key.fromBase64(),
-                count >= 2*Int(kCCBlockSizeAES128) + Int(CC_SHA256_DIGEST_LENGTH)
+    func unseal(key:Key) throws -> Data {
+        guard count >= 2*Int(kCCBlockSizeAES128) + Int(CC_SHA256_DIGEST_LENGTH)
         else {
             throw CryptoError.encoding
         }
         
-        let keyBytes = keyData.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: keyData.count))
+        let keyBytes = key.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: key.count))
         }
 
         let nonce = self.subdata(in: 0 ..< Int(kCCBlockSizeAES128))
@@ -103,7 +98,7 @@ extension Data {
         
         let taggedHMAC = self.subdata(in: count - Int(CC_SHA256_DIGEST_LENGTH) ..< count)
         
-        let hmac = try self.subdata(in: 0 ..< count - Int(CC_SHA256_DIGEST_LENGTH)).HMAC(key: keyData)
+        let hmac = try self.subdata(in: 0 ..< count - Int(CC_SHA256_DIGEST_LENGTH)).HMAC(key: key)
         
         // check HMAC
         guard taggedHMAC == hmac else {
@@ -113,7 +108,7 @@ extension Data {
         var plaintext = [UInt8](repeating: 0, count: ciphertext.count)
         var plaintextLength = 0
         
-        let status = CCCrypt(CCOperation(kCCDecrypt), CCAlgorithm(kCCAlgorithmAES128), CCOptions(kCCOptionPKCS7Padding), keyBytes, keyData.count, nonceBytes, ciphertextBytes, ciphertext.count, &plaintext, ciphertext.count, &plaintextLength)
+        let status = CCCrypt(CCOperation(kCCDecrypt), CCAlgorithm(kCCAlgorithmAES128), CCOptions(kCCOptionPKCS7Padding), keyBytes, key.count, nonceBytes, ciphertextBytes, ciphertext.count, &plaintext, ciphertext.count, &plaintextLength)
         
         guard UInt32(status) == UInt32(kCCSuccess) else {
             throw CryptoError.decrypt

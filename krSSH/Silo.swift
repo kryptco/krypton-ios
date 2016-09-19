@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 typealias SessionLabel = String
 
@@ -16,9 +17,40 @@ private var sharedSilo:Silo?
 class Silo {
     
     var sessionLabels:[SessionLabel:Session] = [:]
+    var sessionServiceUUIDS: [CBUUID: Session] = [:]
     var mutex = Mutex()
-    
-    
+
+    var bluetoothDelegate: BluetoothDelegate = BluetoothDelegate()
+    var centralManager: CBCentralManager
+
+    init() {
+        centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
+        bluetoothDelegate.mutex.lock {
+            bluetoothDelegate.silo = self
+        }
+    }
+
+    func onBluetoothReceive(serviceUUID: CBUUID, message: Data) {
+        mutex.lock()
+
+        guard let session = sessionServiceUUIDS[serviceUUID] else {
+            mutex.unlock()
+            return
+        }
+        mutex.unlock()
+
+        guard let req = try? Request(key: session.pairing.key, sealed: message) else {
+            log("request from bluetooth did not parse correctly", .error)
+            return
+        }
+        guard let resp = try? Silo.handle(request: req, session: session).seal(key: session.pairing.key) else {
+            log("handling request from bluetooth failed", .error)
+            return
+        }
+
+        self.bluetoothDelegate.writeToServiceUUID(uuid: serviceUUID, data: resp)
+    }
+
     class var shared:Silo {
         guard let ss = sharedSilo else {
             sharedSilo = Silo()
@@ -104,13 +136,13 @@ class Silo {
                 for msg in msgs {
                     
                     do {
-                        let req = try Request(key: to.pairing.key, sealed: msg)
-                        let resp = try Silo.handle(request: req, id: to.id).seal(key: to.pairing.key)
+                        let req = try Request(key: to.pairing.key, sealedBase64: msg)
+                        let resp = try Silo.handle(request: req, session: to).seal(key: to.pairing.key)
                         
                         log("created response")
                         
                         
-                        api.send(to: to.pairing.queue, message: resp, handler: { (sendResult) in
+                        api.send(to: to.pairing.queue, message: resp.toBase64(), handler: { (sendResult) in
                             switch sendResult {
                             case .sent:
                                 log("success! sent response.")
@@ -149,12 +181,20 @@ class Silo {
             }
             
             sessionLabels[session.id] = session
+            if let cbuuid = session.pairing.bluetoothServiceUUID {
+                sessionServiceUUIDS[cbuuid] = session
+                bluetoothDelegate.addServiceUUID(uuid: cbuuid)
+            }
         }
     }
     
     func remove(session:Session) {
         mutex.lock {
             sessionLabels.removeValue(forKey: session.id)
+            if let cbuuid = session.pairing.bluetoothServiceUUID {
+                sessionServiceUUIDS.removeValue(forKey: cbuuid)
+                bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
+            }
         }
     }
     
@@ -169,10 +209,9 @@ class Silo {
         }
     }
 
-    
     //MARK: Handle Logic
     
-    class func handle(request:Request, id:String) throws -> Response {
+    class func handle(request:Request, session:Session) throws -> Response {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
@@ -185,7 +224,8 @@ class Silo {
             do {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
-                LogManager.shared.save(theLog: SignatureLog(session: id, digest: signRequest.digest, signature: sig ?? "<err>"))
+                AppDelegate.sendLocalPush(session: session, success: true)
+                LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>"))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
                 
             } catch let e {

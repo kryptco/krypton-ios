@@ -170,38 +170,12 @@ class KryptoTests: XCTestCase {
             }
         }
     }
-
-    
-    func testPublicKeyImport() {
-        
-        let pkEC = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEYCsv6QH9AH9lh4Eq3KewR9MhK5dQiRDFGrJaCwd0by0aMROTpmZ1ZTvfX+IAINebHF/umT4a20v7fZ29TbitVA=="
-        
-        let pkRSA = "MIIBCgKCAQEA2Ddg4jCLE7VPxLPjBaTPH3DSXpkJQP3J5KycZBUF4dyWJTeY8m5HyTrRj+Dm5t3ccpPJSd+OjupHdUj+BtL+8g+NOddmUCr0gmQsxsXx8ex+lS+wHgRBmH/Cb/5lZ1Ml7Omtysz8G/pw6LGYK9C0s0ZoUOAApv/rC9vQ1T8S0eJPJIB8rHsfnvrxkC9Cwkftu5pOIv5fqrjsDLqn0dLypWyT8AhHSdgRZn0658efTyPytfnu2/1XiOzzCbNxPExv+n8fq1kkzSIg9+gN7tvPz+gpbv1eQsDkArrGx838EqW8o5cUbGA3DtlGWAr4dKTe3yY40CA55AMz/lvmU0dnRwIDAQAB"
-
-        do {
-
-            let pub = try PublicKey.importFrom("test1", publicKeyDER: pkEC)
-            
-            
-            //let _ = try PublicKey.importFrom("test2", publicKeyDER: pkRSA)
-
-        } catch (let e) {
-            if let ce = e as? CryptoError {
-                XCTFail("test failed: \(ce.getError())")
-            } else {
-                XCTFail(e.localizedDescription)
-            }
-        }
-    }
-    
-    
-    
     
     func testCertImport() {
         
         let pkEC = "MIIBejCCASACCQDSO7zy24AZ8jAKBggqhkjOPQQDAjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMB4XDTE2MDkxOTE4MjQ0MVoXDTE3MDkxOTE4MjQ0MVowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABGArL+kB/QB/ZYeBKtynsEfTISuXUIkQxRqyWgsHdG8tGjETk6ZmdWU731/iACDXmxxf7pk+GttL+32dvU24rVQwCgYIKoZIzj0EAwIDSAAwRQIhAN4LR6vRiVOPlDVyyVB96c7KU027fccHNntzJp5kuJ7GAiBF1A3e10odlauvR0EoIqiM2kax29G3JvJCM+VFX7PmCw==".fromBase64()!
         
-        let pub = PublicKey(certData: pkEC)
+        let pub = try? PublicKey(certData: pkEC)
         log(pub)
     }
     
@@ -229,7 +203,7 @@ class KryptoTests: XCTestCase {
     func testSealUnseal() {
         
         do {
-            let key = try Data.random(size: 32).toBase64()
+            let key : Key = try Data.random(size: 32)
             let c = try "hello friends".data(using: String.Encoding.utf8)!.seal(key: key)
             
             let d = try c.unseal(key: key)
@@ -248,10 +222,10 @@ class KryptoTests: XCTestCase {
     func testSealUnsealIntegrity() {
         
         do {
-            let key = try Data.random(size: 32).toBase64()
+            let key = try Data.random(size: 32)
             let c = try "hello friends".data(using: String.Encoding.utf8)!.seal(key: key)
             
-            let key2 = try Data.random(size: 32).toBase64()
+            let key2 = try Data.random(size: 32)
             let d = try c.unseal(key: key2)
             
             let ds = String(data: d, encoding: String.Encoding.utf8)!
@@ -270,14 +244,4 @@ class KryptoTests: XCTestCase {
             }
         }
     }
-    
-    
-
-    
-    
-    /*func testPerformanceExample() {
-        self.measureBlock {
-        }
-    }*/
-    
 }
