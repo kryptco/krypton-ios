@@ -21,6 +21,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var peripheralCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
 
     var characteristicMessageBuffers: [CBCharacteristic: Data] = [:]
+    var serviceQueuedMessage: [CBUUID: Data] = [:]
 
     var mutex : Mutex = Mutex()
     var central: CBCentralManager?
@@ -58,6 +59,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         defer { mutex.unlock() }
         guard let peripheral = pairedPeripherals[uuid],
             let characteristic = peripheralCharacteristics[peripheral] else {
+                serviceQueuedMessage[uuid] = data
             return
         }
         do {
@@ -143,6 +145,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                 central?.cancelPeripheralConnection(pairedPeripheral)
             }
         }
+        serviceQueuedMessage.removeValue(forKey: uuid)
         scanLogic()
     }
 
@@ -204,6 +207,11 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             log("discovered krSSH characteristic")
             peripheralCharacteristics[peripheral] = char
             peripheral.setNotifyValue(true, for: char)
+            if let queuedMessage = serviceQueuedMessage.removeValue(forKey: service.uuid) {
+                dispatchAsync {
+                    self.writeToServiceUUID(uuid: service.uuid, data: queuedMessage)
+                }
+            }
         }
     }
 

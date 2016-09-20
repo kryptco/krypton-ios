@@ -1,0 +1,3 @@
+[submodule "swift-sodium"]
+	path = swift-sodium
+	url  = https://bitbucket.org/kryptco/swift-sodium

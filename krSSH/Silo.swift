@@ -39,11 +39,11 @@ class Silo {
         }
         mutex.unlock()
 
-        guard let req = try? Request(key: session.pairing.key, sealed: message) else {
+        guard let req = try? Request(key: session.pairing.symmetricKey, sealed: message) else {
             log("request from bluetooth did not parse correctly", .error)
             return
         }
-        guard let resp = try? Silo.handle(request: req, session: session).seal(key: session.pairing.key) else {
+        guard let resp = try? Silo.handle(request: req, session: session).seal(key: session.pairing.symmetricKey) else {
             log("handling request from bluetooth failed", .error)
             return
         }
@@ -136,8 +136,8 @@ class Silo {
                 for msg in msgs {
                     
                     do {
-                        let req = try Request(key: to.pairing.key, sealedBase64: msg)
-                        let resp = try Silo.handle(request: req, session: to).seal(key: to.pairing.key)
+                        let req = try Request(key: to.pairing.symmetricKey, sealedBase64: msg)
+                        let resp = try Silo.handle(request: req, session: to).seal(key: to.pairing.symmetricKey)
                         
                         log("created response")
                         
@@ -181,20 +181,39 @@ class Silo {
             }
             
             sessionLabels[session.id] = session
-            if let cbuuid = session.pairing.bluetoothServiceUUID {
-                sessionServiceUUIDS[cbuuid] = session
-                bluetoothDelegate.addServiceUUID(uuid: cbuuid)
+            let cbuuid = session.pairing.uuid
+            sessionServiceUUIDS[cbuuid] = session
+            bluetoothDelegate.addServiceUUID(uuid: cbuuid)
+
+            do {
+                let wrappedKey = try session.pairing.symmetricKey.wrap(to: session.pairing.workstationPublicKey)
+
+                bluetoothDelegate.writeToServiceUUID(uuid: cbuuid, data: wrappedKey)
+
+                API().send(to: session.pairing.queue, message: wrappedKey.toBase64(), handler: { (sendResult) in
+                    switch sendResult {
+                    case .sent:
+                        log("success! sent response.")
+                    case .failure(let e):
+                        log("error sending response: \(e)", LogType.error)
+                    default:
+                        break
+                    }
+                })
+            } catch let e {
+                log("error wrapping key: \(e)", .error)
+                return
             }
+
         }
     }
-    
+
     func remove(session:Session) {
         mutex.lock {
             sessionLabels.removeValue(forKey: session.id)
-            if let cbuuid = session.pairing.bluetoothServiceUUID {
-                sessionServiceUUIDS.removeValue(forKey: cbuuid)
-                bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
-            }
+            let cbuuid = session.pairing.uuid
+            sessionServiceUUIDS.removeValue(forKey: cbuuid)
+            bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
         }
     }
     
