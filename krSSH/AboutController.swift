@@ -25,8 +25,6 @@ class AboutController: UIViewController {
             let hashShort = hash.substring(to: hash.index(hash.startIndex, offsetBy: min(6, hash.characters.count)))
             self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
         }
-
-        
     }
 
     override func didReceiveMemoryWarning() {
