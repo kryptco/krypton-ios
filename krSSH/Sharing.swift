@@ -34,6 +34,9 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         msgDialogue.body = "\(peer.publicKey) <\(peer.email)>"
         msgDialogue.messageComposeDelegate = self
         
+        
+        Resources.makeAppearences()
+        
         return msgDialogue
     }
     

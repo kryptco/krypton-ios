@@ -159,9 +159,28 @@ class KRButton:UIButton {
         super.touchesEnded(touches, with: event)
         backgroundColor = UIColor.clear
     }
-    
-
 }
+
+
+class KRImageView:UIImageView {
+    
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+}
+
 
 
 class StyleFilledButton:UIButton {}
