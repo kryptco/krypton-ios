@@ -21,11 +21,13 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>77</string>
+	<key>GitHash</key>
+	<string>89c4ed716218a5d72d23969e54881ff91eec1e6f</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Scan QR codes to pair and record peer&apos;s public keys.</string>
+	<string>Scan QR codes to pair and record peer's public keys.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

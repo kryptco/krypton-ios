@@ -10,10 +10,23 @@ import UIKit
 
 class AboutController: UIViewController {
 
+    @IBOutlet weak var versionLabel:UILabel!
+    @IBOutlet weak var approvalSwitch:UISwitch!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        approvalSwitch.isOn = Policy.needsUserApproval
+        
+        if  let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String,
+            let hash = Bundle.main.infoDictionary?["GitHash"] as? String
+        {
+            let hashShort = hash.substring(to: hash.index(hash.startIndex, offsetBy: min(6, hash.characters.count)))
+            self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
+        }
+
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +34,15 @@ class AboutController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func doneTapped() {
+        dismiss(animated: true, completion: nil)
+    }
 
+    @IBAction func userApprovalSettingChanged(sender:UISwitch) {
+        Policy.needsUserApproval = sender.isOn
+    }
+    
+    
     /*
     // MARK: - Navigation
 

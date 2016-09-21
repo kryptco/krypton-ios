@@ -11,7 +11,17 @@ import Foundation
 
 class Policy {
     
-    class func needsUserApproval() -> Bool {
-        return false
+    enum StorageKey:String {
+        case userApproval = "policy_user_approval"
+    }
+    
+    class var needsUserApproval:Bool {
+        set(val) {
+            UserDefaults.standard.set(val, forKey: StorageKey.userApproval.rawValue)
+            UserDefaults.standard.synchronize()
+        }
+        get {
+            return UserDefaults.standard.bool(forKey: StorageKey.userApproval.rawValue) 
+        }
     }
 }

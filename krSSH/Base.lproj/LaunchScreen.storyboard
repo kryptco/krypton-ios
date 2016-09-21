@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -21,8 +21,8 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon-Circle" translatesAutoresizingMaskIntoConstraints="NO" id="veG-mA-S0L">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="PW5-K3-1tE"/>
-                                    <constraint firstAttribute="width" constant="180" id="YK2-1r-ghM"/>
+                                    <constraint firstAttribute="height" constant="120" id="PW5-K3-1tE"/>
+                                    <constraint firstAttribute="width" constant="120" id="YK2-1r-ghM"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="krypt co" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hly-y2-wuY">
@@ -79,6 +79,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppIcon-Circle" width="24" height="24"/>
+        <image name="AppIcon-Circle" width="256" height="256"/>
     </resources>
 </document>

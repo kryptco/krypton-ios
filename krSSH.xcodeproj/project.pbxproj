@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
 		FA01D7751D90640000FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
 		FA01D7761D9065AE00FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
-		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
@@ -142,8 +142,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FA01D7741D90640000FF3543 /* Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
+		FA01D7741D90640000FF3543 /* Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import.swift; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -585,6 +585,7 @@
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "krSSH" */;
 			buildPhases = (
 				FA8141521D714250004FE58C /* CommonCrypto */,
+				FAB28E8B1D93122400B61E6B /* Build Bump */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
 				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141341D70B0F4004FE58C /* Resources */,
@@ -715,6 +716,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
+		};
+		FAB28E8B1D93122400B61E6B /* Build Bump */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Bump";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n";
 		};
 		FAEE04A41D74BCCF002A7AFD /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
