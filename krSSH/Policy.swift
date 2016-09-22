@@ -10,13 +10,11 @@ import Foundation
 
 
 class Policy {
-    
-    
+
     //MARK: Settings
     enum StorageKey:String {
         case userApproval = "policy_user_approval"
     }
-    
     
     class var needsUserApproval:Bool {
         set(val) {
@@ -68,6 +66,7 @@ class Policy {
     class func notifyUser(session:Session, request:Request) {
         let notification = UILocalNotification()
         notification.fireDate = Date()
+
         notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"
         notification.soundName = UILocalNotificationDefaultSoundName
         
@@ -100,7 +99,7 @@ extension AppDelegate {
         }
         
         do {
-            let resp = try Silo.handle(request: request, session: session).seal(key: session.pairing.symmetricKey)
+            let resp = try Silo.responseFor(request: request, session: session).seal(key: session.pairing.symmetricKey)
             
             Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, data: resp)
 

@@ -256,6 +256,7 @@ class Silo {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
+        
 
         if let signRequest = request.sign {
             let kp = try KeyManager.sharedInstance()
@@ -265,6 +266,7 @@ class Silo {
             do {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
+                
                 Policy.notifyUser(session: session, request: request)
                 
                 LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>"))
@@ -303,18 +305,13 @@ class Silo {
 
     
     // MARK: Silo -new
-
-    var sigMutex = Mutex()
-    var sigCache:[String:Bool] = [:]
     
-    class func responseFor(request:Request, id:String) throws -> Response {
+    class func responseFor(request:Request, session:Session) throws -> Response {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
         
         if let signRequest = request.sign {
-            
-        
             let kp = try KeyManager.sharedInstance()
             
             var sig:String?
@@ -322,14 +319,14 @@ class Silo {
             do {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
-                LogManager.shared.save(theLog: SignatureLog(session: id, digest: signRequest.digest, signature: sig ?? "<err>"))
+                LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>"))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
                 
             } catch let e {
                 guard e is CryptoError else {
                     throw e
                 }
-                
+
                 err = "\(e)"
                 throw e
             }
