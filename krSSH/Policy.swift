@@ -41,7 +41,7 @@ class Policy {
         var approve = UIMutableUserNotificationAction()
         
         approve.identifier = "approve_identifier"
-        approve.title = "Approve"
+        approve.title = "Allow"
         approve.activationMode = UIUserNotificationActivationMode.background
         approve.isDestructive = false
         approve.isAuthenticationRequired = true
@@ -66,7 +66,7 @@ class Policy {
     class func requestUserAuthorization(session:Session, request:Request) {
         let notification = UILocalNotification()
         notification.fireDate = Date()
-        notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"
+        notification.alertBody = "\(session.pairing.name) is requesting to login with SSH using your key."
         notification.soundName = UILocalNotificationDefaultSoundName
         
         notification.category = Policy.authorizeCategory.identifier

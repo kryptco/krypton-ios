@@ -260,6 +260,10 @@ class Silo {
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session)
         
+        if response.sign != nil {
+            Policy.notifyUser(session: session, request: request)
+        }
+        
         try send(session: session, response: response, completionHandler: completionHandler)
     }
     
