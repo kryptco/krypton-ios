@@ -12,6 +12,10 @@
 		8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
+		8DE3955C1D942647005D559C /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
+		8DE3955D1D942647005D559C /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
+		8DE3955E1D942647005D559C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE395591D942647005D559C /* Info.plist */; };
+		8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */; };
 		FA01D7751D90640000FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
 		FA01D7761D9065AE00FF3543 /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA01D7741D90640000FF3543 /* Import.swift */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
@@ -201,6 +205,12 @@
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
+		8DE395561D942647005D559C /* AwesomeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeCache.h; sourceTree = "<group>"; };
+		8DE395571D942647005D559C /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		8DE395581D942647005D559C /* CacheObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheObject.swift; sourceTree = "<group>"; };
+		8DE395591D942647005D559C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DE3955A1D942647005D559C /* NSKeyedUnarchiverWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKeyedUnarchiverWrapper.h; sourceTree = "<group>"; };
+		8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSKeyedUnarchiverWrapper.m; sourceTree = "<group>"; };
 		FA01D7741D90640000FF3543 /* Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import.swift; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
@@ -344,6 +354,20 @@
 				8D003DEF1D90EBB10085ED21 /* Example OSXTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8DE395551D942647005D559C /* AwesomeCache */ = {
+			isa = PBXGroup;
+			children = (
+				8DE395561D942647005D559C /* AwesomeCache.h */,
+				8DE395571D942647005D559C /* Cache.swift */,
+				8DE395581D942647005D559C /* CacheObject.swift */,
+				8DE395591D942647005D559C /* Info.plist */,
+				8DE3955A1D942647005D559C /* NSKeyedUnarchiverWrapper.h */,
+				8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */,
+			);
+			name = AwesomeCache;
+			path = AwesomeCache/AwesomeCache;
 			sourceTree = "<group>";
 		};
 		FA16824F1D774C2700A7ED53 /* Pair */ = {
@@ -604,6 +628,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8DE395551D942647005D559C /* AwesomeCache */,
 				8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */,
 				8D93CD641D9198C7008955B2 /* libsodium-ios.a */,
 				FACAA4B91D8887FA000B9A01 /* CoreData.framework */,
@@ -816,6 +841,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DE3955E1D942647005D559C /* Info.plist in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
@@ -906,12 +932,15 @@
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
+				8DE3955D1D942647005D559C /* CacheObject.swift in Sources */,
 				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
+				8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
+				8DE3955C1D942647005D559C /* Cache.swift in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
@@ -1119,6 +1148,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = krSSH/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1149,6 +1179,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = krSSH/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
