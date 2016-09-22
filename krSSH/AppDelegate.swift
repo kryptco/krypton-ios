@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func registerPushNotifications() {
         DispatchQueue.main.async {
-            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: [Policy.authorizeCategory])
             UIApplication.shared.registerUserNotificationSettings(settings)
         }
     }
@@ -90,11 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let req = try Request(key: session.pairing.symmetricKey, sealedBase64: sealed)
             let resp = try Silo.shared.handle(request: req, session: session)
             let sealedResp = try resp.seal(key: session.pairing.symmetricKey)
-            Silo.shared.add(session: session)
+            //Silo.shared.add(session: session)
 
             log("created response")
             
-            
+
             API().send(to: session.pairing.queue, message: sealedResp.toBase64(), handler: { (sendResult) in
                 switch sendResult {
                 case .sent:
@@ -115,18 +115,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     }
-    
-    //MARK: Local Push
-    
-    class func sendLocalPush(session:Session, success:Bool) {
-        let notification = UILocalNotification()
-        notification.fireDate = Date()
-        notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        UIApplication.shared.scheduleLocalNotification(notification)
-    }
-
-    
+        
+   
     //MARK: App Lifecycle
     
     func applicationWillResignActive(_ application: UIApplication) {

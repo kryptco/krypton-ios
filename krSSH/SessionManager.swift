@@ -35,9 +35,14 @@ class SessionManager {
         return [Session](sessions.values)
     }
     
-    func get(with:QueueName) -> Session? {
-        return all.filter({$0.pairing.queue == with}).first
+    func get(queue:QueueName) -> Session? {
+        return all.filter({$0.pairing.queue == queue}).first
     }
+    
+    func get(id:String) -> Session? {
+        return sessions[id]
+    }
+    
     
     func add(session:Session) {
         let didSave = KeychainStorage().set(key: session.id, value: session.pairing.symmetricKey.toBase64())

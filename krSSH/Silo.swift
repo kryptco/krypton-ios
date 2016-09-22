@@ -265,7 +265,8 @@ class Silo {
             do {
                 sig = try kp.keyPair.sign(digest: signRequest.digest)
                 log("signed: \(sig)")
-                AppDelegate.sendLocalPush(session: session, success: true)
+                Policy.notifyUser(session: session, request: request)
+                
                 LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>"))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
                 
