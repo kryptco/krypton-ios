@@ -7,10 +7,10 @@
     "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : 9223372036854775807,
     "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "80FCF10D-3F39-435A-A4BF-A79EA163ADE0",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9741E69A-F4BE-4CBB-9FCF-A7B46F27A7D1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : "krSSH\/swift-sodium\/",
-    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : "krSSH\/"
+    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : "krssh-ios\/swift-sodium\/",
+    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : "krssh-ios\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "krSSH",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
