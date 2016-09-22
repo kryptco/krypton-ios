@@ -62,10 +62,14 @@ struct Request:JSONConvertable {
 struct SignRequest:JSONConvertable {
     var digest:String
     var fingerprint:String
+    var command:String?
     
     init(json: JSON) throws {
         self.digest = try json ~> "digest"
         self.fingerprint = try json ~> "public_key_fingerprint"
+        if let command : String = try? json ~> "command" {
+            self.command = command
+        }
     }
     
     var jsonMap: JSON {

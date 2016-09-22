@@ -34,9 +34,10 @@ class LogManager {
                 else {
                     continue
                 }
+                let command = managedLog.value(forKey: "command") as? String
                 
                 if sigs[digest] == nil {
-                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, date: date))
+                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, command: command, date: date))
                     sigs[digest] = true
                 }
                 
@@ -66,6 +67,8 @@ class LogManager {
     
     func save(theLog:SignatureLog) {
         mutex.lock()
+
+        log("saving \(theLog)")
         
         guard sigs[theLog.digest] == nil else {
             mutex.unlock()
@@ -88,6 +91,9 @@ class LogManager {
         logEntry.setValue(theLog.session, forKey: "session")
         logEntry.setValue(theLog.signature, forKey: "signature")
         logEntry.setValue(theLog.date, forKey: "date")
+        if let command = theLog.command {
+            logEntry.setValue(command, forKey: "command")
+        }
         
         //4
         do {

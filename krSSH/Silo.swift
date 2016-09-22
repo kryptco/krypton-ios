@@ -113,8 +113,6 @@ class Silo {
     }
     
     func listen(to: Session, completion:((Bool, Error?)->Void)?) {
-        
-        
         let api = API()
         
         log("listening with: \(to.id)", .warning)
@@ -178,8 +176,6 @@ class Silo {
             do {
                 let wrappedKey = try session.pairing.symmetricKey.wrap(to: session.pairing.workstationPublicKey)
 
-                bluetoothDelegate.writeToServiceUUID(uuid: cbuuid, data: wrappedKey)
-
                 API().send(to: session.pairing.queue, message: wrappedKey.toBase64(), handler: { (sendResult) in
                     switch sendResult {
                     case .sent:
@@ -190,6 +186,8 @@ class Silo {
                         break
                     }
                 })
+                bluetoothDelegate.writeToServiceUUID(uuid: cbuuid, data: wrappedKey)
+
             } catch let e {
                 log("error wrapping key: \(e)", .error)
                 return
