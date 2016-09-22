@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : 9223372036854775807,
+    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "80FCF10D-3F39-435A-A4BF-A79EA163ADE0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : "krSSH\/swift-sodium\/",
+    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : "krSSH\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "krSSH",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "krSSH.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:kryptco\/krssh-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:kryptco\/swift-sodium",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68"
+    }
+  ]
+}

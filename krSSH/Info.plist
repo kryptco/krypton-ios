@@ -21,9 +21,9 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>77</string>
+	<string>80</string>
 	<key>GitHash</key>
-	<string>89c4ed716218a5d72d23969e54881ff91eec1e6f</string>
+	<string>4954cd4ca09c4eeae6b6243fd374f73cb2a04a88</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

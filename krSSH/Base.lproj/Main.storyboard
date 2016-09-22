@@ -629,7 +629,9 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54D-kV-ltb" userLabel="header">
                                 <subviews>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D37-Dy-8JK"/>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D37-Dy-8JK">
+                                        <frame key="frameInset" width="1000" height="1000"/>
+                                    </mapView>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dID-Ae-DeD">
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cOg-Rc-c9O">
                                             <frame key="frameInset"/>
@@ -1183,46 +1185,7 @@ Cg
                                                 <attributes>
                                                     <color key="NSColor" red="0.4096381797082228" green="0.4096381797082228" blue="0.4096381797082228" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="10" name="AvenirNext-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                        <tabStops>
-                                                            <textTab alignment="left" location="28">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="56">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="84">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="112">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="140">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="168">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="196">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="224">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="252">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="280">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="308">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="336">
-                                                                <options/>
-                                                            </textTab>
-                                                        </tabStops>
-                                                    </paragraphStyle>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment>
@@ -1232,46 +1195,7 @@ Cg
                                                 <attributes>
                                                     <color key="NSColor" red="0.4096381797082228" green="0.4096381797082228" blue="0.4096381797082228" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                        <tabStops>
-                                                            <textTab alignment="left" location="28">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="56">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="84">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="112">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="140">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="168">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="196">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="224">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="252">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="280">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="308">
-                                                                <options/>
-                                                            </textTab>
-                                                            <textTab alignment="left" location="336">
-                                                                <options/>
-                                                            </textTab>
-                                                        </tabStops>
-                                                    </paragraphStyle>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
@@ -1387,7 +1311,7 @@ Cg
                                                     <constraint firstAttribute="height" constant="40" id="AXF-ho-aRl"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
-                                                <state key="normal" title="Other">
+                                                <state key="normal" title="Google Cloud">
                                                     <color key="titleColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
@@ -1407,7 +1331,7 @@ Cg
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="xVY-Ba-Ly9"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                 <state key="normal" title="GitHub">
                                                     <color key="titleColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -1427,25 +1351,25 @@ Cg
                                                 <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="16" id="ILu-zX-APp"/>
-                                                    <constraint firstAttribute="height" constant="16" id="vs7-Ra-dad"/>
+                                                    <constraint firstAttribute="width" constant="24" id="ILu-zX-APp"/>
+                                                    <constraint firstAttribute="height" constant="24" id="vs7-Ra-dad"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="8"/>
+                                                        <real key="value" value="12"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="digitalocean-logo" translatesAutoresizingMaskIntoConstraints="NO" id="SRe-Pz-8Hb" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gcloud" translatesAutoresizingMaskIntoConstraints="NO" id="shl-hq-vcq" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
                                                 <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="16" id="6EQ-AX-gyi"/>
-                                                    <constraint firstAttribute="height" constant="16" id="Yv8-SR-9zc"/>
+                                                    <constraint firstAttribute="width" constant="24" id="Mhd-Io-SoK"/>
+                                                    <constraint firstAttribute="height" constant="24" id="Xih-rz-rKj"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="8"/>
+                                                        <real key="value" value="12"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
@@ -1453,14 +1377,14 @@ Cg
                                         <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="ZFY-IL-sad" firstAttribute="leading" secondItem="dEI-Of-4Wh" secondAttribute="trailing" constant="-20" id="3rQ-YR-YJi"/>
+                                            <constraint firstItem="ZFY-IL-sad" firstAttribute="leading" secondItem="dEI-Of-4Wh" secondAttribute="trailing" constant="-30" id="3rQ-YR-YJi"/>
                                             <constraint firstItem="ZFY-IL-sad" firstAttribute="centerY" secondItem="LtF-SC-L3M" secondAttribute="centerY" id="7Tr-Er-lMB"/>
                                             <constraint firstItem="dEI-Of-4Wh" firstAttribute="centerY" secondItem="ZFY-IL-sad" secondAttribute="centerY" id="Ct2-d0-4OZ"/>
+                                            <constraint firstItem="qkb-be-G1c" firstAttribute="leading" secondItem="shl-hq-vcq" secondAttribute="trailing" constant="-28" id="FIT-MX-ZCU"/>
                                             <constraint firstAttribute="height" constant="60" id="KHD-2E-25e"/>
                                             <constraint firstItem="qkb-be-G1c" firstAttribute="centerX" secondItem="LtF-SC-L3M" secondAttribute="centerX" multiplier="1.5" id="QP5-PP-hrf"/>
-                                            <constraint firstItem="SRe-Pz-8Hb" firstAttribute="trailing" secondItem="qkb-be-G1c" secondAttribute="trailing" constant="-4" id="UX3-m5-5R2"/>
                                             <constraint firstItem="ZFY-IL-sad" firstAttribute="leading" secondItem="LtF-SC-L3M" secondAttribute="leading" constant="10" id="YUJ-Nb-K8Q"/>
-                                            <constraint firstItem="SRe-Pz-8Hb" firstAttribute="centerY" secondItem="qkb-be-G1c" secondAttribute="centerY" id="m0v-1A-wNO"/>
+                                            <constraint firstItem="shl-hq-vcq" firstAttribute="centerY" secondItem="qkb-be-G1c" secondAttribute="centerY" id="b4o-gl-sJq"/>
                                             <constraint firstAttribute="trailing" secondItem="qkb-be-G1c" secondAttribute="trailing" constant="10" id="tms-ks-5tF"/>
                                             <constraint firstItem="qkb-be-G1c" firstAttribute="centerY" secondItem="LtF-SC-L3M" secondAttribute="centerY" id="u4h-4K-uDO"/>
                                             <constraint firstItem="ZFY-IL-sad" firstAttribute="centerX" secondItem="LtF-SC-L3M" secondAttribute="centerX" multiplier="0.5" id="wzk-7q-xr7"/>
@@ -1593,10 +1517,19 @@ Cg
                                                     </paragraphStyle>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content=" or elsewhere">
+                                            <fragment content=" or ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.20784313725490197" green="0.20784313725490197" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="14" name="AvenirNext-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Google Cloud">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.20784313725490197" green="0.20784313725490197" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="14" name="AvenirNext-Bold"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
                                                         <tabStops/>
                                                     </paragraphStyle>
@@ -1754,8 +1687,8 @@ Cg
         <image name="copy" width="50" height="50"/>
         <image name="device" width="30" height="30"/>
         <image name="device_selected" width="30" height="30"/>
-        <image name="digitalocean-logo" width="44" height="44"/>
         <image name="fingerprint" width="256" height="256"/>
+        <image name="gcloud" width="25" height="25"/>
         <image name="github-logo" width="44" height="44"/>
         <image name="mac" width="256" height="256"/>
         <image name="mail-icon" width="50" height="50"/>
@@ -1771,7 +1704,7 @@ Cg
         <image name="x" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8Vx-DU-0ql"/>
+        <segue reference="Rob-Re-AWf"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
