@@ -40,8 +40,8 @@ class SessionManager {
     }
     
     func add(session:Session) {
-        let didSave = KeychainStorage().set(key: session.id, value: session.pairing.key.toBase64())
-        if !didSave { log("could not save key for id: \(session.id)", .error) }
+        let didSave = KeychainStorage().set(key: session.id, value: session.pairing.symmetricKey.toBase64())
+        if !didSave { log("could not save keys for id: \(session.id)", .error) }
         sessions[session.id] = session
         save()
     }
