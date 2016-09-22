@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Response:JSONConvertable {
+final class Response:JSONConvertable {
     
     var requestID:String
     var snsEndpointARN:String
@@ -60,7 +60,6 @@ struct Response:JSONConvertable {
         
         return json
     }
-    
 }
 
 //MARK: Responses

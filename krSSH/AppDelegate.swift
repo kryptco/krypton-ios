@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let req = try Request(key: session.pairing.symmetricKey, sealedBase64: sealed)
-            let resp = try Silo.handle(request: req, session: session)
+            let resp = try Silo.shared.handle(request: req, session: session)
             let sealedResp = try resp.seal(key: session.pairing.symmetricKey)
             Silo.shared.add(session: session)
 

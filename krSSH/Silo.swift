@@ -12,6 +12,7 @@ import CoreBluetooth
 typealias SessionLabel = String
 
 struct SessionRemovedError:Error{}
+struct InvalidRequestTimeError:Error{}
 
 private var sharedSilo:Silo?
 class Silo {
@@ -23,7 +24,10 @@ class Silo {
     var bluetoothDelegate: BluetoothDelegate = BluetoothDelegate()
     var centralManager: CBCentralManager
 
+    var requestCache: Cache<NSData>?
+
     init() {
+        requestCache = try? Cache<NSData>(name: "SILO_CACHE")
         centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
         bluetoothDelegate.mutex.lock {
             bluetoothDelegate.silo = self
@@ -43,7 +47,7 @@ class Silo {
             log("request from bluetooth did not parse correctly", .error)
             return
         }
-        guard let resp = try? Silo.handle(request: req, session: session).seal(key: session.pairing.symmetricKey) else {
+        guard let resp = try? handle(request: req, session: session).seal(key: session.pairing.symmetricKey) else {
             log("handling request from bluetooth failed", .error)
             return
         }
@@ -137,7 +141,7 @@ class Silo {
                     
                     do {
                         let req = try Request(key: to.pairing.symmetricKey, sealedBase64: msg)
-                        let resp = try Silo.handle(request: req, session: to).seal(key: to.pairing.symmetricKey)
+                        let resp = try self.handle(request: req, session: to).seal(key: to.pairing.symmetricKey)
                         
                         log("created response")
                         
@@ -230,7 +234,25 @@ class Silo {
 
     //MARK: Handle Logic
     
-    class func handle(request:Request, session:Session) throws -> Response {
+    func handle(request:Request, session:Session) throws -> Response {
+        mutex.lock()
+        defer { mutex.unlock() }
+
+        let now = Date().timeIntervalSince1970
+        if abs(now - Double(request.unixSeconds)) > 60 {
+            throw InvalidRequestTimeError()
+        }
+
+        if let requestCache = self.requestCache {
+            requestCache.removeExpiredObjects()
+            if let cachedResponseData = requestCache[request.id] {
+                let rawJSON = try JSONSerialization.jsonObject(with: cachedResponseData as Data)
+                if let json = rawJSON as? JSON {
+                    return try Response(json: json)
+                }
+            }
+        }
+
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
@@ -269,9 +291,15 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        return Response(requestID: request.id, endpoint: arn, sign: sign, list: list, me: me)
+        let response = Response(requestID: request.id, endpoint: arn, sign: sign, list: list, me: me)
+
+        if let requestCache = self.requestCache {
+            requestCache.setObject(try response.jsonData() as NSData, forKey: request.id, expires: .seconds(300))
+            requestCache[request.id] = try response.jsonData() as NSData
+        }
+        return response
     }
-    
+
     
     // MARK: Silo -new
 
