@@ -47,12 +47,8 @@ class Silo {
             log("request from bluetooth did not parse correctly", .error)
             return
         }
-        guard let resp = try? handle(request: req, session: session).seal(key: session.pairing.symmetricKey) else {
-            log("handling request from bluetooth failed", .error)
-            return
-        }
-
-        self.bluetoothDelegate.writeToServiceUUID(uuid: serviceUUID, data: resp)
+        
+        try? handle(request: req, session: session)
     }
 
     class var shared:Silo {
@@ -141,21 +137,7 @@ class Silo {
                     
                     do {
                         let req = try Request(key: to.pairing.symmetricKey, sealedBase64: msg)
-                        let resp = try self.handle(request: req, session: to).seal(key: to.pairing.symmetricKey)
-                        
-                        log("created response")
-                        
-                        
-                        api.send(to: to.pairing.queue, message: resp.toBase64(), handler: { (sendResult) in
-                            switch sendResult {
-                            case .sent:
-                                log("success! sent response.")
-                            case .failure(let e):
-                                log("error sending response: \(e)", LogType.error)
-                            default:
-                                break
-                            }
-                        })
+                        try self.handle(request: req, session: to)
                     } catch (let e) {
                         log("error responding: \(e)", LogType.error)
                     }
@@ -234,7 +216,7 @@ class Silo {
 
     //MARK: Handle Logic
     
-    func handle(request:Request, session:Session) throws -> Response {
+    func handle(request:Request, session:Session, completionHandler: (()->Void)? = nil) throws {
         mutex.lock()
         defer { mutex.unlock() }
 
@@ -242,32 +224,75 @@ class Silo {
         if abs(now - Double(request.unixSeconds)) > 60 {
             throw InvalidRequestTimeError()
         }
-
-        if let requestCache = self.requestCache {
-            requestCache.removeExpiredObjects()
-            if let cachedResponseData = requestCache[request.id] {
-                let rawJSON = try JSONSerialization.jsonObject(with: cachedResponseData as Data)
-                if let json = rawJSON as? JSON {
-                    return try Response(json: json)
-                }
-            }
+        
+        requestCache?.removeExpiredObjects()
+        if  let cachedResponseData = requestCache?[request.id] as? Data,
+            let json = (try JSONSerialization.jsonObject(with: cachedResponseData)) as? JSON
+        {
+            let response = try Response(json: json)
+            try self.send(session: session, response: response, completionHandler: nil)
+            return
         }
 
+        
+        // logic
+        
+        // if signature request AND we need a user approval, 
+        // then exit and wait for it
+        guard   Policy.needsUserApproval == false &&
+                request.sign != nil
+        else {
+            Policy.requestUserAuthorization(session: session, request: request)
+            return
+        }
+        
+        
+        // otherwise, continue with creating and sending the response
+        let response = try responseFor(request: request, session: session)
+        
+        try send(session: session, response: response, completionHandler: completionHandler)
+    }
+    
+    
+    func send(session:Session, response:Response, completionHandler: (()->Void)? = nil) throws {
+        let sealedResponse = try response.seal(key: session.pairing.symmetricKey)
+        
+        Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, data: sealedResponse)
+        
+        API().send(to: session.pairing.queue, message: sealedResponse.toBase64(), handler: { (sendResult) in
+            switch sendResult {
+            case .sent:
+                log("success! sent response.")
+            case .failure(let e):
+                log("error sending response: \(e)", LogType.error)
+            default:
+                break
+            }
+            
+            completionHandler?()
+            
+        })
+    }
+    
+    // MARK: Silo -new
+    
+    // precondition: mutex locked
+    func responseFor(request:Request, session:Session) throws -> Response {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
         
-
         if let signRequest = request.sign {
             let kp = try KeyManager.sharedInstance()
             
             var sig:String?
             var err:String?
             do {
-                sig = try kp.keyPair.sign(digest: signRequest.digest)
-                log("signed: \(sig)")
                 
-                Policy.notifyUser(session: session, request: request)
+                // only place where signature should occur
+                sig = try kp.keyPair.sign(digest: signRequest.digest)
+                
+                log("signed: \(sig)")
                 
                 LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>"))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
@@ -276,12 +301,12 @@ class Silo {
                 guard e is CryptoError else {
                     throw e
                 }
-                
+
                 err = "\(e)"
                 throw e
             }
             
-     
+            
             sign = SignResponse(sig: sig, err: err)
         }
         
@@ -295,55 +320,12 @@ class Silo {
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
         let response = Response(requestID: request.id, endpoint: arn, sign: sign, list: list, me: me)
-
-        if let requestCache = self.requestCache {
-            requestCache.setObject(try response.jsonData() as NSData, forKey: request.id, expires: .seconds(300))
-            requestCache[request.id] = try response.jsonData() as NSData
-        }
+        
+        let responseData = try response.jsonData() as NSData
+        
+        requestCache?.setObject(responseData, forKey: request.id, expires: .seconds(300))
+        
         return response
-    }
 
-    
-    // MARK: Silo -new
-    
-    class func responseFor(request:Request, session:Session) throws -> Response {
-        var sign:SignResponse?
-        var list:ListResponse?
-        var me:MeResponse?
-        
-        if let signRequest = request.sign {
-            let kp = try KeyManager.sharedInstance()
-            
-            var sig:String?
-            var err:String?
-            do {
-                sig = try kp.keyPair.sign(digest: signRequest.digest)
-                log("signed: \(sig)")
-                LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>"))
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
-                
-            } catch let e {
-                guard e is CryptoError else {
-                    throw e
-                }
-
-                err = "\(e)"
-                throw e
-            }
-            
-            
-            sign = SignResponse(sig: sig, err: err)
-        }
-        
-        if let _ = request.list {
-            list = ListResponse(peers: PeerManager.shared.all)
-        }
-        if let _ = request.me {
-            me = MeResponse(me: try KeyManager.sharedInstance().getMe())
-        }
-        
-        let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
-        
-        return Response(requestID: request.id, endpoint: arn, sign: sign, list: list, me: me)
     }
 }

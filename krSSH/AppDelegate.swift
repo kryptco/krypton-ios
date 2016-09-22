@@ -88,26 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let req = try Request(key: session.pairing.symmetricKey, sealedBase64: sealed)
-            let resp = try Silo.shared.handle(request: req, session: session)
-            let sealedResp = try resp.seal(key: session.pairing.symmetricKey)
-            //Silo.shared.add(session: session)
+            try Silo.shared.handle(request: req, session: session)
 
-            log("created response")
-            
-
-            API().send(to: session.pairing.queue, message: sealedResp.toBase64(), handler: { (sendResult) in
-                switch sendResult {
-                case .sent:
-                    log("success! sent response.")
-                case .failure(let e):
-                    log("error sending response: \(e)", LogType.error)
-                default:
-                    break
-                }
-                
-                completionHandler(.newData)
-
-            })
         } catch let e {
             log("error creating or sending response: \(e)")
             completionHandler(.failed)

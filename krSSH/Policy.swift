@@ -63,19 +63,30 @@ class Policy {
     
     //MARK: Notification Push
 
-    class func notifyUser(session:Session, request:Request) {
+    class func requestUserAuthorization(session:Session, request:Request) {
         let notification = UILocalNotification()
         notification.fireDate = Date()
-
         notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"
         notification.soundName = UILocalNotificationDefaultSoundName
         
-        if Policy.needsUserApproval {
-            notification.category = Policy.authorizeCategory.identifier
-            notification.userInfo = ["session_id": session.id, "request": request.jsonMap]
+        notification.category = Policy.authorizeCategory.identifier
+        notification.userInfo = ["session_id": session.id, "request": request.jsonMap]
+
+        dispatchMain {
+            UIApplication.shared.scheduleLocalNotification(notification)
         }
+    }
+    
+    class func notifyUser(session:Session, request:Request) {
+        let notification = UILocalNotification()
+        notification.fireDate = Date()
         
-        UIApplication.shared.scheduleLocalNotification(notification)
+        notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        
+        dispatchMain {
+            UIApplication.shared.scheduleLocalNotification(notification)
+        }
     }
 }
 
@@ -99,23 +110,11 @@ extension AppDelegate {
         }
         
         do {
-            let resp = try Silo.responseFor(request: request, session: session).seal(key: session.pairing.symmetricKey)
-            
-            Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, data: resp)
+            Silo.shared.mutex.lock()
+            let resp = try Silo.shared.responseFor(request: request, session: session)
+            Silo.shared.mutex.unlock()
+            try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
 
-            API().send(to: session.pairing.queue, message: resp.toBase64(), handler: { (sendResult) in
-                switch sendResult {
-                case .sent:
-                    log("success! sent response.")
-                case .failure(let e):
-                    log("error sending response: \(e)", LogType.error)
-                default:
-                    break
-                }
-                
-                completionHandler()
-                
-            })
         } catch (let e) {
             log("handle error \(e)", .error)
             completionHandler()
