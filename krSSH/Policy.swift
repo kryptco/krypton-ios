@@ -110,9 +110,7 @@ extension AppDelegate {
         }
         
         do {
-            Silo.shared.mutex.lock()
-            let resp = try Silo.shared.responseFor(request: request, session: session)
-            Silo.shared.mutex.unlock()
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session)
             try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
 
         } catch (let e) {

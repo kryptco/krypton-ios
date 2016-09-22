@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let req = try Request(key: session.pairing.symmetricKey, sealedBase64: sealed)
-            try Silo.shared.handle(request: req, session: session)
+            try Silo.shared.handle(request: req, session: session, completionHandler: { completionHandler(.newData) })
 
         } catch let e {
             log("error creating or sending response: \(e)")

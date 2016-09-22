@@ -13,6 +13,7 @@ typealias SessionLabel = String
 
 struct SessionRemovedError:Error{}
 struct InvalidRequestTimeError:Error{}
+struct RequestPendingError:Error{}
 
 private var sharedSilo:Silo?
 class Silo {
@@ -25,9 +26,12 @@ class Silo {
     var centralManager: CBCentralManager
 
     var requestCache: Cache<NSData>?
+    //  store requests waiting for user approval
+    var pendingRequests: Cache<NSString>?
 
     init() {
         requestCache = try? Cache<NSData>(name: "SILO_CACHE")
+        pendingRequests = try? Cache<NSString>(name: "SILO_PENDING_REQUESTS")
         centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
         bluetoothDelegate.mutex.lock {
             bluetoothDelegate.silo = self
@@ -230,7 +234,7 @@ class Silo {
             let json = (try JSONSerialization.jsonObject(with: cachedResponseData)) as? JSON
         {
             let response = try Response(json: json)
-            try self.send(session: session, response: response, completionHandler: nil)
+            try self.send(session: session, response: response, completionHandler: completionHandler)
             return
         }
 
@@ -241,7 +245,14 @@ class Silo {
         // then exit and wait for it
         guard   request.sign == nil || Policy.needsUserApproval == false
         else {
+            pendingRequests?.removeExpiredObjects()
+            if pendingRequests?.object(forKey: request.id) != nil {
+                throw RequestPendingError()
+            }
+            pendingRequests?.setObject("", forKey: request.id, expires: .seconds(300))
+
             Policy.requestUserAuthorization(session: session, request: request)
+            completionHandler?()
             return
         }
         
@@ -267,13 +278,16 @@ class Silo {
             default:
                 break
             }
-            
             completionHandler?()
-            
         })
     }
     
     // MARK: Silo -new
+    func lockResponseFor(request:Request, session:Session) throws -> Response {
+        mutex.lock()
+        defer { mutex.unlock() }
+        return try responseFor(request: request, session: session)
+    }
     
     // precondition: mutex locked
     func responseFor(request:Request, session:Session) throws -> Response {
