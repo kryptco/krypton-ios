@@ -29,8 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         registerPushNotifications()
 
+        
         return true
     }
+    
     
     func registerPushNotifications() {
         DispatchQueue.main.async {
@@ -98,6 +100,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
+    
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        
+        // if approval notification
+        if
+            let sessionID = notification.userInfo?["session_id"] as? String,
+            let session = SessionManager.shared.get(id: sessionID),
+            let requestJSON = notification.userInfo?["request"] as? JSON,
+            let request = try? Request(json: requestJSON)
+            
+        {
+            Policy.requestUserAuthorization(session: session, request: request)
+        }
+        
+        
+    }
     
     //MARK: Allow/Reject
     
