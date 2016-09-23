@@ -69,8 +69,6 @@
 		FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
-		FA88366C1D94A56C00EFF07C /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA88366B1D94A56C00EFF07C /* OctoKit.framework */; };
-		FA88366E1D94A58500EFF07C /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA88366D1D94A58500EFF07C /* RequestKit.framework */; };
 		FA8E1BDC1D9491FC0095AEF4 /* app-icon-url.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8E1BDB1D9491FC0095AEF4 /* app-icon-url.png */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
@@ -176,6 +174,104 @@
 			remoteGlobalIDString = 901644EB1AE36F2E00163E3E;
 			remoteInfo = "Example OSXTests";
 		};
+		8DB8434C1D94A87D003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 234F4C1C1BDDF64300A58EF7;
+			remoteInfo = RequestKit;
+		};
+		8DB8434E1D94A87D003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 234F4C261BDDF64300A58EF7;
+			remoteInfo = RequestKitTests;
+		};
+		8DB843501D94A87D003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 233743001C7981A800013492;
+			remoteInfo = "RequestKit tvOS";
+		};
+		8DB843521D94A87D003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2337434D1C79833A00013492;
+			remoteInfo = "RequestKit tvTests";
+		};
+		8DB843541D94A87D003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2337430D1C7981D700013492;
+			remoteInfo = "RequestKit watchOS";
+		};
+		8DB843561D94A87D003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2337431A1C7981E700013492;
+			remoteInfo = "RequestKit Mac";
+		};
+		8DB843581D94A87D003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2337433E1C79832700013492;
+			remoteInfo = "RequestKit MacTests";
+		};
+		8DB8436B1D94A885003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 239BE7C91B8C47A100D2CE22;
+			remoteInfo = OctoKit;
+		};
+		8DB8436D1D94A885003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 234F4BA91BDDE31A00A58EF7;
+			remoteInfo = OctoKitTests;
+		};
+		8DB8436F1D94A885003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 23CAF2621C7AB5FB005011C4;
+			remoteInfo = "OctoKit tvOS";
+		};
+		8DB843711D94A885003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 23CAF26B1C7AB5FC005011C4;
+			remoteInfo = "OctoKit tvOSTests";
+		};
+		8DB843731D94A885003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 23CAF27E1C7AB60C005011C4;
+			remoteInfo = "OctoKit Mac";
+		};
+		8DB843751D94A885003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 23CAF2871C7AB60D005011C4;
+			remoteInfo = "OctoKit MacTests";
+		};
+		8DB843771D94A885003E57D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 23CAF29A1C7AB619005011C4;
+			remoteInfo = "OctoKit watchOS";
+		};
 		FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
@@ -208,6 +304,8 @@
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
+		8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RequestKit.xcodeproj; path = RequestKit/RequestKit.xcodeproj; sourceTree = "<group>"; };
+		8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OctoKit.xcodeproj; path = octokit.swift/OctoKit.xcodeproj; sourceTree = "<group>"; };
 		8DE395561D942647005D559C /* AwesomeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeCache.h; sourceTree = "<group>"; };
 		8DE395571D942647005D559C /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		8DE395581D942647005D559C /* CacheObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheObject.swift; sourceTree = "<group>"; };
@@ -274,8 +372,6 @@
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		FA88366B1D94A56C00EFF07C /* OctoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OctoKit.framework; path = "../../../../Library/Developer/Xcode/DerivedData/OctoKit-ddzczuoevxssvocfdbwzsvssqnjt/Build/Products/Debug-iphonesimulator/OctoKit.framework"; sourceTree = "<group>"; };
-		FA88366D1D94A58500EFF07C /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = "../../../../Library/Developer/Xcode/DerivedData/RequestKit-gtxhtuguzcyfrzgsawedzirbbxkw/Build/Products/Debug-iphonesimulator/RequestKit.framework"; sourceTree = "<group>"; };
 		FA8E1BDB1D9491FC0095AEF4 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon-url.png"; path = "krSSH/Assets.xcassets/AppIcon-Circle240.imageset/app-icon-url.png"; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
@@ -330,12 +426,10 @@
 			files = (
 				FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */,
 				FA16827D1D774F3C00A7ED53 /* CoreImage.framework in Frameworks */,
-				FA88366C1D94A56C00EFF07C /* OctoKit.framework in Frameworks */,
 				FAA6E1F51D79E4FC007D1B3A /* AWSCore.framework in Frameworks */,
 				FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */,
 				FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */,
 				FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */,
-				FA88366E1D94A58500EFF07C /* RequestKit.framework in Frameworks */,
 				FA8141511D714203004FE58C /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,6 +454,34 @@
 				8D003DEB1D90EBB10085ED21 /* Example iOSTests.xctest */,
 				8D003DED1D90EBB10085ED21 /* Example OSX.app */,
 				8D003DEF1D90EBB10085ED21 /* Example OSXTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8DB843431D94A87D003E57D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8434D1D94A87D003E57D1 /* RequestKit.framework */,
+				8DB8434F1D94A87D003E57D1 /* RequestKitTests.xctest */,
+				8DB843511D94A87D003E57D1 /* RequestKit.framework */,
+				8DB843531D94A87D003E57D1 /* RequestKit tvTests.xctest */,
+				8DB843551D94A87D003E57D1 /* RequestKit.framework */,
+				8DB843571D94A87D003E57D1 /* RequestKit.framework */,
+				8DB843591D94A87D003E57D1 /* RequestKit MacTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8DB843621D94A885003E57D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8436C1D94A885003E57D1 /* OctoKit.framework */,
+				8DB8436E1D94A885003E57D1 /* OctoKitTests.xctest */,
+				8DB843701D94A885003E57D1 /* OctoKit.framework */,
+				8DB843721D94A885003E57D1 /* OctoKit tvOSTests.xctest */,
+				8DB843741D94A885003E57D1 /* OctoKit.framework */,
+				8DB843761D94A885003E57D1 /* OctoKit MacTests.xctest */,
+				8DB843781D94A885003E57D1 /* OctoKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -636,8 +758,8 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FA88366D1D94A58500EFF07C /* RequestKit.framework */,
-				FA88366B1D94A56C00EFF07C /* OctoKit.framework */,
+				8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */,
+				8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */,
 				8DE395551D942647005D559C /* AwesomeCache */,
 				8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */,
 				8D93CD641D9198C7008955B2 /* libsodium-ios.a */,
@@ -783,6 +905,14 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 8DB843621D94A885003E57D1 /* Products */;
+					ProjectRef = 8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */;
+				},
+				{
+					ProductGroup = 8DB843431D94A87D003E57D1 /* Products */;
+					ProjectRef = 8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */;
+				},
+				{
 					ProductGroup = 8D003DD91D90EBB10085ED21 /* Products */;
 					ProjectRef = 8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */;
 				},
@@ -843,6 +973,104 @@
 			fileType = wrapper.cfbundle;
 			path = "Example OSXTests.xctest";
 			remoteRef = 8D003DEE1D90EBB10085ED21 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB8434D1D94A87D003E57D1 /* RequestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RequestKit.framework;
+			remoteRef = 8DB8434C1D94A87D003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB8434F1D94A87D003E57D1 /* RequestKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RequestKitTests.xctest;
+			remoteRef = 8DB8434E1D94A87D003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843511D94A87D003E57D1 /* RequestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RequestKit.framework;
+			remoteRef = 8DB843501D94A87D003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843531D94A87D003E57D1 /* RequestKit tvTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "RequestKit tvTests.xctest";
+			remoteRef = 8DB843521D94A87D003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843551D94A87D003E57D1 /* RequestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RequestKit.framework;
+			remoteRef = 8DB843541D94A87D003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843571D94A87D003E57D1 /* RequestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RequestKit.framework;
+			remoteRef = 8DB843561D94A87D003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843591D94A87D003E57D1 /* RequestKit MacTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "RequestKit MacTests.xctest";
+			remoteRef = 8DB843581D94A87D003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB8436C1D94A885003E57D1 /* OctoKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OctoKit.framework;
+			remoteRef = 8DB8436B1D94A885003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB8436E1D94A885003E57D1 /* OctoKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OctoKitTests.xctest;
+			remoteRef = 8DB8436D1D94A885003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843701D94A885003E57D1 /* OctoKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OctoKit.framework;
+			remoteRef = 8DB8436F1D94A885003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843721D94A885003E57D1 /* OctoKit tvOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OctoKit tvOSTests.xctest";
+			remoteRef = 8DB843711D94A885003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843741D94A885003E57D1 /* OctoKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OctoKit.framework;
+			remoteRef = 8DB843731D94A885003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843761D94A885003E57D1 /* OctoKit MacTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OctoKit MacTests.xctest";
+			remoteRef = 8DB843751D94A885003E57D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DB843781D94A885003E57D1 /* OctoKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OctoKit.framework;
+			remoteRef = 8DB843771D94A885003E57D1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

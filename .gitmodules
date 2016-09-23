@@ -6,7 +6,7 @@
 	url = git@github.com:aschuch/AwesomeCache.git
 [submodule "RequestKit"]
 	path = RequestKit
-	url = https://github.com/nerdishbynature/RequestKit.git
+	url = https://github.com/KryptCo/RequestKit.git
 [submodule "octokit.swift"]
 	path = octokit.swift
-	url = https://github.com/nerdishbynature/octokit.swift.git
+	url = https://github.com/KryptCo/octokit.swift.git
