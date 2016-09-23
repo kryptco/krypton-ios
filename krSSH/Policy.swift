@@ -66,7 +66,7 @@ class Policy {
     class func requestUserAuthorization(session:Session, request:Request) {
         let notification = UILocalNotification()
         notification.fireDate = Date()
-        notification.alertBody = "\(session.pairing.name) is requesting to login with SSH using your key."
+        notification.alertBody = "\(session.pairing.name) is requesting to use your key for '\(request.sign?.command ?? "SSH login")'."
         notification.soundName = UILocalNotificationDefaultSoundName
         
         notification.category = Policy.authorizeCategory.identifier
@@ -81,44 +81,12 @@ class Policy {
         let notification = UILocalNotification()
         notification.fireDate = Date()
         
-        notification.alertBody = "\(session.pairing.name) just used your key to login with SSH"
+        notification.alertBody = "\(session.pairing.name) just used your key for '\(request.sign?.command ?? "SSH login")'."
         notification.soundName = UILocalNotificationDefaultSoundName
         
         dispatchMain {
             UIApplication.shared.scheduleLocalNotification(notification)
         }
-    }
-}
-
-extension AppDelegate {
-    
-    @objc(application:handleActionWithIdentifier:forLocalNotification:completionHandler:) func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        
-        guard identifier == Policy.approveAction.identifier else {
-            log("user rejected", .warning)
-            return
-        }
-        
-        guard   let sessionID = notification.userInfo?["session_id"] as? String,
-                let session = SessionManager.shared.get(id: sessionID),
-                let requestJSON = notification.userInfo?["request"] as? JSON,
-                let request = try? Request(json: requestJSON)
-        else {
-                
-            log("invalid notification", .error)
-            return
-        }
-        
-        do {
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session)
-            try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
-
-        } catch (let e) {
-            log("handle error \(e)", .error)
-            completionHandler()
-            return
-        }
-        
     }
 }
 

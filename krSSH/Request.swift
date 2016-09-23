@@ -18,7 +18,7 @@ struct Request:JSONConvertable {
     
     init(json: JSON) throws {
         self.id = try json ~> "request_id"
-        unixSeconds = try json ~> "unix_seconds"
+        self.unixSeconds = try json ~> "unix_seconds"
         
         if let json:JSON = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
@@ -67,14 +67,21 @@ struct SignRequest:JSONConvertable {
     init(json: JSON) throws {
         self.digest = try json ~> "digest"
         self.fingerprint = try json ~> "public_key_fingerprint"
-        if let command : String = try? json ~> "command" {
+        if let command:String = try? json ~> "command" {
             self.command = command
         }
     }
     
     var jsonMap: JSON {
-        return ["message": digest,
-                "public_key_fingerprint": fingerprint]
+        
+        var json:[String:Any] = ["digest": digest,
+                                "public_key_fingerprint": fingerprint]
+        
+        if let command = command {
+            json["command"] = command
+        }
+        
+        return json
     }
 }
 

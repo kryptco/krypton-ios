@@ -24,7 +24,7 @@ class GitHub {
     
     
     func loginAndUpload() {
-        authConfig.authenticate()
+        //authConfig.authenticate()
     }
     
     func upload(peer:Peer) {

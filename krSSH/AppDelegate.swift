@@ -97,7 +97,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     }
+    
+    
+    //MARK: Allow/Reject
+    
+    func application(_ application: UIApplication,
+                     handleActionWithIdentifier identifier: String?,
+                     for notification: UILocalNotification,
+                     completionHandler: @escaping () -> Void ){
         
+        guard identifier == Policy.approveAction.identifier else {
+            log("user rejected", .warning)
+            return
+        }
+        
+        guard   let sessionID = notification.userInfo?["session_id"] as? String,
+            let session = SessionManager.shared.get(id: sessionID),
+            let requestJSON = notification.userInfo?["request"] as? JSON
+            else {
+
+                log("invalid notification", .error)
+                return
+        }
+        
+        do {
+            let request = try Request(json: requestJSON)
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session)
+            try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
+            
+        } catch (let e) {
+            log("handle error \(e)", .error)
+            completionHandler()
+            return
+        }
+        
+    }
+    
    
     //MARK: App Lifecycle
     
