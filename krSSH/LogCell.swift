@@ -18,10 +18,14 @@ class LogCell: UITableViewCell {
     }
     
     func set(log:SignatureLog) {
-        if let hexSig = log.digest.fromBase64()?.hexPretty {
-            signatureLabel.text = hexSig
+        if let command = log.command {
+            signatureLabel.text = command
         } else {
-            signatureLabel.text = log.digest
+            if let hexSig = log.digest.fromBase64()?.hexPretty {
+                signatureLabel.text = hexSig
+            } else {
+                signatureLabel.text = log.digest
+            }
         }
         timeLabel.text = log.date.toLongTimeString()
     }
