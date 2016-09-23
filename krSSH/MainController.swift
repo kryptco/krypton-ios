@@ -96,6 +96,8 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         blurView.frame = view.frame
         self.blurView.isHidden = false
+        
+        Policy.currentViewController = self
     }
 
     override func viewDidAppear(_ animated: Bool) {

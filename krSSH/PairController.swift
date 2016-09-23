@@ -86,6 +86,8 @@ class PairController: UIViewController, KRScanDelegate {
         approveButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
         
         self.scanViewController?.canScan = true
+        
+        Policy.currentViewController = self
     }
     
     var shouldShowProfile = true

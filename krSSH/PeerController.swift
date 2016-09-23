@@ -43,6 +43,8 @@ class PeerController: UITableViewController, UISearchBarDelegate {
         
         //animate plus button
         //addButton.pulse(scale: 1.025, duration: 1.0)
+        
+        Policy.currentViewController = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {

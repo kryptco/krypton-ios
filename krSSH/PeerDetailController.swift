@@ -24,6 +24,11 @@ class PeerDetailController: UIViewController {
         self.title = peer?.email ?? "Detail"
         drawPeer()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Policy.currentViewController = self
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

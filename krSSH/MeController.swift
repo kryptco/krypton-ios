@@ -27,8 +27,9 @@ class MeController:UIViewController {
         super.viewWillAppear(animated)
         
         redrawMe()
+        Policy.currentViewController = self
+
     }
-    
     
     
     dynamic func redrawMe() {

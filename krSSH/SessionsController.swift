@@ -36,6 +36,8 @@ class SessionsController: UITableViewController {
         //start timer
         
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionsController.reloadTableViewTimer), userInfo: nil, repeats: true)
+        
+        Policy.currentViewController = self
 
     }
     

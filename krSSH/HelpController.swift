@@ -21,6 +21,11 @@ class HelpController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Policy.currentViewController = self
+    }
+
 
     /*
     // MARK: - Navigation

@@ -26,6 +26,11 @@ class AboutController: UIViewController {
             self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Policy.currentViewController = self
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

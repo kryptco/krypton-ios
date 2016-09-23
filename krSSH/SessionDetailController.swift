@@ -43,6 +43,7 @@ class SessionDetailController: UITableViewController {
         
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionDetailController.reloadTableViewTimer), userInfo: nil, repeats: true)
 
+        Policy.currentViewController = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {

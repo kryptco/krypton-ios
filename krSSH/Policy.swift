@@ -10,7 +10,7 @@ import Foundation
 
 
 class Policy {
-
+    
     //MARK: Settings
     enum StorageKey:String {
         case userApproval = "policy_user_approval"
@@ -25,6 +25,8 @@ class Policy {
             return UserDefaults.standard.bool(forKey: StorageKey.userApproval.rawValue) 
         }
     }
+    
+    static var currentViewController:UIViewController?
     
     
     //MARK: Notification Actions
@@ -64,9 +66,15 @@ class Policy {
     //MARK: Notification Push
 
     class func requestUserAuthorization(session:Session, request:Request) {
+        
+        guard UIApplication.shared.applicationState != .active else {
+            Policy.currentViewController?.requestUserAuthorization(session: session, request: request)
+            return
+        }
+        
         let notification = UILocalNotification()
         notification.fireDate = Date()
-        notification.alertBody = "\(session.pairing.name) is requesting to use your key for '\(request.sign?.command ?? "SSH login")'."
+        notification.alertBody = "Request from \(session.pairing.name): \(request.sign?.command ?? "SSH login")"
         notification.soundName = UILocalNotificationDefaultSoundName
         
         notification.category = Policy.authorizeCategory.identifier
@@ -81,7 +89,7 @@ class Policy {
         let notification = UILocalNotification()
         notification.fireDate = Date()
         
-        notification.alertBody = "\(session.pairing.name) just used your key for '\(request.sign?.command ?? "SSH login")'."
+        notification.alertBody = "\(session.pairing.name): \(request.sign?.command ?? "SSH login")"
         notification.soundName = UILocalNotificationDefaultSoundName
         
         dispatchMain {
@@ -90,5 +98,28 @@ class Policy {
     }
 }
 
+extension UIViewController {
+    
+    
+    func requestUserAuthorization(session:Session, request:Request) {
+        self.askConfirmationIn(title: "Request", text: "\(session.pairing.name): \(request.sign?.command ?? "SSH login")", accept: "Allow", cancel: "Reject")
+        { (success) in
+            
+            guard success else {
+                return
+            }
+            
+            
+            do {
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session)
+                try Silo.shared.send(session: session, response: resp, completionHandler: nil)
+                
+            } catch (let e) {
+                log("send error \(e)", .error)
+                return
+            }
+        }
+    }
 
+}
 
