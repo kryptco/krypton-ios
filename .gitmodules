@@ -1,12 +1,12 @@
 [submodule "swift-sodium"]
 	path = swift-sodium
-	url  = https://bitbucket.org/kryptco/swift-sodium
+	url  = https://github.com/kryptco/swift-sodium
 [submodule "AwesomeCache"]
 	path = AwesomeCache
 	url = git@github.com:aschuch/AwesomeCache.git
 [submodule "RequestKit"]
 	path = RequestKit
-	url = https://github.com/KryptCo/RequestKit.git
+	url = https://github.com/kryptco/RequestKit.git
 [submodule "octokit.swift"]
 	path = octokit.swift
-	url = https://github.com/KryptCo/octokit.swift.git
+	url = https://github.com/kryptco/octokit.swift.git
