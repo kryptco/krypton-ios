@@ -28,15 +28,6 @@ class PairController: UIViewController, KRScanDelegate {
     @IBOutlet weak var result:UIImageView!
     
     
-    enum ResultImage:String {
-        case check = "check"
-        case x = "x"
-        
-        var image:UIImage? {
-            return UIImage(named: self.rawValue)
-        }
-    }
-    
     
     enum Scanned {
         case peer(Peer)

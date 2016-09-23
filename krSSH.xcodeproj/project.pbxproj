@@ -58,6 +58,7 @@
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA3185701D8F6E5D00B46536 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31856F1D8F6E5D00B46536 /* GitHub.swift */; };
+		FA4831211D95DA030089D399 /* ResultImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4831201D95DA030089D399 /* ResultImage.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
@@ -362,6 +363,7 @@
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA31856F1D8F6E5D00B46536 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		FA4831201D95DA030089D399 /* ResultImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultImage.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
@@ -730,6 +732,7 @@
 			isa = PBXGroup;
 			children = (
 				FAA536311D8F465600549710 /* SuccessController.swift */,
+				FA4831201D95DA030089D399 /* ResultImage.swift */,
 			);
 			name = UIUtil;
 			sourceTree = "<group>";
@@ -1184,6 +1187,7 @@
 				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
+				FA4831211D95DA030089D399 /* ResultImage.swift in Sources */,
 				8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,

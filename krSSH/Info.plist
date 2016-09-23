@@ -31,7 +31,7 @@
 			<string>kr-upload-oauth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>krauth</string>
+				<string>kr-github</string>
 			</array>
 		</dict>
 	</array>

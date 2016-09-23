@@ -23,10 +23,6 @@ class GitHub {
     }
     
     
-    func loginAndUpload() {
-        //authConfig.authenticate()
-    }
-    
     func upload(peer:Peer) {
         
     }

@@ -101,6 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+    //MARK: Tap local notification
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         
         // if approval notification
@@ -149,6 +150,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
+    }
+    
+    //MARK: Integrations OAuth
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        guard let appLink = AppLink(rawValue: url.scheme ?? "") else {
+            log("invalid open url scheme", .error)
+            return false
+        }
+        
+        switch appLink {
+        case AppLink.github:
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "finish_github_login"), object: url, userInfo: nil)
+        default:
+            log("unknown scheme: \(url.scheme)")
+        }
+        
+        return false
     }
     
    

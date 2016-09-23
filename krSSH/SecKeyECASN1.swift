@@ -21,7 +21,7 @@ private let Secp384r1:ECASN1Header = (384, 23, [0x30, 0x76, 0x30, 0x10, 0x06, 0x
 private let Secp521r1:ECASN1Header = (521, 25, [0x30, 0x81, 0x9B, 0x30, 0x10, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x23, 0x03, 0x81, 0x86, 0x00])
 
 extension PublicKey {
-    func exportSecp() throws -> String {
+    func exportSecpData() throws -> Data {
         
         var publicKeyData:Data
         
@@ -51,8 +51,41 @@ extension PublicKey {
         
         let data = NSMutableData(bytes: curveOIDHeader, length: curveOIDHeaderLen)
         data.append(publicKeyData)
-        return (data as Data).toBase64()
+        return (data as Data)
     }
+    
+    
+    func exportSecp() throws -> String {
+        return try exportSecpData().toBase64()
+    }
+    
+    
+    func wireFormat() throws -> String {
+        let publicKeyData = try export() as Data
+        
+        
+        guard   let keyTypeBytes = "ecdsa-sha2-nistp256".data(using: String.Encoding.utf8)?.bytes,
+                let nistID = "nistp256".data(using: String.Encoding.utf8)?.bytes
+        else {
+            throw CryptoError.encoding
+        }
+     
+        var wireBytes:[UInt8] = [0x00, 0x00, 0x00, 0x13]
+        wireBytes.append(contentsOf: keyTypeBytes)
+        wireBytes.append(contentsOf: [0x00, 0x00, 0x00, 0x08])
+
+        wireBytes.append(contentsOf: nistID)
+        
+        let sizeBytes = stride(from: 24, through: 0, by: -8).map {
+            UInt8(truncatingBitPattern: UInt32(publicKeyData.count).littleEndian >> UInt32($0))
+        }
+        
+        wireBytes.append(contentsOf: sizeBytes)
+        wireBytes.append(contentsOf: publicKeyData.bytes)
+        
+        return "ecdsa-sha2-nistp256 \(Data(bytes: wireBytes).toBase64())"        
+    }
+    
 }
 
 

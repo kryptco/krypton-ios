@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+
+enum AppLink:String {
+    case github = "kr-github"
+    case kryptonite = "kr"
+}
