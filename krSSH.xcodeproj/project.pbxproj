@@ -12,6 +12,10 @@
 		8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
+		8DB23BEA1D94ADAC00F52607 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB8436C1D94A885003E57D1 /* OctoKit.framework */; };
+		8DB23BEB1D94ADAC00F52607 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB8434D1D94A87D003E57D1 /* RequestKit.framework */; };
+		8DB23BF31D94ADE300F52607 /* OctoKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB8436C1D94A885003E57D1 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8DB23BF41D94ADE300F52607 /* RequestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB8434D1D94A87D003E57D1 /* RequestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8DE3955C1D942647005D559C /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
 		8DE3955D1D942647005D559C /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
 		8DE3955E1D942647005D559C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE395591D942647005D559C /* Info.plist */; };
@@ -288,6 +292,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8DB23BF31D94ADE300F52607 /* OctoKit.framework in Embed Frameworks */,
+				8DB23BF41D94ADE300F52607 /* RequestKit.framework in Embed Frameworks */,
 				8D003DF01D90EBBD0085ED21 /* Sodium.framework in Embed Frameworks */,
 				FAA6E1FB1D79FBE2007D1B3A /* AWSSNS.framework in Embed Frameworks */,
 				FAA6E1FC1D79FBE2007D1B3A /* AWSSQS.framework in Embed Frameworks */,
@@ -424,6 +430,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DB23BEA1D94ADAC00F52607 /* OctoKit.framework in Frameworks */,
+				8DB23BEB1D94ADAC00F52607 /* RequestKit.framework in Frameworks */,
 				FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */,
 				FA16827D1D774F3C00A7ED53 /* CoreImage.framework in Frameworks */,
 				FAA6E1F51D79E4FC007D1B3A /* AWSCore.framework in Frameworks */,
