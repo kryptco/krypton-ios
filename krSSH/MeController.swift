@@ -146,39 +146,50 @@ class MeController:UIViewController {
     //MARK: Sharing
     
     @IBAction func shareTextTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe() else {
+        guard let peer = try? KeyManager.sharedInstance().getMe(),
+              let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+        else {
             return
         }
         
         dispatchMain {
-            self.present(self.textDialogue(for: peer, with: nil), animated: true, completion: nil)
+            self.present(self.textDialogue(for: peer, with: nil, and: publicKeyWire), animated: true, completion: nil)
         }
     }
     
     @IBAction func shareEmailTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe() else {
-            return
+        guard let peer = try? KeyManager.sharedInstance().getMe(),
+            let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+            else {
+                return
         }
         
+        
         dispatchMain {
-            self.present(self.emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+            self.present(self.emailDialogue(for: peer, with: nil, and: publicKeyWire), animated: true, completion: nil)
         }
     }
     
     @IBAction func shareCopyTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe() else {
-            return
+        guard let peer = try? KeyManager.sharedInstance().getMe(),
+            let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+            else {
+                return
         }
         
-        copyDialogue(for: peer)
+        
+        copyDialogue(for: peer, and: publicKeyWire)
     }
     
     @IBAction func shareOtherTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe() else {
-            return
+        guard let peer = try? KeyManager.sharedInstance().getMe(),
+            let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+            else {
+                return
         }
+        
         dispatchMain {
-            self.present(self.otherDialogue(for: peer), animated: true, completion: nil)
+            self.present(self.otherDialogue(for: peer, and: publicKeyWire), animated: true, completion: nil)
         }
     }
 }

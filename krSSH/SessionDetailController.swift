@@ -24,7 +24,16 @@ class SessionDetailController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Details"        
+        self.title = "Details"
+        
+        if let session = session {
+            colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.7)
+            deviceNameLabel.text = session.pairing.name
+            
+            logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
+            lastAccessLabel.text = logs.first?.date.timeAgo() ?? session.created.timeAgo()
+            
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -32,14 +41,6 @@ class SessionDetailController: UITableViewController {
         revokeButton.setBorder(color: UIColor(hex: 0xFC484C), cornerRadius: 8, borderWidth: 1.0)
         revokeButton.setTitleColor(UIColor.white, for: UIControlState.selected)
 
-        if let session = session {
-            colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.7)
-            deviceNameLabel.text = session.pairing.name
-            
-            logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
-            lastAccessLabel.text = logs.first?.date.timeAgo() ?? session.created.timeAgo()
-
-        }
         
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionDetailController.reloadTableViewTimer), userInfo: nil, repeats: true)
 

@@ -65,7 +65,7 @@ class PeerDetailController: UIViewController {
         }
         
         dispatchMain {
-            self.present(self.textDialogue(for: peer, with: nil), animated: true, completion: nil)
+            self.present(self.textDialogue(for: peer, with: nil, and: peer.publicKey), animated: true, completion: nil)
         }
     }
     
@@ -75,7 +75,7 @@ class PeerDetailController: UIViewController {
         }
         
         dispatchMain {
-            self.present(self.emailDialogue(for: peer, with: nil), animated: true, completion: nil)
+            self.present(self.emailDialogue(for: peer, with: nil, and: peer.publicKey), animated: true, completion: nil)
         }
     }
     
@@ -84,7 +84,7 @@ class PeerDetailController: UIViewController {
             return
         }
         
-        copyDialogue(for: peer)
+        copyDialogue(for: peer, and: peer.publicKey)
     }
     
     @IBAction func shareOtherTapped() {
@@ -93,7 +93,7 @@ class PeerDetailController: UIViewController {
         }
         
         dispatchMain {
-            self.present(self.otherDialogue(for: peer), animated: true, completion: nil)
+            self.present(self.otherDialogue(for: peer, and: peer.publicKey), animated: true, completion: nil)
         }
     }
     

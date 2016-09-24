@@ -13,7 +13,7 @@ class LogGraph:UIView {
     
     var fillColor = UIColor.black
     var bars:[UIView] = []
-    var bucketSize = 60
+    var bucketSize = 48
     var zeroRatio = 0.1
     
     override init(frame: CGRect) {
@@ -56,8 +56,8 @@ class LogGraph:UIView {
         
         for i in 0 ..< bucketSize {
             
-            let curr = Double((bucketSize - i)*TimeSeconds.second.rawValue)
-            let next = Double((bucketSize - i - 1)*TimeSeconds.second.rawValue)
+            let curr = Double((bucketSize - i)*TimeSeconds.hour.rawValue)
+            let next = Double((bucketSize - i - 1)*TimeSeconds.hour.rawValue)
             
             for date in sorted {
                 guard
