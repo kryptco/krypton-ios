@@ -37,9 +37,11 @@ class MeController:UIViewController {
     
     dynamic func redrawMe() {
         do {
-            tagLabel.text = try KeyManager.sharedInstance().getMe().email
             
-            let json = try KeyManager.sharedInstance().getMe().jsonString()
+            let me = try KeyManager.sharedInstance().getMe()
+            
+            tagLabel.text = me.email
+            let json = try me.jsonString()
             
             let gen = RSUnifiedCodeGenerator()
             gen.strokeColor = UIColor.red
@@ -62,7 +64,15 @@ class MeController:UIViewController {
     //MARK: Upload to GitHub
     
     @IBAction func uploadToGitHub() {
-        guard let authURL = GitHub().authConfig.authenticate() else {
+        
+        let github = GitHub()
+        
+        guard github.accessToken == nil else {
+            doGitHubUpload()
+            return
+        }
+        
+        guard let authURL = github.authConfig.authenticate() else {
             showWarning(title: "Error", body: "Cannot connect to GitHub.")
             log("error: github oauth url", .error)
             return
@@ -77,10 +87,17 @@ class MeController:UIViewController {
             return
         }
         
+        GitHub().getToken(url: url) { 
+            self.doGitHubUpload()
+        }
+        
+    }
+    
+    func doGitHubUpload() {
         guard let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
-        else {
-            log("no success controller storyboard", .error)
-            return
+            else {
+                log("no success controller storyboard", .error)
+                return
         }
         
         successVC.resultImage = nil
@@ -90,64 +107,52 @@ class MeController:UIViewController {
         
         present(successVC, animated: true, completion: nil)
         
-        GitHub().authConfig.handleOpenURL(url: url) { (tokenConfig) in
+        let github = GitHub()
+        do {
+            let km = try KeyManager.sharedInstance()
+            let email = try km.getMe().email
+            let publicKeyWire = try km.keyPair.publicKey.wireFormat()
+            let title = "kryptonite iOS <\(email)>"
             
-            do {
-                let email = try KeyManager.sharedInstance().getMe().email
-                let publicKeyWire = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
-                let title = "kryptonite iOS <\(email)>"
-                
-                let _ = Octokit(tokenConfig).postPublicKey(publicKey: publicKeyWire, title: title, completion: { (resp) in
-                    
-                    switch resp {
-                    case .success(let msg):
-                        log("github success: \(msg)")
-                        
-                        dispatchMain {
-                            successVC.spinner.stopAnimating()
-                            successVC.resultImageView.image = ResultImage.check.image
-                            successVC.titleLabel.text = "Success!"
-                            dispatchAfter(delay: 2.0, task: {
-                                successVC.dismiss(animated: true, completion: nil)
-                                
-                            })
-                        }
-                        
-                    case .failure(let e):
-                        log("github error: \(e)", .error)
-                        
-                        let errors = ((e as NSError).userInfo["RequestKitErrorResponseKey"] as? [String:Any])?["errors"] as? [[String:Any]]
-                        let message = errors?.first?["message"] ?? "unknown"
-                        
-                        dispatchMain {
-                            successVC.spinner.stopAnimating()
-                            successVC.resultImageView.image = ResultImage.x.image
-                            successVC.titleLabel.text = "Error: \(message)"
-                            dispatchAfter(delay: 3.0, task: {
-                                successVC.dismiss(animated: true, completion: nil)
-
-                            })
-                        }
-
+            github.upload(title: title, publicKeyWire: publicKeyWire,
+                          success: {
+                            
+                            dispatchMain {
+                                successVC.spinner.stopAnimating()
+                                successVC.resultImageView.image = ResultImage.check.image
+                                successVC.titleLabel.text = "Success!"
+                                dispatchAfter(delay: 2.0, task: {
+                                    successVC.dismiss(animated: true, completion: nil)
+                                    
+                                })
+                            }
+                }, failure: { (error) in
+                    dispatchMain {
+                        successVC.spinner.stopAnimating()
+                        successVC.resultImageView.image = ResultImage.x.image
+                        successVC.titleLabel.text = "Error: \(error.message)"
+                        dispatchAfter(delay: 3.0, task: {
+                            successVC.dismiss(animated: true, completion: nil)
+                            
+                        })
                     }
                     
-
-                })
-                
-            } catch (let e) {
-                log("error getting keypair: \(e)", LogType.error)
-                self.showWarning(title: "Error loading keypair", body: "\(e)")
-            }
-            
+                    
+            })
         }
-        
+        catch (let e) {
+            log("error getting keypair: \(e)", LogType.error)
+            self.showWarning(title: "Error loading keypair", body: "\(e)")
+        }
     }
     
     //MARK: Sharing
     
     @IBAction func shareTextTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe(),
-              let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+        
+        guard let km = try? KeyManager.sharedInstance(),
+              let peer = try? km.getMe() ,
+              let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
         else {
             return
         }
@@ -158,12 +163,13 @@ class MeController:UIViewController {
     }
     
     @IBAction func shareEmailTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe(),
-            let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+        guard let km = try? KeyManager.sharedInstance(),
+            let peer = try? km.getMe() ,
+            let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
             else {
                 return
         }
-        
+
         
         dispatchMain {
             self.present(self.emailDialogue(for: peer, with: nil, and: publicKeyWire), animated: true, completion: nil)
@@ -171,22 +177,25 @@ class MeController:UIViewController {
     }
     
     @IBAction func shareCopyTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe(),
-            let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+        guard let km = try? KeyManager.sharedInstance(),
+            let peer = try? km.getMe() ,
+            let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
             else {
                 return
         }
-        
+
         
         copyDialogue(for: peer, and: publicKeyWire)
     }
     
     @IBAction func shareOtherTapped() {
-        guard let peer = try? KeyManager.sharedInstance().getMe(),
-            let publicKeyWire = try? KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
-            else {
-                return
+        guard let km = try? KeyManager.sharedInstance(),
+            let peer = try? km.getMe() ,
+            let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
+        else {
+            return
         }
+
         
         dispatchMain {
             self.present(self.otherDialogue(for: peer, and: publicKeyWire), animated: true, completion: nil)

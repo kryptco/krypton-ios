@@ -29,16 +29,15 @@ class KeyManager {
     }
     
     class func sharedInstance() throws -> KeyManager {
-        if let km = sharedManager {
-            return km
-        }
+//        if let km = sharedManager {
+//            return km
+//        }
         do {
             guard let kp = try KeyPair.load(KeyTag.me.rawValue) else {
                 throw KeyManagerError.keyDoesNotExist
             }
             
-            sharedManager = KeyManager(kp)
-            return sharedManager!
+            return KeyManager(kp)
         }
         catch let e {
             log("Crypto Load error -> \(e)", LogType.warning)
@@ -83,7 +82,7 @@ class KeyManager {
     func getMe() throws -> Peer {
         do {
             let email = try KeychainStorage().get(key: KrMeDataKey)
-            let publicKey = try KeyManager.sharedInstance().keyPair.publicKey.exportSecp()
+            let publicKey = try keyPair.publicKey.exportSecp()
             let fp = try publicKey.fingerprint().toBase64()
             
             return Peer(email: email, fingerprint: fp, publicKey: publicKey)

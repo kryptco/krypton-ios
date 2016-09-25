@@ -9,6 +9,21 @@
 import Foundation
 import OctoKit
 
+protocol GitHubError:Error {
+    var message:String { get }
+}
+struct NotAuthenticatedError:GitHubError{
+    var message = "not logged in to GitHub"
+}
+struct ApiError:GitHubError{
+    var message:String
+    
+    init(error:Error) {
+        let errors = ((error as NSError).userInfo["RequestKitErrorResponseKey"] as? [String:Any])?["errors"] as? [[String:Any]]
+        self.message = (errors?.first?["message"] as? String) ?? "unknown"
+    }
+}
+
 class GitHub {
     
     var authConfig:OAuthConfiguration
@@ -23,8 +38,41 @@ class GitHub {
     }
     
     
-    func upload(peer:Peer) {
+    
+    func getToken(url:URL, completion:()->()) {
+        GitHub().authConfig.handleOpenURL(url: url) { (tokenConfig) in
+    
+            if let token = tokenConfig.accessToken {
+                self.accessToken = token
+                UserDefaults.standard.set(token, forKey: self.accessTokenKey)
+                UserDefaults.standard.synchronize()
+            }
+            
+        }
+    }
+    
+    func upload(title:String, publicKeyWire:String, success:@escaping ()->(), failure:@escaping (GitHubError)->()) {
         
+        guard let token = accessToken else {
+            failure(NotAuthenticatedError())
+            return
+        }
+
+        let tokenConfig = TokenConfiguration(token)
+        let _ = Octokit(tokenConfig).postPublicKey(publicKey: publicKeyWire, title: title, completion: { (resp) in
+            switch resp {
+            case .success(let msg):
+                log("github success: \(msg)")
+                success()
+                
+                
+            case .failure(let e):
+                log("github error: \(e)", .error)
+                failure(ApiError(error: e))
+    
+            }
+        })
+
     }
     
 }
