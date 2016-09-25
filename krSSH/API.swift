@@ -17,7 +17,7 @@ enum AWSConfKey:String {
 struct UnknownAWSRequestError:Error {}
 struct BadAWSRequestError:Error {}
 enum APIResult {
-    case message([String])
+    case message([NetworkMessage])
     case sent
     case failure(Error)
 }
@@ -89,12 +89,12 @@ class API {
     
     
     //MARK: SQS
-    func send(to:QueueName, message:String, handler:@escaping ((APIResult)->Void)) {
+    func send(to:QueueName, message:NetworkMessage, handler:@escaping ((APIResult)->Void)) {
         guard let request = AWSSQSSendMessageRequest() else {
             return
         }
         
-        request.messageBody = message
+        request.messageBody = message.networkFormat().toBase64()
         request.queueUrl = to.responder.url
         
         sqsClient.sendMessage(request) { (result, err) in
@@ -147,7 +147,17 @@ class API {
                 self.sqsClient.deleteMessageBatch(batchDeleteRequest)
                 
             }
-            handler(APIResult.message(messages))
+
+            var networkMessages : [NetworkMessage] = []
+            for message in messages {
+                do {
+                    let data = try message.fromBase64()
+                    try networkMessages.append(NetworkMessage(networkData: data))
+                } catch (let e) {
+                    log("received malformed message \(message) from SQS with error: \(e)", .warning)
+                }
+            }
+            handler(APIResult.message(networkMessages))
         }
     }
     

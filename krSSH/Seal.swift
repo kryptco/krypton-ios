@@ -12,17 +12,11 @@ import Sodium
 
 typealias Key = Data
 
-enum CiphertextHeader : UInt8{
-    case ciphertext = 0
-    case wrappedKey = 1
-}
-
 extension SecretBox.Key {
     func wrap(to pk: Box.PublicKey) throws -> Data {
         guard var wrappedKey = try KRSodium.shared().box.seal(self, recipientPublicKey: pk) else {
             throw CryptoError.encrypt
         }
-        wrappedKey.insert(CiphertextHeader.wrappedKey.rawValue, at: 0)
         return wrappedKey
     }
 }
@@ -89,7 +83,6 @@ extension Data {
         let hmac = try nonceAndCiphertext.HMAC(key: key)
         nonceAndCiphertext.append(hmac)
 
-        nonceAndCiphertext.insert(CiphertextHeader.ciphertext.rawValue, at: 0)
         return nonceAndCiphertext
     }
     

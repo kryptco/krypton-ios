@@ -12,6 +12,7 @@
 		8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
+		8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		8DB23BEA1D94ADAC00F52607 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB8436C1D94A885003E57D1 /* OctoKit.framework */; };
 		8DB23BEB1D94ADAC00F52607 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB8434D1D94A87D003E57D1 /* RequestKit.framework */; };
 		8DB23BF31D94ADE300F52607 /* OctoKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB8436C1D94A885003E57D1 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -308,6 +309,7 @@
 		8D003DF11D90EDE30085ED21 /* Sodium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sodium.swift; sourceTree = "<group>"; };
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
+		8D7941671D98732600F6E32E /* NetworkProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
 		8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RequestKit.xcodeproj; path = RequestKit/RequestKit.xcodeproj; sourceTree = "<group>"; };
 		8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OctoKit.xcodeproj; path = octokit.swift/OctoKit.xcodeproj; sourceTree = "<group>"; };
@@ -618,7 +620,6 @@
 			isa = PBXGroup;
 			children = (
 				FA61EF421D81D150009FD899 /* SessionManager.swift */,
-				8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */,
 				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
 				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
@@ -740,6 +741,8 @@
 				FAA6E1F01D79E3ED007D1B3A /* API.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
+				8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */,
+				8D7941671D98732600F6E32E /* NetworkProtocol.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1238,6 +1241,7 @@
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
+				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,
 				FAA6E1F11D79E3ED007D1B3A /* API.swift in Sources */,
 				FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */,

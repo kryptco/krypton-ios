@@ -21,12 +21,11 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var peripheralCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
 
     var characteristicMessageBuffers: [CBCharacteristic: Data] = [:]
-    var serviceQueuedMessage: [CBUUID: Data] = [:]
+    var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
 
     var mutex : Mutex = Mutex()
     var central: CBCentralManager?
     var silo: Silo?
-    var onReceive: ((CBUUID, Data) -> Void)?
 
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         mutex.lock()
@@ -54,12 +53,14 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         }
     }
 
-    func writeToServiceUUID(uuid: CBUUID, data: Data) {
+    func writeToServiceUUID(uuid: CBUUID, message: NetworkMessage) {
         mutex.lock()
         defer { mutex.unlock() }
+        let data = message.networkFormat()
+        
         guard let peripheral = pairedPeripherals[uuid],
             let characteristic = peripheralCharacteristics[peripheral] else {
-                serviceQueuedMessage[uuid] = data
+                serviceQueuedMessage[uuid] = message
             return
         }
         do {
@@ -209,7 +210,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             peripheral.setNotifyValue(true, for: char)
             if let queuedMessage = serviceQueuedMessage.removeValue(forKey: service.uuid) {
                 dispatchAsync {
-                    self.writeToServiceUUID(uuid: service.uuid, data: queuedMessage)
+                    self.writeToServiceUUID(uuid: service.uuid, message: queuedMessage)
                 }
             }
         }
@@ -269,7 +270,12 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                 if let silo = silo {
                     //  onBluetoothReceive locks mutex
                     mutex.unlock()
-                    silo.onBluetoothReceive(serviceUUID: characteristic.service.uuid, message: fullBuffer)
+                    do {
+                        let message = try NetworkMessage(networkData: fullBuffer)
+                        silo.onBluetoothReceive(serviceUUID: characteristic.service.uuid, message: message)
+                    } catch (let e) {
+                        log("received malformed message over bluetooth with error: \(e)")
+                    }
                     mutex.lock()
                 }
             }

@@ -38,7 +38,7 @@ class Silo {
         }
     }
 
-    func onBluetoothReceive(serviceUUID: CBUUID, message: Data) {
+    func onBluetoothReceive(serviceUUID: CBUUID, message: NetworkMessage) {
         mutex.lock()
 
         guard let session = sessionServiceUUIDS[serviceUUID] else {
@@ -47,7 +47,7 @@ class Silo {
         }
         mutex.unlock()
 
-        guard let req = try? Request(key: session.pairing.symmetricKey, sealed: message) else {
+        guard let req = try? Request(key: session.pairing.symmetricKey, sealed: message.data) else {
             log("request from bluetooth did not parse correctly", .error)
             return
         }
@@ -138,7 +138,7 @@ class Silo {
                 for msg in msgs {
                     
                     do {
-                        let req = try Request(key: to.pairing.symmetricKey, sealedBase64: msg)
+                        let req = try Request(key: to.pairing.symmetricKey, sealed: msg.data)
                         try self.handle(request: req, session: to)
                     } catch (let e) {
                         log("error responding: \(e)", LogType.error)
@@ -174,9 +174,11 @@ class Silo {
             bluetoothDelegate.addServiceUUID(uuid: cbuuid)
 
             do {
-                let wrappedKey = try session.pairing.symmetricKey.wrap(to: session.pairing.workstationPublicKey)
+                let wrappedKeyMessage = try NetworkMessage(
+                    localData: session.pairing.symmetricKey.wrap(to: session.pairing.workstationPublicKey),
+                    header: .wrappedKey)
 
-                API().send(to: session.pairing.queue, message: wrappedKey.toBase64(), handler: { (sendResult) in
+                API().send(to: session.pairing.queue, message: wrappedKeyMessage, handler: { (sendResult) in
                     switch sendResult {
                     case .sent:
                         log("success! sent response.")
@@ -186,7 +188,7 @@ class Silo {
                         break
                     }
                 })
-                bluetoothDelegate.writeToServiceUUID(uuid: cbuuid, data: wrappedKey)
+                bluetoothDelegate.writeToServiceUUID(uuid: cbuuid, message: wrappedKeyMessage)
 
             } catch let e {
                 log("error wrapping key: \(e)", .error)
@@ -268,10 +270,11 @@ class Silo {
     
     func send(session:Session, response:Response, completionHandler: (()->Void)? = nil) throws {
         let sealedResponse = try response.seal(key: session.pairing.symmetricKey)
+        let message = NetworkMessage(localData: sealedResponse, header: .ciphertext)
         
-        Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, data: sealedResponse)
+        Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, message: message)
         
-        API().send(to: session.pairing.queue, message: sealedResponse.toBase64(), handler: { (sendResult) in
+        API().send(to: session.pairing.queue, message: message, handler: { (sendResult) in
             switch sendResult {
             case .sent:
                 log("success! sent response.")
