@@ -118,7 +118,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         do {
             let kp = try KeyManager.sharedInstance().keyPair
-            let pk = try kp.publicKey.exportSecp()
+            let pk = try kp.publicKey.export().toBase64()
             
             log("started with: \(pk)")
             

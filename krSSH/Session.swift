@@ -21,13 +21,10 @@ struct Session:JSONConvertable {
     
     init(json: JSON) throws {
         id      = try json ~> "id"
-        guard let workstationPublicKeyB64: String = try? json ~> "workstationPublicKey",
-            let workstationPublicKey = workstationPublicKeyB64.fromBase64() else {
-            throw CryptoError.encoding
-        }
-        guard let symmetricKey = try KeychainStorage().get(key: id).fromBase64() else {
-            throw KeychainStorageError.notFound
-        }
+        
+        let workstationPublicKey = try ((try json ~> "workstationPublicKey") as String).fromBase64()
+        let symmetricKey = try KeychainStorage().get(key: id).fromBase64()
+        
         pairing = try Pairing(name: json ~> "name", workstationPublicKey: workstationPublicKey, symmetricKey: symmetricKey)
         
         created = Date(timeIntervalSince1970: try json ~> "created")

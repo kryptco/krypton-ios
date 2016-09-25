@@ -34,9 +34,7 @@ struct Pairing {
 
     init(json: JSON) throws {
         let pkB64:String = try json ~> "pk"
-        guard let workstationPublicKey = pkB64.fromBase64() else {
-            throw CryptoError.encoding
-        }
+        let workstationPublicKey = try pkB64.fromBase64()
         try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey)
     }
 

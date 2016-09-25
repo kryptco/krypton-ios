@@ -33,7 +33,7 @@ class SetupController: UITableViewController, UITextFieldDelegate {
 
         do {
             let kp = try KeyManager.sharedInstance().keyPair
-            let pk = try kp.publicKey.exportSecp()
+            let pk = try kp.publicKey.export().toBase64()
             let fp = try pk.fingerprint().hexPretty
             
             keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))

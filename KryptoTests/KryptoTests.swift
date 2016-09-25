@@ -133,7 +133,7 @@ class KryptoTests: XCTestCase {
             let rawPub = try kp.publicKey.export()
             print(rawPub)
             
-            let secpPub = try kp.publicKey.exportSecp()
+            let secpPub = try kp.publicKey.export().toBase64()
             print(secpPub)
             
         } catch (let e) {
@@ -153,7 +153,7 @@ class KryptoTests: XCTestCase {
             let kp = try KeyPair.generate("test")
             let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!)
 
-            let pub = try kp.publicKey.exportSecp()
+            let pub = try kp.publicKey.export().toBase64()
             let impPubKey = try PublicKey.importFrom("test", publicKeyDER: pub)
             
             let resYes = try impPubKey.verify("hellllo", signature: sig)
@@ -171,13 +171,6 @@ class KryptoTests: XCTestCase {
         }
     }
     
-    func testCertImport() {
-        
-        let pkEC = "MIIBejCCASACCQDSO7zy24AZ8jAKBggqhkjOPQQDAjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMB4XDTE2MDkxOTE4MjQ0MVoXDTE3MDkxOTE4MjQ0MVowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABGArL+kB/QB/ZYeBKtynsEfTISuXUIkQxRqyWgsHdG8tGjETk6ZmdWU731/iACDXmxxf7pk+GttL+32dvU24rVQwCgYIKoZIzj0EAwIDSAAwRQIhAN4LR6vRiVOPlDVyyVB96c7KU027fccHNntzJp5kuJ7GAiBF1A3e10odlauvR0EoIqiM2kax29G3JvJCM+VFX7PmCw==".fromBase64()!
-        
-        let pub = try? PublicKey(certData: pkEC)
-        log(pub)
-    }
     
     func testPublicKeyExportImport() {
         
@@ -185,10 +178,10 @@ class KryptoTests: XCTestCase {
             let _ = try KeyPair.destroy("test")
             let kp = try KeyPair.generate("test")
             
-            let pub = try kp.publicKey.exportSecp()
+            let pub = try kp.publicKey.export().toBase64()
             let pub2 = try PublicKey.importFrom("test", publicKeyDER: pub)
             
-            let pub2secp = try pub2.exportSecp()
+            let pub2secp = try pub2.export().toBase64()
             XCTAssert(pub == pub2secp, "public keys don't match after import export")
 
         } catch (let e) {
@@ -200,6 +193,29 @@ class KryptoTests: XCTestCase {
         }
     }
     
+    
+    func testImportPublicKeyDER() {
+        
+        do {
+            
+            let _ = try KeyPair.destroy("test")
+
+            let pkRSA = "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0fAZp+DuQKltrL5b0NPY9awpDVbg4aEedPKsAGReE1d/m96OvlswV5WOjd9sz7Qr0q1WxM+LHbIiORRLrEunHaSdkICVWc7SLV8LI/vsxIs+x8w/2llreutAVFBwhU5I4SK9bFdlDu1BTxQi83oRiM2oECqOZd34qCww16TmnSCLKUeRDigB4bSwgav807BB+wDi5Pg6FneI41XyQY+TaMtEm+h3fxnE+J+2XlG4tuwAv7n2N4lN2gsl2b1PITtQgzeeHRjpDKFVfhUApacCIu3Ia8kaQXDKC6zCBCk8pbWcLtrp35a8G/WPqgxvvVsGrWHmY1gtTwVhOYk5AtkaUjGudWspoTRO5lB59IGNhsr4xcSwK/SbxgYelB/Lj7GLIuxUZLwRZm+jjK7BlKg5883YrwZmTg5BFcjOLw7phbygrPyf7HzUMFyZaBr5dLN5m5nzUs1lxIY/moRkmcZKsxPOfh2DO91kdess7U6/wXowfB3OS1jme2cpefX8pTfxfVLZJxf7Qpll6PZLpMyg5zLnEIkvzwicHK0CJeA94p6eaXtO53li3psrYRvRrxAS5TkyHOR6//EOfxsBLol7jHpAkMEN6ljs9uivSEH/TYW+itde10StIZ36IXmJsHvDEi6AqM01QGz4aI55V9zLk7GkiJOVh3IueAuAvlt7syMCAwEAAQ=="
+            
+            let _ = try PublicKey.importFrom("test", publicKeyDER: pkRSA)
+            
+        } catch (let e) {
+            if let ce = e as? CryptoError {
+                XCTFail("test failed: \(ce.getError())")
+            } else {
+                XCTFail(e.localizedDescription)
+            }
+        }
+        
+        
+    }
+    
+    // MARK: Seal
     func testSealUnseal() {
         
         do {

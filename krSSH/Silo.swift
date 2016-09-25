@@ -305,7 +305,9 @@ class Silo {
             do {
                 
                 // only place where signature should occur
-                sig = try kp.keyPair.sign(digest: signRequest.digest)
+                
+                let digestData = try signRequest.digest.fromBase64()
+                sig = try kp.keyPair.sign(digest: digestData)
                 
                 log("signed: \(sig)")
                 

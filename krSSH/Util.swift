@@ -80,12 +80,16 @@ extension NSMutableData {
 }
 
 extension String {
-    func fromBase64() -> Data? {
+    func fromBase64() throws -> Data {
         var urlDecoded = self
         urlDecoded = urlDecoded.replacingOccurrences(of: "_", with: "/")
         urlDecoded = urlDecoded.replacingOccurrences(of: "-", with: "+")
         
-        return Data(base64Encoded: urlDecoded, options: NSData.Base64DecodingOptions(rawValue: 0))
+        guard let data = Data(base64Encoded: urlDecoded, options: NSData.Base64DecodingOptions(rawValue: 0)) else {
+            throw CryptoError.encoding
+        }
+        
+        return data
     }
 }
 

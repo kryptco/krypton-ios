@@ -21,8 +21,9 @@ class LogCell: UITableViewCell {
         if let command = log.command {
             signatureLabel.text = command
         } else {
-            if let hexSig = log.digest.fromBase64()?.hexPretty {
-                signatureLabel.text = hexSig
+            if  let sig = try? log.digest.fromBase64()
+            {
+                signatureLabel.text = sig.hexPretty
             } else {
                 signatureLabel.text = log.digest
             }

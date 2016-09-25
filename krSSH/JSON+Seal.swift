@@ -17,11 +17,7 @@ extension JSONConvertable {
     }
     
     init(key:Key, sealedBase64:String) throws {
-        guard let sealedData = sealedBase64.fromBase64()
-        else {
-            throw CryptoError.encoding
-        }
-        try self.init(key: key, sealed: sealedData)
+        try self.init(key: key, sealed: try sealedBase64.fromBase64())
     }
 
     init(key:Key, sealed:Sealed) throws {

@@ -46,7 +46,7 @@ class CreateController: UIViewController {
             try KeyManager.generateKeyPair()
             
             let kp = try KeyManager.sharedInstance().keyPair
-            let pk = try kp.publicKey.exportSecp()
+            let pk = try kp.publicKey.export().toBase64()
             
             log("Generated public key: \(pk)")
             

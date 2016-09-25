@@ -48,30 +48,16 @@ class KeyPair {
     }
 
     class func load(_ tag: String) throws -> KeyPair? {
-    
- //       guard let acl = KeyPair.getACL() else {
- //           throw CryptoError.paramCreate
- //       }
-        
         // get the private key
         let privTag = KeyIdentifier.Private.tag(tag)
 
         var params = [String(kSecReturnRef): kCFBooleanTrue,
                       String(kSecClass): kSecClassKey,
-                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                      String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrApplicationTag): privTag,
                       String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
             ] as [String : Any]
 
-
-        if TARGET_IPHONE_SIMULATOR == 0 {
-            print(" -- using secure enclave for key load --")
-            
-            params[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
-            //params[String(kSecAttrAccessControl)] = acl
-        }
-
-        params[String(kSecAttrCanSign)] = kCFBooleanTrue
 
         var privKeyObject:AnyObject?
         var status = SecItemCopyMatching(params as CFDictionary, &privKeyObject)
@@ -90,12 +76,10 @@ class KeyPair {
         
         params = [String(kSecReturnRef): kCFBooleanTrue,
                       String(kSecClass): kSecClassKey,
-                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                      String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrApplicationTag): pubTag,
                       String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
                       ] as [String : Any]
-        
-        params[String(kSecAttrCanVerify)] = kCFBooleanTrue
         
         var pubKeyObject:AnyObject?
         status = SecItemCopyMatching(params as CFDictionary, &pubKeyObject)
@@ -110,7 +94,7 @@ class KeyPair {
         return KeyPair(pub: pubKey as! SecKey, priv: privKey as! SecKey)
     }
     
-    class func generate(_ tag: String, keySize: Int = 256) throws -> KeyPair {
+    class func generate(_ tag: String, keySize: Int = 4096) throws -> KeyPair {
     
         guard let keyParams = KeyPair.getPrivateKeyParamsFor(tag: tag, keySize: keySize) else {
             throw CryptoError.paramCreate
@@ -140,7 +124,7 @@ class KeyPair {
         let pubTag = KeyIdentifier.Public.tag(tag)
         var pubParams = [String(kSecReturnRef): kCFBooleanTrue,
                   String(kSecClass): kSecClassKey,
-                  String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                  String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                   String(kSecAttrApplicationTag): pubTag,
                   String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
                   ] as [String : Any]
@@ -150,7 +134,6 @@ class KeyPair {
         pubParams[String(kSecAttrIsPermanent)] = kCFBooleanTrue
         pubParams[String(kSecReturnData)] = kCFBooleanTrue
 
-        pubParams[String(kSecAttrCanVerify)] = kCFBooleanTrue
 
         var ref:AnyObject?
         let status = SecItemAdd(pubParams as CFDictionary, &ref)
@@ -181,13 +164,12 @@ class KeyPair {
         
         var params = [String(kSecClass): kSecClassKey,
                       String(kSecAttrApplicationTag): pubTag,
-                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                      String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
         
         params[String(kSecAttrKeyClass)] = kSecAttrKeyClassPublic
         params[String(kSecAttrIsPermanent)] = kCFBooleanTrue
         params[String(kSecReturnRef)] = kCFBooleanTrue
-        params[String(kSecAttrCanVerify)] = kCFBooleanTrue
 
 
         let status = SecItemDelete(params as CFDictionary)
@@ -209,21 +191,13 @@ class KeyPair {
         // delete the private key
         let privTag = KeyIdentifier.Private.tag(tag)
         
-        var params = [String(kSecReturnRef): kCFBooleanTrue,
+        let params = [String(kSecReturnRef): kCFBooleanTrue,
                       String(kSecClass): kSecClassKey,
-                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                      String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrApplicationTag): privTag,
                       String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
                       ] as [String : Any]
         
-        
-        if TARGET_IPHONE_SIMULATOR == 0 {
-            print(" -- using secure enclave for key destroy --")
-            
-            params[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
-        }
-        
-        params[String(kSecAttrCanSign)] = kCFBooleanTrue
         
         let status = SecItemDelete(params as CFDictionary)
         if status == errSecItemNotFound {
@@ -239,24 +213,8 @@ class KeyPair {
         return true
     }
     
-    
-    
-    private class func getACL() -> SecAccessControl? {
-        var errorRef:Unmanaged<CFError>?
-        let aclOpt = SecAccessControlCreateWithFlags(
-            kCFAllocatorDefault,
-            kSecAttrAccessibleAlwaysThisDeviceOnly,
-            SecAccessControlCreateFlags.privateKeyUsage, &errorRef)
-        
-        return aclOpt
-    }
-    
-    private class func getPrivateKeyParamsFor(tag:String, keySize:Int = 256) -> [String:Any]? {
+    private class func getPrivateKeyParamsFor(tag:String, keySize:Int) -> [String:Any]? {
         let privTag = KeyIdentifier.Private.tag(tag)
-        
-        guard let acl = KeyPair.getACL() else {
-            return nil
-        }
         
         let privateAttributes:[String:Any] = [
             String(kSecAttrIsPermanent): kCFBooleanTrue,
@@ -265,20 +223,11 @@ class KeyPair {
             ]
         
         var keyParams:[String:Any] = [
-            String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+            String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
             String(kSecAttrKeySizeInBits): keySize,
             ]
         
-        
-        if TARGET_IPHONE_SIMULATOR == 0 {
-            print("-- using secure enclave for private key --")
-            
-            keyParams[String(kSecAttrTokenID)] = String(kSecAttrTokenIDSecureEnclave)
-            keyParams[String(kSecAttrAccessControl)] = acl
-        }
-        
         keyParams[String(kSecAttrAccessible)] = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
-        keyParams[String(kSecAttrCanSign)] = kCFBooleanTrue
         keyParams[String(kSecPrivateKeyAttrs)] = privateAttributes
 
         return keyParams
@@ -290,36 +239,17 @@ class KeyPair {
         var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         CC_SHA256((data as NSData).bytes, CC_LONG(data.count), &hash)
         
-        
-        // Create signature
-        var sigBufferSize = 2048
-        var result = [UInt8](repeating: 0, count: sigBufferSize)
-        
-        let status = SecKeyRawSign(privateKey, SecPadding.PKCS1, hash, hash.count, &result, &sigBufferSize)
-
-        guard status.isSuccess() else {
-            throw CryptoError.sign(status)
-        }
-        
-        // Create Base64 string of the result
-        
-        let resultData = Data(bytes: result[0..<sigBufferSize])
-        return resultData.toBase64()
+        return try sign(digest: Data(bytes: hash))
     }
     
-    func sign(digest:String) throws -> String {
-        // convert to data
-        guard let data = digest.fromBase64()
-            else {
-                throw CryptoError.encoding
-        }
+    func sign(digest:Data) throws -> String {
         
-        let dataBytes = data.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: data.count))
+        let dataBytes = digest.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: digest.count))
         }
         
         // Create signature
-        var sigBufferSize = 2048
+        var sigBufferSize = SecKeyGetBlockSize(privateKey)
         var result = [UInt8](repeating: 0, count: sigBufferSize)
         
         let status = SecKeyRawSign(privateKey, SecPadding.PKCS1, dataBytes, dataBytes.count, &result, &sigBufferSize)
@@ -341,12 +271,12 @@ struct PublicKey {
     
     func verify(_ message:String, signature:String) throws -> Bool {
         
-        guard let
-            data = message.data(using: String.Encoding.utf8),
-            let sigData = signature.fromBase64()
+        guard let data = message.data(using: String.Encoding.utf8)
         else {
             throw CryptoError.encoding
         }
+        
+        let sigData = try signature.fromBase64()
         
         let sigBytes = sigData.withUnsafeBytes {
             [UInt8](UnsafeBufferPointer(start: $0, count: sigData.count))
@@ -390,22 +320,17 @@ struct PublicKey {
     static func importFrom(_ tag:String, publicKeyDER:String) throws -> PublicKey {
         
         let pubTag = KeyIdentifier.Public.tag(tag)
-
-        guard let data = publicKeyDER.fromBase64()
-        else {
-            throw CryptoError.encoding
-        }
+        let data = try publicKeyDER.fromBase64()
 
         var params = [String(kSecClass): kSecClassKey,
                       String(kSecAttrApplicationTag): pubTag,
-                      String(kSecAttrKeyType): kSecAttrKeyTypeEC,
+                      String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
         
         params[String(kSecAttrKeyClass)] = kSecAttrKeyClassPublic
         params[String(kSecValueData)] = data
         params[String(kSecAttrIsPermanent)] = kCFBooleanTrue
         params[String(kSecReturnRef)] = kCFBooleanTrue
-        params[String(kSecAttrCanVerify)] = kCFBooleanTrue
         
         var publicKeyObject:AnyObject?
         var status = SecItemAdd(params as CFDictionary, &publicKeyObject)
@@ -423,7 +348,6 @@ struct PublicKey {
         }
             
         return PublicKey(key: pubKey as! SecKey)
-
     }
     
 }
