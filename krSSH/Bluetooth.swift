@@ -272,11 +272,13 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                     mutex.unlock()
                     do {
                         let message = try NetworkMessage(networkData: fullBuffer)
-                        silo.onBluetoothReceive(serviceUUID: characteristic.service.uuid, message: message)
+                        try silo.onBluetoothReceive(serviceUUID: characteristic.service.uuid, message: message)
                     } catch (let e) {
-                        log("received malformed message over bluetooth with error: \(e)")
+                        log("error processing bluetooth message: \(e)")
                     }
                     mutex.lock()
+                } else {
+                    log("BluetoothDelegate Silo not set", .error)
                 }
             }
         }

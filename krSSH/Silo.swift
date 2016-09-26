@@ -38,10 +38,11 @@ class Silo {
         }
     }
 
-    func onBluetoothReceive(serviceUUID: CBUUID, message: NetworkMessage) {
+    func onBluetoothReceive(serviceUUID: CBUUID, message: NetworkMessage) throws {
         mutex.lock()
 
         guard let session = sessionServiceUUIDS[serviceUUID] else {
+            log("bluetooth session not found \(serviceUUID)", .warning)
             mutex.unlock()
             return
         }
@@ -52,7 +53,7 @@ class Silo {
             return
         }
         
-        try? handle(request: req, session: session)
+        try handle(request: req, session: session)
     }
 
     class var shared:Silo {
