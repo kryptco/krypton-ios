@@ -12,7 +12,6 @@ class SessionDetailController: KRBaseTableController {
 
     @IBOutlet var deviceNameLabel:UILabel!
     @IBOutlet var lastAccessLabel:UILabel!
-    @IBOutlet var colorView:UIView!
     @IBOutlet var barView:LogGraph!
 
     @IBOutlet var revokeButton:UIButton!
@@ -27,20 +26,16 @@ class SessionDetailController: KRBaseTableController {
         self.title = "Details"
         
         if let session = session {
-            colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.7)
             deviceNameLabel.text = session.pairing.name
             
             logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
-            lastAccessLabel.text = logs.first?.date.timeAgo() ?? session.created.timeAgo()
+            lastAccessLabel.text =  "Active as of " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
             
         }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        revokeButton.setBorder(color: UIColor(hex: 0xFC484C), cornerRadius: 8, borderWidth: 1.0)
-        revokeButton.setTitleColor(UIColor.white, for: UIControlState.selected)
-
         
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionDetailController.reloadTableViewTimer), userInfo: nil, repeats: true)
 
@@ -69,7 +64,7 @@ class SessionDetailController: KRBaseTableController {
                 self.barView.fillColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
                 self.barView.set(values: self.logs.map({$0.date}))
                 
-                self.lastAccessLabel.text = self.logs.first?.date.timeAgo() ?? session.created.timeAgo()
+                self.lastAccessLabel.text =  "Active as of " + (self.logs.first?.date.timeAgo() ?? session.created.timeAgo())
                 self.tableView.reloadData()
             }
         }

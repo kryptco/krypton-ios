@@ -18,11 +18,9 @@ class SessionCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-
-    
     func set(session:Session) {
         deviceNameLabel.text = session.pairing.name
-        lastAccessLabel.text = session.lastAccessed?.timeAgo() ?? session.created.timeAgo()
+        lastAccessLabel.text = "Active as of " + (session.lastAccessed?.timeAgo() ?? session.created.timeAgo())
         
         let logDates = LogManager.shared.all.filter({$0.session == session.id}).map({ $0.date })
         barView.fillColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
