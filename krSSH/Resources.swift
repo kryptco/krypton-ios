@@ -102,7 +102,7 @@ extension UINavigationItem {
         let logo = UIImageView(image: UIImage(named: "app-icon-nav"))
         
         //logo.tintColor = UIColor.black.withAlphaComponent(0.2)
-        logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 30, height: 30))
+        logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 30, height: 34))
 
     
         let title = UIView()

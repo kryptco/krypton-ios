@@ -6,19 +6,16 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "AppIcon240.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "AppIcon-Circle.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
-  },
-  "properties" : {
-    "compression-type" : "gpu-optimized-best"
   }
 }

@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon-Circle" translatesAutoresizingMaskIntoConstraints="NO" id="veG-mA-S0L">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon240" translatesAutoresizingMaskIntoConstraints="NO" id="veG-mA-S0L">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="PW5-K3-1tE"/>
                                     <constraint firstAttribute="width" constant="120" id="YK2-1r-ghM"/>
@@ -79,6 +79,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppIcon-Circle" width="256" height="256"/>
+        <image name="AppIcon240" width="106" height="120"/>
     </resources>
 </document>
