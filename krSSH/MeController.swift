@@ -11,7 +11,7 @@ import AVFoundation
 import UIKit
 import OctoKit
 
-class MeController:UIViewController {
+class MeController:KRBaseController {
     @IBOutlet var qrImageView:UIImageView!
     @IBOutlet var tagLabel:UILabel!
 

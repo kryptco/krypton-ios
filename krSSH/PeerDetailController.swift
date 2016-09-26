@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class PeerDetailController: UIViewController {
+class PeerDetailController: KRBaseController {
 
     @IBOutlet var qrImageView:UIImageView!
 
@@ -27,7 +27,6 @@ class PeerDetailController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Policy.currentViewController = self
     }
 
     override func didReceiveMemoryWarning() {

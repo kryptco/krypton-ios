@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SessionsController: UITableViewController {
+class SessionsController: KRBaseTableController {
     
 
     var sessions:[Session] = []
@@ -37,8 +37,6 @@ class SessionsController: UITableViewController {
         
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionsController.reloadTableViewTimer), userInfo: nil, repeats: true)
         
-        Policy.currentViewController = self
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {

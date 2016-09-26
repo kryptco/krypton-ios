@@ -12,10 +12,42 @@ import MessageUI
 
 extension UIViewController: UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
     
-    enum Kind {
-        case text(String?), email(String?), copy, other
+    // Requesting
+    func smsRequest(for phone:String) -> UIViewController {
+        
+        UINavigationBar.appearance().tintColor = UIColor.app
+        UIBarButtonItem.appearance().tintColor = UIColor.app
+        
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.app,
+            NSFontAttributeName: UIFont(name: "Avenir Next", size: 17)!
+        ]
+        
+        let msgDialogue = MFMessageComposeViewController()
+        msgDialogue.recipients = [phone]
+        msgDialogue.body = "Please send me your SSH public key with kryptonite! \(Link.publicKeyRequest())"
+        msgDialogue.messageComposeDelegate = self
+        
+        Resources.makeAppearences()
+        
+        return msgDialogue
     }
     
+    func emailRequest(for email:String) -> UIViewController {
+        let mailDialogue = MFMailComposeViewController()
+        mailDialogue.setToRecipients([email])
+        
+        mailDialogue.setSubject("Requesting your SSH public key")
+        mailDialogue.setMessageBody("Please send me your SSH public key with kryptonite! \(Link.publicKeyRequest())", isHTML: false)
+        mailDialogue.mailComposeDelegate = self
+        
+        Resources.makeAppearences()
+        
+        return mailDialogue
+    }
+
+    
+    // Sending
     func textDialogue(for peer:Peer, with phone:String?, and publicKeyWire:String) -> UIViewController {
         
         UINavigationBar.appearance().tintColor = UIColor.app
@@ -49,6 +81,8 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         mailDialogue.setSubject("My SSH Public Key")
         mailDialogue.setMessageBody("\(publicKeyWire) <\(peer.email)>", isHTML: false)
         mailDialogue.mailComposeDelegate = self
+
+        Resources.makeAppearences()
 
         return mailDialogue
     }

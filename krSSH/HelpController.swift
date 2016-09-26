@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HelpController: UIViewController {
+class HelpController: KRBaseController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,6 @@ class HelpController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Policy.currentViewController = self
     }
 
 

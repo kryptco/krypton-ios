@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 
-class PairController: UIViewController, KRScanDelegate {
+class PairController: KRBaseController, KRScanDelegate {
     
 
     @IBOutlet var scanViewController:KRScanController?

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutController: UIViewController {
+class AboutController: KRBaseController {
 
     @IBOutlet weak var versionLabel:UILabel!
     @IBOutlet weak var approvalSwitch:UISwitch!
@@ -29,7 +29,6 @@ class AboutController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Policy.currentViewController = self
     }
 
     override func didReceiveMemoryWarning() {

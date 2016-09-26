@@ -14,7 +14,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var pendingLink:Link?
+    
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
                 
         Resources.makeAppearences()
@@ -28,7 +29,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Silo.shared.startPolling()
         
         registerPushNotifications()
-
+        
+        // check for link
+        if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
+            let link = Link(url: url)
+        {
+            pendingLink = link
+        }
+        
+        //TODO: check for remote notification
         
         return true
     }
@@ -157,19 +166,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        guard let appLink = AppLink(rawValue: url.scheme ?? "") else {
+        guard let appLink = AppLinkType(rawValue: url.scheme ?? "") else {
             log("invalid open url scheme", .error)
             return false
         }
         
         switch appLink {
-        case AppLink.github:
+        case AppLinkType.github:
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "finish_github_login"), object: url, userInfo: nil)
-        default:
-            log("unknown scheme: \(url.scheme)")
+            return true
+        case AppLinkType.kryptonite:
+            guard let link = Link(url: url) else {
+                log("invalid kr url: \(url)")
+                return false
+            }
+            
+            self.pendingLink = link
+            NotificationCenter.default.post(name: link.command.notificationName, object: link, userInfo: nil)
+            return true
         }
-        
-        return false
     }
     
    

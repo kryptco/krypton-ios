@@ -56,6 +56,8 @@
 		FA2696FA1D98851600FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FA2697101D996E6400FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FA2697121D9992A900FE44D3 /* app-icon-url.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2697111D9992A900FE44D3 /* app-icon-url.png */; };
+		FA2697191D99999A00FE44D3 /* Contacts+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697181D99999A00FE44D3 /* Contacts+KR.swift */; };
+		FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */; };
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
@@ -363,6 +365,8 @@
 		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "krSSH-Bridging-Header.h"; path = "krSSH/krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2696F91D98851600FE44D3 /* ASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA2697111D9992A900FE44D3 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon-url.png"; sourceTree = "<group>"; };
+		FA2697181D99999A00FE44D3 /* Contacts+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contacts+KR.swift"; sourceTree = "<group>"; };
+		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA31856F1D8F6E5D00B46536 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
@@ -573,6 +577,7 @@
 				FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */,
 				FAA536241D8F13E300549710 /* PeerDetailController.swift */,
 				FAA6E1E71D79B863007D1B3A /* PeerCell.swift */,
+				FA2697181D99999A00FE44D3 /* Contacts+KR.swift */,
 			);
 			name = Peer;
 			sourceTree = "<group>";
@@ -606,6 +611,7 @@
 		FA29779A1D773A2F003EB1F7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */,
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
 				FAA536261D8F2EA800549710 /* AboutController.swift */,
 				FAA536281D8F2EB900549710 /* HelpController.swift */,
@@ -1197,6 +1203,7 @@
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				8DE3955C1D942647005D559C /* Cache.swift in Sources */,
+				FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
@@ -1224,6 +1231,7 @@
 				FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
 				FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */,
+				FA2697191D99999A00FE44D3 /* Contacts+KR.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,

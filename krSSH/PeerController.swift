@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import MapKit
+import ContactsUI
 
-class PeerController: UITableViewController, UISearchBarDelegate {
+
+class PeerController: KRBaseTableController, CNContactPickerDelegate {
 
     var peers:[Peer] = []
     
@@ -18,14 +19,6 @@ class PeerController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //42.362169, -71.081203 -- cambridge, ma
-//        var region = MKCoordinateRegion()
-//        region.center = CLLocationCoordinate2D(latitude: 42.362169, longitude: -71.081203)
-//        region.span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-//        map.setRegion(region, animated: true)
-        
-        //addButton.setBorder(color: UIColor.app, cornerRadius: 10, borderWidth: 0.0)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,10 +34,6 @@ class PeerController: UITableViewController, UISearchBarDelegate {
     
         tableView.reloadData()
         
-        //animate plus button
-        //addButton.pulse(scale: 1.025, duration: 1.0)
-        
-        Policy.currentViewController = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,15 +44,51 @@ class PeerController: UITableViewController, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+    //MARK: Request Flow
+    
+    @IBAction func requestTapped() {
+        
+        let contactPicker = CNContactPickerViewController()
+        contactPicker.delegate = self;
+        contactPicker.navigationController?.navigationBar.tintColor = UIColor.white
+        contactPicker.navigationController?.navigationBar.barTintColor = UIColor.app
+        contactPicker.displayedPropertyKeys = [CNContactPhoneNumbersKey, CNContactEmailAddressesKey]
+        
+        // 1 phone & 0 email - OR - 0 phone & 1 email
+        contactPicker.predicateForSelectionOfContact =
+            NSPredicate(format: "(phoneNumbers.@count == 1 &&  emailAddresses.@count == 0) || phoneNumbers.@count == 0 &&  emailAddresses.@count == 1")
+        
+        present(contactPicker, animated: true, completion: nil)
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {        
+        if let phoneNumber = contactProperty.value as? CNPhoneNumber {
+            picker.dismiss(animated: true, completion: { 
+                self.present(self.smsRequest(for: phoneNumber.stringValue.sanitizedPhoneNumber()), animated: true, completion: nil)
+            })
+        }
+        else if let email = contactProperty.value as? String {
+            picker.dismiss(animated: true, completion: {
+                self.present(self.emailRequest(for: email), animated: true, completion: nil)
+            })
+        }
 
     }
     
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        if let phoneNumber = contact.phoneNumbers.first?.value {
+            picker.dismiss(animated: true, completion: {
+                self.present(self.smsRequest(for: phoneNumber.stringValue.sanitizedPhoneNumber()), animated: true, completion: nil)
+            })
+        }
+        else if let email = contact.emailAddresses.first?.value as? String {
+            picker.dismiss(animated: true, completion: {
+                self.present(self.emailRequest(for: email), animated: true, completion: nil)
+            })
+        }
+
+    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -137,3 +162,22 @@ class PeerController: UITableViewController, UISearchBarDelegate {
 
   
 }
+
+
+extension String {
+    func sanitizedPhoneNumber() -> String {
+        var sanitizedPhone = self.components(separatedBy: CharacterSet.whitespaces).joined(separator: "")
+        
+        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: "(", with: "")
+        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: ")", with: "")
+        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: "-", with: "")
+        
+        if !sanitizedPhone.contains("+") {
+            sanitizedPhone = "+1" + sanitizedPhone
+        }
+        
+        return sanitizedPhone
+    }
+    
+}
+

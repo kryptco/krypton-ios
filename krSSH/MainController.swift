@@ -9,7 +9,7 @@
 import UIKit
 
 
-class MainController: UITabBarController, UITabBarControllerDelegate {
+class MainController: KRBaseTabController, UITabBarControllerDelegate {
 
     var blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
 
@@ -94,10 +94,10 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         blurView.frame = view.frame
         self.blurView.isHidden = false
-        
-        Policy.currentViewController = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
