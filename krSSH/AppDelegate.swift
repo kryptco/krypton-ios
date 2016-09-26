@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         log("got background notification")
         
         guard   let queue = (userInfo["aps"] as? [String: Any])?["queue"] as? QueueName,
-                let sealed = (userInfo["aps"] as? [String: Any])?["c"] as? String
+                let networkMessageString = (userInfo["aps"] as? [String: Any])?["c"] as? String
         else {
             log("invalid push notification: \(userInfo)", .error)
             completionHandler(.failed)
@@ -89,7 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         do {
-            let req = try Request(key: session.pairing.symmetricKey, sealedBase64: sealed)
+            let networkMessage = try NetworkMessage(networkData: networkMessageString.fromBase64())
+            let req = try Request(key: session.pairing.symmetricKey, sealed: networkMessage.data)
             try Silo.shared.handle(request: req, session: session, completionHandler: { completionHandler(.newData) })
 
         } catch let e {

@@ -297,6 +297,8 @@ class Silo {
     
     // precondition: mutex locked
     func responseFor(request:Request, session:Session) throws -> Response {
+        let requestStart = Date().timeIntervalSince1970
+        defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
@@ -311,9 +313,12 @@ class Silo {
                 // only place where signature should occur
                 
                 let digestData = try signRequest.digest.fromBase64()
+                let signStart = Date().timeIntervalSince1970
                 sig = try kp.keyPair.sign(digest: digestData)
+                let signEnd = Date().timeIntervalSince1970
+
                 
-                log("signed: \(sig)")
+                log("signed: \(sig) in \(signEnd - signStart) seconds")
                 
                 LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>", command: signRequest.command))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)

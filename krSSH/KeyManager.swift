@@ -20,8 +20,6 @@ enum KeyManagerError:Error {
     case keyDoesNotExist
 }
 class KeyManager {
-    private static var sharedManager:KeyManager?
-
     var keyPair:KeyPair
     
     init(_ keyPair:KeyPair) {
@@ -29,13 +27,14 @@ class KeyManager {
     }
     
     class func sharedInstance() throws -> KeyManager {
-//        if let km = sharedManager {
-//            return km
-//        }
         do {
+            let loadStart = Date().timeIntervalSince1970
             guard let kp = try KeyPair.load(KeyTag.me.rawValue) else {
                 throw KeyManagerError.keyDoesNotExist
             }
+            let loadEnd = Date().timeIntervalSince1970
+
+            log("keypair load took \(loadEnd - loadStart) seconds")
             
             return KeyManager(kp)
         }
@@ -56,8 +55,6 @@ class KeyManager {
     }
     
     class func destroyKeyPair() -> Bool {
-        sharedManager = nil
-        
         guard let result = try? KeyPair.destroy(KeyTag.me.rawValue) else {
             return false
         }
