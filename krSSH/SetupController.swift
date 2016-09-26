@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetupController: UITableViewController, UITextFieldDelegate {
+class SetupController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var keyIcon:UILabel!
     @IBOutlet var keyLabel:UILabel!
@@ -17,19 +17,16 @@ class SetupController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var nameTextfield: UITextField!
 
-    var doneButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.setKrLogo()
 
-        doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SetupController.done))
-        doneButton.isEnabled = false
-        self.navigationItem.rightBarButtonItem = doneButton
         
         keyIcon.FAIcon = FAType.FAKey
-        identiconView.setBorder(color: UIColor.white, cornerRadius: 50.0, borderWidth: 0.0)
+        identiconView.setBorder(color: UIColor.white, cornerRadius: 40.0, borderWidth: 0.0)
 
         do {
             let kp = try KeyManager.sharedInstance().keyPair
@@ -53,13 +50,14 @@ class SetupController: UITableViewController, UITextFieldDelegate {
             self.nameTextfield.becomeFirstResponder()
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    dynamic func done () {
+    @IBAction func next() {
         nameTextfield.resignFirstResponder()
         
         do {

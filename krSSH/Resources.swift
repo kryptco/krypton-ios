@@ -141,6 +141,13 @@ class KRButton:UIButton {
     }
     
     
+    @IBInspectable var borderWidth: CGFloat = 1.0 {
+        didSet {
+            layer.borderWidth = borderWidth
+        }
+    }
+
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -45,9 +45,9 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         self.navigationItem.rightBarButtonItem = helpButton
         
 //        log("\(LogManager.shared.all.count)")
-//        let _ = KeyManager.destroyKeyPair()
-//        SessionManager.shared.destory()
-//        PeerManager.shared.destory()
+        let _ = KeyManager.destroyKeyPair()
+        SessionManager.shared.destory()
+        PeerManager.shared.destory()
     }
     
     dynamic func didRegisterPush(note:Notification?) {
@@ -108,9 +108,9 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         
         guard KeyManager.hasKey() else {
             
-            if let createNav = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "CreateNavigation") as? UINavigationController
+            if let create = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "CreateController") as? CreateController
             {
-                self.present(createNav, animated: true, completion: nil)
+                self.present(create, animated: true, completion: nil)
             }
             
             return

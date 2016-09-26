@@ -58,6 +58,8 @@
 		FA2697121D9992A900FE44D3 /* app-icon-url.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2697111D9992A900FE44D3 /* app-icon-url.png */; };
 		FA2697191D99999A00FE44D3 /* Contacts+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697181D99999A00FE44D3 /* Contacts+KR.swift */; };
 		FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */; };
+		FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697311D99CA1100FE44D3 /* GenerateController.swift */; };
+		FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */; };
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
@@ -367,6 +369,8 @@
 		FA2697111D9992A900FE44D3 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon-url.png"; sourceTree = "<group>"; };
 		FA2697181D99999A00FE44D3 /* Contacts+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contacts+KR.swift"; sourceTree = "<group>"; };
 		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
+		FA2697311D99CA1100FE44D3 /* GenerateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateController.swift; sourceTree = "<group>"; };
+		FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA31856F1D8F6E5D00B46536 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
@@ -532,6 +536,7 @@
 				FA1682821D77811900A7ED53 /* IGIdenticon */,
 				FA1682531D774D6000A7ED53 /* RSBarCodes */,
 				FA61EF451D8319ED009FD899 /* Mutex.swift */,
+				FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */,
 			);
 			path = Lib;
 			sourceTree = SOURCE_ROOT;
@@ -758,6 +763,7 @@
 			isa = PBXGroup;
 			children = (
 				FACBEFEA1D779D6E005D71B9 /* CreateController.swift */,
+				FA2697311D99CA1100FE44D3 /* GenerateController.swift */,
 				FACBEFED1D77A2B7005D71B9 /* SetupController.swift */,
 			);
 			name = Setup;
@@ -1189,11 +1195,13 @@
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
+				FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,
 				FA2696FA1D98851600FE44D3 /* ASN1.swift in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
 				8DE3955D1D942647005D559C /* CacheObject.swift in Sources */,
+				FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */,
 				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,

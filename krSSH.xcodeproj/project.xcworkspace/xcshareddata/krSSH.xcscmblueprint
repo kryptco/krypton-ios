@@ -4,17 +4,19 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "3B887947841C5D283DA9A43F50E75B318A2BFC2C" : 9223372036854775807,
     "A7FDBF7DE1372248DCCBA399FD19DD1C03550B46" : 9223372036854775807,
     "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : 9223372036854775807,
     "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : 9223372036854775807,
-    "3B887947841C5D283DA9A43F50E75B318A2BFC2C" : 9223372036854775807
+    "D84B44F309129032C5A39FC5561DD01414003B8F" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "80FCF10D-3F39-435A-A4BF-A79EA163ADE0",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "A7FDBF7DE1372248DCCBA399FD19DD1C03550B46" : "krSSH\/RequestKit\/",
-    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : "krSSH\/swift-sodium\/",
-    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : "krSSH\/",
-    "3B887947841C5D283DA9A43F50E75B318A2BFC2C" : "krSSH\/octokit.swift\/"
+    "3B887947841C5D283DA9A43F50E75B318A2BFC2C" : "krssh-ios\/octokit.swift\/",
+    "A7FDBF7DE1372248DCCBA399FD19DD1C03550B46" : "krssh-ios\/RequestKit\/",
+    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : "krssh-ios\/swift-sodium\/",
+    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : "krssh-ios\/",
+    "D84B44F309129032C5A39FC5561DD01414003B8F" : "krssh-ios\/AwesomeCache\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "krSSH",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -39,6 +41,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:kryptco\/swift-sodium",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:aschuch\/AwesomeCache.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D84B44F309129032C5A39FC5561DD01414003B8F"
     }
   ]
 }
