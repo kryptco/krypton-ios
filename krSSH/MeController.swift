@@ -41,7 +41,9 @@ class MeController:UIViewController {
             let me = try KeyManager.sharedInstance().getMe()
             
             tagLabel.text = me.email
-            let json = try me.jsonString()
+            
+            //TODO: --> deal
+            let json = try me.publicKey.fingerprint().toBase64()
             
             let gen = RSUnifiedCodeGenerator()
             gen.strokeColor = UIColor.red
