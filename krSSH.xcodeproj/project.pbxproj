@@ -360,7 +360,7 @@
 		FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSimpleIdenticon.m; sourceTree = "<group>"; };
 		FA1682911D77868D00A7ED53 /* FAIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAIcon.swift; sourceTree = "<group>"; };
 		FA1682921D77868D00A7ED53 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../FontAwesome.ttf; sourceTree = "<group>"; };
-		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
+		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "krSSH-Bridging-Header.h"; path = "krSSH/krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2696F91D98851600FE44D3 /* ASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
@@ -380,7 +380,7 @@
 		FA81413E1D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA8141401D70B0F4004FE58C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = krSSH/Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FA8E1BDB1D9491FC0095AEF4 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon-url.png"; path = "krSSH/Assets.xcassets/AppIcon-Circle240.imageset/app-icon-url.png"; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
@@ -692,8 +692,6 @@
 				FAEE048A1D736972002A7AFD /* Krypto */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
 				FAA536301D8F461300549710 /* UIUtil */,
-				FA8141451D70B0F4004FE58C /* Info.plist */,
-				FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */,
 			);
 			path = krSSH;
 			sourceTree = "<group>";
@@ -807,6 +805,8 @@
 		FAEE048F1D736AE3002A7AFD /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				FA8141451D70B0F4004FE58C /* Info.plist */,
+				FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */,
 				FA0322751D74F1B300CD7622 /* krSSH.entitlements */,
 				FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */,
 				FA2977981D7736A8003EB1F7 /* ImageLicenses */,

@@ -6,6 +6,21 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Kryptonite</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>app-icon-url</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>KR</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.alexgrinman.krSSH.kr</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -32,6 +47,18 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kr-github</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string>app-icon-url</string>
+			<key>CFBundleURLName</key>
+			<string>kr-url</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kr</string>
 			</array>
 		</dict>
 	</array>
@@ -72,6 +99,33 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Kryptonite Public Key</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.alexgrinman.krSSH.kr</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://krypt.co/krext</string>
+			<key>UTTypeSize320IconFile</key>
+			<string>app-icon-url</string>
+			<key>UTTypeSize64IconFile</key>
+			<string>app-icon-url</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>kr</string>
+					<string>KR</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>

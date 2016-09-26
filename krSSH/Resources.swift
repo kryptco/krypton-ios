@@ -55,7 +55,7 @@ extension UIColor {
     }
     
     static var app:UIColor {
-        return UIColor(hex: 0x1FB18A)
+        return UIColor(hex: 0x5BC894)
     }
 }
 
