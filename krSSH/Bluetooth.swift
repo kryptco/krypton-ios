@@ -311,7 +311,7 @@ func splitMessageForBluetooth(message: Data, mtu: UInt) throws -> [Data] {
     }
     var blocks : [Data] = []
     let n: UInt8 = UInt8(intN)
-    let offset = Int(0)
+    var offset = Int(0)
     for n in (0...n).reversed() {
         var block = Data()
         var inoutN = n
@@ -320,6 +320,7 @@ func splitMessageForBluetooth(message: Data, mtu: UInt) throws -> [Data] {
         block.append(message.subdata(in: offset..<endIndex))
 
         blocks.append(block)
+        offset += Int(msgBlockSize)
     }
     return blocks
 }
