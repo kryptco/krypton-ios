@@ -1119,7 +1119,7 @@
                                     <action selector="doneTapped" destination="UnB-Qg-F2t" eventType="touchUpInside" id="yjA-1P-fdX"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon-Circle240" translatesAutoresizingMaskIntoConstraints="NO" id="gMp-eB-XXN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo240" translatesAutoresizingMaskIntoConstraints="NO" id="gMp-eB-XXN">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="pHc-cW-BqT"/>
                                     <constraint firstAttribute="width" constant="120" id="qMN-b3-rgc"/>
@@ -1182,7 +1182,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sGH-yS-MIk">
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="56b-kb-Emv">
-                                        <color key="onTintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="onTintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="userApprovalSettingChangedWithSender:" destination="UnB-Qg-F2t" eventType="valueChanged" id="opq-Cd-pXr"/>
                                         </connections>
@@ -1349,11 +1349,11 @@ Cg
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                 <state key="normal" title="Upload Public Key to GitHub">
-                                                    <color key="titleColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
-                                                        <color key="value" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
                                                         <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1586,7 +1586,7 @@ Cg
         </scene>
     </scenes>
     <resources>
-        <image name="AppIcon-Circle240" width="120" height="120"/>
+        <image name="AppLogo240" width="106" height="120"/>
         <image name="check" width="256" height="256"/>
         <image name="copy" width="50" height="50"/>
         <image name="device" width="30" height="30"/>

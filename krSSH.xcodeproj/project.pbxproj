@@ -55,6 +55,7 @@
 		FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1682921D77868D00A7ED53 /* FontAwesome.ttf */; };
 		FA2696FA1D98851600FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FA2697101D996E6400FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
+		FA2697121D9992A900FE44D3 /* app-icon-url.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2697111D9992A900FE44D3 /* app-icon-url.png */; };
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
@@ -75,7 +76,6 @@
 		FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
-		FA8E1BDC1D9491FC0095AEF4 /* app-icon-url.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8E1BDB1D9491FC0095AEF4 /* app-icon-url.png */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9271D77B61F006372B4 /* Dispatch.swift */; };
@@ -362,6 +362,7 @@
 		FA1682921D77868D00A7ED53 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../FontAwesome.ttf; sourceTree = "<group>"; };
 		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "krSSH-Bridging-Header.h"; path = "krSSH/krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2696F91D98851600FE44D3 /* ASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
+		FA2697111D9992A900FE44D3 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon-url.png"; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA31856F1D8F6E5D00B46536 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
@@ -382,7 +383,6 @@
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = krSSH/Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		FA8E1BDB1D9491FC0095AEF4 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon-url.png"; path = "krSSH/Assets.xcassets/AppIcon-Circle240.imageset/app-icon-url.png"; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FA92E9271D77B61F006372B4 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
@@ -810,7 +810,7 @@
 				FA0322751D74F1B300CD7622 /* krSSH.entitlements */,
 				FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */,
 				FA2977981D7736A8003EB1F7 /* ImageLicenses */,
-				FA8E1BDB1D9491FC0095AEF4 /* app-icon-url.png */,
+				FA2697111D9992A900FE44D3 /* app-icon-url.png */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -1094,7 +1094,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8E1BDC1D9491FC0095AEF4 /* app-icon-url.png in Resources */,
+				FA2697121D9992A900FE44D3 /* app-icon-url.png in Resources */,
 				8DE3955E1D942647005D559C /* Info.plist in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */,

@@ -19,12 +19,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon240" translatesAutoresizingMaskIntoConstraints="NO" id="veG-mA-S0L">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="PW5-K3-1tE"/>
-                                    <constraint firstAttribute="width" constant="120" id="YK2-1r-ghM"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="krypt co" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hly-y2-wuY">
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="27"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,13 +44,16 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo240" translatesAutoresizingMaskIntoConstraints="NO" id="P0I-gH-TDZ"/>
                         </subviews>
                         <color key="backgroundColor" red="0.35686274509803922" green="0.78431372549019607" blue="0.58039215686274503" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4FH-7H-Rgj" firstAttribute="top" secondItem="Hly-y2-wuY" secondAttribute="bottom" id="3F0-0x-o9F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hly-y2-wuY" secondAttribute="trailing" constant="20" id="I8h-k1-Z3J"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="4FH-7H-Rgj" secondAttribute="bottom" constant="20" id="LhX-he-heq"/>
                             <constraint firstItem="j3j-Jc-s7R" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="OM3-qy-LzV"/>
+                            <constraint firstItem="P0I-gH-TDZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="QgU-c7-Jwi"/>
                             <constraint firstItem="pVS-lh-0Qy" firstAttribute="top" secondItem="opU-J5-hI7" secondAttribute="bottom" constant="-2" id="SC6-dH-fVH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="j3j-Jc-s7R" secondAttribute="trailing" constant="20" id="VcR-fZ-R88"/>
                             <constraint firstAttribute="trailingMargin" secondItem="opU-J5-hI7" secondAttribute="trailing" constant="20" id="XP6-kn-FlV"/>
@@ -64,12 +61,11 @@
                             <constraint firstItem="pVS-lh-0Qy" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="bfo-Ul-no0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pVS-lh-0Qy" secondAttribute="trailing" constant="20" id="g8T-CK-jbD"/>
                             <constraint firstItem="opU-J5-hI7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="gZv-dn-Aau"/>
+                            <constraint firstItem="P0I-gH-TDZ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="h1D-6p-a6K"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4FH-7H-Rgj" secondAttribute="trailing" constant="20" id="me9-ce-eFb"/>
                             <constraint firstItem="4FH-7H-Rgj" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="mtj-Wr-XXY"/>
-                            <constraint firstItem="veG-mA-S0L" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="oJE-4r-y6h"/>
                             <constraint firstItem="opU-J5-hI7" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="22" id="pKJ-pW-oQ1"/>
                             <constraint firstItem="Hly-y2-wuY" firstAttribute="top" secondItem="j3j-Jc-s7R" secondAttribute="bottom" id="pTH-mi-vbH"/>
-                            <constraint firstItem="veG-mA-S0L" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="sRn-X0-ySy"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -79,6 +75,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppIcon240" width="106" height="120"/>
+        <image name="AppLogo240" width="106" height="120"/>
     </resources>
 </document>
