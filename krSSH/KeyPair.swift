@@ -252,7 +252,7 @@ class KeyPair {
         var sigBufferSize = SecKeyGetBlockSize(privateKey)
         var result = [UInt8](repeating: 0, count: sigBufferSize)
         
-        let status = SecKeyRawSign(privateKey, SecPadding.PKCS1SHA1, dataBytes, dataBytes.count, &result, &sigBufferSize)
+        let status = SecKeyRawSign(privateKey, SecPadding.PKCS1, dataBytes, dataBytes.count, &result, &sigBufferSize)
         
         guard status.isSuccess() else {
             throw CryptoError.sign(status)
