@@ -52,7 +52,7 @@ class GenerateController:UIViewController {
                 self.showWarning(title: "Error", body: "Cryptography: error generating key pair. \(e)", then: {
                     dispatchMain {
                         SwiftSpinner.hide()
-                        self.performSegue(withIdentifier: "errorGenerate", sender: nil)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 })
             }

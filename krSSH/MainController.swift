@@ -107,12 +107,7 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         
         
         guard KeyManager.hasKey() else {
-            
-            if let create = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "CreateController") as? CreateController
-            {
-                self.present(create, animated: true, completion: nil)
-            }
-            
+            self.performSegue(withIdentifier: "showOnboard", sender: nil)
             return
         }
         
@@ -142,6 +137,11 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    
+    @IBAction func dismissOnboarding(segue: UIStoryboardSegue) {
+    }
+    
 
     
     //MARK: Nav Bar Buttons

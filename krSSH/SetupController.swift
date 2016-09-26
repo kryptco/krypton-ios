@@ -13,17 +13,16 @@ class SetupController: UIViewController, UITextFieldDelegate {
     @IBOutlet var keyIcon:UILabel!
     @IBOutlet var keyLabel:UILabel!
     
-    @IBOutlet var identiconView:UIImageView!
-
+    @IBOutlet weak var identiconView:UIImageView!
     @IBOutlet weak var nameTextfield: UITextField!
-
     @IBOutlet weak var doneButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.setKrLogo()
-
+        
+        doneButton.isEnabled = false
         
         keyIcon.FAIcon = FAType.FAKey
         identiconView.setBorder(color: UIColor.white, cornerRadius: 40.0, borderWidth: 0.0)
@@ -57,6 +56,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+
     @IBAction func next() {
         nameTextfield.resignFirstResponder()
         
@@ -68,7 +68,6 @@ class SetupController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
