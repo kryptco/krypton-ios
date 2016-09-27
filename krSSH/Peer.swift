@@ -26,7 +26,7 @@ struct Peer:JSONConvertable {
     
     init(json:JSON) throws {
         
-        let publicKeyBase64:String = try json ~> "public_key_der"
+        let publicKeyBase64:String = try json ~> "rsa_public_key_wire"
         self.publicKey = try publicKeyBase64.fromBase64()
         self.fingerprint = self.publicKey.fingerprint()
         
