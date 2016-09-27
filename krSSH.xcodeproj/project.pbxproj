@@ -53,6 +53,7 @@
 		FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */ = {isa = PBXBuildFile; fileRef = FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */; };
 		FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682911D77868D00A7ED53 /* FAIcon.swift */; };
 		FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1682921D77868D00A7ED53 /* FontAwesome.ttf */; };
+		FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E706D1D9AC22900A14650 /* FirstPairController.swift */; };
 		FA2696FA1D98851600FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FA2697101D996E6400FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FA2697121D9992A900FE44D3 /* app-icon-url.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2697111D9992A900FE44D3 /* app-icon-url.png */; };
@@ -364,6 +365,7 @@
 		FA1682911D77868D00A7ED53 /* FAIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAIcon.swift; sourceTree = "<group>"; };
 		FA1682921D77868D00A7ED53 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../FontAwesome.ttf; sourceTree = "<group>"; };
 		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "krSSH-Bridging-Header.h"; path = "krSSH/krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
+		FA1E706D1D9AC22900A14650 /* FirstPairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPairController.swift; sourceTree = "<group>"; };
 		FA2696F91D98851600FE44D3 /* ASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA2697111D9992A900FE44D3 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon-url.png"; sourceTree = "<group>"; };
 		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 				FACBEFEA1D779D6E005D71B9 /* CreateController.swift */,
 				FA2697311D99CA1100FE44D3 /* GenerateController.swift */,
 				FACBEFED1D77A2B7005D71B9 /* SetupController.swift */,
+				FA1E706D1D9AC22900A14650 /* FirstPairController.swift */,
 			);
 			name = Setup;
 			sourceTree = "<group>";
@@ -1261,6 +1264,7 @@
 				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,
 				FAA6E1F11D79E3ED007D1B3A /* API.swift in Sources */,
+				FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */,
 				FAA6E1E61D79B7BB007D1B3A /* PeerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
