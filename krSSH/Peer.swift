@@ -33,7 +33,7 @@ struct Peer:JSONConvertable {
         let email:String? = try json ~> "email"
         self.email = email ?? KrUnknownEmailValue
         
-        let epoch:Double? = try json ~> "date"
+        let epoch:Double? = try? json ~> "date"
         if  let epoch = epoch {
             self.dateAdded = Date(timeIntervalSince1970: epoch)
         } else {
