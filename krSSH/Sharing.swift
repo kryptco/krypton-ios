@@ -67,6 +67,19 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         msgDialogue.messageComposeDelegate = self
         
         
+        let authorizedKey = peer.publicKey.toAuthorized()
+        
+        if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
+            msgDialogue.addAttachmentData(pkData, typeIdentifier: "kr", filename: "publickey.kr")
+        }
+        
+        if let url = URL(string: Link.publicKeyImport()) {
+            msgDialogue.addAttachmentURL(url, withAlternateFilename: "publickey.kr")
+        }
+
+        msgDialogue.body = "Import my public key with kryptonite!"
+
+        
         Resources.makeAppearences()
         
         return msgDialogue
@@ -79,8 +92,17 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         }
     
         mailDialogue.setSubject("My SSH Public Key")
-        mailDialogue.setMessageBody("\(peer.publicKey.toAuthorized()) \(peer.email)", isHTML: false)
         mailDialogue.mailComposeDelegate = self
+        
+        let authorizedKey = peer.publicKey.toAuthorized()
+        
+        if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
+            mailDialogue.addAttachmentData(pkData, mimeType: "", fileName: "publickey.kr")
+        }
+        
+        mailDialogue.setMessageBody("<a href=\"\(Link.publicKeyImport())\"> Import my public key with kryptonite by tapping here</a> or download the public key attached below. ", isHTML: true)
+
+        
 
         Resources.makeAppearences()
 

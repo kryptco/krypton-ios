@@ -16,14 +16,20 @@ class KRBaseController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        linkListener = LinkListener(handle)
     }
     
     //MARK: Policy
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Policy.currentViewController = self
+        linkListener = LinkListener(handle)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        linkListener = nil
+    }
+ 
     
 }
 
@@ -49,15 +55,16 @@ class KRBaseTableController: UITableViewController {
     
     private var linkListener:LinkListener?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        linkListener = LinkListener(handle)
-    }
-    
     //MARK: Policy
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Policy.currentViewController = self
+        linkListener = LinkListener(handle)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        linkListener = nil
     }
     
 }
@@ -65,6 +72,12 @@ class KRBaseTableController: UITableViewController {
 
 
 extension UIViewController {
+    
+    var foregroundNotificationName:NSNotification.Name {
+        return NSNotification.Name(rawValue: "on_foreground_view_will_appear")
+    }
+
+    
     //MARK: LinkHandler
     struct InvalidLinkError:Error{}
     func handle(link:Link) {
@@ -84,6 +97,31 @@ extension UIViewController {
                 dispatchMain {
                     self.present(self.emailDialogue(for: me, with: toEmail), animated: true, completion: nil)
                 }
+            case .import:
+                guard
+                    let publicKeyWire = try link.properties["pk"]?.fromBase64(),
+                    let emailData = try link.properties["e"]?.fromBase64(),
+                    let email = String(data: emailData, encoding: String.Encoding.utf8)
+                else {
+                        throw InvalidLinkError()
+                }
+                
+                let peer = Peer(email: email, fingerprint: publicKeyWire.fingerprint(), publicKey: publicKeyWire)
+                
+                PeerManager.shared.add(peer: peer)
+                
+                dispatchAfter(delay: 1.0, task: { 
+                    dispatchMain {
+                        if let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
+                        {
+                            successVC.hudText = "Added \(email)'s Public Key!"
+                            successVC.modalPresentationStyle = .overCurrentContext
+                            self.present(successVC, animated: true, completion: nil)
+                        }
+                        
+                    }
+                })
+      
             }
             
         } catch {

@@ -2156,8 +2156,8 @@ Cg
         <image name="x" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="0R2-zj-seh"/>
         <segue reference="Rob-Re-AWf"/>
-        <segue reference="kMu-oa-2FM"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

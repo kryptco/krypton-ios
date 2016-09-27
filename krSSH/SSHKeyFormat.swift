@@ -38,6 +38,22 @@ extension SSHAuthorizedFormat {
         
         return try components[1].fromBase64()
     }
+    
+    func byAdding(comment:String) -> SSHAuthorizedFormat{
+        return "\(self) \(comment)"
+    }
+    
+    func byRemovingComment() throws -> (SSHAuthorizedFormat, String) {
+        let components = self.components(separatedBy: " ")
+        guard components.count > 2 else {
+            throw CryptoError.encoding
+        }
+        
+        let authorized = "\(components[0]) \(components[1])"
+        let comment = components[2]
+        
+        return (authorized, comment)
+    }
 }
 
 

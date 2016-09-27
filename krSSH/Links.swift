@@ -19,13 +19,15 @@ import Foundation
 enum AppLinkType:String {
     case github = "kr-github"
     case kryptonite = "kr"
+    case file = "file"
 }
 
 
 enum LinkCommand:String {
     case request = "request"
-    
-    static let all = [request]
+    case `import` = "import"
+
+    static let all = [request, `import`]
 
     var notificationName:NSNotification.Name {
         return NSNotification.Name("\(self.rawValue)_app_link_notification")
@@ -53,6 +55,16 @@ extension Link {
         let email = (try? KeyManager.sharedInstance().getMe().email)?.data(using: String.Encoding.utf8)?.toBase64(true)
         return "\(AppLinkType.kryptonite.rawValue)://\(LinkCommand.request.rawValue)?r=\(email ?? "")"
     }
+    
+    static func publicKeyImport() -> String {
+        let me = try? KeyManager.sharedInstance().getMe()
+        
+        let email = me?.email.data(using: String.Encoding.utf8)?.toBase64(true)
+        let publicKeyWire = me?.publicKey.toBase64() ?? ""
+        
+        return "\(AppLinkType.kryptonite.rawValue)://\(LinkCommand.import.rawValue)?pk=\(publicKeyWire)&e=\(email ?? "")"
+    }
+
 }
 
 class LinkListener {
