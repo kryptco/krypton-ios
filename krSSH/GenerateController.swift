@@ -31,6 +31,8 @@ class GenerateController:UIViewController {
         let didDestroy = KeyManager.destroyKeyPair()
         log("destroyed keypair: \(didDestroy)")
         
+        let startTime = Date()
+
         dispatchAsync {
             do {
                 
@@ -41,13 +43,23 @@ class GenerateController:UIViewController {
                 
                 log("Generated public key: \(pk)")
                 
-                dispatchAfter(delay: 2.0, task: {
+                let delay = abs(Date().timeIntervalSince(startTime))
+                
+                if delay >= 4.0 {
+                    dispatchMain {
+                        SwiftSpinner.hide()
+                        self.performSegue(withIdentifier: "showSetup", sender: nil)
+                    }
+                    return
+                }
+                
+                dispatchAfter(delay: 4.0 - delay, task: {
                     dispatchMain {
                         SwiftSpinner.hide()
                         self.performSegue(withIdentifier: "showSetup", sender: nil)
                     }
                 })
-                
+
             } catch (let e) {
                 self.showWarning(title: "Error", body: "Cryptography: error generating key pair. \(e)", then: {
                     dispatchMain {

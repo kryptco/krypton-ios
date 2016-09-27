@@ -96,7 +96,10 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         super.viewWillAppear(animated)
         
         blurView.frame = view.frame
-        self.blurView.isHidden = false
+
+        if !KeyManager.hasKey() {
+            self.blurView.isHidden = false
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

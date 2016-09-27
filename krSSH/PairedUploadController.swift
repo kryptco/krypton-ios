@@ -24,7 +24,7 @@ class PairedUploadController:UIViewController {
         super.viewWillAppear(animated)
         
         if let session = session {
-            sessionLabel.text = "Pairing with \(session.pairing.name)"
+            sessionLabel.text = "\(session.pairing.name)"
         }
 
     }

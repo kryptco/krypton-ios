@@ -30,6 +30,7 @@ class PairingAnimationController:UIViewController {
         
         sessionLabel.text = "Pairing with \(session.pairing.name)"
 
+        let startTime = Date()
         
         Silo.shared.listen(to: session) { (success, error) in
             guard success else {
@@ -41,11 +42,21 @@ class PairingAnimationController:UIViewController {
                 return
             }
             
+            
             SessionManager.shared.add(session: session)
             Silo.shared.add(session: session)
             Silo.shared.startPolling(session: session)
             
-            dispatchAfter(delay: 2.0, task: {
+            let delay = abs(Date().timeIntervalSince(startTime))
+            
+            if delay >= 2.0 {
+                dispatchMain {
+                    self.performSegue(withIdentifier: "showDone", sender: nil)
+                }
+                return
+            }
+            
+            dispatchAfter(delay: 2.0 - delay, task: {
                 dispatchMain {
                     self.performSegue(withIdentifier: "showDone", sender: nil)
                 }
