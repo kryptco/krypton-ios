@@ -1850,19 +1850,31 @@ Cg
                                                 <constraint firstAttribute="width" constant="20" id="SM3-6w-aov"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="agrinman@mit.edu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qu-t0-iBL">
-                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="alex@krypt.co" textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="rrc-CV-gf3">
+                                            <color key="textColor" red="0.33387558023872677" green="0.33387558023872677" blue="0.33387558023872677" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="3yk-j0-9Le" id="wRx-7O-o96"/>
+                                            </connections>
+                                        </textField>
+                                        <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hC0-Xs-8nj" userLabel="underline">
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="ArO-2c-by1"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="s5R-5f-PkA" firstAttribute="trailing" secondItem="5Qu-t0-iBL" secondAttribute="leading" constant="-10" id="EKs-ql-GH7"/>
-                                        <constraint firstItem="s5R-5f-PkA" firstAttribute="centerY" secondItem="5Qu-t0-iBL" secondAttribute="centerY" id="MMd-B2-CGH"/>
+                                        <constraint firstItem="rrc-CV-gf3" firstAttribute="leading" secondItem="s5R-5f-PkA" secondAttribute="trailing" constant="10" id="JpP-fn-fay"/>
+                                        <constraint firstItem="s5R-5f-PkA" firstAttribute="centerY" secondItem="rrc-CV-gf3" secondAttribute="centerY" id="O9q-PV-rvT"/>
                                         <constraint firstItem="YfX-h2-UOh" firstAttribute="centerX" secondItem="elP-K7-igh" secondAttribute="centerX" id="OCx-XZ-nFN"/>
-                                        <constraint firstItem="5Qu-t0-iBL" firstAttribute="centerX" secondItem="YfX-h2-UOh" secondAttribute="centerX" id="TSa-x0-WPT"/>
+                                        <constraint firstItem="hC0-Xs-8nj" firstAttribute="leading" secondItem="rrc-CV-gf3" secondAttribute="leading" id="ROR-CH-NID"/>
                                         <constraint firstItem="YfX-h2-UOh" firstAttribute="top" secondItem="elP-K7-igh" secondAttribute="top" constant="80" id="V7Y-D6-B8t"/>
-                                        <constraint firstItem="5Qu-t0-iBL" firstAttribute="top" secondItem="YfX-h2-UOh" secondAttribute="bottom" constant="20" id="lCJ-SP-2Gn"/>
+                                        <constraint firstItem="hC0-Xs-8nj" firstAttribute="trailing" secondItem="rrc-CV-gf3" secondAttribute="trailing" id="doj-5x-Wcm"/>
+                                        <constraint firstItem="rrc-CV-gf3" firstAttribute="centerX" secondItem="elP-K7-igh" secondAttribute="centerX" id="flE-sv-tKZ"/>
+                                        <constraint firstItem="hC0-Xs-8nj" firstAttribute="top" secondItem="rrc-CV-gf3" secondAttribute="bottom" id="gxH-9b-4YD"/>
+                                        <constraint firstItem="rrc-CV-gf3" firstAttribute="top" secondItem="YfX-h2-UOh" secondAttribute="bottom" constant="20" id="utu-dp-Mkc"/>
                                     </constraints>
                                 </view>
                                 <constraints>
@@ -1892,33 +1904,21 @@ Cg
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="4"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="uploadToGitHub" destination="3yk-j0-9Le" eventType="touchUpInside" id="gyz-QD-Qyt"/>
                                                 </connections>
                                             </button>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="github-logo" translatesAutoresizingMaskIntoConstraints="NO" id="dEI-Of-4Wh" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
-                                                <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="24" id="ILu-zX-APp"/>
-                                                    <constraint firstAttribute="height" constant="24" id="vs7-Ra-dad"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="12"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </imageView>
                                         </subviews>
                                         <color key="tintColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="dEI-Of-4Wh" firstAttribute="leading" secondItem="LtF-SC-L3M" secondAttribute="leading" constant="10" id="0cx-Z8-Tmx"/>
                                             <constraint firstItem="ZFY-IL-sad" firstAttribute="centerY" secondItem="LtF-SC-L3M" secondAttribute="centerY" id="7Tr-Er-lMB"/>
-                                            <constraint firstItem="dEI-Of-4Wh" firstAttribute="centerY" secondItem="ZFY-IL-sad" secondAttribute="centerY" id="Ct2-d0-4OZ"/>
                                             <constraint firstAttribute="trailing" secondItem="ZFY-IL-sad" secondAttribute="trailing" constant="10" id="GRp-2Z-N6z"/>
+                                            <constraint firstItem="ZFY-IL-sad" firstAttribute="leading" secondItem="LtF-SC-L3M" secondAttribute="leading" constant="8" id="JE3-HJ-mwW"/>
                                             <constraint firstAttribute="height" constant="60" id="KHD-2E-25e"/>
-                                            <constraint firstItem="ZFY-IL-sad" firstAttribute="leading" secondItem="dEI-Of-4Wh" secondAttribute="trailing" constant="10" id="QWG-F6-iZH"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flF-m3-hsS">
@@ -2107,7 +2107,7 @@ Cg
                     <tabBarItem key="tabBarItem" title="Me" image="me" selectedImage="me_selected" id="mV9-63-qvt"/>
                     <connections>
                         <outlet property="qrImageView" destination="YfX-h2-UOh" id="QBq-jV-Ak2"/>
-                        <outlet property="tagLabel" destination="5Qu-t0-iBL" id="YsB-IT-ONi"/>
+                        <outlet property="tagTextField" destination="rrc-CV-gf3" id="w1l-FX-9vs"/>
                         <segue destination="FBy-gQ-WmY" kind="presentation" identifier="showSuccess" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="Rob-Re-AWf"/>
                     </connections>
                 </viewController>
@@ -2137,7 +2137,6 @@ Cg
         <image name="copy" width="50" height="50"/>
         <image name="device" width="30" height="30"/>
         <image name="device_selected" width="30" height="30"/>
-        <image name="github-logo" width="44" height="44"/>
         <image name="imac" width="128" height="128"/>
         <image name="iphone" width="128" height="128"/>
         <image name="mac" width="256" height="256"/>
@@ -2157,7 +2156,7 @@ Cg
         <image name="x" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8Vx-DU-0ql"/>
+        <segue reference="Rob-Re-AWf"/>
         <segue reference="kMu-oa-2FM"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

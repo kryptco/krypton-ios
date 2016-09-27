@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 import OctoKit
 
-class MeController:KRBaseController {
+class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var qrImageView:UIImageView!
-    @IBOutlet var tagLabel:UILabel!
+    @IBOutlet var tagTextField:UITextField!
 
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class MeController:KRBaseController {
         do {
             
             let me = try KeyManager.sharedInstance().getMe()
-            tagLabel.text = me.email
+            tagTextField.text = me.email
             
             qrImageView.image = IGSimpleIdenticon.from(me.publicKey.toBase64(), size: CGSize(width: 80, height: 80))
             
@@ -179,4 +179,35 @@ class MeController:KRBaseController {
             self.present(self.otherDialogue(for: me), animated: true, completion: nil)
         }
     }
+    
+    
+    //MARK: TextField Delegate -> Editing Email
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+//        let text = textField.text ?? ""
+//        let txtAfterUpdate = (text as NSString).replacingCharacters(in: range, with: string)
+        
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        guard let email = textField.text else {
+            return false
+        }
+        
+        if email.isEmpty {
+            tagTextField.text = (try? KeyManager.sharedInstance().getMe().email) ?? ""
+        } else {
+           try? KeyManager.sharedInstance().setMe(email: email)
+        }
+        
+        textField.resignFirstResponder()
+        return true
+    }
+
 }
