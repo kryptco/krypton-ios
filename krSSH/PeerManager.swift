@@ -38,21 +38,24 @@ class PeerManager {
     }
     
     func add(peer:Peer) {
-        let success = KeychainStorage().set(key: peer.fingerprint, value: peer.publicKey)
+        let fp = peer.fingerprint.toBase64()
+        let success = KeychainStorage().set(key: fp, value: peer.publicKey.toBase64())
         if !success {
             log("failed to save \(peer)", LogType.error)
         }
-        peers[peer.fingerprint] = peer
+        peers[fp] = peer
         
         save()
     }
     
     func remove(peer:Peer) {
-        let success = KeychainStorage().delete(key: peer.fingerprint, value: peer.publicKey)
+        let fp = peer.fingerprint.toBase64()
+
+        let success = KeychainStorage().delete(key: fp, value: peer.publicKey.toBase64())
         if !success {
             log("failed to delete \(peer)", LogType.error)
         }
-        peers.removeValue(forKey: peer.fingerprint)
+        peers.removeValue(forKey: fp)
         
         save()
     }
@@ -68,9 +71,10 @@ class PeerManager {
         var peerDict = [String:AnyObject]()
         
         for (_, peer) in peers {
-            peerDict[peer.fingerprint] = ["email": peer.email,
-                                          "fingerprint": peer.fingerprint,
-                                          "date_added": Double(peer.dateAdded.timeIntervalSince1970)] as AnyObject
+            let fp = peer.fingerprint.toBase64()
+            peerDict[fp] = ["email": peer.email,
+                            "fingerprint": fp,
+                            "date_added": Double(peer.dateAdded.timeIntervalSince1970)] as AnyObject
         }
         
         datastore.set(peerDict, forKey: PeerManager.ListKey)
@@ -103,11 +107,11 @@ class PeerManager {
             }
             
             let date = Date(timeIntervalSince1970: seconds)
-            var publicKey:String
+            var publicKey:SSHWireFormat
             
             do {
-                publicKey = try KeychainStorage().get(key: fp)
-                let foundFingerprint = try publicKey.fingerprint().toBase64()
+                publicKey = try KeychainStorage().get(key: fp).fromBase64()
+                let foundFingerprint = publicKey.fingerprint().toBase64()
 
                 guard foundFingerprint == fp
                 else {
@@ -119,9 +123,9 @@ class PeerManager {
                 continue
             }
             
-            
-            let peer = Peer(email: email, fingerprint: fp, publicKey: publicKey, date: date)
-            peers[peer.fingerprint] = peer
+            let peerFingerprint = publicKey.fingerprint()
+            let peer = Peer(email: email, fingerprint: peerFingerprint, publicKey: publicKey, date: date)
+            peers[peerFingerprint.toBase64()] = peer
         }
         
         

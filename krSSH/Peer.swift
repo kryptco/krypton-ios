@@ -12,12 +12,12 @@ private let KrUnknownEmailValue = "unknown"
 
 struct Peer:JSONConvertable {
     var email:String
-    var fingerprint:String
-    var publicKey:String
+    var fingerprint:Data
+    var publicKey:SSHWireFormat
     var dateAdded:Date
 
     
-    init(email:String, fingerprint:String, publicKey:String, date:Date = Date()) {
+    init(email:String, fingerprint:Data, publicKey:SSHWireFormat, date:Date = Date()) {
         self.email = email
         self.fingerprint = fingerprint
         self.publicKey = publicKey
@@ -26,18 +26,23 @@ struct Peer:JSONConvertable {
     
     init(json:JSON) throws {
         
-        let publicKey:String = try json ~> "public_key_der"
-        let fingerprint = try publicKey.fingerprint().toBase64()
-        let email:String? = try json ~> "email"
+        let publicKeyBase64:String = try json ~> "public_key_der"
+        self.publicKey = try publicKeyBase64.fromBase64()
+        self.fingerprint = self.publicKey.fingerprint()
         
-        self.publicKey = publicKey
+        let email:String? = try json ~> "email"
         self.email = email ?? KrUnknownEmailValue
-        self.dateAdded = Date()
-        self.fingerprint = fingerprint
+        
+        let epoch:Double? = try json ~> "date"
+        if  let epoch = epoch {
+            self.dateAdded = Date(timeIntervalSince1970: epoch)
+        } else {
+            self.dateAdded = Date()
+        }
     }
     
     var jsonMap:JSON {
-        return ["email": email, "public_key_der": publicKey]
+        return ["email": email, "rsa_public_key_wire": publicKey.toBase64()]
     }
     
     var hasEmail:Bool {

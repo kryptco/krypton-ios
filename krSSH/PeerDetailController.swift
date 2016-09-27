@@ -41,7 +41,7 @@ class PeerDetailController: KRBaseController {
         tagLabel.text = peer?.email
         dateLabel.text = "Added " + (peer?.dateAdded.toShortTimeString() ?? "?")
 
-        qrImageView.image = IGSimpleIdenticon.from(peer?.publicKey ?? "", size: CGSize(width: 80, height: 80))
+        qrImageView.image = IGSimpleIdenticon.from(peer?.publicKey.toBase64() ?? "", size: CGSize(width: 80, height: 80))
 
 
 
@@ -55,7 +55,7 @@ class PeerDetailController: KRBaseController {
         }
         
         dispatchMain {
-            self.present(self.textDialogue(for: peer, with: nil, and: peer.publicKey), animated: true, completion: nil)
+            self.present(self.textDialogue(for: peer), animated: true, completion: nil)
         }
     }
     
@@ -65,7 +65,7 @@ class PeerDetailController: KRBaseController {
         }
         
         dispatchMain {
-            self.present(self.emailDialogue(for: peer, with: nil, and: peer.publicKey), animated: true, completion: nil)
+            self.present(self.emailDialogue(for: peer), animated: true, completion: nil)
         }
     }
     
@@ -74,7 +74,7 @@ class PeerDetailController: KRBaseController {
             return
         }
         
-        copyDialogue(for: peer, and: peer.publicKey)
+        copyDialogue(for: peer)
     }
     
     @IBAction func shareOtherTapped() {
@@ -83,7 +83,7 @@ class PeerDetailController: KRBaseController {
         }
         
         dispatchMain {
-            self.present(self.otherDialogue(for: peer, and: peer.publicKey), animated: true, completion: nil)
+            self.present(self.otherDialogue(for: peer), animated: true, completion: nil)
         }
     }
     

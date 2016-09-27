@@ -41,10 +41,7 @@ class MeController:KRBaseController {
             let me = try KeyManager.sharedInstance().getMe()
             tagLabel.text = me.email
             
-            let kp = try KeyManager.sharedInstance().keyPair
-            let pk = try kp.publicKey.wireFormat()
-            
-            qrImageView.image = IGSimpleIdenticon.from(pk, size: CGSize(width: 80, height: 80))
+            qrImageView.image = IGSimpleIdenticon.from(me.publicKey.toBase64(), size: CGSize(width: 80, height: 80))
             
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
@@ -102,10 +99,10 @@ class MeController:KRBaseController {
         do {
             let km = try KeyManager.sharedInstance()
             let email = try km.getMe().email
-            let publicKeyWire = try km.keyPair.publicKey.wireFormat()
+            let authorizedKey = try km.keyPair.publicKey.authorizedFormat()
             let title = "kryptonite iOS <\(email)>"
             
-            github.upload(title: title, publicKeyWire: publicKeyWire,
+            github.upload(title: title, publicKeyWire: authorizedKey,
                           success: {
                             
                             dispatchMain {
@@ -141,55 +138,45 @@ class MeController:KRBaseController {
     
     @IBAction func shareTextTapped() {
         
-        guard let km = try? KeyManager.sharedInstance(),
-              let peer = try? km.getMe() ,
-              let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
+        guard let me = try? KeyManager.sharedInstance().getMe()
         else {
             return
         }
         
         dispatchMain {
-            self.present(self.textDialogue(for: peer, with: nil, and: publicKeyWire), animated: true, completion: nil)
+            self.present(self.textDialogue(for: me), animated: true, completion: nil)
         }
     }
     
     @IBAction func shareEmailTapped() {
-        guard let km = try? KeyManager.sharedInstance(),
-            let peer = try? km.getMe() ,
-            let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
-            else {
-                return
+        guard let me = try? KeyManager.sharedInstance().getMe()
+        else {
+            return
         }
-
         
         dispatchMain {
-            self.present(self.emailDialogue(for: peer, with: nil, and: publicKeyWire), animated: true, completion: nil)
+            self.present(self.emailDialogue(for: me), animated: true, completion: nil)
         }
     }
     
     @IBAction func shareCopyTapped() {
-        guard let km = try? KeyManager.sharedInstance(),
-            let peer = try? km.getMe() ,
-            let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
-            else {
-                return
+        guard let me = try? KeyManager.sharedInstance().getMe()
+        else {
+            return
         }
-
         
-        copyDialogue(for: peer, and: publicKeyWire)
+        copyDialogue(for: me)
     }
     
     @IBAction func shareOtherTapped() {
-        guard let km = try? KeyManager.sharedInstance(),
-            let peer = try? km.getMe() ,
-            let publicKeyWire = try? km.keyPair.publicKey.wireFormat()
+        guard let me = try? KeyManager.sharedInstance().getMe()
         else {
             return
         }
 
         
         dispatchMain {
-            self.present(self.otherDialogue(for: peer, and: publicKeyWire), animated: true, completion: nil)
+            self.present(self.otherDialogue(for: me), animated: true, completion: nil)
         }
     }
 }

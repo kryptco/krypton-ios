@@ -80,7 +80,7 @@ class KeyManager {
         do {
             let email = try KeychainStorage().get(key: KrMeDataKey)
             let publicKey = try keyPair.publicKey.wireFormat()
-            let fp = try keyPair.publicKey.export().toBase64().fingerprint().toBase64()
+            let fp = publicKey.fingerprint()
             
             return Peer(email: email, fingerprint: fp, publicKey: publicKey)
             

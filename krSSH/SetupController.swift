@@ -30,10 +30,10 @@ class SetupController: UIViewController, UITextFieldDelegate {
         do {
             let kp = try KeyManager.sharedInstance().keyPair
             let pk = try kp.publicKey.wireFormat()
-            let fp = try kp.publicKey.export().toBase64().fingerprint().hexPretty
+            let fp = try pk.fingerprint().hexPretty
             
             keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
-            identiconView.image = IGSimpleIdenticon.from(pk, size: CGSize(width: 100, height: 100))
+            identiconView.image = IGSimpleIdenticon.from(pk.toBase64(), size: CGSize(width: 100, height: 100))
             
         } catch (let e) {
             self.showWarning(title: "Crypto Error", body: "\(e)")

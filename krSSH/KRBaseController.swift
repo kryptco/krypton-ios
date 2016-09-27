@@ -79,12 +79,10 @@ extension UIViewController {
                         throw InvalidLinkError()
                 }
                 
-                let km = try KeyManager.sharedInstance()
-                let me = try km.getMe()
-                let publicKeyWire = try km.keyPair.publicKey.wireFormat()
+                let me = try KeyManager.sharedInstance().getMe()
                 
                 dispatchMain {
-                    self.present(self.emailDialogue(for: me, with: toEmail, and: publicKeyWire), animated: true, completion: nil)
+                    self.present(self.emailDialogue(for: me, with: toEmail), animated: true, completion: nil)
                 }
             }
             

@@ -48,7 +48,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
 
     
     // Sending
-    func textDialogue(for peer:Peer, with phone:String?, and publicKeyWire:String) -> UIViewController {
+    func textDialogue(for peer:Peer, with phone:String? = nil) -> UIViewController {
         
         UINavigationBar.appearance().tintColor = UIColor.app
         UIBarButtonItem.appearance().tintColor = UIColor.app
@@ -63,7 +63,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         if let phone = phone {
             msgDialogue.recipients = [phone]
         }
-        msgDialogue.body = "\(publicKeyWire) <\(peer.email)>"
+        msgDialogue.body = "\(peer.publicKey.toAuthorized()) \(peer.email)"
         msgDialogue.messageComposeDelegate = self
         
         
@@ -72,14 +72,14 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         return msgDialogue
     }
     
-    func emailDialogue(for peer:Peer, with email:String?, and publicKeyWire:String) -> UIViewController {
+    func emailDialogue(for peer:Peer, with email:String? = nil) -> UIViewController {
         let mailDialogue = MFMailComposeViewController()
         if let email = email {
             mailDialogue.setToRecipients([email])
         }
     
         mailDialogue.setSubject("My SSH Public Key")
-        mailDialogue.setMessageBody("\(publicKeyWire) <\(peer.email)>", isHTML: false)
+        mailDialogue.setMessageBody("\(peer.publicKey.toAuthorized()) \(peer.email)", isHTML: false)
         mailDialogue.mailComposeDelegate = self
 
         Resources.makeAppearences()
@@ -87,13 +87,13 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         return mailDialogue
     }
     
-    func copyDialogue(for peer:Peer, and publicKeyWire:String) {
-        UIPasteboard.general.string = "\(publicKeyWire) <\(peer.email)>"
+    func copyDialogue(for peer:Peer) {
+        UIPasteboard.general.string = "\(peer.publicKey.toAuthorized()) \(peer.email)"
         performSegue(withIdentifier: "showSuccess", sender: nil)
     }
     
-    func otherDialogue(for peer:Peer, and publicKeyWire:String) -> UIViewController {
-        let otherDialogue = UIActivityViewController(activityItems: ["\(publicKeyWire) <\(peer.email)>"
+    func otherDialogue(for peer:Peer) -> UIViewController {
+        let otherDialogue = UIActivityViewController(activityItems: ["\(peer.publicKey.toAuthorized()) \(peer.email)"
 ], applicationActivities: nil)
         return otherDialogue
     }

@@ -21,7 +21,7 @@ class PeerCell: UITableViewCell {
     }
     
     func set(peer:Peer) {
-        identiconView.image = IGSimpleIdenticon.from(peer.publicKey, size: CGSize(width: 80, height: 80))
+        identiconView.image = IGSimpleIdenticon.from(peer.publicKey.toBase64(), size: CGSize(width: 80, height: 80))
         tagLabel.text = peer.email
         dateLabel.text = "Added \(peer.dateAdded.toShortTimeString())"
 
