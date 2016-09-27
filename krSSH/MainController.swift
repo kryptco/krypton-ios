@@ -45,9 +45,9 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         self.navigationItem.rightBarButtonItem = helpButton
         
 //        log("\(LogManager.shared.all.count)")
-        let _ = KeyManager.destroyKeyPair()
-        SessionManager.shared.destory()
-        PeerManager.shared.destory()
+//        let _ = KeyManager.destroyKeyPair()
+//        SessionManager.shared.destory()
+//        PeerManager.shared.destory()
     }
     
     dynamic func didRegisterPush(note:Notification?) {

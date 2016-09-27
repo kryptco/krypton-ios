@@ -42,17 +42,9 @@ class PeerDetailController: KRBaseController {
         tagLabel.text = peer?.email
         dateLabel.text = "Added " + (peer?.dateAdded.toShortTimeString() ?? "?")
 
-        if  let p = peer,
-            let json = try? p.jsonString(),
-            let img = RSUnifiedCodeGenerator().generateCode(json, machineReadableCodeObjectType: AVMetadataObjectTypeQRCode)
-        {
-            
-            let resized = RSAbstractCodeGenerator.resizeImage(img, targetSize: qrImageView.frame.size, contentMode: UIViewContentMode.scaleAspectFill)
-            
-            self.qrImageView.image = resized//.withRenderingMode(.alwaysTemplate)
-        } else {
-            log("problem creating qr code for peer", .error)
-        }
+        qrImageView.image = IGSimpleIdenticon.from(peer?.publicKey ?? "", size: CGSize(width: 80, height: 80))
+
+
 
     }
     

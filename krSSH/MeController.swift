@@ -36,26 +36,16 @@ class MeController:KRBaseController {
     
     
     dynamic func redrawMe() {
+        
         do {
             
             let me = try KeyManager.sharedInstance().getMe()
-            
             tagLabel.text = me.email
             
-            //TODO: --> deal
-            let json = try me.publicKey.fingerprint().toBase64()
+            let kp = try KeyManager.sharedInstance().keyPair
+            let pk = try kp.publicKey.wireFormat()
             
-            let gen = RSUnifiedCodeGenerator()
-            gen.strokeColor = UIColor.red
-            gen.fillColor = UIColor.clear
-            
-            if let img = gen.generateCode(json, machineReadableCodeObjectType: AVMetadataObjectTypeQRCode) {
-                
-                
-                let resized = RSAbstractCodeGenerator.resizeImage(img, targetSize: qrImageView.frame.size, contentMode: UIViewContentMode.scaleAspectFill)
-                
-                self.qrImageView.image = resized//.withRenderingMode(.alwaysTemplate)
-            }
+            qrImageView.image = IGSimpleIdenticon.from(pk, size: CGSize(width: 80, height: 80))
             
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
