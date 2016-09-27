@@ -86,7 +86,7 @@ class Policy {
     
     class func notifyUser(session:Session, request:Request) {
         let notification = UILocalNotification()
-        notification.fireDate = Date()
+        notification.fireDate = Date().addingTimeInterval(1.0)
         
         notification.alertBody = "\(session.pairing.name): \(request.sign?.command ?? "SSH login")"
         notification.soundName = UILocalNotificationDefaultSoundName
