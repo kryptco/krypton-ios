@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AudioToolbox
 import AVFoundation
 
 protocol KRScanDelegate {
@@ -36,7 +35,6 @@ class KRScanController: RSCodeReaderViewController {
         self.focusMarkLayer.strokeColor = UIColor.red.cgColor
         self.cornersLayer.strokeColor = UIColor(hex: 0x3FC380).cgColor
         self.cornersLayer.strokeWidth = 6.0
-
         if self.output.availableMetadataObjectTypes.contains(where: {$0 as? String ?? "" == AVMetadataObjectTypeQRCode}) {
             self.output.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
         }
@@ -54,10 +52,9 @@ class KRScanController: RSCodeReaderViewController {
                 if didDecode {
                     AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 }
-
+                
             }
         }
-        
-        
     }
+    
 }

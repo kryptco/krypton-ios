@@ -56,7 +56,6 @@
 		FA2696FA1D98851600FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FA2697101D996E6400FE44D3 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FA2697121D9992A900FE44D3 /* app-icon-url.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2697111D9992A900FE44D3 /* app-icon-url.png */; };
-		FA2697191D99999A00FE44D3 /* Contacts+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697181D99999A00FE44D3 /* Contacts+KR.swift */; };
 		FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */; };
 		FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697311D99CA1100FE44D3 /* GenerateController.swift */; };
 		FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */; };
@@ -367,7 +366,6 @@
 		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "krSSH-Bridging-Header.h"; path = "krSSH/krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2696F91D98851600FE44D3 /* ASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA2697111D9992A900FE44D3 /* app-icon-url.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon-url.png"; sourceTree = "<group>"; };
-		FA2697181D99999A00FE44D3 /* Contacts+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contacts+KR.swift"; sourceTree = "<group>"; };
 		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
 		FA2697311D99CA1100FE44D3 /* GenerateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateController.swift; sourceTree = "<group>"; };
 		FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
@@ -582,7 +580,6 @@
 				FAA6E1E51D79B7BB007D1B3A /* PeerController.swift */,
 				FAA536241D8F13E300549710 /* PeerDetailController.swift */,
 				FAA6E1E71D79B863007D1B3A /* PeerCell.swift */,
-				FA2697181D99999A00FE44D3 /* Contacts+KR.swift */,
 			);
 			name = Peer;
 			sourceTree = "<group>";
@@ -1239,7 +1236,6 @@
 				FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
 				FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */,
-				FA2697191D99999A00FE44D3 /* Contacts+KR.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,

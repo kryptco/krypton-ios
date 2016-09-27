@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 
-
 class PairController: KRBaseController, KRScanDelegate {
     
 
@@ -62,6 +61,7 @@ class PairController: KRBaseController, KRScanDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    
         popupView.isHidden = true
         blurView.isHidden = true
         result.isHidden = true

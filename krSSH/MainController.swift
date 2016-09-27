@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class MainController: KRBaseTabController, UITabBarControllerDelegate {
 
     var blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
