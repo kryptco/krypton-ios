@@ -188,6 +188,38 @@ class KRImageView:UIImageView {
     
 }
 
+class KRView:UIView {
+    
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+        }
+    }
+    
+    
+    @IBInspectable var borderWidth: CGFloat = 0.0 {
+        didSet {
+            layer.borderWidth = borderWidth
+        }
+    }
+    
+    @IBInspectable var borderColor:UIColor = UIColor.clear {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+}
+
 
 
 class StyleFilledButton:UIButton {}
@@ -203,4 +235,40 @@ extension UIView {
         layer.borderColor = color.cgColor
     }
 }
+
+//MARK: Fonts
+
+extension UIFont {
+    
+    var monospacedDigitFont: UIFont {
+        let oldFontDescriptor = fontDescriptor
+        let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
+        return UIFont(descriptor: newFontDescriptor, size: 0)
+    }
+    
+}
+
+private extension UIFontDescriptor {
+    
+    var monospacedDigitFontDescriptor: UIFontDescriptor {
+        let fontDescriptorFeatureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
+        let fontDescriptorAttributes = [UIFontDescriptorFeatureSettingsAttribute: fontDescriptorFeatureSettings]
+        let fontDescriptor = self.addingAttributes(fontDescriptorAttributes)
+        return fontDescriptor
+    }
+    
+}
+
+class KRMonoLabel:UILabel {
+        @IBInspectable var  isMono:Bool = true {
+        didSet {
+            if isMono {
+                self.font = self.font.monospacedDigitFont
+            }
+        }
+    }}
+
+
+
+
 

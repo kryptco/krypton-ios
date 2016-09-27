@@ -65,6 +65,8 @@
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA3185701D8F6E5D00B46536 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31856F1D8F6E5D00B46536 /* GitHub.swift */; };
 		FA4831211D95DA030089D399 /* ResultImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4831201D95DA030089D399 /* ResultImage.swift */; };
+		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
+		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
@@ -375,6 +377,8 @@
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA31856F1D8F6E5D00B46536 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 		FA4831201D95DA030089D399 /* ResultImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultImage.swift; sourceTree = "<group>"; };
+		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
+		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
@@ -620,7 +624,7 @@
 				FAA536261D8F2EA800549710 /* AboutController.swift */,
 				FAA536281D8F2EB900549710 /* HelpController.swift */,
 				FAA5362B1D8F3FAE00549710 /* Integrations */,
-				FACBEFEC1D779D71005D71B9 /* Setup */,
+				FACBEFEC1D779D71005D71B9 /* Onboard */,
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16824F1D774C2700A7ED53 /* Pair */,
 				FA61EF501D85DB19009FD899 /* Devices */,
@@ -758,15 +762,17 @@
 			name = API;
 			sourceTree = "<group>";
 		};
-		FACBEFEC1D779D71005D71B9 /* Setup */ = {
+		FACBEFEC1D779D71005D71B9 /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
 				FACBEFEA1D779D6E005D71B9 /* CreateController.swift */,
 				FA2697311D99CA1100FE44D3 /* GenerateController.swift */,
 				FACBEFED1D77A2B7005D71B9 /* SetupController.swift */,
 				FA1E706D1D9AC22900A14650 /* FirstPairController.swift */,
+				FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */,
+				FA49F7671D9AF32800372556 /* PairedUploadController.swift */,
 			);
-			name = Setup;
+			name = Onboard;
 			sourceTree = "<group>";
 		};
 		FADD71481D772F6E00DA5112 /* Extensions */ = {
@@ -1190,6 +1196,7 @@
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
 				FACAA4C61D89FEB5000B9A01 /* Policy.swift in Sources */,
+				FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */,
 				FA1682511D774C3900A7ED53 /* PairController.swift in Sources */,
 				FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */,
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
@@ -1204,6 +1211,7 @@
 				FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */,
 				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
+				FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
 				FA4831211D95DA030089D399 /* ResultImage.swift in Sources */,
 				8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */,
