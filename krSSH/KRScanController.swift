@@ -57,5 +57,7 @@ class KRScanController: RSCodeReaderViewController {
 
             }
         }
+        
+        
     }
 }

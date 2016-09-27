@@ -68,8 +68,12 @@
 	<string>33b0b036cc26c85d7903b1d76e7b366bec197e7b</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth is used to pair to your workstation.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan QR codes to pair and record peer's public keys.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Your contact list is used to choose people to send public keys to. We will never send your contacts anywhere.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
