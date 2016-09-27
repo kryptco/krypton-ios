@@ -198,7 +198,6 @@ class PairController: KRBaseController, KRScanDelegate {
                 SessionManager.shared.add(session: session)
                 Silo.shared.add(session: session)
                 Silo.shared.startPolling(session: session)
-                Silo.shared.listen(to: session, completion: nil)
             }
             catch let e {
                 log("error creating session: \(e)", .error)

@@ -57,6 +57,9 @@ class SetupController: UIViewController, UITextFieldDelegate {
     }
 
 
+    @IBAction func unwindToSetup(segue: UIStoryboardSegue) {
+    }
+    
     @IBAction func next() {
         nameTextfield.resignFirstResponder()
         

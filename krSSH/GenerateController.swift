@@ -41,7 +41,7 @@ class GenerateController:UIViewController {
                 
                 log("Generated public key: \(pk)")
                 
-                dispatchAfter(delay: 4.0, task: {
+                dispatchAfter(delay: 2.0, task: {
                     dispatchMain {
                         SwiftSpinner.hide()
                         self.performSegue(withIdentifier: "showSetup", sender: nil)
