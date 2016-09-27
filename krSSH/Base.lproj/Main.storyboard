@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ykf-O1-Jwd" id="bF3-Mb-Wuw">
-                                    <frame key="frameInset" width="342" height="99"/>
+                                    <frame key="frameInset" width="342" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0e-sO-A9S" customClass="LogGraph" customModule="krSSH" customModuleProvider="target">
@@ -184,10 +184,10 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LogCell" rowHeight="80" id="uTg-IR-NZZ" customClass="LogCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="360" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="359.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
-                                    <frame key="frameInset" width="375" height="79"/>
+                                    <frame key="frameInset" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="3/26 10:55 PM EST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="rpd-go-jFD">
@@ -573,10 +573,10 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PeerCell" rowHeight="60" id="ue9-Gd-KUc" customClass="PeerCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="219" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="218.5" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ue9-Gd-KUc" id="Qks-pz-ede">
-                                    <frame key="frameInset" width="342" height="59"/>
+                                    <frame key="frameInset" width="342" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="alex@kryptco.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="w0F-1O-IBb">
@@ -1117,17 +1117,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vsx-ht-e5S" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="Vib-dO-RAE"/>
-                                    <constraint firstAttribute="height" constant="80" id="myS-hb-G8y"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" placeholder="what's your email?" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lsM-Wc-ke2">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="2RZ-Wx-SIo"/>
@@ -1184,11 +1173,22 @@
                                     <segue destination="N69-xx-flF" kind="unwind" unwindAction="dismissOnboardingWithSegue:" id="oDV-nw-z40"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Your key pair is ready lets create your identity" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aod-Vi-pEK">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Your key pair is ready, let's identify it with an email address" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aod-Vi-pEK">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vsx-ht-e5S" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="Vib-dO-RAE"/>
+                                    <constraint firstAttribute="height" constant="60" id="myS-hb-G8y"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1197,7 +1197,8 @@
                             <constraint firstItem="Ipv-H4-ypw" firstAttribute="top" secondItem="GrS-Br-jzP" secondAttribute="bottom" constant="10" id="EMz-HF-S7h"/>
                             <constraint firstItem="lsM-Wc-ke2" firstAttribute="leading" secondItem="Pw1-WR-bQV" secondAttribute="leading" id="EPP-Yf-urW"/>
                             <constraint firstItem="Ipv-H4-ypw" firstAttribute="leading" secondItem="znE-nY-bIh" secondAttribute="leadingMargin" id="IvA-20-6q0"/>
-                            <constraint firstItem="hf0-It-a8o" firstAttribute="leading" secondItem="aod-Vi-pEK" secondAttribute="trailing" constant="10" id="L0D-5R-9Lb"/>
+                            <constraint firstItem="aod-Vi-pEK" firstAttribute="leading" secondItem="znE-nY-bIh" secondAttribute="leading" constant="20" id="JIh-jP-ikH"/>
+                            <constraint firstItem="aod-Vi-pEK" firstAttribute="top" secondItem="Vsx-ht-e5S" secondAttribute="bottom" constant="26" id="JW4-uH-z8g"/>
                             <constraint firstItem="xnP-N2-th3" firstAttribute="top" secondItem="Pw1-WR-bQV" secondAttribute="bottom" constant="4" id="LRy-9q-tx3"/>
                             <constraint firstItem="Vsx-ht-e5S" firstAttribute="centerX" secondItem="znE-nY-bIh" secondAttribute="centerX" id="N9o-39-WTC"/>
                             <constraint firstItem="fVx-I3-R3D" firstAttribute="centerY" secondItem="B6P-Et-3mB" secondAttribute="centerY" id="OVt-Tw-Vq7"/>
@@ -1207,13 +1208,12 @@
                             <constraint firstItem="lsM-Wc-ke2" firstAttribute="trailing" secondItem="Pw1-WR-bQV" secondAttribute="trailing" id="VTT-gs-C9z"/>
                             <constraint firstItem="xnP-N2-th3" firstAttribute="trailing" secondItem="Pw1-WR-bQV" secondAttribute="trailing" id="agt-7s-Zwj"/>
                             <constraint firstItem="xnP-N2-th3" firstAttribute="leading" secondItem="Pw1-WR-bQV" secondAttribute="leading" id="bpl-DW-Nn2"/>
+                            <constraint firstAttribute="trailing" secondItem="aod-Vi-pEK" secondAttribute="trailing" constant="20" id="cp8-3g-Pi7"/>
                             <constraint firstItem="hf0-It-a8o" firstAttribute="trailing" secondItem="znE-nY-bIh" secondAttribute="trailingMargin" id="hOA-g2-Xza"/>
-                            <constraint firstItem="aod-Vi-pEK" firstAttribute="centerY" secondItem="Ipv-H4-ypw" secondAttribute="centerY" id="pXe-XJ-HZ0"/>
                             <constraint firstItem="hf0-It-a8o" firstAttribute="top" secondItem="GrS-Br-jzP" secondAttribute="bottom" constant="10" id="qoo-tX-Zx3"/>
-                            <constraint firstItem="lsM-Wc-ke2" firstAttribute="top" secondItem="Vsx-ht-e5S" secondAttribute="bottom" constant="40" id="sIA-SZ-403"/>
-                            <constraint firstItem="aod-Vi-pEK" firstAttribute="leading" secondItem="Ipv-H4-ypw" secondAttribute="trailing" constant="10" id="uQb-ow-rMb"/>
+                            <constraint firstItem="Vsx-ht-e5S" firstAttribute="top" secondItem="Ipv-H4-ypw" secondAttribute="top" id="qsd-S0-Pn4"/>
+                            <constraint firstItem="lsM-Wc-ke2" firstAttribute="top" secondItem="aod-Vi-pEK" secondAttribute="bottom" constant="40" id="wh0-Ov-Pve"/>
                             <constraint firstAttribute="trailing" secondItem="lsM-Wc-ke2" secondAttribute="trailing" constant="20" id="xpN-vi-N1T"/>
-                            <constraint firstItem="Vsx-ht-e5S" firstAttribute="top" secondItem="Ipv-H4-ypw" secondAttribute="bottom" constant="20" id="yXs-PD-m90"/>
                         </constraints>
                     </view>
                     <connections>
