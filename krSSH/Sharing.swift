@@ -15,20 +15,11 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
     // Requesting
     func smsRequest(for phone:String) -> UIViewController {
         
-        UINavigationBar.appearance().tintColor = UIColor.app
-        UIBarButtonItem.appearance().tintColor = UIColor.app
-        
-        UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.app,
-            NSFontAttributeName: UIFont(name: "Avenir Next", size: 17)!
-        ]
-        
         let msgDialogue = MFMessageComposeViewController()
         msgDialogue.recipients = [phone]
         msgDialogue.body = "Please send me your SSH public key with kryptonite! \(Link.publicKeyRequest())"
         msgDialogue.messageComposeDelegate = self
         
-        Resources.makeAppearences()
         
         return msgDialogue
     }
@@ -40,9 +31,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         mailDialogue.setSubject("Requesting your SSH public key")
         mailDialogue.setMessageBody("Please send me your SSH public key with kryptonite! \(Link.publicKeyRequest())", isHTML: false)
         mailDialogue.mailComposeDelegate = self
-        
-        Resources.makeAppearences()
-        
+                
         return mailDialogue
     }
 
@@ -50,14 +39,6 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
     // Sending
     func textDialogue(for peer:Peer, with phone:String? = nil) -> UIViewController {
         
-        UINavigationBar.appearance().tintColor = UIColor.app
-        UIBarButtonItem.appearance().tintColor = UIColor.app
-
-        UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.app,
-            NSFontAttributeName: UIFont(name: "Avenir Next Ultra Light", size: 17)!
-        ]
-
         let msgDialogue = MFMessageComposeViewController()
         
         if let phone = phone {
@@ -79,8 +60,6 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
 
         msgDialogue.body = "Import my public key with kryptonite!"
 
-        
-        Resources.makeAppearences()
         
         return msgDialogue
     }
@@ -122,11 +101,14 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
     
     //MARK: Delegates
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        Resources.makeAppearences()
+
         controller.dismiss(animated: true, completion: nil)
     }
     
     
     public func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        Resources.makeAppearences()
         controller.dismiss(animated: true, completion: nil)
     }
 }

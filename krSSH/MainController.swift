@@ -14,11 +14,11 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
 
     
     lazy var aboutButton:UIBarButtonItem = {
-        return UIBarButtonItem(title: "i", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.aboutTapped))
+        return UIBarButtonItem(image: UIImage(named: "gear"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.aboutTapped))
     }()
     
     lazy var helpButton:UIBarButtonItem = {
-        return UIBarButtonItem(title: "?", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.helpTapped))
+        return UIBarButtonItem(image: UIImage(named: "help"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.helpTapped))
     }()
 
     
