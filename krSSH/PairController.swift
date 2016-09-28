@@ -246,9 +246,12 @@ class PairController: KRBaseController, KRScanDelegate {
         }
         
         
-        context.evaluatePolicy(policy, localizedReason: reason, reply: { (success, policyErr) in
-            completion(success)
-        })
+        dispatchMain {
+            context.evaluatePolicy(policy, localizedReason: reason, reply: { (success, policyErr) in
+                completion(success)
+            })
+
+        }
 
     }
 
