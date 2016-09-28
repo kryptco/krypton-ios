@@ -27,7 +27,7 @@ class SessionCell: UITableViewCell {
             let user = session.pairing.name.getUserOrNil() ?? ""
             commandLabel.text = "\(user) $ \(command)"
         } else {
-            commandLabel.text = " - $ -- (unused)"
+            commandLabel.text = " $ "
         }
         
         colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)

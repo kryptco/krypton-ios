@@ -65,8 +65,6 @@ class PairController: KRBaseController, KRScanDelegate {
         popupView.isHidden = true
         blurView.isHidden = true
         result.isHidden = true
-
-        popupView.setBorder(color: UIColor.black.withAlphaComponent(0.2), cornerRadius: 40, borderWidth: 0.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

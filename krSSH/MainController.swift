@@ -51,7 +51,7 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
     
     dynamic func didRegisterPush(note:Notification?) {
         guard let token = note?.object as? String else {
-           showPushErrorAlert()
+            log("push token missing", .error)
             return
         }
         
@@ -59,7 +59,6 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         API().updateSNS(token: token) { (endpoint, err) in
             guard let arn = endpoint else {
                 log("AWS SNS error: \(err)", .error)
-                dispatchMain { self.showPushErrorAlert() }
                 return
             }
             
@@ -75,7 +74,7 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         }
 
         let alertController = UIAlertController(title: "Push Notifications",
-                                                message: "Push notifications are not enabled. Please enable push notifications to enable SSH login when the app is in the background. Tap `Settings` to continue.",
+                                                message: "Push notifications are not enabled. Please enable push notifications to get real-time notifications when your private key is used for ssh. Push notifications also enable the app to work in the background. Tap `Settings` to continue.",
                                                 preferredStyle: .alert)
         
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
@@ -124,6 +123,7 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
             })
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
+            
 
         } catch (let e) {
             log("\(e)", LogType.error)
@@ -131,8 +131,13 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
             return
         }
         
-        //(self.viewControllers?.first as? MeController)?.updateCurrentUser()
-        
+        // check push
+        if !UIApplication.shared.isRegisteredForRemoteNotifications && !UserDefaults.standard.bool(forKey: "did_ask_push")
+        {
+            self.showPushErrorAlert()
+            UserDefaults.standard.set(true, forKey: "did_ask_push")
+            UserDefaults.standard.synchronize()
+        }
     }
     
     override func didReceiveMemoryWarning() {

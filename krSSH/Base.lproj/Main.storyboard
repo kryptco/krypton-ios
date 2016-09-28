@@ -371,7 +371,7 @@
                                                 <blurEffect style="light"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWP-0J-OIM">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWP-0J-OIM" customClass="KRView" customModule="krSSH" customModuleProvider="target">
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gjd-3e-XWg">
                                                     <constraints>
@@ -419,6 +419,17 @@
                                                 <constraint firstAttribute="trailing" secondItem="cIO-0v-oh8" secondAttribute="trailing" constant="10" id="pbY-f5-xGv"/>
                                                 <constraint firstItem="HYr-gx-lat" firstAttribute="centerX" secondItem="DWP-0J-OIM" secondAttribute="centerX" id="yYE-m3-I6J"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="24"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" red="0.82718211210000003" green="0.82718211210000003" blue="0.82718211210000003" alpha="0.39797018788343558" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                     <constraints>

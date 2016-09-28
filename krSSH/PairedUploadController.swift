@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PairedUploadController:UIViewController {
+class PairedUploadController:KRBaseController {
     
     @IBOutlet weak var sessionLabel:UILabel!
     var session:Session?
@@ -17,6 +17,7 @@ class PairedUploadController:UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         NotificationCenter.default.addObserver(self, selector: #selector(MeController.didFinishLoginToGitHub(note:)), name: NSNotification.Name(rawValue: "finish_github_login"), object: nil)
 
     }
@@ -25,6 +26,14 @@ class PairedUploadController:UIViewController {
         
         if let session = session {
             sessionLabel.text = "\(session.pairing.name)"
+        }
+        
+        self.askConfirmationIn(title: "Enable Push notifications?", text: "Push notifications are used to notify you when your private key is used. Push notifications signficiantly improve the app experience.", accept: "Enable", cancel: "Later")
+        { (enable) in
+            
+            if enable {
+                (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+            }
         }
 
     }

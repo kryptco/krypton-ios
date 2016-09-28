@@ -27,9 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AWSLogger.default().logLevel = .none
         Silo.shared.add(sessions: SessionManager.shared.all)
         Silo.shared.startPolling()
-        
-        registerPushNotifications()
-        
+                
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
             let link = Link(url: url)
@@ -38,6 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //TODO: check for remote notification
+        
+        
+        //if push allow reauthorized just incase
+        if UIApplication.shared.isRegisteredForRemoteNotifications {
+            registerPushNotifications()
+        }
+        
         
         return true
     }
