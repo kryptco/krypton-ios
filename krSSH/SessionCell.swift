@@ -20,8 +20,8 @@ class SessionCell: UITableViewCell {
     }
     
     func set(session:Session) {
-        deviceNameLabel.text = session.pairing.name
-        lastAccessLabel.text = "Active as of " + (session.lastAccessed?.timeAgo() ?? session.created.timeAgo())
+        deviceNameLabel.text = session.pairing.name.uppercased()
+        lastAccessLabel.text = (session.lastAccessed?.timeAgo() ?? session.created.timeAgo())
         
         if let command = LogManager.shared.all.filter({$0.session == session.id}).sorted(by: {$0.date > $1.date}).first?.command {
             let user = session.pairing.name.getUserOrNil() ?? ""
