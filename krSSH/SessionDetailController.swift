@@ -12,7 +12,6 @@ class SessionDetailController: KRBaseTableController {
 
     @IBOutlet var deviceNameLabel:UILabel!
     @IBOutlet var lastAccessLabel:UILabel!
-    @IBOutlet var barView:LogGraph!
 
     @IBOutlet var revokeButton:UIButton!
 
@@ -37,22 +36,22 @@ class SessionDetailController: KRBaseTableController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionDetailController.reloadTableViewTimer), userInfo: nil, repeats: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(SessionDetailController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        timer?.invalidate()
-        timer = nil
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "new_log"), object: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    dynamic func reloadTableViewTimer() {
-        log("time fired")
+    dynamic func newLogLine() {
+        log("new log")
         guard let session = session else {
             return
         }
@@ -60,10 +59,7 @@ class SessionDetailController: KRBaseTableController {
         dispatchAsync {
             self.logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
             
-            dispatchMain {
-                self.barView.fillColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
-                self.barView.set(values: self.logs.map({$0.date}))
-                
+            dispatchMain {                
                 self.lastAccessLabel.text =  "Active as of " + (self.logs.first?.date.timeAgo() ?? session.created.timeAgo())
                 self.tableView.reloadData()
             }

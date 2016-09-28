@@ -28,7 +28,7 @@ class LogCell: UITableViewCell {
                 signatureLabel.text = log.digest
             }
         }
-        timeLabel.text = log.date.toLongTimeString()
+        timeLabel.text = log.date.toLongTimeString().uppercased()
     }
     
 }

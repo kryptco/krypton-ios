@@ -12,7 +12,8 @@ class SessionCell: UITableViewCell {
     
     @IBOutlet var deviceNameLabel:UILabel!
     @IBOutlet var lastAccessLabel:UILabel!
-    @IBOutlet var barView:LogGraph!
+    @IBOutlet var commandLabel:UILabel!
+    @IBOutlet var colorView:UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,9 +23,14 @@ class SessionCell: UITableViewCell {
         deviceNameLabel.text = session.pairing.name
         lastAccessLabel.text = "Active as of " + (session.lastAccessed?.timeAgo() ?? session.created.timeAgo())
         
-        let logDates = LogManager.shared.all.filter({$0.session == session.id}).map({ $0.date })
-        barView.fillColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
-        barView.set(values: logDates)
+        if let command = LogManager.shared.all.filter({$0.session == session.id}).sorted(by: {$0.date > $1.date}).first?.command {
+            let user = session.pairing.name.getUserOrNil() ?? ""
+            commandLabel.text = "\(user) $ \(command)"
+        } else {
+            commandLabel.text = " - $ -- (unused)"
+        }
+        
+        colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
     }
 
 }

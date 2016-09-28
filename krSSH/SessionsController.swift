@@ -13,7 +13,6 @@ class SessionsController: KRBaseTableController {
     
 
     var sessions:[Session] = []
-    var timer:Timer?
     
     //@IBOutlet weak var addButton:UIButton!
 
@@ -33,31 +32,19 @@ class SessionsController: KRBaseTableController {
             dispatchMain{ self.tableView.reloadData() }
         }
         
-        //start timer
-        
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SessionsController.reloadTableViewTimer), userInfo: nil, repeats: true)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "new_log"), object: nil)
-        timer?.invalidate()
-        timer = nil
     }
     
-    dynamic func reloadTableViewTimer() {
-        log("time fired")
-        dispatchMain {
-            self.tableView.reloadData()
-        }
-    }
     
     dynamic func newLogLine() {
-//        dispatchAsync {
-//            self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
-//            dispatchMain{ self.tableView.reloadData() }
-//        }
+        dispatchAsync {
+            self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
+            dispatchMain{ self.tableView.reloadData() }
+        }
     }
  
     //MARK: TableView
