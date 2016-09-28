@@ -98,6 +98,7 @@ class LogManager {
         // set attirbutes
         logEntry.setValue(theLog.session, forKey: "session")
         logEntry.setValue(theLog.signature, forKey: "signature")
+        logEntry.setValue(theLog.digest, forKey: "digest")
         logEntry.setValue(theLog.date, forKey: "date")
         if let command = theLog.command {
             logEntry.setValue(command, forKey: "command")
