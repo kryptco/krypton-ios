@@ -166,37 +166,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        guard let appLink = AppLinkType(rawValue: url.scheme ?? "") else {
+        guard let appLink = LinkType(rawValue: url.scheme ?? "") else {
             log("invalid open url scheme", .error)
             return false
         }
         
         switch appLink {
-        case AppLinkType.github:
+        case LinkType.github:
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "finish_github_login"), object: url, userInfo: nil)
             return true
-        case AppLinkType.file:
-            guard   let pubKeyFile = try? String(contentsOf: url, encoding: String.Encoding.utf8),
-                    let components = try? pubKeyFile.byRemovingComment(),
-                    let pubKeyWire = try? components.0.toWire()
-            else {
-                log("invalid pubkey file at url: \(url)")
-                return false
-            }
-            
-            let peer = Peer(email: components.1, fingerprint: pubKeyWire.fingerprint(), publicKey: pubKeyWire)
-            PeerManager.shared.add(peer: peer)
-            
-            return true
-            
-        case AppLinkType.kryptonite:
+        default:
             guard let link = Link(url: url) else {
                 log("invalid kr url: \(url)")
                 return false
             }
             
             self.pendingLink = link
-            NotificationCenter.default.post(name: link.command.notificationName, object: link, userInfo: nil)
+            NotificationCenter.default.post(name: Link.notificationName, object: link, userInfo: nil)
             return true
             
         }

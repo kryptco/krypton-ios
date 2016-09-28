@@ -84,7 +84,7 @@ extension UIViewController {
         
         do {
             switch link.command {
-            case .request:
+            case .request where link.type == .kr:
                 guard
                     let emailData = try link.properties["r"]?.fromBase64(),
                     let toEmail = String(data: emailData, encoding: String.Encoding.utf8)
@@ -93,11 +93,11 @@ extension UIViewController {
                 }
                 
                 let me = try KeyManager.sharedInstance().getMe()
-                
+            
                 dispatchMain {
                     self.present(self.emailDialogue(for: me, with: toEmail), animated: true, completion: nil)
                 }
-            case .import:
+            case .import where link.type == .kr:
                 guard
                     let publicKeyWire = try link.properties["pk"]?.fromBase64(),
                     let emailData = try link.properties["e"]?.fromBase64(),
@@ -121,6 +121,30 @@ extension UIViewController {
                         
                     }
                 })
+                
+            case .none where link.type == .file:
+                let pubKeyFile = try String(contentsOf: link.url, encoding: String.Encoding.utf8)
+                let components = try pubKeyFile.byRemovingComment()
+                let pubKeyWire = try components.0.toWire()
+                let peer = Peer(email: components.1, fingerprint: pubKeyWire.fingerprint(), publicKey: pubKeyWire)
+                
+                PeerManager.shared.add(peer: peer)
+                
+                dispatchAfter(delay: 1.0, task: {
+                    dispatchMain {
+                        if let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
+                        {
+                            successVC.hudText = "Added \(peer.email)'s Public Key!"
+                            successVC.modalPresentationStyle = .overCurrentContext
+                            self.present(successVC, animated: true, completion: nil)
+                        }
+                        
+                    }
+                })
+
+                
+            default:
+                break
       
             }
             

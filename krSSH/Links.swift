@@ -10,15 +10,10 @@ import Foundation
 
 
 
-// Request URL ->
-// kr://request?email=aasda@sddfsd.com
-// kr://request?phone=6173712321
 
-
-
-enum AppLinkType:String {
+enum LinkType:String {
     case github = "kr-github"
-    case kryptonite = "kr"
+    case kr = "kr"
     case file = "file"
 }
 
@@ -26,34 +21,55 @@ enum AppLinkType:String {
 enum LinkCommand:String {
     case request = "request"
     case `import` = "import"
+    case none = ""
 
     static let all = [request, `import`]
 
-    var notificationName:NSNotification.Name {
-        return NSNotification.Name("\(self.rawValue)_app_link_notification")
+    
+    init(url:URL) {
+        guard
+            let host = url.host,
+            let command = LinkCommand(rawValue: host)
+        else {
+            self = .none
+            return
+        }
+        
+        self = command
     }
+
 }
 class Link {
+    let type:LinkType
     let command:LinkCommand
     let properties:[String:String]
  
+    let url:URL
+    
     init?(url:URL) {
         guard
-            let command = LinkCommand(rawValue: url.host ?? ""),
-            url.scheme == AppLinkType.kryptonite.rawValue
+            let scheme = url.scheme,
+            let type = LinkType(rawValue: scheme)
         else {
             return nil
         }
         
-        self.command = command
+        self.url = url
+        self.type = type
+        self.command = LinkCommand(url: url)
         self.properties = url.queryItems()
     }
+    
+    static var notificationName:NSNotification.Name {
+        return NSNotification.Name("app_link_notification")
+    }
+
 }
 
 extension Link {
     static func publicKeyRequest() -> String {
         let email = (try? KeyManager.sharedInstance().getMe().email)?.data(using: String.Encoding.utf8)?.toBase64(true)
-        return "\(AppLinkType.kryptonite.rawValue)://\(LinkCommand.request.rawValue)?r=\(email ?? "")"
+        return "\(LinkType.kr.rawValue)://\(LinkCommand.request.rawValue)?r=\(email ?? "")"
     }
     
     static func publicKeyImport() -> String {
@@ -62,7 +78,7 @@ extension Link {
         let email = me?.email.data(using: String.Encoding.utf8)?.toBase64(true)
         let publicKeyWire = me?.publicKey.toBase64() ?? ""
         
-        return "\(AppLinkType.kryptonite.rawValue)://\(LinkCommand.import.rawValue)?pk=\(publicKeyWire)&e=\(email ?? "")"
+        return "\(LinkType.kr.rawValue)://\(LinkCommand.import.rawValue)?pk=\(publicKeyWire)&e=\(email ?? "")"
     }
 
 }
@@ -73,9 +89,8 @@ class LinkListener {
     init(_ onListen: @escaping (Link)->()) {
         self.onListen = onListen
         
-        for command in LinkCommand.all {
-            NotificationCenter.default.addObserver(self, selector: #selector(LinkListener.didReceive(note:)), name: command.notificationName, object: nil)
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(LinkListener.didReceive(note:)), name: Link.notificationName, object: nil)
+
         
         if let pending = (UIApplication.shared.delegate as? AppDelegate)?.pendingLink
         {
@@ -86,9 +101,7 @@ class LinkListener {
     }
     
     deinit {
-        for command in LinkCommand.all {
-            NotificationCenter.default.removeObserver(self, name: command.notificationName, object: nil)
-        }
+        NotificationCenter.default.removeObserver(self, name: Link.notificationName, object: nil)
     }
     
     dynamic func didReceive(note:NSNotification) {

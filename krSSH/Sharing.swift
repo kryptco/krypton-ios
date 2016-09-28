@@ -97,7 +97,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         let authorizedKey = peer.publicKey.toAuthorized()
         
         if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
-            mailDialogue.addAttachmentData(pkData, mimeType: "", fileName: "publickey.kr")
+            mailDialogue.addAttachmentData(pkData, mimeType: "text/plain", fileName: "publickey.kr")
         }
         
         mailDialogue.setMessageBody("<a href=\"\(Link.publicKeyImport())\"> Import my public key with kryptonite by tapping here</a> or download the public key attached below. ", isHTML: true)
