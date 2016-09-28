@@ -28,24 +28,34 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text=" - $ --" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="R2N-o5-RWq">
-                                <color key="backgroundColor" red="0.28706912804909768" green="0.28706912804909768" blue="0.28706912804909768" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LHM-Kq-Ni1">
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text=" - $ --" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="R2N-o5-RWq">
+                                        <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="18"/>
+                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.28706912800000001" green="0.28706912800000001" blue="0.28706912800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="R2N-o5-RWq" firstAttribute="leading" secondItem="LHM-Kq-Ni1" secondAttribute="leading" constant="8" id="3TU-Kc-ef1"/>
+                                    <constraint firstItem="R2N-o5-RWq" firstAttribute="top" secondItem="LHM-Kq-Ni1" secondAttribute="top" constant="2" id="7nX-rh-kGy"/>
+                                    <constraint firstAttribute="trailing" secondItem="R2N-o5-RWq" secondAttribute="trailing" constant="8" id="PhR-5V-Wnh"/>
+                                    <constraint firstAttribute="bottom" secondItem="R2N-o5-RWq" secondAttribute="bottom" constant="4" id="pJh-jx-HKV"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="R2N-o5-RWq" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="8pz-bI-TjF"/>
+                            <constraint firstAttribute="bottom" secondItem="LHM-Kq-Ni1" secondAttribute="bottom" id="ALb-wm-UBT"/>
                             <constraint firstItem="GcN-lo-r42" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="8" symbolic="YES" id="JU3-Pd-vrC"/>
+                            <constraint firstItem="LHM-Kq-Ni1" firstAttribute="top" secondItem="GcN-lo-r42" secondAttribute="bottom" constant="4" id="LZa-jF-3yC"/>
                             <constraint firstItem="GcN-lo-r42" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" constant="8" id="MHi-r4-DDC"/>
                             <constraint firstItem="GcN-lo-r42" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="8" id="dVA-Bo-rFE"/>
-                            <constraint firstItem="R2N-o5-RWq" firstAttribute="top" secondItem="GcN-lo-r42" secondAttribute="bottom" constant="8" id="kNJ-5E-HJq"/>
+                            <constraint firstItem="LHM-Kq-Ni1" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="jXu-HR-gwo"/>
                             <constraint firstItem="n0P-Rj-nEg" firstAttribute="leading" secondItem="GcN-lo-r42" secondAttribute="trailing" id="nHo-Pi-0gN"/>
-                            <constraint firstAttribute="trailing" secondItem="R2N-o5-RWq" secondAttribute="trailing" id="o5T-vT-jFq"/>
                             <constraint firstItem="n0P-Rj-nEg" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="8" id="tZA-cK-i7h"/>
                             <constraint firstAttribute="trailing" secondItem="n0P-Rj-nEg" secondAttribute="trailing" constant="8" id="woC-5M-MAF"/>
-                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="R2N-o5-RWq" secondAttribute="bottom" id="zEx-2J-Mao"/>
+                            <constraint firstAttribute="trailing" secondItem="LHM-Kq-Ni1" secondAttribute="trailing" id="y3a-Ix-cFu"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

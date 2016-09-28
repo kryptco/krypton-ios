@@ -44,9 +44,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         let device = defaults?.string(forKey: "last_log_device") ?? "--"
         
         if let user = device.getUserOrNil() {
-            commandLabel.text = " \(user) $ \(command)"
+            commandLabel.text = "\(user) $ \(command)"
         } else {
-            commandLabel.text = " - $ \(command)"
+            commandLabel.text = "- $ \(command)"
         }
         
         
