@@ -65,7 +65,7 @@ class LogManager {
         return theLogs
     }
     
-    func save(theLog:SignatureLog) {
+    func save(theLog:SignatureLog, deviceName:String) {
         mutex.lock()
 
         log("saving \(theLog)")
@@ -78,6 +78,14 @@ class LogManager {
         sigs[theLog.digest] = true
         
         mutex.unlock()
+        
+        // update last log
+        let defaults = UserDefaults(suiteName: "group.lastcommand")
+        defaults?.set(theLog.date.toShortTimeString(), forKey: "last_log_time")
+        defaults?.set(theLog.command ?? "--", forKey: "last_log_command")
+        defaults?.set(deviceName, forKey: "last_log_device")
+        defaults?.synchronize()
+        //
         
         guard
             let entity =  NSEntityDescription.entity(forEntityName: "SignatureLog", in: managedObjectContext)
@@ -95,7 +103,7 @@ class LogManager {
             logEntry.setValue(command, forKey: "command")
         }
         
-        //4
+        //
         do {
             try self.managedObjectContext.save()
             
@@ -106,6 +114,10 @@ class LogManager {
         } catch let error  {
             log("Could not save signature log: \(error)", .error)
         }
+        
+        // notify we have a new log
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
+
     }
     
     lazy var applicationDocumentsDirectory: URL = {

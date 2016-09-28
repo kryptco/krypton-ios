@@ -320,8 +320,10 @@ class Silo {
                 
                 log("signed: \(sig) in \(signEnd - signStart) seconds")
                 
-                LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>", command: signRequest.command))
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
+                // Update the Logs
+                dispatchAsync {
+                    LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>", command: signRequest.command), deviceName: session.pairing.name)
+                }
                 
             } catch let e {
                 guard e is CryptoError else {

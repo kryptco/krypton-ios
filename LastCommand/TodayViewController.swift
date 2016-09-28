@@ -10,10 +10,19 @@ import UIKit
 import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding {
-        
+    
+    @IBOutlet weak var timeLabel:UILabel!
+    @IBOutlet weak var commandLabel:UILabel!
+    @IBOutlet weak var deviceLabel:UILabel!
+
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view from its nib.
+        update()
     }
     
     override func didReceiveMemoryWarning() {
@@ -21,14 +30,28 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         // Dispose of any resources that can be recreated.
     }
     
-    func widgetPerformUpdate(completionHandler: ((NCUpdateResult) -> Void)) {
-        // Perform any setup necessary in order to update the view.
-        
-        // If an error is encountered, use NCUpdateResult.Failed
-        // If there's no update required, use NCUpdateResult.NoData
-        // If there's an update, use NCUpdateResult.NewData
-        
+    func widgetPerformUpdate(completionHandler: @escaping (NCUpdateResult) -> Void) {
+        update()
         completionHandler(NCUpdateResult.newData)
+    }
+    
+    func update() {
+        print("update called")
+        let defaults = UserDefaults(suiteName: "group.lastcommand")
+
+        let dateString = defaults?.string(forKey: "last_log_time") ?? "--"
+        let command = defaults?.string(forKey: "last_log_command") ?? "--"
+        let device = defaults?.string(forKey: "last_log_device") ?? "--"
+        
+        if let user = device.getUserOrNil() {
+            commandLabel.text = " \(user) $ \(command)"
+        } else {
+            commandLabel.text = " - $ \(command)"
+        }
+        
+        
+        deviceLabel.text = device.uppercased()
+        timeLabel.text = dateString
     }
     
 }
