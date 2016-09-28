@@ -114,6 +114,8 @@
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FABA4B191D9C21C40057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
+		FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */; };
+		FABA4B1D1D9C6E690057A666 /* AuthenticateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B1C1D9C6E690057A666 /* AuthenticateController.swift */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
 		FACAA4B41D887923000B9A01 /* krSSH.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */; };
@@ -449,6 +451,8 @@
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		FABA4B171D9C21BE0057A666 /* String+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+User.swift"; sourceTree = "<group>"; };
+		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		FABA4B1C1D9C6E690057A666 /* AuthenticateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateController.swift; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACAA4B01D887904000B9A01 /* SignatureLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureLog.swift; sourceTree = "<group>"; };
 		FACAA4B31D887923000B9A01 /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
@@ -485,6 +489,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */,
 				8DB23BEA1D94ADAC00F52607 /* OctoKit.framework in Frameworks */,
 				8DB23BEB1D94ADAC00F52607 /* RequestKit.framework in Frameworks */,
 				FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */,
@@ -567,6 +572,7 @@
 			isa = PBXGroup;
 			children = (
 				FA1682501D774C3900A7ED53 /* PairController.swift */,
+				FABA4B1C1D9C6E690057A666 /* AuthenticateController.swift */,
 				FA16824D1D774C2200A7ED53 /* KRScanController.swift */,
 			);
 			name = Pair;
@@ -841,6 +847,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */,
 				8DB843611D94A885003E57D1 /* OctoKit.xcodeproj */,
 				8DB843421D94A87D003E57D1 /* RequestKit.xcodeproj */,
 				8DE395551D942647005D559C /* AwesomeCache */,
@@ -1297,6 +1304,7 @@
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SSHKeyFormat.swift in Sources */,
 				FACAA4B41D887923000B9A01 /* krSSH.xcdatamodeld in Sources */,
+				FABA4B1D1D9C6E690057A666 /* AuthenticateController.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
 				FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */,
 				FA1682811D77682C00A7ED53 /* SessionsController.swift in Sources */,

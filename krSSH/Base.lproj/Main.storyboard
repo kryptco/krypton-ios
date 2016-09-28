@@ -336,7 +336,7 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1A-No-lCQ">
                                 <connections>
-                                    <segue destination="rlL-ey-ui2" kind="embed" id="RPS-16-UT4"/>
+                                    <segue destination="rlL-ey-ui2" kind="embed" id="ai3-J7-U7W"/>
                                 </connections>
                             </containerView>
                             <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan_rails" translatesAutoresizingMaskIntoConstraints="NO" id="7nB-wh-gHQ">
@@ -497,7 +497,102 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xbf-jV-jh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3225" y="-523"/>
+            <point key="canvasLocation" x="3036" y="-418"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Mpf-v3-mlC">
+            <objects>
+                <viewController id="dKg-iG-jY3" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CBv-pY-49q"/>
+                        <viewControllerLayoutGuide type="bottom" id="VgO-LS-Xha"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bxo-WK-pQT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Hd-eX-hU6">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="3TU-NG-Mvr">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DUi-fm-5dz">
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="VYW-ia-B9B">
+                                                <frame key="frameInset"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="Jw9-VZ-L9L">
+                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="120" id="DBd-UD-HOB"/>
+                                                            <constraint firstAttribute="width" constant="120" id="V1E-1E-z4T"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pairing is locked. Authenticate with TouchID or your password to continue." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1d3-zs-khl">
+                                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lh8-HA-3Bs" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="180" id="QI1-qa-trE"/>
+                                                            <constraint firstAttribute="height" constant="60" id="bGP-hc-GUf"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
+                                                        <state key="normal" title="Authenticate">
+                                                            <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
+                                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="1d3-zs-khl" firstAttribute="centerX" secondItem="Jw9-VZ-L9L" secondAttribute="centerX" id="3ya-LS-OD0"/>
+                                                    <constraint firstItem="1d3-zs-khl" firstAttribute="leading" secondItem="VYW-ia-B9B" secondAttribute="leading" constant="20" id="6Vb-uU-0rO"/>
+                                                    <constraint firstItem="Jw9-VZ-L9L" firstAttribute="bottom" secondItem="VYW-ia-B9B" secondAttribute="centerY" constant="-20" id="7iz-T0-40J"/>
+                                                    <constraint firstItem="lh8-HA-3Bs" firstAttribute="top" secondItem="1d3-zs-khl" secondAttribute="bottom" constant="20" id="CxJ-5z-4gb"/>
+                                                    <constraint firstItem="1d3-zs-khl" firstAttribute="top" secondItem="Jw9-VZ-L9L" secondAttribute="bottom" constant="10" id="J7r-wu-Ii9"/>
+                                                    <constraint firstItem="Jw9-VZ-L9L" firstAttribute="centerX" secondItem="VYW-ia-B9B" secondAttribute="centerX" id="X3O-8T-yyk"/>
+                                                    <constraint firstItem="lh8-HA-3Bs" firstAttribute="centerX" secondItem="1d3-zs-khl" secondAttribute="centerX" id="oy6-Gk-Orj"/>
+                                                </constraints>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="prominent"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="DUi-fm-5dz" secondAttribute="trailing" id="1YE-6m-WmD"/>
+                                        <constraint firstAttribute="bottom" secondItem="DUi-fm-5dz" secondAttribute="bottom" id="DMr-mZ-jdM"/>
+                                        <constraint firstItem="DUi-fm-5dz" firstAttribute="top" secondItem="3TU-NG-Mvr" secondAttribute="top" id="FbA-gh-blO"/>
+                                        <constraint firstItem="DUi-fm-5dz" firstAttribute="leading" secondItem="3TU-NG-Mvr" secondAttribute="leading" id="pDx-fU-1WC"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="4Hd-eX-hU6" secondAttribute="trailing" id="8iY-v0-5Yc"/>
+                            <constraint firstItem="4Hd-eX-hU6" firstAttribute="leading" secondItem="bxo-WK-pQT" secondAttribute="leading" id="IPw-8E-h67"/>
+                            <constraint firstItem="VgO-LS-Xha" firstAttribute="top" secondItem="4Hd-eX-hU6" secondAttribute="bottom" id="Ul7-YD-7kc"/>
+                            <constraint firstItem="4Hd-eX-hU6" firstAttribute="top" secondItem="CBv-pY-49q" secondAttribute="bottom" id="lcO-tz-Gbk"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sUu-z1-u1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4456.8000000000002" y="-467.3163418290855"/>
         </scene>
         <!--Success Controller-->
         <scene sceneID="OXG-TQ-eg2">
@@ -2200,6 +2295,7 @@ Cg
         <image name="device_selected" width="30" height="30"/>
         <image name="imac" width="128" height="128"/>
         <image name="iphone" width="128" height="128"/>
+        <image name="lock" width="128" height="128"/>
         <image name="mail-icon" width="50" height="50"/>
         <image name="me" width="30" height="30"/>
         <image name="me_selected" width="30" height="30"/>
@@ -2217,7 +2313,7 @@ Cg
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0R2-zj-seh"/>
-        <segue reference="Rob-Re-AWf"/>
+        <segue reference="8Vx-DU-0ql"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

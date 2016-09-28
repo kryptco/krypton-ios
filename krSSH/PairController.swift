@@ -8,11 +8,11 @@
 
 import UIKit
 import AVFoundation
+import LocalAuthentication
 
 class PairController: KRBaseController, KRScanDelegate {
     
-
-    @IBOutlet var scanViewController:KRScanController?
+    var scanViewController:KRScanController?
     @IBOutlet weak var scanRails:UIImageView!
 
     @IBOutlet weak var blurView:UIView!
@@ -27,6 +27,7 @@ class PairController: KRBaseController, KRScanDelegate {
     @IBOutlet weak var result:UIImageView!
     
     
+    static var isAuthenticated:Bool = false
     
     enum Scanned {
         case peer(Peer)
@@ -73,11 +74,11 @@ class PairController: KRBaseController, KRScanDelegate {
         
         rejectButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
         approveButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        
+
         self.scanViewController?.canScan = true
-        
-        Policy.currentViewController = self
     }
+    
+    
     
     var shouldShowProfile = true
     override func viewDidAppear(_ animated: Bool) {
@@ -148,7 +149,6 @@ class PairController: KRBaseController, KRScanDelegate {
             approve(scanned: scanned)
         }
         
-        hidePopup(success: true)
         currentScanned = nil
     }
     
@@ -191,22 +191,65 @@ class PairController: KRBaseController, KRScanDelegate {
     func approve(scanned:Scanned) {
         switch scanned {
         case .pairing(let pairing):
-            do {
-                let session = try Session(pairing: pairing)
-                SessionManager.shared.add(session: session)
-                Silo.shared.add(session: session)
-                Silo.shared.startPolling(session: session)
-            }
-            catch let e {
-                log("error creating session: \(e)", .error)
-            }
-            dispatchAfter(delay: 1.0, task: {
-                self.scanViewController?.canScan = true
+            
+            authenticate(completion: { (success) in
+                guard success else {
+                    dispatchMain {
+                        self.hidePopup(success: false)
+                    }
+
+                    self.showWarning(title: "Authentication Failed", body: "Authentication is needed to pair to a new device.")
+
+                    return
+                }
+                
+                do {
+                    let session = try Session(pairing: pairing)
+                    SessionManager.shared.add(session: session)
+                    Silo.shared.add(session: session)
+                    Silo.shared.startPolling(session: session)
+                }
+                catch let e {
+                    log("error creating session: \(e)", .error)
+                }
+                
+                dispatchMain {
+                    self.hidePopup(success: true)
+                }
+
+                dispatchAfter(delay: 1.0, task: {
+                    self.scanViewController?.canScan = true
+                })
             })
+            
+
 
         case .peer(let peer):
             PeerManager.shared.add(peer: peer)
+            hidePopup(success: true)
         }
+        
+        
+    }
+    
+    func authenticate(completion:@escaping (Bool)->Void) {
+        let context = LAContext()
+        let policy = LAPolicy.deviceOwnerAuthentication
+        let reason = "Authentication is needed to pair with a new machine."
+        
+        var err:NSError?
+        guard context.canEvaluatePolicy(policy, error: &err) else {
+            log("cannot eval policy: \(err?.localizedDescription ?? "unknown err")", .error)
+            completion(true)
+
+            return
+        }
+        
+        
+        context.evaluatePolicy(policy, localizedReason: reason, reply: { (success, policyErr) in
+            completion(success)
+        })
+
     }
 
 }
