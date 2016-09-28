@@ -61,7 +61,7 @@
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DQK-f9-GL4" customClass="KRView" customModule="krSSH" customModuleProvider="target">
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text=" Alex $ ssh github.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Cya-7I-bMu" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text=" Alex $ ssh github.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Cya-7I-bMu" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
                                                     <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="18"/>
                                                     <color key="textColor" red="0.64902810013262602" green="0.64902810013262602" blue="0.64902810013262602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -69,8 +69,8 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.28706912800000001" green="0.28706912800000001" blue="0.28706912800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="Cya-7I-bMu" firstAttribute="top" secondItem="DQK-f9-GL4" secondAttribute="top" constant="4" id="R9Y-k4-mWE"/>
-                                                <constraint firstAttribute="bottom" secondItem="Cya-7I-bMu" secondAttribute="bottom" constant="4" id="T84-Eb-GlE"/>
+                                                <constraint firstItem="Cya-7I-bMu" firstAttribute="top" secondItem="DQK-f9-GL4" secondAttribute="top" constant="8" id="R9Y-k4-mWE"/>
+                                                <constraint firstAttribute="bottom" secondItem="Cya-7I-bMu" secondAttribute="bottom" constant="8" id="T84-Eb-GlE"/>
                                                 <constraint firstAttribute="trailing" secondItem="Cya-7I-bMu" secondAttribute="trailing" constant="8" id="U5Y-f4-YAH"/>
                                                 <constraint firstItem="Cya-7I-bMu" firstAttribute="leading" secondItem="DQK-f9-GL4" secondAttribute="leading" constant="8" id="dJh-GY-pFw"/>
                                             </constraints>
@@ -1904,7 +1904,7 @@ Cg
                                                 <outlet property="delegate" destination="3yk-j0-9Le" id="wRx-7O-o96"/>
                                             </connections>
                                         </textField>
-                                        <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hC0-Xs-8nj" userLabel="underline">
+                                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hC0-Xs-8nj" userLabel="underline">
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="ArO-2c-by1"/>
@@ -1936,7 +1936,7 @@ Cg
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="xVY-Ba-Ly9"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                                 <state key="normal" title="Upload Public Key to GitHub">
                                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -1951,7 +1951,7 @@ Cg
                                                         <real key="value" value="4"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                        <real key="value" value="1"/>
+                                                        <real key="value" value="2"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -1962,8 +1962,6 @@ Cg
                                         <color key="tintColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="ZFY-IL-sad" firstAttribute="centerY" secondItem="LtF-SC-L3M" secondAttribute="centerY" id="7Tr-Er-lMB"/>
-                                            <constraint firstAttribute="trailing" secondItem="ZFY-IL-sad" secondAttribute="trailing" constant="10" id="GRp-2Z-N6z"/>
-                                            <constraint firstItem="ZFY-IL-sad" firstAttribute="leading" secondItem="LtF-SC-L3M" secondAttribute="leading" constant="8" id="JE3-HJ-mwW"/>
                                             <constraint firstAttribute="height" constant="60" id="KHD-2E-25e"/>
                                         </constraints>
                                     </view>
@@ -2103,6 +2101,7 @@ Cg
                                     <constraint firstItem="Dc8-gJ-d7E" firstAttribute="leading" secondItem="flF-m3-hsS" secondAttribute="trailing" constant="30" id="9PS-yY-m8x"/>
                                     <constraint firstItem="flF-m3-hsS" firstAttribute="width" secondItem="ghP-HZ-rRs" secondAttribute="width" id="COr-Il-QkD"/>
                                     <constraint firstItem="Dc8-gJ-d7E" firstAttribute="height" secondItem="ghP-HZ-rRs" secondAttribute="height" id="FaR-Gj-WUy"/>
+                                    <constraint firstItem="ZFY-IL-sad" firstAttribute="leading" secondItem="ghP-HZ-rRs" secondAttribute="leading" id="H1K-br-94X"/>
                                     <constraint firstAttribute="trailing" secondItem="QZb-CH-bUr" secondAttribute="trailing" id="HPc-ga-sqm"/>
                                     <constraint firstItem="n8n-f7-7Z7" firstAttribute="centerY" secondItem="flF-m3-hsS" secondAttribute="centerY" id="JMx-Gb-9Fo"/>
                                     <constraint firstItem="vb3-4L-DE4" firstAttribute="width" secondItem="8lm-Ye-OGM" secondAttribute="width" multiplier="0.5" id="KRL-0o-KZG"/>
@@ -2121,6 +2120,7 @@ Cg
                                     <constraint firstItem="rD7-Qn-MyU" firstAttribute="leading" secondItem="8lm-Ye-OGM" secondAttribute="leading" id="YKq-Bl-u6x"/>
                                     <constraint firstItem="QZb-CH-bUr" firstAttribute="top" secondItem="LtF-SC-L3M" secondAttribute="bottom" id="YjO-N4-jIt"/>
                                     <constraint firstItem="GUS-Tc-GNM" firstAttribute="centerX" secondItem="Dc8-gJ-d7E" secondAttribute="centerX" id="cuW-N9-sKH"/>
+                                    <constraint firstItem="ZFY-IL-sad" firstAttribute="trailing" secondItem="n8n-f7-7Z7" secondAttribute="trailing" id="iMJ-vC-EwP"/>
                                     <constraint firstItem="8Xn-kK-YfJ" firstAttribute="top" secondItem="GUS-Tc-GNM" secondAttribute="bottom" constant="20" id="lQq-8h-HK5"/>
                                     <constraint firstAttribute="trailing" secondItem="8Xn-kK-YfJ" secondAttribute="trailing" constant="10" id="nso-21-wB0"/>
                                     <constraint firstItem="flF-m3-hsS" firstAttribute="top" secondItem="QZb-CH-bUr" secondAttribute="bottom" constant="20" id="osN-NV-gUv"/>
