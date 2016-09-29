@@ -13,7 +13,9 @@ class PairedUploadController:KRBaseController {
     
     @IBOutlet weak var sessionLabel:UILabel!
     var session:Session?
-    
+
+    @IBOutlet weak var githubButton:UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

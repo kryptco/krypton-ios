@@ -11,7 +11,14 @@ import UIKit
 
 class FirstPairController:UIViewController, KRScanDelegate {
     
+    enum InstallMethod:String {
+        case brew = "brew install kryptco/tap/kr"
+        case curl = "brew install kryptco/tap/kr"
+        case apt = "brew install kryptco/tap/kr"
+    }
     
+    @IBOutlet weak var installLabel:UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
