@@ -132,9 +132,11 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         }
         
         // check push
+        
+        //if push allow reauthorized just incase
         if !UIApplication.shared.isRegisteredForRemoteNotifications && !UserDefaults.standard.bool(forKey: "did_ask_push")
         {
-            self.showPushErrorAlert()
+            (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
             UserDefaults.standard.set(true, forKey: "did_ask_push")
             UserDefaults.standard.synchronize()
         }

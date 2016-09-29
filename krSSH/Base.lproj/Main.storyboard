@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ykf-O1-Jwd" id="bF3-Mb-Wuw">
-                                    <frame key="frameInset" width="342" height="119"/>
+                                    <frame key="frameInset" width="342" height="119.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Alex Grinman's Mac Book Pro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="AEr-V1-x9H">
@@ -218,10 +218,10 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="80" id="uTg-IR-NZZ" customClass="LogCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="304" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="303.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
-                                    <frame key="frameInset" width="375" height="79"/>
+                                    <frame key="frameInset" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="zzY-Sa-78v">
@@ -726,10 +726,10 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PeerCell" rowHeight="60" id="ue9-Gd-KUc" customClass="PeerCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="219" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="218.5" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ue9-Gd-KUc" id="Qks-pz-ede">
-                                    <frame key="frameInset" width="342" height="59"/>
+                                    <frame key="frameInset" width="342" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="alex@kryptco.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="w0F-1O-IBb">
@@ -1575,7 +1575,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Pairing with Alex@MacbookPro.Local" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="w0j-zF-VOM">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Pairing with Alex@MacbookPro.Local" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="w0j-zF-VOM">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1924,6 +1924,17 @@ Cg
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFf-5E-5mv">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="U76-rg-jAk"/>
+                                    <constraint firstAttribute="width" constant="22" id="nGB-cZ-rbs"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="trash"/>
+                                <connections>
+                                    <action selector="trashTapped" destination="UnB-Qg-F2t" eventType="touchUpInside" id="fUc-8d-dyP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1941,18 +1952,20 @@ Cg
                             <constraint firstItem="Ow3-ZL-ssG" firstAttribute="top" secondItem="DMf-nU-zQo" secondAttribute="bottom" constant="8" id="aIz-dg-DFQ"/>
                             <constraint firstItem="AgI-vX-s9D" firstAttribute="leading" secondItem="5GU-HZ-5nC" secondAttribute="leadingMargin" id="amZ-Gy-QMf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ow3-ZL-ssG" secondAttribute="trailing" id="avd-CS-RlD"/>
-                            <constraint firstItem="gMp-eB-XXN" firstAttribute="top" secondItem="eRJ-v7-wSj" secondAttribute="bottom" constant="20" id="bdo-Ru-zLv"/>
+                            <constraint firstItem="gMp-eB-XXN" firstAttribute="top" secondItem="eRJ-v7-wSj" secondAttribute="bottom" constant="50" id="bdo-Ru-zLv"/>
                             <constraint firstItem="8n2-Yv-erL" firstAttribute="width" secondItem="Q6s-yD-bs0" secondAttribute="width" id="dXg-jx-Nkk"/>
                             <constraint firstItem="DMf-nU-zQo" firstAttribute="centerX" secondItem="5GU-HZ-5nC" secondAttribute="centerX" id="dxY-mZ-ANW"/>
                             <constraint firstAttribute="trailing" secondItem="sGH-yS-MIk" secondAttribute="trailing" id="e1k-Y4-6nv"/>
                             <constraint firstItem="gMp-eB-XXN" firstAttribute="centerX" secondItem="5GU-HZ-5nC" secondAttribute="centerX" id="hWZ-Q7-Mvh"/>
                             <constraint firstItem="Q6s-yD-bs0" firstAttribute="trailing" secondItem="5GU-HZ-5nC" secondAttribute="centerX" constant="-10" id="hlI-Et-MfP"/>
                             <constraint firstItem="LRD-U0-XOp" firstAttribute="top" secondItem="gMp-eB-XXN" secondAttribute="bottom" constant="10" id="hwA-Qc-FQK"/>
+                            <constraint firstItem="yFf-5E-5mv" firstAttribute="centerY" secondItem="AgI-vX-s9D" secondAttribute="centerY" id="ieu-Qt-14Q"/>
                             <constraint firstItem="ZS4-x0-EUj" firstAttribute="centerX" secondItem="5GU-HZ-5nC" secondAttribute="centerX" id="mUb-pk-FZm"/>
-                            <constraint firstItem="AgI-vX-s9D" firstAttribute="top" secondItem="eRJ-v7-wSj" secondAttribute="bottom" id="qQR-2Z-i9H"/>
+                            <constraint firstItem="AgI-vX-s9D" firstAttribute="top" secondItem="eRJ-v7-wSj" secondAttribute="bottom" constant="8" id="qQR-2Z-i9H"/>
                             <constraint firstItem="ZS4-x0-EUj" firstAttribute="top" secondItem="Q6s-yD-bs0" secondAttribute="bottom" constant="20" id="s4r-Zf-y14"/>
                             <constraint firstItem="8n2-Yv-erL" firstAttribute="centerY" secondItem="Q6s-yD-bs0" secondAttribute="centerY" id="tJg-NU-kOw"/>
                             <constraint firstItem="QM7-Gk-dCn" firstAttribute="leading" secondItem="5GU-HZ-5nC" secondAttribute="leadingMargin" id="tLB-Fh-QNo"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yFf-5E-5mv" secondAttribute="trailing" id="vES-KJ-Tdh"/>
                             <constraint firstItem="sGH-yS-MIk" firstAttribute="leading" secondItem="5GU-HZ-5nC" secondAttribute="leading" id="wct-LY-fs0"/>
                         </constraints>
                     </view>
@@ -2309,6 +2322,7 @@ Cg
         <image name="shield_outer" width="176" height="200"/>
         <image name="tag" width="256" height="256"/>
         <image name="text-icon" width="50" height="50"/>
+        <image name="trash" width="30" height="30"/>
         <image name="x" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>

@@ -11,7 +11,7 @@ import AVFoundation
 
 open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
-    public var device: AVCaptureDevice?
+    public var device: AVCaptureDevice? = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
     public var output = AVCaptureMetadataOutput()
     public var session = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -205,38 +205,6 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         
         self.view.backgroundColor = UIColor.clear
         
-        if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .notDetermined {
-            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (granted: Bool) in
-                if granted {
-                    print("granted")
-                    self.beginScanning()
-                }
-                else {
-                    let alertController = UIAlertController(title: "Camera",
-                                                            message: "Camera is necessary to pair phone with external devices.",
-                                                            preferredStyle: .alert)
-                    
-                    let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
-                        
-                        if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                            UIApplication.shared.openURL(appSettings)
-                        }
-                    }
-                    alertController.addAction(settingsAction)
-                    
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            })
-        } else {
-            self.beginScanning()
-        }
-
-        
-    }
-    
-    func beginScanning() {
-        self.device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-
         var error : NSError?
         let input: AVCaptureDeviceInput!
         do {

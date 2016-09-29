@@ -38,12 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //TODO: check for remote notification
         
         
-        //if push allow reauthorized just incase
-        if UIApplication.shared.isRegisteredForRemoteNotifications {
-            registerPushNotifications()
-        }
-        
-        
         return true
     }
     

@@ -75,8 +75,10 @@ class MeController:KRBaseController, UITextFieldDelegate {
             return
         }
         
-        GitHub().getToken(url: url) { 
-            self.doGitHubUpload()
+        GitHub().getToken(url: url) {
+            dispatchMain {
+                self.doGitHubUpload()
+            }
         }
         
     }

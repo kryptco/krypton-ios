@@ -45,7 +45,7 @@ class GenerateController:UIViewController {
                 
                 let delay = abs(Date().timeIntervalSince(startTime))
                 
-                if delay >= 4.0 {
+                if delay >= 3.0 {
                     dispatchMain {
                         SwiftSpinner.hide()
                         self.performSegue(withIdentifier: "showSetup", sender: nil)
@@ -53,7 +53,7 @@ class GenerateController:UIViewController {
                     return
                 }
                 
-                dispatchAfter(delay: 4.0 - delay, task: {
+                dispatchAfter(delay: 3.0 - delay, task: {
                     dispatchMain {
                         SwiftSpinner.hide()
                         self.performSegue(withIdentifier: "showSetup", sender: nil)

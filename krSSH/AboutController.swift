@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class AboutController: KRBaseController {
 
@@ -44,6 +45,61 @@ class AboutController: KRBaseController {
         Policy.needsUserApproval = sender.isOn
     }
     
+    
+    @IBAction func trashTapped() {
+        
+        let sheet = UIAlertController(title: "Do you want to destroy your private and public key?", message: "Your private key will be gone forever and you will be asked to generate a new one. You will be unpaired from all devices.", preferredStyle: .actionSheet)
+        
+        sheet.addAction(UIAlertAction(title: "Delete key pair", style: UIAlertActionStyle.destructive, handler: { (action) in
+            self.deleteKeyTapped()
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) in
+        }))
+        
+        present(sheet, animated: true, completion: nil)
+        
+    }
+    
+    
+    func deleteKeyTapped() {
+        
+        authenticate { (yes) in
+            guard yes else {
+                return
+            }
+            
+            let _ = KeyManager.destroyKeyPair()
+            SessionManager.shared.destory()
+            
+            dispatchMain {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func authenticate(completion:@escaping (Bool)->Void) {
+        let context = LAContext()
+        let policy = LAPolicy.deviceOwnerAuthentication
+        let reason = "Authentication is needed to delete your key pair"
+        
+        var err:NSError?
+        guard context.canEvaluatePolicy(policy, error: &err) else {
+            log("cannot eval policy: \(err?.localizedDescription ?? "unknown err")", .error)
+            completion(true)
+            
+            return
+        }
+        
+        
+        dispatchMain {
+            context.evaluatePolicy(policy, localizedReason: reason, reply: { (success, policyErr) in
+                completion(success)
+            })
+            
+        }
+        
+    }
     
     /*
     // MARK: - Navigation

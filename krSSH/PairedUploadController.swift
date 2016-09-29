@@ -34,6 +34,8 @@ class PairedUploadController:KRBaseController {
             if enable {
                 (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
             }
+            UserDefaults.standard.set(true, forKey: "did_ask_push")
+            UserDefaults.standard.synchronize()
         }
 
     }
