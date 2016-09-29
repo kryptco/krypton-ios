@@ -905,7 +905,7 @@
                                             <constraint firstAttribute="height" constant="50" id="Lcm-WC-WMy"/>
                                             <constraint firstAttribute="width" constant="50" id="wPM-iV-045"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.16078431369999999" green="0.16078431369999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.3469580538" green="0.3469580538" blue="0.3469580538" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="share-circle"/>
                                         <connections>
                                             <action selector="shareOtherTapped" destination="S5k-6X-LUk" eventType="touchUpInside" id="nzw-xW-fTj"/>
@@ -921,6 +921,7 @@
                                             <constraint firstAttribute="height" constant="50" id="76Z-sl-G32"/>
                                             <constraint firstAttribute="width" constant="50" id="fe4-FM-o26"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.3469580538" green="0.3469580538" blue="0.3469580538" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="mail-icon"/>
                                         <connections>
                                             <action selector="shareEmailTapped" destination="S5k-6X-LUk" eventType="touchUpInside" id="ZaU-eV-wpD"/>
@@ -936,6 +937,7 @@
                                             <constraint firstAttribute="width" constant="50" id="1YQ-vq-lN0"/>
                                             <constraint firstAttribute="height" constant="50" id="lV1-xE-ZtF"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.3469580538" green="0.3469580538" blue="0.3469580538" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="text-icon"/>
                                         <connections>
                                             <action selector="shareTextTapped" destination="S5k-6X-LUk" eventType="touchUpInside" id="nGu-93-HQt"/>
@@ -946,7 +948,7 @@
                                             <constraint firstAttribute="height" constant="50" id="JWh-cv-gdR"/>
                                             <constraint firstAttribute="width" constant="50" id="hSE-Um-V9G"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.16078431369999999" green="0.16078431369999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.3469580538" green="0.3469580538" blue="0.3469580538" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="copy"/>
                                         <connections>
                                             <action selector="shareCopyTapped" destination="S5k-6X-LUk" eventType="touchUpInside" id="ssj-td-9Ky"/>
@@ -1018,7 +1020,7 @@
                                     <constraint firstAttribute="trailing" secondItem="aWx-Tr-lSv" secondAttribute="trailing" id="viF-aF-0gi"/>
                                     <constraint firstItem="aWx-Tr-lSv" firstAttribute="leading" secondItem="cPm-lf-ohe" secondAttribute="leading" id="xm2-9T-YKS"/>
                                     <constraint firstItem="3uY-QQ-sPZ" firstAttribute="top" secondItem="zr9-4q-jgA" secondAttribute="bottom" id="y56-tD-lZK"/>
-                                    <constraint firstItem="WAd-IZ-KF8" firstAttribute="top" secondItem="ae7-9y-C1s" secondAttribute="bottom" constant="40" id="z3O-n8-MYA"/>
+                                    <constraint firstItem="WAd-IZ-KF8" firstAttribute="top" secondItem="ae7-9y-C1s" secondAttribute="bottom" constant="20" id="z3O-n8-MYA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1710,7 +1712,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Let's check that everything works:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnW-nX-2qo">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1798,7 +1800,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8dM-Li-PbG" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="hns-CC-XJ1"/>
+                                    <constraint firstAttribute="height" constant="40" id="hns-CC-XJ1"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
                                 <state key="normal" title="Upload Public Key to GitHub"/>
@@ -2130,13 +2132,14 @@ Cg
                             </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8lm-Ye-OGM" userLabel="share">
                                 <subviews>
-                                    <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-SC-L3M" userLabel="upload view">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-SC-L3M" userLabel="upload view">
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZFY-IL-sad" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="xVY-Ba-Ly9"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                                <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Upload Public Key to GitHub">
                                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -2166,21 +2169,55 @@ Cg
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flF-m3-hsS">
+                                        <color key="tintColor" red="0.34695805375305033" green="0.34695805375305033" blue="0.34695805375305033" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="mail-icon"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
+                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
+                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareEmailTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="ugX-pw-ZzC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dc8-gJ-d7E">
-                                        <color key="tintColor" red="0.16078431369999999" green="0.16078431369999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dc8-gJ-d7E">
+                                        <color key="tintColor" red="0.34695805375305033" green="0.34695805375305033" blue="0.34695805375305033" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="copy"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
+                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
+                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareCopyTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="gfz-Ve-YPo"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8n-f7-7Z7">
-                                        <color key="tintColor" red="0.16078431369999999" green="0.16078431369999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8n-f7-7Z7">
+                                        <color key="tintColor" red="0.34695805375305033" green="0.34695805375305033" blue="0.34695805375305033" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="share-circle"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
+                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
+                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareOtherTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="X4j-mD-00q"/>
                                         </connections>
@@ -2190,7 +2227,19 @@ Cg
                                             <constraint firstAttribute="height" constant="50" id="591-V6-GSy"/>
                                             <constraint firstAttribute="width" constant="50" id="Zfc-yt-Fpf"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.34695805375305033" green="0.34695805375305033" blue="0.34695805375305033" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="text-icon"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
+                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
+                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareTextTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="JDK-4a-qgG"/>
                                         </connections>
@@ -2399,7 +2448,7 @@ Cg
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0R2-zj-seh"/>
-        <segue reference="Rob-Re-AWf"/>
+        <segue reference="8Vx-DU-0ql"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
