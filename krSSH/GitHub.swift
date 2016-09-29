@@ -39,7 +39,7 @@ class GitHub {
     
     
     
-    func getToken(url:URL, completion:()->()) {
+    func getToken(url:URL, completion:@escaping ()->()) {
         GitHub().authConfig.handleOpenURL(url: url) { (tokenConfig) in
     
             if let token = tokenConfig.accessToken {
@@ -48,6 +48,7 @@ class GitHub {
                 UserDefaults.standard.synchronize()
             }
             
+            completion()
         }
     }
     
