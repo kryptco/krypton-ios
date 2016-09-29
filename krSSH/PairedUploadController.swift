@@ -15,6 +15,7 @@ class PairedUploadController:KRBaseController {
     var session:Session?
 
     @IBOutlet weak var githubButton:UIButton!
+    @IBOutlet weak var gitSSHView:UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,8 @@ class PairedUploadController:KRBaseController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.gitSSHView.alpha = 0.0
+
         if let session = session {
             sessionLabel.text = "\(session.pairing.name)"
         }
@@ -100,8 +103,17 @@ class PairedUploadController:KRBaseController {
                                 successVC.spinner.stopAnimating()
                                 successVC.resultImageView.image = ResultImage.check.image
                                 successVC.titleLabel.text = "Success!"
+                                
+                                self.githubButton.layer.borderColor = UIColor.clear.cgColor
+                                self.githubButton.setTitle("Uploaded to Github!", for: UIControlState.normal)
+                                self.githubButton.isEnabled = false
+                                
                                 dispatchAfter(delay: 2.0, task: {
                                     successVC.dismiss(animated: true, completion: nil)
+                                    
+                                    UIView.animate(withDuration: 1.0, animations: { 
+                                        self.gitSSHView.alpha = 1.0
+                                    })
                                     
                                 })
                             }

@@ -13,8 +13,9 @@ class FirstPairController:UIViewController, KRScanDelegate {
     
     enum InstallMethod:String {
         case brew = "brew install kryptco/tap/kr"
-        case curl = "brew install kryptco/tap/kr"
-        case apt = "brew install kryptco/tap/kr"
+        case curl = "curl https://krypt.co/kr | sh"
+        case apt = "apt-get install kr"
+        
     }
     
     @IBOutlet weak var installLabel:UILabel!
@@ -33,6 +34,20 @@ class FirstPairController:UIViewController, KRScanDelegate {
         {
             animationController.session = session
         }
+    }
+    
+    //MARK: Install Instructions
+    
+    @IBAction func brewTapped() {
+        installLabel.text = InstallMethod.brew.rawValue
+    }
+    
+    @IBAction func aptGetTapped() {
+        installLabel.text = InstallMethod.apt.rawValue
+    }
+    
+    @IBAction func curlTapped() {
+        installLabel.text = InstallMethod.curl.rawValue
     }
     
     //MARK: KRScanDelegate
