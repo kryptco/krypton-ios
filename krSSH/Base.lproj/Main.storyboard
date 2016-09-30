@@ -2021,12 +2021,12 @@
                                             <action selector="userApprovalSettingChangedWithSender:" destination="UnB-Qg-F2t" eventType="valueChanged" id="opq-Cd-pXr"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgo-gb-M67">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xgo-gb-M67">
                                         <attributedString key="attributedText">
                                             <fragment content="Manually authorize every SSH login ">
                                                 <attributes>
                                                     <font key="NSFont" size="16" name="AvenirNext-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment>
@@ -2036,14 +2036,14 @@ Cg
                                                 <attributes>
                                                     <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment content="You will need to tap `Approve` on every SSH login notification.">
                                                 <attributes>
                                                     <color key="NSColor" red="0.4096381797082228" green="0.4096381797082228" blue="0.4096381797082228" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="10" name="AvenirNext-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment>
@@ -2053,7 +2053,7 @@ Cg
                                                 <attributes>
                                                     <color key="NSColor" red="0.4096381797082228" green="0.4096381797082228" blue="0.4096381797082228" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
@@ -2065,7 +2065,7 @@ Cg
                                     <constraint firstAttribute="trailingMargin" secondItem="56b-kb-Emv" secondAttribute="trailing" id="0NZ-Qw-Jak"/>
                                     <constraint firstItem="56b-kb-Emv" firstAttribute="leading" secondItem="xgo-gb-M67" secondAttribute="trailing" constant="4" id="6kO-O4-jre"/>
                                     <constraint firstItem="56b-kb-Emv" firstAttribute="centerY" secondItem="sGH-yS-MIk" secondAttribute="centerY" id="8zl-ZJ-Nnc"/>
-                                    <constraint firstItem="xgo-gb-M67" firstAttribute="top" secondItem="sGH-yS-MIk" secondAttribute="top" constant="8" id="OYA-QQ-3li"/>
+                                    <constraint firstItem="xgo-gb-M67" firstAttribute="top" secondItem="sGH-yS-MIk" secondAttribute="top" constant="2" id="OYA-QQ-3li"/>
                                     <constraint firstItem="xgo-gb-M67" firstAttribute="leading" secondItem="sGH-yS-MIk" secondAttribute="leadingMargin" id="UvT-Gt-ovn"/>
                                     <constraint firstAttribute="height" constant="60" id="oeT-E3-kFC"/>
                                     <constraint firstAttribute="bottom" secondItem="xgo-gb-M67" secondAttribute="bottom" constant="2" id="weq-PQ-OBg"/>
@@ -2212,7 +2212,7 @@ Cg
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="xVY-Ba-Ly9"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
                                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Upload Public Key to GitHub">
                                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2545,7 +2545,7 @@ Cg
         <image name="x" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8Vx-DU-0ql"/>
+        <segue reference="Rob-Re-AWf"/>
         <segue reference="kMu-oa-2FM"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
