@@ -180,16 +180,7 @@ public class RSAbstractCodeGenerator : RSCodeGenerator {
                 filter.setValue(inputMessage, forKey: "inputMessage")
                 filter.setValue(inputCorrectionLevel.rawValue, forKey: "inputCorrectionLevel")
                 
-                /// color
-                guard let colorFilter = CIFilter(name: "CIFalseColor") else { return nil }
-                
-                colorFilter.setDefaults()
-                colorFilter.setValue(filter.outputImage, forKey: "inputImage")
-                colorFilter.setValue(UIColor.clear.coreImageColor, forKey: "inputColor0")
-                colorFilter.setValue(UIColor.black.coreImageColor, forKey: "inputColor1")
-                ///
-                
-                let outputImage = colorFilter.outputImage
+                let outputImage = filter.outputImage
                 let context = CIContext(options: nil)
                 if let outputImage = outputImage {
                     let cgImage = context.createCGImage(outputImage, from: outputImage.extent)

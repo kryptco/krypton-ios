@@ -592,7 +592,82 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sUu-z1-u1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4456.8000000000002" y="-467.3163418290855"/>
+            <point key="canvasLocation" x="4630" y="-491"/>
+        </scene>
+        <!--Controller-->
+        <scene sceneID="zDN-BQ-52F">
+            <objects>
+                <viewController id="ZKn-uY-sej" customClass="QRController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2rB-EH-UM4"/>
+                        <viewControllerLayoutGuide type="bottom" id="EMy-Oy-3x0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Jfc-Do-1AQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2I5-Yc-uUY">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZOb-MD-OZ7">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uq-zY-PYF" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-cz-IND">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="Ec5-cz-IND" secondAttribute="height" multiplier="1:1" id="aLR-KP-fod"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Ec5-cz-IND" secondAttribute="trailing" constant="10" id="4TM-TG-aY2"/>
+                                                <constraint firstItem="Ec5-cz-IND" firstAttribute="top" secondItem="1uq-zY-PYF" secondAttribute="top" constant="10" id="MOE-jE-gOR"/>
+                                                <constraint firstAttribute="width" secondItem="1uq-zY-PYF" secondAttribute="height" multiplier="1:1" id="dg2-DW-sRK"/>
+                                                <constraint firstItem="Ec5-cz-IND" firstAttribute="leading" secondItem="1uq-zY-PYF" secondAttribute="leading" constant="10" id="gm2-Gs-MDX"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ec5-cz-IND" secondAttribute="bottom" constant="10" id="pIN-qi-1Q1"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="20"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cK2-6d-QMl">
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                            <state key="normal" title="CLOSE">
+                                                <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <segue destination="UvH-3l-EG2" kind="unwind" unwindAction="dismissQRWithSegue:" id="euw-5B-DWA"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="leading" secondItem="ZOb-MD-OZ7" secondAttribute="leading" constant="20" id="1ur-2G-Ag8"/>
+                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="JRz-HE-YZs"/>
+                                        <constraint firstAttribute="trailing" secondItem="cK2-6d-QMl" secondAttribute="trailing" constant="20" id="JsZ-TY-a5T"/>
+                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="centerY" secondItem="ZOb-MD-OZ7" secondAttribute="centerY" id="LSW-Ze-Dsj"/>
+                                        <constraint firstAttribute="bottom" secondItem="cK2-6d-QMl" secondAttribute="bottom" constant="10" id="gzP-1H-oQj"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="2I5-Yc-uUY" firstAttribute="top" secondItem="2rB-EH-UM4" secondAttribute="bottom" id="3uw-CJ-g3b"/>
+                            <constraint firstAttribute="trailing" secondItem="2I5-Yc-uUY" secondAttribute="trailing" id="B30-In-eb9"/>
+                            <constraint firstItem="2I5-Yc-uUY" firstAttribute="leading" secondItem="Jfc-Do-1AQ" secondAttribute="leading" id="a0Q-pI-24p"/>
+                            <constraint firstItem="EMy-Oy-3x0" firstAttribute="top" secondItem="2I5-Yc-uUY" secondAttribute="bottom" id="heY-zH-LoQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="qrImageView" destination="Ec5-cz-IND" id="07t-56-ao5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lbk-PO-dxD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4540" y="-2383.3583208395803"/>
         </scene>
         <!--Success Controller-->
         <scene sceneID="OXG-TQ-eg2">
@@ -1387,8 +1462,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="AppLogoMedium" translatesAutoresizingMaskIntoConstraints="NO" id="a70-gW-DlA">
-                                <frame key="frameInset" minX="168" minY="40" width="35" height="40"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogoMedium" translatesAutoresizingMaskIntoConstraints="NO" id="a70-gW-DlA">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="89r-ne-lYX"/>
                                     <constraint firstAttribute="height" constant="40" id="aTG-Sh-5yL"/>
@@ -1436,7 +1510,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/kr/kr" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/kr/kr" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="0.81960784313725488" green="0.81960784313725488" blue="0.81960784313725488" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2329,12 +2403,33 @@ Cg
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5U-hj-zcg">
+                                        <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="1oZ-pP-yAZ"/>
+                                            <constraint firstAttribute="height" constant="50" id="WbB-XT-klU"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="qr-code"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="25"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="ZKn-uY-sej" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="E21-Xm-10e"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="LtF-SC-L3M" firstAttribute="leading" secondItem="8lm-Ye-OGM" secondAttribute="leading" id="0KY-qZ-VXz"/>
                                     <constraint firstItem="flF-m3-hsS" firstAttribute="leading" secondItem="ghP-HZ-rRs" secondAttribute="trailing" constant="30" id="1DR-8l-s63"/>
                                     <constraint firstItem="n8n-f7-7Z7" firstAttribute="height" secondItem="ghP-HZ-rRs" secondAttribute="height" id="1VP-n1-YyE"/>
+                                    <constraint firstItem="a5U-hj-zcg" firstAttribute="centerX" secondItem="8lm-Ye-OGM" secondAttribute="centerX" id="1d0-xs-eny"/>
                                     <constraint firstItem="yXk-Un-A2u" firstAttribute="centerX" secondItem="flF-m3-hsS" secondAttribute="centerX" id="1qI-UG-7UG"/>
                                     <constraint firstItem="flF-m3-hsS" firstAttribute="centerX" secondItem="8lm-Ye-OGM" secondAttribute="centerX" constant="-40" id="1zP-xI-cFx"/>
                                     <constraint firstItem="8Xn-kK-YfJ" firstAttribute="leading" secondItem="8lm-Ye-OGM" secondAttribute="leading" constant="10" id="3dS-MW-cwg"/>
@@ -2361,10 +2456,11 @@ Cg
                                     <constraint firstItem="QZb-CH-bUr" firstAttribute="top" secondItem="LtF-SC-L3M" secondAttribute="bottom" id="YjO-N4-jIt"/>
                                     <constraint firstItem="GUS-Tc-GNM" firstAttribute="centerX" secondItem="Dc8-gJ-d7E" secondAttribute="centerX" id="cuW-N9-sKH"/>
                                     <constraint firstItem="wLT-gB-Kld" firstAttribute="top" secondItem="8Xn-kK-YfJ" secondAttribute="bottom" id="e5Q-dS-jg9"/>
+                                    <constraint firstAttribute="bottom" secondItem="a5U-hj-zcg" secondAttribute="bottom" constant="70" id="ebW-ff-TR9"/>
                                     <constraint firstItem="ZFY-IL-sad" firstAttribute="trailing" secondItem="n8n-f7-7Z7" secondAttribute="trailing" id="iMJ-vC-EwP"/>
                                     <constraint firstItem="8Xn-kK-YfJ" firstAttribute="top" secondItem="GUS-Tc-GNM" secondAttribute="bottom" constant="20" id="lQq-8h-HK5"/>
                                     <constraint firstAttribute="trailing" secondItem="8Xn-kK-YfJ" secondAttribute="trailing" constant="10" id="nso-21-wB0"/>
-                                    <constraint firstItem="flF-m3-hsS" firstAttribute="top" secondItem="QZb-CH-bUr" secondAttribute="bottom" constant="40" id="osN-NV-gUv"/>
+                                    <constraint firstItem="flF-m3-hsS" firstAttribute="top" secondItem="QZb-CH-bUr" secondAttribute="bottom" constant="20" id="osN-NV-gUv"/>
                                     <constraint firstItem="n8n-f7-7Z7" firstAttribute="leading" secondItem="Dc8-gJ-d7E" secondAttribute="trailing" constant="30" id="qo4-D5-l5I"/>
                                     <constraint firstItem="vgP-wz-IyQ" firstAttribute="centerX" secondItem="ghP-HZ-rRs" secondAttribute="centerX" id="rCG-iD-NGR"/>
                                     <constraint firstAttribute="trailing" secondItem="rD7-Qn-MyU" secondAttribute="trailing" id="ru6-XM-XVI"/>
@@ -2397,6 +2493,7 @@ Cg
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTa-oc-dXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="UvH-3l-EG2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2365.5999999999999" y="-1102.3988005997003"/>
         </scene>
@@ -2409,7 +2506,7 @@ Cg
                         <viewControllerLayoutGuide type="bottom" id="fg5-Zr-3oz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QHV-WP-e4i">
-                        <rect key="frame" x="0.0" y="0.0" width="316" height="316"/>
+                        <rect key="frame" x="0.0" y="0.0" width="317.5" height="317.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2435,6 +2532,7 @@ Cg
         <image name="me_selected" width="30" height="30"/>
         <image name="peers" width="30" height="24"/>
         <image name="peers_selected" width="30" height="24"/>
+        <image name="qr-code" width="128" height="128"/>
         <image name="qr_selected" width="24" height="24"/>
         <image name="scan_rails" width="256" height="256"/>
         <image name="share-circle" width="50" height="50"/>
@@ -2447,8 +2545,8 @@ Cg
         <image name="x" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0R2-zj-seh"/>
         <segue reference="8Vx-DU-0ql"/>
+        <segue reference="kMu-oa-2FM"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

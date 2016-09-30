@@ -211,5 +211,11 @@ class MeController:KRBaseController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    //MARK: Segue
+    @IBAction func dismissQR(segue: UIStoryboardSegue) {
+    }
+    
+
 
 }
