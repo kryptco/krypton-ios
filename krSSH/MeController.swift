@@ -10,9 +10,11 @@ import Foundation
 import UIKit
 import OctoKit
 
-class MeController:KRBaseController, UITextFieldDelegate {
+class MeController:KRBaseController, GitHubDelegate, UITextFieldDelegate {
     @IBOutlet var qrImageView:UIImageView!
     @IBOutlet var tagTextField:UITextField!
+
+    @IBOutlet var myQRButton:UIButton!
 
     
     override func viewDidLoad() {
@@ -21,12 +23,12 @@ class MeController:KRBaseController, UITextFieldDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(MeController.redrawMe), name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
     
-        NotificationCenter.default.addObserver(self, selector: #selector(MeController.didFinishLoginToGitHub(note:)), name: NSNotification.Name(rawValue: "finish_github_login"), object: nil)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        myQRButton.setBorder(color: UIColor.clear, cornerRadius: 25, borderWidth: 0.0)
         
         redrawMe()
         Policy.currentViewController = self
@@ -56,7 +58,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
         let github = GitHub()
         
         guard github.accessToken == nil else {
-            doGitHubUpload()
+            self.doGithubUpload(token: github.accessToken)
             return
         }
         
@@ -68,36 +70,31 @@ class MeController:KRBaseController, UITextFieldDelegate {
         
         UIApplication.shared.openURL(authURL)
     }
-
-    dynamic func didFinishLoginToGitHub(note:Notification) {
-        guard let url = note.object as? URL else {
-            log("no url in github login notification", .error)
-            return
-        }
-        
-        GitHub().getToken(url: url) {
-            dispatchMain {
-                self.doGitHubUpload()
-            }
-        }
-        
-    }
     
-    func doGitHubUpload() {
+    func doGithubUpload(token:String?) {
         guard let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
             else {
                 log("no success controller storyboard", .error)
                 return
         }
         
-        successVC.resultImage = nil
-        successVC.hudText = "Uploading Public Key to GitHub..."
-        successVC.shouldSpin = true
         successVC.modalPresentationStyle = .overCurrentContext
         
+        guard let accessToken = token else {
+            successVC.hudText = "Invalid Credentials"
+            successVC.resultImage = ResultImage.x.image
+            present(successVC, animated: true, completion: nil)
+            return
+        }
+        
+        successVC.resultImage = nil
+        successVC.shouldSpin = true
+        successVC.hudText = "Uploading Public Key to GitHub..."
         present(successVC, animated: true, completion: nil)
         
         let github = GitHub()
+        github.accessToken = accessToken
+        
         do {
             let km = try KeyManager.sharedInstance()
             let email = try km.getMe().email

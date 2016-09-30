@@ -141,7 +141,8 @@ extension UIViewController {
                         
                     }
                 })
-
+            case .none where link.type == .github && self is GitHubDelegate:
+                (self as? GitHubDelegate)?.didAuthenticate(url: link.url)
                 
             default:
                 break

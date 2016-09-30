@@ -24,6 +24,21 @@ struct ApiError:GitHubError{
     }
 }
 
+protocol GitHubDelegate {
+    func didAuthenticate(url:URL)
+    func doGithubUpload(token:String?)
+}
+
+extension GitHubDelegate {
+    func didAuthenticate(url: URL) {
+        GitHub().getToken(url: url) { token in
+            dispatchMain {
+                self.doGithubUpload(token: token)
+            }
+        }
+        
+    }
+}
 class GitHub {
     
     var authConfig:OAuthConfiguration
@@ -34,21 +49,21 @@ class GitHub {
     init() {
         authConfig =  OAuthConfiguration(token: "ed1626f32b2945987427", secret: "eec8e5b957d2b0176cb61da87c32b99accd860eb", scopes: ["read:public_key", "write:public_key"])
         
-        accessToken = UserDefaults.standard.string(forKey: accessTokenKey)
+//        accessToken = UserDefaults.standard.string(forKey: accessTokenKey)
     }
     
     
     
-    func getToken(url:URL, completion:@escaping ()->()) {
+    func getToken(url:URL, completion:@escaping (String?)->()) {
         GitHub().authConfig.handleOpenURL(url: url) { (tokenConfig) in
     
-            if let token = tokenConfig.accessToken {
-                self.accessToken = token
-                UserDefaults.standard.set(token, forKey: self.accessTokenKey)
-                UserDefaults.standard.synchronize()
-            }
+//            if let token = tokenConfig.accessToken {
+//                self.accessToken = token
+//                UserDefaults.standard.set(token, forKey: self.accessTokenKey)
+//                UserDefaults.standard.synchronize()
+//            }
             
-            completion()
+            completion(tokenConfig.accessToken)
         }
     }
     

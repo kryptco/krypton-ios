@@ -165,26 +165,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        guard let appLink = LinkType(rawValue: url.scheme ?? "") else {
-            log("invalid open url scheme", .error)
+        guard let link = Link(url: url) else {
+            log("invalid kr url: \(url)")
             return false
         }
         
-        switch appLink {
-        case LinkType.github:
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "finish_github_login"), object: url, userInfo: nil)
-            return true
-        default:
-            guard let link = Link(url: url) else {
-                log("invalid kr url: \(url)")
-                return false
-            }
-            
-            self.pendingLink = link
-            NotificationCenter.default.post(name: Link.notificationName, object: link, userInfo: nil)
-            return true
-            
-        }
+        self.pendingLink = link
+        NotificationCenter.default.post(name: Link.notificationName, object: link, userInfo: nil)
+        return true
     }
     
    

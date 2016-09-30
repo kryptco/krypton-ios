@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PairedUploadController:KRBaseController {
+class PairedUploadController:KRBaseController, GitHubDelegate {
     
     @IBOutlet weak var sessionLabel:UILabel!
     var session:Session?
@@ -19,10 +19,6 @@ class PairedUploadController:KRBaseController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-        NotificationCenter.default.addObserver(self, selector: #selector(MeController.didFinishLoginToGitHub(note:)), name: NSNotification.Name(rawValue: "finish_github_login"), object: nil)
-
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -50,7 +46,7 @@ class PairedUploadController:KRBaseController {
         let github = GitHub()
         
         guard github.accessToken == nil else {
-            doGitHubUpload()
+            self.doGithubUpload(token: github.accessToken!)
             return
         }
         
@@ -63,33 +59,35 @@ class PairedUploadController:KRBaseController {
         UIApplication.shared.openURL(authURL)
     }
     
-    dynamic func didFinishLoginToGitHub(note:Notification) {
-        guard let url = note.object as? URL else {
-            log("no url in github login notification", .error)
-            return
-        }
-        
-        GitHub().getToken(url: url) {
-            self.doGitHubUpload()
-        }
-        
-    }
     
-    func doGitHubUpload() {
+    //MARK: GitHub Delegate
+  
+    func doGithubUpload(token: String?) {
+
         guard let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
             else {
                 log("no success controller storyboard", .error)
                 return
         }
         
-        successVC.resultImage = nil
-        successVC.hudText = "Uploading Public Key to GitHub..."
-        successVC.shouldSpin = true
+
         successVC.modalPresentationStyle = .overCurrentContext
         
+        guard let accessToken = token else {
+            successVC.hudText = "Invalid Credentials"
+            successVC.resultImage = ResultImage.x.image
+            present(successVC, animated: true, completion: nil)
+            return
+        }
+    
+        successVC.resultImage = nil
+        successVC.shouldSpin = true
+        successVC.hudText = "Uploading Public Key to GitHub..."
         present(successVC, animated: true, completion: nil)
         
         let github = GitHub()
+        github.accessToken = accessToken
+        
         do {
             let km = try KeyManager.sharedInstance()
             let email = try km.getMe().email

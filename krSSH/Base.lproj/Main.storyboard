@@ -2487,6 +2487,7 @@ Cg
                     </view>
                     <tabBarItem key="tabBarItem" title="Me" image="me" selectedImage="me_selected" id="mV9-63-qvt"/>
                     <connections>
+                        <outlet property="myQRButton" destination="a5U-hj-zcg" id="LGL-0m-8Wg"/>
                         <outlet property="qrImageView" destination="YfX-h2-UOh" id="QBq-jV-Ak2"/>
                         <outlet property="tagTextField" destination="rrc-CV-gf3" id="w1l-FX-9vs"/>
                         <segue destination="FBy-gQ-WmY" kind="presentation" identifier="showSuccess" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="Rob-Re-AWf"/>
