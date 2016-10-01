@@ -37,7 +37,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func update() {
         print("update called")
-        let defaults = UserDefaults(suiteName: "group.lastcommand")
+        let defaults = UserDefaults(suiteName: "group.co.krypt.kryptonite")
 
         let dateString = defaults?.string(forKey: "last_log_time") ?? "--"
         let command = defaults?.string(forKey: "last_log_command") ?? "--"

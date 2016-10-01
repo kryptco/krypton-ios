@@ -18,7 +18,7 @@
 			<string>KR</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.alexgrinman.krSSH.kr</string>
+				<string>co.krypt.kryptonite.kr</string>
 			</array>
 		</dict>
 	</array>
@@ -64,9 +64,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>87</string>
+	<string>166</string>
 	<key>GitHash</key>
-	<string>33b0b036cc26c85d7903b1d76e7b366bec197e7b</string>
+	<string>9449e41a83be05f15814749346c182d31f070588</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
@@ -114,7 +114,7 @@
 			<key>UTTypeDescription</key>
 			<string>kryptonite SSH Public Key</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.alexgrinman.krSSH.kr</string>
+			<string>co.krypt.kryptonite.kr</string>
 			<key>UTTypeReferenceURL</key>
 			<string>http://krypt.co/krext</string>
 			<key>UTTypeSize320IconFile</key>

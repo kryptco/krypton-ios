@@ -1471,7 +1471,7 @@
 				INFOPLIST_FILE = LastCommand/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.lastcommand;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.last;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1491,7 +1491,7 @@
 				INFOPLIST_FILE = LastCommand/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.lastcommand;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.last;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1659,7 +1659,7 @@
 				INFOPLIST_FILE = KryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.KryptoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/krSSH.app/krSSH";
@@ -1673,7 +1673,7 @@
 				INFOPLIST_FILE = KryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.KryptoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/krSSH.app/krSSH";
