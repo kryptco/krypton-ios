@@ -19,4 +19,20 @@ extension String {
         
         return components[0]
     }
+
+    func sanitizedPhoneNumber() -> String {
+        var sanitizedPhone = self.components(separatedBy: CharacterSet.whitespaces).joined(separator: "")
+        
+        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: "(", with: "")
+        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: ")", with: "")
+        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: "-", with: "")
+        
+        if !sanitizedPhone.contains("+") {
+            sanitizedPhone = "+1" + sanitizedPhone
+        }
+        
+        return sanitizedPhone
+    }
+    
 }
+

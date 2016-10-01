@@ -26,12 +26,17 @@ class PeerController: KRBaseTableController, CNContactPickerDelegate {
         
         
         peers = PeerManager.shared.all
+        
+        guard !peers.isEmpty else {
+            addButton.isHidden = true
+            performSegue(withIdentifier: "showEmpty", sender: nil)
+            return
+        }
+        
+        addButton.isHidden = false
+
         peers = peers.sorted(by: { $0.dateAdded > $1.dateAdded })
         
-        if let me = try? KeyManager.sharedInstance().getMe() {
-            peers.append(me)
-        }
-    
         tableView.reloadData()
         
     }
@@ -164,20 +169,4 @@ class PeerController: KRBaseTableController, CNContactPickerDelegate {
 }
 
 
-extension String {
-    func sanitizedPhoneNumber() -> String {
-        var sanitizedPhone = self.components(separatedBy: CharacterSet.whitespaces).joined(separator: "")
-        
-        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: "(", with: "")
-        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: ")", with: "")
-        sanitizedPhone = sanitizedPhone.replacingOccurrences(of: "-", with: "")
-        
-        if !sanitizedPhone.contains("+") {
-            sanitizedPhone = "+1" + sanitizedPhone
-        }
-        
-        return sanitizedPhone
-    }
-    
-}
 

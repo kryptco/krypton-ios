@@ -29,7 +29,14 @@ class SessionsController: KRBaseTableController {
 
         dispatchAsync {
             self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
-            dispatchMain{ self.tableView.reloadData() }
+            dispatchMain{
+                
+                guard !self.sessions.isEmpty else {
+                    self.performSegue(withIdentifier: "showEmpty", sender: nil)
+                    return
+                }
+                self.tableView.reloadData()
+            }
         }
         
     }
