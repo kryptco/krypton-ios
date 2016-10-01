@@ -148,12 +148,12 @@
                     <connections>
                         <outlet property="emptyView" destination="SLJ-6b-J30" id="JJi-jb-yh4"/>
                         <outlet property="tableView" destination="Ugy-zK-4F4" id="fci-32-DoH"/>
-                        <segue destination="2XW-PV-xjB" kind="show" identifier="showSignatureLogs" action="showDetailViewController:sender:" id="cJQ-sX-zpF"/>
+                        <segue destination="2XW-PV-xjB" kind="show" identifier="showSignatureLogs" id="eBD-Gd-dhp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="km9-Gr-NmZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2719" y="309"/>
+            <point key="canvasLocation" x="2615" y="309"/>
         </scene>
         <!--Session Detail Controller-->
         <scene sceneID="Jb8-M5-3lO">
@@ -2348,7 +2348,7 @@ Cg
                                     <frame key="frameInset"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YfX-h2-UOh" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
+                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YfX-h2-UOh" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="EGb-M2-Se2"/>
                                                 <constraint firstAttribute="width" constant="80" id="ntd-IB-cNY"/>
@@ -2383,8 +2383,8 @@ Cg
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5U-hj-zcg">
                                             <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="1oZ-pP-yAZ"/>
-                                                <constraint firstAttribute="height" constant="30" id="WbB-XT-klU"/>
+                                                <constraint firstAttribute="width" constant="36" id="1oZ-pP-yAZ"/>
+                                                <constraint firstAttribute="height" constant="36" id="WbB-XT-klU"/>
                                             </constraints>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <state key="normal" image="qr-code"/>
@@ -2743,7 +2743,7 @@ Cg
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0R2-zj-seh"/>
-        <segue reference="8Vx-DU-0ql"/>
+        <segue reference="Rob-Re-AWf"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
