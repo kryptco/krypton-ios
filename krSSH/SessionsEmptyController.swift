@@ -23,6 +23,6 @@ class SessionsEmptyController:KRBaseController {
     
     
     @IBAction func addDevice() {
-        
+        (self.parent?.parent as? UITabBarController)?.selectedIndex = 1
     }
 }

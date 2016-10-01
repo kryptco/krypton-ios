@@ -9,12 +9,13 @@
 import Foundation
 import UIKit
 
-class SessionsController: KRBaseTableController {
+class SessionsController: KRBaseController, UITableViewDelegate, UITableViewDataSource {
     
 
     var sessions:[Session] = []
     
-    //@IBOutlet weak var addButton:UIButton!
+    @IBOutlet weak var tableView:UITableView!
+    @IBOutlet weak var emptyView:UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +33,11 @@ class SessionsController: KRBaseTableController {
             dispatchMain{
                 
                 guard !self.sessions.isEmpty else {
-                    self.performSegue(withIdentifier: "showEmpty", sender: nil)
+                    self.emptyView.isHidden = false
                     return
                 }
+                
+                self.emptyView.isHidden = true
                 self.tableView.reloadData()
             }
         }
@@ -56,46 +59,48 @@ class SessionsController: KRBaseTableController {
  
     //MARK: TableView
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return nil
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sessions.count
     }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell") as! SessionCell
         cell.set(session: sessions[indexPath.row])
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120.0
 
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showSignatureLogs", sender: sessions[indexPath.row])
     }
     
     
      // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
      }
     
 
      // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             SessionManager.shared.remove(session: sessions[indexPath.row])
             Silo.shared.remove(session: sessions[0])
             sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
             
+            self.emptyView.isHidden = !sessions.isEmpty
+
             tableView.deleteRows(at: [indexPath], with: .right)
             tableView.reloadData()
         } else if editingStyle == .insert {

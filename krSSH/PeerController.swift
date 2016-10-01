@@ -10,12 +10,14 @@ import UIKit
 import ContactsUI
 
 
-class PeerController: KRBaseTableController, CNContactPickerDelegate {
+class PeerController: KRBaseController, UITableViewDelegate, UITableViewDataSource, CNContactPickerDelegate {
 
     var peers:[Peer] = []
     
     @IBOutlet weak var addButton:UIButton!
+    @IBOutlet weak var tableView:UITableView!
 
+    @IBOutlet weak var emptyView:UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +31,11 @@ class PeerController: KRBaseTableController, CNContactPickerDelegate {
         
         guard !peers.isEmpty else {
             addButton.isHidden = true
-            performSegue(withIdentifier: "showEmpty", sender: nil)
+            emptyView.isHidden = false
             return
         }
         
+        emptyView.isHidden = true
         addButton.isHidden = false
 
         peers = peers.sorted(by: { $0.dateAdded > $1.dateAdded })
@@ -41,10 +44,10 @@ class PeerController: KRBaseTableController, CNContactPickerDelegate {
         
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    override func didReceiveMemoryWarning() {
+     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -96,19 +99,19 @@ class PeerController: KRBaseTableController, CNContactPickerDelegate {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return ""
     }
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return peers.count
     }
 
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PeerCell", for: indexPath) as! PeerCell
 
@@ -116,25 +119,28 @@ class PeerController: KRBaseTableController, CNContactPickerDelegate {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
     }
 
 
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
  
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showPeerDetail", sender: peers[indexPath.row])
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
 
             PeerManager.shared.remove(peer: peers[indexPath.row])
             peers = PeerManager.shared.all
+            
+            self.emptyView.isHidden = !peers.isEmpty
+
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.reloadData()
             
