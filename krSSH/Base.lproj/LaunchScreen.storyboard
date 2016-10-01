@@ -24,7 +24,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="in cambridge, ma" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FH-7H-Rgj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="in Boston" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FH-7H-Rgj">
                                 <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -65,7 +65,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="4FH-7H-Rgj" secondAttribute="trailing" constant="20" id="me9-ce-eFb"/>
                             <constraint firstItem="4FH-7H-Rgj" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="mtj-Wr-XXY"/>
                             <constraint firstItem="opU-J5-hI7" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="22" id="pKJ-pW-oQ1"/>
-                            <constraint firstItem="Hly-y2-wuY" firstAttribute="top" secondItem="j3j-Jc-s7R" secondAttribute="bottom" id="pTH-mi-vbH"/>
+                            <constraint firstItem="Hly-y2-wuY" firstAttribute="top" secondItem="j3j-Jc-s7R" secondAttribute="bottom" constant="-4" id="pTH-mi-vbH"/>
                         </constraints>
                     </view>
                 </viewController>
