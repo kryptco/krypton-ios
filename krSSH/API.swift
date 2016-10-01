@@ -71,7 +71,7 @@ class API {
             return
         }
         
-        request.platformApplicationArn = "arn:aws:sns:us-east-1:911777333295:app/APNS_SANDBOX/alexgrinman-ios"
+        request.platformApplicationArn = "arn:aws:sns:us-east-1:911777333295:app/APNS_SANDBOX/kryptco-ios-dev"
         
         request.token = token
 
