@@ -980,7 +980,7 @@
 				TargetAttributes = {
 					FA49F7841D9B6B3200372556 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = C246BC89CJ;
+						DevelopmentTeam = W7AMYM5LPN;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -993,7 +993,7 @@
 					};
 					FA8141351D70B0F4004FE58C = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = C246BC89CJ;
+						DevelopmentTeam = W7AMYM5LPN;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -1259,7 +1259,7 @@
 		};
 		FAB28E8B1D93122400B61E6B /* BuildHashBump */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -1267,7 +1267,7 @@
 			name = BuildHashBump;
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n";
 		};
@@ -1467,11 +1467,11 @@
 				CODE_SIGN_ENTITLEMENTS = LastCommand/LastCommand.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = C246BC89CJ;
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				INFOPLIST_FILE = LastCommand/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.krSSH.LastCommand;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.lastcommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1487,11 +1487,11 @@
 				CODE_SIGN_ENTITLEMENTS = LastCommand/LastCommand.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = C246BC89CJ;
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				INFOPLIST_FILE = LastCommand/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.krSSH.LastCommand;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.lastcommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1537,7 +1537,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1579,7 +1579,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1596,7 +1596,7 @@
 				CODE_SIGN_ENTITLEMENTS = krSSH/krSSH.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = C246BC89CJ;
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1611,7 +1611,7 @@
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.krSSH;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
@@ -1628,7 +1628,7 @@
 				CODE_SIGN_ENTITLEMENTS = krSSH/krSSH.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = C246BC89CJ;
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1643,7 +1643,7 @@
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
 				);
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexgrinman.krSSH;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
