@@ -51,14 +51,11 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         let authorizedKey = peer.publicKey.toAuthorized()
         
         if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
-            msgDialogue.addAttachmentData(pkData, typeIdentifier: "kr", filename: "publickey.kr")
+            msgDialogue.addAttachmentData(pkData, typeIdentifier: "public.plain-text", filename: "publickey.kr")
         }
-        
-        if let url = URL(string: Link.publicKeyImport()) {
-            msgDialogue.addAttachmentURL(url, withAlternateFilename: "publickey.kr")
-        }
+    
 
-        msgDialogue.body = "Import my public key with kryptonite!"
+        msgDialogue.body = "Import \(peer.email)'s public key with kryptonite!"
 
         
         return msgDialogue
@@ -79,7 +76,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
             mailDialogue.addAttachmentData(pkData, mimeType: "text/plain", fileName: "publickey.kr")
         }
         
-        mailDialogue.setMessageBody("<a href=\"\(Link.publicKeyImport())\"> Import my public key with kryptonite by tapping here</a> or download the public key attached below. ", isHTML: true)
+        mailDialogue.setMessageBody("<a href=\"\(Link.publicKeyImport())\"> Import \(peer.email)'s public key with kryptonite by tapping here</a> or download the public key attached below. ", isHTML: true)
 
         
 

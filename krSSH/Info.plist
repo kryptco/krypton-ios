@@ -64,9 +64,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>173</string>
+	<string>174</string>
 	<key>GitHash</key>
-	<string>79a25069dcbdb03943164a60532c13b34c71d016</string>
+	<string>03817240583d2ff65813d9a684a6d1ca33874ddc</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
@@ -108,8 +108,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
-				<string>public.text</string>
+				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>kryptonite SSH Public Key</string>

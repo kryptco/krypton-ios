@@ -312,7 +312,7 @@
         <scene sceneID="Atm-Dh-fQZ">
             <objects>
                 <navigationController id="QdC-wE-jq3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -909,6 +909,7 @@
                         <outlet property="addButton" destination="AR7-Go-sez" id="n1f-5y-2p2"/>
                         <outlet property="emptyView" destination="dMG-CZ-hvF" id="JdK-Jw-ihK"/>
                         <outlet property="tableView" destination="hy6-Wx-sFY" id="cGk-jA-BJl"/>
+                        <segue destination="S5k-6X-LUk" kind="show" identifier="showPeerDetail" id="9HW-NQ-AJW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="40f-xL-iS7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1157,7 +1158,7 @@
                                                 <constraint firstItem="bqZ-XP-Szz" firstAttribute="top" secondItem="cOg-Rc-c9O" secondAttribute="top" constant="20" id="5tA-tZ-IdT"/>
                                                 <constraint firstAttribute="bottom" secondItem="BS2-YM-EH0" secondAttribute="bottom" constant="20" id="AM7-EI-DPA"/>
                                                 <constraint firstItem="bqZ-XP-Szz" firstAttribute="centerX" secondItem="cOg-Rc-c9O" secondAttribute="centerX" id="C40-fg-AtY"/>
-                                                <constraint firstItem="u9N-Bj-uzY" firstAttribute="centerX" secondItem="cOg-Rc-c9O" secondAttribute="centerX" id="FVI-Rm-HEH"/>
+                                                <constraint firstItem="u9N-Bj-uzY" firstAttribute="centerX" secondItem="cOg-Rc-c9O" secondAttribute="centerX" constant="14" id="FVI-Rm-HEH"/>
                                                 <constraint firstItem="J01-71-vXh" firstAttribute="bottom" secondItem="u9N-Bj-uzY" secondAttribute="bottom" id="Q25-LV-CuH"/>
                                                 <constraint firstItem="XA7-6H-T64" firstAttribute="top" secondItem="u9N-Bj-uzY" secondAttribute="bottom" id="ZAG-ho-vku"/>
                                                 <constraint firstItem="XA7-6H-T64" firstAttribute="centerX" secondItem="cOg-Rc-c9O" secondAttribute="centerX" id="hwp-pe-9Zb"/>
@@ -2701,7 +2702,7 @@ Cg
                         <viewControllerLayoutGuide type="bottom" id="fg5-Zr-3oz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QHV-WP-e4i">
-                        <rect key="frame" x="0.0" y="0.0" width="317.5" height="317.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="316" height="316"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2743,7 +2744,7 @@ Cg
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0R2-zj-seh"/>
-        <segue reference="Rob-Re-AWf"/>
+        <segue reference="8Vx-DU-0ql"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
