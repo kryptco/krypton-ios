@@ -27,6 +27,33 @@ extension UIViewController {
         }
     }
     
+    func showSettings(with title:String, message:String, then:(()->Void)? = nil) {
+        
+        let alertController = UIAlertController(title: title,
+                                                message: message,
+                                                preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
+            
+            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.openURL(appSettings)
+            }
+            
+            then?()
+        }
+        alertController.addAction(settingsAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) in
+            then?()
+        }
+        alertController.addAction(cancelAction)
+        
+        dispatchMain {
+            self.present(alertController, animated: true, completion: nil)
+        }
+
+    }
+    
     func askConfirmationIn(title:String, text:String, accept:String, cancel:String, handler: @escaping ((_ confirmed:Bool) -> Void)) {
         
         let alertController:UIAlertController = UIAlertController(title: title, message: text, preferredStyle: UIAlertControllerStyle.alert)

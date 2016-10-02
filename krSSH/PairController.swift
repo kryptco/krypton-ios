@@ -78,11 +78,17 @@ class PairController: KRBaseController, KRScanDelegate {
         self.scanViewController?.canScan = true
     }
     
+
     
     
     var shouldShowProfile = true
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == AVAuthorizationStatus.denied
+        {
+            self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. We need the camera to scan your computer's QR code to pair with it. Pairing enables your computer to ask your phone for SSH logins.")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
