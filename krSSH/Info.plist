@@ -44,18 +44,6 @@
 			<key>CFBundleURLIconFile</key>
 			<string>file-url-icon</string>
 			<key>CFBundleURLName</key>
-			<string>kr-upload-oauth</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>kr-github</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleURLIconFile</key>
-			<string>file-url-icon</string>
-			<key>CFBundleURLName</key>
 			<string>kr-url</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
@@ -64,9 +52,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>180</string>
+	<string>181</string>
 	<key>GitHash</key>
-	<string>44953217b7b20385e50b8e304c3a9be58c316001</string>
+	<string>c895c8d6892c152f0d97268bdd391124fe1684db</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

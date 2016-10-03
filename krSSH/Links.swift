@@ -12,7 +12,6 @@ import Foundation
 
 
 enum LinkType:String {
-    case github = "kr-github"
     case kr = "kr"
     case file = "file"
 }
