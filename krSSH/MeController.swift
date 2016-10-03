@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import OctoKit
 
-class MeController:KRBaseController, GitHubDelegate, UITextFieldDelegate {
+class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var qrImageView:UIImageView!
     @IBOutlet var tagTextField:UITextField!
 
@@ -32,7 +32,6 @@ class MeController:KRBaseController, GitHubDelegate, UITextFieldDelegate {
         
         redrawMe()
         Policy.currentViewController = self
-
     }
     
     
@@ -51,88 +50,6 @@ class MeController:KRBaseController, GitHubDelegate, UITextFieldDelegate {
         }
     }
    
-    //MARK: Upload to GitHub
-    
-    @IBAction func uploadToGitHub() {
-        
-        let github = GitHub()
-        
-        guard github.accessToken == nil else {
-            self.doGithubUpload(token: github.accessToken)
-            return
-        }
-        
-        guard let authURL = github.authConfig.authenticate() else {
-            showWarning(title: "Error", body: "Cannot connect to GitHub.")
-            log("error: github oauth url", .error)
-            return
-        }
-        
-        UIApplication.shared.openURL(authURL)
-    }
-    
-    func doGithubUpload(token:String?) {
-        guard let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
-            else {
-                log("no success controller storyboard", .error)
-                return
-        }
-        
-        successVC.modalPresentationStyle = .overCurrentContext
-        
-        guard let accessToken = token else {
-            successVC.hudText = "Invalid Credentials"
-            successVC.resultImage = ResultImage.x.image
-            present(successVC, animated: true, completion: nil)
-            return
-        }
-        
-        successVC.resultImage = nil
-        successVC.shouldSpin = true
-        successVC.hudText = "Uploading Public Key to GitHub..."
-        present(successVC, animated: true, completion: nil)
-        
-        let github = GitHub()
-        github.accessToken = accessToken
-        
-        do {
-            let km = try KeyManager.sharedInstance()
-            let email = try km.getMe().email
-            let authorizedKey = try km.keyPair.publicKey.authorizedFormat()
-            let title = "kryptonite iOS <\(email)>"
-            
-            github.upload(title: title, publicKeyWire: authorizedKey,
-                          success: {
-                            
-                            dispatchMain {
-                                successVC.spinner.stopAnimating()
-                                successVC.resultImageView.image = ResultImage.check.image
-                                successVC.titleLabel.text = "Success!"
-                                dispatchAfter(delay: 2.0, task: {
-                                    successVC.dismiss(animated: true, completion: nil)
-                                    
-                                })
-                            }
-                }, failure: { (error) in
-                    dispatchMain {
-                        successVC.spinner.stopAnimating()
-                        successVC.resultImageView.image = ResultImage.x.image
-                        successVC.titleLabel.text = "Error: \(error.message)"
-                        dispatchAfter(delay: 3.0, task: {
-                            successVC.dismiss(animated: true, completion: nil)
-                            
-                        })
-                    }
-                    
-                    
-            })
-        }
-        catch (let e) {
-            log("error getting keypair: \(e)", LogType.error)
-            self.showWarning(title: "Error loading keypair", body: "\(e)")
-        }
-    }
-    
     //MARK: Sharing
     
     @IBAction func shareTextTapped() {
