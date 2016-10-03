@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import OctoKit
 
 class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var qrImageView:UIImageView!

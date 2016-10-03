@@ -30,7 +30,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
         do {
             let kp = try KeyManager.sharedInstance().keyPair
             let pk = try kp.publicKey.wireFormat()
-            let fp = try pk.fingerprint().hexPretty
+            let fp = pk.fingerprint().hexPretty
             
             keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
             identiconView.image = IGSimpleIdenticon.from(pk.toBase64(), size: CGSize(width: 100, height: 100))
