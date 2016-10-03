@@ -92,9 +92,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         
         
-        if let alert = userInfo["alert"] as? String, alert != "" {
+        if let alert = (userInfo["aps"] as? [String: Any])?["alert"] as? String, alert != "" {
             application.applicationIconBadgeNumber = 1
-            application.applicationIconBadgeNumber = 0
+            application.applicationIconBadgeNumber = 0  
         }
         
         log("got background notification")
