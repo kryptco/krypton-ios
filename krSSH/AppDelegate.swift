@@ -91,8 +91,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     {
         
-        application.applicationIconBadgeNumber = 1
-        application.applicationIconBadgeNumber = 0
+        
+        if let alert = userInfo["alert"] as? String, alert != "" {
+            application.applicationIconBadgeNumber = 1
+            application.applicationIconBadgeNumber = 0
+        }
         
         log("got background notification")
         
