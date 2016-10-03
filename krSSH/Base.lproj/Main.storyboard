@@ -23,97 +23,106 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ugy-zK-4F4">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Ugy-zK-4F4">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.89283197940000003" green="0.89283197940000003" blue="0.89283197940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="120" id="lJB-FH-bYG" customClass="SessionCell" customModule="krSSH" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="120"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="krSSH" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="120" width="375" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJB-FH-bYG" id="Rnu-6u-07F">
-                                            <frame key="frameInset" width="342" height="119.5"/>
+                                            <frame key="frameInset" width="342" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Alex Grinman's Mac Book Pro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="DWT-TF-Vxh">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="22" id="NJA-r4-Gny"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
-                                                    <color key="textColor" red="0.43936107099999999" green="0.43936107099999999" blue="0.43936107099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="10m ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="afj-iH-vdA">
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
-                                                    <color key="textColor" red="0.43936107099999999" green="0.43936107099999999" blue="0.43936107099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view alpha="0.02500000037252903" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pOv-eI-0Tc" userLabel="line">
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="tf0-Es-3j4"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pvz-Ja-bYE" userLabel="colorView" customClass="KRView" customModule="krSSH" customModuleProvider="target">
-                                                    <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="8" id="Afc-Es-5jP"/>
-                                                    </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKT-Zi-3mF" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpT-FI-zYC" customClass="KRView" customModule="krSSH" customModuleProvider="target">
                                                     <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text=" Alex $ ssh github.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="76P-xA-CKd" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
-                                                            <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="18"/>
-                                                            <color key="textColor" red="0.6490281001" green="0.6490281001" blue="0.6490281001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OhU-bn-DIw" userLabel="cornerview" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Alex Grinman's Mac Book Pro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="DWT-TF-Vxh">
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="NJA-r4-Gny"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                                                    <color key="textColor" red="0.35686274509803922" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKT-Zi-3mF" userLabel="command">
+                                                                    <subviews>
+                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="76P-xA-CKd" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                                                            <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="16"/>
+                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="LAST SSH COMMAND" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="nsK-f5-2tJ">
+                                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="8"/>
+                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="10m ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="afj-iH-vdA">
+                                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="8"/>
+                                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" red="0.35694760022222216" green="0.35694760022222216" blue="0.35694760022222216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstItem="nsK-f5-2tJ" firstAttribute="leading" secondItem="lKT-Zi-3mF" secondAttribute="leading" constant="4" id="3bO-Gy-jRx"/>
+                                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="top" secondItem="nsK-f5-2tJ" secondAttribute="bottom" constant="10" id="7KK-FI-xFW"/>
+                                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="leading" secondItem="lKT-Zi-3mF" secondAttribute="leading" constant="10" id="88o-q2-Xui"/>
+                                                                        <constraint firstItem="afj-iH-vdA" firstAttribute="centerY" secondItem="nsK-f5-2tJ" secondAttribute="centerY" id="Hvh-MF-oSi"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="76P-xA-CKd" secondAttribute="bottom" constant="8" id="MUp-KL-C59"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="76P-xA-CKd" secondAttribute="trailing" constant="10" id="kJJ-CZ-hAr"/>
+                                                                        <constraint firstItem="nsK-f5-2tJ" firstAttribute="top" secondItem="lKT-Zi-3mF" secondAttribute="top" constant="4" id="sMl-FQ-w5h"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="afj-iH-vdA" secondAttribute="trailing" constant="4" id="uy8-PA-gGK"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="DWT-TF-Vxh" firstAttribute="leading" secondItem="OhU-bn-DIw" secondAttribute="leading" constant="10" id="KSt-ga-7jI"/>
+                                                                <constraint firstAttribute="trailing" secondItem="lKT-Zi-3mF" secondAttribute="trailing" id="Qd7-3a-ZUz"/>
+                                                                <constraint firstAttribute="bottom" secondItem="lKT-Zi-3mF" secondAttribute="bottom" id="VvE-cA-6gh"/>
+                                                                <constraint firstAttribute="trailing" secondItem="DWT-TF-Vxh" secondAttribute="trailing" constant="10" id="b0E-1n-sxU"/>
+                                                                <constraint firstItem="lKT-Zi-3mF" firstAttribute="top" secondItem="DWT-TF-Vxh" secondAttribute="bottom" id="gF2-Ii-aON"/>
+                                                                <constraint firstItem="lKT-Zi-3mF" firstAttribute="leading" secondItem="OhU-bn-DIw" secondAttribute="leading" id="sEI-9g-Cj8"/>
+                                                                <constraint firstItem="DWT-TF-Vxh" firstAttribute="top" secondItem="OhU-bn-DIw" secondAttribute="top" id="smj-z7-eS0"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                    <real key="value" value="0.0"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <real key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.28706912800000001" green="0.28706912800000001" blue="0.28706912800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="leading" secondItem="lKT-Zi-3mF" secondAttribute="leading" constant="8" id="88o-q2-Xui"/>
-                                                        <constraint firstAttribute="bottom" secondItem="76P-xA-CKd" secondAttribute="bottom" constant="8" id="MUp-KL-C59"/>
-                                                        <constraint firstAttribute="trailing" secondItem="76P-xA-CKd" secondAttribute="trailing" constant="8" id="kJJ-CZ-hAr"/>
-                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="top" secondItem="lKT-Zi-3mF" secondAttribute="top" constant="8" id="z6m-re-Pgr"/>
+                                                        <constraint firstItem="OhU-bn-DIw" firstAttribute="top" secondItem="zpT-FI-zYC" secondAttribute="top" id="GQU-sw-WKN"/>
+                                                        <constraint firstAttribute="bottom" secondItem="OhU-bn-DIw" secondAttribute="bottom" id="RJf-Wd-uSq"/>
+                                                        <constraint firstItem="OhU-bn-DIw" firstAttribute="leading" secondItem="zpT-FI-zYC" secondAttribute="leading" id="bou-Cu-dGb"/>
+                                                        <constraint firstAttribute="trailing" secondItem="OhU-bn-DIw" secondAttribute="trailing" id="muE-au-bJS"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="8"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="4"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.82718211210000003" green="0.82718211210000003" blue="0.82718211210000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <real key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="pOv-eI-0Tc" secondAttribute="trailing" id="0J0-kF-xZl"/>
-                                                <constraint firstItem="pOv-eI-0Tc" firstAttribute="leading" secondItem="Rnu-6u-07F" secondAttribute="leadingMargin" constant="-11" id="3fq-9Q-GxG"/>
-                                                <constraint firstItem="lKT-Zi-3mF" firstAttribute="leading" secondItem="Pvz-Ja-bYE" secondAttribute="trailing" constant="8" id="656-sz-VLg"/>
-                                                <constraint firstAttribute="bottom" secondItem="pOv-eI-0Tc" secondAttribute="bottom" id="RDa-lK-sH2"/>
-                                                <constraint firstItem="Pvz-Ja-bYE" firstAttribute="leading" secondItem="Rnu-6u-07F" secondAttribute="leading" id="SbU-1t-KV8"/>
-                                                <constraint firstAttribute="trailing" secondItem="afj-iH-vdA" secondAttribute="trailing" constant="1" id="W7l-fg-OMV"/>
-                                                <constraint firstItem="lKT-Zi-3mF" firstAttribute="top" secondItem="DWT-TF-Vxh" secondAttribute="bottom" constant="10" id="ZAN-Ay-eAh"/>
-                                                <constraint firstAttribute="bottom" secondItem="Pvz-Ja-bYE" secondAttribute="bottom" constant="10" id="awM-o3-SLx"/>
-                                                <constraint firstItem="afj-iH-vdA" firstAttribute="leading" secondItem="DWT-TF-Vxh" secondAttribute="trailing" id="dzG-Gl-xd3"/>
-                                                <constraint firstItem="DWT-TF-Vxh" firstAttribute="top" secondItem="Rnu-6u-07F" secondAttribute="top" constant="10" id="eB7-8Z-ccG"/>
-                                                <constraint firstAttribute="bottom" secondItem="lKT-Zi-3mF" secondAttribute="bottom" constant="10" id="ewo-db-dbu"/>
-                                                <constraint firstItem="DWT-TF-Vxh" firstAttribute="leading" secondItem="Pvz-Ja-bYE" secondAttribute="trailing" constant="8" id="gvr-pt-Fwa"/>
-                                                <constraint firstItem="afj-iH-vdA" firstAttribute="centerY" secondItem="DWT-TF-Vxh" secondAttribute="centerY" id="kJc-uh-hNP"/>
-                                                <constraint firstAttribute="trailing" secondItem="lKT-Zi-3mF" secondAttribute="trailing" id="kbp-pi-4PB"/>
-                                                <constraint firstItem="Pvz-Ja-bYE" firstAttribute="top" secondItem="Rnu-6u-07F" secondAttribute="top" constant="10" id="swZ-QQ-xqR"/>
+                                                <constraint firstItem="zpT-FI-zYC" firstAttribute="top" secondItem="Rnu-6u-07F" secondAttribute="top" constant="10" id="OFs-sx-cxC"/>
+                                                <constraint firstAttribute="trailing" secondItem="zpT-FI-zYC" secondAttribute="trailing" constant="4" id="OKC-oP-Ucm"/>
+                                                <constraint firstAttribute="bottom" secondItem="zpT-FI-zYC" secondAttribute="bottom" constant="10" id="kEg-JS-PzK"/>
+                                                <constraint firstItem="zpT-FI-zYC" firstAttribute="leading" secondItem="Rnu-6u-07F" secondAttribute="leading" constant="20" id="q4a-wu-52C"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <outlet property="colorView" destination="Pvz-Ja-bYE" id="njK-DQ-qfU"/>
                                             <outlet property="commandLabel" destination="76P-xA-CKd" id="8WL-bx-8KO"/>
+                                            <outlet property="commandView" destination="zpT-FI-zYC" id="3mI-V5-p2f"/>
                                             <outlet property="deviceNameLabel" destination="DWT-TF-Vxh" id="UPh-zp-7BK"/>
                                             <outlet property="lastAccessLabel" destination="afj-iH-vdA" id="6ml-fa-MvX"/>
                                         </connections>
@@ -143,6 +152,11 @@
                             <constraint firstItem="Ugy-zK-4F4" firstAttribute="height" secondItem="6Vm-cK-Aen" secondAttribute="height" id="oEL-RD-CfD"/>
                             <constraint firstItem="Ugy-zK-4F4" firstAttribute="centerX" secondItem="6Vm-cK-Aen" secondAttribute="centerX" id="trc-DK-JRJ"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="SLJ-6b-J30"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Devices" image="device" selectedImage="device_selected" id="6tf-YE-vI7"/>
                     <connections>
@@ -153,7 +167,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="km9-Gr-NmZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2615" y="309"/>
+            <point key="canvasLocation" x="2613.5999999999999" y="308.9955022488756"/>
         </scene>
         <!--Session Detail Controller-->
         <scene sceneID="Jb8-M5-3lO">
@@ -246,10 +260,10 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="80" id="uTg-IR-NZZ" customClass="LogCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="303.5" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="304" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
-                                    <frame key="frameInset" width="375" height="79.5"/>
+                                    <frame key="frameInset" width="375" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="zzY-Sa-78v">
@@ -832,10 +846,10 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PeerCell" rowHeight="60" id="g9F-av-ggY" customClass="PeerCell" customModule="krSSH" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="218.5" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="219" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g9F-av-ggY" id="sY3-zH-X4X">
-                                            <frame key="frameInset" width="342" height="59.5"/>
+                                            <frame key="frameInset" width="342" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="alex@kryptco.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l15-ka-h8r">

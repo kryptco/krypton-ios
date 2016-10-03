@@ -77,7 +77,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120.0
+        return 140.0
 
     }
     

@@ -13,24 +13,38 @@ class SessionCell: UITableViewCell {
     @IBOutlet var deviceNameLabel:UILabel!
     @IBOutlet var lastAccessLabel:UILabel!
     @IBOutlet var commandLabel:UILabel!
-    @IBOutlet var colorView:UIView!
+    @IBOutlet var commandView:UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        commandView.layer.shadowColor = UIColor.black.cgColor
+        commandView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        commandView.layer.shadowOpacity = 0.175
+        commandView.layer.shadowRadius = 3
+        commandView.layer.masksToBounds = false
+
+    }
+    
+    override func layoutSubviews()
+    {
+        super.layoutSubviews()
+        
     }
     
     func set(session:Session) {
+
         deviceNameLabel.text = session.pairing.name.uppercased()
         lastAccessLabel.text = (session.lastAccessed?.timeAgo() ?? session.created.timeAgo())
         
         if let command = LogManager.shared.all.filter({$0.session == session.id}).sorted(by: {$0.date > $1.date}).first?.command {
-            let user = session.pairing.name.getUserOrNil() ?? ""
-            commandLabel.text = "\(user) $ \(command)"
+            //let user = session.pairing.name.getUserOrNil() ?? ""
+            commandLabel.text = "$ \(command)"
         } else {
-            commandLabel.text = " $ "
+            commandLabel.text = "No activity"
+            lastAccessLabel.text = "--"
         }
         
-        colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
+//        colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
     }
 
 }
