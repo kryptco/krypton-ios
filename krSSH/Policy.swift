@@ -80,7 +80,7 @@ class Policy {
         notification.userInfo = ["session_id": session.id, "request": request.jsonMap]
 
         dispatchMain {
-            UIApplication.shared.scheduleLocalNotification(notification)
+            UIApplication.shared.presentLocalNotificationNow(notification)
         }
     }
     
@@ -92,7 +92,7 @@ class Policy {
         notification.soundName = UILocalNotificationDefaultSoundName
         
         dispatchMain {
-            UIApplication.shared.scheduleLocalNotification(notification)
+            UIApplication.shared.presentLocalNotificationNow(notification)
         }
     }
 }

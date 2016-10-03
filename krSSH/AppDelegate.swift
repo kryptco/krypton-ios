@@ -86,9 +86,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "registered_push_notifications"), object: nil)
 
     }
+
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     {
+        
+        application.applicationIconBadgeNumber = 1
+        application.applicationIconBadgeNumber = 0
         
         log("got background notification")
         
