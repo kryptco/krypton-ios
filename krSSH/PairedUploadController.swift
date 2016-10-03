@@ -29,15 +29,7 @@ class PairedUploadController:KRBaseController, GitHubDelegate {
             sessionLabel.text = "\(session.pairing.name)"
         }
         
-        self.askConfirmationIn(title: "Enable Push notifications?", text: "Push notifications are used to notify you when your private key is used. Push notifications signficiantly improve the app experience.", accept: "Enable", cancel: "Later")
-        { (enable) in
-            
-            if enable {
-                (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
-            }
-            UserDefaults.standard.set(true, forKey: "did_ask_push")
-            UserDefaults.standard.synchronize()
-        }
+ 
 
     }
     

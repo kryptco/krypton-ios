@@ -37,9 +37,7 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
         
         // add a blur view
         view.addSubview(blurView)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(MainController.didRegisterPush), name: NSNotification.Name(rawValue: "registered_push_notifications"), object: nil)
-        
+                
         self.navigationItem.leftBarButtonItem = aboutButton
         self.navigationItem.rightBarButtonItem = helpButton
         
@@ -49,25 +47,7 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
 //        PeerManager.shared.destory()
     }
     
-    dynamic func didRegisterPush(note:Notification?) {
-        guard let token = note?.object as? String else {
-            log("push token missing", .error)
-            return
-        }
-        
-        
-        API().updateSNS(token: token) { (endpoint, err) in
-            guard let arn = endpoint else {
-                log("AWS SNS error: \(err)", .error)
-                return
-            }
-            
-            let res = KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
-            if !res { log("Could not save push ARN", .error) }
-        }
 
-    }
-    
     func showPushErrorAlert() {
         if TARGET_IPHONE_SIMULATOR == 1 {
             return

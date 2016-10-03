@@ -32,6 +32,8 @@ class FirstPairController:UIViewController, KRScanDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        
 
     }
     
@@ -42,6 +44,18 @@ class FirstPairController:UIViewController, KRScanDelegate {
         {
             addScanner()
             permissionView.isHidden = true
+        }
+        
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            self.askConfirmationIn(title: "Enable Push notifications?", text: "Push notifications are used to notify you when your private key is used. Push notifications signficiantly improve the app experience.", accept: "Enable", cancel: "Later")
+            { (enable) in
+                
+                if enable {
+                    (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+                }
+                UserDefaults.standard.set(true, forKey: "did_ask_push")
+                UserDefaults.standard.synchronize()
+            }
         }
     }
     

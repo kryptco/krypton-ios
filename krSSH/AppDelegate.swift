@@ -37,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //TODO: check for remote notification
         
+        if application.isRegisteredForRemoteNotifications {
+            self.registerPushNotifications()
+        }
         
         return true
     }
@@ -65,7 +68,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         log("Got token: \(token)")
         
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "registered_push_notifications"), object: token)
+        API().updateSNS(token: token) { (endpoint, err) in
+            guard let arn = endpoint else {
+                log("AWS SNS error: \(err)", .error)
+                return
+            }
+            
+            let res = KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
+            if !res { log("Could not save push ARN", .error) }
+        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
