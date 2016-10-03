@@ -347,7 +347,7 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, sign: sign, list: list, me: me)
+        let response = Response(requestID: request.id, endpoint: arn, requireManualApproval: Policy.needsUserApproval, sign: sign, list: list, me: me)
         
         let responseData = try response.jsonData() as NSData
         
