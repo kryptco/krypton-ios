@@ -4,9 +4,3 @@
 [submodule "AwesomeCache"]
 	path = AwesomeCache
 	url = git@github.com:aschuch/AwesomeCache.git
-[submodule "RequestKit"]
-	path = RequestKit
-	url = https://github.com/kryptco/RequestKit.git
-[submodule "octokit.swift"]
-	path = octokit.swift
-	url = https://github.com/kryptco/octokit.swift.git
