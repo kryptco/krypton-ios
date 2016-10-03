@@ -43,6 +43,10 @@ class SessionManager {
         return sessions[id]
     }
     
+    func get(deviceName:String) -> Session? {
+        return all.filter({ $0.pairing.name == deviceName }).first
+    }
+    
     
     func add(session:Session) {
         let didSave = KeychainStorage().set(key: session.id, value: session.pairing.symmetricKey.toBase64())

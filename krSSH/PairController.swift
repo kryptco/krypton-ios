@@ -210,6 +210,12 @@ class PairController: KRBaseController, KRScanDelegate {
                 }
                 
                 do {
+                    
+                    if let existing = SessionManager.shared.get(deviceName: pairing.name) {
+                        SessionManager.shared.remove(session: existing)
+                        Silo.shared.remove(session: existing)
+                    }
+                    
                     let session = try Session(pairing: pairing)
                     SessionManager.shared.add(session: session)
                     Silo.shared.add(session: session)
