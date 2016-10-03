@@ -145,7 +145,7 @@ class Silo {
                         log("error responding: \(e)", LogType.error)
                     }
                 }
-                break
+                
             case .sent:
                 log("sent")
                 completion?(true, nil)

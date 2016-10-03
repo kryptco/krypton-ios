@@ -144,22 +144,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //MARK: Allow/Reject
     
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, withResponseInfo responseInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
+        
+        handleAction(userInfo: notification.userInfo, identifier: identifier, completionHandler: completionHandler)
+    }
+    
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
+        
+        handleAction(userInfo: userInfo, identifier: identifier, completionHandler: completionHandler)
+    }
+    
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable : Any], withResponseInfo responseInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
+
+        handleAction(userInfo: userInfo, identifier: identifier, completionHandler: completionHandler)
+
+    }
+    
     func application(_ application: UIApplication,
                      handleActionWithIdentifier identifier: String?,
                      for notification: UILocalNotification,
                      completionHandler: @escaping () -> Void ){
         
+        handleAction(userInfo: notification.userInfo, identifier: identifier, completionHandler: completionHandler)
+        
+    }
+    
+    func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
+        
         guard identifier == Policy.approveAction.identifier else {
             log("user rejected", .warning)
+            completionHandler()
             return
         }
         
-        guard   let sessionID = notification.userInfo?["session_id"] as? String,
+        log("user allows")
+        
+        guard   let sessionID = userInfo?["session_id"] as? String,
             let session = SessionManager.shared.get(id: sessionID),
-            let requestJSON = notification.userInfo?["request"] as? JSON
+            let requestJSON = userInfo?["request"] as? JSON
             else {
-
+                
                 log("invalid notification", .error)
+                completionHandler()
                 return
         }
         
@@ -174,9 +200,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
+
     }
     
-    //MARK: Integrations OAuth
+    //MARK: Links
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
