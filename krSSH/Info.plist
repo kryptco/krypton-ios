@@ -52,11 +52,13 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>193</string>
+	<string>194</string>
 	<key>GitHash</key>
-	<string>fb84750286747e67da1d85dc9990e5c8fc3378bf</string>
+	<string>a01e18b6239cf26bff7a8df46d405dbda1baedd0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Kryptonite uses bluetooth to communicate to paired devices.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan QR codes to pair and record peer's public keys.</string>
 	<key>NSContactsUsageDescription</key>
