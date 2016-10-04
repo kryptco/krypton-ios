@@ -15,6 +15,8 @@ class SessionDetailController: KRBaseTableController {
 
     @IBOutlet var revokeButton:UIButton!
 
+    @IBOutlet var headerView:UIView!
+
     var logs:[SignatureLog] = []
     var session:Session?
     
@@ -23,6 +25,10 @@ class SessionDetailController: KRBaseTableController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Details"
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 40
+
         
         if let session = session {
             deviceNameLabel.text = session.pairing.name.uppercased()
@@ -38,6 +44,11 @@ class SessionDetailController: KRBaseTableController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(SessionDetailController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
 
+        headerView.layer.shadowColor = UIColor.black.cgColor
+        headerView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        headerView.layer.shadowOpacity = 0.175
+        headerView.layer.shadowRadius = 3
+        headerView.layer.masksToBounds = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,10 +121,10 @@ class SessionDetailController: KRBaseTableController {
         return cell
     }
  
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
-        
-    }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 80.0
+//        
+//    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

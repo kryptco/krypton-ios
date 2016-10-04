@@ -19,7 +19,7 @@ class LogCell: UITableViewCell {
     
     func set(log:SignatureLog) {
         if let command = log.command {
-            signatureLabel.text = command
+            signatureLabel.text = "$ \(command)"
         } else {
             if  let sig = try? log.digest.fromBase64()
             {
@@ -28,7 +28,7 @@ class LogCell: UITableViewCell {
                 signatureLabel.text = log.digest
             }
         }
-        timeLabel.text = log.date.toLongTimeString().uppercased()
+        timeLabel.text = log.date.timeAgo()
     }
     
 }
