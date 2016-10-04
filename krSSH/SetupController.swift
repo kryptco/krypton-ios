@@ -91,6 +91,12 @@ class SetupController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let firstPair = segue.destination as? FirstPairController {
+            firstPair.firstTime = true
+        }
+    }
+    
 
 
 }

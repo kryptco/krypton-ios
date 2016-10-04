@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
+import LocalAuthentication
 
 class FirstPairController:UIViewController, KRScanDelegate {
     
@@ -24,6 +25,8 @@ class FirstPairController:UIViewController, KRScanDelegate {
     @IBOutlet weak var scanView:UIView!
     @IBOutlet weak var permissionView:UIView!
 
+    var firstTime = false
+
     var scanController:KRScanController?
     
     override func viewDidLoad() {
@@ -32,9 +35,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
-
+        self.scanController?.canScan = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,22 +123,24 @@ class FirstPairController:UIViewController, KRScanDelegate {
         }
         
         
-        if let pairing = try? Pairing(json: json) {
-            
+        if let pairing = try? Pairing(json: json) {            
             do {
                 let session = try Session(pairing: pairing)
                 Silo.shared.add(session: session)
                 self.performSegue(withIdentifier: "showPairingAnimation", sender: session)
+                self.scanController?.canScan = true
+                
             } catch (let e) {
                 log("error scanning: \(e)", .error)
+                self.scanController?.canScan = true
                 return false
             }
-
-            
+    
             return true
         }
         
         
         return false
     }
+    
 }

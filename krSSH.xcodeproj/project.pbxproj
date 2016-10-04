@@ -59,6 +59,7 @@
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
+		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
 		FA4831211D95DA030089D399 /* ResultImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4831201D95DA030089D399 /* ResultImage.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
@@ -88,7 +89,6 @@
 		FAA536231D8F072500549710 /* UIView+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536221D8F072500549710 /* UIView+KR.swift */; };
 		FAA536251D8F13E300549710 /* PeerDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536241D8F13E300549710 /* PeerDetailController.swift */; };
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
-		FAA536291D8F2EB900549710 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536281D8F2EB900549710 /* HelpController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
 		FAA5362F1D8F43D100549710 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362E1D8F43D100549710 /* Links.swift */; };
 		FAA536321D8F465600549710 /* SuccessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536311D8F465600549710 /* SuccessController.swift */; };
@@ -297,6 +297,7 @@
 		FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
 		FA4831201D95DA030089D399 /* ResultImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultImage.swift; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
@@ -329,7 +330,6 @@
 		FAA536221D8F072500549710 /* UIView+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+KR.swift"; sourceTree = "<group>"; };
 		FAA536241D8F13E300549710 /* PeerDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerDetailController.swift; sourceTree = "<group>"; };
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
-		FAA536281D8F2EB900549710 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
 		FAA5362E1D8F43D100549710 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		FAA536311D8F465600549710 /* SuccessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessController.swift; sourceTree = "<group>"; };
@@ -537,7 +537,7 @@
 				FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */,
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
 				FAA536261D8F2EA800549710 /* AboutController.swift */,
-				FAA536281D8F2EB900549710 /* HelpController.swift */,
+				FA309F411DA42C69006D8D81 /* HelpController.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16824F1D774C2700A7ED53 /* Pair */,
@@ -1137,11 +1137,11 @@
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
-				FAA536291D8F2EB900549710 /* HelpController.swift in Sources */,
 				FAA6E1E81D79B863007D1B3A /* PeerCell.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FACDE41D1DA031820065E1E1 /* PeerEmptyController.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
+				FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,

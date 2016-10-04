@@ -69,6 +69,25 @@ class KRBaseTableController: UITableViewController {
     
 }
 
+class KRBasePageController: UIPageViewController {
+    
+    private var linkListener:LinkListener?
+    
+    //MARK: Policy
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Policy.currentViewController = self
+        linkListener = LinkListener(handle)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        linkListener = nil
+    }
+    
+}
+
+
 
 
 extension UIViewController {

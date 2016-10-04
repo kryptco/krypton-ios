@@ -2,38 +2,39 @@
 //  HelpController.swift
 //  krSSH
 //
-//  Created by Alex Grinman on 9/18/16.
+//  Created by Alex Grinman on 10/4/16.
 //  Copyright © 2016 KryptCo. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class HelpController: KRBaseController {
+class HelpController:KRBaseController {
+    
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+}
 
-        // Do any additional setup after loading the view.
-    }
+class HelpInstallController:KRBaseController {
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBOutlet weak var installLabel:UILabel!
+
+    enum InstallMethod:String {
+        case brew = "brew install kryptco/tap/kr"
+        case curl = "curl https://krypt.co/kr | sh"
+        case apt = "apt-get install kr"
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @IBAction func brewTapped() {
+        installLabel.text = InstallMethod.brew.rawValue
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func aptGetTapped() {
+        installLabel.text = InstallMethod.apt.rawValue
     }
-    */
+    
+    @IBAction func curlTapped() {
+        installLabel.text = InstallMethod.curl.rawValue
+    }
 
 }

@@ -132,6 +132,10 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
     }
     
 
+    @IBAction func dismissHelpAndGoToPair(segue: UIStoryboardSegue) {
+        self.selectedIndex = 1
+    }
+    
     
     //MARK: Nav Bar Buttons
     
@@ -140,7 +144,7 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
     }
     
     dynamic func helpTapped() {
-        
+        self.performSegue(withIdentifier: "showHelp", sender: nil)
     }
 
 }
