@@ -11,7 +11,7 @@ import Foundation
 //MARK: Keys
 let KR_URL_SCHEME = "kr://"
 
-let KR_ENDPOINT_ARN_KEY = "aws_endpoint_arn"
+let KR_ENDPOINT_ARN_KEY = "aws_endpoint_arn_key"
 
 //MARK: Functions
 func isDebug() -> Bool {

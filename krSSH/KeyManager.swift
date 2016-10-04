@@ -14,7 +14,7 @@ enum KeyTag:String {
     case peer = "peer"
 }
 
-private let KrMeDataKey = "kr_me_data"
+private let KrMeDataKey = "kr_me_email"
 
 enum KeyManagerError:Error {
     case keyDoesNotExist

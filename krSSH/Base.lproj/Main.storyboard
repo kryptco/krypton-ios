@@ -2742,14 +2742,6 @@ Cg
                                             </constraints>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <state key="normal" image="qr-code"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                    <real key="value" value="0.0"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="25"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <segue destination="ZKn-uY-sej" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="E21-Xm-10e"/>
                                             </connections>
@@ -2938,17 +2930,6 @@ Cg
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flF-m3-hsS">
                                         <color key="tintColor" red="0.34695805375305033" green="0.34695805375305033" blue="0.34695805375305033" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="mail-icon"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
-                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
-                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareEmailTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="ugX-pw-ZzC"/>
                                         </connections>
@@ -2956,17 +2937,6 @@ Cg
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dc8-gJ-d7E">
                                         <color key="tintColor" red="0.34509803921568627" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="copy"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
-                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
-                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareCopyTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="gfz-Ve-YPo"/>
                                         </connections>
@@ -2974,17 +2944,6 @@ Cg
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8n-f7-7Z7">
                                         <color key="tintColor" red="0.34695805375305033" green="0.34695805375305033" blue="0.34695805375305033" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="share-circle"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
-                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
-                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareOtherTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="X4j-mD-00q"/>
                                         </connections>
@@ -2996,17 +2955,6 @@ Cg
                                         </constraints>
                                         <color key="tintColor" red="0.34695805375305033" green="0.34695805375305033" blue="0.34695805375305033" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="text-icon"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
-                                                <color key="value" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="altForegroundColor">
-                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="shareTextTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="JDK-4a-qgG"/>
                                         </connections>

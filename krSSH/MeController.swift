@@ -45,7 +45,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
             
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
-            showWarning(title: "Error loading keypair", body: "\(e)")
+            showWarning(title: "Error", body: "Email address not found.")
         }
     }
    

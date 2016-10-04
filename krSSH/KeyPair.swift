@@ -20,7 +20,7 @@ enum KeyIdentifier:String {
     }
 }
 
-private let KeypairAccessiblity = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
+let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
 
 class KeyPair {
     
@@ -57,7 +57,7 @@ class KeyPair {
                       String(kSecClass): kSecClassKey,
                       String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrApplicationTag): privTag,
-                      String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
+                      String(kSecAttrAccessible):KeychainAccessiblity,
             ] as [String : Any]
 
 
@@ -80,7 +80,7 @@ class KeyPair {
                       String(kSecClass): kSecClassKey,
                       String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrApplicationTag): pubTag,
-                      String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
+                      String(kSecAttrAccessible):KeychainAccessiblity,
                       ] as [String : Any]
         
         var pubKeyObject:AnyObject?
@@ -128,7 +128,7 @@ class KeyPair {
                   String(kSecClass): kSecClassKey,
                   String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                   String(kSecAttrApplicationTag): pubTag,
-                  String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
+                  String(kSecAttrAccessible):KeychainAccessiblity,
                   ] as [String : Any]
         
         pubParams[String(kSecAttrKeyClass)] = kSecAttrKeyClassPublic
@@ -167,7 +167,7 @@ class KeyPair {
         var params = [String(kSecClass): kSecClassKey,
                       String(kSecAttrApplicationTag): pubTag,
                       String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
-                      String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
+                      String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
         
         params[String(kSecAttrKeyClass)] = kSecAttrKeyClassPublic
         params[String(kSecAttrIsPermanent)] = kCFBooleanTrue
@@ -197,7 +197,7 @@ class KeyPair {
                       String(kSecClass): kSecClassKey,
                       String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
                       String(kSecAttrApplicationTag): privTag,
-                      String(kSecAttrAccessible):String(kSecAttrAccessibleAlwaysThisDeviceOnly),
+                      String(kSecAttrAccessible):KeychainAccessiblity,
                       ] as [String : Any]
         
         
@@ -221,7 +221,7 @@ class KeyPair {
         let privateAttributes:[String:Any] = [
             String(kSecAttrIsPermanent): kCFBooleanTrue,
             String(kSecAttrApplicationTag): privTag,
-            String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly,
+            String(kSecAttrAccessible): KeychainAccessiblity,
             ]
         
         var keyParams:[String:Any] = [
@@ -229,7 +229,7 @@ class KeyPair {
             String(kSecAttrKeySizeInBits): keySize,
             ]
         
-        keyParams[String(kSecAttrAccessible)] = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
+        keyParams[String(kSecAttrAccessible)] = KeychainAccessiblity
         keyParams[String(kSecPrivateKeyAttrs)] = privateAttributes
 
         return keyParams
@@ -309,7 +309,7 @@ struct PublicKey {
         
         
         if status == errSecItemNotFound {
-            params[String(kSecAttrAccessible)] = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
+            params[String(kSecAttrAccessible)] = KeychainAccessiblity
             status = SecItemAdd(params as CFDictionary, &publicKeyObject)
         }
 
@@ -329,7 +329,7 @@ struct PublicKey {
         var params = [String(kSecClass): kSecClassKey,
                       String(kSecAttrApplicationTag): pubTag,
                       String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
-                      String(kSecAttrAccessible): kSecAttrAccessibleAlwaysThisDeviceOnly] as [String : Any]
+                      String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
         
         params[String(kSecAttrKeyClass)] = kSecAttrKeyClassPublic
         params[String(kSecValueData)] = data

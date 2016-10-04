@@ -33,11 +33,16 @@ class KeychainStorage {
                       String(kSecAttrService): service,
                       String(kSecAttrAccount): key,
                       String(kSecValueData): data,
-                      String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock] as [String : Any]
+                      String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
         
-        SecItemDelete(params as CFDictionary)
+        let deleteStatus = SecItemDelete(params as CFDictionary)
+        guard deleteStatus == errSecItemNotFound || deleteStatus.isSuccess()
+        else {
+            log("could not delete item first", .error)
+            return false
+        }
+        
         let status = SecItemAdd(params as CFDictionary, nil)
-        
         guard status.isSuccess() else {
             return false
         }
@@ -51,7 +56,7 @@ class KeychainStorage {
                       String(kSecAttrAccount): key,
                       String(kSecReturnData): kCFBooleanTrue,
                       String(kSecMatchLimit): kSecMatchLimitOne,
-                      String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock] as [String : Any]
+                      String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
         
         var object:AnyObject?
         let status = SecItemCopyMatching(params as CFDictionary, &object)
