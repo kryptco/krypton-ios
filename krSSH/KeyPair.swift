@@ -20,6 +20,8 @@ enum KeyIdentifier:String {
     }
 }
 
+private let KeypairAccessiblity = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
+
 class KeyPair {
     
     var publicKey:PublicKey
@@ -298,15 +300,17 @@ struct PublicKey {
     
     func export() throws -> Data {
         
-        let params = [String(kSecReturnData): kCFBooleanTrue,
+        var params = [String(kSecReturnData): kCFBooleanTrue,
                       String(kSecClass): kSecClassKey,
                       String(kSecValueRef): key] as [String : Any]
         
         var publicKeyObject:AnyObject?
-        var status = SecItemAdd(params as CFDictionary, &publicKeyObject)
+        var status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
         
-        if status == errSecDuplicateItem {
-             status = SecItemCopyMatching(params as CFDictionary, &publicKeyObject)
+        
+        if status == errSecItemNotFound {
+            params[String(kSecAttrAccessible)] = String(kSecAttrAccessibleAlwaysThisDeviceOnly)
+            status = SecItemAdd(params as CFDictionary, &publicKeyObject)
         }
 
         guard let pubData = (publicKeyObject as? Data), status.isSuccess()

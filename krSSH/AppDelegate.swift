@@ -81,12 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         
-        log("Push registration failed!", .warning)
-        
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "registered_push_notifications"), object: nil)
-
+        log("Push registration failed!", .error)
     }
-
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     {
