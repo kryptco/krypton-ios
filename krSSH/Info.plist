@@ -52,9 +52,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>188</string>
+	<string>192</string>
 	<key>GitHash</key>
-	<string>3036e91dc33d9e2b17d4112a4bb852aaa15d38cc</string>
+	<string>96843b1179573970cae4840d2578dc645672d22d</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

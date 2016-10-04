@@ -30,15 +30,16 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
 
         dispatchAsync {
             self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
+
             dispatchMain{
-                
+                self.tableView.reloadData()
+
                 guard !self.sessions.isEmpty else {
                     self.emptyView.isHidden = false
                     return
                 }
                 
                 self.emptyView.isHidden = true
-                self.tableView.reloadData()
             }
         }
         

@@ -16,14 +16,16 @@ final class Response:JSONConvertable {
     var sign:SignResponse?
     var list:ListResponse?
     var me:MeResponse?
+    var unpair:UnpairResponse?
     
-    init(requestID:String, endpoint:String, requireManualApproval:Bool, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil) {
+    init(requestID:String, endpoint:String, requireManualApproval:Bool, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
         self.requireManualApproval = requireManualApproval
         self.sign = sign
         self.list = list
         self.me = me
+        self.unpair = unpair
     }
     
     init(json: JSON) throws {
@@ -41,7 +43,11 @@ final class Response:JSONConvertable {
         
         if let json:JSON = try? json ~> "me_response" {
             self.me = try MeResponse(json: json)
-        }        
+        }
+
+        if let json:JSON = try? json ~> "unpair_response" {
+            self.unpair = UnpairResponse(json: json)
+        }
     }
     
     var jsonMap: JSON {
@@ -60,6 +66,10 @@ final class Response:JSONConvertable {
         
         if let m = me {
             json["me_response"] = m.jsonMap
+        }
+
+        if let u = unpair {
+            json["unpair_response"] = u.jsonMap
         }
         
         return json
@@ -130,5 +140,16 @@ struct MeResponse:JSONConvertable {
     }
     var jsonMap: JSON {
         return ["me": me.jsonMap]
+    }
+}
+
+// Unpair
+struct UnpairResponse:JSONConvertable {
+    init(){}
+    init(json: JSON) {
+
+    }
+    var jsonMap: JSON {
+        return [:]
     }
 }

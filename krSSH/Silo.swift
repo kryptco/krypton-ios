@@ -199,15 +199,24 @@ class Silo {
         }
     }
 
-    func remove(session:Session) {
+    func remove(session:Session, sendUnpairResponse:Bool = true) {
         mutex.lock {
-            sessionLabels.removeValue(forKey: session.id)
-            let cbuuid = session.pairing.uuid
-            sessionServiceUUIDS.removeValue(forKey: cbuuid)
-            bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
+           removeLocked(session: session, sendUnpairResponse: sendUnpairResponse)
         }
     }
-    
+
+    func removeLocked(session:Session, sendUnpairResponse:Bool = true) {
+        if sendUnpairResponse {
+            let response = Response(requestID: "", endpoint: "", requireManualApproval: false, unpair: UnpairResponse())
+            try? send(session: session, response: response)
+        }
+        sessionLabels.removeValue(forKey: session.id)
+        let cbuuid = session.pairing.uuid
+        sessionServiceUUIDS.removeValue(forKey: cbuuid)
+        bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
+    }
+
+
     func add(sessions:[Session]) {
         sessions.forEach({ self.add(session: $0) })
     }
@@ -302,6 +311,12 @@ class Silo {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
+
+        if let _ = request.unpair {
+            SessionManager.shared.remove(session: session)
+            removeLocked(session: session, sendUnpairResponse: false)
+            throw SessionRemovedError()
+        }
         
         if let signRequest = request.sign {
             let kp = try KeyManager.sharedInstance()

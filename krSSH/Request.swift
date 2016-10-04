@@ -15,6 +15,7 @@ struct Request:JSONConvertable {
     var sign:SignRequest?
     var list:ListRequest?
     var me:MeRequest?
+    var unpair:UnpairRequest?
     
     init(json: JSON) throws {
         self.id = try json ~> "request_id"
@@ -31,7 +32,10 @@ struct Request:JSONConvertable {
         if let json:JSON = try? json ~> "me_request" {
             self.me = try MeRequest(json: json)
         }
-        
+
+        if let json:JSON = try? json ~> "unpair_request" {
+            self.unpair = try UnpairRequest(json: json)
+        }
     }
     
     var jsonMap: JSON {
@@ -49,6 +53,10 @@ struct Request:JSONConvertable {
         
         if let m = me {
             json["me_request"] = m.jsonMap
+        }
+
+        if let u = unpair {
+            json["unpair_request"] = u.jsonMap
         }
         
         return json
@@ -98,6 +106,11 @@ struct MeRequest:JSONConvertable {
     var jsonMap: JSON {return [:]}
 }
 
+// Unpair
+struct UnpairRequest:JSONConvertable {
+    init(json: JSON) throws {}
+    var jsonMap: JSON {return [:]}
+}
 
 
 
