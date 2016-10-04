@@ -352,7 +352,7 @@
                         <segue destination="Hqk-jW-f1I" kind="relationship" relationship="viewControllers" id="p0V-gL-PRN"/>
                         <segue destination="Mah-te-0DZ" kind="relationship" relationship="viewControllers" id="gMm-G1-CbV"/>
                         <segue destination="STk-oA-iNW" kind="relationship" relationship="viewControllers" id="1Ad-eV-k2n"/>
-                        <segue destination="Zzi-01-ZMM" kind="presentation" identifier="showHelp" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="J1X-L1-bMR"/>
+                        <segue destination="Zzi-01-ZMM" kind="presentation" identifier="showHelp" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="J1X-L1-bMR"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BDF-DO-KsA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1115,9 +1115,6 @@ Cg
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="defaultColor">
                                                     <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="altColor">
-                                                    <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                     <real key="value" value="4"/>
@@ -2787,7 +2784,7 @@ Cg
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZFY-IL-sad" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="xVY-Ba-Ly9"/>
+                                                    <constraint firstAttribute="height" constant="50" id="xVY-Ba-Ly9"/>
                                                 </constraints>
                                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
@@ -2939,7 +2936,7 @@ Cg
                                         <color key="tintColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="ZFY-IL-sad" firstAttribute="centerY" secondItem="LtF-SC-L3M" secondAttribute="centerY" id="7Tr-Er-lMB"/>
-                                            <constraint firstAttribute="height" constant="60" id="KHD-2E-25e"/>
+                                            <constraint firstAttribute="height" constant="80" id="KHD-2E-25e"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flF-m3-hsS">
@@ -3216,7 +3213,7 @@ Cg
                                     <constraint firstAttribute="height" constant="1" id="vPG-IO-1aI"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9y-yh-X03">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9y-yh-X03">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                 <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3377,13 +3374,13 @@ Cg
                                     <constraint firstAttribute="height" constant="1" id="7xo-Q5-3Tq"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qH-16-PwH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qH-16-PwH">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                 <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="INX-MH-UQi" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="ODC-8d-JAs"/>
+                                    <segue destination="INX-MH-UQi" kind="presentation" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="ODC-8d-JAs"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shield_outer" translatesAutoresizingMaskIntoConstraints="NO" id="Lvr-4y-dL4">
@@ -3563,7 +3560,7 @@ Cg
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="installLabel" destination="AHU-EO-R8o" id="tmZ-rw-9mU"/>
+                        <outlet property="installLabel" destination="tBo-VT-1MR" id="vMV-WL-4gG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KMa-Qc-gXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3602,9 +3599,9 @@ Cg
         <image name="x" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="0R2-zj-seh"/>
         <segue reference="ODC-8d-JAs"/>
         <segue reference="Rob-Re-AWf"/>
-        <segue reference="kMu-oa-2FM"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
