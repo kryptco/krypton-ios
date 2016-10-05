@@ -772,6 +772,7 @@
 			buildConfigurationList = FA49F7921D9B6B3300372556 /* Build configuration list for PBXNativeTarget "LastCommand" */;
 			buildPhases = (
 				FA49F7811D9B6B3200372556 /* Sources */,
+				FA309F431DA5947C006D8D81 /* BuildHashBump */,
 				FA49F7821D9B6B3200372556 /* Frameworks */,
 				FA49F7831D9B6B3200372556 /* Resources */,
 			);
@@ -995,6 +996,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		FA309F431DA5947C006D8D81 /* BuildHashBump */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = BuildHashBump;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n";
+		};
 		FA8141521D714250004FE58C /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1035,7 +1050,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n";
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n";
 		};
 		FAEE04A41D74BCCF002A7AFD /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
