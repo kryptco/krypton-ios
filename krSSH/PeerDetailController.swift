@@ -34,6 +34,21 @@ class PeerDetailController: KRBaseController {
     
     @IBAction func delete() {
         
+        self.askConfirmationIn(title: "Delete", text: "Are you sure you want to delete \(peer?.email ?? "")'s public key?", accept: "Delete", cancel: "Cancel")
+        { (yes) in
+            guard yes else {
+                return
+            }
+            
+            guard let peer = self.peer else {
+                return
+            }
+            
+            PeerManager.shared.remove(peer: peer)
+            dispatchMain {
+                let _ = self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     

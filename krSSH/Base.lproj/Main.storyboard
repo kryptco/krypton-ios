@@ -676,17 +676,49 @@
                                             <state key="normal" title="CLOSE">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <state key="highlighted">
+                                                <color key="titleColor" red="0.35694760022222216" green="0.35694760022222216" blue="0.35694760022222216" alpha="0.79976274923312884" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
                                             <connections>
                                                 <segue destination="UvH-3l-EG2" kind="unwind" unwindAction="dismissQRWithSegue:" id="euw-5B-DWA"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Peers can scan this QR code to add your public key to their phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwv-vk-k7u">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="240" id="66w-PI-Rsr"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="shield_inner" translatesAutoresizingMaskIntoConstraints="NO" id="pfH-ao-GhZ">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="36" id="AqL-ID-raf"/>
+                                                <constraint firstAttribute="width" constant="36" id="isH-Ll-VPQ"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is your public key" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PY4-dZ-zUM">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="240" id="ojP-sP-Y2F"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="1uq-zY-PYF" firstAttribute="leading" secondItem="ZOb-MD-OZ7" secondAttribute="leading" constant="20" id="1ur-2G-Ag8"/>
+                                        <constraint firstItem="Hwv-vk-k7u" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="GrO-bV-YUJ"/>
                                         <constraint firstItem="1uq-zY-PYF" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="JRz-HE-YZs"/>
                                         <constraint firstAttribute="trailing" secondItem="cK2-6d-QMl" secondAttribute="trailing" constant="20" id="JsZ-TY-a5T"/>
                                         <constraint firstItem="1uq-zY-PYF" firstAttribute="centerY" secondItem="ZOb-MD-OZ7" secondAttribute="centerY" id="LSW-Ze-Dsj"/>
+                                        <constraint firstItem="Hwv-vk-k7u" firstAttribute="top" secondItem="1uq-zY-PYF" secondAttribute="bottom" constant="30" id="YPw-oK-2C2"/>
+                                        <constraint firstItem="PY4-dZ-zUM" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="efY-sW-Uqj"/>
                                         <constraint firstAttribute="bottom" secondItem="cK2-6d-QMl" secondAttribute="bottom" constant="10" id="gzP-1H-oQj"/>
+                                        <constraint firstItem="PY4-dZ-zUM" firstAttribute="top" secondItem="pfH-ao-GhZ" secondAttribute="bottom" constant="8" id="hzb-Wc-K6p"/>
+                                        <constraint firstItem="pfH-ao-GhZ" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="nGz-2M-ZIK"/>
+                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="top" secondItem="PY4-dZ-zUM" secondAttribute="bottom" constant="30" id="qpw-Od-Yx1"/>
                                     </constraints>
                                 </view>
                                 <blurEffect style="dark"/>
@@ -1133,6 +1165,9 @@ Cg
                                                     <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="requestTapped" destination="STk-oA-iNW" eventType="touchUpInside" id="DXA-Hu-WEi"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

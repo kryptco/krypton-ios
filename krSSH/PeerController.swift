@@ -32,6 +32,8 @@ class PeerController: KRBaseController, UITableViewDelegate, UITableViewDataSour
         guard !peers.isEmpty else {
             addButton.isHidden = true
             emptyView.isHidden = false
+            tableView.reloadData()
+
             return
         }
         
@@ -140,6 +142,7 @@ class PeerController: KRBaseController, UITableViewDelegate, UITableViewDataSour
             peers = PeerManager.shared.all
             
             self.emptyView.isHidden = !peers.isEmpty
+            self.addButton.isHidden = !peers.isEmpty
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.reloadData()
