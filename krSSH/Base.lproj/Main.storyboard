@@ -8,6 +8,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -2835,7 +2836,10 @@ Cg
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <state key="normal" image="qr-code"/>
                                             <connections>
-                                                <segue destination="ZKn-uY-sej" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="E21-Xm-10e"/>
+                                                <segue destination="ZKn-uY-sej" kind="presentation" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="E21-Xm-10e">
+                                                    <segue key="commit" inheritsFrom="parent" id="lFe-zW-gU3"/>
+                                                    <segue key="preview" inheritsFrom="commit" id="iOL-Yk-1gP"/>
+                                                </segue>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -3687,7 +3691,8 @@ Cg
     <inferredMetricsTieBreakers>
         <segue reference="0R2-zj-seh"/>
         <segue reference="ODC-8d-JAs"/>
-        <segue reference="8Vx-DU-0ql"/>
+        <segue reference="Rob-Re-AWf"/>
+        <segue reference="E21-Xm-10e"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
