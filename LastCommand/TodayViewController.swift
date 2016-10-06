@@ -3,7 +3,7 @@
 //  LastCommand
 //
 //  Created by Alex Grinman on 9/27/16.
-//  Copyright © 2016 KryptCo. All rights reserved.
+//  Copyright © 2016 KryptCo, Inc. All rights reserved.
 //
 
 import UIKit

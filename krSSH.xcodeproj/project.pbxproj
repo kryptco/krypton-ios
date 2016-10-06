@@ -1409,6 +1409,7 @@
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "krSSH/krSSH-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1441,6 +1442,7 @@
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "krSSH/krSSH-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

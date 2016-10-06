@@ -1,9 +1,9 @@
 //
 //  Util.swift
-//  krSSH
+//  Kryptonite
 //
 //  Created by Alex Grinman on 8/29/16.
-//  Copyright © 2016 KryptCo Inc. All rights reserved.
+//  Copyright © 2016 KryptCo, Inc. Inc. All rights reserved.
 //
 
 import Foundation

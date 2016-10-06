@@ -1,9 +1,9 @@
 //
-//  krSSH-Bridging-Header.h
-//  krSSH
+//  Kryptonite-Bridging-Header.h
+//  Kryptonite
 //
 //  Created by Alex Grinman on 8/31/16.
-//  Copyright © 2016 KryptCo. All rights reserved.
+//  Copyright © 2016 KryptCo, Inc. All rights reserved.
 //
 
 #ifndef krSSH_Bridging_Header_h
