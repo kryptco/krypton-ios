@@ -101,6 +101,29 @@ class AboutController: KRBaseController {
         
     }
     
+    //MARK: Actions
+    
+    @IBAction func contactUsTapped() {
+        if let mailURL = URL(string: "mailto://\(Properties.shared.contactUsEmail)") {
+            UIApplication.shared.openURL(mailURL)
+        }
+    }
+    
+    @IBAction func openSourceTapped() {
+        if let url = URL(string: Properties.shared.openSourceURL) {
+            UIApplication.shared.openURL(url)
+        }
+    }
+    
+    @IBAction func privacyTapped() {
+        if let url = URL(string: Properties.shared.privacyPolicyURL) {
+            UIApplication.shared.openURL(url)
+        }
+    }
+
+
+
+    
     /*
     // MARK: - Navigation
 

@@ -68,7 +68,7 @@ class Link {
 extension Link {
     static func publicKeyRequest() -> String {
         let email = (try? KeyManager.sharedInstance().getMe().email)?.data(using: String.Encoding.utf8)?.toBase64(true)
-        return "\(LinkType.kr.rawValue)://\(LinkCommand.request.rawValue)?r=\(email ?? "")"
+        return "\(Properties.shared.requestKeyURLBase)\(email ?? "")"
     }
     
     static func publicKeyImport() -> String {

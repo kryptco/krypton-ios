@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         Resources.makeAppearences()
         
-        if !API.provision(accessKey: "AKIAJMZJ3X6MHMXRF7QQ", secretKey: "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") {
+        if !API.provision() {
             log("API provision failed.", LogType.error)
         }
         

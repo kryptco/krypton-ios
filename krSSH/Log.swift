@@ -30,5 +30,8 @@ enum LogType {
 func log(_ arg:CustomDebugStringConvertible?, _ type:LogType = .info, file:String = #file, function:String = #function, line:Int = #line) {
     let className = URL(fileURLWithPath: file).lastPathComponent.replacingOccurrences(of: ".swift", with: "")
     let statement = "[\(Date().timeIntervalSince1970)] - \(type.getIndicator()) \(className).\(function):\(line)> \(arg ?? "")"
-    print(statement)
+    
+    if isDebug() {
+        print(statement)
+    }
 }

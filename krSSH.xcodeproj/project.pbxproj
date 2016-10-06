@@ -19,6 +19,11 @@
 		8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
+		FA15EB3B1DA5B4E600BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
+		FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
+		FA15EB441DA5B4F100BED16C /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
+		FA15EB461DA5B53500BED16C /* properties.json in Resources */ = {isa = PBXBuildFile; fileRef = FA15EB451DA5B53500BED16C /* properties.json */; };
+		FA15EB491DA5C6CC00BED16C /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15EB481DA5C6CC00BED16C /* Properties.swift */; };
 		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
 		FA1682511D774C3900A7ED53 /* PairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682501D774C3900A7ED53 /* PairController.swift */; };
 		FA1682681D774D6000A7ED53 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1682541D774D6000A7ED53 /* Info.plist */; };
@@ -84,7 +89,6 @@
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
-		FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9271D77B61F006372B4 /* Dispatch.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
 		FAA536231D8F072500549710 /* UIView+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536221D8F072500549710 /* UIView+KR.swift */; };
 		FAA536251D8F13E300549710 /* PeerDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536241D8F13E300549710 /* PeerDetailController.swift */; };
@@ -252,6 +256,8 @@
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		FA15EB451DA5B53500BED16C /* properties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = properties.json; sourceTree = "<group>"; };
+		FA15EB481DA5C6CC00BED16C /* Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		FA16824D1D774C2200A7ED53 /* KRScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRScanController.swift; sourceTree = "<group>"; };
 		FA1682501D774C3900A7ED53 /* PairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairController.swift; sourceTree = "<group>"; };
 		FA1682541D774D6000A7ED53 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -325,7 +331,6 @@
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
-		FA92E9271D77B61F006372B4 /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
 		FAA536221D8F072500549710 /* UIView+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+KR.swift"; sourceTree = "<group>"; };
 		FAA536241D8F13E300549710 /* PeerDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerDetailController.swift; sourceTree = "<group>"; };
@@ -436,6 +441,17 @@
 			path = AwesomeCache/AwesomeCache;
 			sourceTree = "<group>";
 		};
+		FA15EB471DA5C5BB00BED16C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
+				FA61EF421D81D150009FD899 /* SessionManager.swift */,
+				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
+				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 		FA16824F1D774C2700A7ED53 /* Pair */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,6 +554,7 @@
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
 				FAA536261D8F2EA800549710 /* AboutController.swift */,
 				FA309F411DA42C69006D8D81 /* HelpController.swift */,
+				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16824F1D774C2700A7ED53 /* Pair */,
@@ -561,12 +578,12 @@
 		FA61EF471D831A77009FD899 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				FA61EF421D81D150009FD899 /* SessionManager.swift */,
-				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
-				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
-				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
-				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
-				FA92E9271D77B61F006372B4 /* Dispatch.swift */,
+				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
+				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
+				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
+				FA0322CD1D7A72E800CD7622 /* Session.swift */,
+				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
+				FACAA4B01D887904000B9A01 /* SignatureLog.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -582,17 +599,6 @@
 				FACAA4C31D897BC0000B9A01 /* LogGraph.swift */,
 			);
 			name = Devices;
-			sourceTree = "<group>";
-		};
-		FA6972991D78DD5B002F34D6 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
-				FA0322CD1D7A72E800CD7622 /* Session.swift */,
-				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
-				FACAA4B01D887904000B9A01 /* SignatureLog.swift */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		FA81412D1D70B0F4004FE58C = {
@@ -622,14 +628,9 @@
 			isa = PBXGroup;
 			children = (
 				FAA1B9231D81AF7C00FF37CC /* App */,
-				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
-				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
-				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
-				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
-				FAA5362E1D8F43D100549710 /* Links.swift */,
 				FA61EF471D831A77009FD899 /* Core */,
+				FA15EB471DA5C5BB00BED16C /* Data */,
 				FAA6E1EF1D79E3E3007D1B3A /* API */,
-				FA6972991D78DD5B002F34D6 /* Models */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
@@ -654,7 +655,11 @@
 			children = (
 				FA8141391D70B0F4004FE58C /* AppDelegate.swift */,
 				FA0322721D74D39100CD7622 /* Globals.swift */,
+				FAA5362E1D8F43D100549710 /* Links.swift */,
 				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
+				FA15EB481DA5C6CC00BED16C /* Properties.swift */,
+				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
+				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */,
 				FA81414B1D70B10F004FE58C /* UX */,
 			);
@@ -750,6 +755,7 @@
 				FAEE048D1D736AD3002A7AFD /* UsedSoftwareLicenses */,
 				FA2977981D7736A8003EB1F7 /* ImageLicenses */,
 				FA2697111D9992A900FE44D3 /* file-url-icon.png */,
+				FA15EB451DA5B53500BED16C /* properties.json */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -981,6 +987,7 @@
 				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
 				FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */,
+				FA15EB461DA5B53500BED16C /* properties.json in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1075,6 +1082,8 @@
 			files = (
 				FA49F78A1D9B6B3300372556 /* TodayViewController.swift in Sources */,
 				FABA4B191D9C21C40057A666 /* String+User.swift in Sources */,
+				FA15EB441DA5B4F100BED16C /* Log.swift in Sources */,
+				FA15EB3B1DA5B4E600BED16C /* Globals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,7 +1092,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAE9C5531D9E1909000DAD18 /* QRController.swift in Sources */,
-				FA92E9281D77B61F006372B4 /* Dispatch.swift in Sources */,
 				FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
@@ -1103,6 +1111,7 @@
 				8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
 				FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */,
+				FA15EB491DA5C6CC00BED16C /* Properties.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,
 				FA2696FA1D98851600FE44D3 /* ASN1.swift in Sources */,
@@ -1189,6 +1198,7 @@
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
 				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
+				FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FAFE54701D7BB19900391FDD /* Seal.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,

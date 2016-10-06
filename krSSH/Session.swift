@@ -22,7 +22,7 @@ struct Session:JSONConvertable {
     init(json: JSON) throws {
         id      = try json ~> "id"
         
-        let workstationPublicKey = try ((try json ~> "workstationPublicKey") as String).fromBase64()
+        let workstationPublicKey = try ((try json ~> "workstation_public_key") as String).fromBase64()
         let symmetricKey = try KeychainStorage().get(key: id).fromBase64()
         
         pairing = try Pairing(name: json ~> "name", workstationPublicKey: workstationPublicKey, symmetricKey: symmetricKey)
@@ -35,7 +35,7 @@ struct Session:JSONConvertable {
                 "name": pairing.name,
                 "queue": pairing.queue,
                 "created": created.timeIntervalSince1970,
-                "workstationPublicKey": pairing.workstationPublicKey.toBase64()]
+                "workstation_public_key": pairing.workstationPublicKey.toBase64()]
     }
 
 }

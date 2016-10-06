@@ -26,7 +26,7 @@ typealias QueueName = String
 
 extension QueueName {
     var url:String {
-        return "https://sqs.us-east-1.amazonaws.com/911777333295/\(self)"
+        return  "\(Properties.shared.awsQueueURLBase)\(self)"
     }
     
     var responder:String {
@@ -40,7 +40,11 @@ class API {
     private var snsClient = AWSSNS(forKey: AWSConfKey.sns.rawValue)
     private var sqsClient = AWSSQS(forKey: AWSConfKey.sqs.rawValue)
     
-    class func provision(accessKey:String, secretKey:String) -> Bool {
+    class func provision() -> Bool {
+        
+        let accessKey = Properties.shared.awsAccessKey
+        let secretKey = Properties.shared.awsSecretKey
+        
         let snsCreds = AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
         let snsConf = AWSServiceConfiguration(region: AWSRegionType.usEast1, credentialsProvider: snsCreds)
         
@@ -71,7 +75,12 @@ class API {
             return
         }
         
-        request.platformApplicationArn = "arn:aws:sns:us-east-1:911777333295:app/APNS_SANDBOX/kryptco-ios-dev"
+        if isDebug() {
+            request.platformApplicationArn = Properties.shared.awsPlatformARN.sandbox
+
+        } else {
+            request.platformApplicationArn = Properties.shared.awsPlatformARN.production
+        }
         
         request.token = token
 
