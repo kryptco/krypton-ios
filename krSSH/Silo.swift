@@ -341,12 +341,7 @@ class Silo {
                 }
                 
             } catch let e {
-                guard e is CryptoError else {
-                    throw e
-                }
-
                 err = "\(e)"
-                throw e
             }
             
             
