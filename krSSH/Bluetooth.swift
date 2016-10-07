@@ -133,6 +133,10 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func removeServiceUUID(uuid: CBUUID) {
         mutex.lock()
         defer { mutex.unlock() }
+        removeServiceUUIDLocked(uuid: uuid)
+    }
+
+    func removeServiceUUIDLocked(uuid: CBUUID) {
         if !allServiceUUIDS.contains(uuid) {
             log("didn't have uuid \(uuid.uuidString)")
             return
@@ -140,6 +144,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         log("remove uuid \(uuid.uuidString)")
         allServiceUUIDS.remove(uuid)
         pairedServiceUUIDS.remove(uuid)
+        scanningServiceUUIDS.remove(uuid)
         if let pairedPeripheral = pairedPeripherals.removeValue(forKey: uuid) {
             //  Check if any remaining serviceUUIDs for peripheral
             if !pairedPeripherals.values.contains(pairedPeripheral) {
@@ -147,6 +152,15 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             }
         }
         serviceQueuedMessage.removeValue(forKey: uuid)
+        scanLogic()
+    }
+
+    func refreshServiceUUID(uuid: CBUUID) {
+        mutex.lock()
+        defer { mutex.unlock() }
+        log("refresh uuid \(uuid.uuidString)")
+        removeServiceUUIDLocked(uuid: uuid)
+        allServiceUUIDS.insert(uuid)
         scanLogic()
     }
 

@@ -24,6 +24,8 @@ class Silo {
 
     var bluetoothDelegate: BluetoothDelegate = BluetoothDelegate()
     var centralManager: CBCentralManager
+    var sessionLastBluetoothActivity: [CBUUID:Date] = [:]
+    var sessionLastNetworkActivity: [CBUUID:Date] = [:]
 
     var requestCache: Cache<NSData>?
     //  store requests waiting for user approval
@@ -53,7 +55,7 @@ class Silo {
             return
         }
         
-        try handle(request: req, session: session)
+        try handle(request: req, session: session, communicationMedium: .Bluetooth)
     }
 
     class var shared:Silo {
@@ -140,7 +142,7 @@ class Silo {
                     
                     do {
                         let req = try Request(key: to.pairing.symmetricKey, sealed: msg.data)
-                        try self.handle(request: req, session: to)
+                        try self.handle(request: req, session: to, communicationMedium: .SQS)
                     } catch (let e) {
                         log("error responding: \(e)", LogType.error)
                     }
@@ -172,6 +174,8 @@ class Silo {
             sessionLabels[session.id] = session
             let cbuuid = session.pairing.uuid
             sessionServiceUUIDS[cbuuid] = session
+            sessionLastBluetoothActivity[cbuuid] = Date()
+            sessionLastNetworkActivity[cbuuid] = Date()
             bluetoothDelegate.addServiceUUID(uuid: cbuuid)
 
             do {
@@ -214,6 +218,8 @@ class Silo {
         let cbuuid = session.pairing.uuid
         sessionServiceUUIDS.removeValue(forKey: cbuuid)
         bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
+        sessionLastNetworkActivity.removeValue(forKey: cbuuid)
+        sessionLastBluetoothActivity.removeValue(forKey: cbuuid)
     }
 
 
@@ -229,10 +235,28 @@ class Silo {
     }
 
     //MARK: Handle Logic
-    
-    func handle(request:Request, session:Session, completionHandler: (()->Void)? = nil) throws {
+    enum CommunicationMedium {
+        case Bluetooth
+        case RemoteNotification
+        case SQS
+    }
+    func handle(request:Request, session:Session, communicationMedium: CommunicationMedium, completionHandler: (()->Void)? = nil) throws {
         mutex.lock()
         defer { mutex.unlock() }
+
+        switch communicationMedium {
+        case .Bluetooth:
+            sessionLastBluetoothActivity[session.pairing.uuid] = Date()
+        case .RemoteNotification, .SQS:
+            sessionLastNetworkActivity[session.pairing.uuid] = Date()
+        }
+
+        if let lastNetwork = sessionLastNetworkActivity[session.pairing.uuid],
+            let lastBluetooth = sessionLastBluetoothActivity[session.pairing.uuid],
+            lastNetwork.timeIntervalSince(lastBluetooth) > 60 {
+            bluetoothDelegate.refreshServiceUUID(uuid: session.pairing.uuid)
+            sessionLastBluetoothActivity[session.pairing.uuid] = Date()
+        }
 
         let now = Date().timeIntervalSince1970
         if abs(now - Double(request.unixSeconds)) > 60 {
