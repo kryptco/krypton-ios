@@ -30,10 +30,10 @@
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="krSSH" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="375" height="140"/>
+                                        <rect key="frame" x="0.0" y="119.5" width="1000" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJB-FH-bYG" id="Rnu-6u-07F">
-                                            <frame key="frameInset" width="342" height="140"/>
+                                            <frame key="frameInset" width="818" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpT-FI-zYC" customClass="KRView" customModule="krSSH" customModuleProvider="target">
@@ -2091,7 +2091,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/kr/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3490,7 +3490,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/kr/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-VT-1MR" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-VT-1MR" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
