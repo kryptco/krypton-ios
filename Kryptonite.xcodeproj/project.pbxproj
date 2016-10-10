@@ -321,7 +321,7 @@
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA69729E1D78E819002F34D6 /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FA8141361D70B0F4004FE58C /* krSSH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = krSSH.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA8141361D70B0F4004FE58C /* Kryptonite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kryptonite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA81413B1D70B0F4004FE58C /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA81413E1D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -617,7 +617,7 @@
 		FA8141371D70B0F4004FE58C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FA8141361D70B0F4004FE58C /* krSSH.app */,
+				FA8141361D70B0F4004FE58C /* Kryptonite.app */,
 				FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */,
 				FA49F7851D9B6B3200372556 /* LastCommand.appex */,
 			);
@@ -791,9 +791,9 @@
 			productReference = FA49F7851D9B6B3200372556 /* LastCommand.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		FA8141351D70B0F4004FE58C /* krSSH */ = {
+		FA8141351D70B0F4004FE58C /* Kryptonite */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "krSSH" */;
+			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
 				FA8141521D714250004FE58C /* CommonCrypto */,
 				FAB28E8B1D93122400B61E6B /* BuildHashBump */,
@@ -809,9 +809,9 @@
 			dependencies = (
 				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,
 			);
-			name = krSSH;
+			name = Kryptonite;
 			productName = krSSH;
-			productReference = FA8141361D70B0F4004FE58C /* krSSH.app */;
+			productReference = FA8141361D70B0F4004FE58C /* Kryptonite.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FAEE04991D74BCC3002A7AFD /* KryptoTests */ = {
@@ -888,7 +888,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FA8141311D70B0F4004FE58C /* Build configuration list for PBXProject "krSSH" */;
+			buildConfigurationList = FA8141311D70B0F4004FE58C /* Build configuration list for PBXProject "Kryptonite" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -907,7 +907,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				FA8141351D70B0F4004FE58C /* krSSH */,
+				FA8141351D70B0F4004FE58C /* Kryptonite */,
 				FA49F7841D9B6B3200372556 /* LastCommand */,
 				FAEE04991D74BCC3002A7AFD /* KryptoTests */,
 			);
@@ -1218,7 +1218,7 @@
 		};
 		FAEE04A01D74BCC3002A7AFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FA8141351D70B0F4004FE58C /* krSSH */;
+			target = FA8141351D70B0F4004FE58C /* Kryptonite */;
 			targetProxy = FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1456,7 +1456,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/krSSH.app/krSSH";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kryptonite.app/Kryptonite";
 			};
 			name = Debug;
 		};
@@ -1470,7 +1470,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/krSSH.app/krSSH";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kryptonite.app/Kryptonite";
 			};
 			name = Release;
 		};
@@ -1486,7 +1486,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FA8141311D70B0F4004FE58C /* Build configuration list for PBXProject "krSSH" */ = {
+		FA8141311D70B0F4004FE58C /* Build configuration list for PBXProject "Kryptonite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FA8141461D70B0F4004FE58C /* Debug */,
@@ -1495,7 +1495,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "krSSH" */ = {
+		FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FA8141491D70B0F4004FE58C /* Debug */,

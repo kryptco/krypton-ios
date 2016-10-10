@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : 9223372036854775807,
+    "D84B44F309129032C5A39FC5561DD01414003B8F" : 9223372036854775807,
+    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3269C9DE-C7D9-4DEB-A8D7-06EA5690AD8B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : "krssh-ios\/swift-sodium\/",
+    "D84B44F309129032C5A39FC5561DD01414003B8F" : "krssh-ios\/AwesomeCache\/",
+    "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : "krssh-ios\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Kryptonite",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Kryptonite.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:agrinman\/kryptonite-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:kryptco\/swift-sodium",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:aschuch\/AwesomeCache.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D84B44F309129032C5A39FC5561DD01414003B8F"
+    }
+  ]
+}
