@@ -27,14 +27,14 @@ class MeController:KRBaseController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        myQRButton.setBorder(color: UIColor.clear, cornerRadius: 16, borderWidth: 0.0)
+        myQRButton.setBorder(color: UIColor.clear, cornerRadius: 20, borderWidth: 0.0)
         
         redrawMe()
         Policy.currentViewController = self
     }
     
     
-    dynamic func redrawMe() {
+     func redrawMe() {
         
         do {
             

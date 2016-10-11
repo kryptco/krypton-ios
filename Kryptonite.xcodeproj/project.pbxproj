@@ -1426,6 +1426,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = krSSH/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
@@ -1441,6 +1442,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "krSSH/krSSH-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

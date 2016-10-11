@@ -15,7 +15,7 @@
         <!--Devices-->
         <scene sceneID="36J-Aw-Z8K">
             <objects>
-                <viewController id="Mah-te-0DZ" customClass="SessionsController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Mah-te-0DZ" customClass="SessionsController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NjE-15-d0f"/>
                         <viewControllerLayoutGuide type="bottom" id="Nd3-0v-u9H"/>
@@ -29,16 +29,16 @@
                                 <color key="separatorColor" red="0.89283197940000003" green="0.89283197940000003" blue="0.89283197940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="krSSH" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="119.5" width="1000" height="140"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="Kryptonite" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="119.5" width="375" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJB-FH-bYG" id="Rnu-6u-07F">
-                                            <frame key="frameInset" width="818" height="140"/>
+                                            <frame key="frameInset" width="342" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpT-FI-zYC" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpT-FI-zYC" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OhU-bn-DIw" userLabel="cornerview" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OhU-bn-DIw" userLabel="cornerview" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Alex Grinman's Mac Book Pro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="DWT-TF-Vxh">
                                                                     <constraints>
@@ -50,7 +50,7 @@
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKT-Zi-3mF" userLabel="command">
                                                                     <subviews>
-                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="76P-xA-CKd" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="76P-xA-CKd" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                                                             <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="16"/>
                                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -168,7 +168,7 @@
         <!--Session Detail Controller-->
         <scene sceneID="Jb8-M5-3lO">
             <objects>
-                <tableViewController id="2XW-PV-xjB" customClass="SessionDetailController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="2XW-PV-xjB" customClass="SessionDetailController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-7h-nCq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,7 +184,7 @@
                                     <color key="textColor" red="0.18112268431535999" green="0.076153255975904138" blue="0.23635416666666664" alpha="0.55945913461538466" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="StT-WG-kLD" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="StT-WG-kLD" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Alex@MacbookPro.Local" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="2Nu-Gs-UkC">
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
@@ -203,7 +203,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcG-Ph-Zje" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcG-Ph-Zje" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="140" id="DSt-dq-zRr"/>
                                                 <constraint firstAttribute="height" constant="40" id="KWO-LK-Dcz"/>
@@ -266,8 +266,8 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="40" id="uTg-IR-NZZ" customClass="LogCell" customModule="krSSH" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="320" width="375" height="40"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="40" id="uTg-IR-NZZ" customClass="LogCell" customModule="Kryptonite" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="319.5" width="375" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
                                     <frame key="frameInset" width="375" height="40"/>
@@ -322,7 +322,7 @@
         <scene sceneID="Atm-Dh-fQZ">
             <objects>
                 <navigationController id="QdC-wE-jq3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FCa-7m-VBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -339,7 +339,7 @@
         <!--Main Controller-->
         <scene sceneID="YQA-Jr-jTS">
             <objects>
-                <tabBarController definesPresentationContext="YES" id="DPC-jq-gmQ" customClass="MainController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController definesPresentationContext="YES" id="DPC-jq-gmQ" customClass="MainController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="6Bc-TP-8ur"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="VhI-KX-pg9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
@@ -364,7 +364,7 @@
         <!--Pair-->
         <scene sceneID="c7H-AU-rGh">
             <objects>
-                <viewController id="Hqk-jW-f1I" customClass="PairController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Hqk-jW-f1I" customClass="PairController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xu9-DM-CgO"/>
                         <viewControllerLayoutGuide type="bottom" id="utS-1f-tAc"/>
@@ -410,7 +410,7 @@
                                                 <blurEffect style="light"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWP-0J-OIM" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWP-0J-OIM" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gjd-3e-XWg">
                                                     <constraints>
@@ -523,7 +523,7 @@
         <!--Scan Controller-->
         <scene sceneID="aiY-AW-sQa">
             <objects>
-                <viewController id="rlL-ey-ui2" customClass="KRScanController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rlL-ey-ui2" customClass="KRScanController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="r2k-oe-W9g"/>
                         <viewControllerLayoutGuide type="bottom" id="Uxw-jY-Pon"/>
@@ -573,7 +573,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lh8-HA-3Bs" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lh8-HA-3Bs" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="180" id="QI1-qa-trE"/>
                                                             <constraint firstAttribute="height" constant="60" id="bGP-hc-GUf"/>
@@ -636,7 +636,7 @@
         <!--Controller-->
         <scene sceneID="zDN-BQ-52F">
             <objects>
-                <viewController id="ZKn-uY-sej" customClass="QRController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZKn-uY-sej" customClass="QRController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2rB-EH-UM4"/>
                         <viewControllerLayoutGuide type="bottom" id="EMy-Oy-3x0"/>
@@ -650,7 +650,7 @@
                                     <frame key="frameInset"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uq-zY-PYF" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uq-zY-PYF" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-cz-IND">
                                                     <constraints>
@@ -743,7 +743,7 @@
         <!--Success Controller-->
         <scene sceneID="OXG-TQ-eg2">
             <objects>
-                <viewController storyboardIdentifier="SuccessController" id="FBy-gQ-WmY" customClass="SuccessController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SuccessController" id="FBy-gQ-WmY" customClass="SuccessController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="joP-OR-KuB"/>
                         <viewControllerLayoutGuide type="bottom" id="ZNS-N5-PBd"/>
@@ -838,9 +838,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uLC-Hb-f7T" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uLC-Hb-f7T" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sip-xY-Vgf" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sip-xY-Vgf" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -848,7 +848,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr me" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgf-3f-LdY" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr me" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgf-3f-LdY" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -947,9 +947,9 @@ Cg
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQa-1w-5AZ" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQa-1w-5AZ" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNI-pb-HTd" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNI-pb-HTd" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -957,7 +957,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr peers" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-BI-t7D" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr peers" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-BI-t7D" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1130,7 +1130,7 @@ Cg
         <!--Peers-->
         <scene sceneID="GrJ-Qg-XWH">
             <objects>
-                <viewController id="STk-oA-iNW" customClass="PeerController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="STk-oA-iNW" customClass="PeerController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="J2P-9g-mLv"/>
                         <viewControllerLayoutGuide type="bottom" id="5BI-j4-c3a"/>
@@ -1147,7 +1147,7 @@ Cg
                                     <rect key="frame" x="0.0" y="64" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AR7-Go-sez" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AR7-Go-sez" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                             <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="kxa-9V-FXc"/>
@@ -1180,11 +1180,11 @@ Cg
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PeerCell" rowHeight="80" id="g9F-av-ggY" customClass="PeerCell" customModule="krSSH" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="219" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PeerCell" rowHeight="80" id="g9F-av-ggY" customClass="PeerCell" customModule="Kryptonite" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="218.5" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g9F-av-ggY" id="sY3-zH-X4X">
-                                            <frame key="frameInset" width="342" height="79"/>
+                                            <frame key="frameInset" width="342" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="alex@kryptco.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l15-ka-h8r">
@@ -1197,7 +1197,7 @@ Cg
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SAX-0l-6aU" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
+                                                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SAX-0l-6aU" customClass="KRImageView" customModule="Kryptonite" customModuleProvider="target">
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="YC6-2A-dBO"/>
@@ -1268,7 +1268,7 @@ Cg
         <!--Peer Empty Controller-->
         <scene sceneID="HZV-jR-PHP">
             <objects>
-                <viewController id="FYp-CY-czS" customClass="PeerEmptyController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FYp-CY-czS" customClass="PeerEmptyController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RHc-mK-DCJ"/>
                         <viewControllerLayoutGuide type="bottom" id="ndZ-2l-Brh"/>
@@ -1294,7 +1294,7 @@ Cg
                                     <constraint firstAttribute="width" constant="115" id="IlJ-HA-Dky"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MqX-o4-TCh" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MqX-o4-TCh" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="geb-Xa-UOo"/>
@@ -1345,7 +1345,7 @@ Cg
         <!--Scan Controller-->
         <scene sceneID="Np2-ch-G46">
             <objects>
-                <viewController storyboardIdentifier="KRScanController" id="M7U-MZ-G6u" customClass="KRScanController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KRScanController" id="M7U-MZ-G6u" customClass="KRScanController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eII-8V-xgr"/>
                         <viewControllerLayoutGuide type="bottom" id="QYC-kz-xwn"/>
@@ -1363,7 +1363,7 @@ Cg
         <!--Sessions Empty Controller-->
         <scene sceneID="Bw2-VR-U8T">
             <objects>
-                <viewController id="g2n-Av-AEc" customClass="SessionsEmptyController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="g2n-Av-AEc" customClass="SessionsEmptyController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7xF-EH-kS8"/>
                         <viewControllerLayoutGuide type="bottom" id="59i-D2-7Zs"/>
@@ -1391,7 +1391,7 @@ Cg
                                     <constraint firstAttribute="height" constant="60" id="Zmq-Vg-fHI"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9v-v6-j6Q" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9v-v6-j6Q" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="jHM-BR-5Ea"/>
@@ -1438,7 +1438,7 @@ Cg
         <!--Peer Detail Controller-->
         <scene sceneID="GCV-Oa-ibp">
             <objects>
-                <viewController id="S5k-6X-LUk" customClass="PeerDetailController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="S5k-6X-LUk" customClass="PeerDetailController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RKP-M5-ScJ"/>
                         <viewControllerLayoutGuide type="bottom" id="JpX-me-50A"/>
@@ -1455,7 +1455,7 @@ Cg
                                             <frame key="frameInset"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqZ-XP-Szz" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
+                                                <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqZ-XP-Szz" customClass="KRImageView" customModule="Kryptonite" customModuleProvider="target">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="TQO-CR-ywK"/>
                                                         <constraint firstAttribute="height" constant="80" id="TgV-4z-nJg"/>
@@ -1476,7 +1476,7 @@ Cg
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BS2-YM-EH0" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BS2-YM-EH0" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="120" id="IXd-aS-56o"/>
                                                         <constraint firstAttribute="height" constant="40" id="Xhi-Jo-3e5"/>
@@ -1695,7 +1695,7 @@ Cg
         <!--Create Controller-->
         <scene sceneID="OOC-Qx-L4k">
             <objects>
-                <viewController storyboardIdentifier="CreateController" id="y42-wC-eAP" customClass="CreateController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateController" id="y42-wC-eAP" customClass="CreateController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wfB-ra-r4Y"/>
                         <viewControllerLayoutGuide type="bottom" id="PGm-UI-rua"/>
@@ -1704,7 +1704,7 @@ Cg
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgf-JF-nfl" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgf-JF-nfl" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="0c7-zD-9Y0"/>
                                 </constraints>
@@ -1815,7 +1815,7 @@ Cg
         <!--Generate Controller-->
         <scene sceneID="X27-2h-A0y">
             <objects>
-                <viewController id="2Pb-gB-K90" customClass="GenerateController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="2Pb-gB-K90" customClass="GenerateController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="knN-Q7-8QO"/>
                         <viewControllerLayoutGuide type="bottom" id="C5Y-or-oqK"/>
@@ -1916,7 +1916,7 @@ Cg
         <!--Setup Controller-->
         <scene sceneID="UDk-N1-R8h">
             <objects>
-                <viewController id="YMV-qx-Mll" customClass="SetupController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YMV-qx-Mll" customClass="SetupController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GrS-Br-jzP"/>
                         <viewControllerLayoutGuide type="bottom" id="fhl-WZ-cb7"/>
@@ -1986,7 +1986,7 @@ Cg
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vsx-ht-e5S" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vsx-ht-e5S" customClass="KRImageView" customModule="Kryptonite" customModuleProvider="target">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="Vib-dO-RAE"/>
                                     <constraint firstAttribute="height" constant="60" id="myS-hb-G8y"/>
@@ -2040,7 +2040,7 @@ Cg
         <!--First Pair Controller-->
         <scene sceneID="pqL-6E-emo">
             <objects>
-                <viewController id="jeO-uC-lbZ" customClass="FirstPairController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jeO-uC-lbZ" customClass="FirstPairController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="o1h-L0-I0u"/>
                         <viewControllerLayoutGuide type="bottom" id="Ixf-5S-NX1"/>
@@ -2081,9 +2081,9 @@ Cg
                                 <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="px1-ko-Hn4" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="px1-ko-Hn4" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Msp-bv-d3Z" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Msp-bv-d3Z" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2091,7 +2091,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2099,7 +2099,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWH-NR-dPx" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWH-NR-dPx" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2107,7 +2107,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr pair" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-XI-IkM" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr pair" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-XI-IkM" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2143,7 +2143,7 @@ Cg
                                 <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdD-Dg-pGU" userLabel="scan" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdD-Dg-pGU" userLabel="scan" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L9e-h3-Bl4"/>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gb4-1s-5Wz">
@@ -2160,7 +2160,7 @@ Cg
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PiP-Nm-2Ak" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PiP-Nm-2Ak" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="1z1-HY-aWJ"/>
                                                 </constraints>
@@ -2219,7 +2219,7 @@ Cg
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have brew?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SrY-j0-vkP" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have brew?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SrY-j0-vkP" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" red="0.24667398872679047" green="0.24667398872679047" blue="0.24667398872679047" alpha="0.62213381899999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2311,7 +2311,7 @@ Cg
         <!--Pairing Animation Controller-->
         <scene sceneID="vmz-48-sMU">
             <objects>
-                <viewController id="Dxo-p4-1c2" customClass="PairingAnimationController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Dxo-p4-1c2" customClass="PairingAnimationController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dhj-Az-A2P"/>
                         <viewControllerLayoutGuide type="bottom" id="AGD-Pu-ULe"/>
@@ -2379,7 +2379,7 @@ Cg
         <!--Paired Upload Controller-->
         <scene sceneID="THx-mq-eCP">
             <objects>
-                <viewController id="UOh-D0-xqU" customClass="PairedUploadController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UOh-D0-xqU" customClass="PairedUploadController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="l5h-WF-S1R"/>
                         <viewControllerLayoutGuide type="bottom" id="iWC-jo-Jc1"/>
@@ -2415,9 +2415,9 @@ Cg
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H93-E0-eT6" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H93-E0-eT6" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxf-FQ-Kpm" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxf-FQ-Kpm" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2425,7 +2425,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSq-Io-jBk" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSq-Io-jBk" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2463,9 +2463,9 @@ Cg
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7il-mr-Api" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7il-mr-Api" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUd-9b-fno" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUd-9b-fno" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2473,7 +2473,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr me" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLP-dQ-2Tu" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr me" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLP-dQ-2Tu" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2546,7 +2546,7 @@ Cg
         <!--About Controller-->
         <scene sceneID="kIW-BV-9lT">
             <objects>
-                <viewController id="UnB-Qg-F2t" customClass="AboutController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UnB-Qg-F2t" customClass="AboutController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eRJ-v7-wSj"/>
                         <viewControllerLayoutGuide type="bottom" id="Gv5-u7-rsN"/>
@@ -2585,7 +2585,7 @@ Cg
                                     <constraint firstAttribute="height" constant="1" id="9Rf-Ge-PPg"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n2-Yv-erL" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n2-Yv-erL" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                 <state key="normal" title="Privacy Policy"/>
                                 <state key="highlighted">
@@ -2606,7 +2606,7 @@ Cg
                                     <action selector="privacyTapped" destination="UnB-Qg-F2t" eventType="touchUpInside" id="wuq-3b-Ror"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6s-yD-bs0" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6s-yD-bs0" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                 <state key="normal" title="Open Source"/>
                                 <state key="highlighted">
@@ -2706,7 +2706,7 @@ Cg
                                     <action selector="trashTapped" destination="UnB-Qg-F2t" eventType="touchUpInside" id="fUc-8d-dyP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-U7-8S5" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-U7-8S5" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="fwP-fK-MT7"/>
                                 </constraints>
@@ -2780,7 +2780,7 @@ Cg
         <!--Me-->
         <scene sceneID="ONh-nV-16R">
             <objects>
-                <viewController id="3yk-j0-9Le" customClass="MeController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3yk-j0-9Le" customClass="MeController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mRE-ow-Lhg"/>
                         <viewControllerLayoutGuide type="bottom" id="aKk-ID-Wah"/>
@@ -2795,7 +2795,7 @@ Cg
                                     <frame key="frameInset"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YfX-h2-UOh" customClass="KRImageView" customModule="krSSH" customModuleProvider="target">
+                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YfX-h2-UOh" customClass="KRImageView" customModule="Kryptonite" customModuleProvider="target">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="EGb-M2-Se2"/>
                                                 <constraint firstAttribute="width" constant="80" id="ntd-IB-cNY"/>
@@ -2828,10 +2828,10 @@ Cg
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5U-hj-zcg">
-                                            <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.43249544099999998" green="0.43249544099999998" blue="0.43249544099999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="32" id="1oZ-pP-yAZ"/>
-                                                <constraint firstAttribute="height" constant="32" id="WbB-XT-klU"/>
+                                                <constraint firstAttribute="width" constant="40" id="1oZ-pP-yAZ"/>
+                                                <constraint firstAttribute="height" constant="40" id="WbB-XT-klU"/>
                                             </constraints>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <state key="normal" image="qr-code"/>
@@ -2866,7 +2866,7 @@ Cg
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-SC-L3M" userLabel="upload view">
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZFY-IL-sad" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZFY-IL-sad" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="xVY-Ba-Ly9"/>
                                                 </constraints>
@@ -3216,7 +3216,7 @@ Cg
         <!--Help Controller-->
         <scene sceneID="nQf-6F-CUm">
             <objects>
-                <viewController id="Zzi-01-ZMM" customClass="HelpController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Zzi-01-ZMM" customClass="HelpController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="D4R-Dy-rSc"/>
                         <viewControllerLayoutGuide type="bottom" id="p5x-yT-n0H"/>
@@ -3356,7 +3356,7 @@ Cg
         <!--Help Install Controller-->
         <scene sceneID="90N-KT-7R3">
             <objects>
-                <viewController id="hTx-bT-ZFG" customClass="HelpInstallController" customModule="krSSH" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hTx-bT-ZFG" customClass="HelpInstallController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BoZ-c1-hVY"/>
                         <viewControllerLayoutGuide type="bottom" id="WN1-sm-cbY"/>
@@ -3480,9 +3480,9 @@ Cg
                                     <constraint firstAttribute="height" constant="57" id="MfC-VE-tFc"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvW-Mo-dOd" customClass="KRView" customModule="krSSH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvW-Mo-dOd" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2U4-Xi-sTy" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2U4-Xi-sTy" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3490,7 +3490,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-VT-1MR" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-VT-1MR" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3498,7 +3498,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3d-Dv-Mjv" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3d-Dv-Mjv" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3506,7 +3506,7 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isMono" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr pair" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o16-fR-Tq3" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr pair" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o16-fR-Tq3" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                         <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3537,7 +3537,7 @@ Cg
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have brew?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6l-jE-DWJ" customClass="KRMonoLabel" customModule="krSSH" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have brew?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6l-jE-DWJ" customClass="KRMonoLabel" customModule="Kryptonite" customModuleProvider="target">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" red="0.24667398870000001" green="0.24667398870000001" blue="0.24667398870000001" alpha="0.62213381899999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3584,7 +3584,7 @@ Cg
                                     <action selector="aptGetTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="kpA-GT-7oJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IyZ-TJ-dBh" customClass="KRButton" customModule="krSSH" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IyZ-TJ-dBh" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="5Yp-ta-0gK"/>
@@ -3690,7 +3690,7 @@ Cg
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0R2-zj-seh"/>
-        <segue reference="ODC-8d-JAs"/>
+        <segue reference="gwV-Pa-aX2"/>
         <segue reference="Rob-Re-AWf"/>
         <segue reference="E21-Xm-10e"/>
     </inferredMetricsTieBreakers>
