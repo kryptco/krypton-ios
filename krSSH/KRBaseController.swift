@@ -105,7 +105,7 @@ extension UIViewController {
             switch link.command {
             case .request where link.type == .kr:
                 guard
-                    let emailData = try link.properties["r"]?.fromBase64(),
+                    let emailData = try link.properties["e"]?.fromBase64(),
                     let toEmail = String(data: emailData, encoding: String.Encoding.utf8)
                     else {
                         throw InvalidLinkError()

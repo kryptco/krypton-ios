@@ -27,8 +27,8 @@ enum LinkCommand:String {
     
     init(url:URL) {
         guard
-            let host = url.host,
-            let command = LinkCommand(rawValue: host)
+            let commandParam = url.queryItems()["c"],
+            let command = LinkCommand(rawValue: commandParam)
         else {
             self = .none
             return
@@ -77,7 +77,7 @@ extension Link {
         let email = me?.email.data(using: String.Encoding.utf8)?.toBase64(true)
         let publicKeyWire = me?.publicKey.toBase64() ?? ""
         
-        return "\(LinkType.kr.rawValue)://\(LinkCommand.import.rawValue)?pk=\(publicKeyWire)&e=\(email ?? "")"
+        return "\(LinkType.kr.rawValue)://?c=\(LinkCommand.import.rawValue)&pk=\(publicKeyWire)&e=\(email ?? "")"
     }
 
 }
