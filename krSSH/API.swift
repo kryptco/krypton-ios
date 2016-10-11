@@ -75,13 +75,7 @@ class API {
             return
         }
         
-        if isDebug() {
-            request.platformApplicationArn = Properties.shared.awsPlatformARN.sandbox
-
-        } else {
-            request.platformApplicationArn = Properties.shared.awsPlatformARN.production
-        }
-        
+        request.platformApplicationArn = Properties.shared.awsPlatformARN.production
         request.token = token
 
         snsClient.createPlatformEndpoint(request) { (resp, err) in

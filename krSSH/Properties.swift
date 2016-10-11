@@ -28,7 +28,7 @@ class Properties {
 
     
     //MARK: Properties
-    let requestKeyURLBase = "app.krypt.co/?c=request&e="
+    let requestKeyURLBase = "https://app.krypt.co/?c=request&e="
     
     let awsAccessKey = "AKIAJMZJ3X6MHMXRF7QQ"
     let awsSecretKey = "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"
