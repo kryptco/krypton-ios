@@ -19,12 +19,12 @@ struct Resources {
     }
     
     static func makeAppearences() {
-        UINavigationBar.appearance().barTintColor = UIColor.app
-        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = UIColor.white
+        UINavigationBar.appearance().tintColor = UIColor.app
 
         UINavigationBar.appearance().titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont(name: "Avenir Next Ultra Light", size: 17)!
+            NSFontAttributeName: UIFont(name: "Avenir Next", size: 17)!
         ]
 
        // UIButton.appearance().tintColor = UIColor.app
@@ -101,7 +101,7 @@ extension UIColor {
 extension UINavigationItem {
     func setKrLogo() {
         
-        let logo = UIImageView(image: UIImage(named: "app-icon-nav"))
+        let logo = UIImageView(image: UIImage(named: "app-icon-nav-green"))
         
         //logo.tintColor = UIColor.black.withAlphaComponent(0.2)
         logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 30, height: 34))
@@ -237,39 +237,6 @@ extension UIView {
         layer.borderColor = color.cgColor
     }
 }
-
-//MARK: Fonts
-
-extension UIFont {
-    
-    var monospacedDigitFont: UIFont {
-        let oldFontDescriptor = fontDescriptor
-        let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
-        return UIFont(descriptor: newFontDescriptor, size: 0)
-    }
-    
-}
-
-private extension UIFontDescriptor {
-    
-    var monospacedDigitFontDescriptor: UIFontDescriptor {
-        let fontDescriptorFeatureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
-        let fontDescriptorAttributes = [UIFontDescriptorFeatureSettingsAttribute: fontDescriptorFeatureSettings]
-        let fontDescriptor = self.addingAttributes(fontDescriptorAttributes)
-        return fontDescriptor
-    }
-    
-}
-
-class KRMonoLabel:UILabel {
-        @IBInspectable var  isMono:Bool = true {
-        didSet {
-            if isMono {
-                self.font = self.font.monospacedDigitFont
-            }
-        }
-    }}
-
 
 
 

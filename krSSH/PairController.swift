@@ -70,7 +70,6 @@ class PairController: KRBaseController, KRScanDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barTintColor = UIColor.app
         
         rejectButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
         approveButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit

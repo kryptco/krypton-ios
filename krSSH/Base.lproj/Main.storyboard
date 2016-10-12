@@ -30,7 +30,7 @@
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="119.5" width="375" height="140"/>
+                                        <rect key="frame" x="0.0" y="120" width="375" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJB-FH-bYG" id="Rnu-6u-07F">
                                             <frame key="frameInset" width="342" height="140"/>
@@ -267,7 +267,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="40" id="uTg-IR-NZZ" customClass="LogCell" customModule="Kryptonite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="319.5" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="320" width="375" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
                                     <frame key="frameInset" width="375" height="40"/>
@@ -325,7 +325,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
@@ -1181,10 +1180,10 @@ Cg
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PeerCell" rowHeight="80" id="g9F-av-ggY" customClass="PeerCell" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="218.5" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="219" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g9F-av-ggY" id="sY3-zH-X4X">
-                                            <frame key="frameInset" width="342" height="79.5"/>
+                                            <frame key="frameInset" width="342" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="alex@kryptco.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l15-ka-h8r">
