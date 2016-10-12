@@ -23,7 +23,7 @@ struct Resources {
         UINavigationBar.appearance().tintColor = UIColor.app
 
         UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.white,
+            NSForegroundColorAttributeName: UIColor.app,
             NSFontAttributeName: UIFont(name: "Avenir Next", size: 17)!
         ]
 
