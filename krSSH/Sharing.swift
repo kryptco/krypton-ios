@@ -90,10 +90,68 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         performSegue(withIdentifier: "showSuccess", sender: nil)
     }
     
-    func otherDialogue(for peer:Peer) -> UIViewController {
-        let otherDialogue = UIActivityViewController(activityItems: ["\(peer.publicKey.toAuthorized()) \(peer.email)"
-], applicationActivities: nil)
+    func otherDialogueNative(for peer:Peer) -> UIViewController {
+        let textItem = "\(peer.publicKey.toAuthorized()) \(peer.email)"
+        
+        let otherDialogue = UIActivityViewController(activityItems: [textItem
+            ], applicationActivities: nil)
+        
+        
         return otherDialogue
+
+    }
+    
+    func otherDialogue(for peer:Peer) -> UIViewController {
+        
+        
+        let alertController:UIAlertController = UIAlertController(title: "Share my Public Key", message: "The private key never leaves your device.", preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        
+        alertController.addAction(UIAlertAction(title: "Mail", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
+            
+            self.present(self.emailDialogue(for: peer), animated: true, completion: nil)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "SMS", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
+            
+            self.present(self.textDialogue(for: peer), animated: true, completion: nil)
+        }))
+
+        
+        alertController.addAction(UIAlertAction(title: "Other", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
+            
+            self.present(self.otherDialogueNative(for: peer), animated: true, completion: nil)
+        }))
+        
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action:UIAlertAction) -> Void in
+            
+            
+        }))
+        
+
+        return alertController
+    }
+    
+    func savePublicKeyToFile(key: String) -> URL? {
+        let file = "publickey.kr"
+        
+        guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first  else {
+            
+            return nil
+        }
+        
+        let path = dir.appendingPathComponent(file)
+        
+        //writing
+        do {
+            try key.write(to: path, atomically: false, encoding: String.Encoding.utf8)
+            return path
+        }
+        catch {/* error handling here */}
+        
+        return nil
+
     }
     
     //MARK: Delegates
