@@ -1651,6 +1651,9 @@ Cg
                                         </constraints>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="share"/>
+                                        <connections>
+                                            <action selector="shareOtherTapped" destination="S5k-6X-LUk" eventType="touchUpInside" id="zgY-fM-nwF"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2941,6 +2944,9 @@ Cg
                                         </constraints>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="share"/>
+                                        <connections>
+                                            <action selector="shareOtherTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="HvP-pd-hSM"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5U-hj-zcg">
                                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
