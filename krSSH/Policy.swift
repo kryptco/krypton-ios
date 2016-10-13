@@ -13,7 +13,7 @@ import Foundation
 class Policy {
     
     enum Interval:TimeInterval {
-        case fifteenSeconds = 15
+        //case fifteenSeconds = 15
         case oneHour = 3600
     }
 
@@ -161,7 +161,7 @@ extension UIViewController {
         
         alertController.addAction(UIAlertAction(title: Policy.approveTemporaryAction.title, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
             
-            Policy.allowFor(time: Policy.Interval.fifteenSeconds)
+            Policy.allowFor(time: Policy.Interval.oneHour)
             
             do {
                 let resp = try Silo.shared.lockResponseFor(request: request, session: session)

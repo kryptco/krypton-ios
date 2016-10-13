@@ -191,7 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if identifier == Policy.approveTemporaryAction.identifier {
-            Policy.allowFor(time: Policy.Interval.fifteenSeconds)
+            Policy.allowFor(time: Policy.Interval.oneHour)
         }
         
         log("user allows")
