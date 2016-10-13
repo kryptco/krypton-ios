@@ -76,12 +76,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let res = KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
             if !res { log("Could not save push ARN", .error) }
+            
+            API().setEndpointEnabledSNS(endpointArn: arn, completionHandler: { (err) in
+                if let err = err {
+                    log("AWS SNS endpoint enable error: \(err)", .error)
+                    return
+                }
+            })
         }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         
         log("Push registration failed!", .error)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        
+        self.application(application, didReceiveRemoteNotification: userInfo) { (fr) in
+            log("handled from other didReceive")
+        }
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
@@ -170,10 +184,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
         
-        guard identifier == Policy.approveAction.identifier else {
+        guard identifier != Policy.rejectAction.identifier else {
             log("user rejected", .warning)
             completionHandler()
             return
+        }
+        
+        if identifier == Policy.approveTemporaryAction.identifier {
+            Policy.allowFor(time: Policy.Interval.fifteenSeconds)
         }
         
         log("user allows")

@@ -75,9 +75,13 @@ class API {
             return
         }
         
-        request.platformApplicationArn = Properties.shared.awsPlatformARN.production
+        if isDebug() {
+            request.platformApplicationArn = Properties.shared.awsPlatformARN.sandbox
+        } else {
+            request.platformApplicationArn = Properties.shared.awsPlatformARN.production
+        }
         request.token = token
-
+        
         snsClient.createPlatformEndpoint(request) { (resp, err) in
             guard err == nil else {
                 log("error getting push: \(err!)", .error)
@@ -88,6 +92,21 @@ class API {
             completionHandler(resp?.endpointArn, nil)
         }
 
+    }
+    
+    func setEndpointEnabledSNS(endpointArn:String, completionHandler:@escaping ((Error?)->Void)) {
+        
+        guard let request = AWSSNSSetEndpointAttributesInput() else {
+            return
+        }
+        
+        request.endpointArn = endpointArn
+        request.attributes = ["Enabled": "true"]
+        
+        snsClient.setEndpointAttributes(request) { (err) in
+            completionHandler(err)
+        }
+        
     }
     
     
