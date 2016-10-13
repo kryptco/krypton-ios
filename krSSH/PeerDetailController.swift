@@ -15,13 +15,20 @@ class PeerDetailController: KRBaseController {
     @IBOutlet var tagLabel:UILabel!
     @IBOutlet var dateLabel:UILabel!
 
-    
+    @IBOutlet var commandLabel:UILabel!
+    @IBOutlet var commandHeaderLabel:UILabel!
+
+    @IBOutlet var shareButton:UIButton!
+
     var peer:Peer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = peer?.email ?? "Detail"
         drawPeer()
+        
+        shareButton.setBorder(color: UIColor.clear, cornerRadius: 25, borderWidth: 0.0)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +65,10 @@ class PeerDetailController: KRBaseController {
 
         qrImageView.image = IGSimpleIdenticon.from(peer?.publicKey.toBase64() ?? "", size: CGSize(width: 80, height: 80))
 
-
+        if let email = peer?.email {
+            commandHeaderLabel.text = "View \(email)'s public key"
+            commandLabel.text = "kr peers \(email)"
+        }
 
     }
     

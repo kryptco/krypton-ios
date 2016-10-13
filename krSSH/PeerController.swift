@@ -30,7 +30,7 @@ class PeerController: KRBaseController, UITableViewDelegate, UITableViewDataSour
         peers = PeerManager.shared.all
         
         guard !peers.isEmpty else {
-            addButton.isHidden = true
+            self.tableView.isHidden = true
             emptyView.isHidden = false
             tableView.reloadData()
 
@@ -38,7 +38,7 @@ class PeerController: KRBaseController, UITableViewDelegate, UITableViewDataSour
         }
         
         emptyView.isHidden = true
-        addButton.isHidden = false
+        self.tableView.isHidden = false
 
         peers = peers.sorted(by: { $0.dateAdded > $1.dateAdded })
         
@@ -142,7 +142,7 @@ class PeerController: KRBaseController, UITableViewDelegate, UITableViewDataSour
             peers = PeerManager.shared.all
             
             self.emptyView.isHidden = !peers.isEmpty
-            self.addButton.isHidden = !peers.isEmpty
+            self.tableView.isHidden = peers.isEmpty
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.reloadData()
