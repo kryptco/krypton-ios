@@ -93,7 +93,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
 
         
         dispatchMain {
-            self.present(self.otherDialogue(for: me), animated: true, completion: nil)
+            self.present(self.otherDialogue(for: me, me: true), animated: true, completion: nil)
         }
     }
     

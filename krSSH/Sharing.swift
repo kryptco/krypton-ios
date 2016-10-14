@@ -62,6 +62,11 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
     }
     
     func emailDialogue(for peer:Peer, with email:String? = nil) -> UIViewController {
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            return unsupportedDialogue()
+        }
+        
         let mailDialogue = MFMailComposeViewController()
         if let email = email {
             mailDialogue.setToRecipients([email])
@@ -101,10 +106,20 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
 
     }
     
-    func otherDialogue(for peer:Peer) -> UIViewController {
+    func otherDialogue(for peer:Peer, me:Bool = false) -> UIViewController {
         
+        var title:String
+        var message:String
         
-        let alertController:UIAlertController = UIAlertController(title: "Share my Public Key", message: "The private key never leaves your device.", preferredStyle: UIAlertControllerStyle.actionSheet)
+        if me {
+            title = "Share My Public Key"
+            message = "Send your public key so peers can give you access to servers and code repositories. Don't worry, your private key never leaves this device."
+        } else {
+            title = "Share \(peer.email)'s Public Key"
+            message = "Send \(peer.email)'s public key so peers can give them access to servers and code repositories."
+        }
+        
+        let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         
         alertController.addAction(UIAlertAction(title: "Mail", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
@@ -133,6 +148,17 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         return alertController
     }
     
+    func unsupportedDialogue() -> UIViewController {
+        let alertController:UIAlertController = UIAlertController(title: "Unsupported sharing action.", message: "You are missing the right app to share a public key this way.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
+            
+        }))
+
+        return alertController
+    }
+    
     func savePublicKeyToFile(key: String) -> URL? {
         let file = "publickey.kr"
         
@@ -153,6 +179,8 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         return nil
 
     }
+    
+    
     
     //MARK: Delegates
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

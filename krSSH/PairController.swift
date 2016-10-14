@@ -226,10 +226,14 @@ class PairController: KRBaseController, KRScanDelegate {
                 
                 dispatchMain {
                     self.hidePopup(success: true)
+
                 }
 
                 dispatchAfter(delay: 1.0, task: {
                     self.scanViewController?.canScan = true
+                    dispatchMain {
+                        self.tabBarController?.selectedIndex = 2
+                    }
                 })
             })
             
@@ -238,6 +242,9 @@ class PairController: KRBaseController, KRScanDelegate {
         case .peer(let peer):
             PeerManager.shared.add(peer: peer)
             hidePopup(success: true)
+            dispatchAfter(delay: 1.0, task: {
+                self.tabBarController?.selectedIndex = 3
+            })
         }
         
         
