@@ -112,7 +112,7 @@ class Policy {
         
         let notification = UILocalNotification()
         notification.fireDate = Date().addingTimeInterval(0.25)
-        notification.alertBody = "Request from \(session.pairing.name): \(request.sign?.command ?? "SSH login")"
+        notification.alertBody = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.category = Policy.authorizeCategory.identifier
         notification.userInfo = ["session_id": session.id, "request": request.jsonMap]
@@ -126,7 +126,7 @@ class Policy {
         let notification = UILocalNotification()
         notification.fireDate = Date().addingTimeInterval(0.25)
         
-        notification.alertBody = "\(session.pairing.name): \(request.sign?.command ?? "SSH login")"
+        notification.alertBody = "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
         notification.soundName = UILocalNotificationDefaultSoundName
         
         dispatchMain {
@@ -141,7 +141,7 @@ extension UIViewController {
     func requestUserAuthorization(session:Session, request:Request) {
         
         
-        let alertController:UIAlertController = UIAlertController(title: "Request", message: "\(session.pairing.name): \(request.sign?.command ?? "SSH login")", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alertController:UIAlertController = UIAlertController(title: "Request", message: "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")", preferredStyle: UIAlertControllerStyle.actionSheet)
         
         
         alertController.addAction(UIAlertAction(title: Policy.approveAction.title, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in

@@ -33,7 +33,7 @@ class SessionCell: UITableViewCell {
     
     func set(session:Session) {
 
-        deviceNameLabel.text = session.pairing.name.uppercased()
+        deviceNameLabel.text = session.pairing.displayName.uppercased()
         lastAccessLabel.text = (session.lastAccessed?.timeAgo() ?? session.created.timeAgo())
         
         if let command = LogManager.shared.all.filter({$0.session == session.id}).sorted(by: {$0.date > $1.date}).first?.command {

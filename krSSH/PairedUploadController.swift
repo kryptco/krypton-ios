@@ -21,7 +21,7 @@ class PairedUploadController:KRBaseController {
         super.viewWillAppear(animated)
         
         if let session = session {
-            sessionLabel.text = "\(session.pairing.name)"
+            sessionLabel.text = "\(session.pairing.displayName.uppercased())"
         }
         
  

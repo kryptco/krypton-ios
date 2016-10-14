@@ -19,6 +19,10 @@ extension String {
         
         return components[0]
     }
+    
+    func removeDotLocal() -> String {
+        return self.replacingOccurrences(of: ".local", with: "")
+    }
 
     func sanitizedPhoneNumber() -> String {
         var sanitizedPhone = self.components(separatedBy: CharacterSet.whitespaces).joined(separator: "")

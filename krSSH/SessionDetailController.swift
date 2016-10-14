@@ -31,7 +31,7 @@ class SessionDetailController: KRBaseTableController {
 
         
         if let session = session {
-            deviceNameLabel.text = session.pairing.name.uppercased()
+            deviceNameLabel.text = session.pairing.displayName.uppercased()
             
             logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
             lastAccessLabel.text =  "Active as of " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())

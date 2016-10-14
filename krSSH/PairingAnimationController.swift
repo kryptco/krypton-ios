@@ -28,7 +28,7 @@ class PairingAnimationController:UIViewController {
             return
         }
         
-        sessionLabel.text = "Pairing with \(session.pairing.name)"
+        sessionLabel.text = "Pairing with \(session.pairing.displayName.uppercased())"
 
         let startTime = Date()
         

@@ -19,6 +19,10 @@ struct Pairing {
     }
     var workstationPublicKey:Box.PublicKey
     var symmetricKey:SecretBox.Key
+    
+    var displayName:String {
+        return name.removeDotLocal()
+    }
 
     init(name: String, workstationPublicKey:Box.PublicKey) throws {
         let symmetricKey = try Data.random(size: KRSodium.shared().secretBox.KeyBytes)
