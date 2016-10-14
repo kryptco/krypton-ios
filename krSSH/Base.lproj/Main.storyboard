@@ -547,11 +547,6 @@
                             <constraint firstItem="utS-1f-tAc" firstAttribute="top" secondItem="PPg-7g-WiY" secondAttribute="bottom" id="jnt-sA-cjr"/>
                             <constraint firstAttribute="trailing" secondItem="PPg-7g-WiY" secondAttribute="trailing" id="yQv-M8-99k"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="PPg-7g-WiY"/>
-                            </mask>
-                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Pair" image="pair_icon_selected" selectedImage="pair_icon" id="ISJ-Dm-kd0"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO">
