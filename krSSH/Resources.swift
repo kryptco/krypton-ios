@@ -171,6 +171,53 @@ class KRButton:UIButton {
 }
 
 
+class KRSimpleButton:UIButton {
+    
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+        }
+    }
+    
+    @IBInspectable var highlightedColor:UIColor = UIColor.white
+    
+    @IBInspectable var borderWidth: CGFloat = 1.0 {
+        didSet {
+            layer.borderWidth = borderWidth
+        }
+    }
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        if let originalColor = backgroundColor {
+            backgroundColor = highlightedColor
+            highlightedColor = originalColor
+        }
+        
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
+        if let highlight = backgroundColor {
+            backgroundColor = highlightedColor
+            highlightedColor = highlight
+        }
+
+    }
+}
+
+
 class KRImageView:UIImageView {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {

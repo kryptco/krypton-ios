@@ -18,6 +18,13 @@ class CreateController: UIViewController {
         
         // enable by default
         Policy.needsUserApproval = true
+        
+        createButton.layer.shadowColor = UIColor.black.cgColor
+        createButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        createButton.layer.shadowOpacity = 0.175
+        createButton.layer.shadowRadius = 3
+        createButton.layer.masksToBounds = false
+
     }
     
     

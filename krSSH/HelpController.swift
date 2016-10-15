@@ -12,6 +12,10 @@ import UIKit
 class HelpController:KRBaseController {
     
 
+    @IBAction func goToHelpStart(segue: UIStoryboardSegue) {
+    }
+    
+
 }
 
 class HelpInstallController:KRBaseController {
@@ -36,5 +40,9 @@ class HelpInstallController:KRBaseController {
     @IBAction func curlTapped() {
         installLabel.text = InstallMethod.curl.rawValue
     }
+    
+    @IBAction func goToHelpInstall(segue: UIStoryboardSegue) {
+    }
+
 
 }
