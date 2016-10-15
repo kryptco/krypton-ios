@@ -52,9 +52,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>230</string>
+	<string>232</string>
 	<key>GitHash</key>
-	<string>c993b79d835b893b1f01ca6fa201e5c46c2afe83</string>
+	<string>82bb2130911140b78278a7a38aa805494b03aa5b</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>

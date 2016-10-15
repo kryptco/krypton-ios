@@ -135,7 +135,7 @@ extension UIViewController {
     func requestUserAuthorization(session:Session, request:Request) {
         
         
-        let alertController:UIAlertController = UIAlertController(title: "Request", message: "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alertController:UIAlertController = UIAlertController(title: "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         
         alertController.addAction(UIAlertAction(title: Policy.approveAction.title, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
