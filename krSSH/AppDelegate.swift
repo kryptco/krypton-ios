@@ -102,10 +102,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         
         
-        if let alert = (userInfo["aps"] as? [String: Any])?["alert"] as? String, alert != "" {
-            application.applicationIconBadgeNumber = 1
-            application.applicationIconBadgeNumber = 0  
-        }
+//        if let alert = (userInfo["aps"] as? [String: Any])?["alert"] as? String, alert != "" {
+//            application.applicationIconBadgeNumber = 1
+//            application.applicationIconBadgeNumber = 0  
+//        }
         
         log("got background notification")
         
@@ -225,7 +225,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         guard let link = Link(url: url) else {
-            log("invalid kr url: \(url)")
+            log("invalid kr url: \(url)", .error)
             return false
         }
         

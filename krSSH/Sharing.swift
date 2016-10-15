@@ -72,7 +72,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
             mailDialogue.setToRecipients([email])
         }
     
-        mailDialogue.setSubject("My SSH Public Key")
+        mailDialogue.setSubject("SSH Public Key")
         mailDialogue.mailComposeDelegate = self
         
         let authorizedKey = peer.publicKey.toAuthorized()
