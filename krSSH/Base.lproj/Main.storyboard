@@ -872,10 +872,10 @@
             </objects>
             <point key="canvasLocation" x="4540" y="-1594.4527736131936"/>
         </scene>
-        <!--View Controller-->
+        <!--Help Add Pub Key Controller-->
         <scene sceneID="8Dg-dh-h48">
             <objects>
-                <viewController id="INX-MH-UQi" sceneMemberID="viewController">
+                <viewController id="INX-MH-UQi" customClass="HelpAddPubKeyController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mjU-A1-Wfn"/>
                         <viewControllerLayoutGuide type="bottom" id="tlG-CB-0ZL"/>

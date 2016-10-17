@@ -46,3 +46,6 @@ class HelpInstallController:KRBaseController {
 
 
 }
+
+class HelpAddPubKeyController:KRBaseController {}
+
