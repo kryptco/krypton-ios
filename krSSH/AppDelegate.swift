@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var pendingLink:Link?
     
+    var pendingAuthorizationMutex = Mutex()
+    
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
                 
         Resources.makeAppearences()
@@ -141,16 +143,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //MARK: Tap local notification
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         
-        // if approval notification
-        if
-            let sessionID = notification.userInfo?["session_id"] as? String,
-            let session = SessionManager.shared.get(id: sessionID),
-            let requestJSON = notification.userInfo?["request"] as? JSON,
-            let request = try? Request(json: requestJSON)
-            
-        {
-            Policy.requestUserAuthorization(session: session, request: request)
+        log("tap local notification")
+        
+        pendingAuthorizationMutex.lock {
+            if
+                let sessionID = notification.userInfo?["session_id"] as? String,
+                let session = SessionManager.shared.get(id: sessionID),
+                let requestJSON = notification.userInfo?["request"] as? JSON,
+                let request = try? Request(json: requestJSON)
+                
+            {
+                // if approval notification
+                Policy.pendingAuthorization = (session, request)
+            }
         }
+        
+      
         
         
     }
@@ -183,6 +191,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
+        
+        Policy.pendingAuthorization = nil
         
         guard identifier != Policy.rejectAction.identifier else {
             log("user rejected", .warning)
@@ -258,6 +268,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        pendingAuthorizationMutex.lock {
+            if let (session, request) = Policy.pendingAuthorization {
+                log("requesting pending authorization")
+                Policy.requestUserAuthorization(session: session, request: request)
+            }
+
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

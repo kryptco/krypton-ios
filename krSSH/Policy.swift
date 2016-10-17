@@ -55,6 +55,10 @@ class Policy {
         UserDefaults.standard.synchronize()
     }
     
+    //MARK: Pending request
+    
+    static var pendingAuthorization:(Session, Request)?
+    
     //MARK: Notification Actions
 
     static var authorizeCategory:UIUserNotificationCategory = {
@@ -106,10 +110,15 @@ class Policy {
     class func requestUserAuthorization(session:Session, request:Request) {
         
         guard UIApplication.shared.applicationState != .active else {
+            Policy.pendingAuthorization = nil
             Policy.currentViewController?.requestUserAuthorization(session: session, request: request)
             return
         }
         
+        // set the pending
+        Policy.pendingAuthorization = (session, request)
+        
+        // present notification
         let notification = UILocalNotification()
         notification.alertBody = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
         notification.soundName = UILocalNotificationDefaultSoundName
@@ -139,8 +148,7 @@ extension UIViewController {
         
         
         alertController.addAction(UIAlertAction(title: Policy.approveAction.title, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
-            
-            
+
             do {
                 let resp = try Silo.shared.lockResponseFor(request: request, session: session)
                 try Silo.shared.send(session: session, response: resp, completionHandler: nil)
@@ -149,7 +157,6 @@ extension UIViewController {
                 log("send error \(e)", .error)
                 return
             }
-
             
         }))
         
