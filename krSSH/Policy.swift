@@ -52,6 +52,10 @@ class Policy {
         {
             let approvalInterval = UserDefaults.standard.double(forKey: StorageKey.userApprovalInterval.rawValue)
             
+            if -lastApproved.timeIntervalSinceNow > approvalInterval {
+                return nil
+            }
+            
             return lastApproved.addingTimeInterval(approvalInterval + lastApproved.timeIntervalSinceNow).timeAgo(suffix: "")
         }
         

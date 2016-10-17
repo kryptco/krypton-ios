@@ -49,7 +49,7 @@ extension Date {
     
     func timeAgo(suffix:String = " ago") -> String {
         
-        let time = -self.timeIntervalSinceNow
+        let time = abs(self.timeIntervalSinceNow)
         
         if time < 60 {
             return "\(Int(time))s\(suffix)"

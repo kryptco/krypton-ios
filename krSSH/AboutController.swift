@@ -29,7 +29,7 @@ class AboutController: KRBaseController {
         }
         
         if let remaining = Policy.approvalTimeRemaining {
-            timeRemainingLabel.text = "Automatic for the next \(remaining)"
+            timeRemainingLabel.text = "Authorized for \(remaining)"
         } else {
             timeRemainingLabel.text = ""
         }
