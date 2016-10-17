@@ -292,7 +292,7 @@ class Silo {
         
         
         // otherwise, continue with creating and sending the response
-        let response = try responseFor(request: request, session: session)
+        let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
         if response.sign != nil {
             Policy.notifyUser(session: session, request: request)
@@ -322,14 +322,14 @@ class Silo {
     }
     
     // MARK: Silo -new
-    func lockResponseFor(request:Request, session:Session) throws -> Response {
+    func lockResponseFor(request:Request, session:Session, signatureAllowed:Bool) throws -> Response {
         mutex.lock()
         defer { mutex.unlock() }
-        return try responseFor(request: request, session: session)
+        return try responseFor(request: request, session: session, signatureAllowed: signatureAllowed)
     }
     
     // precondition: mutex locked
-    func responseFor(request:Request, session:Session) throws -> Response {
+    func responseFor(request:Request, session:Session, signatureAllowed:Bool) throws -> Response {
         let requestStart = Date().timeIntervalSince1970
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         var sign:SignResponse?
@@ -349,21 +349,21 @@ class Silo {
             var err:String?
             do {
                 
-                // only place where signature should occur
-                
-                let digestData = try signRequest.digest.fromBase64()
-                let signStart = Date().timeIntervalSince1970
-                sig = try kp.keyPair.sign(digest: digestData)
-                let signEnd = Date().timeIntervalSince1970
-
-                
-                log("signed: \(sig) in \(signEnd - signStart) seconds")
-                
-                // Update the Logs
-                dispatchAsync {
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>", command: signRequest.command), deviceName: session.pairing.name)
+                if signatureAllowed {
+                    // only place where signature should occur
+                    let digestData = try signRequest.digest.fromBase64()
+                    sig = try kp.keyPair.sign(digest: digestData)
+                    
+                    dispatchAsync {
+                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>", command: signRequest.command), deviceName: session.pairing.name)
+                    }
+                } else {
+                    err = "rejected"
+                    dispatchAsync {
+                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: "rejected", command: signRequest.command), deviceName: session.pairing.name)
+                    }
                 }
-                
+
             } catch let e {
                 err = "\(e)"
             }

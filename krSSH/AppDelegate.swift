@@ -194,11 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Policy.pendingAuthorization = nil
         
-        guard identifier != Policy.rejectAction.identifier else {
-            log("user rejected", .warning)
-            completionHandler()
-            return
-        }
+        let signatureAllowed = (identifier != Policy.rejectAction.identifier)
         
         if identifier == Policy.approveTemporaryAction.identifier {
             Policy.allowFor(time: Policy.Interval.oneHour)
@@ -218,7 +214,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let request = try Request(json: requestJSON)
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session)
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: signatureAllowed)
             try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
             
         } catch (let e) {

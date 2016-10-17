@@ -150,7 +150,7 @@ extension UIViewController {
         alertController.addAction(UIAlertAction(title: Policy.approveAction.title, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
 
             do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session)
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
                 try Silo.shared.send(session: session, response: resp, completionHandler: nil)
                 
             } catch (let e) {
@@ -165,7 +165,7 @@ extension UIViewController {
             Policy.allowFor(time: Policy.Interval.oneHour)
             
             do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session)
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
                 try Silo.shared.send(session: session, response: resp, completionHandler: nil)
                 
             } catch (let e) {
@@ -180,6 +180,15 @@ extension UIViewController {
         
         alertController.addAction(UIAlertAction(title: Policy.rejectAction.title, style: UIAlertActionStyle.cancel, handler: { (action:UIAlertAction) -> Void in
             
+            do {
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: false)
+                try Silo.shared.send(session: session, response: resp, completionHandler: nil)
+                
+            } catch (let e) {
+                log("send error \(e)", .error)
+                return
+            }
+
             
         }))
         

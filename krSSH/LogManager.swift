@@ -60,7 +60,7 @@ class LogManager {
     var all:[SignatureLog] {
         var theLogs:[SignatureLog] = []
         mutex.lock {
-            theLogs = [SignatureLog](self.logs)
+            theLogs = [SignatureLog](self.logs).filter({ $0.signature != "rejected" })
         }
         return theLogs
     }
