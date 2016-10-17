@@ -47,20 +47,20 @@ extension Date {
         return timeString
     }
     
-    func timeAgo() -> String {
+    func timeAgo(suffix:String = " ago") -> String {
         
         let time = -self.timeIntervalSinceNow
         
         if time < 60 {
-            return "\(Int(time))s ago"
+            return "\(Int(time))s\(suffix)"
         } else if time < 3600 {
-            return "\(Int(time/60))m ago"
+            return "\(Int(time/60))m\(suffix)"
         } else if time < 86400 {
-            return "\(Int(time/3600))h ago"
+            return "\(Int(time/3600))h\(suffix)"
         } else if time < 604800 {
-            return "\(Int(time/86400))d ago"
+            return "\(Int(time/86400))d\(suffix)"
         } else {
-            return "\(Int(time/604800))wk ago"
+            return "\(Int(time/604800))wk\(suffix)"
         }
     }
  

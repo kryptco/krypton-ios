@@ -47,6 +47,18 @@ class Policy {
         }
     }
     
+    class var approvalTimeRemaining:String? {
+        if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.rawValue) as? Date
+        {
+            let approvalInterval = UserDefaults.standard.double(forKey: StorageKey.userApprovalInterval.rawValue)
+            
+            return lastApproved.addingTimeInterval(approvalInterval + lastApproved.timeIntervalSinceNow).timeAgo(suffix: "")
+        }
+        
+        return nil
+
+    }
+    
     static var currentViewController:UIViewController?
     
     static func allowFor(time:Interval) {

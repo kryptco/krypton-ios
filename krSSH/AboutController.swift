@@ -13,6 +13,7 @@ class AboutController: KRBaseController {
 
     @IBOutlet weak var versionLabel:UILabel!
     @IBOutlet weak var approvalSwitch:UISwitch!
+    @IBOutlet weak var timeRemainingLabel:UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,12 @@ class AboutController: KRBaseController {
         {
             let hashShort = hash.substring(to: hash.index(hash.startIndex, offsetBy: min(6, hash.characters.count)))
             self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
+        }
+        
+        if let remaining = Policy.approvalTimeRemaining {
+            timeRemainingLabel.text = "Automatic for the next \(remaining)"
+        } else {
+            timeRemainingLabel.text = ""
         }
     }
     
@@ -43,6 +50,7 @@ class AboutController: KRBaseController {
 
     @IBAction func userApprovalSettingChanged(sender:UISwitch) {
         Policy.needsUserApproval = sender.isOn
+        timeRemainingLabel.text = ""
     }
     
     

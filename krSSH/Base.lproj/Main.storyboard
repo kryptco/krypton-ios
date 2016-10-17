@@ -2538,6 +2538,11 @@ Cg
                                     <action selector="contactUsTapped" destination="UnB-Qg-F2t" eventType="touchUpInside" id="MFu-wj-bQ4"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic for  45m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZz-lM-lg0">
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -2554,10 +2559,12 @@ Cg
                             <constraint firstItem="sGH-yS-MIk" firstAttribute="centerY" secondItem="5GU-HZ-5nC" secondAttribute="centerY" constant="10" id="ISZ-KK-QlI"/>
                             <constraint firstItem="Q6s-yD-bs0" firstAttribute="centerY" secondItem="R4q-U7-8S5" secondAttribute="centerY" id="LVt-uy-2vR"/>
                             <constraint firstItem="QM7-Gk-dCn" firstAttribute="trailing" secondItem="5GU-HZ-5nC" secondAttribute="trailingMargin" id="XmY-3N-b4d"/>
+                            <constraint firstItem="NZz-lM-lg0" firstAttribute="trailing" secondItem="56b-kb-Emv" secondAttribute="trailing" id="ZBq-wq-NXk"/>
                             <constraint firstItem="Ow3-ZL-ssG" firstAttribute="top" secondItem="DMf-nU-zQo" secondAttribute="bottom" constant="20" id="aIz-dg-DFQ"/>
                             <constraint firstItem="Q6s-yD-bs0" firstAttribute="centerY" secondItem="8n2-Yv-erL" secondAttribute="centerY" id="aW2-l5-p9R"/>
                             <constraint firstItem="AgI-vX-s9D" firstAttribute="leading" secondItem="5GU-HZ-5nC" secondAttribute="leadingMargin" id="amZ-Gy-QMf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ow3-ZL-ssG" secondAttribute="trailing" id="avd-CS-RlD"/>
+                            <constraint firstItem="NZz-lM-lg0" firstAttribute="top" secondItem="sGH-yS-MIk" secondAttribute="bottom" constant="3" id="bKh-r2-SrA"/>
                             <constraint firstItem="gMp-eB-XXN" firstAttribute="top" secondItem="eRJ-v7-wSj" secondAttribute="bottom" constant="50" id="bdo-Ru-zLv"/>
                             <constraint firstItem="ZS4-x0-EUj" firstAttribute="top" secondItem="QM7-Gk-dCn" secondAttribute="bottom" constant="12" id="dPl-kn-CQf"/>
                             <constraint firstItem="DMf-nU-zQo" firstAttribute="centerX" secondItem="5GU-HZ-5nC" secondAttribute="centerX" id="dxY-mZ-ANW"/>
@@ -2578,6 +2585,7 @@ Cg
                     </view>
                     <connections>
                         <outlet property="approvalSwitch" destination="56b-kb-Emv" id="ONS-gj-xsB"/>
+                        <outlet property="timeRemainingLabel" destination="NZz-lM-lg0" id="Bux-0K-d4r"/>
                         <outlet property="versionLabel" destination="ZS4-x0-EUj" id="LrW-IN-ZT6"/>
                     </connections>
                 </viewController>
