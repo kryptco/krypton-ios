@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>241</string>
+	<string>242</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionMainStoryboard</key>
@@ -27,5 +27,10 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widget-extension</string>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SourceCodePro-Regular</string>
+		<string>SourceCodePro-Bold</string>
+	</array>
 </dict>
 </plist>

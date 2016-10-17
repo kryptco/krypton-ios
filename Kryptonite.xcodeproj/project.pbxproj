@@ -76,6 +76,10 @@
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
 		FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF4C1D8492D5009FD899 /* MeController.swift */; };
+		FA632E441DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */; };
+		FA632E451DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */; };
+		FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
+		FA632E471DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
 		FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729A1D78DD6D002F34D6 /* Peer.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
 		FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729E1D78E819002F34D6 /* PeerManager.swift */; };
@@ -317,6 +321,8 @@
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
 		FA61EF4C1D8492D5009FD899 /* MeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeController.swift; sourceTree = "<group>"; };
+		FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Bold.ttf"; sourceTree = "<group>"; };
+		FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Regular.ttf"; sourceTree = "<group>"; };
 		FA69729A1D78DD6D002F34D6 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA69729E1D78E819002F34D6 /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
@@ -756,6 +762,8 @@
 				FA2977981D7736A8003EB1F7 /* ImageLicenses */,
 				FA2697111D9992A900FE44D3 /* file-url-icon.png */,
 				FA15EB451DA5B53500BED16C /* properties.json */,
+				FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */,
+				FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -972,6 +980,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA49F78D1D9B6B3300372556 /* MainInterface.storyboard in Resources */,
+				FA632E471DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
+				FA632E451DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -980,6 +990,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA2697121D9992A900FE44D3 /* file-url-icon.png in Resources */,
+				FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
 				8DE3955E1D942647005D559C /* Info.plist in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */,
@@ -989,6 +1000,7 @@
 				FAEE048E1D736AD3002A7AFD /* UsedSoftwareLicenses in Resources */,
 				FA15EB461DA5B53500BED16C /* properties.json in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
+				FA632E441DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

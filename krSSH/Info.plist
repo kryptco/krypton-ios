@@ -52,9 +52,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>241</string>
+	<string>242</string>
 	<key>GitHash</key>
-	<string>27a17f33241dd68bb59d6975c7ffa0b247fa4cef</string>
+	<string>d40e6b1a5b8da00ea437ed8d0758a5cf2966d27a</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
@@ -63,6 +63,11 @@
 	<string>Scan QR codes to pair and record peer's public keys.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Your contact list is used to choose people to send public keys to. We will never send your contacts anywhere.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SourceCodePro-Regular</string>
+		<string>SourceCodePro-Bold</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
