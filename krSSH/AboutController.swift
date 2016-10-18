@@ -8,8 +8,9 @@
 
 import UIKit
 import LocalAuthentication
+import MessageUI
 
-class AboutController: KRBaseController {
+class AboutController: KRBaseController, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var versionLabel:UILabel!
     @IBOutlet weak var approvalSwitch:UISwitch!
@@ -112,9 +113,37 @@ class AboutController: KRBaseController {
     //MARK: Actions
     
     @IBAction func contactUsTapped() {
-        if let mailURL = URL(string: "mailto://\(Properties.shared.contactUsEmail)") {
-            UIApplication.shared.openURL(mailURL)
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            if let mailURL = URL(string: "mailto://\(Properties.shared.contactUsEmail)") {
+                UIApplication.shared.openURL(mailURL)
+            }
+            
+            return
         }
+        
+        let mailDialogue = MFMailComposeViewController()
+        mailDialogue.setToRecipients([Properties.shared.contactUsEmail])
+        
+        mailDialogue.setSubject("Feedback for Kryptonite \(self.versionLabel.text ?? "")")
+        
+        // feedback device info
+        var deviceInfo = [String:String]()
+        deviceInfo["model"] = UIDevice.current.model
+        deviceInfo["version"] = UIDevice.current.systemVersion
+        deviceInfo["system_name"] = UIDevice.current.systemName
+        deviceInfo["arn"] = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? "unknown"
+        
+        if let deviceInfoJson = try? JSONSerialization.data(withJSONObject: deviceInfo, options: JSONSerialization.WritingOptions.prettyPrinted) {
+            mailDialogue.addAttachmentData(deviceInfoJson, mimeType: "plain/text", fileName: "device-info.txt")
+        }
+        //
+        
+        mailDialogue.mailComposeDelegate = self
+        
+        present(mailDialogue, animated: true, completion: nil)
+        
+        
     }
     
     @IBAction func openSourceTapped() {
@@ -129,6 +158,13 @@ class AboutController: KRBaseController {
         }
     }
 
+
+    //MARK: Delegates
+    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        Resources.makeAppearences()
+        
+        controller.dismiss(animated: true, completion: nil)
+    }
 
 
     
