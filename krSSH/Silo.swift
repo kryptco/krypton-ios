@@ -211,7 +211,7 @@ class Silo {
 
     func removeLocked(session:Session, sendUnpairResponse:Bool = true) {
         if sendUnpairResponse {
-            let response = Response(requestID: "", endpoint: "", requireManualApproval: false, unpair: UnpairResponse())
+            let response = Response(requestID: "", endpoint: "", unpair: UnpairResponse())
             try? send(session: session, response: response)
         }
         sessionLabels.removeValue(forKey: session.id)
@@ -381,7 +381,12 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, requireManualApproval: Policy.needsUserApproval, sign: sign, list: list, me: me)
+        var approvedUntil:Int?
+        if let time = Policy.approvedUntil?.timeIntervalSince1970 {
+             approvedUntil = Int(time)
+        }
+
+        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: approvedUntil, sign: sign, list: list, me: me)
         
         let responseData = try response.jsonData() as NSData
         

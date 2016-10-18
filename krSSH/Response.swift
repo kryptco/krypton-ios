@@ -12,16 +12,16 @@ final class Response:JSONConvertable {
     
     var requestID:String
     var snsEndpointARN:String
-    var requireManualApproval:Bool
+    var approvedUntil:Int?
     var sign:SignResponse?
     var list:ListResponse?
     var me:MeResponse?
     var unpair:UnpairResponse?
     
-    init(requestID:String, endpoint:String, requireManualApproval:Bool, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil) {
+    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
-        self.requireManualApproval = requireManualApproval
+        self.approvedUntil = approvedUntil
         self.sign = sign
         self.list = list
         self.me = me
@@ -31,7 +31,7 @@ final class Response:JSONConvertable {
     init(json: JSON) throws {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
-        self.requireManualApproval = try json ~> "require_manual_approval"
+        self.approvedUntil = try json ~> "approved_until"
 
         if let json:JSON = try? json ~> "sign_response" {
             self.sign = try SignResponse(json: json)
@@ -54,7 +54,10 @@ final class Response:JSONConvertable {
         var json:[String:Any] = [:]
         json["request_id"] = requestID
         json["sns_endpoint_arn"] = snsEndpointARN
-        json["require_manual_approval"] = requireManualApproval
+        
+        if let approvedUntil = approvedUntil {
+            json["approved_until"] = approvedUntil
+        }
 
         if let s = sign {
             json["sign_response"] = s.jsonMap

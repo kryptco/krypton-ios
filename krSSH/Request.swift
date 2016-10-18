@@ -11,7 +11,7 @@ import Foundation
 struct Request:JSONConvertable {
     
     var id:String
-    var unixSeconds: Int
+    var unixSeconds:Int    
     var sign:SignRequest?
     var list:ListRequest?
     var me:MeRequest?

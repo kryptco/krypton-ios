@@ -47,6 +47,18 @@ class Policy {
         }
     }
     
+    class var approvedUntil:Date? {
+        if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.rawValue) as? Date
+        {
+            let approvalInterval = UserDefaults.standard.double(forKey: StorageKey.userApprovalInterval.rawValue)
+            
+            return lastApproved.addingTimeInterval(approvalInterval)
+            
+        }
+        
+        return nil
+    }
+    
     class var approvalTimeRemaining:String? {
         if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.rawValue) as? Date
         {
