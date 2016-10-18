@@ -17,9 +17,21 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var shareButton:UIButton!
 
     
+    @IBOutlet var meCommandWindow:UIView!
+    @IBOutlet var otherCommandWindow:UIView!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        for v in [meCommandWindow, otherCommandWindow] {
+            v?.layer.shadowColor = UIColor.black.cgColor
+            v?.layer.shadowOffset = CGSize(width: 0, height: 0)
+            v?.layer.shadowOpacity = 0.175
+            v?.layer.shadowRadius = 3
+            v?.layer.masksToBounds = false
+        }
+
         
         NotificationCenter.default.addObserver(self, selector: #selector(MeController.redrawMe), name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
     
