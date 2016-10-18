@@ -969,23 +969,13 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKu-Bt-qdc">
-                                            <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="xGg-cb-23D"/>
-                                            </constraints>
-                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="bKu-Bt-qdc" firstAttribute="leading" secondItem="OGH-lL-ZN6" secondAttribute="leading" id="2gD-27-ede"/>
                                         <constraint firstItem="Apv-jU-c3r" firstAttribute="top" secondItem="OGH-lL-ZN6" secondAttribute="top" constant="10" id="DAa-83-6G9"/>
                                         <constraint firstAttribute="trailing" secondItem="Apv-jU-c3r" secondAttribute="trailing" constant="20" id="M8a-UN-fhc"/>
                                         <constraint firstItem="AR7-Go-sez" firstAttribute="leading" secondItem="OGH-lL-ZN6" secondAttribute="leading" constant="20" id="QDA-Z5-S2q"/>
-                                        <constraint firstAttribute="trailing" secondItem="bKu-Bt-qdc" secondAttribute="trailing" id="V0A-O4-DeG"/>
-                                        <constraint firstItem="bKu-Bt-qdc" firstAttribute="top" secondItem="Apv-jU-c3r" secondAttribute="bottom" constant="10" id="eu0-qs-RMM"/>
                                         <constraint firstItem="Apv-jU-c3r" firstAttribute="leading" secondItem="OGH-lL-ZN6" secondAttribute="leading" constant="20" id="g2V-OW-T0r"/>
                                         <constraint firstAttribute="bottom" secondItem="AR7-Go-sez" secondAttribute="bottom" constant="10" id="gfL-Qx-SGv"/>
                                         <constraint firstAttribute="trailing" secondItem="AR7-Go-sez" secondAttribute="trailing" constant="20" id="qJs-x7-pTG"/>
@@ -1068,6 +1058,7 @@
                     <tabBarItem key="tabBarItem" title="Peers" image="peers" selectedImage="peers_selected" id="7lF-8f-VqC"/>
                     <connections>
                         <outlet property="addButton" destination="AR7-Go-sez" id="n1f-5y-2p2"/>
+                        <outlet property="commandView" destination="Apv-jU-c3r" id="Bsg-4n-Xoj"/>
                         <outlet property="emptyView" destination="dMG-CZ-hvF" id="JdK-Jw-ihK"/>
                         <outlet property="tableView" destination="hy6-Wx-sFY" id="cGk-jA-BJl"/>
                         <segue destination="S5k-6X-LUk" kind="show" identifier="showPeerDetail" id="9HW-NQ-AJW"/>

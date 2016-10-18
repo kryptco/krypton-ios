@@ -19,8 +19,17 @@ class PeerController: KRBaseController, UITableViewDelegate, UITableViewDataSour
 
     @IBOutlet weak var emptyView:UIView!
     
+    @IBOutlet weak var commandView:UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        commandView.layer.shadowColor = UIColor.black.cgColor
+        commandView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        commandView.layer.shadowOpacity = 0.175
+        commandView.layer.shadowRadius = 3
+        commandView.layer.masksToBounds = false
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
