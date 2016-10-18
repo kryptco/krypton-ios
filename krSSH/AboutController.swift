@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 import MessageUI
 
-class AboutController: KRBaseController, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate {
+class AboutController: KRBaseController {
 
     @IBOutlet weak var versionLabel:UILabel!
     @IBOutlet weak var approvalSwitch:UISwitch!
@@ -128,17 +128,14 @@ class AboutController: KRBaseController, UINavigationControllerDelegate, MFMailC
         mailDialogue.setSubject("Feedback for Kryptonite \(self.versionLabel.text ?? "")")
         
         // feedback device info
-        var deviceInfo = [String:String]()
-        deviceInfo["model"] = UIDevice.current.model
-        deviceInfo["version"] = UIDevice.current.systemVersion
-        deviceInfo["system_name"] = UIDevice.current.systemName
-        deviceInfo["arn"] = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? "unknown"
-        
-        if let deviceInfoJson = try? JSONSerialization.data(withJSONObject: deviceInfo, options: JSONSerialization.WritingOptions.prettyPrinted) {
-            mailDialogue.addAttachmentData(deviceInfoJson, mimeType: "plain/text", fileName: "device-info.txt")
-        }
+        var deviceInfo = "\n\n\n\n\n\n-----------\nDevice Info:\n"
+        deviceInfo += "Model: \(UIDevice.current.model)\n"
+        deviceInfo += "SystemVersion: \(UIDevice.current.systemVersion)\n"
+        deviceInfo += "SystemName: \(UIDevice.current.systemName)\n"
+        deviceInfo += "Identifier: \((try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? "unknown")\n"
+        deviceInfo += "-----------"
         //
-        
+        mailDialogue.setMessageBody(deviceInfo, isHTML: false)
         mailDialogue.mailComposeDelegate = self
         
         present(mailDialogue, animated: true, completion: nil)
@@ -160,7 +157,7 @@ class AboutController: KRBaseController, UINavigationControllerDelegate, MFMailC
 
 
     //MARK: Delegates
-    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    public override func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         Resources.makeAppearences()
         
         controller.dismiss(animated: true, completion: nil)

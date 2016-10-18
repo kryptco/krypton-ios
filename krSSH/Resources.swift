@@ -21,11 +21,16 @@ struct Resources {
     static func makeAppearences() {
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().tintColor = UIColor.app
+        
+        
+        if let font = UIFont(name: "AvenirNext-DemiBold", size: 17) {
+            UINavigationBar.appearance().titleTextAttributes = [
+                NSForegroundColorAttributeName: UIColor.black,
+                NSFontAttributeName: font,
+            ]
 
-        UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.app,
-            NSFontAttributeName: UIFont(name: "Avenir Next", size: 17)!
-        ]
+        }
+
 
        // UIButton.appearance().tintColor = UIColor.app
         UISwitch.appearance().tintColor = UIColor.app
