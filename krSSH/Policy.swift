@@ -14,7 +14,7 @@ class Policy {
     
     enum Interval:TimeInterval {
         //case fifteenSeconds = 15
-        case oneHour = 3600
+        case oneHour = 3600 
     }
 
     
