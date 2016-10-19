@@ -97,7 +97,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             SessionManager.shared.remove(session: sessions[indexPath.row])
-            Silo.shared.remove(session: sessions[0])
+            Silo.shared.remove(session: sessions[indexPath.row])
             sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
             
             self.emptyView.isHidden = !sessions.isEmpty
