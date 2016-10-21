@@ -24,6 +24,12 @@ class PeerEmptyController:KRBaseController, CNContactPickerDelegate {
         }
     }
     
+    //MARK: Scan Tapped
+    
+    @IBAction func scanTapped() {
+        (self.parent?.parent as? UITabBarController)?.selectedIndex = 1
+    }
+
     
     //MARK: Request Flow
     

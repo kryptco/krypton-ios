@@ -193,6 +193,12 @@ class KRSimpleButton:UIButton {
         }
     }
     
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

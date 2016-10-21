@@ -23,7 +23,6 @@ class PeerDetailController: KRBaseController {
     var peer:Peer?
     
     @IBOutlet var firstCommandWindow:UIView!
-    @IBOutlet var secondCommandWindow:UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +31,7 @@ class PeerDetailController: KRBaseController {
         
         shareButton.setBorder(color: UIColor.clear, cornerRadius: 25, borderWidth: 0.0)
         
-        for v in [firstCommandWindow, secondCommandWindow] {
+        for v in [firstCommandWindow] {
             v?.layer.shadowColor = UIColor.black.cgColor
             v?.layer.shadowOffset = CGSize(width: 0, height: 0)
             v?.layer.shadowOpacity = 0.175

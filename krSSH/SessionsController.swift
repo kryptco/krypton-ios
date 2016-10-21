@@ -108,7 +108,13 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
             return
         }
      }
- 
+    
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Unpair"
+    }
+    
+
     //MARK: Segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
