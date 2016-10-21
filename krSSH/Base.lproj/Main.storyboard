@@ -2051,67 +2051,58 @@ Cg
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M4r-f4-utM">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQa-Fg-tka">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="WmQ-O8-nm6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                 <state key="normal" title="curl">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="curlTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="PrW-gp-91r"/>
+                                    <action selector="switchIntallMethodTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="lCh-5L-poT"/>
+                                    <action selector="switchIntallMethodTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="stW-gz-TPY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B56-H3-S35">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="mu2-I3-Qcs"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="brew">
-                                    <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="brewTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="RKS-Ml-OoX"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Don't have brew?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LUS-E7-F80">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Don't have brew?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EOl-Hj-3Zc">
+                                <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="14"/>
                                 <color key="textColor" red="0.70439945289999994" green="0.70439945289999994" blue="0.70439945289999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="M4r-f4-utM" firstAttribute="centerY" secondItem="B56-H3-S35" secondAttribute="centerY" id="012-gU-Qrx"/>
-                            <constraint firstItem="B56-H3-S35" firstAttribute="leading" secondItem="M4r-f4-utM" secondAttribute="trailing" constant="10" id="06X-xy-TTA"/>
                             <constraint firstItem="a70-gW-DlA" firstAttribute="top" secondItem="o1h-L0-I0u" secondAttribute="bottom" constant="20" id="6TI-Wo-Gln"/>
                             <constraint firstItem="px1-ko-Hn4" firstAttribute="leading" secondItem="uWQ-1d-4R8" secondAttribute="leading" id="7No-nR-Nzz"/>
-                            <constraint firstItem="M4r-f4-utM" firstAttribute="height" secondItem="B56-H3-S35" secondAttribute="height" id="8ds-H9-d1f"/>
                             <constraint firstAttribute="trailing" secondItem="CWh-oz-sAa" secondAttribute="trailing" constant="10" id="92x-ao-RF4"/>
                             <constraint firstItem="a70-gW-DlA" firstAttribute="centerX" secondItem="zuL-ne-aMT" secondAttribute="centerX" id="Cb4-QL-Aqw"/>
                             <constraint firstItem="8zl-e9-ZKu" firstAttribute="top" secondItem="o1h-L0-I0u" secondAttribute="bottom" id="Cl9-47-XFp"/>
-                            <constraint firstItem="LUS-E7-F80" firstAttribute="centerY" secondItem="M4r-f4-utM" secondAttribute="centerY" id="FVm-0A-Qie"/>
                             <constraint firstItem="kdD-Dg-pGU" firstAttribute="top" secondItem="wyV-da-FOA" secondAttribute="bottom" constant="10" id="I31-1v-RIK"/>
                             <constraint firstItem="Ixf-5S-NX1" firstAttribute="top" secondItem="kdD-Dg-pGU" secondAttribute="bottom" constant="30" id="KtR-qL-TyY"/>
                             <constraint firstItem="8zl-e9-ZKu" firstAttribute="leading" secondItem="zuL-ne-aMT" secondAttribute="leadingMargin" id="Rnd-6Q-Pgg"/>
                             <constraint firstItem="uWQ-1d-4R8" firstAttribute="top" secondItem="CWh-oz-sAa" secondAttribute="bottom" constant="30" id="S86-FZ-Xom"/>
                             <constraint firstItem="wyV-da-FOA" firstAttribute="leading" secondItem="uWQ-1d-4R8" secondAttribute="leading" id="Ujo-V6-4k6"/>
+                            <constraint firstItem="EOl-Hj-3Zc" firstAttribute="leading" secondItem="px1-ko-Hn4" secondAttribute="leading" constant="4" id="Y85-2Q-OSX"/>
                             <constraint firstItem="CWh-oz-sAa" firstAttribute="top" secondItem="a70-gW-DlA" secondAttribute="bottom" constant="10" id="Ymg-PD-RcO"/>
                             <constraint firstItem="wyV-da-FOA" firstAttribute="trailing" secondItem="uWQ-1d-4R8" secondAttribute="trailing" id="bLz-lI-7pD"/>
-                            <constraint firstItem="LUS-E7-F80" firstAttribute="leading" secondItem="px1-ko-Hn4" secondAttribute="leading" constant="4" id="ccJ-d1-vV0"/>
-                            <constraint firstItem="B56-H3-S35" firstAttribute="top" secondItem="px1-ko-Hn4" secondAttribute="bottom" constant="4" id="e01-ZQ-OrD"/>
                             <constraint firstItem="kdD-Dg-pGU" firstAttribute="centerX" secondItem="zuL-ne-aMT" secondAttribute="centerX" id="eRV-gz-4FJ"/>
                             <constraint firstItem="CWh-oz-sAa" firstAttribute="leading" secondItem="zuL-ne-aMT" secondAttribute="leading" constant="10" id="hJp-y2-5OE"/>
                             <constraint firstItem="bFG-nj-JQs" firstAttribute="top" secondItem="o1h-L0-I0u" secondAttribute="bottom" id="hQb-Cb-DCX"/>
                             <constraint firstItem="bFG-nj-JQs" firstAttribute="trailing" secondItem="zuL-ne-aMT" secondAttribute="trailingMargin" id="ig4-Zh-tQa"/>
+                            <constraint firstItem="EOl-Hj-3Zc" firstAttribute="centerY" secondItem="kQa-Fg-tka" secondAttribute="centerY" id="kRD-NS-IXg"/>
+                            <constraint firstItem="kQa-Fg-tka" firstAttribute="trailing" secondItem="px1-ko-Hn4" secondAttribute="trailing" constant="-4" id="lTD-3p-KEG"/>
                             <constraint firstItem="uWQ-1d-4R8" firstAttribute="leading" secondItem="zuL-ne-aMT" secondAttribute="leading" constant="20" id="mEJ-me-tEb"/>
                             <constraint firstItem="px1-ko-Hn4" firstAttribute="top" secondItem="uWQ-1d-4R8" secondAttribute="bottom" constant="10" id="n11-je-lEn"/>
-                            <constraint firstItem="B56-H3-S35" firstAttribute="trailing" secondItem="px1-ko-Hn4" secondAttribute="trailing" constant="-2" id="qEM-tR-9Rs"/>
                             <constraint firstItem="px1-ko-Hn4" firstAttribute="trailing" secondItem="uWQ-1d-4R8" secondAttribute="trailing" id="v6i-te-zca"/>
                             <constraint firstAttribute="trailing" secondItem="uWQ-1d-4R8" secondAttribute="trailing" constant="20" id="vtN-7n-ZAG"/>
                             <constraint firstItem="wyV-da-FOA" firstAttribute="top" secondItem="px1-ko-Hn4" secondAttribute="bottom" constant="40" id="xOe-Zm-IHl"/>
+                            <constraint firstItem="kQa-Fg-tka" firstAttribute="top" secondItem="px1-ko-Hn4" secondAttribute="bottom" constant="4" id="xrL-DT-gxY"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dontHaveLabel" destination="EOl-Hj-3Zc" id="YtU-B4-Cm3"/>
                         <outlet property="installLabel" destination="KCd-fj-d49" id="wxT-dG-peT"/>
+                        <outlet property="installMethodButton" destination="kQa-Fg-tka" id="DDK-fp-yK7"/>
                         <outlet property="permissionView" destination="Gb4-1s-5Wz" id="98J-ZL-Zcq"/>
                         <outlet property="scanView" destination="L9e-h3-Bl4" id="c77-VX-Kw9"/>
                         <segue destination="Dxo-p4-1c2" kind="presentation" identifier="showPairingAnimation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="3dx-GE-TL6"/>
@@ -3003,7 +2994,7 @@ Cg
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-5487.1999999999998" y="-913.49325337331345"/>
+            <point key="canvasLocation" x="-3382" y="-788"/>
         </scene>
         <!--Help Install Controller-->
         <scene sceneID="90N-KT-7R3">
@@ -3106,26 +3097,15 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iec-Lo-C0I">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="VyW-9H-9SS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                 <state key="normal" title="curl">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="curlTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="Emj-yA-IAr"/>
-                                    <action selector="curlTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="Knt-rz-yS0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wAh-Jz-nFW">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="63x-hf-P0E"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="brew">
-                                    <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="brewTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="1UN-iA-WKb"/>
-                                    <action selector="brewTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="eIX-Lp-pyj"/>
+                                    <action selector="switchIntallMethodTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="Xfq-wZ-wmU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IyZ-TJ-dBh" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
@@ -3161,7 +3141,7 @@ Cg
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Don't have brew?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtC-Yc-YYF">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="14"/>
                                 <color key="textColor" red="0.7043994529437666" green="0.7043994529437666" blue="0.7043994529437666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -3170,11 +3150,9 @@ Cg
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="oAX-Ef-nB4" firstAttribute="leading" secondItem="Nq4-Sw-Jw8" secondAttribute="leading" id="24Z-2R-yZ4"/>
-                            <constraint firstItem="Iec-Lo-C0I" firstAttribute="centerY" secondItem="wAh-Jz-nFW" secondAttribute="centerY" id="3CN-rg-QGy"/>
                             <constraint firstItem="yvW-Mo-dOd" firstAttribute="top" secondItem="oAX-Ef-nB4" secondAttribute="bottom" constant="38.5" id="436-BT-KGB"/>
+                            <constraint firstItem="Iec-Lo-C0I" firstAttribute="trailing" secondItem="yvW-Mo-dOd" secondAttribute="trailing" constant="-4" id="CC6-qN-c7t"/>
                             <constraint firstAttribute="trailing" secondItem="IyZ-TJ-dBh" secondAttribute="trailing" constant="40" id="EAs-vB-pZl"/>
-                            <constraint firstItem="wAh-Jz-nFW" firstAttribute="leading" secondItem="Iec-Lo-C0I" secondAttribute="trailing" constant="10" id="EKF-B6-xJD"/>
-                            <constraint firstItem="wAh-Jz-nFW" firstAttribute="top" secondItem="yvW-Mo-dOd" secondAttribute="bottom" constant="6.5" id="IsV-Fb-X2Z"/>
                             <constraint firstAttribute="trailing" secondItem="AHU-EO-R8o" secondAttribute="trailing" constant="20" id="Jd7-Q3-bWn"/>
                             <constraint firstItem="oAX-Ef-nB4" firstAttribute="top" secondItem="AHU-EO-R8o" secondAttribute="bottom" constant="20" id="NvD-BA-Dlf"/>
                             <constraint firstItem="WN1-sm-cbY" firstAttribute="top" secondItem="9qH-16-PwH" secondAttribute="bottom" constant="10" id="OTm-uC-2yO"/>
@@ -3183,12 +3161,11 @@ Cg
                             <constraint firstAttribute="trailing" secondItem="9qH-16-PwH" secondAttribute="trailing" constant="20" id="URu-MS-yxg"/>
                             <constraint firstItem="Lvr-4y-dL4" firstAttribute="centerX" secondItem="Nq4-Sw-Jw8" secondAttribute="centerX" id="VBr-hG-eMY"/>
                             <constraint firstItem="CtC-Yc-YYF" firstAttribute="centerY" secondItem="Iec-Lo-C0I" secondAttribute="centerY" id="VTn-W0-iOu"/>
-                            <constraint firstItem="wAh-Jz-nFW" firstAttribute="trailing" secondItem="yvW-Mo-dOd" secondAttribute="trailing" constant="-2" id="W3A-pz-n6w"/>
                             <constraint firstItem="IyZ-TJ-dBh" firstAttribute="leading" secondItem="Nq4-Sw-Jw8" secondAttribute="leading" constant="40" id="Xtq-e9-6pw"/>
                             <constraint firstItem="oAX-Ef-nB4" firstAttribute="top" secondItem="BoZ-c1-hVY" secondAttribute="bottom" constant="140" id="Xw6-Ei-1OC"/>
+                            <constraint firstItem="Iec-Lo-C0I" firstAttribute="top" secondItem="yvW-Mo-dOd" secondAttribute="bottom" constant="4" id="dA8-fi-7eL"/>
                             <constraint firstAttribute="trailing" secondItem="oAX-Ef-nB4" secondAttribute="trailing" id="eJP-gu-GAr"/>
                             <constraint firstItem="WN1-sm-cbY" firstAttribute="top" secondItem="0OE-fh-UXf" secondAttribute="bottom" constant="10" id="esQ-2E-n3j"/>
-                            <constraint firstItem="Iec-Lo-C0I" firstAttribute="height" secondItem="wAh-Jz-nFW" secondAttribute="height" id="gKH-qg-g2C"/>
                             <constraint firstItem="CtC-Yc-YYF" firstAttribute="leading" secondItem="yvW-Mo-dOd" secondAttribute="leading" constant="4" id="jUa-kk-Oj2"/>
                             <constraint firstItem="AHU-EO-R8o" firstAttribute="top" secondItem="Lvr-4y-dL4" secondAttribute="bottom" constant="20" id="lBW-bD-TMb"/>
                             <constraint firstItem="AHU-EO-R8o" firstAttribute="leading" secondItem="Nq4-Sw-Jw8" secondAttribute="leading" constant="20" id="oJ4-ac-68g"/>
@@ -3200,7 +3177,9 @@ Cg
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="dontHaveLabel" destination="CtC-Yc-YYF" id="suB-hq-Q82"/>
                         <outlet property="installLabel" destination="tBo-VT-1MR" id="vMV-WL-4gG"/>
+                        <outlet property="installMethodButton" destination="Iec-Lo-C0I" id="Wrk-WX-E6S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KMa-Qc-gXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3210,7 +3189,7 @@ Cg
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-4759.1999999999998" y="-913.49325337331345"/>
+            <point key="canvasLocation" x="-2652" y="-788.45577211394311"/>
         </scene>
     </scenes>
     <resources>

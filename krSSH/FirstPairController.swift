@@ -16,12 +16,12 @@ class FirstPairController:UIViewController, KRScanDelegate {
     enum InstallMethod:String {
         case brew = "brew install kryptco/tap/kr"
         case curl = "curl https://krypt.co/kr | sh"
-        case apt = "apt-get install kr"
         
     }
-    
     @IBOutlet weak var installLabel:UILabel!
-    
+    @IBOutlet weak var dontHaveLabel:UILabel!
+    @IBOutlet weak var installMethodButton:UIButton!
+
     @IBOutlet weak var scanView:UIView!
     @IBOutlet weak var permissionView:UIView!
 
@@ -71,16 +71,26 @@ class FirstPairController:UIViewController, KRScanDelegate {
     
     //MARK: Install Instructions
     
-    @IBAction func brewTapped() {
-        installLabel.text = InstallMethod.brew.rawValue
-    }
-    
-    @IBAction func aptGetTapped() {
-        installLabel.text = InstallMethod.apt.rawValue
-    }
-    
-    @IBAction func curlTapped() {
-        installLabel.text = InstallMethod.curl.rawValue
+    @IBAction func switchIntallMethodTapped() {
+        
+        guard let installMethodString = self.installLabel.text,
+            let installMethod = InstallMethod(rawValue: installMethodString)
+        else {
+            return
+        }
+        
+        switch installMethod {
+        case .brew:
+            self.installLabel.text = InstallMethod.curl.rawValue
+            self.installMethodButton.setTitle("brew", for: UIControlState.normal)
+            self.dontHaveLabel.text = "Install with brew instead?"
+        case .curl:
+            self.installLabel.text = InstallMethod.brew.rawValue
+            self.installMethodButton.setTitle("curl", for: UIControlState.normal)
+            self.dontHaveLabel.text = "Don't have brew?"
+            
+        }
+        
     }
     
     //MARK: Camera
