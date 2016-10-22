@@ -13,13 +13,25 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var qrImageView:UIImageView!
     @IBOutlet var tagTextField:UITextField!
 
-    @IBOutlet var myQRButton:UIButton!
     @IBOutlet var shareButton:UIButton!
 
     
     @IBOutlet var meCommandWindow:UIView!
     @IBOutlet var otherCommandWindow:UIView!
 
+    @IBOutlet var addCommandLabel:UILabel!
+
+    @IBOutlet var githubButton:UIButton!
+    @IBOutlet var githubLine:UIView!
+
+    @IBOutlet var doButton:UIButton!
+    @IBOutlet var doLine:UIView!
+    
+    @IBOutlet var awsButton:UIButton!
+    @IBOutlet var awsLine:UIView!
+
+    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,19 +46,22 @@ class MeController:KRBaseController, UITextFieldDelegate {
 
         
         NotificationCenter.default.addObserver(self, selector: #selector(MeController.redrawMe), name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
-    
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        myQRButton.setBorder(color: UIColor.clear, cornerRadius: 25, borderWidth: 0.0)
         shareButton.setBorder(color: UIColor.clear, cornerRadius: 25, borderWidth: 0.0)
 
         redrawMe()
         Policy.currentViewController = self
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        githubTapped()
+    }
     
      func redrawMe() {
         
@@ -63,6 +78,53 @@ class MeController:KRBaseController, UITextFieldDelegate {
         }
     }
    
+    //MARK: Add Public Key Helper
+    
+    enum UploadMethod:String {
+        case github = "kr github"
+        case digitalOcean = "kr digital-ocean"
+        case aws = "kr aws"
+    }
+    
+    @IBAction func githubTapped() {
+        disableAllUploadMethods()
+        
+        githubButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        githubLine.backgroundColor = UIColor.app
+        addCommandLabel.text = UploadMethod.github.rawValue
+        
+    }
+
+    @IBAction func doTapped() {
+        disableAllUploadMethods()
+        
+        doButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        doLine.backgroundColor = UIColor.app
+        addCommandLabel.text = UploadMethod.digitalOcean.rawValue
+        
+    }
+
+    @IBAction func awsTapped() {
+        disableAllUploadMethods()
+        
+        awsButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        awsLine.backgroundColor = UIColor.app
+        addCommandLabel.text = UploadMethod.aws.rawValue
+
+    }
+    
+    func disableAllUploadMethods() {
+        
+        githubButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        doButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        awsButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+
+        githubLine.backgroundColor = UIColor.clear
+        doLine.backgroundColor = UIColor.clear
+        awsLine.backgroundColor = UIColor.clear
+    }
+
+    
     //MARK: Sharing
     
     @IBAction func shareTextTapped() {
