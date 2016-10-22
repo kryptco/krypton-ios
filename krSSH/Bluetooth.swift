@@ -138,10 +138,10 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
 
     func removeServiceUUIDLocked(uuid: CBUUID) {
         if !allServiceUUIDS.contains(uuid) {
-            log("didn't have uuid \(uuid.uuidString)")
-            return
+            log("didn't have uuid \(uuid.uuidString) in allServiceUUIDS")
+        } else {
+            log("remove uuid \(uuid.uuidString)")
         }
-        log("remove uuid \(uuid.uuidString)")
         allServiceUUIDS.remove(uuid)
         pairedServiceUUIDS.remove(uuid)
         scanningServiceUUIDS.remove(uuid)
