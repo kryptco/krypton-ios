@@ -82,7 +82,6 @@
 		FA632E471DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
 		FA69729B1D78DD6D002F34D6 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729A1D78DD6D002F34D6 /* Peer.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
-		FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729E1D78E819002F34D6 /* PeerManager.swift */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
 		FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
 		FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8141391D70B0F4004FE58C /* AppDelegate.swift */; };
@@ -321,7 +320,6 @@
 		FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Regular.ttf"; sourceTree = "<group>"; };
 		FA69729A1D78DD6D002F34D6 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
-		FA69729E1D78E819002F34D6 /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8141361D70B0F4004FE58C /* Kryptonite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kryptonite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -444,7 +442,6 @@
 			children = (
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
 				FA61EF421D81D150009FD899 /* SessionManager.swift */,
-				FA69729E1D78E819002F34D6 /* PeerManager.swift */,
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
 			);
 			name = Data;
@@ -1128,7 +1125,6 @@
 				FAFE546F1D7B9C1400391FDD /* Seal.swift in Sources */,
 				FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */,
 				FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */,
-				FA69729F1D78E819002F34D6 /* PeerManager.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
 				FAA536231D8F072500549710 /* UIView+KR.swift in Sources */,

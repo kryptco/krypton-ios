@@ -14,7 +14,7 @@ class SessionsEmptyController:KRBaseController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard PeerManager.shared.all.isEmpty else {
+        guard SessionManager.shared.all.isEmpty else {
             dismiss(animated: true, completion: nil)
             return
         }

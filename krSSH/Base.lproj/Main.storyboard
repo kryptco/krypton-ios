@@ -364,7 +364,7 @@
             </objects>
             <point key="canvasLocation" x="-177" y="171"/>
         </scene>
-        <!--Scan-->
+        <!--Pair-->
         <scene sceneID="c7H-AU-rGh">
             <objects>
                 <viewController id="Hqk-jW-f1I" customClass="PairController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
@@ -562,7 +562,7 @@
                             <constraint firstAttribute="trailing" secondItem="PPg-7g-WiY" secondAttribute="trailing" id="yQv-M8-99k"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Scan" image="pair_icon_selected" selectedImage="pair_icon" id="ISJ-Dm-kd0"/>
+                    <tabBarItem key="tabBarItem" title="Pair" image="pair_icon_selected" selectedImage="pair_icon" id="ISJ-Dm-kd0"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO">
                         <color key="tintColor" red="0.1232467592" green="0.69430840019999995" blue="0.54211139679999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.1232467592" green="0.69430840019999995" blue="0.54211139679999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

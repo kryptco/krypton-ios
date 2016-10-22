@@ -116,50 +116,7 @@ extension UIViewController {
                 dispatchMain {
                     self.present(self.emailDialogue(for: me, with: toEmail), animated: true, completion: nil)
                 }
-            case .import where link.type == .kr:
-                guard
-                    let publicKeyWire = try link.properties["pk"]?.fromBase64(),
-                    let emailData = try link.properties["e"]?.fromBase64(),
-                    let email = String(data: emailData, encoding: String.Encoding.utf8)
-                else {
-                        throw InvalidLinkError()
-                }
                 
-                let peer = Peer(email: email, fingerprint: publicKeyWire.fingerprint(), publicKey: publicKeyWire)
-                
-                PeerManager.shared.add(peer: peer)
-                
-                dispatchAfter(delay: 1.0, task: { 
-                    dispatchMain {
-                        if let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
-                        {
-                            successVC.hudText = "Added \(email)'s Public Key!"
-                            successVC.modalPresentationStyle = .overCurrentContext
-                            self.present(successVC, animated: true, completion: nil)
-                        }
-                        
-                    }
-                })
-                
-            case .none where link.type == .file:
-                let pubKeyFile = try String(contentsOf: link.url, encoding: String.Encoding.utf8)
-                let components = try pubKeyFile.byRemovingComment()
-                let pubKeyWire = try components.0.toWire()
-                let peer = Peer(email: components.1, fingerprint: pubKeyWire.fingerprint(), publicKey: pubKeyWire)
-                
-                PeerManager.shared.add(peer: peer)
-                
-                dispatchAfter(delay: 1.0, task: {
-                    dispatchMain {
-                        if let successVC = self.storyboard?.instantiateViewController(withIdentifier: "SuccessController") as? SuccessController
-                        {
-                            successVC.hudText = "Added \(peer.email)'s Public Key!"
-                            successVC.modalPresentationStyle = .overCurrentContext
-                            self.present(successVC, animated: true, completion: nil)
-                        }
-                        
-                    }
-                })                
             default:
                 break
       

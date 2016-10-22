@@ -30,13 +30,10 @@ class PairController: KRBaseController, KRScanDelegate {
     static var isAuthenticated:Bool = false
     
     enum Scanned {
-        case peer(Peer)
         case pairing(Pairing)
         
         var subject:String {
             switch self {
-            case .peer(let p):
-                return p.email.uppercased()
             case .pairing(let p):
                 return p.name.uppercased()
             }
@@ -44,8 +41,6 @@ class PairController: KRBaseController, KRScanDelegate {
         
         var message:String {
             switch self {
-            case .peer(let p):
-                return "Do you want save this as \(p.email)'s public key?"
             case .pairing(let p):
                 return "Do you want to pair with \"\(p.name)\"? This device will be able to request SSH logins using your private key."
             }
@@ -173,13 +168,7 @@ class PairController: KRBaseController, KRScanDelegate {
         }
         
         
-        if let peer = try? Peer(json: json) {
-            let scanned = Scanned.peer(peer)
-            currentScanned = scanned
-            dispatchMain { self.showPopup(scanned: scanned) }
-            return true
-            
-        } else if let pairing = try? Pairing(json: json) {
+        if let pairing = try? Pairing(json: json) {
             let scanned = Scanned.pairing(pairing)
             currentScanned = scanned
             dispatchMain { self.showPopup(scanned: scanned) }
@@ -235,15 +224,6 @@ class PairController: KRBaseController, KRScanDelegate {
                         self.tabBarController?.selectedIndex = 2
                     }
                 })
-            })
-            
-
-
-        case .peer(let peer):
-            PeerManager.shared.add(peer: peer)
-            hidePopup(success: true)
-            dispatchAfter(delay: 1.0, task: {
-                self.tabBarController?.selectedIndex = 3
             })
         }
         

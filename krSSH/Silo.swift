@@ -373,7 +373,7 @@ class Silo {
         }
         
         if let _ = request.list {
-            list = ListResponse(peers: PeerManager.shared.all)
+            list = ListResponse(peers: [])
         }
         if let _ = request.me {
             me = MeResponse(me: try KeyManager.sharedInstance().getMe())
