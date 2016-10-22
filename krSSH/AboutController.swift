@@ -50,6 +50,7 @@ class AboutController: KRBaseController {
     }
 
     @IBAction func userApprovalSettingChanged(sender:UISwitch) {
+        Analytics.postEvent(category: "manual approval", action: String(sender.isOn))
         Policy.needsUserApproval = sender.isOn
         timeRemainingLabel.text = ""
     }
@@ -77,7 +78,9 @@ class AboutController: KRBaseController {
             guard yes else {
                 return
             }
-            
+
+            Analytics.postEvent(category: "keypair", action: "destroy")
+
             let _ = KeyManager.destroyKeyPair()
             SessionManager.shared.destory()
             

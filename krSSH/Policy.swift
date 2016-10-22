@@ -96,11 +96,13 @@ class Policy {
         return cat
         
     }()
+
+    static let approveIdentifier = "approve_identifier"
     
     static var approveAction:UIMutableUserNotificationAction = {
         var approve = UIMutableUserNotificationAction()
         
-        approve.identifier = "approve_identifier"
+        approve.identifier = approveIdentifier
         approve.title = "Allow once"
         approve.activationMode = UIUserNotificationActivationMode.background
         approve.isDestructive = false
@@ -108,11 +110,13 @@ class Policy {
         
         return approve
     }()
-    
+
+
+    static let approveTempIdentifier = "approve_temp_identifier"
     static var approveTemporaryAction:UIMutableUserNotificationAction = {
         var approve = UIMutableUserNotificationAction()
         
-        approve.identifier = "approve_temp_identifier"
+        approve.identifier = approveTempIdentifier
         approve.title = "Allow for 1 hour"
         approve.activationMode = UIUserNotificationActivationMode.background
         approve.isDestructive = false
@@ -120,11 +124,12 @@ class Policy {
         
         return approve
     }()
-    
+
+    static let rejectIdentifier = "reject_identifier"
     static var rejectAction:UIMutableUserNotificationAction = {
         var reject = UIMutableUserNotificationAction()
         
-        reject.identifier = "reject_identifier"
+        reject.identifier = rejectIdentifier
         reject.title = "Reject"
         reject.activationMode = UIUserNotificationActivationMode.background
         reject.isDestructive = true

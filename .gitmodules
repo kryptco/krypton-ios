@@ -4,3 +4,6 @@
 [submodule "AwesomeCache"]
 	path = AwesomeCache
 	url = git@github.com:aschuch/AwesomeCache.git
+[submodule "SwiftHTTP"]
+	path = SwiftHTTP
+	url = git@github.com:daltoniam/SwiftHTTP.git

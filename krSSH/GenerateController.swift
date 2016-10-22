@@ -34,17 +34,19 @@ class GenerateController:UIViewController {
 
         dispatchAsync {
             do {
-                
+
                 try KeyManager.generateKeyPair()
+
+                let elapsed = Date().timeIntervalSince(startTime)
+                
+                Analytics.postEvent(category: "keypair", action: "generate", value: UInt(elapsed))
                 
                 let kp = try KeyManager.sharedInstance().keyPair
                 let pk = try kp.publicKey.export().toBase64()
                 
                 log("Generated public key: \(pk)")
-                
-                let delay = abs(Date().timeIntervalSince(startTime))
-                
-                if delay >= 3.0 {
+
+                if elapsed >= 3.0 {
                     dispatchMain {
                         SwiftSpinner.hide()
                         self.performSegue(withIdentifier: "showSetup", sender: nil)
@@ -52,7 +54,7 @@ class GenerateController:UIViewController {
                     return
                 }
                 
-                dispatchAfter(delay: 3.0 - delay, task: {
+                dispatchAfter(delay: 3.0 - elapsed, task: {
                     dispatchMain {
                         SwiftSpinner.hide()
                         self.performSegue(withIdentifier: "showSetup", sender: nil)

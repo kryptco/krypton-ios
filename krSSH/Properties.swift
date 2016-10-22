@@ -49,6 +49,8 @@ class Properties {
     let openSourceURL = "https://krypt.co/app/open-source"
     let privacyPolicyURL = "https://krypt.co/app/privacy"
 
+    let trackingID = "UA-86173430-1"
+
     init() {
         
     }
