@@ -34,9 +34,69 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.89283197940000003" green="0.89283197940000003" blue="0.89283197940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="QK0-qP-mcO" userLabel="header">
+                                    <rect key="frame" x="0.0" y="64" width="375" height="96"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="When you pair with a new computer, it shows up here. Pair with as many computers as you'd like! " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-yT-3Mb">
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                            <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Paired Devices" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="uxt-xK-IKx">
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                            <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="LVv-yT-3Mb" firstAttribute="leading" secondItem="QK0-qP-mcO" secondAttribute="leading" constant="20" id="45u-qq-xFd"/>
+                                        <constraint firstAttribute="trailing" secondItem="LVv-yT-3Mb" secondAttribute="trailing" constant="20" id="6di-Xx-0Q8"/>
+                                        <constraint firstItem="uxt-xK-IKx" firstAttribute="top" secondItem="QK0-qP-mcO" secondAttribute="top" constant="10" id="8nP-vI-GeX"/>
+                                        <constraint firstItem="LVv-yT-3Mb" firstAttribute="centerX" secondItem="uxt-xK-IKx" secondAttribute="centerX" id="8zC-0U-iG4"/>
+                                        <constraint firstItem="LVv-yT-3Mb" firstAttribute="top" secondItem="uxt-xK-IKx" secondAttribute="bottom" id="Spo-4h-N9e"/>
+                                    </constraints>
+                                </view>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="QjA-3G-Z8r" userLabel="footer">
+                                    <rect key="frame" x="0.0" y="374" width="375" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j67-fI-9z6">
+                                            <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal">
+                                                <attributedString key="attributedTitle">
+                                                    <fragment content="+">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="20" name="AvenirNext-Bold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content=" Pair with a new device">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="16" name="AvenirNext-Bold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                            </state>
+                                            <connections>
+                                                <action selector="addDevice" destination="Mah-te-0DZ" eventType="touchUpInside" id="anB-sH-cOU"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="j67-fI-9z6" firstAttribute="top" secondItem="QjA-3G-Z8r" secondAttribute="top" id="1Tj-Up-DzI"/>
+                                        <constraint firstItem="j67-fI-9z6" firstAttribute="centerX" secondItem="QjA-3G-Z8r" secondAttribute="centerX" id="Lil-wx-Jio"/>
+                                        <constraint firstAttribute="bottom" secondItem="j67-fI-9z6" secondAttribute="bottom" id="PG7-k4-S7s"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="375" height="140"/>
+                                        <rect key="frame" x="0.0" y="216" width="375" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJB-FH-bYG" id="Rnu-6u-07F">
                                             <frame key="frameInset" width="342" height="140"/>
@@ -76,7 +136,8 @@
                                                                     <constraints>
                                                                         <constraint firstItem="nsK-f5-2tJ" firstAttribute="leading" secondItem="lKT-Zi-3mF" secondAttribute="leading" constant="4" id="3bO-Gy-jRx"/>
                                                                         <constraint firstItem="afj-iH-vdA" firstAttribute="centerY" secondItem="nsK-f5-2tJ" secondAttribute="centerY" id="Hvh-MF-oSi"/>
-                                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="centerY" secondItem="lKT-Zi-3mF" secondAttribute="centerY" constant="9" id="SX4-zt-iJc"/>
+                                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="top" secondItem="nsK-f5-2tJ" secondAttribute="bottom" constant="10" id="PeE-3U-ldN"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="76P-xA-CKd" secondAttribute="bottom" constant="10" id="ex3-LE-xks"/>
                                                                         <constraint firstAttribute="trailing" secondItem="76P-xA-CKd" secondAttribute="trailing" constant="10" id="kJJ-CZ-hAr"/>
                                                                         <constraint firstItem="76P-xA-CKd" firstAttribute="leading" secondItem="lKT-Zi-3mF" secondAttribute="leading" constant="10" id="nxR-qY-X82"/>
                                                                         <constraint firstItem="nsK-f5-2tJ" firstAttribute="top" secondItem="lKT-Zi-3mF" secondAttribute="top" constant="4" id="sMl-FQ-w5h"/>

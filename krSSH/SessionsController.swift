@@ -19,7 +19,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.tableFooterView = UIView()
+        //tableView.tableFooterView = UIView()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -36,10 +36,13 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
 
                 guard !self.sessions.isEmpty else {
                     self.emptyView.isHidden = false
+                    self.tableView.isHidden = true
                     return
                 }
                 
                 self.emptyView.isHidden = true
+                self.tableView.isHidden = false
+
             }
         }
         
@@ -58,6 +61,11 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
         }
     }
  
+    
+    @IBAction func addDevice() {
+        (self.parent as? UITabBarController)?.selectedIndex = 1
+    }
+    
     //MARK: TableView
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -101,6 +109,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
             sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
             
             self.emptyView.isHidden = !sessions.isEmpty
+            self.tableView.isHidden = sessions.isEmpty
 
             tableView.deleteRows(at: [indexPath], with: .right)
             tableView.reloadData()
