@@ -13,9 +13,8 @@ struct Resources {
     
     //MARK: Storyboards
     struct Storyboard {
-        static let Main = UIStoryboard(name: "Main",   bundle: Bundle.main)
-        static let Help = UIStoryboard(name: "Help",   bundle: Bundle.main)
-
+        static let Main = UIStoryboard(name: "Main", bundle: Bundle.main)
+        static let Approval = UIStoryboard(name: "Approval", bundle: Bundle.main)
     }
     
     static func makeAppearences() {
