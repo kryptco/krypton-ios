@@ -170,6 +170,20 @@ extension UIViewController {
     
     
     func requestUserAuthorization(session:Session, request:Request) {
+
+        let approvalController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController")
+        approvalController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        approvalController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        
+        (approvalController as? ApproveController)?.session = session
+        (approvalController as? ApproveController)?.request = request
+        
+        self.present(approvalController, animated: true, completion: nil)
+    }
+    
+    
+    /*
+    func requestUserAuthorization(session:Session, request:Request) {
         
         
         let alertController:UIAlertController = UIAlertController(title: "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
@@ -224,5 +238,6 @@ extension UIViewController {
 
 
     }
+ */
 }
 

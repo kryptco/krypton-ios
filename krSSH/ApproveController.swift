@@ -20,6 +20,9 @@ class ApproveController:UIViewController {
 
     var rejectColor = UIColor(hex: 0xFF6361)
     
+    var request:Request?
+    var session:Session?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +53,21 @@ class ApproveController:UIViewController {
     
     @IBAction func approveOnce() {
         
+        guard let request = request, let session = session else {
+            log("no valid request or session", .error)
+            return
+        }
+        
+        do {
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
+            try Silo.shared.send(session: session, response: resp, completionHandler: nil)
+            
+        } catch (let e) {
+            log("send error \(e)", .error)
+            self.showWarning(title: "Error", body: "Could not approve request. \(e)")
+            return
+        }
+        
         self.resultLabel.text = "Allowed once".uppercased()
         
         UIView.animate(withDuration: 0.3, animations: {
@@ -71,6 +89,22 @@ class ApproveController:UIViewController {
     }
     
     @IBAction func approveOneHour() {
+        
+        guard let request = request, let session = session else {
+            log("no valid request or session", .error)
+            return
+        }
+        
+        do {
+            Policy.allowFor(time: Policy.Interval.oneHour)
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
+            try Silo.shared.send(session: session, response: resp, completionHandler: nil)
+            
+        } catch (let e) {
+            log("send error \(e)", .error)
+            self.showWarning(title: "Error", body: "Could not approve request. \(e)")
+            return
+        }
         
         self.resultLabel.text = "Allowed for 1 hour".uppercased()
         
@@ -94,6 +128,16 @@ class ApproveController:UIViewController {
     
     
     @IBAction func dismissReject() {
+
+        do {
+            if let request = request, let session = session {
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: false)
+                try Silo.shared.send(session: session, response: resp, completionHandler: nil)
+            }
+            
+        } catch (let e) {
+            log("send error \(e)", .error)
+        }
         
         self.resultLabel.text = "Rejected".uppercased()
         self.resultView.backgroundColor = rejectColor
