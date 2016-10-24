@@ -173,71 +173,14 @@ extension UIViewController {
 
         let approvalController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController")
         approvalController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        approvalController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        approvalController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
         (approvalController as? ApproveController)?.session = session
         (approvalController as? ApproveController)?.request = request
         
-        self.present(approvalController, animated: true, completion: nil)
+        dispatchMain {
+            self.present(approvalController, animated: true, completion: nil)
+        }
     }
-    
-    
-    /*
-    func requestUserAuthorization(session:Session, request:Request) {
-        
-        
-        let alertController:UIAlertController = UIAlertController(title: "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-        
-        
-        alertController.addAction(UIAlertAction(title: Policy.approveAction.title, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
-
-            do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
-                try Silo.shared.send(session: session, response: resp, completionHandler: nil)
-                
-            } catch (let e) {
-                log("send error \(e)", .error)
-                return
-            }
-            
-        }))
-        
-        alertController.addAction(UIAlertAction(title: Policy.approveTemporaryAction.title, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
-            
-            Policy.allowFor(time: Policy.Interval.oneHour)
-            
-            do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
-                try Silo.shared.send(session: session, response: resp, completionHandler: nil)
-                
-            } catch (let e) {
-                log("send error \(e)", .error)
-                return
-            }
-
-            
-        }))
-
-        
-        
-        alertController.addAction(UIAlertAction(title: Policy.rejectAction.title, style: UIAlertActionStyle.cancel, handler: { (action:UIAlertAction) -> Void in
-            
-            do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: false)
-                try Silo.shared.send(session: session, response: resp, completionHandler: nil)
-                
-            } catch (let e) {
-                log("send error \(e)", .error)
-                return
-            }
-
-            
-        }))
-        
-        self.present(alertController, animated: true, completion: nil)
-
-
-    }
- */
 }
 
