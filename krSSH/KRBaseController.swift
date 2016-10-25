@@ -28,6 +28,12 @@ class KRBaseController: UIViewController {
             Analytics.postControllerView(clazz: String(describing: type(of: self)))
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        checkForUpdatesIfNeeded()
+    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -36,24 +42,6 @@ class KRBaseController: UIViewController {
 
     func shouldPostAnalytics() -> Bool {
         return true
-    }
-    
-}
-
-class KRBaseTabController: UITabBarController {
-    
-    private var linkListener:LinkListener?
-    
-    //MARK: Policy
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Policy.currentViewController = self
-        linkListener = LinkListener(handle)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        linkListener = nil
     }
     
 }
@@ -73,6 +61,12 @@ class KRBaseTableController: UITableViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        checkForUpdatesIfNeeded()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         linkListener = nil
@@ -84,63 +78,39 @@ class KRBaseTableController: UITableViewController {
 
 }
 
-class KRBasePageController: UIPageViewController {
-    
-    private var linkListener:LinkListener?
-    
-    //MARK: Policy
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Policy.currentViewController = self
-        linkListener = LinkListener(handle)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        linkListener = nil
-    }
-    
-}
-
-
-
-
 extension UIViewController {
-    
-    var foregroundNotificationName:NSNotification.Name {
-        return NSNotification.Name(rawValue: "on_foreground_view_will_appear")
-    }
 
+    //MARK: Updates
+    func checkForUpdatesIfNeeded() {
+        Updater.checkForUpdateIfNeeded { (version) in
+            guard let newVersion = version else {
+                log("no new version found")
+                return
+            }
+            
+            let alertController = UIAlertController(title: "New Version",
+                                                    message: "Kryptonite v\(newVersion.string) is now available! Tap \"Download\" to go to the App Store to get the latest and greatest features.",
+                                                    preferredStyle: .alert)
+            
+            let downloadAction = UIAlertAction(title: "Download", style: .default) { (alertAction) in
+                
+                if let appStoreURL = URL(string: Properties.appStoreURL) {
+                    UIApplication.shared.openURL(appStoreURL)
+                }
+            }
+            alertController.addAction(downloadAction)
+            
+            let cancelAction = UIAlertAction(title: "Later", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     
     //MARK: LinkHandler
     struct InvalidLinkError:Error{}
     func handle(link:Link) {
-        
-        do {
-            switch link.command {
-            case .request where link.type == .kr:
-                guard
-                    let emailData = try link.properties["e"]?.fromBase64(),
-                    let toEmail = String(data: emailData, encoding: String.Encoding.utf8)
-                    else {
-                        throw InvalidLinkError()
-                }
-                
-                let me = try KeyManager.sharedInstance().getMe()
-            
-                dispatchMain {
-                    self.present(self.emailDialogue(for: me, with: toEmail), animated: true, completion: nil)
-                }
-                
-            default:
-                break
-      
-            }
-            
-        } catch {
-            self.showWarning(title: "Error", body: "Invalid app link.")
-            return
-        }
         
     }
 }

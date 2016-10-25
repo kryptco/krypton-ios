@@ -118,7 +118,7 @@ class AboutController: KRBaseController {
     @IBAction func contactUsTapped() {
         
         guard MFMailComposeViewController.canSendMail() else {
-            if let mailURL = URL(string: "mailto://\(Properties.shared.contactUsEmail)") {
+            if let mailURL = URL(string: "mailto://\(Properties.contactUsEmail)") {
                 UIApplication.shared.openURL(mailURL)
             }
             
@@ -126,7 +126,7 @@ class AboutController: KRBaseController {
         }
         
         let mailDialogue = MFMailComposeViewController()
-        mailDialogue.setToRecipients([Properties.shared.contactUsEmail])
+        mailDialogue.setToRecipients([Properties.contactUsEmail])
         
         mailDialogue.setSubject("Feedback for Kryptonite \(self.versionLabel.text ?? "")")
         
@@ -147,13 +147,13 @@ class AboutController: KRBaseController {
     }
     
     @IBAction func openSourceTapped() {
-        if let url = URL(string: Properties.shared.openSourceURL) {
+        if let url = URL(string: Properties.openSourceURL) {
             UIApplication.shared.openURL(url)
         }
     }
     
     @IBAction func privacyTapped() {
-        if let url = URL(string: Properties.shared.privacyPolicyURL) {
+        if let url = URL(string: Properties.privacyPolicyURL) {
             UIApplication.shared.openURL(url)
         }
     }

@@ -8,52 +8,44 @@
 
 import Foundation
 
-class Properties {
+struct Properties {
     
-    //MARK: Singelton
-    private static var sharedProperties:Properties?
+    //MARK: Version
+    static let currentVersion = Version(major: 1, minor: 0, patch: 1)
+    static let appVersionURL = "https://s3.amazonaws.com/kr-versions/versions"
     
-    class var shared:Properties {
-        guard let sp = sharedProperties else {
-            sharedProperties = Properties()
-            return sharedProperties!
-        }
-        return sp
-    }
-    
-    
-    //MARK: URLs
-    // private static let remotePropertiesURL = "krypt.co/app/properties.json"
-    // private static let localPropertiesURL = "properties.json"
+    static let updateCheckIntervalForeground = TimeSeconds.hour.multiplied(by: 6)
+    static let updateCheckIntervalBackground = TimeSeconds.week.rawValue
 
-    
-    //MARK: Properties
-    let requestKeyURLBase = "https://app.krypt.co/?c=request&e="
-    
-    let awsAccessKey = "AKIAJMZJ3X6MHMXRF7QQ"
-    let awsSecretKey = "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"
+    //MARK: AWS
+    static let awsAccessKey = "AKIAJMZJ3X6MHMXRF7QQ"
+    static let awsSecretKey = "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"
 
     struct AWSPlatformARN {
         let sandbox:String
         let production:String
     }
     
-    let awsPlatformARN = AWSPlatformARN(
+    static let awsPlatformARN = AWSPlatformARN(
         sandbox: "arn:aws:sns:us-east-1:911777333295:app/APNS_SANDBOX/kryptco-ios-dev",
         production: "arn:aws:sns:us-east-1:911777333295:app/APNS/kryptco-ios-prod")
     
-
-    let awsQueueURLBase = "https://sqs.us-east-1.amazonaws.com/911777333295/"
+    static let awsQueueURLBase = "https://sqs.us-east-1.amazonaws.com/911777333295/"
     
-    let contactUsEmail = "hello@krypt.co"
-    let openSourceURL = "https://krypt.co/app/open-source"
-    let privacyPolicyURL = "https://krypt.co/app/privacy"
 
-    let trackingID = "UA-86173430-1"
+    //MARK: URLs
 
-    init() {
-        
-    }
+    static let contactUsEmail = "hello@krypt.co"
+    static let openSourceURL = "https://krypt.co/app/open-source-libraries"
+    static let privacyPolicyURL = "https://krypt.co/app/privacy"
     
+    static let appStoreURL = "https://beta.itunes.apple.com/v1/app/1161494806"
+    static let appURL = "https://beta.krypt.co"
+
+    //MARK: Analytics
+    static let trackingID = "UA-86173430-1"
+
+
+    init() {}
     
 }

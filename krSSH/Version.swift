@@ -13,8 +13,6 @@ class Version: Comparable {
     let minor:UInt
     let patch:UInt
     
-    static let current = Version(major: 1, minor: 0, patch: 1)
-
     init(major:UInt, minor:UInt, patch:UInt) {
         self.major = major
         self.minor = minor

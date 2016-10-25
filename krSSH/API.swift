@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import SwiftHTTP
 
 enum AWSConfKey:String {
     case sns = "kr-sns"
     case sqs = "kr-sqs"
 }
 
+
+struct UnknownRemoteAppVersionError:Error {}
 
 struct UnknownAWSRequestError:Error {}
 struct BadAWSRequestError:Error {}
@@ -26,7 +29,7 @@ typealias QueueName = String
 
 extension QueueName {
     var url:String {
-        return  "\(Properties.shared.awsQueueURLBase)\(self)"
+        return  "\(Properties.awsQueueURLBase)\(self)"
     }
     
     var responder:String {
@@ -42,8 +45,8 @@ class API {
     
     class func provision() -> Bool {
         
-        let accessKey = Properties.shared.awsAccessKey
-        let secretKey = Properties.shared.awsSecretKey
+        let accessKey = Properties.awsAccessKey
+        let secretKey = Properties.awsSecretKey
         
         let snsCreds = AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
         let snsConf = AWSServiceConfiguration(region: AWSRegionType.usEast1, credentialsProvider: snsCreds)
@@ -66,9 +69,25 @@ class API {
     }
     
     
-    //MARK: SNS
+    //MARK: Version
     func getNewestAppVersion(completionHandler:@escaping ((Version?, Error?)->Void)) {
-        
+        do {
+            try HTTP.GET(Properties.appStoreURL).start({ (response) in
+                
+                guard let jsonObject = (try? JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments)) as? [String:Any],
+                      let semVer = jsonObject["iOS"] as? String,
+                      let version = Version(string: semVer)
+                else {
+                    completionHandler(nil, UnknownRemoteAppVersionError())
+                    return
+                }
+                
+                completionHandler(version, nil)
+            })
+            
+        } catch {
+            completionHandler(nil, error)
+        }
     }
     
     
@@ -81,9 +100,9 @@ class API {
         }
         
         if isDebug() {
-            request.platformApplicationArn = Properties.shared.awsPlatformARN.sandbox
+            request.platformApplicationArn = Properties.awsPlatformARN.sandbox
         } else {
-            request.platformApplicationArn = Properties.shared.awsPlatformARN.production
+            request.platformApplicationArn = Properties.awsPlatformARN.production
         }
         request.token = token
         

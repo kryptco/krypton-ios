@@ -12,29 +12,6 @@ import MessageUI
 
 extension UIViewController: UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
     
-    // Requesting
-    func smsRequest(for phone:String) -> UIViewController {
-        
-        let msgDialogue = MFMessageComposeViewController()
-        msgDialogue.recipients = [phone]
-        msgDialogue.body = "Please send me your SSH public key with kryptonite! \(Link.publicKeyRequest())"
-        msgDialogue.messageComposeDelegate = self
-        
-        
-        return msgDialogue
-    }
-    
-    func emailRequest(for email:String) -> UIViewController {
-        let mailDialogue = MFMailComposeViewController()
-        mailDialogue.setToRecipients([email])
-        
-        mailDialogue.setSubject("Requesting your SSH public key")
-        mailDialogue.setMessageBody("Please send me your SSH public key with kryptonite! \(Link.publicKeyRequest())", isHTML: false)
-        mailDialogue.mailComposeDelegate = self
-                
-        return mailDialogue
-    }
-
     
     // Sending
     func textDialogue(for peer:Peer, with phone:String? = nil) -> UIViewController {
@@ -44,19 +21,15 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         if let phone = phone {
             msgDialogue.recipients = [phone]
         }
-        msgDialogue.body = "\(peer.publicKey.toAuthorized()) \(peer.email)"
+        msgDialogue.body = "This is my SSH public key. Store your SSH Keypair with Kryptonite \(Properties.appURL))."
         msgDialogue.messageComposeDelegate = self
         
-        
+
         let authorizedKey = peer.publicKey.toAuthorized()
         
         if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
             msgDialogue.addAttachmentData(pkData, typeIdentifier: "public.plain-text", filename: "publickey.kr")
         }
-    
-
-        msgDialogue.body = "Import \(peer.email)'s public key with kryptonite!"
-
         
         return msgDialogue
     }
@@ -72,18 +45,12 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
             mailDialogue.setToRecipients([email])
         }
     
-        mailDialogue.setSubject("SSH Public Key")
+        mailDialogue.setSubject("My SSH Public Key")
         mailDialogue.mailComposeDelegate = self
         
         let authorizedKey = peer.publicKey.toAuthorized()
         
-        if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
-            mailDialogue.addAttachmentData(pkData, mimeType: "text/plain", fileName: "publickey.kr")
-        }
-        
-        mailDialogue.setMessageBody("<a href=\"\(Link.publicKeyImport())\"> Import \(peer.email)'s public key with kryptonite by tapping here</a> or download the public key attached below. ", isHTML: true)
-
-        
+        mailDialogue.setMessageBody("My SSH public key is:\n\n\(authorizedKey)\n\n--\n Sent via Kryptonite (\(Properties.appURL))", isHTML: true)
 
         Resources.makeAppearences()
 

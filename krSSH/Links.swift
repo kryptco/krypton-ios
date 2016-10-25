@@ -13,16 +13,13 @@ import Foundation
 
 enum LinkType:String {
     case kr = "kr"
-    case file = "file"
 }
 
-
 enum LinkCommand:String {
-    case request = "request"
-    case `import` = "import"
+    case share = "share"
     case none = ""
-
-    static let all = [request, `import`]
+    
+    static let all = [share]
 
     
     init(url:URL) {
@@ -66,19 +63,6 @@ class Link {
 }
 
 extension Link {
-    static func publicKeyRequest() -> String {
-        let email = (try? KeyManager.sharedInstance().getMe().email)?.data(using: String.Encoding.utf8)?.toBase64(true)
-        return "\(Properties.shared.requestKeyURLBase)\(email ?? "")"
-    }
-    
-    static func publicKeyImport() -> String {
-        let me = try? KeyManager.sharedInstance().getMe()
-        
-        let email = me?.email.data(using: String.Encoding.utf8)?.toBase64(true)
-        let publicKeyWire = me?.publicKey.toBase64() ?? ""
-        
-        return "\(LinkType.kr.rawValue)://?c=\(LinkCommand.import.rawValue)&pk=\(publicKeyWire)&e=\(email ?? "")"
-    }
 
 }
 

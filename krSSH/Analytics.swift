@@ -51,7 +51,7 @@ class Analytics {
     class func post(params: [String:String]) {
         var analyticsParams : [String:String] = [
             "v": "1",
-            "tid": Properties().trackingID,
+            "tid": Properties.trackingID,
             "cid": userID,
             ]
 

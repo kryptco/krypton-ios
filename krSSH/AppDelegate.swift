@@ -105,13 +105,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     {
         
-        
-//        if let alert = (userInfo["aps"] as? [String: Any])?["alert"] as? String, alert != "" {
-//            application.applicationIconBadgeNumber = 1
-//            application.applicationIconBadgeNumber = 0  
-//        }
-        
         log("got background notification")
+        checkForAppUpdateIfNeededBackground()
         
         guard   let queue = (userInfo["aps"] as? [String: Any])?["queue"] as? QueueName,
                 let networkMessageString = (userInfo["aps"] as? [String: Any])?["c"] as? String
@@ -256,6 +251,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    //MARK: Update Checking in the Background
+    
+    func checkForAppUpdateIfNeededBackground() {
+        Updater.checkForUpdateIfNeeded { (version) in
+            guard let newVersion = version else {
+                log("no new version found")
+                return
+            }
+            
+            let notification = UILocalNotification()
+            notification.alertBody = "A new version of Kryptonite (v\(newVersion.string)) is now available!"
+            notification.soundName = UILocalNotificationDefaultSoundName
+            UIApplication.shared.presentLocalNotificationNow(notification)
+
+        }
+
+    }
    
     //MARK: App Lifecycle
     

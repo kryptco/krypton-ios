@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>kryptonite</string>
+	<string>Kryptonite</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -52,9 +52,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>276</string>
+	<string>278</string>
 	<key>GitHash</key>
-	<string>1bc8c8f62b75d1c8b68a89e126fab28abcd8bd84</string>
+	<string>23588c10c16dc23c3f6bb18fcd02c8ae9cffc7b5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>

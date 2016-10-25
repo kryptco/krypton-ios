@@ -56,8 +56,8 @@ class LogGraph:UIView {
         
         for i in 0 ..< bucketSize {
             
-            let curr = Double((bucketSize - i)*TimeSeconds.second.rawValue)
-            let next = Double((bucketSize - i - 1)*TimeSeconds.second.rawValue)
+            let curr = Double(bucketSize - i)*TimeSeconds.second.rawValue
+            let next = Double(bucketSize - i - 1)*TimeSeconds.second.rawValue
             
             for date in sorted {
                 guard

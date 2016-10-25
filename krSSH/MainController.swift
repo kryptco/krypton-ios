@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainController: KRBaseTabController, UITabBarControllerDelegate {
+class MainController: UITabBarController, UITabBarControllerDelegate {
 
     var blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
 
@@ -35,11 +35,6 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
                 
         self.navigationItem.leftBarButtonItem = aboutButton
         self.navigationItem.rightBarButtonItem = helpButton
-        
-//        log("\(LogManager.shared.all.count)")
-//        let _ = KeyManager.destroyKeyPair()
-//        SessionManager.shared.destory()
-//        PeerManager.shared.destory()
     }
     
 
@@ -78,9 +73,6 @@ class MainController: KRBaseTabController, UITabBarControllerDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // temp delete
-        
         
         guard KeyManager.hasKey() else {
             self.performSegue(withIdentifier: "showOnboard", sender: nil)
