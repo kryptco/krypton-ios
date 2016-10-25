@@ -34,8 +34,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.89283197940000003" green="0.89283197940000003" blue="0.89283197940000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="QK0-qP-mcO" userLabel="header">
-                                    <rect key="frame" x="0.0" y="64" width="1000" height="96"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="QK0-qP-mcO" userLabel="header">
+                                    <rect key="frame" x="0.0" y="64" width="375" height="96"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="When you pair with a new computer, it shows up here. Pair with as many computers as you'd like! " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-yT-3Mb">
@@ -58,7 +58,7 @@
                                         <constraint firstItem="LVv-yT-3Mb" firstAttribute="top" secondItem="uxt-xK-IKx" secondAttribute="bottom" id="Spo-4h-N9e"/>
                                     </constraints>
                                 </view>
-                                <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="QjA-3G-Z8r" userLabel="footer">
+                                <view key="tableFooterView" contentMode="scaleToFill" id="QjA-3G-Z8r" userLabel="footer">
                                     <rect key="frame" x="0.0" y="374" width="375" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
@@ -95,7 +95,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="Kryptonite" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SessionCell" rowHeight="140" id="lJB-FH-bYG" customClass="SessionCell" customModule="Kryptonite" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="216" width="375" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJB-FH-bYG" id="Rnu-6u-07F">
@@ -333,7 +333,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="40" id="uTg-IR-NZZ" customClass="LogCell" customModule="Kryptonite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="319.5" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="320" width="375" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
                                     <frame key="frameInset" width="375" height="40"/>
@@ -1767,30 +1767,40 @@ Cg
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imac" translatesAutoresizingMaskIntoConstraints="NO" id="4lE-j6-uJ3">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8t-vd-I5o">
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="mub-Im-KPY"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paired_icon" translatesAutoresizingMaskIntoConstraints="NO" id="4lE-j6-uJ3">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="53" id="Ceq-k2-VdL"/>
-                                    <constraint firstAttribute="width" constant="58" id="Gpx-wP-n84"/>
+                                    <constraint firstAttribute="width" constant="78" id="U5P-La-tGB"/>
+                                    <constraint firstAttribute="height" constant="70" id="sgK-e3-twR"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Paired" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBZ-07-TPn">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Now you are ready to use SSH just as you normally would!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymv-bL-Szh">
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bnE-5b-OuK">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Alex@Spinny" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="ouL-lV-knX">
+                                <state key="normal" title="SKIP">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="N69-xx-flF" kind="unwind" unwindAction="dismissOnboardingWithSegue:" id="O2r-vT-MnT"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="ALEX@SPINNY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="ouL-lV-knX">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Now you are ready to use SSH just as you normally would!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymv-bL-Szh">
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Check that everything works" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnW-nX-2qo">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Try it out!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnW-nX-2qo">
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1822,82 +1832,25 @@ Cg
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bnE-5b-OuK">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="DONE">
-                                    <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="N69-xx-flF" kind="unwind" unwindAction="dismissOnboardingWithSegue:" id="O2r-vT-MnT"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="View my public key" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2n-b9-q6j">
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7il-mr-Api" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUd-9b-fno">
-                                        <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr me" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLP-dQ-2Tu">
-                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="wLP-dQ-2Tu" secondAttribute="trailing" constant="20" id="WCi-Vm-3QH"/>
-                                    <constraint firstItem="kUd-9b-fno" firstAttribute="top" secondItem="7il-mr-Api" secondAttribute="top" constant="10" id="YXM-1k-yB6"/>
-                                    <constraint firstAttribute="bottom" secondItem="kUd-9b-fno" secondAttribute="bottom" constant="10" id="gEB-Up-B8t"/>
-                                    <constraint firstItem="wLP-dQ-2Tu" firstAttribute="leading" secondItem="kUd-9b-fno" secondAttribute="trailing" constant="8" id="k6h-pJ-x4F"/>
-                                    <constraint firstItem="wLP-dQ-2Tu" firstAttribute="centerY" secondItem="kUd-9b-fno" secondAttribute="centerY" id="vFp-ao-o4j"/>
-                                    <constraint firstItem="kUd-9b-fno" firstAttribute="leading" secondItem="7il-mr-Api" secondAttribute="leading" constant="10" id="yTA-rp-MlX"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ylG-mf-3cg">
-                                <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="lvh-98-UCL"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="ylG-mf-3cg" secondAttribute="trailing" id="25R-QW-ggF"/>
-                            <constraint firstItem="VBZ-07-TPn" firstAttribute="top" secondItem="4lE-j6-uJ3" secondAttribute="top" id="38Z-cq-PEU"/>
-                            <constraint firstItem="mnW-nX-2qo" firstAttribute="top" secondItem="ylG-mf-3cg" secondAttribute="bottom" constant="30" id="3FM-fs-fLu"/>
-                            <constraint firstItem="7il-mr-Api" firstAttribute="top" secondItem="N2n-b9-q6j" secondAttribute="bottom" constant="8" id="5m9-bu-nbb"/>
+                            <constraint firstItem="n8t-vd-I5o" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" id="4zz-dS-ELs"/>
+                            <constraint firstItem="mnW-nX-2qo" firstAttribute="top" secondItem="n8t-vd-I5o" secondAttribute="bottom" constant="50" id="7vU-Ku-frJ"/>
                             <constraint firstItem="H93-E0-eT6" firstAttribute="leading" secondItem="mnW-nX-2qo" secondAttribute="leading" id="9Rj-vM-YXF"/>
-                            <constraint firstItem="VBZ-07-TPn" firstAttribute="leading" secondItem="4lE-j6-uJ3" secondAttribute="trailing" constant="8" id="CeI-Vx-ZVK"/>
-                            <constraint firstItem="ymv-bL-Szh" firstAttribute="top" secondItem="ouL-lV-knX" secondAttribute="bottom" constant="20" id="Dxr-h4-7xa"/>
                             <constraint firstAttribute="trailing" secondItem="ymv-bL-Szh" secondAttribute="trailing" constant="20" id="GQo-zL-oit"/>
                             <constraint firstItem="H93-E0-eT6" firstAttribute="trailing" secondItem="mnW-nX-2qo" secondAttribute="trailing" id="K99-Ag-3mM"/>
-                            <constraint firstItem="4lE-j6-uJ3" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="Kvg-wv-Vpr"/>
-                            <constraint firstItem="7il-mr-Api" firstAttribute="trailing" secondItem="N2n-b9-q6j" secondAttribute="trailing" id="NTx-xe-dld"/>
-                            <constraint firstItem="VBZ-07-TPn" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" constant="20" id="OA9-oV-8wG"/>
-                            <constraint firstItem="ylG-mf-3cg" firstAttribute="top" secondItem="ymv-bL-Szh" secondAttribute="bottom" constant="30" id="UcE-pY-4Eh"/>
-                            <constraint firstItem="ouL-lV-knX" firstAttribute="leading" secondItem="4lE-j6-uJ3" secondAttribute="trailing" constant="8" id="XiI-lF-4O1"/>
+                            <constraint firstAttribute="trailing" secondItem="n8t-vd-I5o" secondAttribute="trailing" id="MnU-h4-UJe"/>
+                            <constraint firstItem="4lE-j6-uJ3" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" id="QUr-UB-VtN"/>
+                            <constraint firstItem="n8t-vd-I5o" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" constant="-22" id="R8z-T4-mxl"/>
+                            <constraint firstItem="ouL-lV-knX" firstAttribute="top" secondItem="4lE-j6-uJ3" secondAttribute="bottom" id="TGS-NC-jc3"/>
                             <constraint firstItem="mnW-nX-2qo" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="YQu-cq-WjT"/>
-                            <constraint firstItem="7il-mr-Api" firstAttribute="leading" secondItem="N2n-b9-q6j" secondAttribute="leading" id="auv-xr-Sbm"/>
-                            <constraint firstItem="N2n-b9-q6j" firstAttribute="top" secondItem="H93-E0-eT6" secondAttribute="bottom" constant="30" id="d7x-zg-Jqb"/>
-                            <constraint firstItem="N2n-b9-q6j" firstAttribute="trailing" secondItem="mnW-nX-2qo" secondAttribute="trailing" id="iWA-99-Y82"/>
-                            <constraint firstItem="N2n-b9-q6j" firstAttribute="leading" secondItem="mnW-nX-2qo" secondAttribute="leading" id="lbf-fg-EHI"/>
+                            <constraint firstItem="4lE-j6-uJ3" firstAttribute="centerX" secondItem="um0-21-5iX" secondAttribute="centerX" id="dPG-ak-CI5"/>
                             <constraint firstItem="ymv-bL-Szh" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="mkf-Tw-JbK"/>
                             <constraint firstAttribute="trailing" secondItem="ouL-lV-knX" secondAttribute="trailing" constant="20" id="obw-hg-ObW"/>
                             <constraint firstItem="iWC-jo-Jc1" firstAttribute="top" secondItem="bnE-5b-OuK" secondAttribute="bottom" constant="20" id="qQe-Fq-gl0"/>
-                            <constraint firstItem="ouL-lV-knX" firstAttribute="top" secondItem="VBZ-07-TPn" secondAttribute="bottom" constant="3" id="qdV-QP-Xr5"/>
-                            <constraint firstItem="ylG-mf-3cg" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" id="tfO-Tz-y7A"/>
+                            <constraint firstItem="n8t-vd-I5o" firstAttribute="bottom" secondItem="ymv-bL-Szh" secondAttribute="bottom" constant="10" id="rBW-lU-2cg"/>
+                            <constraint firstItem="ouL-lV-knX" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="vid-21-cwL"/>
                             <constraint firstAttribute="trailing" secondItem="mnW-nX-2qo" secondAttribute="trailing" constant="20" id="vjt-B8-ota"/>
                             <constraint firstItem="H93-E0-eT6" firstAttribute="top" secondItem="mnW-nX-2qo" secondAttribute="bottom" constant="8" id="xRd-k1-wEn"/>
                             <constraint firstAttribute="trailing" secondItem="bnE-5b-OuK" secondAttribute="trailing" constant="20" id="ydh-wg-Iel"/>
@@ -2829,6 +2782,7 @@ Cg
         <image name="me_selected" width="30" height="30"/>
         <image name="pair_icon" width="25" height="25"/>
         <image name="pair_icon_selected" width="25" height="25"/>
+        <image name="paired_icon" width="109" height="79"/>
         <image name="scan_rails" width="256" height="256"/>
         <image name="share" width="128" height="128"/>
         <image name="shield_background" width="176" height="200"/>
