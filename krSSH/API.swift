@@ -66,6 +66,11 @@ class API {
     }
     
     
+    //MARK: SNS
+    func getNewestAppVersion(completionHandler:@escaping ((Version?, Error?)->Void)) {
+        
+    }
+    
     
     
     //MARK: SNS

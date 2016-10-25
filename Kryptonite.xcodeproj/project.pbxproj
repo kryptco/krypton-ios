@@ -93,6 +93,7 @@
 		FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
+		FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
@@ -404,6 +405,7 @@
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = krSSH/Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FA8523C91DBFDA5200D465D2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
@@ -687,6 +689,7 @@
 				FA0322CD1D7A72E800CD7622 /* Session.swift */,
 				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
 				FACAA4B01D887904000B9A01 /* SignatureLog.swift */,
+				FA8523C91DBFDA5200D465D2 /* Version.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1373,6 +1376,7 @@
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
 				FAA536321D8F465600549710 /* SuccessController.swift in Sources */,
 				FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */,
+				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
