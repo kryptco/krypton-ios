@@ -131,7 +131,7 @@ class ApproveController:UIViewController {
         }) { (_) in
             
             self.checkBox.toggleCheckState(true)
-                dispatchAfter(delay: 1.5) {
+                dispatchAfter(delay: 2.0) {
                     self.animateDismiss()
                 }
         }
@@ -174,7 +174,7 @@ class ApproveController:UIViewController {
             
         }) { (_) in
             self.checkBox.toggleCheckState(true)
-            dispatchAfter(delay: 1.5) {
+            dispatchAfter(delay: 2.0) {
                 self.animateDismiss()
             }
         }
@@ -214,7 +214,7 @@ class ApproveController:UIViewController {
             
         }) { (_) in
             self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
-            dispatchAfter(delay: 1.5) {
+            dispatchAfter(delay: 2.0) {
                 self.animateDismiss()
             }
         }
