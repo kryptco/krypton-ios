@@ -12,7 +12,6 @@ import AVFoundation
 class ApproveController:UIViewController {
     
     @IBOutlet weak var contentView:UIView!
-    @IBOutlet weak var contentVisible:NSLayoutConstraint!
     
     @IBOutlet weak var resultView:UIView!
     @IBOutlet weak var resultViewHeight:NSLayoutConstraint!
@@ -55,7 +54,7 @@ class ApproveController:UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIView.animate(withDuration: 1.3) {
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         }
 
     }

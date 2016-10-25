@@ -136,8 +136,8 @@
                                                                     <constraints>
                                                                         <constraint firstItem="nsK-f5-2tJ" firstAttribute="leading" secondItem="lKT-Zi-3mF" secondAttribute="leading" constant="4" id="3bO-Gy-jRx"/>
                                                                         <constraint firstItem="afj-iH-vdA" firstAttribute="centerY" secondItem="nsK-f5-2tJ" secondAttribute="centerY" id="Hvh-MF-oSi"/>
-                                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="top" secondItem="nsK-f5-2tJ" secondAttribute="bottom" constant="10" id="PeE-3U-ldN"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="76P-xA-CKd" secondAttribute="bottom" constant="10" id="ex3-LE-xks"/>
+                                                                        <constraint firstItem="76P-xA-CKd" firstAttribute="top" secondItem="nsK-f5-2tJ" secondAttribute="bottom" constant="4" id="PeE-3U-ldN"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="76P-xA-CKd" secondAttribute="bottom" constant="4" id="ex3-LE-xks"/>
                                                                         <constraint firstAttribute="trailing" secondItem="76P-xA-CKd" secondAttribute="trailing" constant="10" id="kJJ-CZ-hAr"/>
                                                                         <constraint firstItem="76P-xA-CKd" firstAttribute="leading" secondItem="lKT-Zi-3mF" secondAttribute="leading" constant="10" id="nxR-qY-X82"/>
                                                                         <constraint firstItem="nsK-f5-2tJ" firstAttribute="top" secondItem="lKT-Zi-3mF" secondAttribute="top" constant="4" id="sMl-FQ-w5h"/>
@@ -202,7 +202,7 @@
                             </tableView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLJ-6b-J30">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="MiQ-iW-QFf"/>
+                                    <constraint firstAttribute="height" id="MiQ-iW-QFf"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="g2n-Av-AEc" kind="embed" id="9WN-0u-995"/>
@@ -983,7 +983,7 @@
                         <viewControllerLayoutGuide type="bottom" id="59i-D2-7Zs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kQE-TA-mrz">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="0.0"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Paired Devices" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6pK-6e-tvp">
