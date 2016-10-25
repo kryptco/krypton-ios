@@ -27,7 +27,7 @@ class ApproveController:UIViewController {
 
     var rejectColor = UIColor(hex: 0xFF6361)
     
-    var heightCover:CGFloat = 174.0
+    var heightCover:CGFloat = 178.0
     
     var request:Request?
     var session:Session?
