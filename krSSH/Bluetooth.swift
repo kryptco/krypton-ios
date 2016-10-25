@@ -30,6 +30,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         mutex.lock()
         defer{ mutex.unlock() }
+        self.central = central
         if let restoredPeripherals = dict[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] {
             for peripheral in restoredPeripherals {
                 peripheral.delegate = self
@@ -95,14 +96,14 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             }
             return
         }
-        if (scanningServiceUUIDS != shouldBeScanning) {
-            if central.isScanning{
-                central.stopScan()
-            }
-            log("Start scanning")
-            scanningServiceUUIDS = shouldBeScanning
-            central.scanForPeripherals(withServices: Array(scanningServiceUUIDS), options:nil)
+
+        if central.isScanning{
+            central.stopScan()
         }
+
+        scanningServiceUUIDS = shouldBeScanning
+        central.scanForPeripherals(withServices: Array(scanningServiceUUIDS), options:nil)
+        
     }
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
