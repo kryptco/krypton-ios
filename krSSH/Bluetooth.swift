@@ -97,9 +97,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             return
         }
 
-        if central.isScanning{
-            central.stopScan()
-        }
+        log("Scanning for \(scanningServiceUUIDS)")
 
         scanningServiceUUIDS = shouldBeScanning
         central.scanForPeripherals(withServices: Array(scanningServiceUUIDS), options:nil)
