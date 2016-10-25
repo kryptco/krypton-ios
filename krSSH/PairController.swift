@@ -185,7 +185,6 @@ class PairController: KRBaseController, KRScanDelegate {
     func approve(scanned:Scanned) {
         switch scanned {
         case .pairing(let pairing):
-            
             authenticate(completion: { (success) in
                 guard success else {
                     dispatchMain {
@@ -202,8 +201,11 @@ class PairController: KRBaseController, KRScanDelegate {
                     if let existing = SessionManager.shared.get(deviceName: pairing.name) {
                         SessionManager.shared.remove(session: existing)
                         Silo.shared.remove(session: existing)
+                        Analytics.postEvent(category: "device", action: "pair", label: "existing")
+                    } else {
+                        Analytics.postEvent(category: "device", action: "pair", label: "new")
                     }
-                    
+
                     let session = try Session(pairing: pairing)
                     SessionManager.shared.add(session: session)
                     Silo.shared.add(session: session)
@@ -215,7 +217,6 @@ class PairController: KRBaseController, KRScanDelegate {
                 
                 dispatchMain {
                     self.hidePopup(success: true)
-
                 }
 
                 dispatchAfter(delay: 1.0, task: {
@@ -226,8 +227,6 @@ class PairController: KRBaseController, KRScanDelegate {
                 })
             })
         }
-        
-        
     }
     
     func authenticate(completion:@escaping (Bool)->Void) {

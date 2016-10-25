@@ -93,6 +93,7 @@ class SessionDetailController: KRBaseTableController {
     
     @IBAction func revokeTapped() {
         if let session = session {
+            Analytics.postEvent(category: "device", action: "unpair", label: "detail")
             SessionManager.shared.remove(session: session)
             Silo.shared.remove(session: session)
         }

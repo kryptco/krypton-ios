@@ -135,7 +135,8 @@ class ApproveController:UIViewController {
                     self.animateDismiss()
                 }
         }
-        
+
+        Analytics.postEvent(category: "signature", action: "foreground approve", label: "once")
 
     }
     
@@ -178,6 +179,8 @@ class ApproveController:UIViewController {
             }
         }
 
+        Analytics.postEvent(category: "signature", action: "foreground approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
+
     }
     
     
@@ -215,6 +218,8 @@ class ApproveController:UIViewController {
                 self.animateDismiss()
             }
         }
+
+        Analytics.postEvent(category: "signature", action: "foreground reject")
 
     }
     

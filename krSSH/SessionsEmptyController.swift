@@ -19,10 +19,15 @@ class SessionsEmptyController:KRBaseController {
             return
         }
     }
+
+    override func shouldPostAnalytics() -> Bool {
+        return false
+    }
     
     
     
     @IBAction func addDevice() {
+        Analytics.postEvent(category: "button", action: "empty device pair")
         (self.parent?.parent as? UITabBarController)?.selectedIndex = 1
     }
 }

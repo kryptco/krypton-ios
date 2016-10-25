@@ -42,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if application.isRegisteredForRemoteNotifications {
             self.registerPushNotifications()
         }
+
+        Analytics.appLaunch()
         
         return true
     }
@@ -138,8 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     }
-    
-    
+
     //MARK: Tap local notification
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         
@@ -199,7 +200,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if identifier == Policy.approveTemporaryAction.identifier {
             Policy.allowFor(time: Policy.Interval.oneHour)
         }
-        
+
+
+        if let identifier = identifier {
+            switch identifier {
+            case Policy.approveIdentifier:
+                Analytics.postEvent(category: "signature", action: "background approve", label: "once")
+            case Policy.approveTempIdentifier:
+                Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
+            case Policy.rejectIdentifier:
+                Analytics.postEvent(category: "signature", action: "background reject")
+            default:
+                log("unhandled approval identifier: \(identifier)")
+            }
+        }
+
+
         log("user allows")
         
         guard   let sessionID = userInfo?["session_id"] as? String,
@@ -253,6 +269,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        Analytics.appClose()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -264,7 +281,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
+        Analytics.setUserAgent()
+        Analytics.appOpen()
         pendingAuthorizationMutex.lock {
             if let (session, request) = Policy.pendingAuthorization {
                 log("requesting pending authorization")

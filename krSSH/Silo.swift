@@ -199,7 +199,6 @@ class Silo {
                 log("error wrapping key: \(e)", .error)
                 return
             }
-
         }
     }
 
@@ -286,11 +285,15 @@ class Silo {
             pendingRequests?.setObject("", forKey: request.id, expires: .seconds(300))
 
             Policy.requestUserAuthorization(session: session, request: request)
+
+            Analytics.postEvent(category: "signature", action: "requires approval")
+
             completionHandler?()
             return
         }
-        
-        
+
+        Analytics.postEvent(category: "signature", action: "automatic approval")
+
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
@@ -337,6 +340,7 @@ class Silo {
         var me:MeResponse?
 
         if let _ = request.unpair {
+            Analytics.postEvent(category: "device", action: "unpair", label: "request")
             SessionManager.shared.remove(session: session)
             removeLocked(session: session, sendUnpairResponse: false)
             throw SessionRemovedError()

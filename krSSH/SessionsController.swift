@@ -104,6 +104,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
      // Override to support editing the table view.
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            Analytics.postEvent(category: "device", action: "unpair", label: "slide")
             SessionManager.shared.remove(session: sessions[indexPath.row])
             Silo.shared.remove(session: sessions[indexPath.row])
             sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
