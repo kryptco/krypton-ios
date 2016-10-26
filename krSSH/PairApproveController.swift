@@ -152,35 +152,54 @@ class PairApproveController: UIViewController {
                 }
                 
                 let session = try Session(pairing: pairing)
-                SessionManager.shared.add(session: session)
                 Silo.shared.add(session: session)
-                Silo.shared.startPolling(session: session)
+
+                Silo.shared.listen(to: session) { (success, error) in
+                    guard success && error == nil else {
+                        Silo.shared.remove(session: session)
+                        self.showWarning(title: "Error Pairing", body: "Could not create session with this device. Please try again.")
+                        
+                        Analytics.postEvent(category: "device", action: "pair", label: "failed")
+
+                        dispatchMain {
+                            self.doRejectAnimation()
+                        }
+
+                        return
+                    }
+                    
+                    
+                    SessionManager.shared.add(session: session)
+                    Silo.shared.add(session: session)
+                    Silo.shared.startPolling(session: session)
+                 
+                    dispatchMain {
+                        self.arcView.alpha = 0
+                        
+                        self.checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
+                        self.messageLabel.text = "Paired".uppercased()
+                        
+                        dispatchAfter(delay: 1.0, task: {
+                            
+                            self.dismiss(animated: true, completion: {
+                                self.scanController?.canScan = true
+                                self.tabController?.selectedIndex = 2
+                            })
+                        })
+                    }
+                }
             }
             catch let e {
                 log("error creating session: \(e)", .error)
                 self.showWarning(title: "Error Pairing", body: "Could not create session with this device. \(e))")
-                self.doRejectAnimation()
+                
+                Analytics.postEvent(category: "device", action: "pair", label: "failed")
+
+                dispatchMain {
+                    self.doRejectAnimation()
+                }
             }
-            
-            
-            dispatchMain {
-                self.arcView.alpha = 0
-
-                self.checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
-                self.messageLabel.text = "Paired".uppercased()
-
-                dispatchAfter(delay: 1.0, task: {
-
-                    self.dismiss(animated: true, completion: {
-                        self.scanController?.canScan = true
-                        self.tabController?.selectedIndex = 2
-                    })
-                })
-            }
-            
-            
         })
-
     }
     
     func authenticate(completion:@escaping (Bool)->Void) {

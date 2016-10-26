@@ -11,6 +11,7 @@ import CoreBluetooth
 
 typealias SessionLabel = String
 
+struct NoMessageError:Error{}
 struct SessionRemovedError:Error{}
 struct InvalidRequestTimeError:Error{}
 struct RequestPendingError:Error{}
@@ -100,7 +101,7 @@ class Silo {
                 // otherwise listen
                 
                 self.listen(to: session, completion: { (success, err) in
-                    if let e = err {
+                    if let e = err, !(e is NoMessageError) {
                         log("listen error: \(e)", .error)
                     }
                     
@@ -148,16 +149,21 @@ class Silo {
                     }
                 }
                 
+                completion?(true, nil)
+                return
+                
             case .sent:
                 log("sent")
                 completion?(true, nil)
+                return
 
             case .failure(let e):
                 log("error recieving: \(e)", LogType.error)
                 completion?(false, e)
+                return
             }
             
-            completion?(true, nil)
+            completion?(true, NoMessageError())
         }
 
     }

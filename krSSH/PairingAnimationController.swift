@@ -33,10 +33,10 @@ class PairingAnimationController:UIViewController {
         let startTime = Date()
         
         Silo.shared.listen(to: session) { (success, error) in
-            guard success else {
+            guard success && error == nil else {
                 Silo.shared.remove(session: session)
 
-                self.showWarning(title: "Error Pairing", body: "Could not pair with machine. Error: \(error). Try again.", then: {
+                self.showWarning(title: "Error Pairing", body: "Could not pair with machine. Please try again.", then: {
                     self.dismiss(animated: true, completion: nil)
                 })
                 return

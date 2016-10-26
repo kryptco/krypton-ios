@@ -31,7 +31,10 @@ final class Response:JSONConvertable {
     init(json: JSON) throws {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
-        self.approvedUntil = try json ~> "approved_until"
+        
+        if let approvedUntil:Int = try? json ~> "approved_until" {
+            self.approvedUntil = approvedUntil
+        }
 
         if let json:JSON = try? json ~> "sign_response" {
             self.sign = try SignResponse(json: json)
