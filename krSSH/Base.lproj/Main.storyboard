@@ -1648,7 +1648,7 @@ Cg
                             <constraint firstItem="Ndf-no-4vW" firstAttribute="centerX" secondItem="mRy-VX-Ecx" secondAttribute="centerX" id="RKQ-Mb-wTK"/>
                             <constraint firstItem="w0j-zF-VOM" firstAttribute="top" secondItem="mRy-VX-Ecx" secondAttribute="centerY" constant="30" id="Rq5-tB-F9D"/>
                             <constraint firstItem="6Cc-ak-pOr" firstAttribute="leading" secondItem="Ndf-no-4vW" secondAttribute="trailing" constant="18" id="adg-6v-4vH"/>
-                            <constraint firstItem="w0j-zF-VOM" firstAttribute="top" secondItem="Ndf-no-4vW" secondAttribute="bottom" constant="60" id="b99-0g-eyS"/>
+                            <constraint firstItem="w0j-zF-VOM" firstAttribute="top" secondItem="Ndf-no-4vW" secondAttribute="bottom" constant="30" id="b99-0g-eyS"/>
                             <constraint firstItem="Ndf-no-4vW" firstAttribute="leading" secondItem="96z-Vb-PK6" secondAttribute="trailing" constant="18" id="hae-wD-kfH"/>
                             <constraint firstItem="96z-Vb-PK6" firstAttribute="centerY" secondItem="Ndf-no-4vW" secondAttribute="firstBaseline" id="oyG-xC-p5q"/>
                             <constraint firstAttribute="trailing" secondItem="w0j-zF-VOM" secondAttribute="trailing" constant="20" id="yl7-be-LeV"/>
@@ -1696,8 +1696,8 @@ Cg
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bnE-5b-OuK">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="SKIP">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="DONE">
+                                    <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="N69-xx-flF" kind="unwind" unwindAction="dismissOnboardingWithSegue:" id="O2r-vT-MnT"/>
@@ -1750,7 +1750,7 @@ Cg
                             <constraint firstAttribute="trailing" secondItem="ymv-bL-Szh" secondAttribute="trailing" constant="20" id="GQo-zL-oit"/>
                             <constraint firstItem="H93-E0-eT6" firstAttribute="trailing" secondItem="mnW-nX-2qo" secondAttribute="trailing" id="K99-Ag-3mM"/>
                             <constraint firstAttribute="trailing" secondItem="n8t-vd-I5o" secondAttribute="trailing" id="MnU-h4-UJe"/>
-                            <constraint firstItem="4lE-j6-uJ3" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" id="QUr-UB-VtN"/>
+                            <constraint firstItem="4lE-j6-uJ3" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" constant="20" id="QUr-UB-VtN"/>
                             <constraint firstItem="n8t-vd-I5o" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" constant="-22" id="R8z-T4-mxl"/>
                             <constraint firstItem="ouL-lV-knX" firstAttribute="top" secondItem="4lE-j6-uJ3" secondAttribute="bottom" id="TGS-NC-jc3"/>
                             <constraint firstItem="mnW-nX-2qo" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="YQu-cq-WjT"/>
@@ -1758,7 +1758,7 @@ Cg
                             <constraint firstItem="ymv-bL-Szh" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="mkf-Tw-JbK"/>
                             <constraint firstAttribute="trailing" secondItem="ouL-lV-knX" secondAttribute="trailing" constant="20" id="obw-hg-ObW"/>
                             <constraint firstItem="iWC-jo-Jc1" firstAttribute="top" secondItem="bnE-5b-OuK" secondAttribute="bottom" constant="20" id="qQe-Fq-gl0"/>
-                            <constraint firstItem="n8t-vd-I5o" firstAttribute="bottom" secondItem="ymv-bL-Szh" secondAttribute="bottom" constant="10" id="rBW-lU-2cg"/>
+                            <constraint firstItem="n8t-vd-I5o" firstAttribute="bottom" secondItem="ymv-bL-Szh" secondAttribute="bottom" constant="20" id="rBW-lU-2cg"/>
                             <constraint firstItem="ouL-lV-knX" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="vid-21-cwL"/>
                             <constraint firstAttribute="trailing" secondItem="mnW-nX-2qo" secondAttribute="trailing" constant="20" id="vjt-B8-ota"/>
                             <constraint firstItem="H93-E0-eT6" firstAttribute="top" secondItem="mnW-nX-2qo" secondAttribute="bottom" constant="8" id="xRd-k1-wEn"/>
