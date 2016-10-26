@@ -21,6 +21,8 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var peripheralCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
     var knownPeripherals: Cache<NSString>? = try? Cache<NSString>(name: "BLUETOOTH_PERIPHERALS")
     var triedKnownPeripherals: Cache<NSString>? = try? Cache<NSString>(name: "TRIED_BLUETOOTH_PERIPHERALS")
+    var recentPeripheralConnections: Cache<NSString>? = try? Cache<NSString>(name: "TRIED_BLUETOOTH_PERIPHERALS_CONNECT")
+
 
     var characteristicMessageBuffers: [CBCharacteristic: Data] = [:]
     var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
@@ -105,7 +107,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             if !pairedPeripherals.values.contains(matchingPeripheral) {
                 log("found unpaired connected peripheral with services \(matchingPeripheral.services)")
                 discoveredPeripherals.insert(matchingPeripheral)
-                central.connect(matchingPeripheral, options: nil)
+                connectPeripheral(central, matchingPeripheral)
             }
         }
 
@@ -123,7 +125,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                     triedKnownPeripherals.setObject(knownPeripheral.identifier.uuidString as NSString, forKey: knownPeripheral.identifier.uuidString, expires: .seconds(3600))
                     log("found unpaired known peripheral with services \(knownPeripheral.services)")
                     discoveredPeripherals.insert(knownPeripheral)
-                    central.connect(knownPeripheral, options: nil)
+                    connectPeripheral(central, knownPeripheral)
                 }
             }
         }
@@ -199,6 +201,20 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         log("Discovered \(peripheral.name) at RSSI \(RSSI)")
         //  keep reference so not GCed
         discoveredPeripherals.insert(peripheral)
+
+        connectPeripheral(central, peripheral)
+
+    }
+
+    func connectPeripheral(_ central: CBCentralManager, _ peripheral: CBPeripheral) {
+        if let recentPeripheralConnections = recentPeripheralConnections {
+            recentPeripheralConnections.removeExpiredObjects()
+            if recentPeripheralConnections.object(forKey: peripheral.identifier.uuidString) != nil {
+                return
+            }
+            recentPeripheralConnections.setObject("", forKey: peripheral.identifier.uuidString, expires: .seconds(10))
+        }
+
         central.connect(peripheral, options: nil)
     }
 
@@ -236,6 +252,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             peripheral.discoverCharacteristics([krsshCharUUID], for: service)
         }
         if !foundPairedServiceUUID {
+            log("disconnected peripheral with no relevant services \(peripheral.identifier.uuidString)")
             central?.cancelPeripheralConnection(peripheral)
         }
         scanLogic()
