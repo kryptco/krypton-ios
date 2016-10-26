@@ -50,7 +50,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         
         let authorizedKey = peer.publicKey.toAuthorized()
         
-        mailDialogue.setMessageBody("My SSH public key is:\n\n\(authorizedKey)\n\n--\n Sent via Kryptonite (\(Properties.appURL))", isHTML: true)
+        mailDialogue.setMessageBody("My SSH public key is:\n\n\(authorizedKey)\n\n\n--\nSent via Kryptonite (\(Properties.appURL))", isHTML: false)
 
         Resources.makeAppearences()
 
