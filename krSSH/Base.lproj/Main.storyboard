@@ -1293,7 +1293,7 @@ Cg
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Qu-AE-EQU" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
+                            <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Qu-AE-EQU" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="Hzn-kb-WyV"/>
                                     <constraint firstAttribute="height" constant="60" id="PKx-Bi-3nK"/>
@@ -2047,7 +2047,7 @@ Cg
                                                 <constraint firstAttribute="height" constant="1" id="ArO-2c-by1"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mk-0b-6QV" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
+                                        <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mk-0b-6QV" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="EVz-7F-ELU"/>
                                                 <constraint firstAttribute="height" constant="80" id="UJY-3U-31j"/>
