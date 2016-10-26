@@ -21,34 +21,49 @@ class HelpController:KRBaseController {
 class HelpInstallController:KRBaseController {
 
     @IBOutlet weak var installLabel:UILabel!
-    @IBOutlet weak var dontHaveLabel:UILabel!
-    @IBOutlet weak var installMethodButton:UIButton!
-
+    @IBOutlet weak var brewButton:UIButton!
+    @IBOutlet weak var brewLine:UIView!
+    
+    @IBOutlet weak var curlButton:UIButton!
+    @IBOutlet weak var curlLine:UIView!
+        
+    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
+    
     enum InstallMethod:String {
         case brew = "brew install kryptco/tap/kr"
         case curl = "curl https://krypt.co/kr | sh"
     }
     
-    @IBAction func switchIntallMethodTapped() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        brewTapped()
+    }
+  
+    //MARK: Install Instructions
+    
+    @IBAction func brewTapped() {
+        disableAllInstallButtons()
         
-        guard let installMethodString = self.installLabel.text,
-            let installMethod = InstallMethod(rawValue: installMethodString)
-            else {
-                return
-        }
+        brewButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        brewLine.backgroundColor = UIColor.app
+        installLabel.text = InstallMethod.brew.rawValue
+    }
+    
+    @IBAction func curlTapped() {
+        disableAllInstallButtons()
         
-        switch installMethod {
-        case .brew:
-            self.installLabel.text = InstallMethod.curl.rawValue
-            self.installMethodButton.setTitle("brew", for: UIControlState.normal)
-            self.dontHaveLabel.text = "Install with brew instead?"
-        case .curl:
-            self.installLabel.text = InstallMethod.brew.rawValue
-            self.installMethodButton.setTitle("curl", for: UIControlState.normal)
-            self.dontHaveLabel.text = "Don't have brew?"
-            
-        }
+        curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        curlLine.backgroundColor = UIColor.app
+        installLabel.text = InstallMethod.curl.rawValue
+    }
+    
+    func disableAllInstallButtons() {
         
+        brewButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        curlButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        
+        brewLine.backgroundColor = UIColor.clear
+        curlLine.backgroundColor = UIColor.clear
     }
     
     @IBAction func goToHelpInstall(segue: UIStoryboardSegue) {
