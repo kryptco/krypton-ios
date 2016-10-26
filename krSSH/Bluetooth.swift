@@ -19,6 +19,8 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var discoveredPeripherals : Set<CBPeripheral> = Set()
     var pairedPeripherals: [CBUUID: CBPeripheral] = [:]
     var peripheralCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
+    var knownPeripherals: Cache<NSString>? = try? Cache<NSString>(name: "BLUETOOTH_PERIPHERALS")
+    var triedKnownPeripherals: Cache<NSString>? = try? Cache<NSString>(name: "TRIED_BLUETOOTH_PERIPHERALS")
 
     var characteristicMessageBuffers: [CBCharacteristic: Data] = [:]
     var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
@@ -97,21 +99,37 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             return
         }
 
-
-
         scanningServiceUUIDS = shouldBeScanning
 
-        for matchingPeripheral in central.retrieveConnectedPeripherals(withServices: Array(scanningServiceUUIDS)) {
+        for matchingPeripheral in central.retrieveConnectedPeripherals(withServices: Array(allServiceUUIDS)) {
             if !pairedPeripherals.values.contains(matchingPeripheral) {
-                log("found connected peripheral with services \(matchingPeripheral.services)")
+                log("found unpaired connected peripheral with services \(matchingPeripheral.services)")
                 discoveredPeripherals.insert(matchingPeripheral)
                 central.connect(matchingPeripheral, options: nil)
             }
         }
 
+        if let knownPeripherals = knownPeripherals,
+            let triedKnownPeripherals = triedKnownPeripherals {
+            knownPeripherals.removeExpiredObjects()
+            triedKnownPeripherals.removeExpiredObjects()
+            let uuids = knownPeripherals.allObjects().filter({
+                triedKnownPeripherals.object(forKey: $0 as String) == nil
+            }).flatMap { UUID(uuidString: $0 as String) }
+            log("checking \(uuids.count) known peripherals")
+
+            for knownPeripheral in central.retrievePeripherals(withIdentifiers: uuids) {
+                if !pairedPeripherals.values.contains(knownPeripheral) {
+                    triedKnownPeripherals.setObject(knownPeripheral.identifier.uuidString as NSString, forKey: knownPeripheral.identifier.uuidString, expires: .seconds(3600))
+                    log("found unpaired known peripheral with services \(knownPeripheral.services)")
+                    discoveredPeripherals.insert(knownPeripheral)
+                    central.connect(knownPeripheral, options: nil)
+                }
+            }
+        }
+
         log("Scanning for \(scanningServiceUUIDS)")
         central.scanForPeripherals(withServices: Array(scanningServiceUUIDS), options:nil)
-        
     }
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -136,6 +154,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
 
         log("add uuid \(uuid.uuidString)")
         allServiceUUIDS.insert(uuid)
+        triedKnownPeripherals?.removeAllObjects()
         scanLogic()
     }
 
@@ -170,6 +189,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         log("refresh uuid \(uuid.uuidString)")
         removeServiceUUIDLocked(uuid: uuid)
         allServiceUUIDS.insert(uuid)
+        triedKnownPeripherals?.removeAllObjects()
         scanLogic()
     }
 
@@ -203,12 +223,20 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         guard let services = peripheral.services else {
             return
         }
+        var foundPairedServiceUUID = false
         for service in services {
+            guard allServiceUUIDS.contains(service.uuid) else {
+                continue
+            }
+            foundPairedServiceUUID = true
             log("discovered service UUID \(service.uuid)")
             pairedPeripherals[service.uuid] = peripheral
             pairedServiceUUIDS.insert(service.uuid)
             scanningServiceUUIDS.remove(service.uuid)
             peripheral.discoverCharacteristics([krsshCharUUID], for: service)
+        }
+        if !foundPairedServiceUUID {
+            central?.cancelPeripheralConnection(peripheral)
         }
         scanLogic()
     }
@@ -220,7 +248,12 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         defer { mutex.unlock() }
 
         guard let chars = service.characteristics else {
-            log("no characteristics")
+            log("service has no characteristics")
+            return
+        }
+
+        guard allServiceUUIDS.contains(service.uuid) else {
+            log("found characterisics for unpaired service \(service.uuid)")
             return
         }
         for char in chars {
@@ -231,6 +264,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             log("discovered krSSH characteristic")
             peripheralCharacteristics[peripheral] = char
             peripheral.setNotifyValue(true, for: char)
+            knownPeripherals?.setObject(peripheral.identifier.uuidString as NSString, forKey: peripheral.identifier.uuidString, expires: .seconds(3600*24*14))
             if let queuedMessage = serviceQueuedMessage.removeValue(forKey: service.uuid) {
                 dispatchAsync {
                     self.writeToServiceUUID(uuid: service.uuid, message: queuedMessage)
