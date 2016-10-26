@@ -13,7 +13,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
     @IBOutlet var keyIcon:UILabel!
     @IBOutlet var keyLabel:UILabel!
     
-    @IBOutlet weak var identiconView:UIImageView!
+    @IBOutlet var identiconButton:KRSimpleButton!
     @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var doneButton: UIButton!
 
@@ -32,7 +32,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
             let fp = pk.fingerprint().hexPretty
             
             keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
-            identiconView.image = IGSimpleIdenticon.from(pk.toBase64(), size: CGSize(width: 100, height: 100))
+            identiconButton.setImage(IGSimpleIdenticon.from(pk.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
             
         } catch (let e) {
             self.showWarning(title: "Crypto Error", body: "\(e)")
@@ -111,5 +111,12 @@ class SetupController: UIViewController, UITextFieldDelegate {
         if let firstPair = segue.destination as? FirstPairController {
             firstPair.firstTime = true
         }
+    }
+    
+    //MARK: Identicon
+    @IBAction func identiconTapped() {
+        let alert = UIAlertController(title: "Public Key Identicon", message: "This is your public key identicon. It is a visual representation of the hash of your SSH public key.", preferredStyle: UIAlertControllerStyle.actionSheet)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }

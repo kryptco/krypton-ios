@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class MeController:KRBaseController, UITextFieldDelegate {
-    @IBOutlet var qrImageView:UIImageView!
+    @IBOutlet var identiconButton:KRSimpleButton!
     @IBOutlet var tagTextField:UITextField!
 
     @IBOutlet var shareButton:UIButton!
@@ -71,7 +71,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
             let me = try KeyManager.sharedInstance().getMe()
             tagTextField.text = me.email
             
-            qrImageView.image = IGSimpleIdenticon.from(me.publicKey.toBase64(), size: CGSize(width: 80, height: 80))
+            identiconButton.setImage(IGSimpleIdenticon.from(me.publicKey.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
             
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
@@ -127,39 +127,6 @@ class MeController:KRBaseController, UITextFieldDelegate {
 
     
     //MARK: Sharing
-    
-    @IBAction func shareTextTapped() {
-        
-        guard let me = try? KeyManager.sharedInstance().getMe()
-        else {
-            return
-        }
-        
-        dispatchMain {
-            self.present(self.textDialogue(for: me), animated: true, completion: nil)
-        }
-    }
-    
-    @IBAction func shareEmailTapped() {
-        guard let me = try? KeyManager.sharedInstance().getMe()
-        else {
-            return
-        }
-        
-        dispatchMain {
-            self.present(self.emailDialogue(for: me), animated: true, completion: nil)
-        }
-    }
-    
-    @IBAction func shareCopyTapped() {
-        guard let me = try? KeyManager.sharedInstance().getMe()
-        else {
-            return
-        }
-        
-        copyDialogue(for: me)
-    }
-    
     @IBAction func shareOtherTapped() {
         guard let me = try? KeyManager.sharedInstance().getMe()
         else {
@@ -206,6 +173,12 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @IBAction func dismissQR(segue: UIStoryboardSegue) {
     }
     
-
-
+    //MARK: Identicon
+    @IBAction func identiconTapped() {
+        let alert = UIAlertController(title: "Public Key Identicon", message: "This is your public key identicon. It is a visual representation of the hash of your SSH public key.", preferredStyle: UIAlertControllerStyle.actionSheet)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
 }

@@ -388,7 +388,7 @@
         <scene sceneID="Atm-Dh-fQZ">
             <objects>
                 <navigationController id="QdC-wE-jq3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FCa-7m-VBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -759,122 +759,6 @@
             </objects>
             <point key="canvasLocation" x="4630" y="-491"/>
         </scene>
-        <!--Controller-->
-        <scene sceneID="zDN-BQ-52F">
-            <objects>
-                <viewController id="ZKn-uY-sej" customClass="QRController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2rB-EH-UM4"/>
-                        <viewControllerLayoutGuide type="bottom" id="EMy-Oy-3x0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Jfc-Do-1AQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2I5-Yc-uUY">
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZOb-MD-OZ7">
-                                    <frame key="frameInset"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uq-zY-PYF" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-cz-IND">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="Ec5-cz-IND" secondAttribute="height" multiplier="1:1" id="aLR-KP-fod"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Ec5-cz-IND" secondAttribute="trailing" constant="10" id="4TM-TG-aY2"/>
-                                                <constraint firstItem="Ec5-cz-IND" firstAttribute="top" secondItem="1uq-zY-PYF" secondAttribute="top" constant="10" id="MOE-jE-gOR"/>
-                                                <constraint firstAttribute="width" secondItem="1uq-zY-PYF" secondAttribute="height" multiplier="1:1" id="dg2-DW-sRK"/>
-                                                <constraint firstItem="Ec5-cz-IND" firstAttribute="leading" secondItem="1uq-zY-PYF" secondAttribute="leading" constant="10" id="gm2-Gs-MDX"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ec5-cz-IND" secondAttribute="bottom" constant="10" id="pIN-qi-1Q1"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="20"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cK2-6d-QMl">
-                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                            <state key="normal" title="CLOSE">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <state key="highlighted">
-                                                <color key="titleColor" red="0.35694760022222216" green="0.35694760022222216" blue="0.35694760022222216" alpha="0.79976274923312884" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                            <connections>
-                                                <segue destination="N69-xx-flF" kind="unwind" unwindAction="dismissQRWithSegue:" id="tNA-4b-rdm"/>
-                                            </connections>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Peers can scan this QR code to add your public key to their phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwv-vk-k7u">
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="269" id="66w-PI-Rsr"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="shield_inner" translatesAutoresizingMaskIntoConstraints="NO" id="pfH-ao-GhZ">
-                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="36" id="AqL-ID-raf"/>
-                                                <constraint firstAttribute="width" constant="36" id="isH-Ll-VPQ"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is your public key" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PY4-dZ-zUM">
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="240" id="ojP-sP-Y2F"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <gestureRecognizers/>
-                                    <constraints>
-                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="leading" secondItem="ZOb-MD-OZ7" secondAttribute="leading" constant="20" id="1ur-2G-Ag8"/>
-                                        <constraint firstItem="Hwv-vk-k7u" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="GrO-bV-YUJ"/>
-                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="JRz-HE-YZs"/>
-                                        <constraint firstAttribute="trailing" secondItem="cK2-6d-QMl" secondAttribute="trailing" constant="20" id="JsZ-TY-a5T"/>
-                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="centerY" secondItem="ZOb-MD-OZ7" secondAttribute="centerY" id="LSW-Ze-Dsj"/>
-                                        <constraint firstItem="Hwv-vk-k7u" firstAttribute="top" secondItem="1uq-zY-PYF" secondAttribute="bottom" constant="30" id="YPw-oK-2C2"/>
-                                        <constraint firstItem="PY4-dZ-zUM" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="efY-sW-Uqj"/>
-                                        <constraint firstAttribute="bottom" secondItem="cK2-6d-QMl" secondAttribute="bottom" constant="10" id="gzP-1H-oQj"/>
-                                        <constraint firstItem="PY4-dZ-zUM" firstAttribute="top" secondItem="pfH-ao-GhZ" secondAttribute="bottom" constant="8" id="hzb-Wc-K6p"/>
-                                        <constraint firstItem="pfH-ao-GhZ" firstAttribute="centerX" secondItem="ZOb-MD-OZ7" secondAttribute="centerX" id="nGz-2M-ZIK"/>
-                                        <constraint firstItem="1uq-zY-PYF" firstAttribute="top" secondItem="PY4-dZ-zUM" secondAttribute="bottom" constant="30" id="qpw-Od-Yx1"/>
-                                    </constraints>
-                                    <connections>
-                                        <outletCollection property="gestureRecognizers" destination="2Mv-I2-8ws" appends="YES" id="HJk-DS-hsS"/>
-                                    </connections>
-                                </view>
-                                <blurEffect style="dark"/>
-                            </visualEffectView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="2I5-Yc-uUY" firstAttribute="top" secondItem="2rB-EH-UM4" secondAttribute="bottom" id="3uw-CJ-g3b"/>
-                            <constraint firstAttribute="trailing" secondItem="2I5-Yc-uUY" secondAttribute="trailing" id="B30-In-eb9"/>
-                            <constraint firstItem="2I5-Yc-uUY" firstAttribute="leading" secondItem="Jfc-Do-1AQ" secondAttribute="leading" id="a0Q-pI-24p"/>
-                            <constraint firstItem="EMy-Oy-3x0" firstAttribute="top" secondItem="2I5-Yc-uUY" secondAttribute="bottom" id="heY-zH-LoQ"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="qrImageView" destination="Ec5-cz-IND" id="07t-56-ao5"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lbk-PO-dxD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="down" id="2Mv-I2-8ws">
-                    <connections>
-                        <segue destination="N69-xx-flF" kind="unwind" unwindAction="dismissQRWithSegue:" id="q2E-2K-HqN"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="4540" y="-2383.3583208395803"/>
-        </scene>
         <!--Success Controller-->
         <scene sceneID="OXG-TQ-eg2">
             <objects>
@@ -972,7 +856,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZGp-Y3-EZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3008" y="2806"/>
+            <point key="canvasLocation" x="3761" y="-2143"/>
         </scene>
         <!--Sessions Empty Controller-->
         <scene sceneID="Bw2-VR-U8T">
@@ -1409,17 +1293,21 @@ Cg
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vsx-ht-e5S" customClass="KRImageView" customModule="Kryptonite" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Qu-AE-EQU" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="Vib-dO-RAE"/>
-                                    <constraint firstAttribute="height" constant="60" id="myS-hb-G8y"/>
+                                    <constraint firstAttribute="width" constant="60" id="Hzn-kb-WyV"/>
+                                    <constraint firstAttribute="height" constant="60" id="PKx-Bi-3nK"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="30"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                            </imageView>
+                                <connections>
+                                    <action selector="identiconTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="DEo-eD-KIe"/>
+                                    <action selector="identiconTapped" destination="YMV-qx-Mll" eventType="touchUpInside" id="lRg-tR-7j3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1427,13 +1315,13 @@ Cg
                             <constraint firstItem="fhl-WZ-cb7" firstAttribute="top" secondItem="fVx-I3-R3D" secondAttribute="bottom" constant="20" id="DgW-Aj-GTW"/>
                             <constraint firstItem="Ipv-H4-ypw" firstAttribute="top" secondItem="GrS-Br-jzP" secondAttribute="bottom" constant="10" id="EMz-HF-S7h"/>
                             <constraint firstItem="lsM-Wc-ke2" firstAttribute="leading" secondItem="Pw1-WR-bQV" secondAttribute="leading" id="EPP-Yf-urW"/>
+                            <constraint firstItem="hf0-It-a8o" firstAttribute="centerY" secondItem="Ipv-H4-ypw" secondAttribute="centerY" id="GEF-1t-K8F"/>
                             <constraint firstItem="Ipv-H4-ypw" firstAttribute="leading" secondItem="znE-nY-bIh" secondAttribute="leadingMargin" id="IvA-20-6q0"/>
                             <constraint firstItem="aod-Vi-pEK" firstAttribute="leading" secondItem="znE-nY-bIh" secondAttribute="leading" constant="20" id="JIh-jP-ikH"/>
-                            <constraint firstItem="aod-Vi-pEK" firstAttribute="top" secondItem="Vsx-ht-e5S" secondAttribute="bottom" constant="26" id="JW4-uH-z8g"/>
                             <constraint firstItem="xnP-N2-th3" firstAttribute="top" secondItem="Pw1-WR-bQV" secondAttribute="bottom" constant="4" id="LRy-9q-tx3"/>
-                            <constraint firstItem="hf0-It-a8o" firstAttribute="top" secondItem="Vsx-ht-e5S" secondAttribute="top" id="Mss-PO-MMF"/>
-                            <constraint firstItem="Vsx-ht-e5S" firstAttribute="centerX" secondItem="znE-nY-bIh" secondAttribute="centerX" id="N9o-39-WTC"/>
+                            <constraint firstItem="0Qu-AE-EQU" firstAttribute="centerX" secondItem="znE-nY-bIh" secondAttribute="centerX" id="MlO-k3-5Fj"/>
                             <constraint firstItem="fVx-I3-R3D" firstAttribute="centerY" secondItem="B6P-Et-3mB" secondAttribute="centerY" id="OVt-Tw-Vq7"/>
+                            <constraint firstItem="aod-Vi-pEK" firstAttribute="top" secondItem="0Qu-AE-EQU" secondAttribute="bottom" constant="20" id="Oa0-uW-4BA"/>
                             <constraint firstItem="lsM-Wc-ke2" firstAttribute="leading" secondItem="znE-nY-bIh" secondAttribute="leading" constant="20" id="Og0-EV-Jwo"/>
                             <constraint firstItem="fVx-I3-R3D" firstAttribute="centerX" secondItem="znE-nY-bIh" secondAttribute="centerX" id="PS1-gh-LFo"/>
                             <constraint firstItem="fVx-I3-R3D" firstAttribute="leading" secondItem="B6P-Et-3mB" secondAttribute="trailing" constant="4" id="RmU-rU-qgR"/>
@@ -1442,14 +1330,14 @@ Cg
                             <constraint firstItem="xnP-N2-th3" firstAttribute="leading" secondItem="Pw1-WR-bQV" secondAttribute="leading" id="bpl-DW-Nn2"/>
                             <constraint firstAttribute="trailing" secondItem="aod-Vi-pEK" secondAttribute="trailing" constant="20" id="cp8-3g-Pi7"/>
                             <constraint firstItem="hf0-It-a8o" firstAttribute="trailing" secondItem="znE-nY-bIh" secondAttribute="trailingMargin" id="hOA-g2-Xza"/>
-                            <constraint firstItem="Vsx-ht-e5S" firstAttribute="top" secondItem="Ipv-H4-ypw" secondAttribute="top" id="qsd-S0-Pn4"/>
+                            <constraint firstItem="0Qu-AE-EQU" firstAttribute="top" secondItem="Ipv-H4-ypw" secondAttribute="top" id="htK-ah-H70"/>
                             <constraint firstItem="lsM-Wc-ke2" firstAttribute="top" secondItem="aod-Vi-pEK" secondAttribute="bottom" constant="40" id="wh0-Ov-Pve"/>
                             <constraint firstAttribute="trailing" secondItem="lsM-Wc-ke2" secondAttribute="trailing" constant="20" id="xpN-vi-N1T"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="hf0-It-a8o" id="q4s-Bi-FAL"/>
-                        <outlet property="identiconView" destination="Vsx-ht-e5S" id="W4r-ck-BTT"/>
+                        <outlet property="identiconButton" destination="0Qu-AE-EQU" id="ccR-hB-ZyH"/>
                         <outlet property="keyIcon" destination="B6P-Et-3mB" id="sfw-Kt-r03"/>
                         <outlet property="keyLabel" destination="fVx-I3-R3D" id="U0H-B0-rJA"/>
                         <outlet property="nameTextfield" destination="lsM-Wc-ke2" id="s1i-O3-cKk"/>
@@ -2144,17 +2032,6 @@ Cg
                                     <frame key="frameInset"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YfX-h2-UOh" customClass="KRImageView" customModule="Kryptonite" customModuleProvider="target">
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="EGb-M2-Se2"/>
-                                                <constraint firstAttribute="width" constant="80" id="ntd-IB-cNY"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="40"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </imageView>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="alex@krypt.co" textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="rrc-CV-gf3">
                                             <color key="textColor" red="0.33387558023872677" green="0.33387558023872677" blue="0.33387558023872677" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
@@ -2169,15 +2046,29 @@ Cg
                                                 <constraint firstAttribute="height" constant="1" id="ArO-2c-by1"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mk-0b-6QV" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="EVz-7F-ELU"/>
+                                                <constraint firstAttribute="height" constant="80" id="UJY-3U-31j"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="40"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="identiconTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="1rG-yG-xGx"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="YfX-h2-UOh" firstAttribute="centerX" secondItem="elP-K7-igh" secondAttribute="centerX" id="OCx-XZ-nFN"/>
+                                        <constraint firstItem="8mk-0b-6QV" firstAttribute="centerX" secondItem="elP-K7-igh" secondAttribute="centerX" id="DLM-vL-AhD"/>
+                                        <constraint firstItem="rrc-CV-gf3" firstAttribute="top" secondItem="8mk-0b-6QV" secondAttribute="bottom" constant="10" id="Kjf-wb-ZQf"/>
                                         <constraint firstItem="hC0-Xs-8nj" firstAttribute="leading" secondItem="rrc-CV-gf3" secondAttribute="leading" id="ROR-CH-NID"/>
-                                        <constraint firstItem="YfX-h2-UOh" firstAttribute="top" secondItem="elP-K7-igh" secondAttribute="top" constant="74" id="V7Y-D6-B8t"/>
+                                        <constraint firstItem="8mk-0b-6QV" firstAttribute="top" secondItem="elP-K7-igh" secondAttribute="top" constant="74" id="bVJ-wP-1Pq"/>
                                         <constraint firstItem="hC0-Xs-8nj" firstAttribute="trailing" secondItem="rrc-CV-gf3" secondAttribute="trailing" id="doj-5x-Wcm"/>
                                         <constraint firstItem="rrc-CV-gf3" firstAttribute="centerX" secondItem="elP-K7-igh" secondAttribute="centerX" id="flE-sv-tKZ"/>
                                         <constraint firstItem="hC0-Xs-8nj" firstAttribute="top" secondItem="rrc-CV-gf3" secondAttribute="bottom" id="gxH-9b-4YD"/>
-                                        <constraint firstItem="rrc-CV-gf3" firstAttribute="top" secondItem="YfX-h2-UOh" secondAttribute="bottom" constant="10" id="utu-dp-Mkc"/>
                                     </constraints>
                                 </view>
                                 <constraints>
@@ -2392,9 +2283,9 @@ Cg
                         <outlet property="doLine" destination="q0W-uV-TqU" id="pCr-eE-JxB"/>
                         <outlet property="githubButton" destination="Tfa-NT-hZv" id="TTf-aN-iGO"/>
                         <outlet property="githubLine" destination="ess-4f-QFz" id="duV-c1-7v3"/>
+                        <outlet property="identiconButton" destination="8mk-0b-6QV" id="ot9-Cx-dDS"/>
                         <outlet property="meCommandWindow" destination="eEE-NW-20Z" id="WlA-oC-xZW"/>
                         <outlet property="otherCommandWindow" destination="iUN-2V-sar" id="mf2-a9-eSu"/>
-                        <outlet property="qrImageView" destination="YfX-h2-UOh" id="QBq-jV-Ak2"/>
                         <outlet property="shareButton" destination="MS6-h9-YLF" id="J8k-eJ-qZb"/>
                         <outlet property="tagTextField" destination="rrc-CV-gf3" id="w1l-FX-9vs"/>
                         <segue destination="FBy-gQ-WmY" kind="presentation" identifier="showSuccess" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="Rob-Re-AWf"/>

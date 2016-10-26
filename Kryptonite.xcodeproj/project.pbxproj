@@ -152,7 +152,6 @@
 		FAE495971DBD89F100A97708 /* M13CheckboxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495851DBD89F000A97708 /* M13CheckboxPathGenerator.swift */; };
 		FAE495981DBD89F100A97708 /* M13CheckboxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495861DBD89F000A97708 /* M13CheckboxRadioPathGenerator.swift */; };
 		FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE495991DBD98C400A97708 /* Approval.storyboard */; };
-		FAE9C5531D9E1909000DAD18 /* QRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE9C5521D9E1909000DAD18 /* QRController.swift */; };
 		FAEE048C1D7369C3002A7AFD /* SSHKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */; };
 		FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */ = {isa = PBXBuildFile; fileRef = FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */; };
 		FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
@@ -460,7 +459,6 @@
 		FAE495851DBD89F000A97708 /* M13CheckboxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxPathGenerator.swift; sourceTree = "<group>"; };
 		FAE495861DBD89F000A97708 /* M13CheckboxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxRadioPathGenerator.swift; sourceTree = "<group>"; };
 		FAE4959A1DBD98C400A97708 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Approval.storyboard; sourceTree = "<group>"; };
-		FAE9C5521D9E1909000DAD18 /* QRController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRController.swift; sourceTree = "<group>"; };
 		FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SSHKeyFormat.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SoftwareLibraries; sourceTree = "<group>"; };
 		FAEE04921D73CDD2002A7AFD /* CryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CryptoError.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -613,7 +611,6 @@
 			isa = PBXGroup;
 			children = (
 				FA61EF4C1D8492D5009FD899 /* MeController.swift */,
-				FAE9C5521D9E1909000DAD18 /* QRController.swift */,
 			);
 			name = Me;
 			sourceTree = "<group>";
@@ -1293,7 +1290,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAE4958A1DBD89F100A97708 /* M13CheckboxController.swift in Sources */,
-				FAE9C5531D9E1909000DAD18 /* QRController.swift in Sources */,
 				FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,

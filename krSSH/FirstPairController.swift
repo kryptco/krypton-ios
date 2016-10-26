@@ -120,19 +120,18 @@ class FirstPairController:UIViewController, KRScanDelegate {
     }
     
     func addScanner() {
-        if let sc = self.storyboard?.instantiateViewController(withIdentifier: "KRScanController") as? KRScanController
-        {
-            sc.delegate = self
-            
-            sc.willMove(toParentViewController: self)
-            self.scanView.addSubview(sc.view)
-            self.addChildViewController(sc)
-            sc.didMove(toParentViewController: self)
-            
-            self.scanController = sc
-        }
-
+        let sc = KRScanController()
+        
+        sc.delegate = self
+        sc.willMove(toParentViewController: self)
+        sc.view.frame = scanView.frame
+        scanView.addSubview(sc.view)
+        self.addChildViewController(sc)
+        sc.didMove(toParentViewController: self)
+        
+        self.scanController = sc
     }
+    
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
         
@@ -162,5 +161,5 @@ class FirstPairController:UIViewController, KRScanDelegate {
         
         return false
     }
-    
+
 }
