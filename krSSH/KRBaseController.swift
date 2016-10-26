@@ -84,7 +84,6 @@ extension UIViewController {
     func checkForUpdatesIfNeeded() {
         Updater.checkForUpdateIfNeeded { (version) in
             guard let newVersion = version else {
-                log("no new version found")
                 return
             }
             

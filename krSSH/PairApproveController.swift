@@ -15,17 +15,14 @@ class PairApproveController: UIViewController {
     
     @IBOutlet weak var popupView:UIView!
     @IBOutlet weak var deviceLabel:UILabel!
+    @IBOutlet weak var messageLabel:UILabel!
+
     
-    @IBOutlet weak var result:UIImageView!
-    
+    @IBOutlet weak var buttonView:UIView!
+    @IBOutlet weak var buttonViewHeight:NSLayoutConstraint!
+
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var arcView:UIView!
-
-    @IBOutlet weak var resultView:UIView!
-    @IBOutlet weak var resultViewHeight:NSLayoutConstraint!
-    @IBOutlet weak var resultLabel:UILabel!
-
-    var heightCover:CGFloat = 178.0
 
     static var isAuthenticated:Bool = false
     
@@ -33,14 +30,7 @@ class PairApproveController: UIViewController {
 
     var pairing:Pairing?
 
-    enum ResultImage:String {
-        case check = "check"
-        case x = "x"
-        
-        var image:UIImage? {
-            return UIImage(named: self.rawValue)
-        }
-    }
+    var scanController:KRScanController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +41,6 @@ class PairApproveController: UIViewController {
         popupView.layer.shadowRadius = 3
         popupView.layer.masksToBounds = false
 
-        resultViewHeight.constant = 0
-        resultLabel.alpha = 0
         checkBox.animationDuration = 1.0
         
         if let pairing = pairing {
@@ -87,22 +75,26 @@ class PairApproveController: UIViewController {
         self.checkBox.secondaryCheckmarkTintColor = rejectColor
         self.checkBox.tintColor = rejectColor
         
-        self.resultLabel.text = "Cancelled".uppercased()
-        self.resultView.backgroundColor = rejectColor
-
-        UIView.animate(withDuration: 0.3, animations: {
-            self.arcView.alpha = 0
-            self.resultLabel.alpha = 1.0
-            self.resultViewHeight.constant = self.heightCover
-            self.view.layoutIfNeeded()
-
-        }) { (_) in
-            self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
-            dispatchAfter(delay: 2.0) {
-                self.hidePopup(success: false)
-            }
-        }
+        self.messageLabel.text = "Cancelled".uppercased()
         
+        UIView.animate(withDuration: 0.2, animations: {
+            self.buttonView.alpha = 0
+            }) { (_) in
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.messageLabel.textColor = self.rejectColor
+                    self.arcView.alpha = 0
+                    self.buttonViewHeight.constant = 0
+                    self.view.layoutIfNeeded()
+                    
+                }) { (_) in
+                    self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
+                    dispatchAfter(delay: 2.0) {
+                        self.hidePopup(success: false)
+                    }
+                }
+                
+        }
+ 
 
     }
     
@@ -180,21 +172,11 @@ class PairApproveController: UIViewController {
     //MARK: Hiding popup
     
     func hidePopup(success:Bool) {
-        if success {
-            self.result.image = ResultImage.check.image
-        } else {
-            self.result.image = ResultImage.x.image
-        }
-        
-        UIView.animate(withDuration: 0.5, animations: { 
-            self.popupView.alpha = 0
-        }) { (_) in
-            dispatchAfter(delay: 1.0, task: {
-                self.dismiss(animated: true, completion: { 
-                    (self.parent as? PairController)?.scanViewController?.canScan = true
-                })
+        dispatchAfter(delay: 1.0, task: {
+            self.dismiss(animated: true, completion: {
+                self.scanController?.canScan = true
             })
-        }
+        })
         
     }
     

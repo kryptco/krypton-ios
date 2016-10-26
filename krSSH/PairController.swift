@@ -52,6 +52,7 @@ class PairController: KRBaseController, KRScanDelegate {
                 let pairing = sender as? Pairing
         {
             pairingApproval.pairing = pairing
+            pairingApproval.scanController = scanViewController
         }
     }
     

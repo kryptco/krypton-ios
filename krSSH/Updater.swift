@@ -47,6 +47,8 @@ class Updater {
             return
         }
         
+        log("checking for new version...")
+
         API().getNewestAppVersion { (version, err) in
             guard let remoteVersion = version else {
                 log("could not get remote version: \(err)", .error)
