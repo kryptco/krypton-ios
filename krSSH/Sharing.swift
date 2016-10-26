@@ -21,14 +21,14 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         if let phone = phone {
             msgDialogue.recipients = [phone]
         }
-        msgDialogue.body = "This is my SSH public key. Store your SSH Keypair with Kryptonite \(Properties.appURL))."
+        msgDialogue.body = "This is my SSH public key. Store your SSH Keypair with Kryptonite (\(Properties.appURL))."
         msgDialogue.messageComposeDelegate = self
         
 
         let authorizedKey = peer.publicKey.toAuthorized()
         
         if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
-            msgDialogue.addAttachmentData(pkData, typeIdentifier: "public.plain-text", filename: "publickey.kr")
+            msgDialogue.addAttachmentData(pkData, typeIdentifier: "public.plain-text", filename: "\(peer.email).txt")
         }
         
         return msgDialogue
