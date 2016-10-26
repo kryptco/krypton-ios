@@ -66,7 +66,6 @@
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
-		FA4831211D95DA030089D399 /* ResultImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4831201D95DA030089D399 /* ResultImage.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA49F7871D9B6B3300372556 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA49F7861D9B6B3300372556 /* NotificationCenter.framework */; };
@@ -99,7 +98,6 @@
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
 		FAA5362F1D8F43D100549710 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362E1D8F43D100549710 /* Links.swift */; };
-		FAA536321D8F465600549710 /* SuccessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536311D8F465600549710 /* SuccessController.swift */; };
 		FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E91D79CF97007D1B3A /* JSON.swift */; };
 		FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; };
 		FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
@@ -117,7 +115,7 @@
 		FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FABA4B191D9C21C40057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */; };
-		FABA4B1D1D9C6E690057A666 /* AuthenticateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B1C1D9C6E690057A666 /* AuthenticateController.swift */; };
+		FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE3611DC1097B0073C0EF /* PairApproveController.swift */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
 		FACAA4B41D887923000B9A01 /* krSSH.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */; };
@@ -375,7 +373,6 @@
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
-		FA4831201D95DA030089D399 /* ResultImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultImage.swift; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA49F7851D9B6B3200372556 /* LastCommand.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastCommand.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -409,7 +406,6 @@
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
 		FAA5362E1D8F43D100549710 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
-		FAA536311D8F465600549710 /* SuccessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessController.swift; sourceTree = "<group>"; };
 		FAA6E1E91D79CF97007D1B3A /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSNS.framework; sourceTree = "<group>"; };
 		FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSQS.framework; sourceTree = "<group>"; };
@@ -423,7 +419,7 @@
 		FAB664EE1DBFF18C0094896F /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		FABA4B171D9C21BE0057A666 /* String+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+User.swift"; sourceTree = "<group>"; };
 		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
-		FABA4B1C1D9C6E690057A666 /* AuthenticateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateController.swift; sourceTree = "<group>"; };
+		FABFE3611DC1097B0073C0EF /* PairApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairApproveController.swift; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACAA4B01D887904000B9A01 /* SignatureLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureLog.swift; sourceTree = "<group>"; };
 		FACAA4B31D887923000B9A01 /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
@@ -559,7 +555,7 @@
 			isa = PBXGroup;
 			children = (
 				FA1682501D774C3900A7ED53 /* PairController.swift */,
-				FABA4B1C1D9C6E690057A666 /* AuthenticateController.swift */,
+				FABFE3611DC1097B0073C0EF /* PairApproveController.swift */,
 				FA16824D1D774C2200A7ED53 /* KRScanController.swift */,
 			);
 			name = Pair;
@@ -727,7 +723,6 @@
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
-				FAA536301D8F461300549710 /* UIUtil */,
 			);
 			path = krSSH;
 			sourceTree = "<group>";
@@ -760,15 +755,6 @@
 				FA81414B1D70B10F004FE58C /* UX */,
 			);
 			name = App;
-			sourceTree = "<group>";
-		};
-		FAA536301D8F461300549710 /* UIUtil */ = {
-			isa = PBXGroup;
-			children = (
-				FAA536311D8F465600549710 /* SuccessController.swift */,
-				FA4831201D95DA030089D399 /* ResultImage.swift */,
-			);
-			name = UIUtil;
 			sourceTree = "<group>";
 		};
 		FAA6E1EF1D79E3E3007D1B3A /* API */ = {
@@ -1293,7 +1279,6 @@
 				FAEE048C1D7369C3002A7AFD /* SSHKeyFormat.swift in Sources */,
 				FACAA4B41D887923000B9A01 /* krSSH.xcdatamodeld in Sources */,
 				FAE4958D1DBD89F100A97708 /* M13CheckboxDotController.swift in Sources */,
-				FABA4B1D1D9C6E690057A666 /* AuthenticateController.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
 				8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */,
 				FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */,
@@ -1328,7 +1313,6 @@
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
-				FA4831211D95DA030089D399 /* ResultImage.swift in Sources */,
 				8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */,
 				FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
@@ -1357,7 +1341,6 @@
 				FAA6E1FE1D7A028F007D1B3A /* Pairing.swift in Sources */,
 				FAA536271D8F2EA800549710 /* AboutController.swift in Sources */,
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
-				FAA536321D8F465600549710 /* SuccessController.swift in Sources */,
 				FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */,
 				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
@@ -1390,6 +1373,7 @@
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
+				FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
 				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,

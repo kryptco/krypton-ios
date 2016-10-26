@@ -18,7 +18,30 @@ extension UIView {
             }, completion: nil)
     }
     
+    func spinningArc(lineWidth:CGFloat, ratio:CGFloat = 0.2, color:UIColor = UIColor.app) {
+        let frameSize = self.frame.size
+        
+        let innerCircle = CAShapeLayer()
+        innerCircle.path = UIBezierPath(ovalIn: CGRect(x: 0.0, y: 0.0, width: frameSize.width, height: frameSize.height)).cgPath
+        
+        innerCircle.lineWidth = lineWidth
+        innerCircle.strokeStart = 0.1
+        innerCircle.strokeEnd = 0.1+ratio
+        innerCircle.lineCap = kCALineCapRound
+        innerCircle.fillColor = UIColor.clear.cgColor
+        innerCircle.strokeColor = color.cgColor
+        self.layer.addSublayer(innerCircle)
+        
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotateAnimation.toValue = CGFloat(M_PI*2.0)
+        rotateAnimation.duration = 1.0
+        rotateAnimation.isCumulative = true
+        rotateAnimation.repeatCount = .infinity
+        self.layer.add(rotateAnimation, forKey: "rotation")
+    }
+    
     func stopAnimations() {
         self.layer.removeAllAnimations()
     }
+    
 }
