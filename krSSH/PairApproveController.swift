@@ -179,11 +179,13 @@ class PairApproveController: UIViewController {
                         self.checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
                         self.messageLabel.text = "Paired".uppercased()
                         
-                        dispatchAfter(delay: 1.5, task: {
+                        dispatchAfter(delay: 1.0, task: {
+                            self.tabController?.selectedIndex = 2
                             
-                            self.dismiss(animated: true, completion: {
-                                self.scanController?.canScan = true
-                                self.tabController?.selectedIndex = 2
+                            dispatchAfter(delay: 0.5, task: { 
+                                self.dismiss(animated: true, completion: {
+                                    self.scanController?.canScan = true
+                                })
                             })
                         })
                     }
