@@ -31,7 +31,8 @@ class PairApproveController: UIViewController {
     var pairing:Pairing?
 
     var scanController:KRScanController?
-    
+    var tabController:UITabBarController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,9 +61,32 @@ class PairApproveController: UIViewController {
     //MARK: Accept Reject
     
     @IBAction func acceptTapped() {
+        guard let pairing = self.pairing else {
+            self.doRejectAnimation()
+            return
+        }
+        
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
+        
+        self.messageLabel.text = "Pairing".uppercased()
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.buttonView.alpha = 0
+        }) { (_) in
+            UIView.animate(withDuration: 0.4, animations: {
+                self.messageLabel.textColor = UIColor.app
+                self.buttonViewHeight.constant = 0
+                self.view.layoutIfNeeded()
+                
+            }) { (_) in
+                self.approve(pairing: pairing)
+            }
+            
+        }
+        
+
     }
     
     @IBAction func rejectTapped() {
@@ -71,7 +95,10 @@ class PairApproveController: UIViewController {
         }
         
         Analytics.postEvent(category: "device", action: "pair", label: "reject")
-        
+        doRejectAnimation()
+    }
+    
+    func doRejectAnimation() {
         self.checkBox.secondaryCheckmarkTintColor = rejectColor
         self.checkBox.tintColor = rejectColor
         
@@ -79,22 +106,23 @@ class PairApproveController: UIViewController {
         
         UIView.animate(withDuration: 0.2, animations: {
             self.buttonView.alpha = 0
-            }) { (_) in
-                UIView.animate(withDuration: 0.4, animations: {
-                    self.messageLabel.textColor = self.rejectColor
-                    self.arcView.alpha = 0
-                    self.buttonViewHeight.constant = 0
-                    self.view.layoutIfNeeded()
-                    
-                }) { (_) in
-                    self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
-                    dispatchAfter(delay: 2.0) {
-                        self.hidePopup(success: false)
-                    }
-                }
+        }) { (_) in
+            UIView.animate(withDuration: 0.4, animations: {
+                self.messageLabel.textColor = self.rejectColor
+                self.arcView.alpha = 0
+                self.buttonViewHeight.constant = 0
+                self.view.layoutIfNeeded()
                 
+            }) { (_) in
+                self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
+                dispatchAfter(delay: 1.0, task: {
+                    self.dismiss(animated: true, completion: {
+                        self.scanController?.canScan = true
+                    })
+                })
+            }
+            
         }
- 
 
     }
     
@@ -105,7 +133,7 @@ class PairApproveController: UIViewController {
         authenticate(completion: { (success) in
             guard success else {
                 dispatchMain {
-                    self.hidePopup(success: false)
+                    self.doRejectAnimation()
                 }
                 
                 self.showWarning(title: "Authentication Failed", body: "Authentication is needed to pair to a new device.")
@@ -130,17 +158,27 @@ class PairApproveController: UIViewController {
             }
             catch let e {
                 log("error creating session: \(e)", .error)
+                self.showWarning(title: "Error Pairing", body: "Could not create session with this device. \(e))")
+                self.doRejectAnimation()
             }
+            
             
             dispatchMain {
-                self.hidePopup(success: true)
+                self.arcView.alpha = 0
+
+                self.checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
+                self.messageLabel.text = "Paired".uppercased()
+
+                dispatchAfter(delay: 1.0, task: {
+
+                    self.dismiss(animated: true, completion: {
+                        self.scanController?.canScan = true
+                        self.tabController?.selectedIndex = 2
+                    })
+                })
             }
             
-            dispatchAfter(delay: 1.0, task: {
-                dispatchMain {
-                    self.parent?.tabBarController?.selectedIndex = 2
-                }
-            })
+            
         })
 
     }
@@ -168,17 +206,7 @@ class PairApproveController: UIViewController {
         
     }
 
-    
-    //MARK: Hiding popup
-    
-    func hidePopup(success:Bool) {
-        dispatchAfter(delay: 1.0, task: {
-            self.dismiss(animated: true, completion: {
-                self.scanController?.canScan = true
-            })
-        })
-        
-    }
+
     
 
 }

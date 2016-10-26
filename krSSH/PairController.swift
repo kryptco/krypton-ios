@@ -53,6 +53,7 @@ class PairController: KRBaseController, KRScanDelegate {
         {
             pairingApproval.pairing = pairing
             pairingApproval.scanController = scanViewController
+            pairingApproval.tabController = tabBarController
         }
     }
     
