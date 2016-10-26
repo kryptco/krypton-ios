@@ -1024,9 +1024,9 @@ Cg
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" text="Generating a key pair" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUc-75-pIr">
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Generating a key pair" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUc-75-pIr">
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shield_outer" translatesAutoresizingMaskIntoConstraints="NO" id="YSB-IY-fKV">
@@ -1056,7 +1056,7 @@ Cg
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Private Key" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Weq-Ab-eBK">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Never leaves your phone. The private key is used to authenticate you in an ssh session." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7V7-KO-WGh">
@@ -1073,7 +1073,7 @@ Cg
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Public Key" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mH-Kd-wt9">
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Add the public key to servers, web services such as GitHub, or share it with peers manually." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0m-9g-yV6">
@@ -1185,9 +1185,9 @@ Cg
                                     <segue destination="jeO-uC-lbZ" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="Y5o-pc-uUx"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Your key pair is ready, let's identify it with an email address" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aod-Vi-pEK">
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Your key pair is ready, let's identify it with an email address" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aod-Vi-pEK">
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Qu-AE-EQU" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
@@ -1574,9 +1574,10 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8t-vd-I5o">
-                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="mub-Im-KPY"/>
+                                    <constraint firstAttribute="height" constant="1" id="mub-Im-KPY"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paired_icon" translatesAutoresizingMaskIntoConstraints="NO" id="4lE-j6-uJ3">
@@ -1641,6 +1642,7 @@ Cg
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ymv-bL-Szh" firstAttribute="top" secondItem="ouL-lV-knX" secondAttribute="bottom" id="1MA-tg-9rR"/>
                             <constraint firstItem="n8t-vd-I5o" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" id="4zz-dS-ELs"/>
                             <constraint firstItem="mnW-nX-2qo" firstAttribute="top" secondItem="n8t-vd-I5o" secondAttribute="bottom" constant="50" id="7vU-Ku-frJ"/>
                             <constraint firstItem="H93-E0-eT6" firstAttribute="leading" secondItem="mnW-nX-2qo" secondAttribute="leading" id="9Rj-vM-YXF"/>
@@ -1648,14 +1650,13 @@ Cg
                             <constraint firstItem="H93-E0-eT6" firstAttribute="trailing" secondItem="mnW-nX-2qo" secondAttribute="trailing" id="K99-Ag-3mM"/>
                             <constraint firstAttribute="trailing" secondItem="n8t-vd-I5o" secondAttribute="trailing" id="MnU-h4-UJe"/>
                             <constraint firstItem="4lE-j6-uJ3" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" constant="20" id="QUr-UB-VtN"/>
-                            <constraint firstItem="n8t-vd-I5o" firstAttribute="top" secondItem="l5h-WF-S1R" secondAttribute="bottom" constant="-22" id="R8z-T4-mxl"/>
                             <constraint firstItem="ouL-lV-knX" firstAttribute="top" secondItem="4lE-j6-uJ3" secondAttribute="bottom" id="TGS-NC-jc3"/>
                             <constraint firstItem="mnW-nX-2qo" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="YQu-cq-WjT"/>
                             <constraint firstItem="4lE-j6-uJ3" firstAttribute="centerX" secondItem="um0-21-5iX" secondAttribute="centerX" id="dPG-ak-CI5"/>
+                            <constraint firstItem="n8t-vd-I5o" firstAttribute="top" secondItem="ymv-bL-Szh" secondAttribute="bottom" constant="20" id="lyQ-C5-vBO"/>
                             <constraint firstItem="ymv-bL-Szh" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="mkf-Tw-JbK"/>
                             <constraint firstAttribute="trailing" secondItem="ouL-lV-knX" secondAttribute="trailing" constant="20" id="obw-hg-ObW"/>
                             <constraint firstItem="iWC-jo-Jc1" firstAttribute="top" secondItem="bnE-5b-OuK" secondAttribute="bottom" constant="20" id="qQe-Fq-gl0"/>
-                            <constraint firstItem="n8t-vd-I5o" firstAttribute="bottom" secondItem="ymv-bL-Szh" secondAttribute="bottom" constant="20" id="rBW-lU-2cg"/>
                             <constraint firstItem="ouL-lV-knX" firstAttribute="leading" secondItem="um0-21-5iX" secondAttribute="leading" constant="20" id="vid-21-cwL"/>
                             <constraint firstAttribute="trailing" secondItem="mnW-nX-2qo" secondAttribute="trailing" constant="20" id="vjt-B8-ota"/>
                             <constraint firstItem="H93-E0-eT6" firstAttribute="top" secondItem="mnW-nX-2qo" secondAttribute="bottom" constant="8" id="xRd-k1-wEn"/>
