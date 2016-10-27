@@ -12,6 +12,20 @@ class Analytics {
 
     static let mutex: Mutex = Mutex()
 
+    static var enabled : Bool {
+        mutex.lock()
+        defer { mutex.unlock() }
+        return !UserDefaults.standard.bool(forKey: "analytics_disabled")
+    }
+
+    class func set(disabled: Bool) {
+        postEvent(category: "analytics", action: disabled ? "disabled" : "enabled")
+
+        mutex.lock()
+        defer { mutex.unlock() }
+        UserDefaults.standard.set(disabled, forKey: "analytics_disabled")
+        UserDefaults.standard.synchronize()
+    }
 
     class func setUserAgent() {
         guard UIApplication.shared.applicationState == .active else {
@@ -49,6 +63,9 @@ class Analytics {
 
 
     class func post(params: [String:String]) {
+        guard enabled else {
+            return
+        }
         var analyticsParams : [String:String] = [
             "v": "1",
             "tid": Properties.trackingID,
