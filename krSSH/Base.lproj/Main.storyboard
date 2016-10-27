@@ -399,7 +399,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h50-oO-MIa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-969" y="171"/>
+            <point key="canvasLocation" x="-1111" y="198"/>
         </scene>
         <!--Main Controller-->
         <scene sceneID="YQA-Jr-jTS">
@@ -2121,6 +2121,15 @@ Cg
                                             <constraint firstAttribute="height" constant="1" id="XI5-MJ-tRE"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXM-SU-DNT">
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
+                                        <state key="normal" title="+ Get my team on Kryptonite">
+                                            <color key="titleColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="0.63752156825153372" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -2137,8 +2146,10 @@ Cg
                                     <constraint firstItem="ess-4f-QFz" firstAttribute="top" secondItem="Tfa-NT-hZv" secondAttribute="bottom" constant="2" id="ay6-mI-mzq"/>
                                     <constraint firstItem="5q1-B0-xJU" firstAttribute="leading" secondItem="RM8-vx-TIw" secondAttribute="trailing" constant="24" id="bNM-bq-d1V"/>
                                     <constraint firstItem="RM8-vx-TIw" firstAttribute="centerX" secondItem="iUN-2V-sar" secondAttribute="centerX" id="fTY-Bh-O6b"/>
+                                    <constraint firstAttribute="trailing" secondItem="aXM-SU-DNT" secondAttribute="trailing" constant="20" id="g1o-KN-2CD"/>
                                     <constraint firstAttribute="trailing" secondItem="iUN-2V-sar" secondAttribute="trailing" constant="20" id="gqs-5T-VhA"/>
                                     <constraint firstAttribute="trailing" secondItem="eEE-NW-20Z" secondAttribute="trailing" constant="20" id="hiz-T6-2zc"/>
+                                    <constraint firstItem="MS6-h9-YLF" firstAttribute="top" secondItem="q0W-uV-TqU" secondAttribute="bottom" constant="20" id="hxn-Qu-VTy"/>
                                     <constraint firstItem="iUN-2V-sar" firstAttribute="leading" secondItem="8lm-Ye-OGM" secondAttribute="leading" constant="20" id="kpR-YW-gaM"/>
                                     <constraint firstItem="ess-4f-QFz" firstAttribute="leading" secondItem="Tfa-NT-hZv" secondAttribute="leading" id="ksj-6m-dh0"/>
                                     <constraint firstItem="RM8-vx-TIw" firstAttribute="centerY" secondItem="5q1-B0-xJU" secondAttribute="centerY" id="l7R-OX-Yhk"/>
@@ -2149,6 +2160,7 @@ Cg
                                     <constraint firstItem="3Lq-u0-HJT" firstAttribute="trailing" secondItem="5q1-B0-xJU" secondAttribute="trailing" id="w1o-YT-lgn"/>
                                     <constraint firstItem="q0W-uV-TqU" firstAttribute="trailing" secondItem="RM8-vx-TIw" secondAttribute="trailing" id="x4j-Qr-Mca"/>
                                     <constraint firstItem="q0W-uV-TqU" firstAttribute="leading" secondItem="RM8-vx-TIw" secondAttribute="leading" id="xnH-Vr-rD7"/>
+                                    <constraint firstItem="aXM-SU-DNT" firstAttribute="leading" secondItem="8lm-Ye-OGM" secondAttribute="leading" constant="20" id="xsd-Ov-MxG"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2159,11 +2171,11 @@ Cg
                             <constraint firstItem="aKk-ID-Wah" firstAttribute="top" secondItem="M9f-ul-jyX" secondAttribute="bottom" id="PLl-Gq-LHl"/>
                             <constraint firstItem="BZI-tN-Cgy" firstAttribute="top" secondItem="1nD-98-eKf" secondAttribute="top" id="Q7u-lI-6m3"/>
                             <constraint firstItem="8lm-Ye-OGM" firstAttribute="leading" secondItem="1nD-98-eKf" secondAttribute="leading" id="Uak-SV-jor"/>
+                            <constraint firstItem="aKk-ID-Wah" firstAttribute="top" secondItem="aXM-SU-DNT" secondAttribute="bottom" constant="20" id="Y79-rf-78z"/>
                             <constraint firstItem="8lm-Ye-OGM" firstAttribute="top" secondItem="BZI-tN-Cgy" secondAttribute="bottom" id="aW3-MT-I4J"/>
                             <constraint firstAttribute="trailing" secondItem="BZI-tN-Cgy" secondAttribute="trailing" id="c2u-us-Zy9"/>
                             <constraint firstAttribute="bottom" secondItem="8lm-Ye-OGM" secondAttribute="bottom" id="fkh-3K-NaJ"/>
                             <constraint firstItem="M9f-ul-jyX" firstAttribute="top" secondItem="mRE-ow-Lhg" secondAttribute="bottom" id="fxO-gq-Ylc"/>
-                            <constraint firstItem="aKk-ID-Wah" firstAttribute="top" secondItem="MS6-h9-YLF" secondAttribute="bottom" constant="50" id="iUO-Y9-Xt7"/>
                             <constraint firstAttribute="trailing" secondItem="M9f-ul-jyX" secondAttribute="trailing" id="iiq-Vx-VpI"/>
                             <constraint firstAttribute="trailing" secondItem="8lm-Ye-OGM" secondAttribute="trailing" id="jIu-mO-DMO"/>
                         </constraints>
@@ -2191,7 +2203,7 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTa-oc-dXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2353" y="-1298"/>
+            <point key="canvasLocation" x="2576.8000000000002" y="-1085.3073463268368"/>
         </scene>
         <!--Help Controller-->
         <scene sceneID="nQf-6F-CUm">
