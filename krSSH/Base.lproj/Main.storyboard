@@ -7,6 +7,7 @@
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -388,7 +389,7 @@
         <scene sceneID="Atm-Dh-fQZ">
             <objects>
                 <navigationController id="QdC-wE-jq3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FCa-7m-VBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -584,6 +585,9 @@
                                                             </constraints>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3aO-Tp-xEr">
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="yrQ-r6-HIj"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                                             <state key="normal" title="Pair">
                                                                 <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -618,12 +622,14 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="bMq-7O-3e4" firstAttribute="top" secondItem="qq6-ze-BjS" secondAttribute="bottom" constant="8" id="61j-XH-zX6"/>
+                                                        <constraint firstItem="bMq-7O-3e4" firstAttribute="width" secondItem="ahY-b7-HHQ" secondAttribute="width" multiplier="0.5" id="1re-ZV-r4r"/>
+                                                        <constraint firstItem="bMq-7O-3e4" firstAttribute="top" secondItem="qq6-ze-BjS" secondAttribute="bottom" constant="6" id="61j-XH-zX6"/>
                                                         <constraint firstItem="3aO-Tp-xEr" firstAttribute="centerX" secondItem="ahY-b7-HHQ" secondAttribute="centerX" id="8Ws-Vq-cJJ"/>
-                                                        <constraint firstAttribute="bottom" secondItem="bMq-7O-3e4" secondAttribute="bottom" constant="12" id="HIp-1g-cHG"/>
+                                                        <constraint firstAttribute="bottom" secondItem="bMq-7O-3e4" secondAttribute="bottom" constant="10" id="HIp-1g-cHG"/>
                                                         <constraint firstAttribute="trailing" secondItem="qq6-ze-BjS" secondAttribute="trailing" id="NWE-vu-Qct"/>
-                                                        <constraint firstItem="3aO-Tp-xEr" firstAttribute="top" secondItem="DAZ-CZ-H4p" secondAttribute="bottom" constant="8" id="OoK-L0-5fb"/>
-                                                        <constraint firstItem="qq6-ze-BjS" firstAttribute="top" secondItem="3aO-Tp-xEr" secondAttribute="bottom" constant="8" id="c7m-X6-1JI"/>
+                                                        <constraint firstItem="3aO-Tp-xEr" firstAttribute="top" secondItem="DAZ-CZ-H4p" secondAttribute="bottom" constant="6" id="OoK-L0-5fb"/>
+                                                        <constraint firstItem="3aO-Tp-xEr" firstAttribute="width" secondItem="ahY-b7-HHQ" secondAttribute="width" multiplier="0.5" id="aHf-vm-lcd"/>
+                                                        <constraint firstItem="qq6-ze-BjS" firstAttribute="top" secondItem="3aO-Tp-xEr" secondAttribute="bottom" constant="6" id="c7m-X6-1JI"/>
                                                         <constraint firstAttribute="height" constant="120" id="gel-vX-BtL"/>
                                                         <constraint firstAttribute="trailing" secondItem="DAZ-CZ-H4p" secondAttribute="trailing" id="lv3-97-hft"/>
                                                         <constraint firstItem="bMq-7O-3e4" firstAttribute="centerX" secondItem="ahY-b7-HHQ" secondAttribute="centerX" id="oPG-gv-GmS"/>
@@ -2702,7 +2708,7 @@ Cg
         <image name="trash" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kMu-oa-2FM"/>
+        <segue reference="0R2-zj-seh"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
