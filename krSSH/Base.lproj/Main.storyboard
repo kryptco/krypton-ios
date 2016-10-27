@@ -388,7 +388,7 @@
         <scene sceneID="Atm-Dh-fQZ">
             <objects>
                 <navigationController id="QdC-wE-jq3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1864,6 +1864,9 @@ Cg
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2uy-pH-MZc">
                                                         <color key="onTintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="analyticsEnabledChangedWithSender:" destination="UnB-Qg-F2t" eventType="touchUpInside" id="7CH-uq-36X"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-oD-6Pa">
                                                         <attributedString key="attributedText">
@@ -1967,6 +1970,7 @@ Cg
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="analyticsSwitch" destination="2uy-pH-MZc" id="5Sm-bf-HIe"/>
                         <outlet property="approvalSwitch" destination="56b-kb-Emv" id="ONS-gj-xsB"/>
                         <outlet property="timeRemainingLabel" destination="NZz-lM-lg0" id="Bux-0K-d4r"/>
                         <outlet property="versionLabel" destination="ZS4-x0-EUj" id="LrW-IN-ZT6"/>

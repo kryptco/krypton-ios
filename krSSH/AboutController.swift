@@ -14,6 +14,8 @@ class AboutController: KRBaseController {
 
     @IBOutlet weak var versionLabel:UILabel!
     @IBOutlet weak var approvalSwitch:UISwitch!
+    @IBOutlet weak var analyticsSwitch:UISwitch!
+
     @IBOutlet weak var timeRemainingLabel:UILabel!
 
     override func viewDidLoad() {
@@ -53,6 +55,10 @@ class AboutController: KRBaseController {
         Analytics.postEvent(category: "manual approval", action: String(sender.isOn))
         Policy.needsUserApproval = sender.isOn
         timeRemainingLabel.text = ""
+    }
+    
+    @IBAction func analyticsEnabledChanged(sender:UISwitch) {
+        Analytics.postEvent(category: "analytics enabled", action: String(sender.isOn))
     }
     
     
