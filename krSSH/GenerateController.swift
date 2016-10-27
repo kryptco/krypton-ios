@@ -45,7 +45,7 @@ class GenerateController:UIViewController {
                 let pk = try kp.publicKey.export().toBase64()
                 
                 log("Generated public key: \(pk)")
-
+                
                 if elapsed >= 3.0 {
                     dispatchMain {
                         SwiftSpinner.hide()

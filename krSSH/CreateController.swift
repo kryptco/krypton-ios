@@ -24,12 +24,15 @@ class CreateController: UIViewController {
         createButton.layer.shadowOpacity = 0.175
         createButton.layer.shadowRadius = 3
         createButton.layer.masksToBounds = false
-
+        
+        Analytics.postEvent(category: "onboard", action: "start")
     }
     
     
-    @IBAction func createTapped(sender: AnyObject) {        
+    @IBAction func createTapped(sender: AnyObject) {
+        Analytics.postEvent(category: "onboard", action: "generate tapped")
         performSegue(withIdentifier: "showGenerate", sender: nil)
+        
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

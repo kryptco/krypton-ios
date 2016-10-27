@@ -60,6 +60,8 @@ class FirstPairController:UIViewController, KRScanDelegate {
                 
                 if enable {
                     (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+                    Analytics.postEvent(category: "push", action: "enabled")
+
                 }
                 UserDefaults.standard.set(true, forKey: "did_ask_push")
                 UserDefaults.standard.synchronize()
@@ -84,6 +86,8 @@ class FirstPairController:UIViewController, KRScanDelegate {
         brewButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         brewLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.brew.rawValue
+        
+        Analytics.postEvent(category: "install", action: "brew")
     }
     
     @IBAction func curlTapped() {
@@ -92,6 +96,8 @@ class FirstPairController:UIViewController, KRScanDelegate {
         curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         curlLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.curl.rawValue
+        
+        Analytics.postEvent(category: "install", action: "curl")
     }
     
     func disableAllInstallButtons() {

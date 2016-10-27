@@ -71,8 +71,10 @@ class SetupController: UIViewController, UITextFieldDelegate {
         var email:String
         if let emailText = nameTextfield.text, !emailText.characters.isEmpty {
             email = emailText
+            Analytics.postEvent(category: "email", action: "typed")
         } else {
             email = UIDevice.current.name
+            Analytics.postEvent(category: "email", action: "skipped")
         }
         
         do {

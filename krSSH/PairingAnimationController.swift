@@ -42,7 +42,8 @@ class PairingAnimationController:UIViewController {
                 return
             }
             
-            
+            Analytics.postEvent(category: "first pairing", action: "success")
+
             SessionManager.shared.add(session: session)
             Silo.shared.add(session: session)
             Silo.shared.startPolling(session: session)
