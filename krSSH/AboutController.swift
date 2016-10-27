@@ -22,6 +22,7 @@ class AboutController: KRBaseController {
         super.viewDidLoad()
 
         approvalSwitch.isOn = Policy.needsUserApproval
+        analyticsSwitch.isOn = !Analytics.enabled
         
         if  let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
             let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String,
@@ -58,9 +59,8 @@ class AboutController: KRBaseController {
     }
     
     @IBAction func analyticsEnabledChanged(sender:UISwitch) {
-        Analytics.postEvent(category: "analytics enabled", action: String(sender.isOn))
+        Analytics.set(disabled: sender.isOn)
     }
-    
     
     @IBAction func trashTapped() {
         
