@@ -11,15 +11,24 @@ import UIKit
 
 class PairingAnimationController:UIViewController {
     
-    @IBOutlet weak var dots:UILabel!
     @IBOutlet weak var sessionLabel:UILabel!
+
+    @IBOutlet weak var dot1:UIView!
+    @IBOutlet weak var dot2:UIView!
+    @IBOutlet weak var dot3:UIView!
 
     var session:Session?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        dots.pulse(scale: 1.25, duration: 1.0)
+        var delay = 0.1
+        for dot in [dot1,dot2,dot3] {
+            dispatchAfter(delay: delay, task: { 
+                dispatchMain { dot?.pulse(scale: 1.2, duration: 0.5) }
+            })
+            delay += 0.1
+        }
         
         guard let session = session else {
             self.showWarning(title: "Error Pairing", body: "Could not pair with machine. Try again.", then: { 
