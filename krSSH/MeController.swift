@@ -53,7 +53,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        shareButton.setBorder(color: UIColor.clear, cornerRadius: 25, borderWidth: 0.0)
+        shareButton.setBorder(color: UIColor.clear, cornerRadius: 20, borderWidth: 0.0)
 
         redrawMe()
         Policy.currentViewController = self
