@@ -146,7 +146,7 @@ class ApproveController:UIViewController {
             
             
         }) { (_) in
-            self.checkBox.toggleCheckState(true)
+            dispatchMain{ self.checkBox.toggleCheckState(true) }
             dispatchAfter(delay: 2.0) {
                 self.animateDismiss()
             }
