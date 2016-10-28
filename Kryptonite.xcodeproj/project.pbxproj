@@ -66,6 +66,7 @@
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
+		FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F22A11DC3C3CA0094076E /* Onboarding.swift */; };
 		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
@@ -374,6 +375,7 @@
 		FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		FA2F22A11DC3C3CA0094076E /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 		FACBEFEC1D779D71005D71B9 /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
+				FA2F22A11DC3C3CA0094076E /* Onboarding.swift */,
 				FACBEFEA1D779D6E005D71B9 /* CreateController.swift */,
 				FA2697311D99CA1100FE44D3 /* GenerateController.swift */,
 				FACBEFED1D77A2B7005D71B9 /* SetupController.swift */,
@@ -1356,6 +1359,7 @@
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
+				FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,

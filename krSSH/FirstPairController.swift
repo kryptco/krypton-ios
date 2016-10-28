@@ -35,6 +35,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         brewTapped()
     }
     

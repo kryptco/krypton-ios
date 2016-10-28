@@ -175,7 +175,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
         if email.isEmpty {
             tagTextField.text = (try? KeyManager.sharedInstance().getMe().email) ?? ""
         } else {
-           try? KeyManager.sharedInstance().setMe(email: email)
+           KeyManager.setMe(email: email)
         }
         
         textField.resignFirstResponder()

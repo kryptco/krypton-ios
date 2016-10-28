@@ -20,7 +20,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.setKrLogo()
+        Onboarding.isActive = true
         
         showSkip()
         
@@ -77,14 +77,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
             Analytics.postEvent(category: "email", action: "skipped")
         }
         
-        do {
-            try KeyManager.sharedInstance().setMe(email: email)
-        } catch (let e) {
-            log("Error saving email for keypair: \(e)", LogType.error)
-            showWarning(title: "Error Saving", body: "Try again!")
-            return
-        }
-        
+        KeyManager.setMe(email: email)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

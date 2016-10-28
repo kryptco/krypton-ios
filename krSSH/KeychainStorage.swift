@@ -72,15 +72,10 @@ class KeychainStorage {
         return value
     }
     
-    func delete(key:String, value:String) -> Bool {
-        guard let data = value.data(using: String.Encoding.utf8) else {
-            return false
-        }
-        
+    func delete(key:String) -> Bool {
         let params = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): service,
-                      String(kSecAttrAccount): key,
-                      String(kSecValueData): data] as [String : Any]
+                      String(kSecAttrAccount): key] as [String : Any]
         
         let status = SecItemDelete(params as CFDictionary)
         

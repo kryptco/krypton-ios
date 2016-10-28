@@ -89,12 +89,18 @@ class KeyManager {
         }
     }
     
-    func setMe(email:String) {
+    class func setMe(email:String) {
         let success = KeychainStorage().set(key: KrMeDataKey, value: email)
         if !success {
             log("failed to store `me` email.", LogType.error)
         }
-        
+    }
+    
+    class func clearMe() {
+        let success = KeychainStorage().delete(key: KrMeDataKey)
+        if !success {
+            log("failed to delete `me` email.", LogType.error)
+        }
     }
     
 }

@@ -16,7 +16,9 @@ class PairedUploadController:KRBaseController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        Onboarding.isActive = false
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

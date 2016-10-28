@@ -75,31 +75,29 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidAppear(animated)
         
         guard KeyManager.hasKey() else {
-            self.performSegue(withIdentifier: "showOnboard", sender: nil)
+            self.performSegue(withIdentifier: "showOnboardGenerate", sender: nil)
             return
         }
         
-        do {
-            let kp = try KeyManager.sharedInstance().keyPair
-            let pk = try kp.publicKey.export().toBase64()
-            
-            log("started with: \(pk)")
-            
-            UIView.animate(withDuration: 0.2, animations: { 
-                self.blurView.isHidden = true
-            })
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
-            
-
-        } catch (let e) {
-            log("\(e)", LogType.error)
-            showWarning(title: "Fatal Error", body: "\(e)")
+        guard  let _ = try? KeyManager.sharedInstance().getMe()
+        else {
+            self.performSegue(withIdentifier: "showOnboardEmail", sender: nil)
             return
         }
+        
+        guard Onboarding.isActive == false else {
+            self.performSegue(withIdentifier: "showOnboardFirstPair", sender: nil)
+            return
+        }
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.blurView.isHidden = true
+        })
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
+
         
         // check push
-        
         //if push allow reauthorized just incase
         if !UIApplication.shared.isRegisteredForRemoteNotifications && !UserDefaults.standard.bool(forKey: "did_ask_push")
         {
@@ -116,6 +114,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
 
     
     @IBAction func dismissOnboarding(segue: UIStoryboardSegue) {
+        Onboarding.isActive = false
     }
     
 
