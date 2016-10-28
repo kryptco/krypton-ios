@@ -181,8 +181,8 @@ internal class M13CheckboxSpiralController: M13CheckboxController {
             markLayer.add(checkStrokeAnimation, forKey: "strokeEnd")
             markLayer.add(checkMorphAnimation, forKey: "path")
             
-            markLayer.opacity = checkQuickOpacityAnimation.fromValue as! Float
-            markLayer.strokeEnd = checkStrokeAnimation.fromValue as! CGFloat
+            //markLayer.opacity = checkQuickOpacityAnimation.fromValue as! Float
+            //markLayer.strokeEnd = checkStrokeAnimation.fromValue as! CGFloat
             markLayer.path = pathGenerator.pathForLongMark(toState)?.reversing().cgPath
             
             CATransaction.commit()
