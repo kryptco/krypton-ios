@@ -529,7 +529,7 @@
                                     <constraint firstAttribute="height" constant="80" id="yxh-qQ-Wll"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan_rails" translatesAutoresizingMaskIntoConstraints="NO" id="7nB-wh-gHQ">
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan_rails" translatesAutoresizingMaskIntoConstraints="NO" id="7nB-wh-gHQ">
                                 <rect key="frame" x="40" y="193.5" width="295" height="295"/>
                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -2423,6 +2423,9 @@ Cg
                                         <state key="highlighted">
                                             <color key="titleColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="0.63752156825153372" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="getMyTeamTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="SqB-tf-9cI"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

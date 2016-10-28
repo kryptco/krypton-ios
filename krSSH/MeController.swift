@@ -139,6 +139,19 @@ class MeController:KRBaseController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func getMyTeamTapped() {
+        
+        let textItem = "Team, please use Kryptonite to securely store your SSH private key on your phone. You no longer have to worry that your plain-text keys in the ~/.ssh/ directory are vulnerable. Kryptonite ensures the private key never leaves the device, and gives you ability to know everytime your key is used. Simply pair your phone with your computer once, and you're all set. "
+        
+        var items:[Any] = [textItem]
+
+        if let linkItem = URL(string: Properties.appURL) {
+            items.append(linkItem)
+        }
+        
+        let activityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        self.present(activityController, animated: true, completion: nil)
+    }
     
     //MARK: TextField Delegate -> Editing Email
     func textFieldDidBeginEditing(_ textField: UITextField) {
