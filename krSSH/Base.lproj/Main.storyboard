@@ -472,24 +472,24 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="80"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZ6-5r-kzu" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="10" width="335" height="61"/>
+                                        <rect key="frame" x="20" y="10" width="335" height="59"/>
                                         <subviews>
                                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Scw-xl-NBM">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="61"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="59"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="22h-qn-rzQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="61"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="59"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </view>
                                                 <blurEffect style="dark"/>
                                             </visualEffectView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ci8-vd-B9D">
-                                                <rect key="frame" x="10" y="28" width="22" height="23"/>
+                                                <rect key="frame" x="10" y="28" width="15.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr pair" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWT-p8-xuP">
-                                                <rect key="frame" x="40" y="28" width="275" height="23"/>
+                                                <rect key="frame" x="33.5" y="28" width="281.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -621,7 +621,7 @@
                                                             </constraints>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3aO-Tp-xEr">
-                                                            <rect key="frame" x="74" y="19" width="147.5" height="40"/>
+                                                            <rect key="frame" x="74" y="19" width="148" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="yrQ-r6-HIj"/>
                                                             </constraints>
@@ -638,7 +638,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMq-7O-3e4">
-                                                            <rect key="frame" x="74" y="72" width="147.5" height="38"/>
+                                                            <rect key="frame" x="74" y="72" width="148" height="38"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                             <state key="normal" title="Cancel">
                                                                 <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -683,7 +683,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGK-Eh-2Y4" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
-                                                    <rect key="frame" x="107.5" y="10" width="80" height="80"/>
+                                                    <rect key="frame" x="108" y="10" width="80" height="80"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -707,7 +707,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9aF-HX-ExV">
-                                                    <rect key="frame" x="107.5" y="10" width="80" height="80"/>
+                                                    <rect key="frame" x="108" y="10" width="80" height="80"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tfE-QC-sdt" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                                             <rect key="frame" x="30" y="30" width="20" height="20"/>
