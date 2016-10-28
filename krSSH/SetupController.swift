@@ -21,15 +21,20 @@ class SetupController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         Onboarding.isActive = true
-        
-        showSkip()
-        
+                
         keyIcon.FAIcon = FAType.FAKey
         
         do {
-            let kp = try KeyManager.sharedInstance().keyPair
-            let pk = try kp.publicKey.wireFormat()
+            let km = try KeyManager.sharedInstance()
+            let pk = try km.keyPair.publicKey.wireFormat()
             let fp = pk.fingerprint().hexPretty
+            
+            if let me = try? km.getMe() {
+                nameTextfield.text = me.email
+                showNext()
+            } else {
+                showSkip()
+            }
             
             keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
             identiconButton.setImage(IGSimpleIdenticon.from(pk.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
