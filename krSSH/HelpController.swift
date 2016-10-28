@@ -26,13 +26,11 @@ class HelpInstallController:KRBaseController {
     
     @IBOutlet weak var curlButton:UIButton!
     @IBOutlet weak var curlLine:UIView!
-        
-    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
     
-    enum InstallMethod:String {
-        case brew = "brew install kryptco/tap/kr"
-        case curl = "curl https://krypt.co/kr | sh"
-    }
+    @IBOutlet weak var npmButton:UIButton!
+    @IBOutlet weak var npmLine:UIView!
+
+    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,21 +47,37 @@ class HelpInstallController:KRBaseController {
         installLabel.text = InstallMethod.brew.rawValue
     }
     
+    @IBAction func npmTapped() {
+        disableAllInstallButtons()
+        
+        npmButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        npmLine.backgroundColor = UIColor.app
+        installLabel.text = InstallMethod.npm.rawValue
+        
+        Analytics.postEvent(category: "install", action: "bpm")
+    }
+    
     @IBAction func curlTapped() {
         disableAllInstallButtons()
         
         curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         curlLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.curl.rawValue
+        
+        Analytics.postEvent(category: "install", action: "curl")
     }
+    
     
     func disableAllInstallButtons() {
         
         brewButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
         curlButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        npmButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
         
         brewLine.backgroundColor = UIColor.clear
         curlLine.backgroundColor = UIColor.clear
+        npmLine.backgroundColor = UIColor.clear
+        
     }
     
     @IBAction func goToHelpInstall(segue: UIStoryboardSegue) {

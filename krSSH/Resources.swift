@@ -18,7 +18,7 @@ struct Resources {
     }
     
     static func makeAppearences() {
-        UINavigationBar.appearance().barTintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = nil
         UINavigationBar.appearance().tintColor = UIColor.app
         
         

@@ -13,16 +13,14 @@ import LocalAuthentication
 
 class FirstPairController:UIViewController, KRScanDelegate {
     
-    enum InstallMethod:String {
-        case brew = "brew install kryptco/tap/kr"
-        case curl = "curl https://krypt.co/kr | sh"
-        
-    }
     @IBOutlet weak var brewButton:UIButton!
     @IBOutlet weak var brewLine:UIView!
 
     @IBOutlet weak var curlButton:UIButton!
     @IBOutlet weak var curlLine:UIView!
+
+    @IBOutlet weak var npmButton:UIButton!
+    @IBOutlet weak var npmLine:UIView!
 
     @IBOutlet weak var installLabel:UILabel!
     
@@ -90,6 +88,16 @@ class FirstPairController:UIViewController, KRScanDelegate {
         Analytics.postEvent(category: "install", action: "brew")
     }
     
+    @IBAction func npmTapped() {
+        disableAllInstallButtons()
+        
+        npmButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        npmLine.backgroundColor = UIColor.app
+        installLabel.text = InstallMethod.npm.rawValue
+        
+        Analytics.postEvent(category: "install", action: "bpm")
+    }
+    
     @IBAction func curlTapped() {
         disableAllInstallButtons()
         
@@ -100,13 +108,17 @@ class FirstPairController:UIViewController, KRScanDelegate {
         Analytics.postEvent(category: "install", action: "curl")
     }
     
+    
     func disableAllInstallButtons() {
         
         brewButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
         curlButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
-        
+        npmButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+
         brewLine.backgroundColor = UIColor.clear
         curlLine.backgroundColor = UIColor.clear
+        npmLine.backgroundColor = UIColor.clear
+
     }
 
     //MARK: Camera

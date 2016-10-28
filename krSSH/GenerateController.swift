@@ -20,10 +20,7 @@ class GenerateController:UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        animationView.backgroundColor = UIColor.app
-        animationView.setBorder(color: UIColor.clear, cornerRadius: 60.0, borderWidth: 0.0)
-        
+                
         SwiftSpinner.useContainerView(animationView)
         SwiftSpinner.show("", animated: true)
         
