@@ -12,10 +12,19 @@ import UIKit
 class PairedUploadController:KRBaseController {
     
     @IBOutlet weak var sessionLabel:UILabel!
+    @IBOutlet weak var commandView:UIView!
+
     var session:Session?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        commandView.layer.shadowColor = UIColor.black.cgColor
+        commandView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        commandView.layer.shadowOpacity = 0.175
+        commandView.layer.shadowRadius = 3
+        commandView.layer.masksToBounds = false
+
         Onboarding.isActive = false
     }
     

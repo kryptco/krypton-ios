@@ -24,6 +24,9 @@ class FirstPairController:UIViewController, KRScanDelegate {
 
     @IBOutlet weak var installLabel:UILabel!
     
+    @IBOutlet weak var commandView:UIView!
+
+    
     @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
 
     @IBOutlet weak var scanView:UIView!
@@ -35,6 +38,12 @@ class FirstPairController:UIViewController, KRScanDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        commandView.layer.shadowColor = UIColor.black.cgColor
+        commandView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        commandView.layer.shadowOpacity = 0.175
+        commandView.layer.shadowRadius = 3
+        commandView.layer.masksToBounds = false
         
         brewTapped()
     }

@@ -30,10 +30,20 @@ class HelpInstallController:KRBaseController {
     @IBOutlet weak var npmButton:UIButton!
     @IBOutlet weak var npmLine:UIView!
 
+    @IBOutlet weak var commandView:UIView!
+
     @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        commandView.layer.shadowColor = UIColor.black.cgColor
+        commandView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        commandView.layer.shadowOpacity = 0.175
+        commandView.layer.shadowRadius = 3
+        commandView.layer.masksToBounds = false
+
+        
         brewTapped()
     }
   
