@@ -17,8 +17,9 @@ final class Response:JSONConvertable {
     var list:ListResponse?
     var me:MeResponse?
     var unpair:UnpairResponse?
+    var trackingID:String?
     
-    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil) {
+    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
         self.approvedUntil = approvedUntil
@@ -26,6 +27,7 @@ final class Response:JSONConvertable {
         self.list = list
         self.me = me
         self.unpair = unpair
+        self.trackingID = trackingID
     }
     
     init(json: JSON) throws {
@@ -50,6 +52,10 @@ final class Response:JSONConvertable {
 
         if let json:JSON = try? json ~> "unpair_response" {
             self.unpair = UnpairResponse(json: json)
+        }
+
+        if let trackingID:String = try? json ~> "tracking_id" {
+            self.trackingID = trackingID
         }
     }
     
@@ -77,7 +83,11 @@ final class Response:JSONConvertable {
         if let u = unpair {
             json["unpair_response"] = u.jsonMap
         }
-        
+
+        if let trackingID = self.trackingID {
+            json["tracking_id"] = trackingID
+        }
+
         return json
     }
 }
@@ -143,6 +153,7 @@ struct MeResponse:JSONConvertable {
     }
     init(json: JSON) throws {
         self.me = try Peer(json: json ~> "me")
+
     }
     var jsonMap: JSON {
         return ["me": me.jsonMap]

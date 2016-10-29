@@ -56,7 +56,7 @@ class Silo {
             return
         }
         
-        try handle(request: req, session: session, communicationMedium: .Bluetooth)
+        try handle(request: req, session: session, communicationMedium: .bluetooth)
     }
 
     class var shared:Silo {
@@ -101,11 +101,11 @@ class Silo {
                 // otherwise listen
                 
                 self.listen(to: session, completion: { (success, err) in
+                    pauseMutex.unlock()
                     if let e = err, !(e is NoMessageError) {
                         log("listen error: \(e)", .error)
+                        sleep(5)
                     }
-                    
-                    pauseMutex.unlock()
                 })
                 
                 self.mutex.lock {
@@ -143,7 +143,7 @@ class Silo {
                     
                     do {
                         let req = try Request(key: to.pairing.symmetricKey, sealed: msg.data)
-                        try self.handle(request: req, session: to, communicationMedium: .SQS)
+                        try self.handle(request: req, session: to, communicationMedium: .sqs)
                     } catch (let e) {
                         log("error responding: \(e)", LogType.error)
                     }
@@ -240,19 +240,19 @@ class Silo {
     }
 
     //MARK: Handle Logic
-    enum CommunicationMedium {
-        case Bluetooth
-        case RemoteNotification
-        case SQS
+    enum CommunicationMedium:String {
+        case bluetooth
+        case remoteNotification
+        case sqs
     }
     func handle(request:Request, session:Session, communicationMedium: CommunicationMedium, completionHandler: (()->Void)? = nil) throws {
         mutex.lock()
         defer { mutex.unlock() }
 
         switch communicationMedium {
-        case .Bluetooth:
+        case .bluetooth:
             sessionLastBluetoothActivity[session.pairing.uuid] = Date()
-        case .RemoteNotification, .SQS:
+        case .remoteNotification, .sqs:
             sessionLastNetworkActivity[session.pairing.uuid] = Date()
         }
 
@@ -292,13 +292,13 @@ class Silo {
 
             Policy.requestUserAuthorization(session: session, request: request)
 
-            Analytics.postEvent(category: "signature", action: "requires approval")
+            Analytics.postEvent(category: "signature", action: "requires approval", label:communicationMedium.rawValue)
 
             completionHandler?()
             return
         }
 
-        Analytics.postEvent(category: "signature", action: "automatic approval")
+        Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
 
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
@@ -314,9 +314,9 @@ class Silo {
     func send(session:Session, response:Response, completionHandler: (()->Void)? = nil) throws {
         let sealedResponse = try response.seal(key: session.pairing.symmetricKey)
         let message = NetworkMessage(localData: sealedResponse, header: .ciphertext)
-        
+
         Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, message: message)
-        
+
         API().send(to: session.pairing.queue, message: message, handler: { (sendResult) in
             switch sendResult {
             case .sent:
@@ -396,7 +396,7 @@ class Silo {
              approvedUntil = Int(time)
         }
 
-        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: approvedUntil, sign: sign, list: list, me: me)
+        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: approvedUntil, sign: sign, list: list, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

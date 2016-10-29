@@ -19,7 +19,7 @@ class Analytics {
     }
 
     class func set(disabled: Bool) {
-        postEvent(category: "analytics", action: disabled ? "disabled" : "enabled")
+        postEvent(category: "analytics", action: disabled ? "disabled" : "enabled", forceEnable: true)
 
         mutex.lock()
         defer { mutex.unlock() }
@@ -62,8 +62,8 @@ class Analytics {
     }
 
 
-    class func post(params: [String:String]) {
-        guard enabled else {
+    class func post(params: [String:String], forceEnable:Bool = false) {
+        guard forceEnable || enabled else {
             return
         }
         var analyticsParams : [String:String] = [
@@ -121,7 +121,7 @@ class Analytics {
         dispatchAsync { Analytics.postPageView(page: clazz) }
     }
 
-    class func postEvent(category:String, action:String, label:String? = nil, value: UInt? = nil) {
+    class func postEvent(category:String, action:String, label:String? = nil, value: UInt? = nil, forceEnable:Bool = false) {
         var params : [String:String] = [
             "t": "event",
             "ec": category,
@@ -134,7 +134,7 @@ class Analytics {
             params["ev"] = String(value)
         }
 
-        dispatchAsync{ Analytics.post(params: params) }
+        dispatchAsync{ Analytics.post(params: params, forceEnable:forceEnable) }
     }
 
     class func appLaunch() {
