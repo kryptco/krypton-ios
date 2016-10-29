@@ -231,6 +231,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         defer { mutex.unlock() }
         log("failed to connect \(peripheral.identifier)")
         discoveredPeripherals.remove(peripheral)
+        recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -367,6 +368,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             pairedPeripherals.removeValue(forKey: disconnectedUUID)
             pairedServiceUUIDS.remove(disconnectedUUID)
         }
+        recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
         scanLogic()
     }
 }
