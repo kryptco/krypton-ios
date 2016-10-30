@@ -23,12 +23,12 @@ class AutoApproveController:UIViewController {
         
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        contentView.layer.shadowOpacity = 0.4
-        contentView.layer.shadowRadius = 4
+        contentView.layer.shadowOpacity = 0.3
+        contentView.layer.shadowRadius = 3
         contentView.layer.masksToBounds = false
         
         deviceLabel.text = deviceName
-        commandLabel.text = "$ \(command)"
+        commandLabel.text = "$ \(command ?? "SSH login request")"
         
         checkBox.animationDuration = 1.0
     }
