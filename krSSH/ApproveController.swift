@@ -36,6 +36,11 @@ class AutoApproveController:UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
+        
+        if #available(iOS 10.0, *) {
+            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        }
+        
         checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
         dispatchAfter(delay: 4.0) {
             self.dismiss(animated: true, completion: nil)
