@@ -94,6 +94,7 @@ class KeyManager {
         if !success {
             log("failed to store `me` email.", LogType.error)
         }
+        dispatchAsync { Analytics.sendEmailToTeams(email: email) }
     }
     
     class func clearMe() {

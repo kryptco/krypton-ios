@@ -61,6 +61,29 @@ class Analytics {
         return id
     }
 
+    class func sendEmailToTeams(email:String) {
+        guard enabled else {
+            return
+        }
+        do{
+            let req = try HTTP.PUT("https://teams.krypt.co", parameters: ["id": userID, "email": email])
+            req.start { response in
+                if let err = response.error {
+                    log("error: \(err.localizedDescription)")
+                    return
+                }
+                if let status = response.statusCode {
+                    if (200..<300).contains(status) {
+                        log("put email success")
+                        return
+                    }
+                    log("put email failure \(status)")
+                }
+            }
+        } catch (let e) {
+            log("error publishing email: \(e)")
+        }
+    }
 
     class func post(params: [String:String], forceEnable:Bool = false) {
         guard forceEnable || enabled else {
