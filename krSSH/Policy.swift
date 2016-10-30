@@ -162,6 +162,11 @@ class Policy {
     }
     
     class func notifyUser(session:Session, request:Request) {
+        guard UIApplication.shared.applicationState != .active else {
+            Policy.currentViewController?.showApprovedRequest(session: session, request: request)
+            return
+        }
+        
         let notification = UILocalNotification()
 
         notification.alertBody = "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
@@ -185,6 +190,21 @@ extension UIViewController {
         
         dispatchMain {
             self.present(approvalController, animated: true, completion: nil)
+        }
+    }
+    
+    func showApprovedRequest(session:Session, request:Request) {
+        
+        let autoApproveController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "AutoApproveController")
+        autoApproveController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        
+        (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
+        (autoApproveController as? AutoApproveController)?.command = request.sign?.command ?? "Unknown"
+
+        
+        dispatchMain {
+            self.present(autoApproveController, animated: true, completion: nil)
         }
     }
 }

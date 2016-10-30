@@ -9,6 +9,41 @@
 import UIKit
 import AVFoundation
 
+class AutoApproveController:UIViewController {
+    @IBOutlet weak var deviceLabel:UILabel!
+    @IBOutlet weak var commandLabel:UILabel!
+    @IBOutlet weak var checkBox:M13Checkbox!
+    @IBOutlet weak var contentView:UIView!
+
+    var deviceName:String?
+    var command:String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        contentView.layer.shadowOpacity = 0.4
+        contentView.layer.shadowRadius = 4
+        contentView.layer.masksToBounds = false
+        
+        deviceLabel.text = deviceName
+        commandLabel.text = "$ \(command)"
+        
+        checkBox.animationDuration = 1.0
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
+        dispatchAfter(delay: 4.0) {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+
 class ApproveController:UIViewController {
     
     @IBOutlet weak var contentView:UIView!

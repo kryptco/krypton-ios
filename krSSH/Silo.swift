@@ -298,12 +298,12 @@ class Silo {
             return
         }
 
-        Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
-
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
         if response.sign != nil {
+            Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
+
             Policy.notifyUser(session: session, request: request)
         }
         
