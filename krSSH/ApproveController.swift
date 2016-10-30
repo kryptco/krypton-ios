@@ -46,6 +46,10 @@ class AutoApproveController:UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
+    
+    @IBAction func dismiss() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 

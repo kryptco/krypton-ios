@@ -284,16 +284,59 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9Y-aM-j36" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                <rect key="frame" x="10" y="558.5" width="355" height="88.5"/>
+                                <rect key="frame" x="0.0" y="573.5" width="375" height="113.5"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-Mk-LFw" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="88.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="113.5"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command">
-                                                <rect key="frame" x="0.0" y="36" width="355" height="52.5"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32U-6O-1By">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" lineBreakMode="tailTruncation" numberOfLines="3" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
-                                                        <rect key="frame" x="10" y="16" width="335" height="20.5"/>
+                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIV-jc-ntL" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
+                                                        <rect key="frame" x="343" y="7.5" width="24" height="24"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="24" id="IK1-wY-S4z"/>
+                                                            <constraint firstAttribute="height" constant="24" id="zrb-LX-IbO"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="checkmarkLineWidth">
+                                                                <real key="value" value="2"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="secondaryCheckmarkTintColor">
+                                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="secondaryTintColor">
+                                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
+                                                                <real key="value" value="2"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="_IBStateChangeAnimation" value="Spiral"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALEX@SPINNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="E5I-Q2-AML">
+                                                        <rect key="frame" x="12" y="9" width="323" height="22"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="qIV-jc-ntL" firstAttribute="top" secondItem="32U-6O-1By" secondAttribute="top" constant="8" id="08H-Sg-haI"/>
+                                                    <constraint firstAttribute="trailing" secondItem="qIV-jc-ntL" secondAttribute="trailing" constant="8" id="2Qx-j3-e0C"/>
+                                                    <constraint firstItem="qIV-jc-ntL" firstAttribute="leading" secondItem="E5I-Q2-AML" secondAttribute="trailing" constant="8" id="61e-ul-nSe"/>
+                                                    <constraint firstItem="E5I-Q2-AML" firstAttribute="leading" secondItem="32U-6O-1By" secondAttribute="leading" constant="12" id="9VM-Pl-bfV"/>
+                                                    <constraint firstItem="E5I-Q2-AML" firstAttribute="centerY" secondItem="qIV-jc-ntL" secondAttribute="centerY" id="azG-HO-1lA"/>
+                                                    <constraint firstAttribute="bottom" secondItem="qIV-jc-ntL" secondAttribute="bottom" constant="8" id="zBY-y6-h7b"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="41" width="375" height="52.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" lineBreakMode="tailTruncation" numberOfLines="6" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
+                                                        <rect key="frame" x="10" y="16" width="355" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="16"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -306,53 +349,31 @@
                                                     <constraint firstAttribute="trailing" secondItem="qkt-sF-Z2B" secondAttribute="trailing" constant="10" id="Kmh-lo-Eiv"/>
                                                     <constraint firstAttribute="bottom" secondItem="qkt-sF-Z2B" secondAttribute="bottom" constant="16" id="QZp-DE-p9W"/>
                                                 </constraints>
-                                            </view>
-                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIV-jc-ntL" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="319" y="4" width="28" height="28"/>
-                                                <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="28" id="IK1-wY-S4z"/>
-                                                    <constraint firstAttribute="height" constant="28" id="zrb-LX-IbO"/>
-                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="checkmarkLineWidth">
-                                                        <real key="value" value="2"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="0.0"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="secondaryCheckmarkTintColor">
-                                                        <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="secondaryTintColor">
-                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
-                                                        <real key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="_IBStateChangeAnimation" value="Spiral"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALEX@SPINNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5I-Q2-AML">
-                                                <rect key="frame" x="8" y="7.5" width="115" height="22"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
-                                                <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="HXN-QP-z1c" secondAttribute="bottom" id="0o0-O3-WLv"/>
-                                            <constraint firstItem="HXN-QP-z1c" firstAttribute="top" secondItem="qIV-jc-ntL" secondAttribute="bottom" constant="4" id="2eE-xF-5I3"/>
-                                            <constraint firstItem="E5I-Q2-AML" firstAttribute="centerY" secondItem="qIV-jc-ntL" secondAttribute="centerY" id="Pfj-vp-4NW"/>
-                                            <constraint firstItem="E5I-Q2-AML" firstAttribute="leading" secondItem="Rxp-Mk-LFw" secondAttribute="leading" constant="8" id="RRH-MK-rjU"/>
+                                            <constraint firstAttribute="bottom" secondItem="HXN-QP-z1c" secondAttribute="bottom" constant="20" id="0o0-O3-WLv"/>
+                                            <constraint firstItem="32U-6O-1By" firstAttribute="leading" secondItem="Rxp-Mk-LFw" secondAttribute="leading" id="FL0-hr-lTg"/>
+                                            <constraint firstAttribute="trailing" secondItem="32U-6O-1By" secondAttribute="trailing" id="KwP-Ds-DKC"/>
                                             <constraint firstItem="HXN-QP-z1c" firstAttribute="leading" secondItem="Rxp-Mk-LFw" secondAttribute="leading" id="emW-oU-Nxl"/>
-                                            <constraint firstItem="qIV-jc-ntL" firstAttribute="top" secondItem="Rxp-Mk-LFw" secondAttribute="top" constant="4" id="fyU-4x-HAf"/>
-                                            <constraint firstAttribute="trailing" secondItem="qIV-jc-ntL" secondAttribute="trailing" constant="8" id="hs2-vP-UtY"/>
                                             <constraint firstAttribute="trailing" secondItem="HXN-QP-z1c" secondAttribute="trailing" id="lgS-lh-Wjh"/>
+                                            <constraint firstItem="32U-6O-1By" firstAttribute="top" secondItem="Rxp-Mk-LFw" secondAttribute="top" id="utv-bu-rzO"/>
+                                            <constraint firstItem="HXN-QP-z1c" firstAttribute="top" secondItem="32U-6O-1By" secondAttribute="bottom" constant="1" id="wp2-xT-ezE"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="8"/>
+                                                <real key="value" value="20"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="jWZ-R6-mFh" appends="YES" id="3tZ-J1-iMl"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -364,15 +385,15 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
+                                        <real key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="f9Y-aM-j36" secondAttribute="trailing" constant="10" id="1od-FG-bCJ"/>
-                            <constraint firstItem="dA1-6U-hNs" firstAttribute="top" secondItem="f9Y-aM-j36" secondAttribute="bottom" constant="20" id="8YO-Mu-AkL"/>
-                            <constraint firstItem="f9Y-aM-j36" firstAttribute="leading" secondItem="Flv-tQ-rMU" secondAttribute="leading" constant="10" id="RQ6-5Y-iQI"/>
+                            <constraint firstAttribute="trailing" secondItem="f9Y-aM-j36" secondAttribute="trailing" id="1od-FG-bCJ"/>
+                            <constraint firstItem="dA1-6U-hNs" firstAttribute="top" secondItem="f9Y-aM-j36" secondAttribute="bottom" constant="-20" id="8YO-Mu-AkL"/>
+                            <constraint firstItem="f9Y-aM-j36" firstAttribute="leading" secondItem="Flv-tQ-rMU" secondAttribute="leading" id="RQ6-5Y-iQI"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -384,6 +405,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WtT-kU-obP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="jWZ-R6-mFh">
+                    <connections>
+                        <action selector="dismiss" destination="Qit-Yq-gLb" id="u1u-nd-Fv8"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4952.8000000000002" y="1009.7451274362819"/>
         </scene>
