@@ -298,6 +298,10 @@ class Silo {
             return
         }
 
+        if request.isNoOp() {
+            return
+        }
+
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         

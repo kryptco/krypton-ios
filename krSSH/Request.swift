@@ -61,6 +61,10 @@ struct Request:JSONConvertable {
         
         return json
     }
+
+    func isNoOp() -> Bool {
+        return sign == nil && list == nil && me == nil && unpair == nil
+    }
 }
 
 //MARK: Requests
