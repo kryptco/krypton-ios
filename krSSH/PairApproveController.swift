@@ -153,26 +153,24 @@ class PairApproveController: UIViewController {
                 
                 let session = try Session(pairing: pairing)
                 Silo.shared.add(session: session)
+                Silo.shared.startPolling(session: session)
 
-                Silo.shared.listen(to: session) { (success, error) in
-                    guard success && error == nil else {
+                dispatchAsync {
+                    guard Silo.shared.waitForPairing(session: session) else {
                         Silo.shared.remove(session: session)
-                        self.showWarning(title: "Error Pairing", body: "Could not create session with this device. Please try again.")
+                        self.showWarning(title: "Error Pairing", body: "Timed out. Please make sure Bluetooth is on or you have an internet connection and try again.")
                         
                         Analytics.postEvent(category: "device", action: "pair", label: "failed")
-
+                        
                         dispatchMain {
                             self.doRejectAnimation()
                         }
-
+                        
                         return
                     }
                     
-                    
                     SessionManager.shared.add(session: session)
-                    Silo.shared.add(session: session)
-                    Silo.shared.startPolling(session: session)
-                 
+                    
                     dispatchMain {
                         self.arcView.alpha = 0
                         
@@ -182,14 +180,17 @@ class PairApproveController: UIViewController {
                         dispatchAfter(delay: 1.0, task: {
                             self.tabController?.selectedIndex = 2
                             
-                            dispatchAfter(delay: 0.5, task: { 
+                            dispatchAfter(delay: 0.5, task: {
                                 self.dismiss(animated: true, completion: {
                                     self.scanController?.canScan = true
                                 })
                             })
                         })
                     }
+
                 }
+
+
             }
             catch let e {
                 log("error creating session: \(e)", .error)

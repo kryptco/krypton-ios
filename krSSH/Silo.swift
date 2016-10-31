@@ -238,6 +238,23 @@ class Silo {
             shouldPoll = false
         }
     }
+    
+    //MARK: Session Pairing Completion
+    
+    func waitForPairing(session:Session, timeout:TimeInterval = 10.0) -> Bool {
+        let startTime = Date()        
+        let cbuuid = session.pairing.uuid
+        
+        while sessionLastNetworkActivity[cbuuid] == nil && sessionLastBluetoothActivity[cbuuid] == nil
+        {
+            guard abs(Date().timeIntervalSince(startTime)) < timeout else {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
 
     //MARK: Handle Logic
     enum CommunicationMedium:String {
