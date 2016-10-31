@@ -9,15 +9,6 @@
 import Foundation
 import UIKit
 
-class HelpController:KRBaseController {
-    
-
-    @IBAction func goToHelpStart(segue: UIStoryboardSegue) {
-    }
-    
-
-}
-
 class HelpInstallController:KRBaseController {
 
     @IBOutlet weak var installLabel:UILabel!
@@ -95,6 +86,4 @@ class HelpInstallController:KRBaseController {
 
 
 }
-
-class HelpAddPubKeyController:KRBaseController {}
 

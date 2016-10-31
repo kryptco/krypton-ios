@@ -130,7 +130,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     }
     
     dynamic func helpTapped() {
-        self.performSegue(withIdentifier: "showHelp", sender: nil)
+        self.performSegue(withIdentifier: "showInstall", sender: nil)
     }
 
 }
