@@ -41,21 +41,20 @@ class PairingAnimationController:UIViewController {
 
         let startTime = Date()
         
-        Silo.shared.listen(to: session) { (success, error) in
-            guard success && error == nil else {
+        dispatchAsync {
+            guard Silo.shared.waitForPairing(session: session) else {
                 Silo.shared.remove(session: session)
-
-                self.showWarning(title: "Error Pairing", body: "Could not pair with machine. Please try again.", then: {
+                self.showWarning(title: "Error Pairing", body: "Timed out. Please make sure Bluetooth is on or you have an internet connection and try again.",
+                then: {
+                    (self.presentingViewController as? FirstPairController)?.scanController?.canScan = true
                     self.dismiss(animated: true, completion: nil)
                 })
+                
+                Analytics.postEvent(category: "device", action: "pair", label: "failed")
                 return
             }
             
-            Analytics.postEvent(category: "first pairing", action: "success")
-
             SessionManager.shared.add(session: session)
-            Silo.shared.add(session: session)
-            Silo.shared.startPolling(session: session)
             
             let delay = abs(Date().timeIntervalSince(startTime))
             
@@ -71,7 +70,9 @@ class PairingAnimationController:UIViewController {
                     self.performSegue(withIdentifier: "showDone", sender: nil)
                 }
             })
+
         }
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
