@@ -27,6 +27,7 @@ class Silo {
     var centralManager: CBCentralManager
     var sessionLastBluetoothActivity: [CBUUID:Date] = [:]
     var sessionLastNetworkActivity: [CBUUID:Date] = [:]
+    var sessionLastActivity: [CBUUID:Date] = [:]
 
     var requestCache: Cache<NSData>?
     //  store requests waiting for user approval
@@ -225,6 +226,7 @@ class Silo {
         bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
         sessionLastNetworkActivity.removeValue(forKey: cbuuid)
         sessionLastBluetoothActivity.removeValue(forKey: cbuuid)
+        sessionLastActivity.removeValue(forKey: cbuuid)
     }
 
 
@@ -245,13 +247,18 @@ class Silo {
         let startTime = Date()        
         let cbuuid = session.pairing.uuid
         
-        while sessionLastNetworkActivity[cbuuid] == nil && sessionLastBluetoothActivity[cbuuid] == nil
-        {
+        while true {
+            mutex.lock()
+            if sessionLastActivity[cbuuid] != nil {
+                mutex.unlock()
+                break
+            }
+            mutex.unlock()
+            usleep(250*1000)
             guard abs(Date().timeIntervalSince(startTime)) < timeout else {
                 return false
             }
         }
-        
         return true
     }
     
@@ -266,6 +273,7 @@ class Silo {
         mutex.lock()
         defer { mutex.unlock() }
 
+        sessionLastActivity[session.pairing.uuid] = Date()
         switch communicationMedium {
         case .bluetooth:
             sessionLastBluetoothActivity[session.pairing.uuid] = Date()
