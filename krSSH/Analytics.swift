@@ -69,7 +69,7 @@ class Analytics {
             let req = try HTTP.PUT("https://teams.krypt.co", parameters: ["id": userID, "email": email])
             req.start { response in
                 if let err = response.error {
-                    log("error: \(err.localizedDescription)")
+                    log("email put request error: \(err.localizedDescription)", .error)
                     return
                 }
                 if let status = response.statusCode {
@@ -77,11 +77,11 @@ class Analytics {
                         log("put email success")
                         return
                     }
-                    log("put email failure \(status)")
+                    log("put email failure \(status)", .error)
                 }
             }
         } catch (let e) {
-            log("error publishing email: \(e)")
+            log("error publishing email: \(e)", .error)
         }
     }
 
