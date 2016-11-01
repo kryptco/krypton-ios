@@ -43,7 +43,13 @@ struct Properties {
     static let appURL = "https://beta.krypt.co"
 
     //MARK: Analytics
-    static let trackingID = "UA-86173430-2"
+    static var trackingID:String {
+        if isDebug() {
+            return  "UA-86173430-1"
+        }
+        
+        return "UA-86173430-2"
+    }
 
 
     init() {}
