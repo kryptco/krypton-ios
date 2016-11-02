@@ -58,7 +58,14 @@ class Policy {
         
         return nil
     }
-    
+
+    class var approvedUntilUnixSeconds:Int? {
+        if let time = Policy.approvedUntil?.timeIntervalSince1970 {
+            return Int(time)
+        }
+        return nil
+    }
+
     class var approvalTimeRemaining:String? {
         if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.rawValue) as? Date
         {

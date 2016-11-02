@@ -317,6 +317,17 @@ class Silo {
 
             Policy.requestUserAuthorization(session: session, request: request)
 
+            if request.sendACK {
+                let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
+                let ack = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds, ack: AckResponse(), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+
+                do {
+                    try send(session: session, response: ack)
+                } catch (let e) {
+                    log("ack send error \(e)")
+                }
+            }
+
             Analytics.postEvent(category: "signature", action: "requires approval", label:communicationMedium.rawValue)
 
             completionHandler?()
@@ -420,12 +431,7 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        var approvedUntil:Int?
-        if let time = Policy.approvedUntil?.timeIntervalSince1970 {
-             approvedUntil = Int(time)
-        }
-
-        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: approvedUntil, sign: sign, list: list, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds, sign: sign, list: list, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

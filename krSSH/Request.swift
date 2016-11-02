@@ -11,7 +11,9 @@ import Foundation
 struct Request:JSONConvertable {
     
     var id:String
-    var unixSeconds:Int    
+    var unixSeconds:Int
+    var sendACK:Bool
+    var version:Version?
     var sign:SignRequest?
     var list:ListRequest?
     var me:MeRequest?
@@ -20,7 +22,8 @@ struct Request:JSONConvertable {
     init(json: JSON) throws {
         self.id = try json ~> "request_id"
         self.unixSeconds = try json ~> "unix_seconds"
-        
+        self.sendACK = (try? json ~> "a") ?? false
+
         if let json:JSON = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
         }
@@ -36,12 +39,17 @@ struct Request:JSONConvertable {
         if let json:JSON = try? json ~> "unpair_request" {
             self.unpair = try UnpairRequest(json: json)
         }
+
+        if let verString:String = try? json ~> "v" {
+            self.version = Version(string: verString)
+        }
     }
     
     var jsonMap: JSON {
         var json:[String:Any] = [:]
         json["request_id"] = id
         json["unix_seconds"] = unixSeconds
+        json["a"] = sendACK
 
         if let s = sign {
             json["sign_request"] = s.jsonMap
@@ -58,7 +66,7 @@ struct Request:JSONConvertable {
         if let u = unpair {
             json["unpair_request"] = u.jsonMap
         }
-        
+
         return json
     }
 
@@ -85,7 +93,6 @@ struct SignRequest:JSONConvertable {
     }
     
     var jsonMap: JSON {
-        
         var json:[String:Any] = ["digest": digest,
                                 "public_key_fingerprint": fingerprint]
         

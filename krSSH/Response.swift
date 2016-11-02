@@ -12,14 +12,16 @@ final class Response:JSONConvertable {
     
     var requestID:String
     var snsEndpointARN:String
+    var version:Version?
     var approvedUntil:Int?
     var sign:SignResponse?
     var list:ListResponse?
     var me:MeResponse?
     var unpair:UnpairResponse?
+    var ack:AckResponse?
     var trackingID:String?
     
-    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, trackingID:String? = nil) {
+    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, ack:AckResponse? = nil, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
         self.approvedUntil = approvedUntil
@@ -27,13 +29,16 @@ final class Response:JSONConvertable {
         self.list = list
         self.me = me
         self.unpair = unpair
+        self.ack = ack
         self.trackingID = trackingID
+        self.version = Properties.currentVersion
     }
     
     init(json: JSON) throws {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
-        
+        self.version = Version(string: try json ~> "v")
+
         if let approvedUntil:Int = try? json ~> "approved_until" {
             self.approvedUntil = approvedUntil
         }
@@ -52,6 +57,10 @@ final class Response:JSONConvertable {
 
         if let json:JSON = try? json ~> "unpair_response" {
             self.unpair = UnpairResponse(json: json)
+        }
+
+        if let json:JSON = try? json ~> "ack_response" {
+            self.ack = AckResponse(json: json)
         }
 
         if let trackingID:String = try? json ~> "tracking_id" {
@@ -84,8 +93,16 @@ final class Response:JSONConvertable {
             json["unpair_response"] = u.jsonMap
         }
 
+        if let a = ack {
+            json["ack_response"] = a.jsonMap
+        }
+
         if let trackingID = self.trackingID {
             json["tracking_id"] = trackingID
+        }
+
+        if let v = self.version {
+            json["v"] = v.string
         }
 
         return json
@@ -162,6 +179,17 @@ struct MeResponse:JSONConvertable {
 
 // Unpair
 struct UnpairResponse:JSONConvertable {
+    init(){}
+    init(json: JSON) {
+
+    }
+    var jsonMap: JSON {
+        return [:]
+    }
+}
+
+// Ack
+struct AckResponse:JSONConvertable {
     init(){}
     init(json: JSON) {
 
