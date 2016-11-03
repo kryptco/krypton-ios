@@ -20,7 +20,7 @@ private var sharedSilo:Silo?
 class Silo {
     
     var sessionLabels:[SessionLabel:Session] = [:]
-    var sessionServiceUUIDS: [CBUUID: Session] = [:]
+    var sessionServiceUUIDS: [String: Session] = [:]
     var mutex = Mutex()
 
     var bluetoothDelegate: BluetoothDelegate = BluetoothDelegate()
@@ -45,7 +45,7 @@ class Silo {
     func onBluetoothReceive(serviceUUID: CBUUID, message: NetworkMessage) throws {
         mutex.lock()
 
-        guard let session = sessionServiceUUIDS[serviceUUID] else {
+        guard let session = sessionServiceUUIDS[serviceUUID.uuidString] else {
             log("bluetooth session not found \(serviceUUID)", .warning)
             mutex.unlock()
             return
@@ -180,7 +180,7 @@ class Silo {
             
             sessionLabels[session.id] = session
             let cbuuid = session.pairing.uuid
-            sessionServiceUUIDS[cbuuid] = session
+            sessionServiceUUIDS[cbuuid.uuidString] = session
             sessionLastBluetoothActivity[cbuuid] = Date()
             sessionLastNetworkActivity[cbuuid] = Date()
             bluetoothDelegate.addServiceUUID(uuid: cbuuid)
@@ -222,7 +222,7 @@ class Silo {
         }
         sessionLabels.removeValue(forKey: session.id)
         let cbuuid = session.pairing.uuid
-        sessionServiceUUIDS.removeValue(forKey: cbuuid)
+        sessionServiceUUIDS.removeValue(forKey: cbuuid.uuidString)
         bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
         sessionLastNetworkActivity.removeValue(forKey: cbuuid)
         sessionLastBluetoothActivity.removeValue(forKey: cbuuid)
@@ -289,7 +289,7 @@ class Silo {
         }
 
         let now = Date().timeIntervalSince1970
-        if abs(now - Double(request.unixSeconds)) > 60 {
+        if abs(now - Double(request.unixSeconds)) > 120 {
             throw InvalidRequestTimeError()
         }
         
@@ -320,7 +320,6 @@ class Silo {
             if request.sendACK {
                 let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
                 let ack = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds, ack: AckResponse(), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
-
                 do {
                     try send(session: session, response: ack)
                 } catch (let e) {
