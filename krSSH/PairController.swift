@@ -22,6 +22,7 @@ class PairController: KRBaseController, KRScanDelegate {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        scanRails.tintColor = UIColor.app
     }
     
     override func viewWillAppear(_ animated: Bool) {

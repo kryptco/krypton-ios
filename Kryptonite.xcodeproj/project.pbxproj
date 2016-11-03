@@ -678,6 +678,7 @@
 				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
 				FACAA4B01D887904000B9A01 /* SignatureLog.swift */,
 				FA8523C91DBFDA5200D465D2 /* Version.swift */,
+				FAEE048A1D736972002A7AFD /* Krypto */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -726,7 +727,6 @@
 				FA15EB471DA5C5BB00BED16C /* Data */,
 				FAA6E1EF1D79E3E3007D1B3A /* API */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
-				FAEE048A1D736972002A7AFD /* Krypto */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
 			);
 			path = krSSH;

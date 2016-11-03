@@ -70,7 +70,7 @@ class ApproveController:UIViewController {
 
     var rejectColor = UIColor(hex: 0xFF6361)
     
-    var heightCover:CGFloat = 178.0
+    var heightCover:CGFloat = 232.0
     
     var request:Request?
     var session:Session?
@@ -106,7 +106,7 @@ class ApproveController:UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth)
+        arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
