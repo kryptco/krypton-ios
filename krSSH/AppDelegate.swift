@@ -10,6 +10,8 @@
 
 import UIKit
 
+struct InvalidNotification:Error{}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -160,10 +162,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Policy.pendingAuthorization = (session, request)
             }
         }
-        
-      
-        
-        
     }
     
     //MARK: Allow/Reject
@@ -192,56 +190,76 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         handleAction(userInfo: notification.userInfo, identifier: identifier, completionHandler: completionHandler)
         
     }
-    
-    func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
-        
-        Policy.pendingAuthorization = nil
-        
-        let signatureAllowed = (identifier != Policy.rejectAction.identifier)
-        
-        if identifier == Policy.approveTemporaryAction.identifier {
-            Policy.allowFor(time: Policy.Interval.oneHour)
-        }
 
+    func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
+        Policy.pendingAuthorization = nil
+
+        if let (session, request) = try? convertLocalJSONAction(userInfo: userInfo) {
+            handleRequestAction(session: session, request: request, identifier: identifier, completionHandler: completionHandler)
+        } else if let (session, request) = try? unsealUntrustedAction(userInfo: userInfo) {
+            handleRequestAction(session: session, request: request, identifier: identifier, completionHandler: completionHandler)
+        } else {
+            log("invalid notification", .error)
+            completionHandler()
+        }
+    }
+
+    func unsealUntrustedAction(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
+        guard let notificationDict = userInfo?["aps"] as? [String:Any],
+            let ciphertextB64 = notificationDict["c"] as? String,
+            let ciphertext = try? ciphertextB64.fromBase64(),
+            let sessionUUID = notificationDict["session_uuid"] as? String,
+            let session = Silo.shared.sessionServiceUUIDS[sessionUUID],
+            let alert = notificationDict["alert"] as? String,
+            alert == "Request from ".appending(session.pairing.displayName)
+            else {
+                log("invalid untrusted encrypted notification", .error)
+                throw InvalidNotification()
+        }
+        let sealed = try NetworkMessage(networkData: ciphertext).data
+        let request = try Request(key: session.pairing.symmetricKey, sealed: sealed)
+        return (session, request)
+    }
+
+    func convertLocalJSONAction(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
+        guard let sessionID = userInfo?["session_id"] as? String,
+            let session = SessionManager.shared.get(id: sessionID),
+            let requestJSON = userInfo?["request"] as? JSON
+            else {
+                log("invalid notification", .error)
+                throw InvalidNotification()
+        }
+        return try (session, Request(json: requestJSON))
+    }
+
+    func handleRequestAction(session: Session, request: Request, identifier:String?, completionHandler:@escaping ()->Void) {
+
+        let signatureAllowed = (identifier != Policy.rejectAction.identifier)
 
         if let identifier = identifier {
             switch identifier {
             case Policy.approveIdentifier:
+                Policy.needsUserApproval = true
                 Analytics.postEvent(category: "signature", action: "background approve", label: "once")
             case Policy.approveTempIdentifier:
+                Policy.allowFor(time: Policy.Interval.oneHour)
                 Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
             case Policy.rejectIdentifier:
+                Policy.needsUserApproval = true
                 Analytics.postEvent(category: "signature", action: "background reject")
             default:
                 log("unhandled approval identifier: \(identifier)")
             }
         }
-
-
-        log("user allows")
-        
-        guard   let sessionID = userInfo?["session_id"] as? String,
-            let session = SessionManager.shared.get(id: sessionID),
-            let requestJSON = userInfo?["request"] as? JSON
-            else {
-                
-                log("invalid notification", .error)
-                completionHandler()
-                return
-        }
-        
         do {
-            let request = try Request(json: requestJSON)
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: signatureAllowed)
             try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
-            
+
         } catch (let e) {
             log("handle error \(e)", .error)
             completionHandler()
             return
         }
-        
-
     }
     
     //MARK: Links
