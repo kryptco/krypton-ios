@@ -289,7 +289,7 @@ class Silo {
         }
 
         let now = Date().timeIntervalSince1970
-        if abs(now - Double(request.unixSeconds)) > 60 {
+        if abs(now - Double(request.unixSeconds)) > 120 {
             throw InvalidRequestTimeError()
         }
         
