@@ -236,21 +236,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let signatureAllowed = (identifier != Policy.rejectAction.identifier)
 
-        if let identifier = identifier {
-            switch identifier {
-            case Policy.approveIdentifier:
-                Policy.needsUserApproval = true
-                Analytics.postEvent(category: "signature", action: "background approve", label: "once")
-            case Policy.approveTempIdentifier:
-                Policy.allowFor(time: Policy.Interval.oneHour)
-                Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
-            case Policy.rejectIdentifier:
-                Policy.needsUserApproval = true
-                Analytics.postEvent(category: "signature", action: "background reject")
-            default:
-                log("unhandled approval identifier: \(identifier)")
-            }
+        switch identifier {
+        case Policy.approveIdentifier?:
+            Policy.needsUserApproval = true
+            Analytics.postEvent(category: "signature", action: "background approve", label: "once")
+            
+        case Policy.approveTempIdentifier?:
+            Policy.allowFor(time: Policy.Interval.oneHour)
+            Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
+            
+        case Policy.rejectIdentifier?:
+            Policy.needsUserApproval = true
+            Analytics.postEvent(category: "signature", action: "background reject")
+            
+        default:
+            log("unhandled approval identifier: \(identifier)", .error)
         }
+
+        
         do {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: signatureAllowed)
             try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
