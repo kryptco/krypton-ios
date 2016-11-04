@@ -11,6 +11,10 @@ import CoreBluetooth
 
 let krsshCharUUID = CBUUID(string: "20F53E48-C08D-423A-B2C2-1C797889AF24")
 
+let refreshByte = UInt8(0)
+let pingByte = UInt8(1)
+let pingMsg = Data(bytes: [pingByte])
+
 class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var allServiceUUIDS : Set<CBUUID> = Set()
     var scanningServiceUUIDS: Set<CBUUID> = Set()
@@ -21,6 +25,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var peripheralCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
     var recentPeripheralConnections: Cache<NSString>? = try? Cache<NSString>(name: "TRIED_BLUETOOTH_PERIPHERALS_CONNECT")
 
+    var servicePingEpochs : [CBUUID: UInt] = [:]
+    var serviceAckedEpochs : [CBUUID: UInt] = [:]
+    var servicePingTimeouts : [CBUUID: Double] = [:]
 
     var characteristicMessageBuffers: [CBCharacteristic: Data] = [:]
     var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
@@ -75,6 +82,14 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         } catch let e {
             log("bluetooth message split failed: \(e)", .error)
         }
+    }
+
+    func writeToServiceUUIDRawLocked(uuid: CBUUID, data: Data) {
+        guard let peripheral = pairedPeripherals[uuid],
+            let characteristic = peripheralCharacteristics[peripheral] else {
+                return
+        }
+        peripheral.writeValue(data, for: characteristic, type: .withResponse)
     }
 
     func scanLogic() {
@@ -273,6 +288,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             log("discovered krSSH characteristic")
             peripheralCharacteristics[peripheral] = char
             peripheral.setNotifyValue(true, for: char)
+            pingService(service.uuid)
             if let queuedMessage = serviceQueuedMessage.removeValue(forKey: service.uuid) {
                 dispatchAsync {
                     self.writeToServiceUUID(uuid: service.uuid, message: queuedMessage)
@@ -280,6 +296,65 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             }
         }
     }
+
+    func pingService(_ service: CBUUID) {
+        let epoch = (servicePingEpochs[service] ?? 0) + 1
+        servicePingEpochs[service] = epoch
+        writeToServiceUUIDRawLocked(uuid: service, data: pingMsg)
+        scheduleAliveCheck(forService: service, epoch: epoch)
+    }
+
+    func scheduleAliveCheck(forService service:CBUUID, epoch: UInt) {
+        let timeout = servicePingTimeouts[service] ?? 1.0
+
+        dispatchAfter(delay: timeout, task: {
+            self.aliveCheck(service.uuidString, epoch:epoch)
+        })
+        log("alive check scheduled in \(timeout) seconds")
+    }
+
+    func aliveCheck(_ service:String, epoch:UInt) {
+        guard let uuid = UUID(uuidString: service) else {
+            return
+        }
+        let cbuuid = CBUUID(nsuuid: uuid)
+        self.mutex.lock()
+        defer { self.mutex.unlock() }
+        guard let currentEpoch = self.servicePingEpochs[cbuuid],
+            currentEpoch == epoch else {
+                return
+        }
+        guard let ackedEpoch = self.serviceAckedEpochs[cbuuid],
+            ackedEpoch >= currentEpoch else {
+                log("alive check failed")
+                var timeout = self.servicePingTimeouts[cbuuid] ?? 1.0
+                if timeout >= 3600.0 {
+                    timeout = 1.0
+                }
+                self.servicePingTimeouts[cbuuid] = timeout * 2
+                dispatchAsync { self.refreshServiceUUID(uuid: cbuuid) }
+                return
+        }
+        log("alive check passed")
+
+        self.servicePingTimeouts.removeValue(forKey: cbuuid)
+    }
+
+    func onServiceAck(service:CBUUID) {
+        mutex.lock()
+        defer { mutex.unlock() }
+        guard let currentEpoch = servicePingEpochs[service] else {
+            return
+        }
+        if let previousAck = serviceAckedEpochs[service] {
+            guard currentEpoch > previousAck else {
+                return
+            }
+        }
+        serviceAckedEpochs[service] = currentEpoch
+    }
+
+//    func verifyPing(_ peripheral: CBPeripheral, forService service)
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         mutex.lock()
@@ -313,12 +388,14 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         if data.count == 1 {
             //  control messages
             switch data[0] {
-            case 0:
+            case refreshByte:
                 let uuid = characteristic.service.uuid
                 log("received refresh control message")
                 dispatchAfter(delay: 5.0, task: { self.refreshServiceUUID(uuid: uuid) })
                 return
-            //                central?.cancelPeripheralConnection(characteristic.service.peripheral)
+            case pingByte:
+                onServiceAck(service: characteristic.service.uuid)
+                break
             default:
                 break
             }
@@ -389,9 +466,15 @@ struct BluetoothMessageTooLong : Error {
     var messageLength : Int
     var mtu : Int
 }
+
 /*
- *  Bluetooth packet protocol: first byte of message indicates number of 
- *  remaining packets. Packets must be <= mtu in length.
+ *  Bluetooth packet protocol: 
+ *  1-byte message = control message:
+ *      0: disconnect from workstation
+ *      1: ping/pong
+ *  multi-byte message = data
+ *      first byte of message indicates number of
+ *      remaining packets. Packets must be <= mtu in length.
  */
 func splitMessageForBluetooth(message: Data, mtu: UInt) throws -> [Data] {
     let msgBlockSize = mtu - 1;

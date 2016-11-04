@@ -147,8 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     //MARK: Tap local notification
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        
-        log("tap local notification")
+        log("local notification")
         
         pendingAuthorizationMutex.lock {
             if
