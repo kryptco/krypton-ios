@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import JSON
 
 private var sharedSessionManager:SessionManager?
 
@@ -68,22 +68,21 @@ class SessionManager {
     
     
     func save() {
-        let data = sessions.values.map({ $0.jsonMap }) as [Any]
+        let data = sessions.values.map({ $0.object }) as [Any]
         UserDefaults.standard.set(data, forKey: SessionManager.ListKey)
         UserDefaults.standard.synchronize()
     }
     
     
     private class func load() -> [String:Session] {
-        guard let jsonList = UserDefaults.standard.array(forKey: SessionManager.ListKey) as? [JSON]
+        guard let jsonList = UserDefaults.standard.array(forKey: SessionManager.ListKey) as? [Object]
         else {
             return [:]
         }
         
         var map:[String:Session] = [:]
         do {
-            let sessions = try jsonList.map({try Session(json: $0)})
-            sessions.forEach({ map[$0.id] = $0 })
+            try [Session](json: jsonList).forEach({ map[$0.id] = $0 })
         } catch {
             log("could not parse sessions from persistant storage", .error)
         }

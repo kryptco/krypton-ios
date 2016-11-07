@@ -153,8 +153,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if
                 let sessionID = notification.userInfo?["session_id"] as? String,
                 let session = SessionManager.shared.get(id: sessionID),
-                let requestJSON = notification.userInfo?["request"] as? JSON,
-                let request = try? Request(json: requestJSON)
+                let requestObject = notification.userInfo?["request"] as? [String:Any],
+                let request = try? Request(json: requestObject)
                 
             {
                 // if approval notification
@@ -223,12 +223,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func convertLocalJSONAction(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
         guard let sessionID = userInfo?["session_id"] as? String,
             let session = SessionManager.shared.get(id: sessionID),
-            let requestJSON = userInfo?["request"] as? JSON
+            let requestObject = userInfo?["request"] as? [String:Any]
             else {
                 log("invalid notification", .error)
                 throw InvalidNotification()
         }
-        return try (session, Request(json: requestJSON))
+        return try (session, Request(json: requestObject))
     }
 
     func handleRequestAction(session: Session, request: Request, identifier:String?, completionHandler:@escaping ()->Void) {

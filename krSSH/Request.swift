@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import JSON
 
-struct Request:JSONConvertable {
+struct Request:Jsonable {
     
     var id:String
     var unixSeconds:Int
@@ -19,24 +20,24 @@ struct Request:JSONConvertable {
     var me:MeRequest?
     var unpair:UnpairRequest?
     
-    init(json: JSON) throws {
+    init(json: Object) throws {
         self.id = try json ~> "request_id"
         self.unixSeconds = try json ~> "unix_seconds"
         self.sendACK = (try? json ~> "a") ?? false
 
-        if let json:JSON = try? json ~> "sign_request" {
+        if let json:Object = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
         }
         
-        if let json:JSON = try? json ~> "list_request" {
+        if let json:Object = try? json ~> "list_request" {
             self.list = try ListRequest(json: json)
         }
         
-        if let json:JSON = try? json ~> "me_request" {
+        if let json:Object = try? json ~> "me_request" {
             self.me = try MeRequest(json: json)
         }
 
-        if let json:JSON = try? json ~> "unpair_request" {
+        if let json:Object = try? json ~> "unpair_request" {
             self.unpair = try UnpairRequest(json: json)
         }
 
@@ -45,26 +46,26 @@ struct Request:JSONConvertable {
         }
     }
     
-    var jsonMap: JSON {
+    var object:Object {
         var json:[String:Any] = [:]
         json["request_id"] = id
         json["unix_seconds"] = unixSeconds
         json["a"] = sendACK
 
         if let s = sign {
-            json["sign_request"] = s.jsonMap
+            json["sign_request"] = s.object
         }
         
         if let l = list {
-            json["list_request"] = l.jsonMap
+            json["list_request"] = l.object
         }
         
         if let m = me {
-            json["me_request"] = m.jsonMap
+            json["me_request"] = m.object
         }
 
         if let u = unpair {
-            json["unpair_request"] = u.jsonMap
+            json["unpair_request"] = u.object
         }
 
         return json
@@ -79,12 +80,12 @@ struct Request:JSONConvertable {
 
 // Sign
 
-struct SignRequest:JSONConvertable {
+struct SignRequest:Jsonable {
     var digest:String
     var fingerprint:String
     var command:String?
     
-    init(json: JSON) throws {
+    init(json: Object) throws {
         self.digest = try json ~> "digest"
         self.fingerprint = try json ~> "public_key_fingerprint"
         if let command:String = try? json ~> "command" {
@@ -92,7 +93,7 @@ struct SignRequest:JSONConvertable {
         }
     }
     
-    var jsonMap: JSON {
+    var object: Object {
         var json:[String:Any] = ["digest": digest,
                                 "public_key_fingerprint": fingerprint]
         
@@ -106,21 +107,21 @@ struct SignRequest:JSONConvertable {
 
 
 // List
-struct ListRequest:JSONConvertable {
-    init(json: JSON) throws {}
-    var jsonMap: JSON {return [:]}
+struct ListRequest:Jsonable {
+    init(json: Object) throws {}
+    var object: Object {return [:]}
 }
 
 // Me
-struct MeRequest:JSONConvertable {
-    init(json: JSON) throws {}
-    var jsonMap: JSON {return [:]}
+struct MeRequest:Jsonable {
+    init(json: Object) throws {}
+    var object: Object {return [:]}
 }
 
 // Unpair
-struct UnpairRequest:JSONConvertable {
-    init(json: JSON) throws {}
-    var jsonMap: JSON {return [:]}
+struct UnpairRequest:Jsonable {
+    init(json: Object) throws {}
+    var object: Object {return [:]}
 }
 
 

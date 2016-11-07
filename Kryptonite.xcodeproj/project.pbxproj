@@ -100,7 +100,6 @@
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
 		FAA5362F1D8F43D100549710 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362E1D8F43D100549710 /* Links.swift */; };
-		FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1E91D79CF97007D1B3A /* JSON.swift */; };
 		FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; };
 		FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
 		FAA6E1F11D79E3ED007D1B3A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* API.swift */; };
@@ -161,6 +160,8 @@
 		FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
 		FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
+		FAFDE8E91DD1003100C87C86 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
+		FAFDE8EA1DD1003100C87C86 /* JSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAFE546F1D7B9C1400391FDD /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
 		FAFE54701D7BB19900391FDD /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
 		FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
@@ -280,6 +281,27 @@
 			remoteGlobalIDString = FA8141351D70B0F4004FE58C;
 			remoteInfo = krSSH;
 		};
+		FAFDE8D71DD1000F00C87C86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA1D83F71DCBCFDF00E786E1;
+			remoteInfo = JSON;
+		};
+		FAFDE8D91DD1000F00C87C86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA1D84001DCBCFDF00E786E1;
+			remoteInfo = JSONTests;
+		};
+		FAFDE8EB1DD1003100C87C86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA1D83F61DCBCFDF00E786E1;
+			remoteInfo = JSON;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -302,6 +324,7 @@
 			files = (
 				8D003DF01D90EBBD0085ED21 /* Sodium.framework in Embed Frameworks */,
 				FAA6E1FB1D79FBE2007D1B3A /* AWSSNS.framework in Embed Frameworks */,
+				FAFDE8EA1DD1003100C87C86 /* JSON.framework in Embed Frameworks */,
 				FAA6E1FC1D79FBE2007D1B3A /* AWSSQS.framework in Embed Frameworks */,
 				FAA6E1FA1D79FBC4007D1B3A /* AWSCore.framework in Embed Frameworks */,
 				8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */,
@@ -410,7 +433,6 @@
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
 		FAA5362E1D8F43D100549710 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
-		FAA6E1E91D79CF97007D1B3A /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSNS.framework; sourceTree = "<group>"; };
 		FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSQS.framework; sourceTree = "<group>"; };
 		FAA6E1F01D79E3ED007D1B3A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -465,6 +487,7 @@
 		FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KryptoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE049E1D74BCC3002A7AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Seal.swift"; sourceTree = "<group>"; };
+		FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = JSON/JSON.xcodeproj; sourceTree = "<group>"; };
 		FAFE546E1D7B9C1400391FDD /* Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -487,6 +510,7 @@
 				FAA6E1F51D79E4FC007D1B3A /* AWSCore.framework in Frameworks */,
 				FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */,
 				FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */,
+				FAFDE8E91DD1003100C87C86 /* JSON.framework in Frameworks */,
 				FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */,
 				8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */,
 				FA8141511D714203004FE58C /* Security.framework in Frameworks */,
@@ -754,7 +778,6 @@
 				FA15EB481DA5C6CC00BED16C /* Properties.swift */,
 				8DB2EE381DBC18170079E468 /* Analytics.swift */,
 				FAB664EE1DBFF18C0094896F /* Updater.swift */,
-				FAA6E1E91D79CF97007D1B3A /* JSON.swift */,
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */,
 				FA81414B1D70B10F004FE58C /* UX */,
@@ -843,6 +866,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */,
 				FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */,
 				8DE395551D942647005D559C /* AwesomeCache */,
 				8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */,
@@ -900,6 +924,15 @@
 			path = KryptoTests;
 			sourceTree = "<group>";
 		};
+		FAFDE8D31DD1000F00C87C86 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAFDE8D81DD1000F00C87C86 /* JSON.framework */,
+				FAFDE8DA1DD1000F00C87C86 /* JSONTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -938,6 +971,7 @@
 			);
 			dependencies = (
 				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,
+				FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */,
 			);
 			name = Kryptonite;
 			productName = krSSH;
@@ -1030,6 +1064,10 @@
 			productRefGroup = FA8141371D70B0F4004FE58C /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = FAFDE8D31DD1000F00C87C86 /* Products */;
+					ProjectRef = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
+				},
 				{
 					ProductGroup = 8D003DD91D90EBB10085ED21 /* Products */;
 					ProjectRef = 8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */;
@@ -1145,6 +1183,20 @@
 			fileType = wrapper.framework;
 			path = SwiftHTTP.framework;
 			remoteRef = 8DB2EE511DBC54EF0079E468 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAFDE8D81DD1000F00C87C86 /* JSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = JSON.framework;
+			remoteRef = FAFDE8D71DD1000F00C87C86 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAFDE8DA1DD1000F00C87C86 /* JSONTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = JSONTests.xctest;
+			remoteRef = FAFDE8D91DD1000F00C87C86 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1352,7 +1404,6 @@
 				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */,
-				FAA6E1EA1D79CF97007D1B3A /* JSON.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
 				FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */,
 				FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */,
@@ -1422,6 +1473,11 @@
 			isa = PBXTargetDependency;
 			target = FA8141351D70B0F4004FE58C /* Kryptonite */;
 			targetProxy = FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */;
+		};
+		FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSON;
+			targetProxy = FAFDE8EB1DD1003100C87C86 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

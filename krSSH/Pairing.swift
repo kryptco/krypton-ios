@@ -9,8 +9,9 @@
 import Foundation
 import CoreBluetooth
 import Sodium
+import JSON
 
-struct Pairing {
+struct Pairing:JsonReadable {
 
     var name:String
     var uuid: CBUUID
@@ -36,7 +37,7 @@ struct Pairing {
         self.uuid = CBUUID.init(data: workstationPublicKey.SHA256.subdata(in: 0 ..< 16))
     }
 
-    init(json: JSON) throws {
+    init(json: Object) throws {
         let pkB64:String = try json ~> "pk"
         let workstationPublicKey = try pkB64.fromBase64()
         try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey)

@@ -7,28 +7,23 @@
 //
 
 import Foundation
-
+import JSON
 
 typealias Sealed = Data
-extension JSONConvertable {
-    
+
+extension JsonWritable {
     func seal(key:Key) throws -> Sealed {
         return try self.jsonData().seal(key: key)
     }
+}
+extension JsonReadable {
     
     init(key:Key, sealedBase64:String) throws {
         try self.init(key: key, sealed: try sealedBase64.fromBase64())
     }
 
     init(key:Key, sealed:Sealed) throws {
-        let jsonData = try sealed.unseal(key: key)
-        let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments)
-
-        guard let json = jsonObject as? JSON
-            else {
-                throw CryptoError.encoding
-        }
-
+        let json:Object = try JSON.parse(data: sealed.unseal(key: key))
         self = try Self.init(json: json)
     }
     

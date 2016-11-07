@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import JSON
 
-final class Response:JSONConvertable {
+final class Response:Jsonable {
     
     var requestID:String
     var snsEndpointARN:String
@@ -34,7 +35,7 @@ final class Response:JSONConvertable {
         self.version = Properties.currentVersion
     }
     
-    init(json: JSON) throws {
+    init(json: Object) throws {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
         self.version = Version(string: try json ~> "v")
@@ -43,23 +44,23 @@ final class Response:JSONConvertable {
             self.approvedUntil = approvedUntil
         }
 
-        if let json:JSON = try? json ~> "sign_response" {
+        if let json:Object = try? json ~> "sign_response" {
             self.sign = try SignResponse(json: json)
         }
         
-        if let json:JSON = try? json ~> "list_response" {
+        if let json:Object = try? json ~> "list_response" {
             self.list = try ListResponse(json: json)
         }
         
-        if let json:JSON = try? json ~> "me_response" {
+        if let json:Object = try? json ~> "me_response" {
             self.me = try MeResponse(json: json)
         }
 
-        if let json:JSON = try? json ~> "unpair_response" {
+        if let json:Object = try? json ~> "unpair_response" {
             self.unpair = UnpairResponse(json: json)
         }
 
-        if let json:JSON = try? json ~> "ack_response" {
+        if let json:Object = try? json ~> "ack_response" {
             self.ack = AckResponse(json: json)
         }
 
@@ -68,7 +69,7 @@ final class Response:JSONConvertable {
         }
     }
     
-    var jsonMap: JSON {
+    var object:Object {
         var json:[String:Any] = [:]
         json["request_id"] = requestID
         json["sns_endpoint_arn"] = snsEndpointARN
@@ -78,23 +79,23 @@ final class Response:JSONConvertable {
         }
 
         if let s = sign {
-            json["sign_response"] = s.jsonMap
+            json["sign_response"] = s.object
         }
         
         if let l = list {
-            json["list_response"] = l.jsonMap
+            json["list_response"] = l.object
         }
         
         if let m = me {
-            json["me_response"] = m.jsonMap
+            json["me_response"] = m.object
         }
 
         if let u = unpair {
-            json["unpair_response"] = u.jsonMap
+            json["unpair_response"] = u.object
         }
 
         if let a = ack {
-            json["ack_response"] = a.jsonMap
+            json["ack_response"] = a.object
         }
 
         if let trackingID = self.trackingID {
@@ -113,7 +114,7 @@ final class Response:JSONConvertable {
 
 // Sign
 
-struct SignResponse:JSONConvertable {
+struct SignResponse:Jsonable {
     var signature:String?
     var error:String?
     
@@ -122,7 +123,7 @@ struct SignResponse:JSONConvertable {
         self.error = err
     }
     
-    init(json: JSON) throws {
+    init(json: Object) throws {
         
         if let sig:String = try? json ~> "signature" {
             self.signature = sig
@@ -133,7 +134,7 @@ struct SignResponse:JSONConvertable {
         }
     }
     
-    var jsonMap: JSON {
+    var object: Object {
         var map = [String:Any]()
         
         if let sig = signature {
@@ -148,53 +149,52 @@ struct SignResponse:JSONConvertable {
 
 
 // List
-struct ListResponse:JSONConvertable {
+struct ListResponse:Jsonable {
     var peers:[Peer]
     
     init(peers:[Peer]) {
         self.peers = peers
     }
-    init(json: JSON) throws {
-        self.peers = try ((json ~> "profiles") as [JSON]).map({try Peer(json: $0)})
+    init(json: Object) throws {
+        self.peers = try [Peer](json: json ~> "profiles")
     }
-    var jsonMap: JSON {
-        return ["profiles": peers.map({$0.jsonMap})]
+    var object: Object {
+        return ["profiles": peers.objects]
     }
 }
 
 // Me
-struct MeResponse:JSONConvertable {
+struct MeResponse:Jsonable {
     var me:Peer
     init(me:Peer) {
         self.me = me
     }
-    init(json: JSON) throws {
+    init(json: Object) throws {
         self.me = try Peer(json: json ~> "me")
 
     }
-    var jsonMap: JSON {
-        return ["me": me.jsonMap]
+    var object: Object {
+        return ["me": me.object]
     }
 }
 
 // Unpair
-struct UnpairResponse:JSONConvertable {
+struct UnpairResponse:Jsonable {
     init(){}
-    init(json: JSON) {
+    init(json: Object) {
 
     }
-    var jsonMap: JSON {
+    var object: Object {
         return [:]
     }
 }
 
 // Ack
-struct AckResponse:JSONConvertable {
+struct AckResponse:Jsonable {
     init(){}
-    init(json: JSON) {
-
+    init(json: Object) {
+        
     }
-    var jsonMap: JSON {
+    var object: Object {
         return [:]
-    }
-}
+    }}

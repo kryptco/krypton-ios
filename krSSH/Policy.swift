@@ -163,7 +163,7 @@ class Policy {
         notification.alertBody = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.category = Policy.authorizeCategory.identifier
-        notification.userInfo = ["session_id": session.id, "request": request.jsonMap]
+        notification.userInfo = ["session_id": session.id, "request": request.object]
 
         UIApplication.shared.presentLocalNotificationNow(notification)
     }

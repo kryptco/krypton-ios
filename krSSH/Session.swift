@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import JSON
 
-struct Session:JSONConvertable {
+struct Session:Jsonable {
     var id:String
     var pairing:Pairing
     var created:Date
@@ -19,7 +20,7 @@ struct Session:JSONConvertable {
         self.created = Date()
     }
     
-    init(json: JSON) throws {
+    init(json: Object) throws {
         id      = try json ~> "id"
         
         let workstationPublicKey = try ((try json ~> "workstation_public_key") as String).fromBase64()
@@ -30,7 +31,7 @@ struct Session:JSONConvertable {
         created = Date(timeIntervalSince1970: try json ~> "created")
     }
     
-    var jsonMap: JSON {
+    var object: Object {
         return ["id": id,
                 "name": pairing.name,
                 "queue": pairing.queue,

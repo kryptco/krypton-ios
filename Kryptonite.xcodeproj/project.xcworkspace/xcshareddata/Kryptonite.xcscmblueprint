@@ -4,15 +4,17 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "D84B44F309129032C5A39FC5561DD01414003B8F" : 9223372036854775807,
     "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : 9223372036854775807,
+    "8FCD34F3BDB936D53847399A937A1A49AAFCAF85" : 9223372036854775807,
+    "D84B44F309129032C5A39FC5561DD01414003B8F" : 9223372036854775807,
     "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : 9223372036854775807,
     "38D9009B322140394B9DA7467F68950B56B35FF5" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3269C9DE-C7D9-4DEB-A8D7-06EA5690AD8B",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "D84B44F309129032C5A39FC5561DD01414003B8F" : "kryptonite-ios\/AwesomeCache\/",
     "CD87797B9D09AEEE7FEB1D43B38DA32D51BC7F68" : "kryptonite-ios\/swift-sodium\/",
+    "8FCD34F3BDB936D53847399A937A1A49AAFCAF85" : "kryptonite-ios\/JSON\/",
+    "D84B44F309129032C5A39FC5561DD01414003B8F" : "kryptonite-ios\/AwesomeCache\/",
     "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E" : "kryptonite-ios\/",
     "38D9009B322140394B9DA7467F68950B56B35FF5" : "kryptonite-ios\/SwiftHTTP\/"
   },
@@ -29,6 +31,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:agrinman\/kryptonite-ios.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8B9B1074C4E0DCACE3533B227A43FB1E3B93891E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:KryptCo\/JSON.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8FCD34F3BDB936D53847399A937A1A49AAFCAF85"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:kryptco\/swift-sodium",

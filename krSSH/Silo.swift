@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import JSON
 
 typealias SessionLabel = String
 
@@ -294,9 +295,8 @@ class Silo {
         }
         
         requestCache?.removeExpiredObjects()
-        if  let cachedResponseData = requestCache?[request.id] as? Data,
-            let json = (try JSONSerialization.jsonObject(with: cachedResponseData)) as? JSON
-        {
+        if  let cachedResponseData = requestCache?[request.id] as? Data {
+            let json:Object = try JSON.parse(data: cachedResponseData)
             let response = try Response(json: json)
             try self.send(session: session, response: response, completionHandler: completionHandler)
             return

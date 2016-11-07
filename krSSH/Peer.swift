@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import JSON
 
 private let KrUnknownEmailValue = "unknown"
 
-struct Peer:JSONConvertable {
+struct Peer:Jsonable {
     var email:String
     var fingerprint:Data
     var publicKey:SSHWireFormat
@@ -24,7 +25,7 @@ struct Peer:JSONConvertable {
         self.dateAdded = date
     }
     
-    init(json:JSON) throws {
+    init(json:Object) throws {
         
         let publicKeyBase64:String = try json ~> "rsa_public_key_wire"
         self.publicKey = try publicKeyBase64.fromBase64()
@@ -41,7 +42,7 @@ struct Peer:JSONConvertable {
         }
     }
     
-    var jsonMap:JSON {
+    var object:Object {
         return ["email": email, "rsa_public_key_wire": publicKey.toBase64()]
     }
     
