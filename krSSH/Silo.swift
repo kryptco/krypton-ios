@@ -267,7 +267,7 @@ class Silo {
         mutex.lock()
         defer { mutex.unlock() }
 
-        guard let _ = SessionManager.shared.get(id: session.id) else {
+        guard let _ = sessionLabels[session.id] else {
             throw SessionRemovedError()
         }
 
