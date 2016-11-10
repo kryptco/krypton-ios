@@ -23,15 +23,15 @@ class KRBaseController: UIViewController {
         super.viewWillAppear(animated)
         Policy.currentViewController = self
         linkListener = LinkListener(handle)
-
-        if shouldPostAnalytics() {
-            Analytics.postControllerView(clazz: String(describing: type(of: self)))
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
+
         checkForUpdatesIfNeeded()
     }
 
@@ -55,15 +55,14 @@ class KRBaseTableController: UITableViewController {
         super.viewWillAppear(animated)
         Policy.currentViewController = self
         linkListener = LinkListener(handle)
-
-        if shouldPostAnalytics() {
-            Analytics.postControllerView(clazz: String(describing: type(of: self)))
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
         checkForUpdatesIfNeeded()
     }
     

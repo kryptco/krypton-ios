@@ -316,12 +316,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.applicationIconBadgeNumber = 1
         application.applicationIconBadgeNumber = 0
+        Analytics.setUserAgent()
+        Analytics.appOpen()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        Analytics.setUserAgent()
-        Analytics.appOpen()
         pendingAuthorizationMutex.lock {
             if let (session, request) = Policy.pendingAuthorization {
                 log("requesting pending authorization")
