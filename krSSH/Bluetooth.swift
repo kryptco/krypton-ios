@@ -227,6 +227,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         log("failed to connect \(peripheral.identifier)")
         discoveredPeripherals.remove(peripheral)
         recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
+        removePeripheralLocked(central: central, peripheral: peripheral)
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -451,14 +452,25 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         mutex.lock()
         defer { mutex.unlock() }
         log("Peripheral \(peripheral.identifier) disconnected, error \(error)")
+
+        recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
+        removePeripheralLocked(central: central, peripheral: peripheral)
+
+        let disconnectedServices = pairedPeripherals.filter({ $0.1 == peripheral }).map({$0.0})
+        let disconnectedPairedServices = disconnectedServices.filter({ allServiceUUIDS.contains($0) })
+        if disconnectedPairedServices.count > 0 {
+            log("reconnecting disconnected services \(disconnectedPairedServices)")
+            connectPeripheral(central, peripheral)
+        }
+        scanLogic()
+    }
+
+    func removePeripheralLocked(central: CBCentralManager, peripheral: CBPeripheral) {
         for disconnectedUUID in pairedPeripherals.filter({ $0.1 == peripheral }).map({$0.0}) {
             log("service uuid disconnected \(disconnectedUUID)")
             pairedPeripherals.removeValue(forKey: disconnectedUUID)
             pairedServiceUUIDS.remove(disconnectedUUID)
         }
-        peripheral.delegate = nil
-        recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
-        scanLogic()
     }
 
 
