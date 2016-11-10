@@ -15,10 +15,10 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     lazy var aboutButton:UIBarButtonItem = {
         return UIBarButtonItem(image: UIImage(named: "gear"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.aboutTapped))
-    }()
+    }() 
     
     lazy var helpButton:UIBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "help"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.helpTapped))
+        return UIBarButtonItem(title: "Help", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.helpTapped))
     }()
 
     
