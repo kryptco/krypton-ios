@@ -357,8 +357,6 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         serviceAckedEpochs[service] = currentEpoch
     }
 
-//    func verifyPing(_ peripheral: CBPeripheral, forService service)
-
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         mutex.lock()
         defer { mutex.unlock() }
