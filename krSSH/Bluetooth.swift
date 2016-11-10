@@ -415,6 +415,12 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         }
     }
 
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        if let e = error {
+            log("write error \(e)", .error)
+        }
+    }
+
     //  precondition: mutex locked
     func onUpdateCharacteristicValue(characteristic: CBCharacteristic, data: Data) {
         if data.count == 0 {
