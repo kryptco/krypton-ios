@@ -73,51 +73,44 @@ class Silo {
     
     func startPolling() {
         mutex.lock {
-            sessionLabels.values.forEach({ self.startPolling(session: $0) })
+            sessionLabels.values.forEach({ self.poll(session: $0) })
         }
     }
     
-    func startPolling(session:Session) {
+    func poll(session:Session) {
         
         let queue = DispatchQueue(label: "read-queue-\(session.id)")
         queue.async {
-            
-            let pauseMutex = Mutex()
             var canPoll:Bool = true
+            var isActive = false
 
-            while canPoll {
-                
-                pauseMutex.lock()
-                
-                // check session is still active
-                var isActive = false
-                self.mutex.lock {
-                    isActive = (self.sessionLabels[session.id] != nil)
-                }
-                
-                guard isActive else {
-                    pauseMutex.unlock()
-                    return
-                }
-                
-                // otherwise listen
-                
-                self.listen(to: session, completion: { (success, err) in
-                    pauseMutex.unlock()
-                    if let e = err, !(e is NoMessageError) {
-                        log("listen error: \(e)", .error)
-                        sleep(5)
-                    }
-                })
-                
-                self.mutex.lock {
-                    canPoll = self.shouldPoll
-                }
+            self.mutex.lock {
+                isActive = (self.sessionLabels[session.id] != nil)
+                canPoll = self.shouldPoll
             }
-        }
 
+            // check session is still active
+            guard canPoll && isActive else {
+                return
+            }
+
+            // otherwise listen
+            self.listen(to: session, completion: { (success, err) in
+                if let e = err, !(e is NoMessageError) {
+                    log("listen error: \(e)", .error)
+                    let delay = DispatchTime.now() + 5.0
+                    queue.asyncAfter(deadline: delay, execute: {
+                        self.poll(session: session)
+                    })
+                } else {
+                    queue.async(execute: {
+                        self.poll(session: session);
+                    })
+                }
+            })
+        }
     }
-    
+
     func listen(to: Session, completion:((Bool, Error?)->Void)?) {
         let api = API()
         

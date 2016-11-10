@@ -174,7 +174,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
             do {
                 let session = try Session(pairing: pairing)
                 Silo.shared.add(session: session)
-                Silo.shared.startPolling(session: session)
+                Silo.shared.poll(session: session)
                 self.performSegue(withIdentifier: "showPairingAnimation", sender: session)
                 self.scanController?.canScan = true
                 
