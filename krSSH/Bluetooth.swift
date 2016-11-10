@@ -287,7 +287,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             }
             log("discovered krSSH characteristic")
             peripheralCharacteristics[peripheral] = char
-            peripheral.setNotifyValue(true, for: char)
+            if (!char.isNotifying) {
+                peripheral.setNotifyValue(true, for: char)
+            }
             pingService(service.uuid)
             if let queuedMessage = serviceQueuedMessage.removeValue(forKey: service.uuid) {
                 dispatchAsync {
@@ -448,7 +450,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         mutex.lock()
         defer { mutex.unlock() }
-        log("Peripheral \(peripheral.identifier) disconnected")
+        log("Peripheral \(peripheral.identifier) disconnected, error \(error)")
         for disconnectedUUID in pairedPeripherals.filter({ $0.1 == peripheral }).map({$0.0}) {
             log("service uuid disconnected \(disconnectedUUID)")
             pairedPeripherals.removeValue(forKey: disconnectedUUID)
