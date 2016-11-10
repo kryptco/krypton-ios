@@ -267,6 +267,17 @@ class Silo {
         mutex.lock()
         defer { mutex.unlock() }
 
+        guard let _ = SessionManager.shared.get(id: session.id) else {
+            throw SessionRemovedError()
+        }
+
+        if let _ = request.unpair {
+            Analytics.postEvent(category: "device", action: "unpair", label: "request")
+            SessionManager.shared.remove(session: session)
+            removeLocked(session: session, sendUnpairResponse: false)
+            throw SessionRemovedError()
+        }
+
         sessionLastActivity[session.pairing.uuid] = Date()
         switch communicationMedium {
         case .bluetooth:
@@ -294,7 +305,6 @@ class Silo {
             try self.send(session: session, response: response, completionHandler: completionHandler)
             return
         }
-
         
         // logic
         
@@ -376,13 +386,6 @@ class Silo {
         var sign:SignResponse?
         var list:ListResponse?
         var me:MeResponse?
-
-        if let _ = request.unpair {
-            Analytics.postEvent(category: "device", action: "unpair", label: "request")
-            SessionManager.shared.remove(session: session)
-            removeLocked(session: session, sendUnpairResponse: false)
-            throw SessionRemovedError()
-        }
         
         if let signRequest = request.sign {
             let kp = try KeyManager.sharedInstance()
