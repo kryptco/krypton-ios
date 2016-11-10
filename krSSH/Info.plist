@@ -21,9 +21,9 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>344</string>
+	<string>349</string>
 	<key>GitHash</key>
-	<string>a9f40ccd006ed29209e68630ed894588921b6a65</string>
+	<string>1b6c657414fe723b9f5539fdecf66587df9deaa6</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>

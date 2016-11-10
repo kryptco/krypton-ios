@@ -154,7 +154,7 @@ class ApproveController:UIViewController {
             
             self.checkBox.toggleCheckState(true)
                 dispatchAfter(delay: 2.0) {
-                    self.animateDismiss()
+                    self.animateDismiss(allowed: true)
                 }
         }
 
@@ -199,7 +199,7 @@ class ApproveController:UIViewController {
         }) { (_) in
             dispatchMain{ self.checkBox.toggleCheckState(true) }
             dispatchAfter(delay: 2.0) {
-                self.animateDismiss()
+                self.animateDismiss(allowed: true)
             }
         }
 
@@ -247,11 +247,14 @@ class ApproveController:UIViewController {
 
     }
     
-    func animateDismiss() {
+    func animateDismiss(allowed:Bool = false) {
         UIView.animate(withDuration: 0.1) {
             self.view.backgroundColor = UIColor.clear
         }
         
-        self.dismiss(animated: true, completion: nil)
+        let presenting = self.presentingViewController
+        self.dismiss(animated: true, completion: {
+            presenting?.approveControllerDismissed(allowed: allowed)
+        })
     }
 }

@@ -12,8 +12,6 @@ import UIKit
 
 class KRBaseController: UIViewController {
     
-    private var linkListener:LinkListener?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -22,7 +20,9 @@ class KRBaseController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Policy.currentViewController = self
-        linkListener = LinkListener(handle)
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,28 +33,23 @@ class KRBaseController: UIViewController {
         }
 
         checkForUpdatesIfNeeded()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        linkListener = nil
     }
 
     func shouldPostAnalytics() -> Bool {
         return true
     }
-    
 }
 
 class KRBaseTableController: UITableViewController {
-    
-    private var linkListener:LinkListener?
     
     //MARK: Policy
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Policy.currentViewController = self
-        linkListener = LinkListener(handle)
+
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -66,11 +61,6 @@ class KRBaseTableController: UITableViewController {
         checkForUpdatesIfNeeded()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        linkListener = nil
-    }
-
     func shouldPostAnalytics() -> Bool {
         return true
     }
@@ -105,10 +95,8 @@ extension UIViewController {
         }
     }
     
-    
-    //MARK: LinkHandler
-    struct InvalidLinkError:Error{}
-    func handle(link:Link) {
-        
+    func approveControllerDismissed(allowed:Bool) {
+        let result = allowed ? "allowed" : "rejected"
+        log("approve modal finished with result: \(result)")
     }
 }
