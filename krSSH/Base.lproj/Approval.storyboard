@@ -269,6 +269,7 @@
                         <outlet property="resultLabel" destination="kZC-86-aGO" id="ibC-xe-7pa"/>
                         <outlet property="resultView" destination="2F5-8g-q5h" id="sRJ-bD-e1t"/>
                         <outlet property="resultViewHeight" destination="Gjk-VI-f78" id="AX3-JN-o7u"/>
+                        <outlet property="swipeDownRejectGesture" destination="80S-6d-hAs" id="NSG-w2-IQw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHI-NH-s8N" userLabel="First Responder" sceneMemberID="firstResponder"/>

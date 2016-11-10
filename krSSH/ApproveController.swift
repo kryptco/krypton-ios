@@ -68,9 +68,11 @@ class ApproveController:UIViewController {
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var arcView:UIView!
 
+    @IBOutlet weak var swipeDownRejectGesture:UIGestureRecognizer!
+
     var rejectColor = UIColor(hex: 0xFF6361)
     
-    var heightCover:CGFloat = 232.0
+    var heightCover:CGFloat = 234.0
     
     var request:Request?
     var session:Session?
@@ -116,6 +118,7 @@ class ApproveController:UIViewController {
     
     //MARK: Response
     @IBAction func approveOnce() {
+        
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
@@ -135,6 +138,8 @@ class ApproveController:UIViewController {
             return
         }
         
+        swipeDownRejectGesture.isEnabled = false
+
         self.resultLabel.text = "Allowed once".uppercased()
         
         UIView.animate(withDuration: 0.3, animations: {
@@ -179,6 +184,8 @@ class ApproveController:UIViewController {
             return
         }
         
+        swipeDownRejectGesture.isEnabled = false
+
         self.resultLabel.text = "Allowed for 1 hour".uppercased()
         
         UIView.animate(withDuration: 0.3, animations: {
