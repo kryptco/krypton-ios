@@ -12,6 +12,8 @@ import UIKit
 class PairedUploadController:KRBaseController {
     
     @IBOutlet weak var sessionLabel:UILabel!
+    
+    @IBOutlet weak var commandLabel:UILabel!
     @IBOutlet weak var commandView:UIView!
 
     @IBOutlet weak var githubLabel:UILabel!
@@ -32,6 +34,9 @@ class PairedUploadController:KRBaseController {
             v?.layer.masksToBounds = false
         }
         
+        githubLabel.alpha = 0
+        githubCommandView.alpha = 0
+        
         Onboarding.isActive = false
     }
     
@@ -47,6 +52,26 @@ class PairedUploadController:KRBaseController {
         
         
         return true
+    }
+    
+    
+    override func approveControllerDismissed(allowed: Bool) {
+        super.approveControllerDismissed(allowed: allowed)
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.commandLabel.alpha = 0.5
+            self.commandView.alpha = 0.5
+            
+            self.githubLabel.alpha = 1
+            self.githubCommandView.alpha = 1
+            
+            self.skipButton.setTitle("DONE", for: UIControlState.normal)
+            self.skipButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+
+
+        }, completion: {(_) -> Void in
+                        
+        })
     }
     
     
