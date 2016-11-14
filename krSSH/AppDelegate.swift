@@ -47,12 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Analytics.appLaunch()
 
-        //  TODO: since email is only sent on change, users from before this 
-        //  feature will not publish email unless it is changed we can remove 
-        //  this once all current beta users have published email
-        if let me = try? KeyManager.sharedInstance().getMe() {
-            dispatchAsync { Analytics.sendEmailToTeams(email: me.email) }
-        }
 
         return true
     }
@@ -328,6 +322,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Policy.requestUserAuthorization(session: session, request: request)
             }
 
+        }
+        
+        //  TODO: since email is only sent on change, users from before this
+        //  feature will not publish email unless it is changed we can remove
+        //  this once all current beta users have published email
+        if let me = try? KeyManager.sharedInstance().getMe() {
+            dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: me.email) }
         }
     }
 

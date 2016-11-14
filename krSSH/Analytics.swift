@@ -18,6 +18,15 @@ class Analytics {
         return !UserDefaults.standard.bool(forKey: "analytics_disabled")
     }
 
+    static var publishedEmail:String? {
+        get {
+            return UserDefaults.standard.string(forKey: "analytics_email_sent")
+        } set (e) {
+            UserDefaults.standard.set(e, forKey: "analytics_email_sent")
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     class func set(disabled: Bool) {
         postEvent(category: "analytics", action: disabled ? "disabled" : "enabled", forceEnable: true)
 
@@ -61,24 +70,24 @@ class Analytics {
         return id
     }
 
-    class func sendEmailToTeams(email:String) {
+    class func sendEmailToTeamsIfNeeded(email:String) {
         guard enabled else {
+            return
+        }
+        guard Analytics.publishedEmail != email else {
             return
         }
         do{
             let req = try HTTP.PUT("https://teams.krypt.co", parameters: ["id": userID, "email": email])
             req.start { response in
-                if let err = response.error {
-                    log("email put request error: \(err.localizedDescription)", .error)
+                guard let status = response.statusCode, (200..<300).contains(status)
+                else {
+                    log("put email failure: \(response.error)", .error)
                     return
                 }
-                if let status = response.statusCode {
-                    if (200..<300).contains(status) {
-                        log("put email success")
-                        return
-                    }
-                    log("put email failure \(status)", .error)
-                }
+
+                log("email published success")
+                Analytics.publishedEmail = email
             }
         } catch (let e) {
             log("error publishing email: \(e)", .error)
