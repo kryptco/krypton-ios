@@ -149,6 +149,13 @@ class Policy {
 
     class func requestUserAuthorization(session:Session, request:Request) {
         
+        guard UIApplication.shared.applicationState != .inactive else {
+            dispatchAfter(delay: 1.0, task: { 
+                Policy.requestUserAuthorization(session: session, request: request)
+            })
+            return
+        }
+        
         guard UIApplication.shared.applicationState != .active else {
             Policy.pendingAuthorization = nil
             Policy.currentViewController?.requestUserAuthorization(session: session, request: request)
