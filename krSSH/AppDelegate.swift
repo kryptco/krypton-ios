@@ -97,13 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         log("Push registration failed!", .error)
     }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        
-        self.application(application, didReceiveRemoteNotification: userInfo) { (fr) in
-            log("handled from other didReceive")
-        }
-    }
+//    
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+//        
+//        self.application(application, didReceiveRemoteNotification: userInfo) { (fr) in
+//            log("handled from other didReceive")
+//        }
+//    }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     {
