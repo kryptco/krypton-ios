@@ -29,7 +29,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var serviceAckedEpochs : [CBUUID: UInt] = [:]
     var servicePingTimeouts : [CBUUID: Double] = [:]
 
-    var characteristicMessageBuffers: [CBCharacteristic: Data] = [:]
+    var characteristicMessageBuffersAndLastSplitNumber: [CBCharacteristic: (Data, UInt8)] = [:]
     var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
 
     var mutex : Mutex = Mutex()
@@ -393,13 +393,12 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                 let uuid = characteristic.service.uuid
                 log("received refresh control message")
                 dispatchAfter(delay: 5.0, task: { self.refreshServiceUUID(uuid: uuid) })
-                return
             case pingByte:
                 onServiceAck(service: characteristic.service.uuid)
-                break
             default:
                 break
             }
+            return
         }
 
         mutex.lock {
@@ -424,16 +423,19 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         if data.count == 0 {
             return
         }
+
         let n = data[0]
         let data = data.subdata(in: 1..<data.count)
-        if characteristicMessageBuffers[characteristic] != nil {
-            characteristicMessageBuffers[characteristic]!.append(data)
+        if var (buffer, lastN) = characteristicMessageBuffersAndLastSplitNumber[characteristic], lastN > 0, (n == lastN - 1) {
+            buffer.append(data)
+            characteristicMessageBuffersAndLastSplitNumber[characteristic] = (buffer, n)
         } else {
-            characteristicMessageBuffers[characteristic] = data
+            characteristicMessageBuffersAndLastSplitNumber[characteristic] = (data, n)
         }
+        
         if n == 0 {
             // buffer complete
-            if let fullBuffer = characteristicMessageBuffers.removeValue(forKey: characteristic) {
+            if let (fullBuffer, _) = characteristicMessageBuffersAndLastSplitNumber.removeValue(forKey: characteristic) {
                 log("reconstructed full message of length \(fullBuffer.count)")
                 if let silo = silo {
                     //  onBluetoothReceive locks mutex
