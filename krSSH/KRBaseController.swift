@@ -16,6 +16,8 @@ class KRBaseController: UIViewController {
         super.viewDidLoad()
     }
     
+    var connectivity:Connectivity?
+    
     //MARK: Policy
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,6 +35,12 @@ class KRBaseController: UIViewController {
         }
 
         checkForUpdatesIfNeeded()
+        connectivity = Connectivity(presenter: self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        connectivity = nil
     }
 
     func shouldPostAnalytics() -> Bool {
@@ -51,6 +59,8 @@ class KRBaseTableController: UITableViewController {
             Analytics.postControllerView(clazz: String(describing: type(of: self)))
         }
     }
+    
+    var connectivity:Connectivity?
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -59,8 +69,14 @@ class KRBaseTableController: UITableViewController {
             Analytics.postControllerView(clazz: String(describing: type(of: self)))
         }
         checkForUpdatesIfNeeded()
+        connectivity = Connectivity(presenter: self)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        connectivity = nil
+    }
+
     func shouldPostAnalytics() -> Bool {
         return true
     }

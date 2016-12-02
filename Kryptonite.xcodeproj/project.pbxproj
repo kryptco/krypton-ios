@@ -129,6 +129,7 @@
 		FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFEA1D779D6E005D71B9 /* CreateController.swift */; };
 		FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFED1D77A2B7005D71B9 /* SetupController.swift */; };
 		FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */; };
+		FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD361F61DF08F9E00D17BAB /* Connectivity.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FAE495711DBD741800A97708 /* ApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495701DBD741800A97708 /* ApproveController.swift */; };
 		FAE495871DBD89F100A97708 /* M13Checkbox+IB.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495731DBD89F000A97708 /* M13Checkbox+IB.swift */; };
@@ -458,6 +459,7 @@
 		FACBEFEA1D779D6E005D71B9 /* CreateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateController.swift; sourceTree = "<group>"; };
 		FACBEFED1D77A2B7005D71B9 /* SetupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupController.swift; sourceTree = "<group>"; };
 		FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsEmptyController.swift; sourceTree = "<group>"; };
+		FAD361F61DF08F9E00D17BAB /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		FADD71491D772F8200DA5112 /* Date+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Date+KR.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAE495701DBD741800A97708 /* ApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApproveController.swift; sourceTree = "<group>"; };
 		FAE495731DBD89F000A97708 /* M13Checkbox+IB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "M13Checkbox+IB.swift"; sourceTree = "<group>"; };
@@ -778,6 +780,7 @@
 				FA15EB481DA5C6CC00BED16C /* Properties.swift */,
 				8DB2EE381DBC18170079E468 /* Analytics.swift */,
 				FAB664EE1DBFF18C0094896F /* Updater.swift */,
+				FAD361F61DF08F9E00D17BAB /* Connectivity.swift */,
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */,
 				FA81414B1D70B10F004FE58C /* UX */,
@@ -1391,6 +1394,7 @@
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
 				FAA536231D8F072500549710 /* UIView+KR.swift in Sources */,
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
+				FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
