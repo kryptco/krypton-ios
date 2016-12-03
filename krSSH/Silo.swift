@@ -293,7 +293,7 @@ class Silo {
         
         // if signature request AND we need a user approval, 
         // then exit and wait for it
-        if request.sign != nil && Policy.needsUserApproval {
+        if request.sign != nil && Policy.needsUserApproval(for: session) {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
@@ -325,7 +325,7 @@ class Silo {
         
         if request.sendACK {
             let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
-            let ack = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds, ack: AckResponse(), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            let ack = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), ack: AckResponse(), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
             do {
                 try send(session: session, response: ack)
             } catch (let e) {
@@ -411,7 +411,7 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds, sign: sign, list: list, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, list: list, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

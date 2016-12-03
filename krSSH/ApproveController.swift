@@ -174,7 +174,7 @@ class ApproveController:UIViewController {
         }
         
         do {
-            Policy.allowFor(time: Policy.Interval.oneHour)
+            Policy.allow(session: session, for: Policy.Interval.oneHour)
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
             try Silo.shared.send(session: session, response: resp, completionHandler: nil)
             

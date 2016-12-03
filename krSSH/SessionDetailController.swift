@@ -17,25 +17,42 @@ class SessionDetailController: KRBaseTableController {
 
     @IBOutlet var headerView:UIView!
 
+    @IBOutlet weak var approvalSegmentedControl:UISegmentedControl!
+
+    enum ApprovalControl:Int {
+        case on = 0
+        case timed = 1
+        case off = 2
+    }
     var logs:[SignatureLog] = []
     var session:Session?
     
     var timer:Timer?
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Details"
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
+        
+        
+        if let font = UIFont(name: "AvenirNext-DemiBold", size: 15) {
+            approvalSegmentedControl.setTitleTextAttributes([
+                NSFontAttributeName: font,
+            ], for: UIControlState.normal)
+        }
 
         
         if let session = session {
             deviceNameLabel.text = session.pairing.displayName.uppercased()
-            
+
             logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
             lastAccessLabel.text =  "Active as of " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
             
+            updateApprovalControl(session: session)
+
         }
     }
 
@@ -75,22 +92,37 @@ class SessionDetailController: KRBaseTableController {
                 self.tableView.reloadData()
             }
         }
+        
+        dispatchMain {
+           self.updateApprovalControl(session: session)
+        }
+    }
 
+    @IBAction func userApprovalSettingChanged(sender:UISegmentedControl) {
+        guard let session = session, let approvalControlType = ApprovalControl(rawValue: sender.selectedSegmentIndex) else {
+            log("unknown session or approval segmented control index", .error)
+            return
+        }
+        
+        switch approvalControlType {
+        case .on:
+            Analytics.postEvent(category: "manual approval", action: String(true))
+            Policy.set(needsUserApproval: true, for: session)
+
+        case .timed:
+            Analytics.postEvent(category: "manual approval", action: "time", value: UInt(Policy.Interval.oneHour.rawValue))
+            Policy.allow(session: session, for: Policy.Interval.oneHour)
+
+        case .off:
+            Analytics.postEvent(category: "manual approval", action: String(false))
+            Policy.set(needsUserApproval: false, for: session)
+        }
+        
+        approvalSegmentedControl.setTitle("Don't ask for 1hr", forSegmentAt: ApprovalControl.timed.rawValue)
     }
 
 
     //MARK: Revoke
-    
-    @IBAction func onRevokeSelected() {
-        revokeButton.backgroundColor = UIColor(hex: 0xFC484C)
-        revokeButton.titleLabel?.textColor = UIColor.white
-    }
-    
-    @IBAction func onRevokeUnselected() {
-        revokeButton.backgroundColor = UIColor.white
-        revokeButton.titleLabel?.textColor = UIColor(hex: 0xFC484C)
-    }
-    
     @IBAction func revokeTapped() {
         if let session = session {
             Analytics.postEvent(category: "device", action: "unpair", label: "detail")
@@ -98,6 +130,19 @@ class SessionDetailController: KRBaseTableController {
             Silo.shared.remove(session: session)
         }
         let _ = self.navigationController?.popViewController(animated: true)
+    }
+    
+    func updateApprovalControl(session:Session) {
+        if Policy.needsUserApproval(for: session)  {
+            approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.on.rawValue
+        }
+        else if let remaining = Policy.approvalTimeRemaining(for: session) {
+            approvalSegmentedControl.selectedSegmentIndex = 1
+            approvalSegmentedControl.setTitle("Don't ask for \(remaining)", forSegmentAt: ApprovalControl.timed.rawValue)
+        }
+        else {
+            approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.off.rawValue
+        }
     }
 
     

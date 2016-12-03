@@ -231,15 +231,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         switch identifier {
         case Policy.approveIdentifier?:
-            Policy.needsUserApproval = true
+            Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: "signature", action: "background approve", label: "once")
             
         case Policy.approveTempIdentifier?:
-            Policy.allowFor(time: Policy.Interval.oneHour)
+            Policy.allow(session: session, for: Policy.Interval.oneHour)
             Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
             
         case Policy.rejectIdentifier?:
-            Policy.needsUserApproval = true
+            Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: "signature", action: "background reject")
             
         default:

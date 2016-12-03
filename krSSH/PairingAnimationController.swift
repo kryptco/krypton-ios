@@ -38,6 +38,7 @@ class PairingAnimationController:UIViewController {
         }
         
         sessionLabel.text = "Pairing with \(session.pairing.displayName.uppercased())"
+        Policy.set(needsUserApproval: true, for: session)
 
         let startTime = Date()
         

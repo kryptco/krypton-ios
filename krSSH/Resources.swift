@@ -27,7 +27,7 @@ struct Resources {
                 NSForegroundColorAttributeName: UIColor.black,
                 NSFontAttributeName: font,
             ]
-
+    
         }
 
 

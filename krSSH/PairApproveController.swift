@@ -155,6 +155,8 @@ class PairApproveController: UIViewController {
                 Silo.shared.add(session: session)
                 Silo.shared.poll(session: session)
 
+                Policy.set(needsUserApproval: true, for: session)
+
                 dispatchAsync {
                     guard Silo.shared.waitForPairing(session: session) else {
                         Silo.shared.remove(session: session)

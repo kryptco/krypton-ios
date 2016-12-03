@@ -13,15 +13,11 @@ import MessageUI
 class AboutController: KRBaseController {
 
     @IBOutlet weak var versionLabel:UILabel!
-    @IBOutlet weak var approvalSwitch:UISwitch!
     @IBOutlet weak var analyticsSwitch:UISwitch!
-
-    @IBOutlet weak var timeRemainingLabel:UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        approvalSwitch.isOn = Policy.needsUserApproval
         analyticsSwitch.isOn = !Analytics.enabled
         
         if  let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
@@ -32,11 +28,6 @@ class AboutController: KRBaseController {
             self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
         }
         
-        if let remaining = Policy.approvalTimeRemaining {
-            timeRemainingLabel.text = "Authorized for \(remaining)"
-        } else {
-            timeRemainingLabel.text = ""
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,11 +43,6 @@ class AboutController: KRBaseController {
         dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func userApprovalSettingChanged(sender:UISwitch) {
-        Analytics.postEvent(category: "manual approval", action: String(sender.isOn))
-        Policy.needsUserApproval = sender.isOn
-        timeRemainingLabel.text = ""
-    }
     
     @IBAction func analyticsEnabledChanged(sender:UISwitch) {
         Analytics.set(disabled: sender.isOn)
