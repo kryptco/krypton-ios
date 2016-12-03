@@ -52,6 +52,7 @@ struct Properties {
     }
 
     static let communicationActivityTimeout = 60.0
+    static let requestTimeTolerance = 120.0
 
     init() {}
     

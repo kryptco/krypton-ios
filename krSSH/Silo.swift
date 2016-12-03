@@ -269,7 +269,7 @@ class Silo {
         }
 
         let now = Date().timeIntervalSince1970
-        if abs(now - Double(request.unixSeconds)) > 120 {
+        if abs(now - Double(request.unixSeconds)) > Properties.requestTimeTolerance {
             throw InvalidRequestTimeError()
         }
 
@@ -319,7 +319,7 @@ class Silo {
         if pendingRequests?.object(forKey: request.id) != nil {
             throw RequestPendingError()
         }
-        pendingRequests?.setObject("", forKey: request.id, expires: .seconds(300))
+        pendingRequests?.setObject("", forKey: request.id, expires: .seconds(Properties.requestTimeTolerance * 2))
         
         Policy.requestUserAuthorization(session: session, request: request)
         
