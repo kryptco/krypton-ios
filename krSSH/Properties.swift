@@ -51,6 +51,7 @@ struct Properties {
         return "UA-86173430-2"
     }
 
+    static let communicationActivityTimeout = 60.0
 
     init() {}
     

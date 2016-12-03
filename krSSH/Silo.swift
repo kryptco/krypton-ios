@@ -26,9 +26,7 @@ class Silo {
 
     var bluetoothDelegate: BluetoothDelegate = BluetoothDelegate()
     var centralManager: CBCentralManager
-    var sessionLastBluetoothActivity: [CBUUID:Date] = [:]
-    var sessionLastNetworkActivity: [CBUUID:Date] = [:]
-    var sessionLastActivity: [CBUUID:Date] = [:]
+    var sessionActivity: [CBUUID:CommunicationActivity] = [:]
 
     var requestCache: Cache<NSData>?
     //  store requests waiting for user approval
@@ -175,8 +173,7 @@ class Silo {
             sessionLabels[session.id] = session
             let cbuuid = session.pairing.uuid
             sessionServiceUUIDS[cbuuid.uuidString] = session
-            sessionLastBluetoothActivity[cbuuid] = Date()
-            sessionLastNetworkActivity[cbuuid] = Date()
+            sessionActivity[cbuuid] = CommunicationActivity()
             bluetoothDelegate.addServiceUUID(uuid: cbuuid)
 
             do {
@@ -218,9 +215,7 @@ class Silo {
         let cbuuid = session.pairing.uuid
         sessionServiceUUIDS.removeValue(forKey: cbuuid.uuidString)
         bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
-        sessionLastNetworkActivity.removeValue(forKey: cbuuid)
-        sessionLastBluetoothActivity.removeValue(forKey: cbuuid)
-        sessionLastActivity.removeValue(forKey: cbuuid)
+        sessionActivity.removeValue(forKey: cbuuid)
     }
 
 
@@ -243,7 +238,7 @@ class Silo {
         
         while true {
             mutex.lock()
-            if sessionLastActivity[cbuuid] != nil {
+            if let everActive = sessionActivity[cbuuid]?.everActive(), everActive {
                 mutex.unlock()
                 break
             }
@@ -258,11 +253,6 @@ class Silo {
     
 
     //MARK: Handle Logic
-    enum CommunicationMedium:String {
-        case bluetooth
-        case remoteNotification
-        case sqs
-    }
     func handle(request:Request, session:Session, communicationMedium: CommunicationMedium, completionHandler: (()->Void)? = nil) throws {
         mutex.lock()
         defer { mutex.unlock() }
@@ -278,24 +268,17 @@ class Silo {
             throw SessionRemovedError()
         }
 
-        sessionLastActivity[session.pairing.uuid] = Date()
-        switch communicationMedium {
-        case .bluetooth:
-            sessionLastBluetoothActivity[session.pairing.uuid] = Date()
-        case .remoteNotification, .sqs:
-            sessionLastNetworkActivity[session.pairing.uuid] = Date()
-        }
-
-        if let lastNetwork = sessionLastNetworkActivity[session.pairing.uuid],
-            let lastBluetooth = sessionLastBluetoothActivity[session.pairing.uuid],
-            lastNetwork.timeIntervalSince(lastBluetooth) > 60 {
-            bluetoothDelegate.refreshServiceUUID(uuid: session.pairing.uuid)
-            sessionLastBluetoothActivity[session.pairing.uuid] = Date()
-        }
-
         let now = Date().timeIntervalSince1970
         if abs(now - Double(request.unixSeconds)) > 120 {
             throw InvalidRequestTimeError()
+        }
+
+        if let sessionActivity = sessionActivity[session.pairing.uuid] {
+            sessionActivity.used(medium: communicationMedium)
+            if sessionActivity.isInactive(medium: .bluetooth) {
+                bluetoothDelegate.refreshServiceUUID(uuid: session.pairing.uuid)
+                sessionActivity.used(medium: .bluetooth)
+            }
         }
         
         requestCache?.removeExpiredObjects()
@@ -312,27 +295,7 @@ class Silo {
         // then exit and wait for it
         guard   request.sign == nil || Policy.needsUserApproval == false
         else {
-            pendingRequests?.removeExpiredObjects()
-            if pendingRequests?.object(forKey: request.id) != nil {
-                throw RequestPendingError()
-            }
-            pendingRequests?.setObject("", forKey: request.id, expires: .seconds(300))
-
-            Policy.requestUserAuthorization(session: session, request: request)
-
-            if request.sendACK {
-                let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
-                let ack = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds, ack: AckResponse(), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
-                do {
-                    try send(session: session, response: ack)
-                } catch (let e) {
-                    log("ack send error \(e)")
-                }
-            }
-
-            Analytics.postEvent(category: "signature", action: "requires approval", label:communicationMedium.rawValue)
-
-            completionHandler?()
+            try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
 
@@ -350,6 +313,29 @@ class Silo {
         }
         
         try send(session: session, response: response, completionHandler: completionHandler)
+    }
+
+    func handleRequestRequiresApproval(request: Request, session: Session, communicationMedium: CommunicationMedium, completionHandler: (() -> ())?) throws {
+        pendingRequests?.removeExpiredObjects()
+        if pendingRequests?.object(forKey: request.id) != nil {
+            throw RequestPendingError()
+        }
+        pendingRequests?.setObject("", forKey: request.id, expires: .seconds(300))
+        
+        Policy.requestUserAuthorization(session: session, request: request)
+        
+        if request.sendACK {
+            let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
+            let ack = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds, ack: AckResponse(), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            do {
+                try send(session: session, response: ack)
+            } catch (let e) {
+                log("ack send error \(e)")
+            }
+        }
+        
+        Analytics.postEvent(category: "signature", action: "requires approval", label:communicationMedium.rawValue)
+        completionHandler?()
     }
     
     

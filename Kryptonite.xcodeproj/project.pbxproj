@@ -16,6 +16,7 @@
 		8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
 		8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; };
 		8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		8DE3955C1D942647005D559C /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
 		8DE3955D1D942647005D559C /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
 		8DE3955E1D942647005D559C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE395591D942647005D559C /* Info.plist */; };
@@ -102,7 +103,7 @@
 		FAA5362F1D8F43D100549710 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362E1D8F43D100549710 /* Links.swift */; };
 		FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; };
 		FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
-		FAA6E1F11D79E3ED007D1B3A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* API.swift */; };
+		FAA6E1F11D79E3ED007D1B3A /* AWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* AWS.swift */; };
 		FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F21D79E413007D1B3A /* Response.swift */; };
 		FAA6E1F51D79E4FC007D1B3A /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; };
 		FAA6E1FA1D79FBC4007D1B3A /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -344,6 +345,7 @@
 		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
 		8DB2EE381DBC18170079E468 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftHTTP.xcodeproj; path = SwiftHTTP/SwiftHTTP.xcodeproj; sourceTree = "<group>"; };
+		8DD436A31DF3719000201106 /* CommunicationActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunicationActivity.swift; sourceTree = "<group>"; };
 		8DE395561D942647005D559C /* AwesomeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeCache.h; sourceTree = "<group>"; };
 		8DE395571D942647005D559C /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		8DE395581D942647005D559C /* CacheObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheObject.swift; sourceTree = "<group>"; };
@@ -436,7 +438,7 @@
 		FAA5362E1D8F43D100549710 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSNS.framework; sourceTree = "<group>"; };
 		FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSQS.framework; sourceTree = "<group>"; };
-		FAA6E1F01D79E3ED007D1B3A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		FAA6E1F01D79E3ED007D1B3A /* AWS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWS.swift; sourceTree = "<group>"; };
 		FAA6E1F21D79E413007D1B3A /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
 		FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pairing.swift; sourceTree = "<group>"; };
@@ -699,6 +701,8 @@
 			children = (
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
 				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
+				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
+				FAA6E1F21D79E413007D1B3A /* Response.swift */,
 				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
 				FA0322CD1D7A72E800CD7622 /* Session.swift */,
 				FA69729A1D78DD6D002F34D6 /* Peer.swift */,
@@ -751,7 +755,7 @@
 				FAA1B9231D81AF7C00FF37CC /* App */,
 				FA61EF471D831A77009FD899 /* Core */,
 				FA15EB471DA5C5BB00BED16C /* Data */,
-				FAA6E1EF1D79E3E3007D1B3A /* API */,
+				FAA6E1EF1D79E3E3007D1B3A /* Transport */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
 			);
@@ -788,16 +792,15 @@
 			name = App;
 			sourceTree = "<group>";
 		};
-		FAA6E1EF1D79E3E3007D1B3A /* API */ = {
+		FAA6E1EF1D79E3E3007D1B3A /* Transport */ = {
 			isa = PBXGroup;
 			children = (
-				FAA6E1F01D79E3ED007D1B3A /* API.swift */,
-				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
-				FAA6E1F21D79E413007D1B3A /* Response.swift */,
+				FAA6E1F01D79E3ED007D1B3A /* AWS.swift */,
 				8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */,
 				8D7941671D98732600F6E32E /* NetworkProtocol.swift */,
+				8DD436A31DF3719000201106 /* CommunicationActivity.swift */,
 			);
-			name = API;
+			name = Transport;
 			sourceTree = "<group>";
 		};
 		FACBEFEC1D779D71005D71B9 /* Onboard */ = {
@@ -1345,6 +1348,7 @@
 				FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */,
 				FAE495921DBD89F100A97708 /* M13CheckboxSpiralController.swift in Sources */,
 				FA1682811D77682C00A7ED53 /* SessionsController.swift in Sources */,
+				8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAE495971DBD89F100A97708 /* M13CheckboxPathGenerator.swift in Sources */,
 				FAE4958B1DBD89F100A97708 /* M13CheckboxGestureRecognizer.swift in Sources */,
@@ -1440,7 +1444,7 @@
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
 				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,
-				FAA6E1F11D79E3ED007D1B3A /* API.swift in Sources */,
+				FAA6E1F11D79E3ED007D1B3A /* AWS.swift in Sources */,
 				FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
