@@ -293,8 +293,7 @@ class Silo {
         
         // if signature request AND we need a user approval, 
         // then exit and wait for it
-        guard   request.sign == nil || Policy.needsUserApproval == false
-        else {
+        if request.sign != nil && Policy.needsUserApproval {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
