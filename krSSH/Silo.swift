@@ -321,6 +321,7 @@ class Silo {
         }
         pendingRequests?.setObject("", forKey: request.id, expires: .seconds(Properties.requestTimeTolerance * 2))
         
+        Policy.addPendingAuthorization(session: session, request: request)
         Policy.requestUserAuthorization(session: session, request: request)
         
         if request.sendACK {

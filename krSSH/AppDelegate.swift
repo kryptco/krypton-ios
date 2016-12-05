@@ -142,16 +142,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         log("local notification")
         
-        Policy.pendingAuthorizationMutex.lock {
-            if
-                let sessionID = notification.userInfo?["session_id"] as? String,
-                let session = SessionManager.shared.get(id: sessionID),
-                let requestObject = notification.userInfo?["request"] as? [String:Any],
-                let request = try? Request(json: requestObject)
-                
-            {
-                // if approval notification
-                Policy.addPendingAuthorization(session: session, request: request)
+        if
+            let sessionID = notification.userInfo?["session_id"] as? String,
+            let session = SessionManager.shared.get(id: sessionID),
+            let requestObject = notification.userInfo?["request"] as? [String:Any],
+            let request = try? Request(json: requestObject)
+            
+        {
+            // if approval notification
+            do {
+                try Silo.shared.handle(request: request, session: session, communicationMedium: CommunicationMedium.remoteNotification)
+            } catch {
+                log("handle failed \(error)", .error)
             }
         }
     }
@@ -318,18 +320,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        var pending:Policy.PendingAuthorization?
         Policy.pendingAuthorizationMutex.lock {
-            if let pending = Policy.pendingAuthorizations.popLast() {
-                log("requesting pending authorization")
-                
-                if Policy.needsUserApproval(for: pending.session) {
-                    Policy.requestUserAuthorization(session: pending.session, request: pending.request)
-                } else {
-                    Policy.notifyUser(session: pending.session, request: pending.request)
-                }
-            }
-
+            pending = Policy.pendingAuthorizations.last
         }
+        
+        if let pending = pending {
+            log("requesting pending authorization")
+            Policy.requestUserAuthorization(session: pending.session, request: pending.request)
+        }
+
         
         //  TODO: since email is only sent on change, users from before this
         //  feature will not publish email unless it is changed we can remove

@@ -48,10 +48,7 @@ class AutoApproveController:UIViewController {
     }
     
     @IBAction func dismiss() {
-        let presenting = self.presentingViewController
-
         self.dismiss(animated: true, completion: {
-            presenting?.approveControllerDismissed(allowed: true)
         })
     }
 }
