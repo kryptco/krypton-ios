@@ -95,7 +95,29 @@ class Policy {
     
     //MARK: Pending request
     
-    static var pendingAuthorization:(Session, Request)?
+    struct PendingAuthorization:Equatable {
+        let session:Session
+        let request:Request
+    }
+    
+    static func addPendingAuthorization(session:Session, request:Request) {
+        Policy.pendingAuthorizationMutex.lock {
+            Policy.pendingAuthorizations.append(PendingAuthorization(session: session, request: request))
+        }
+    }
+    
+    static func removePendingAuthorization(session:Session, request:Request) {
+        Policy.pendingAuthorizationMutex.lock {
+            let pending = PendingAuthorization(session: session, request: request)
+            if let pendingIndex = Policy.pendingAuthorizations.index(where: { $0 == pending }) {
+                Policy.pendingAuthorizations.remove(at: pendingIndex)
+            }
+        }
+    }
+    
+    static var pendingAuthorizationMutex = Mutex()
+
+    static var pendingAuthorizations:[PendingAuthorization] = []
     
     //MARK: Notification Actions
 
@@ -151,6 +173,16 @@ class Policy {
     //MARK: Notification Push
 
     class func requestUserAuthorization(session:Session, request:Request) {
+        // add the pending auth request
+        Policy.addPendingAuthorization(session: session, request: request)
+        
+        // proceed to handle it
+        
+        // if we are already presenting, don't try to present until finished
+        guard Policy.currentViewController?.presentedViewController is ApproveController == false
+        else {
+            return
+        }
         
         guard UIApplication.shared.applicationState != .inactive else {
             dispatchAfter(delay: 1.0, task: { 
@@ -160,13 +192,10 @@ class Policy {
         }
         
         guard UIApplication.shared.applicationState != .active else {
-            Policy.pendingAuthorization = nil
             Policy.currentViewController?.requestUserAuthorization(session: session, request: request)
             return
         }
         
-        // set the pending
-        Policy.pendingAuthorization = (session, request)
         
         // present notification
         let notification = UILocalNotification()
@@ -198,6 +227,10 @@ extension UIViewController {
     
     func requestUserAuthorization(session:Session, request:Request) {
 
+        // remove pending if exists
+        Policy.removePendingAuthorization(session: session, request: request)
+        
+        // proceed to show approval request
         let approvalController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController")
         approvalController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         approvalController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
@@ -212,6 +245,10 @@ extension UIViewController {
     
     func showApprovedRequest(session:Session, request:Request) {
         
+        // remove pending if exists
+        Policy.removePendingAuthorization(session: session, request: request)
+
+        // proceed to show auto approval
         let autoApproveController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "AutoApproveController")
         autoApproveController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
@@ -224,5 +261,39 @@ extension UIViewController {
             self.present(autoApproveController, animated: true, completion: nil)
         }
     }
+    
+    func approveControllerDismissed(allowed:Bool) {
+        let result = allowed ? "allowed" : "rejected"
+        log("approve modal finished with result: \(result)")
+        
+        Policy.pendingAuthorizationMutex.lock {
+            if let pending = Policy.pendingAuthorizations.popLast() {
+                log("requesting pending authorization")
+                
+                if Policy.needsUserApproval(for: pending.session) {
+                    self.requestUserAuthorization(session: pending.session, request: pending.request)
+                } else {
+                    do {
+                        let resp = try Silo.shared.lockResponseFor(request: pending.request, session: pending.session, signatureAllowed: true)
+                        try Silo.shared.send(session: pending.session, response: resp, completionHandler: nil)
+                        
+                        self.showApprovedRequest(session: pending.session, request: pending.request)
+                        
+                    } catch (let e) {
+                        log("handle error \(e)", .error)
+                        return
+                    }
+
+                }
+
+            }
+        }
+    }
 }
+
+func ==(l:Policy.PendingAuthorization, r:Policy.PendingAuthorization) -> Bool {
+    return  l.session.id == r.session.id &&
+            l.request.id == r.request.id
+}
+
 

@@ -111,8 +111,5 @@ extension UIViewController {
         }
     }
     
-    func approveControllerDismissed(allowed:Bool) {
-        let result = allowed ? "allowed" : "rejected"
-        log("approve modal finished with result: \(result)")
-    }
+   
 }

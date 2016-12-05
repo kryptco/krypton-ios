@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var pendingLink:Link?
     
-    var pendingAuthorizationMutex = Mutex()
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
                 
@@ -143,7 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         log("local notification")
         
-        pendingAuthorizationMutex.lock {
+        Policy.pendingAuthorizationMutex.lock {
             if
                 let sessionID = notification.userInfo?["session_id"] as? String,
                 let session = SessionManager.shared.get(id: sessionID),
@@ -152,7 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
             {
                 // if approval notification
-                Policy.pendingAuthorization = (session, request)
+                Policy.addPendingAuthorization(session: session, request: request)
             }
         }
     }
@@ -185,7 +184,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
-        Policy.pendingAuthorization = nil
 
         if let (session, request) = try? convertLocalJSONAction(userInfo: userInfo) {
             handleRequestAction(session: session, request: request, identifier: identifier, completionHandler: completionHandler)
@@ -226,7 +224,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func handleRequestAction(session: Session, request: Request, identifier:String?, completionHandler:@escaping ()->Void) {
-
+        
+        // remove pending if exists
+        Policy.removePendingAuthorization(session: session, request: request)
+        
+        // proceed to handle action
         let signatureAllowed = (identifier != Policy.rejectAction.identifier)
 
         switch identifier {
@@ -316,10 +318,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        pendingAuthorizationMutex.lock {
-            if let (session, request) = Policy.pendingAuthorization {
+        Policy.pendingAuthorizationMutex.lock {
+            if let pending = Policy.pendingAuthorizations.popLast() {
                 log("requesting pending authorization")
-                Policy.requestUserAuthorization(session: session, request: request)
+                
+                if Policy.needsUserApproval(for: pending.session) {
+                    Policy.requestUserAuthorization(session: pending.session, request: pending.request)
+                } else {
+                    Policy.notifyUser(session: pending.session, request: pending.request)
+                }
             }
 
         }

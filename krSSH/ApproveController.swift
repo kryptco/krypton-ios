@@ -43,12 +43,16 @@ class AutoApproveController:UIViewController {
         
         checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
         dispatchAfter(delay: 4.0) {
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss()
         }
     }
     
     @IBAction func dismiss() {
-        self.dismiss(animated: true, completion: nil)
+        let presenting = self.presentingViewController
+
+        self.dismiss(animated: true, completion: {
+            presenting?.approveControllerDismissed(allowed: true)
+        })
     }
 }
 
