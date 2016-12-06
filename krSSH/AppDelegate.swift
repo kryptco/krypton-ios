@@ -226,23 +226,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func handleRequestAction(session: Session, request: Request, identifier:String?, completionHandler:@escaping ()->Void) {
-        
         // remove pending if exists
         Policy.removePendingAuthorization(session: session, request: request)
-        
-        // proceed to handle action
-        let signatureAllowed = (identifier != Policy.rejectAction.identifier)
+
+        guard let identifier = identifier else {
+            log("nil identifier", .error)
+            try? Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            completionHandler()
+            return
+        }
+
+        let signatureAllowed = (identifier == Policy.approveAction.identifier || identifier == Policy.approveTemporaryAction.identifier)
 
         switch identifier {
-        case Policy.approveIdentifier?:
+        case Policy.approveIdentifier:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: "signature", action: "background approve", label: "once")
             
-        case Policy.approveTempIdentifier?:
+        case Policy.approveTempIdentifier:
             Policy.allow(session: session, for: Policy.Interval.oneHour)
             Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
             
-        case Policy.rejectIdentifier?:
+        case Policy.rejectIdentifier:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: "signature", action: "background reject")
             
