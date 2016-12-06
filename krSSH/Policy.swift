@@ -85,12 +85,32 @@ class Policy {
 
     }
     
-    static var currentViewController:UIViewController?
+    private static var currentViewControllerMutex = Mutex()
+    static var _currentViewController:UIViewController?
+    static var currentViewController:UIViewController? {
+        get {
+            var controller:UIViewController?
+            currentViewControllerMutex.lock {
+                controller = _currentViewController
+            }
+            
+            return controller
+        }
+        
+        set(c) {
+            currentViewControllerMutex.lock {
+                _currentViewController = c
+            }
+
+        }
+    }
     
     static func allow(session:Session, for time:Interval) {
         UserDefaults.standard.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
         UserDefaults.standard.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
         UserDefaults.standard.synchronize()
+        
+        Policy.sendAllowedPendingIfNeeded()
     }
     
     //MARK: Pending request
@@ -116,7 +136,13 @@ class Policy {
     }
     
     static func sendAllowedPendingIfNeeded() {
-        Policy.pendingAuthorizations.filter({ Policy.needsUserApproval(for: $0.session) == false }).forEach {
+        
+        var pending:[PendingAuthorization]?
+        Policy.pendingAuthorizationMutex.lock {
+            pending = Policy.pendingAuthorizations.filter({ Policy.needsUserApproval(for: $0.session) == false })
+        }
+        
+        pending?.forEach {
             Policy.removePendingAuthorization(session: $0.session, request: $0.request)
             do {
                 let resp = try Silo.shared.lockResponseFor(request: $0.request, session: $0.session, signatureAllowed: true)
@@ -129,8 +155,6 @@ class Policy {
                 return
             }
         }
-   
-
     }
     
     static var pendingAuthorizationMutex = Mutex()
