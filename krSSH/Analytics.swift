@@ -147,6 +147,9 @@ class Analytics {
     }
 
     class func postControllerView(clazz: String) {
+        guard UIApplication.shared.applicationState == .active else {
+            return
+        }
         let clazz = clazz.replacingOccurrences(of: "Kryptonite.", with: "")
             .replacingOccurrences(of: "Controller", with: "")
 
