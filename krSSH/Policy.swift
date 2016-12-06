@@ -38,6 +38,10 @@ class Policy {
     }
     
     class func needsUserApproval(for session:Session) -> Bool {
+        guard UserDefaults.standard.value(forKey: StorageKey.userApproval.key(id: session.id)) != nil else {
+            return true
+        }
+        
         let needsApproval =  UserDefaults.standard.bool(forKey: StorageKey.userApproval.key(id: session.id))
         
         if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
