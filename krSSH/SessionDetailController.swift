@@ -38,7 +38,7 @@ class SessionDetailController: KRBaseTableController {
         tableView.estimatedRowHeight = 40
         
         
-        if let font = UIFont(name: "AvenirNext-DemiBold", size: 15) {
+        if let font = UIFont(name: "AvenirNext-Bold", size: 12) {
             approvalSegmentedControl.setTitleTextAttributes([
                 NSFontAttributeName: font,
             ], for: UIControlState.normal)

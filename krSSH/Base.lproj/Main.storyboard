@@ -331,7 +331,7 @@
                                                 <action selector="userApprovalSettingChangedWithSender:" destination="2XW-PV-xjB" eventType="valueChanged" id="KpU-dd-N7M"/>
                                             </connections>
                                         </segmentedControl>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When should Kryptonite ask for your approval?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EX7-IM-zed">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When should Kryptonite ask for your approval?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="EX7-IM-zed">
                                             <rect key="frame" x="10" y="87" width="335" height="19.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
                                             <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -428,7 +428,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5RS-2j-zVj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2900" y="828"/>
+            <point key="canvasLocation" x="2919" y="741"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Atm-Dh-fQZ">
