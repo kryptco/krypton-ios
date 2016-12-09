@@ -11,7 +11,7 @@ import Foundation
 struct Properties {
     
     //MARK: Version
-    static let currentVersion = Version(major: 1, minor: 0, patch: 3)
+    static let currentVersion = Version(major: 1, minor: 0, patch: 4)
     static let appVersionURL = "https://s3.amazonaws.com/kr-versions/versions"
     
     static let updateCheckIntervalForeground = TimeSeconds.hour.multiplied(by: 6)
