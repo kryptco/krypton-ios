@@ -127,13 +127,13 @@ class LogManager {
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = Bundle.main.url(forResource:"krSSH", withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource:"Kryptonite", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("KrSSHCoreData.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("KryptoniteCoreData.sqlite")
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
         } catch let e {

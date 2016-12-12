@@ -6,12 +6,12 @@
 //  Copyright © 2016 KryptCo, Inc. All rights reserved.
 //
 
-#ifndef krSSH_Bridging_Header_h
-#define krSSH_Bridging_Header_h
+#ifndef Kryptonite_Bridging_Header_h
+#define Kryptonite_Bridging_Header_h
 
 #import "IGIdenticon.h"
 #import <AWSSNS/AWSSNS.h>
 #import <AWSSQS/AWSSQS.h>
 #import <AwesomeCache/AwesomeCache.h>
 
-#endif /* krSSH_Bridging_Header_h */
+#endif /* Kryptonite_Bridging_Header_h */

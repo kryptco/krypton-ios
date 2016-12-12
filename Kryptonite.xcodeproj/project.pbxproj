@@ -113,6 +113,7 @@
 		FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
 		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
+		FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB664EE1DBFF18C0094896F /* Updater.swift */; };
 		FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FABA4B191D9C21C40057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
@@ -120,7 +121,6 @@
 		FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE3611DC1097B0073C0EF /* PairApproveController.swift */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
-		FACAA4B41D887923000B9A01 /* krSSH.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */; };
 		FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
 		FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4B91D8887FA000B9A01 /* CoreData.framework */; };
 		FACAA4BC1D888AB9000B9A01 /* SessionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */; };
@@ -353,7 +353,6 @@
 		8DE3955A1D942647005D559C /* NSKeyedUnarchiverWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKeyedUnarchiverWrapper.h; sourceTree = "<group>"; };
 		8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSKeyedUnarchiverWrapper.m; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FA0322751D74F1B300CD7622 /* krSSH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = krSSH.entitlements; path = krSSH/krSSH.entitlements; sourceTree = "<group>"; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallMethod.swift; sourceTree = "<group>"; };
 		FA15EB481DA5C6CC00BED16C /* Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
@@ -393,7 +392,6 @@
 		FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSimpleIdenticon.m; sourceTree = "<group>"; };
 		FA1682911D77868D00A7ED53 /* FAIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAIcon.swift; sourceTree = "<group>"; };
 		FA1682921D77868D00A7ED53 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../FontAwesome.ttf; sourceTree = "<group>"; };
-		FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "krSSH-Bridging-Header.h"; path = "krSSH/krSSH-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA1E706D1D9AC22900A14650 /* FirstPairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPairController.swift; sourceTree = "<group>"; };
 		FA2696F91D98851600FE44D3 /* ASN1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
@@ -426,7 +424,6 @@
 		FA81413E1D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA8141401D70B0F4004FE58C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		FA8141451D70B0F4004FE58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = krSSH/Info.plist; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FA8523C91DBFDA5200D465D2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
@@ -445,13 +442,16 @@
 		FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
+		FAB43B931DFF1F9200496114 /* Kryptonite-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Kryptonite-Bridging-Header.h"; path = "Kryptonite/Kryptonite-Bridging-Header.h"; sourceTree = "<group>"; };
+		FAB43B941DFF1F9200496114 /* Kryptonite.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Kryptonite.entitlements; path = Kryptonite/Kryptonite.entitlements; sourceTree = "<group>"; };
+		FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
+		FAB43B981DFF1FB100496114 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Kryptonite/Info.plist; sourceTree = "<group>"; };
 		FAB664EE1DBFF18C0094896F /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		FABA4B171D9C21BE0057A666 /* String+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+User.swift"; sourceTree = "<group>"; };
 		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FABFE3611DC1097B0073C0EF /* PairApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairApproveController.swift; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACAA4B01D887904000B9A01 /* SignatureLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureLog.swift; sourceTree = "<group>"; };
-		FACAA4B31D887923000B9A01 /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
 		FACAA4B71D887C19000B9A01 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		FACAA4B91D8887FA000B9A01 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDetailController.swift; sourceTree = "<group>"; };
@@ -729,7 +729,7 @@
 		FA81412D1D70B0F4004FE58C = {
 			isa = PBXGroup;
 			children = (
-				FA8141381D70B0F4004FE58C /* krSSH */,
+				FA8141381D70B0F4004FE58C /* Kryptonite */,
 				FAEE049B1D74BCC3002A7AFD /* KryptoTests */,
 				FA1682521D774C8000A7ED53 /* Lib */,
 				FA49F7881D9B6B3300372556 /* LastCommand */,
@@ -749,7 +749,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FA8141381D70B0F4004FE58C /* krSSH */ = {
+		FA8141381D70B0F4004FE58C /* Kryptonite */ = {
 			isa = PBXGroup;
 			children = (
 				FAA1B9231D81AF7C00FF37CC /* App */,
@@ -759,7 +759,7 @@
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
 				FADD71481D772F6E00DA5112 /* Extensions */,
 			);
-			path = krSSH;
+			path = Kryptonite;
 			sourceTree = "<group>";
 		};
 		FA81414B1D70B10F004FE58C /* UX */ = {
@@ -786,7 +786,7 @@
 				FAB664EE1DBFF18C0094896F /* Updater.swift */,
 				FAD361F61DF08F9E00D17BAB /* Connectivity.swift */,
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
-				FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */,
+				FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */,
 				FA81414B1D70B10F004FE58C /* UX */,
 			);
 			name = App;
@@ -909,9 +909,9 @@
 		FAEE048F1D736AE3002A7AFD /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				FA8141451D70B0F4004FE58C /* Info.plist */,
-				FA1682961D77875700A7ED53 /* krSSH-Bridging-Header.h */,
-				FA0322751D74F1B300CD7622 /* krSSH.entitlements */,
+				FAB43B981DFF1FB100496114 /* Info.plist */,
+				FAB43B931DFF1F9200496114 /* Kryptonite-Bridging-Header.h */,
+				FAB43B941DFF1F9200496114 /* Kryptonite.entitlements */,
 				FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */,
 				FA2977981D7736A8003EB1F7 /* ImageLicenses */,
 				FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */,
@@ -1301,7 +1301,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/krSSH/Info.plist\"\n";
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
 		};
 		FAEE04A41D74BCCF002A7AFD /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1341,7 +1341,6 @@
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SSHKeyFormat.swift in Sources */,
-				FACAA4B41D887923000B9A01 /* krSSH.xcdatamodeld in Sources */,
 				FAE4958D1DBD89F100A97708 /* M13CheckboxDotController.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
 				8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */,
@@ -1439,6 +1438,7 @@
 				FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
+				FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
 				FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
@@ -1659,7 +1659,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = krSSH/krSSH.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Kryptonite/Kryptonite.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
@@ -1668,7 +1668,7 @@
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
-				INFOPLIST_FILE = krSSH/Info.plist;
+				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1681,7 +1681,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
-				SWIFT_OBJC_BRIDGING_HEADER = "krSSH/krSSH-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Kryptonite/Kryptonite-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1692,7 +1692,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = krSSH/krSSH.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Kryptonite/Kryptonite.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
@@ -1702,7 +1702,7 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
-				INFOPLIST_FILE = krSSH/Info.plist;
+				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1715,7 +1715,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
-				SWIFT_OBJC_BRIDGING_HEADER = "krSSH/krSSH-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Kryptonite/Kryptonite-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1792,13 +1792,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		FACAA4B21D887923000B9A01 /* krSSH.xcdatamodeld */ = {
+		FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				FACAA4B31D887923000B9A01 /* krSSH.xcdatamodel */,
+				FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */,
 			);
-			currentVersion = FACAA4B31D887923000B9A01 /* krSSH.xcdatamodel */;
-			path = krSSH.xcdatamodeld;
+			currentVersion = FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */;
+			path = Kryptonite.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
