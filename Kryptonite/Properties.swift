@@ -39,8 +39,8 @@ struct Properties {
     static let openSourceURL = "https://krypt.co/app/open-source-libraries"
     static let privacyPolicyURL = "https://krypt.co/app/privacy"
     
-    static let appStoreURL = "https://beta.itunes.apple.com/v1/app/1161494806"
-    static let appURL = "https://beta.krypt.co"
+    static let appStoreURL = "https://get.krypt.co"
+    static let appURL = "https://krypt.co"
 
     //MARK: Analytics
     static var trackingID:String {
