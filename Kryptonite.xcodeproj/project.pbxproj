@@ -161,6 +161,8 @@
 		FAEE04A61D74BD47002A7AFD /* SSHKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */; };
 		FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
+		FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */; };
+		FAF1E6261E031BB9003CBEA2 /* Notify.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FAF1E61F1E031BB9003CBEA2 /* Notify.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
 		FAFDE8E91DD1003100C87C86 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
 		FAFDE8EA1DD1003100C87C86 /* JSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -283,6 +285,13 @@
 			remoteGlobalIDString = FA8141351D70B0F4004FE58C;
 			remoteInfo = krSSH;
 		};
+		FAF1E6241E031BB9003CBEA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF1E61E1E031BB9003CBEA2;
+			remoteInfo = Notify;
+		};
 		FAFDE8D71DD1000F00C87C86 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
@@ -314,6 +323,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				FA49F7911D9B6B3300372556 /* LastCommand.appex in Embed App Extensions */,
+				FAF1E6261E031BB9003CBEA2 /* Notify.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,6 +500,9 @@
 		FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KryptoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE049E1D74BCC3002A7AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAF1E61F1E031BB9003CBEA2 /* Notify.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Notify.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		FAF1E6231E031BB9003CBEA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Seal.swift"; sourceTree = "<group>"; };
 		FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = JSON/JSON.xcodeproj; sourceTree = "<group>"; };
 		FAFE546E1D7B9C1400391FDD /* Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seal.swift; sourceTree = "<group>"; };
@@ -522,6 +535,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FAEE04971D74BCC3002A7AFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAF1E61C1E031BB9003CBEA2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -733,6 +753,7 @@
 				FAEE049B1D74BCC3002A7AFD /* KryptoTests */,
 				FA1682521D774C8000A7ED53 /* Lib */,
 				FA49F7881D9B6B3300372556 /* LastCommand */,
+				FAF1E6201E031BB9003CBEA2 /* Notify */,
 				FAEE04871D7368C1002A7AFD /* Frameworks */,
 				FAEE048F1D736AE3002A7AFD /* Other */,
 				FA8141371D70B0F4004FE58C /* Products */,
@@ -745,6 +766,7 @@
 				FA8141361D70B0F4004FE58C /* Kryptonite.app */,
 				FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */,
 				FA49F7851D9B6B3200372556 /* LastCommand.appex */,
+				FAF1E61F1E031BB9003CBEA2 /* Notify.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -930,6 +952,15 @@
 			path = KryptoTests;
 			sourceTree = "<group>";
 		};
+		FAF1E6201E031BB9003CBEA2 /* Notify */ = {
+			isa = PBXGroup;
+			children = (
+				FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */,
+				FAF1E6231E031BB9003CBEA2 /* Info.plist */,
+			);
+			path = Notify;
+			sourceTree = "<group>";
+		};
 		FAFDE8D31DD1000F00C87C86 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -978,6 +1009,7 @@
 			dependencies = (
 				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,
 				FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */,
+				FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */,
 			);
 			name = Kryptonite;
 			productName = krSSH;
@@ -1003,13 +1035,30 @@
 			productReference = FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		FAF1E61E1E031BB9003CBEA2 /* Notify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAF1E6381E031BB9003CBEA2 /* Build configuration list for PBXNativeTarget "Notify" */;
+			buildPhases = (
+				FAF1E61B1E031BB9003CBEA2 /* Sources */,
+				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
+				FAF1E61D1E031BB9003CBEA2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Notify;
+			productName = Notify;
+			productReference = FAF1E61F1E031BB9003CBEA2 /* Notify.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		FA81412E1D70B0F4004FE58C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = KryptCo;
 				TargetAttributes = {
@@ -1056,6 +1105,11 @@
 						LastSwiftMigration = 0800;
 						TestTargetID = FA8141351D70B0F4004FE58C;
 					};
+					FAF1E61E1E031BB9003CBEA2 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = W7AMYM5LPN;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = FA8141311D70B0F4004FE58C /* Build configuration list for PBXProject "Kryptonite" */;
@@ -1087,6 +1141,7 @@
 			targets = (
 				FA8141351D70B0F4004FE58C /* Kryptonite */,
 				FA49F7841D9B6B3200372556 /* LastCommand */,
+				FAF1E61E1E031BB9003CBEA2 /* Notify */,
 				FAEE04991D74BCC3002A7AFD /* KryptoTests */,
 			);
 		};
@@ -1241,6 +1296,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAF1E61D1E031BB9003CBEA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1469,6 +1531,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FAF1E61B1E031BB9003CBEA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1481,6 +1551,11 @@
 			isa = PBXTargetDependency;
 			target = FA8141351D70B0F4004FE58C /* Kryptonite */;
 			targetProxy = FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */;
+		};
+		FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAF1E61E1E031BB9003CBEA2 /* Notify */;
+			targetProxy = FAF1E6241E031BB9003CBEA2 /* PBXContainerItemProxy */;
 		};
 		FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1750,6 +1825,41 @@
 			};
 			name = Release;
 		};
+		FAF1E6271E031BB9003CBEA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				INFOPLIST_FILE = Notify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		FAF1E6281E031BB9003CBEA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				INFOPLIST_FILE = Notify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1785,6 +1895,15 @@
 			buildConfigurations = (
 				FAEE04A21D74BCC3002A7AFD /* Debug */,
 				FAEE04A31D74BCC3002A7AFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAF1E6381E031BB9003CBEA2 /* Build configuration list for PBXNativeTarget "Notify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAF1E6271E031BB9003CBEA2 /* Debug */,
+				FAF1E6281E031BB9003CBEA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
