@@ -83,7 +83,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     
     enum UploadMethod:String {
         case github = "kr github"
-        case digitalOcean = "kr digital-ocean"
+        case digitalOcean = "kr digitalocean"
         case aws = "kr aws"
     }
     
