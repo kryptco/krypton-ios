@@ -17,13 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>375</string>
+	<string>376</string>
 	<key>GitHash</key>
-	<string>b294b2a1c401e757d8b45c7d92cd5a98d9105841</string>
+	<string>c3ae677427b4ad6ca7f98abeb56604ea5f8d306b</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
