@@ -78,6 +78,8 @@ class ApproveController:UIViewController {
     var request:Request?
     var session:Session?
     
+    var isEnabled = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -120,20 +122,25 @@ class ApproveController:UIViewController {
     //MARK: Response
     @IBAction func approveOnce() {
         
+        
+        
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
         
-        guard let request = request, let session = session else {
+        guard let request = request, let session = session, isEnabled else {
             log("no valid request or session", .error)
             return
         }
+        
+        isEnabled = false
         
         do {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
             try Silo.shared.send(session: session, response: resp, completionHandler: nil)
             
         } catch (let e) {
+            isEnabled = true
             log("send error \(e)", .error)
             self.showWarning(title: "Error", body: "Could not approve request. \(e)")
             return
@@ -169,10 +176,12 @@ class ApproveController:UIViewController {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
         
-        guard let request = request, let session = session else {
+        guard let request = request, let session = session, isEnabled else {
             log("no valid request or session", .error)
             return
         }
+        
+        isEnabled = false
         
         do {
             Policy.allow(session: session, for: Policy.Interval.oneHour)
@@ -180,6 +189,7 @@ class ApproveController:UIViewController {
             try Silo.shared.send(session: session, response: resp, completionHandler: nil)
             
         } catch (let e) {
+            isEnabled = true
             log("send error \(e)", .error)
             self.showWarning(title: "Error", body: "Could not approve request. \(e)")
             return
@@ -215,6 +225,12 @@ class ApproveController:UIViewController {
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
+        
+        guard isEnabled else {
+            return
+        }
+        
+        isEnabled = false
         
         do {
             if let request = request, let session = session {
