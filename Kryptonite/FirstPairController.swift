@@ -105,7 +105,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         npmLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.npm.rawValue
         
-        Analytics.postEvent(category: "install", action: "bpm")
+        Analytics.postEvent(category: "install", action: "npm")
     }
     
     @IBAction func curlTapped() {
