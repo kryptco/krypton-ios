@@ -119,6 +119,7 @@
 		FABA4B191D9C21C40057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */; };
 		FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE3611DC1097B0073C0EF /* PairApproveController.swift */; };
+		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
 		FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
@@ -460,6 +461,7 @@
 		FABA4B171D9C21BE0057A666 /* String+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+User.swift"; sourceTree = "<group>"; };
 		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FABFE3611DC1097B0073C0EF /* PairApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairApproveController.swift; sourceTree = "<group>"; };
+		FAC07FCB1E42F5D100FEF117 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACAA4B01D887904000B9A01 /* SignatureLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureLog.swift; sourceTree = "<group>"; };
 		FACAA4B71D887C19000B9A01 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
@@ -721,6 +723,7 @@
 			children = (
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
 				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
+				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
 				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
@@ -1461,6 +1464,7 @@
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
 				FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
+				FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
 				FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */,

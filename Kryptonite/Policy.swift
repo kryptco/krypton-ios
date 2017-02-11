@@ -238,13 +238,7 @@ class Policy {
         
         
         // present notification
-        let notification = UILocalNotification()
-        notification.alertBody = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.category = Policy.authorizeCategory.identifier
-        notification.userInfo = ["session_id": session.id, "request": request.object]
-
-        UIApplication.shared.presentLocalNotificationNow(notification)
+        Notify.shared.present(request: request, for: session)
     }
     
     class func notifyUser(session:Session, request:Request) {
@@ -258,12 +252,8 @@ class Policy {
             return
         }
         
-        let notification = UILocalNotification()
-
-        notification.alertBody = "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
-        notification.soundName = UILocalNotificationDefaultSoundName
-
-        UIApplication.shared.presentLocalNotificationNow(notification)
+        // present notification
+        Notify.shared.presentApproved(request: request, for: session)
     }
 }
 
