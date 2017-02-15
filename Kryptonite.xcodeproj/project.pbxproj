@@ -114,6 +114,34 @@
 		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
+		FAB517931E54D46A0032DD47 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
+		FAB517941E54D4750032DD47 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
+		FAB517951E54D52F0032DD47 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
+		FAB517961E54D52F0032DD47 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F21D79E413007D1B3A /* Response.swift */; };
+		FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
+		FAB517981E54D52F0032DD47 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
+		FAB517991E54D52F0032DD47 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729A1D78DD6D002F34D6 /* Peer.swift */; };
+		FAB5179A1E54D5370032DD47 /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
+		FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
+		FAB5179C1E54D54F0032DD47 /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
+		FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
+		FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */; };
+		FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
+		FAB517A01E54D54F0032DD47 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
+		FAB517A11E54D54F0032DD47 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
+		FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
+		FAB517A31E54D54F0032DD47 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
+		FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
+		FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
+		FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
+		FAB517A81E54D5780032DD47 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
+		FAB517B01E54D5DD0032DD47 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
+		FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
+		FAB517B81E54D67E0032DD47 /* JSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
+		FAB517C01E54D7330032DD47 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
+		FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15EB481DA5C6CC00BED16C /* Properties.swift */; };
+		FAB517C61E54E20E0032DD47 /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D003DE31D90EBB10085ED21 /* Sodium.framework */; };
 		FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB664EE1DBFF18C0094896F /* Updater.swift */; };
 		FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FABA4B191D9C21C40057A666 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
@@ -279,6 +307,13 @@
 			remoteGlobalIDString = FA49F7841D9B6B3200372556;
 			remoteInfo = LastCommand;
 		};
+		FAB517A91E54D59A0032DD47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA1D83F61DCBCFDF00E786E1;
+			remoteInfo = JSON;
+		};
 		FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
@@ -341,6 +376,17 @@
 				FAA6E1FC1D79FBE2007D1B3A /* AWSSQS.framework in Embed Frameworks */,
 				FAA6E1FA1D79FBC4007D1B3A /* AWSCore.framework in Embed Frameworks */,
 				8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAB517B71E54D66C0032DD47 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FAB517B81E54D67E0032DD47 /* JSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +503,7 @@
 		FAB43B941DFF1F9200496114 /* Kryptonite.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Kryptonite.entitlements; path = Kryptonite/Kryptonite.entitlements; sourceTree = "<group>"; };
 		FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
 		FAB43B981DFF1FB100496114 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Kryptonite/Info.plist; sourceTree = "<group>"; };
+		FAB517921E54D40A0032DD47 /* Notify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notify.entitlements; sourceTree = "<group>"; };
 		FAB664EE1DBFF18C0094896F /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		FABA4B171D9C21BE0057A666 /* String+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+User.swift"; sourceTree = "<group>"; };
 		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -547,6 +594,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB517C61E54E20E0032DD47 /* Sodium.framework in Frameworks */,
+				FAB517B01E54D5DD0032DD47 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,6 +1007,7 @@
 		FAF1E6201E031BB9003CBEA2 /* Notify */ = {
 			isa = PBXGroup;
 			children = (
+				FAB517921E54D40A0032DD47 /* Notify.entitlements */,
 				FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */,
 				FAF1E6231E031BB9003CBEA2 /* Info.plist */,
 			);
@@ -1042,13 +1092,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAF1E6381E031BB9003CBEA2 /* Build configuration list for PBXNativeTarget "Notify" */;
 			buildPhases = (
+				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
+				FAB517BE1E54D6C90032DD47 /* BuildHashBump */,
 				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
+				FAB517B71E54D66C0032DD47 /* Embed Frameworks */,
 				FAF1E61D1E031BB9003CBEA2 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FAB517AA1E54D59A0032DD47 /* PBXTargetDependency */,
 			);
 			name = Notify;
 			productName = Notify;
@@ -1112,6 +1166,14 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = W7AMYM5LPN;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1368,6 +1430,34 @@
 			shellPath = /bin/sh;
 			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
 		};
+		FAB517AD1E54D5AB0032DD47 /* Common Crypto */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Common Crypto";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
+		};
+		FAB517BE1E54D6C90032DD47 /* BuildHashBump */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = BuildHashBump;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n";
+		};
 		FAEE04A41D74BCCF002A7AFD /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1539,7 +1629,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB517981E54D52F0032DD47 /* Session.swift in Sources */,
+				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
+				FAB517991E54D52F0032DD47 /* Peer.swift in Sources */,
+				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
+				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
+				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
+				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
+				FAB5179C1E54D54F0032DD47 /* Seal.swift in Sources */,
+				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
+				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
+				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
+				FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */,
+				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
+				FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */,
+				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
+				FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */,
+				FAB517A01E54D54F0032DD47 /* ASN1.swift in Sources */,
+				FAB517C01E54D7330032DD47 /* Version.swift in Sources */,
+				FAB5179A1E54D5370032DD47 /* JSON+Seal.swift in Sources */,
 				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
+				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
+				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
+				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
+				FAB517A31E54D54F0032DD47 /* Sodium.swift in Sources */,
+				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
+				FAB517961E54D52F0032DD47 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1550,6 +1665,11 @@
 			isa = PBXTargetDependency;
 			target = FA49F7841D9B6B3200372556 /* LastCommand */;
 			targetProxy = FA49F78F1D9B6B3300372556 /* PBXContainerItemProxy */;
+		};
+		FAB517AA1E54D59A0032DD47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSON;
+			targetProxy = FAB517A91E54D59A0032DD47 /* PBXContainerItemProxy */;
 		};
 		FAEE04A01D74BCC3002A7AFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1833,11 +1953,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = Notify/Notify.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				INFOPLIST_FILE = Notify/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1851,11 +1972,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = Notify/Notify.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				INFOPLIST_FILE = Notify/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
 				PRODUCT_NAME = "$(TARGET_NAME)";

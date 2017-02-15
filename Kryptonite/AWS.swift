@@ -25,8 +25,6 @@ enum APIResult {
     case failure(Error)
 }
 
-typealias QueueName = String
-
 extension QueueName {
     var url:String {
         return  "\(Properties.awsQueueURLBase)\(self)"

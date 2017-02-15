@@ -25,7 +25,6 @@ class NotificationService: UNNotificationServiceExtension {
         }
     }
     
-    
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
@@ -33,5 +32,24 @@ class NotificationService: UNNotificationServiceExtension {
             contentHandler(bestAttemptContent)
         }
     }
+    
+    
+//    func unsealUntrustedAction(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
+//        guard let notificationDict = userInfo?["aps"] as? [String:Any],
+//            let ciphertextB64 = notificationDict["c"] as? String,
+//            let ciphertext = try? ciphertextB64.fromBase64(),
+//            let sessionUUID = notificationDict["session_uuid"] as? String,
+//            let session = Silo.shared.sessionServiceUUIDS[sessionUUID],
+//            let alert = notificationDict["alert"] as? String,
+//            alert == "Request from ".appending(session.pairing.displayName)
+//            else {
+//                log("invalid untrusted encrypted notification", .error)
+//                throw InvalidNotification()
+//        }
+//        let sealed = try NetworkMessage(networkData: ciphertext).data
+//        let request = try Request(key: session.pairing.symmetricKey, sealed: sealed)
+//        return (session, request)
+//    }
+
 
 }
