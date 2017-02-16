@@ -6,7 +6,7 @@
 	url = git@github.com:aschuch/AwesomeCache.git
 [submodule "SwiftHTTP"]
 	path = SwiftHTTP
-	url = git@github.com:daltoniam/SwiftHTTP.git
+	url = git@github.com:KryptCo/SwiftHTTP.git
 [submodule "JSON"]
 	path = JSON
 	url = git@github.com:KryptCo/JSON.git
