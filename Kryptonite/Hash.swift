@@ -18,4 +18,13 @@ extension Data {
         
         return Data(bytes: hash)
     }
+    var SHA1:Data {
+        var dataBytes = self.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
+        }
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+        CC_SHA1(&dataBytes, CC_LONG(self.count), &hash)
+        
+        return Data(bytes: hash)
+    }
 }

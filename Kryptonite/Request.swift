@@ -84,12 +84,16 @@ struct SignRequest:Jsonable {
     var digest:String
     var fingerprint:String
     var command:String?
-    
+    var hostAuth:HostAuth?
+
     init(json: Object) throws {
         self.digest = try json ~> "digest"
         self.fingerprint = try json ~> "public_key_fingerprint"
         if let command:String = try? json ~> "command" {
             self.command = command
+        }
+        if let json:Object = try? json ~> "host_auth" {
+            self.hostAuth = try HostAuth(json: json)
         }
     }
     
@@ -102,6 +106,30 @@ struct SignRequest:Jsonable {
         }
         
         return json
+    }
+
+    var sshSessionID:Data? {
+        guard let digestBytes = try? digest.fromBase64(),
+            digestBytes.count >= 36 else {
+            return nil
+        }
+        return digestBytes.subdata(in: 4..<36)
+    }
+
+    var user:String? {
+        guard let digestBytes = try? digest.fromBase64(),
+            digestBytes.count >= 38 else {
+            return nil
+        }
+        //  user field starts at bytes[37]
+        let userLen = Int32(bigEndianBytes: [UInt8](digestBytes.subdata(in: 37..<41)))
+        if userLen > 0 && digestBytes.count > userLen - 41 {
+            let userCStringBytes = digestBytes.subdata(in: 41..<Int(41+userLen))
+            let user = String(bytes: userCStringBytes, encoding: .utf8)
+            log("userLen \(userLen) user \(user)")
+            return user
+        }
+        return nil
     }
 }
 

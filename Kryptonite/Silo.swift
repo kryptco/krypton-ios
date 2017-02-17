@@ -383,7 +383,7 @@ class Silo {
                 if signatureAllowed {
                     // only place where signature should occur
                     let digestData = try signRequest.digest.fromBase64()
-                    sig = try kp.keyPair.sign(digest: digestData)
+                    sig = try kp.keyPair.sign(data: digestData)
                     
                     dispatchAsync {
                         LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>", command: signRequest.command), deviceName: session.pairing.name)
@@ -398,8 +398,7 @@ class Silo {
             } catch let e {
                 err = "\(e)"
             }
-            
-            
+
             sign = SignResponse(sig: sig, err: err)
         }
         

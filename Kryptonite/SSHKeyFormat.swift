@@ -96,3 +96,17 @@ extension PublicKey {
         return try self.wireFormat().fingerprint()
     }
 }
+
+extension Int32 {
+    init(bigEndianBytes: [UInt8]) {
+        if bigEndianBytes.count < 4 {
+            self.init(0)
+            return
+        }
+        var val : Int32 = 0
+        for i in Int32(0)..<4 {
+            val += Int32(bigEndianBytes[Int(i)]) << ((3 - i) * 8)
+        }
+        self.init(val)
+    }
+}

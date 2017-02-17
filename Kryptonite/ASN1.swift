@@ -8,11 +8,9 @@
 
 import Foundation
 
-
 // Some of the code below is adapted from
 // Heimdal (https://github.com/henrinormak/Heimdall)
 // Software Licence (14)
-
 
 //MARK: Extract Modulus + Exponent
 

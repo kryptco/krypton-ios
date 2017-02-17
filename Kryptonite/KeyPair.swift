@@ -237,13 +237,9 @@ class KeyPair {
     
     
     func sign(data:Data) throws -> String {
-        // Create SHA256 hash of the message
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-        CC_SHA256((data as NSData).bytes, CC_LONG(data.count), &hash)
-        
-        return try sign(digest: Data(bytes: hash))
+        return try sign(digest: data.SHA1)
     }
-    
+
     func sign(digest:Data) throws -> String {
         
         let dataBytes = digest.withUnsafeBytes {
@@ -254,7 +250,7 @@ class KeyPair {
         var sigBufferSize = SecKeyGetBlockSize(privateKey)
         var result = [UInt8](repeating: 0, count: sigBufferSize)
         
-        let status = SecKeyRawSign(privateKey, SecPadding.PKCS1, dataBytes, dataBytes.count, &result, &sigBufferSize)
+        let status = SecKeyRawSign(privateKey, SecPadding.PKCS1SHA1, dataBytes, dataBytes.count, &result, &sigBufferSize)
         
         guard status.isSuccess() else {
             throw CryptoError.sign(status)
