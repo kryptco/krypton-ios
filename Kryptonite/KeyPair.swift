@@ -234,7 +234,14 @@ class KeyPair {
 
         return keyParams
     }
-    
+
+    func signAppendingSSHWirePubkeyToPayload(data:Data) throws -> String {
+        var dataClone = Data(data)
+        let pubkeyWire = try publicKey.wireFormat()
+        dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
+        dataClone.append(pubkeyWire)
+        return try sign(data: dataClone)
+    }
     
     func sign(data:Data) throws -> String {
         return try sign(digest: data.SHA1)

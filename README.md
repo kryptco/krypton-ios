@@ -1,4 +1,6 @@
 # Install
+- Install dependencies (OSX)
+  brew install autoconf
 - Compile OpenSSL-for-iPhone
   cd OpenSSL-for-iPhone
   ./build-libssl.sh
