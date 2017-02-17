@@ -14,7 +14,7 @@ typealias Key = Data
 
 extension SecretBox.Key {
     func wrap(to pk: Box.PublicKey) throws -> Data {
-        guard let wrappedKey = try KRSodium.shared().box.seal(self, recipientPublicKey: pk) else {
+        guard let wrappedKey = try KRSodium.shared().box.seal(message: self, recipientPublicKey: pk) else {
             throw CryptoError.encrypt
         }
         return wrappedKey

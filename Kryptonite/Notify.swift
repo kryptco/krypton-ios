@@ -34,7 +34,8 @@ class Notify {
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_id": session.id, "request": request.object]
             content.categoryIdentifier = Policy.authorizeCategory.identifier!
-
+            content.threadIdentifier = request.id
+            
             let noteId = request.id
             log("pushing note with id: \(noteId)")
             let request = UNNotificationRequest(identifier: noteId, content: content, trigger: nil)
@@ -65,7 +66,7 @@ class Notify {
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_id": session.id, "request": request.object]
             content.categoryIdentifier = Policy.authorizeCategory.identifier!
-            
+
             
             // check grouping index for same notification
             var noteIndex = 0

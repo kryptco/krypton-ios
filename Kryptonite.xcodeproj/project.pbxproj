@@ -113,6 +113,8 @@
 		FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
 		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
+		FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
+		FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FAB517931E54D46A0032DD47 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FAB517941E54D4750032DD47 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
@@ -130,7 +132,6 @@
 		FAB517A01E54D54F0032DD47 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2696F91D98851600FE44D3 /* ASN1.swift */; };
 		FAB517A11E54D54F0032DD47 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
 		FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
-		FAB517A31E54D54F0032DD47 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
 		FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
@@ -230,26 +231,12 @@
 			remoteGlobalIDString = 901644B61AE36EA700163E3E;
 			remoteInfo = "Example iOS";
 		};
-		8D003DEA1D90EBB10085ED21 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 901644CA1AE36EA800163E3E;
-			remoteInfo = "Example iOSTests";
-		};
 		8D003DEC1D90EBB10085ED21 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 901644DC1AE36F2D00163E3E;
 			remoteInfo = "Example OSX";
-		};
-		8D003DEE1D90EBB10085ED21 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 901644EB1AE36F2E00163E3E;
-			remoteInfo = "Example OSXTests";
 		};
 		8DB2EE451DBC54EF0079E468 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -609,9 +596,7 @@
 				8D003DE51D90EBB10085ED21 /* SodiumTests.xctest */,
 				8D003DE71D90EBB10085ED21 /* Sodium.framework */,
 				8D003DE91D90EBB10085ED21 /* Example iOS.app */,
-				8D003DEB1D90EBB10085ED21 /* Example iOSTests.xctest */,
 				8D003DED1D90EBB10085ED21 /* Example OSX.app */,
-				8D003DEF1D90EBB10085ED21 /* Example OSXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1241,25 +1226,11 @@
 			remoteRef = 8D003DE81D90EBB10085ED21 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8D003DEB1D90EBB10085ED21 /* Example iOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Example iOSTests.xctest";
-			remoteRef = 8D003DEA1D90EBB10085ED21 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		8D003DED1D90EBB10085ED21 /* Example OSX.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = "Example OSX.app";
 			remoteRef = 8D003DEC1D90EBB10085ED21 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8D003DEF1D90EBB10085ED21 /* Example OSXTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Example OSXTests.xctest";
-			remoteRef = 8D003DEE1D90EBB10085ED21 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */ = {
@@ -1645,6 +1616,7 @@
 				FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */,
 				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
 				FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */,
+				FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */,
 				FAB517A01E54D54F0032DD47 /* ASN1.swift in Sources */,
 				FAB517C01E54D7330032DD47 /* Version.swift in Sources */,
 				FAB5179A1E54D5370032DD47 /* JSON+Seal.swift in Sources */,
@@ -1652,7 +1624,7 @@
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
-				FAB517A31E54D54F0032DD47 /* Sodium.swift in Sources */,
+				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
 				FAB517961E54D52F0032DD47 /* Response.swift in Sources */,
 			);
