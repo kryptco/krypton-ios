@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Last Command</string>
+	<string>Notify</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,20 +17,15 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>386</string>
 	<key>NSExtension</key>
 	<dict>
-		<key>NSExtensionMainStoryboard</key>
-		<string>MainInterface</string>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.widget-extension</string>
+		<string>com.apple.usernotifications.service</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>$(PRODUCT_MODULE_NAME).NotificationService</string>
 	</dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SourceCodePro-Regular</string>
-		<string>SourceCodePro-Bold</string>
-	</array>
 </dict>
 </plist>

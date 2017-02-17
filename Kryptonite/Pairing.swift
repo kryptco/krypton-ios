@@ -11,11 +11,13 @@ import CoreBluetooth
 import Sodium
 import JSON
 
+typealias QueueName = String
+
 struct Pairing:JsonReadable {
 
     var name:String
     var uuid: CBUUID
-    var queue:QueueName {
+    var queue:String {
         return uuid.uuidString.uppercased()
     }
     var workstationPublicKey:Box.PublicKey

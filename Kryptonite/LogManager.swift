@@ -80,7 +80,7 @@ class LogManager {
         mutex.unlock()
         
         // update last log
-        let defaults = UserDefaults(suiteName: "group.co.krypt.kryptonite")
+        let defaults = UserDefaults.group
         defaults?.set(theLog.date.toShortTimeString(), forKey: "last_log_time")
         defaults?.set(theLog.command ?? "--", forKey: "last_log_command")
         defaults?.set(deviceName, forKey: "last_log_device")

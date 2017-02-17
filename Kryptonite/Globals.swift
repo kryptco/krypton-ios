@@ -20,6 +20,14 @@ func isDebug() -> Bool {
     #endif
 }
 
+//MARK: Defaults
+
+extension UserDefaults {
+    static var  group:UserDefaults? {
+        return UserDefaults(suiteName: "group.co.krypt.kryptonite")
+    }
+}
+
 //MARK: Dispatch
 func dispatchMain(task:@escaping ()->Void) {
     DispatchQueue.main.async {

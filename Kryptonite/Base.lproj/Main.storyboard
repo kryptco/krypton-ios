@@ -2400,8 +2400,8 @@ Cg
                                             <constraint firstAttribute="height" constant="20" id="ej1-Gw-s1M"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                        <state key="normal" title="DigitalOcean">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Digital Ocean">
+                                            <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="doTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="cmu-mE-VWw"/>

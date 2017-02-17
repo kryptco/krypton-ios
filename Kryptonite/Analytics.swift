@@ -36,21 +36,6 @@ class Analytics {
         UserDefaults.standard.synchronize()
     }
 
-    class func setUserAgent() {
-        guard UIApplication.shared.applicationState == .active else {
-            return
-        }
-        dispatchMain {
-            if var userAgent = UIWebView().stringByEvaluatingJavaScript(from: "navigator.userAgent") {
-                if let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-                    userAgent += " Version/\(build)"
-                }
-                UserDefaults.standard.set(userAgent, forKey: "UserAgent")
-                UserDefaults.standard.synchronize()
-                log("Set UserAgent to \(userAgent)")
-            }
-        }
-    }
 
     class var userAgent : String? {
         return UserDefaults.standard.string(forKey: "UserAgent")
@@ -146,15 +131,7 @@ class Analytics {
         dispatchAsync{ Analytics.post(params: params) }
     }
 
-    class func postControllerView(clazz: String) {
-        guard UIApplication.shared.applicationState == .active else {
-            return
-        }
-        let clazz = clazz.replacingOccurrences(of: "Kryptonite.", with: "")
-            .replacingOccurrences(of: "Controller", with: "")
-
-        dispatchAsync { Analytics.postPageView(page: clazz) }
-    }
+ 
 
     class func postEvent(category:String, action:String, label:String? = nil, value: UInt? = nil, forceEnable:Bool = false) {
         var params : [String:String] = [

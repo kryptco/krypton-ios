@@ -9,6 +9,15 @@
 import Foundation
 import JSON
 
+
+//MARK: Defaults
+
+extension UserDefaults {
+    static var sessionDefaults:UserDefaults? {
+        return UserDefaults(suiteName: "kr_session_defaults")
+    }
+}
+
 private var sharedSessionManager:SessionManager?
 
 class SessionManager {
@@ -61,7 +70,7 @@ class SessionManager {
     }
     
     func destory() {
-        UserDefaults.standard.removeObject(forKey: SessionManager.ListKey)
+        UserDefaults.group?.removeObject(forKey: SessionManager.ListKey)
         sharedSessionManager = nil
         sessions = [:]
     }
@@ -69,13 +78,13 @@ class SessionManager {
     
     func save() {
         let data = sessions.values.map({ $0.object }) as [Any]
-        UserDefaults.standard.set(data, forKey: SessionManager.ListKey)
-        UserDefaults.standard.synchronize()
+        UserDefaults.group?.set(data, forKey: SessionManager.ListKey)
+        UserDefaults.group?.synchronize()
     }
     
     
     private class func load() -> [String:Session] {
-        guard let jsonList = UserDefaults.standard.array(forKey: SessionManager.ListKey) as? [Object]
+        guard let jsonList = UserDefaults.group?.array(forKey: SessionManager.ListKey) as? [Object]
         else {
             return [:]
         }
