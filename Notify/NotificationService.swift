@@ -7,6 +7,7 @@
 //
 
 import UserNotifications
+import JSON
 
 class NotificationService: UNNotificationServiceExtension {
 
@@ -23,14 +24,34 @@ class NotificationService: UNNotificationServiceExtension {
         else {
             return
         }
-        
-        
+
         do {
             let (session, unsealedRequest) = try unsealRemoteNotification(userInfo: bestAttemptContent.userInfo)
-
-            bestAttemptContent.body = "Request from \(session.pairing.displayName): \(unsealedRequest.sign?.command ?? "SSH login")"
+            bestAttemptContent.title = "Request from \(session.pairing.displayName) [Remote]"
+            bestAttemptContent.body = "\(unsealedRequest.sign?.command ?? "SSH login")"
             bestAttemptContent.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
-            contentHandler(bestAttemptContent)
+            bestAttemptContent.sound = UNNotificationSound.default()
+
+            UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                for note in notes {
+                    guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
+                        let deliveredRequest = try? Request(json: requestObject)
+                        else {
+                            continue
+                    }
+                    
+                    if deliveredRequest.id == unsealedRequest.id {
+                        dispatchAfter(delay: 0.2, task: {
+                            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                        })
+                        bestAttemptContent.sound = nil
+                    }
+                }
+                
+                contentHandler(bestAttemptContent)
+            })
+            
+            
         } catch {
             log("error: \(error), session count: \(SessionManager.shared.all.count), user info: \(bestAttemptContent.userInfo)")
         }

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 import UserNotifications
+import JSON
 
 class Notify {
     private static var _shared:Notify?
@@ -29,20 +30,36 @@ class Notify {
     func present(request:Request, for session:Session) {
         
         if #available(iOS 10.0, *) {
-            let content = UNMutableNotificationContent()
-            content.body = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
-            content.sound = UNNotificationSound.default()
-            content.userInfo = ["session_id": session.id, "request": request.object]
-            content.categoryIdentifier = Policy.authorizeCategory.identifier!
-            content.threadIdentifier = request.id
-            
-            let noteId = request.id
-            log("pushing note with id: \(noteId)")
-            let request = UNNotificationRequest(identifier: noteId, content: content, trigger: nil)
-            
-            UNUserNotificationCenter.current().add(request) {(error) in
-               log("error firing notification: \(error)")
-            }
+            UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                
+                for note in notes {
+                    guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
+                            let deliveredRequest = try? Request(json: requestObject)
+                    else {
+                        continue
+                    }
+                    
+                    if deliveredRequest.id == request.id {
+                        return
+                    }
+                }
+                
+                let content = UNMutableNotificationContent()
+                content.body = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
+                content.sound = UNNotificationSound.default()
+                content.userInfo = ["session_id": session.id, "request": request.object]
+                content.categoryIdentifier = Policy.authorizeCategoryIdentifier
+                content.threadIdentifier = request.id
+                
+                let noteId = request.id
+                log("pushing note with id: \(noteId)")
+                let request = UNNotificationRequest(identifier: noteId, content: content, trigger: nil)
+                
+                UNUserNotificationCenter.current().add(request) {(error) in
+                    log("error firing notification: \(error)")
+                }
+
+            })
             
         } else {
             let notification = UILocalNotification()
@@ -65,7 +82,7 @@ class Notify {
             content.body = "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_id": session.id, "request": request.object]
-            content.categoryIdentifier = Policy.authorizeCategory.identifier!
+            content.categoryIdentifier = Policy.authorizeCategoryIdentifier
 
             
             // check grouping index for same notification

@@ -115,6 +115,30 @@
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
+		FAAE818F1E576DB8002A9AE6 /* Authorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE818E1E576DB8002A9AE6 /* Authorize.swift */; };
+		FAAE81911E576FC2002A9AE6 /* Policy+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */; };
+		FAAE81931E576FFB002A9AE6 /* Policy+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */; };
+		FAAE81941E577063002A9AE6 /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
+		FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
+		FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
+		FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
+		FAAE819A1E5770EF002A9AE6 /* AWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* AWS.swift */; };
+		FAAE819B1E57720D002A9AE6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
+		FAAE819C1E57720D002A9AE6 /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
+		FAAE819D1E577212002A9AE6 /* NSKeyedUnarchiverWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */; };
+		FAAE819F1E5772A1002A9AE6 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAAE81A01E5772A1002A9AE6 /* AWSSNS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAAE81A11E5772A1002A9AE6 /* AWSSQS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAAE81A21E5772AD002A9AE6 /* Sodium.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8D003DE31D90EBB10085ED21 /* Sodium.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAAE81A31E5772BB002A9AE6 /* SwiftHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAAE81A41E57732C002A9AE6 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */; };
+		FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
+		FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; };
+		FAAE81A71E57734B002A9AE6 /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; };
+		FAAE81A81E5773DC002A9AE6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE395591D942647005D559C /* Info.plist */; };
+		FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
+		FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */; };
+		FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FAB517931E54D46A0032DD47 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FAB517941E54D4750032DD47 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
@@ -373,6 +397,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FAAE81A31E5772BB002A9AE6 /* SwiftHTTP.framework in Embed Frameworks */,
+				FAAE81A21E5772AD002A9AE6 /* Sodium.framework in Embed Frameworks */,
+				FAAE819F1E5772A1002A9AE6 /* AWSCore.framework in Embed Frameworks */,
+				FAAE81A01E5772A1002A9AE6 /* AWSSNS.framework in Embed Frameworks */,
+				FAAE81A11E5772A1002A9AE6 /* AWSSQS.framework in Embed Frameworks */,
 				FAB517B81E54D67E0032DD47 /* JSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -486,6 +515,12 @@
 		FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
+		FAAE818E1E576DB8002A9AE6 /* Authorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorize.swift; sourceTree = "<group>"; };
+		FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+UI.swift"; sourceTree = "<group>"; };
+		FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+UI.swift"; sourceTree = "<group>"; };
+		FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		FAAE819E1E577264002A9AE6 /* Notify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Notify-Bridging-Header.h"; sourceTree = "<group>"; };
+		FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+UI.swift"; sourceTree = "<group>"; };
 		FAB43B931DFF1F9200496114 /* Kryptonite-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Kryptonite-Bridging-Header.h"; path = "Kryptonite/Kryptonite-Bridging-Header.h"; sourceTree = "<group>"; };
 		FAB43B941DFF1F9200496114 /* Kryptonite.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Kryptonite.entitlements; path = Kryptonite/Kryptonite.entitlements; sourceTree = "<group>"; };
 		FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
@@ -581,6 +616,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */,
+				FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */,
+				FAAE81A71E57734B002A9AE6 /* AWSSNS.framework in Frameworks */,
+				FAAE81A41E57732C002A9AE6 /* CoreBluetooth.framework in Frameworks */,
 				FAB517C61E54E20E0032DD47 /* Sodium.framework in Frameworks */,
 				FAB517B01E54D5DD0032DD47 /* Security.framework in Frameworks */,
 			);
@@ -731,6 +770,7 @@
 				FAA536261D8F2EA800549710 /* AboutController.swift */,
 				FA309F411DA42C69006D8D81 /* HelpController.swift */,
 				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
+				FAAE818E1E576DB8002A9AE6 /* Authorize.swift */,
 				FAE495701DBD741800A97708 /* ApproveController.swift */,
 				FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
@@ -757,6 +797,7 @@
 			children = (
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
 				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
+				FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */,
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
@@ -842,6 +883,7 @@
 				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
 				FA15EB481DA5C6CC00BED16C /* Properties.swift */,
 				8DB2EE381DBC18170079E468 /* Analytics.swift */,
+				FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */,
 				FAB664EE1DBFF18C0094896F /* Updater.swift */,
 				FAD361F61DF08F9E00D17BAB /* Connectivity.swift */,
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
@@ -931,6 +973,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */,
 				FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */,
 				FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */,
 				8DE395551D942647005D559C /* AwesomeCache */,
@@ -994,7 +1037,9 @@
 			children = (
 				FAB517921E54D40A0032DD47 /* Notify.entitlements */,
 				FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */,
+				FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */,
 				FAF1E6231E031BB9003CBEA2 /* Info.plist */,
+				FAAE819E1E577264002A9AE6 /* Notify-Bridging-Header.h */,
 			);
 			path = Notify;
 			sourceTree = "<group>";
@@ -1339,6 +1384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAAE81A81E5773DC002A9AE6 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1511,6 +1557,7 @@
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				FAE495941DBD89F100A97708 /* M13CheckboxAddRemovePathGenerator.swift in Sources */,
 				8DE3955C1D942647005D559C /* Cache.swift in Sources */,
+				FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */,
 				FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
@@ -1520,6 +1567,7 @@
 				FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAE4958F1DBD89F100A97708 /* M13CheckboxFadeController.swift in Sources */,
+				FAAE81911E576FC2002A9AE6 /* Policy+UI.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
 				FAA536231D8F072500549710 /* UIView+KR.swift in Sources */,
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
@@ -1544,6 +1592,7 @@
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
+				FAAE818F1E576DB8002A9AE6 /* Authorize.swift in Sources */,
 				FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
@@ -1602,6 +1651,9 @@
 			files = (
 				FAB517981E54D52F0032DD47 /* Session.swift in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
+				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,
+				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
+				FAAE819B1E57720D002A9AE6 /* Cache.swift in Sources */,
 				FAB517991E54D52F0032DD47 /* Peer.swift in Sources */,
 				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
@@ -1610,19 +1662,27 @@
 				FAB5179C1E54D54F0032DD47 /* Seal.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
+				FAAE819C1E57720D002A9AE6 /* CacheObject.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
 				FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */,
 				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
 				FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */,
+				FAAE819D1E577212002A9AE6 /* NSKeyedUnarchiverWrapper.m in Sources */,
+				FAAE819A1E5770EF002A9AE6 /* AWS.swift in Sources */,
 				FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */,
 				FAB517A01E54D54F0032DD47 /* ASN1.swift in Sources */,
 				FAB517C01E54D7330032DD47 /* Version.swift in Sources */,
 				FAB5179A1E54D5370032DD47 /* JSON+Seal.swift in Sources */,
 				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
+				FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
+				FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */,
+				FAAE81931E576FFB002A9AE6 /* Policy+UI.swift in Sources */,
+				FAAE81941E577063002A9AE6 /* Policy.swift in Sources */,
+				FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
@@ -1929,6 +1989,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = Notify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1936,6 +2001,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Notify/Notify-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -1948,12 +2014,18 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = Notify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Notify/Notify-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

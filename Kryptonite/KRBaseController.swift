@@ -9,6 +9,27 @@
 import Foundation
 import UIKit
 
+class Current {
+    private static var mutex = Mutex()
+    static var _viewController:UIViewController?
+    static var viewController:UIViewController? {
+        get {
+            var controller:UIViewController?
+            mutex.lock {
+                controller = _viewController
+            }
+            
+            return controller
+        }
+        
+        set(c) {
+            mutex.lock {
+                _viewController = c
+            }
+            
+        }
+    }
+}
 
 class KRBaseController: UIViewController {
     
@@ -21,7 +42,7 @@ class KRBaseController: UIViewController {
     //MARK: Policy
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Policy.currentViewController = self
+        Current.viewController = self
         if shouldPostAnalytics() {
             Analytics.postControllerView(clazz: String(describing: type(of: self)))
         }
@@ -53,7 +74,7 @@ class KRBaseTableController: UITableViewController {
     //MARK: Policy
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Policy.currentViewController = self
+        Current.viewController = self
 
         if shouldPostAnalytics() {
             Analytics.postControllerView(clazz: String(describing: type(of: self)))
