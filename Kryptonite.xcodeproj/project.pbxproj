@@ -20,6 +20,9 @@
 		8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; };
 		8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8DC6F29F1E54B80C009FAB03 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC6F29D1E54B80C009FAB03 /* libcrypto.a */; };
+		8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
+		8DC860C11E578264008CC974 /* OpenSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D8398FA1E56034F0051C6BA /* OpenSSH.framework */; };
+		8DC860C21E578267008CC974 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC6F29D1E54B80C009FAB03 /* libcrypto.a */; };
 		8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		8DE3955C1D942647005D559C /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
 		8DE3955D1D942647005D559C /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
@@ -632,6 +635,8 @@
 				FAAE81A41E57732C002A9AE6 /* CoreBluetooth.framework in Frameworks */,
 				FAB517C61E54E20E0032DD47 /* Sodium.framework in Frameworks */,
 				FAB517B01E54D5DD0032DD47 /* Security.framework in Frameworks */,
+				8DC860C11E578264008CC974 /* OpenSSH.framework in Frameworks */,
+				8DC860C21E578267008CC974 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1681,6 +1686,7 @@
 				FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
 				FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */,
+				8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */,
 				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
 				FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */,
 				FAAE819D1E577212002A9AE6 /* NSKeyedUnarchiverWrapper.m in Sources */,
@@ -2018,11 +2024,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/openssh-portable/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = Notify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2043,11 +2054,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/openssh-portable/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = Notify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
