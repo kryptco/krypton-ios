@@ -131,6 +131,15 @@ struct SignRequest:Jsonable {
         }
         return nil
     }
+
+    var display:String {
+        let host = hostAuth?.hostNames.first ?? "unknown host"
+        guard let user = user else {
+            return host
+        }
+        return "\(user)@\(host)"
+    }
+
 }
 
 
