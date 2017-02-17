@@ -20,7 +20,7 @@ extension Analytics {
                     userAgent += " Version/\(build)"
                 }
                 UserDefaults.group?.set(userAgent, forKey: "UserAgent")
-                UserDefaults.standard.synchronize()
+                UserDefaults.group?.synchronize()
                 log("Set UserAgent to \(userAgent)")
             }
         }

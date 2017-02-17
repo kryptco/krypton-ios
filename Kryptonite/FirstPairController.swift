@@ -71,8 +71,8 @@ class FirstPairController:UIViewController, KRScanDelegate {
                     Analytics.postEvent(category: "push", action: "enabled")
 
                 }
-                UserDefaults.standard.set(true, forKey: "did_ask_push")
-                UserDefaults.standard.synchronize()
+                UserDefaults.group?.set(true, forKey: "did_ask_push")
+                UserDefaults.group?.synchronize()
             }
         }
     }

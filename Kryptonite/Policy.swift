@@ -44,16 +44,16 @@ class Policy {
     
     
     class func set(needsUserApproval:Bool, for session:Session) {
-        UserDefaults.standard.set(needsUserApproval, forKey: StorageKey.userApproval.key(id: session.id))
-        UserDefaults.standard.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id))
-        UserDefaults.standard.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id))
-        UserDefaults.standard.synchronize()
+        UserDefaults.group?.set(needsUserApproval, forKey: StorageKey.userApproval.key(id: session.id))
+        UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id))
+        UserDefaults.group?.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        UserDefaults.group?.synchronize()
     }
     
     class func needsUserApproval(for session:Session) -> Bool {
-        if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
+        if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
         {
-            let approvalInterval = UserDefaults.standard.double(forKey: StorageKey.userApprovalInterval.key(id: session.id))
+            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id)) ?? 0
             
             return -lastApproved.timeIntervalSinceNow > approvalInterval
             

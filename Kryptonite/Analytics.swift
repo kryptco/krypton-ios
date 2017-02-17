@@ -15,15 +15,15 @@ class Analytics {
     static var enabled : Bool {
         mutex.lock()
         defer { mutex.unlock() }
-        return !UserDefaults.standard.bool(forKey: "analytics_disabled")
+        return !(UserDefaults.group?.bool(forKey: "analytics_disabled") ?? false)
     }
 
     static var publishedEmail:String? {
         get {
-            return UserDefaults.standard.string(forKey: "analytics_email_sent")
+            return UserDefaults.group?.string(forKey: "analytics_email_sent")
         } set (e) {
-            UserDefaults.standard.set(e, forKey: "analytics_email_sent")
-            UserDefaults.standard.synchronize()
+            UserDefaults.group?.set(e, forKey: "analytics_email_sent")
+            UserDefaults.group?.synchronize()
         }
     }
     
@@ -32,17 +32,17 @@ class Analytics {
 
         mutex.lock()
         defer { mutex.unlock() }
-        UserDefaults.standard.set(disabled, forKey: "analytics_disabled")
-        UserDefaults.standard.synchronize()
+        UserDefaults.group?.set(disabled, forKey: "analytics_disabled")
+        UserDefaults.group?.synchronize()
     }
 
 
     class var userAgent : String? {
-        return UserDefaults.standard.string(forKey: "UserAgent")
+        return UserDefaults.group?.string(forKey: "UserAgent")
     }
 
     class var userID : String {
-        if let userID = UserDefaults.standard.string(forKey: "analyticsUserID") {
+        if let userID = UserDefaults.group?.string(forKey: "analyticsUserID") {
             return userID
         }
         mutex.lock()
@@ -50,8 +50,8 @@ class Analytics {
         var randBytes = [UInt8](repeating: 0, count: 16)
         let _ = SecRandomCopyBytes(kSecRandomDefault, randBytes.count, &randBytes)
         let id = Data(randBytes).toBase64()
-        UserDefaults.standard.set(id, forKey: "analyticsUserID")
-        UserDefaults.standard.synchronize()
+        UserDefaults.group?.set(id, forKey: "analyticsUserID")
+        UserDefaults.group?.synchronize()
         return id
     }
 
