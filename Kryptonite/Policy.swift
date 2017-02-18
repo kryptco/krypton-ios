@@ -59,23 +59,27 @@ class Policy {
             
         }
 
-        guard UserDefaults.standard.value(forKey: StorageKey.userApproval.key(id: session.id)) != nil else {
+        guard UserDefaults.group?.value(forKey: StorageKey.userApproval.key(id: session.id)) != nil else {
             return true
         }
         
-        return UserDefaults.standard.bool(forKey: StorageKey.userApproval.key(id: session.id))
+        guard let needsApproval = UserDefaults.group?.bool(forKey: StorageKey.userApproval.key(id: session.id))
+        else {
+            return true
+        }
+        
+        return needsApproval
     }
 
     class func approvedUntil(for session:Session) -> Date? {
-        if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
-        {
-            let approvalInterval = UserDefaults.standard.double(forKey: StorageKey.userApprovalInterval.key(id: session.id))
-            
-            return lastApproved.addingTimeInterval(approvalInterval)
-            
+        guard
+            let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date ,
+            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        else {
+            return nil
         }
         
-        return nil
+        return lastApproved.addingTimeInterval(approvalInterval)
     }
 
     class func approvedUntilUnixSeconds(for session:Session) -> Int? {
@@ -86,9 +90,9 @@ class Policy {
     }
 
     class func approvalTimeRemaining(for session:Session) -> String? {
-        if  let lastApproved = UserDefaults.standard.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
+        if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date,
+            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id))
         {
-            let approvalInterval = UserDefaults.standard.double(forKey: StorageKey.userApprovalInterval.key(id: session.id))
             
             if -lastApproved.timeIntervalSinceNow > approvalInterval {
                 return nil
@@ -98,15 +102,14 @@ class Policy {
         }
         
         return nil
-
     }
     
 
     
     static func allow(session:Session, for time:Interval) {
-        UserDefaults.standard.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
-        UserDefaults.standard.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
-        UserDefaults.standard.synchronize()
+        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
+        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        UserDefaults.group?.synchronize()
         
         Policy.sendAllowedPendingIfNeeded()
     }

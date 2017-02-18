@@ -14,15 +14,15 @@ class Updater {
     
     class var lastChecked:Date? {
         get {
-            return UserDefaults.standard.object(forKey: "update_last_checked") as? Date
+            return UserDefaults.group?.object(forKey: "update_last_checked") as? Date
         } set (d) {
             mutex.lock {
                 if let date = d {
-                    UserDefaults.standard.set(date, forKey: "update_last_checked")
+                    UserDefaults.group?.set(date, forKey: "update_last_checked")
                 } else {
-                    UserDefaults.standard.removeObject(forKey: "update_last_checked")
+                    UserDefaults.group?.removeObject(forKey: "update_last_checked")
                 }
-                UserDefaults.standard.synchronize()
+                UserDefaults.group?.synchronize()
             }
         }
     }

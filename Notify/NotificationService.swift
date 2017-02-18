@@ -53,7 +53,11 @@ class NotificationService: UNNotificationServiceExtension {
             
             
         } catch {
-            log("error: \(error), session count: \(SessionManager.shared.all.count), user info: \(bestAttemptContent.userInfo)")
+            
+            let errorMessage = "error: \(error), session count: \(SessionManager.shared.all.count), user info: \(bestAttemptContent.userInfo)"
+            log(errorMessage)
+//            bestAttemptContent.body = errorMessage
+//            contentHandler(bestAttemptContent)
         }
 
     }
