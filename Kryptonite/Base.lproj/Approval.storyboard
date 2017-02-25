@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -86,10 +86,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WO4-7z-cTV" userLabel="command" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="141" width="335" height="43"/>
+                                        <rect key="frame" x="96.5" y="141" width="182.5" height="43"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" lineBreakMode="tailTruncation" numberOfLines="6" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="zAk-LP-UsK">
-                                                <rect key="frame" x="10" y="10" width="315" height="23"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="root@server.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="zAk-LP-UsK">
+                                                <rect key="frame" x="10" y="10" width="162.5" height="23"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -219,7 +219,7 @@
                                     <constraint firstItem="AtN-i3-krO" firstAttribute="top" secondItem="nCZ-cb-ijv" secondAttribute="bottom" constant="20" id="EGg-3D-EYd"/>
                                     <constraint firstItem="eeh-tD-PoY" firstAttribute="centerX" secondItem="nCZ-cb-ijv" secondAttribute="centerX" id="FlV-bu-ow8"/>
                                     <constraint firstAttribute="trailing" secondItem="L0W-7f-ATi" secondAttribute="trailing" constant="20" id="GEa-fg-c6j"/>
-                                    <constraint firstAttribute="trailing" secondItem="WO4-7z-cTV" secondAttribute="trailing" constant="20" id="JNA-C3-EyP"/>
+                                    <constraint firstItem="WO4-7z-cTV" firstAttribute="centerX" secondItem="xnG-qN-IfJ" secondAttribute="centerX" id="HEj-nI-6iG"/>
                                     <constraint firstItem="9iK-AO-GAx" firstAttribute="top" secondItem="WO4-7z-cTV" secondAttribute="bottom" constant="40" id="JeW-al-sFl"/>
                                     <constraint firstItem="0ud-my-Ov9" firstAttribute="leading" secondItem="xnG-qN-IfJ" secondAttribute="leading" constant="20" id="MKJ-Gu-0pQ"/>
                                     <constraint firstAttribute="bottom" secondItem="4v9-zg-Fjt" secondAttribute="bottom" constant="20" id="MTq-hM-F26"/>
@@ -237,7 +237,7 @@
                                     <constraint firstAttribute="trailing" secondItem="9iK-AO-GAx" secondAttribute="trailing" id="hu9-ZH-qiK"/>
                                     <constraint firstItem="nCZ-cb-ijv" firstAttribute="centerX" secondItem="xnG-qN-IfJ" secondAttribute="centerX" id="iZe-m7-0rS"/>
                                     <constraint firstAttribute="bottom" secondItem="2F5-8g-q5h" secondAttribute="bottom" id="kqS-PR-SZg"/>
-                                    <constraint firstItem="WO4-7z-cTV" firstAttribute="leading" secondItem="xnG-qN-IfJ" secondAttribute="leading" constant="20" id="nYL-SB-LMo"/>
+                                    <constraint firstItem="WO4-7z-cTV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xnG-qN-IfJ" secondAttribute="leading" constant="10" id="qUl-X6-yUg"/>
                                     <constraint firstAttribute="trailing" secondItem="Kti-c4-IOt" secondAttribute="trailing" id="tTr-aA-qEP"/>
                                     <constraint firstItem="4v9-zg-Fjt" firstAttribute="top" secondItem="oHw-wM-1E6" secondAttribute="bottom" constant="10" id="vkE-Mu-QSr"/>
                                     <constraint firstItem="L0W-7f-ATi" firstAttribute="leading" secondItem="xnG-qN-IfJ" secondAttribute="leading" constant="20" id="vmD-c4-277"/>
@@ -345,7 +345,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="41" width="375" height="52.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" lineBreakMode="tailTruncation" numberOfLines="6" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
                                                         <rect key="frame" x="10" y="16" width="355" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="16"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

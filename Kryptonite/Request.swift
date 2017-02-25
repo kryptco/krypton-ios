@@ -137,7 +137,7 @@ struct SignRequest:Jsonable {
         guard let user = user else {
             return host
         }
-        return "\(user)@\(host)"
+        return "\(user) @ \(host)"
     }
 
 }

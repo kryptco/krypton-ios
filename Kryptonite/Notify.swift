@@ -45,7 +45,7 @@ class Notify {
                 }
                 
                 let content = UNMutableNotificationContent()
-                content.body = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
+                content.body = "Request from \(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
                 content.sound = UNNotificationSound.default()
                 content.userInfo = ["session_id": session.id, "request": request.object]
                 content.categoryIdentifier = Policy.authorizeCategoryIdentifier
@@ -63,7 +63,7 @@ class Notify {
             
         } else {
             let notification = UILocalNotification()
-            notification.alertBody = "Request from \(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
+            notification.alertBody = "Request from \(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.category = Policy.authorizeCategory.identifier
             notification.userInfo = ["session_id": session.id, "request": request.object]
@@ -79,7 +79,7 @@ class Notify {
             let noteId = RequestNotificationIdentifier(request: request, session:session)
             
             let content = UNMutableNotificationContent()
-            content.body = "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
+            content.body = "\(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_id": session.id, "request": request.object]
             content.categoryIdentifier = Policy.authorizeCategoryIdentifier
@@ -130,7 +130,7 @@ class Notify {
         } else {
             let notification = UILocalNotification()
             
-            notification.alertBody = "\(session.pairing.displayName): \(request.sign?.command ?? "SSH login")"
+            notification.alertBody = "\(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
             notification.soundName = UILocalNotificationDefaultSoundName
             
             UIApplication.shared.presentLocalNotificationNow(notification)
@@ -142,7 +142,7 @@ class Notify {
 typealias RequestNotificationIdentifier = String
 extension RequestNotificationIdentifier {
     init(request:Request, session:Session) {
-        self = "\(session.id)_\(request.sign?.command)"
+        self = "\(session.id)_\(request.sign?.display)"
     }
     
     func with(count:Int) -> String {

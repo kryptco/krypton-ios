@@ -96,7 +96,7 @@ class ApproveController:UIViewController {
         
         if let session = session, let request = request {
             deviceLabel.text = session.pairing.displayName.uppercased()
-            commandLabel.text = "$ " + (request.sign?.command ?? "Unknown Command")
+            commandLabel.text = request.sign?.display ?? "Unknown"
         }
     }
     

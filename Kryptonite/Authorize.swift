@@ -53,7 +53,7 @@ extension UIViewController {
         autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
         (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
-        (autoApproveController as? AutoApproveController)?.command = request.sign?.command ?? "Unknown"
+        (autoApproveController as? AutoApproveController)?.command = request.sign?.display ?? "Unknown"
         
         
         dispatchMain {

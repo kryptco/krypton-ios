@@ -18,16 +18,7 @@ class LogCell: UITableViewCell {
     }
     
     func set(log:SignatureLog) {
-        if let command = log.command {
-            signatureLabel.text = "$ \(command)"
-        } else {
-            if  let sig = try? log.digest.fromBase64()
-            {
-                signatureLabel.text = sig.hexPretty
-            } else {
-                signatureLabel.text = log.digest
-            }
-        }
+        signatureLabel.text = log.displayName
         timeLabel.text = log.date.timeAgo()
     }
     

@@ -30,14 +30,15 @@ class LogManager {
                     let session = managedLog.value(forKey: "session") as? String,
                     let digest = managedLog.value(forKey: "digest") as? String,
                     let signature = managedLog.value(forKey: "signature") as? String,
-                    let date = managedLog.value(forKey: "date") as? Date
+                    let date = managedLog.value(forKey: "date") as? Date,
+                    let displayName = managedLog.value(forKey: "displayName") as? String
                 else {
                     continue
                 }
                 let command = managedLog.value(forKey: "command") as? String
                 
                 if sigs[digest] == nil {
-                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, command: command, date: date))
+                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, command: command, displayName: displayName, date: date))
                     sigs[digest] = true
                 }
                 
@@ -82,7 +83,7 @@ class LogManager {
         // update last log
         let defaults = UserDefaults.group
         defaults?.set(theLog.date.toShortTimeString(), forKey: "last_log_time")
-        defaults?.set(theLog.command ?? "--", forKey: "last_log_command")
+        defaults?.set(theLog.displayName ?? "--", forKey: "last_log_command")
         defaults?.set(deviceName, forKey: "last_log_device")
         defaults?.synchronize()
         //
@@ -103,6 +104,7 @@ class LogManager {
         if let command = theLog.command {
             logEntry.setValue(command, forKey: "command")
         }
+        logEntry.setValue(theLog.displayName, forKey: "displayName")
         
         //
         do {

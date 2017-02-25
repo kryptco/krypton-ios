@@ -28,7 +28,7 @@ class NotificationService: UNNotificationServiceExtension {
         do {
             let (session, unsealedRequest) = try unsealRemoteNotification(userInfo: bestAttemptContent.userInfo)
             bestAttemptContent.title = "Request from \(session.pairing.displayName) [Remote]"
-            bestAttemptContent.body = "\(unsealedRequest.sign?.command ?? "SSH login")"
+            bestAttemptContent.body = "\(unsealedRequest.sign?.display ?? "SSH login")"
             bestAttemptContent.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
             bestAttemptContent.sound = UNNotificationSound.default()
 
