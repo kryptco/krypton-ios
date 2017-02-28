@@ -37,8 +37,10 @@ class KeyManager {
             else if let edKP = try Ed25519KeyPair.load(KeyTag.me.rawValue) {
                 return KeyManager(edKP)
             }
+            else {
+                throw KeyManagerError.keyDoesNotExist
+            }
             
-            throw KeyManagerError.keyDoesNotExist
 
             /*let loadStart = Date().timeIntervalSince1970
             let loadEnd = Date().timeIntervalSince1970
@@ -57,7 +59,7 @@ class KeyManager {
             case .RSA:
                 let _ = try RSAKeyPair.generate(KeyTag.me.rawValue)
             case .Ed25519:
-                fatalError("ed25519 unimplemented")
+                let _ = try Ed25519KeyPair.generate(KeyTag.me.rawValue)
             }
         }
         catch let e {
@@ -68,18 +70,21 @@ class KeyManager {
     
     class func destroyKeyPair() -> Bool {
         let rsaResult = (try? RSAKeyPair.destroy(KeyTag.me.rawValue)) ?? false
-       //let ed25 = try? RSAKeyPair.destroy(KeyTag.me.rawValue) ?? false
+        let edResult = (try? Ed25519KeyPair.destroy(KeyTag.me.rawValue)) ?? false
 
-        return rsaResult
+        return rsaResult || edResult
     }
     
     class func hasKey() -> Bool {
         if let _ = try? RSAKeyPair.load(KeyTag.me.rawValue) {
             log("has rsa key is true")
             return true
+        } else if let _ = try? Ed25519KeyPair.load(KeyTag.me.rawValue) {
+            log("has ed25519 key is true")
+            return true
         }
 
-        return true
+        return false
     }
     
     func getMe() throws -> Peer {

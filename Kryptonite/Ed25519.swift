@@ -142,7 +142,11 @@ class Ed25519KeyPair:KeyPair {
                           String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
         
         let privDeleteStatus = SecItemDelete(privParams as CFDictionary)
-        guard privDeleteStatus.isSuccess() || privDeleteStatus == errSecItemNotFound
+        if privDeleteStatus == errSecItemNotFound {
+            return false
+        }
+        
+        guard privDeleteStatus.isSuccess()
         else {
             throw CryptoError.destroy(.Ed25519, privDeleteStatus)
         }
@@ -154,7 +158,7 @@ class Ed25519KeyPair:KeyPair {
                           String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
         
         let pubDeleteStatus = SecItemDelete(pubParams as CFDictionary)
-        guard pubDeleteStatus.isSuccess() || pubDeleteStatus == errSecItemNotFound
+        guard pubDeleteStatus.isSuccess()
         else {
             throw CryptoError.destroy(.Ed25519, pubDeleteStatus)
         }
@@ -182,5 +186,11 @@ extension Sign.PublicKey:PublicKey {
     static func importFrom(_ tag:String, publicKeyRaw:Data) throws -> PublicKey {
         return publicKeyRaw as Sign.PublicKey
     }
+    
+    func wireFormat() throws -> SSHWireFormat {
+        return self
+    }
+
+
 }
 extension Sign.SecretKey:PrivateKey {}

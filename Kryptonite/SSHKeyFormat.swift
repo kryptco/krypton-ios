@@ -71,23 +71,6 @@ extension SSHWireFormat {
 //MARK: PublicKey + SSH
 
 extension PublicKey {
-    
-    func wireFormat() throws -> SSHWireFormat {
-        let components = try self.splitIntoComponents()
-
-        // ssh-wire-encoding(ssh-rsa, public exponent, modulus)
-        var wireBytes:[UInt8] = [0x00, 0x00, 0x00, 0x07]
-        wireBytes.append(contentsOf: try SSHKeyType.rsa.bytes())
-
-        wireBytes.append(contentsOf: components.exponent.bigEndianByteSize())
-        wireBytes.append(contentsOf: components.exponent.bytes)
-
-        wireBytes.append(contentsOf: components.modulus.bigEndianByteSize())
-        wireBytes.append(contentsOf: components.modulus.bytes)
-
-        return Data(bytes: wireBytes)
-    }
-    
     func authorizedFormat() throws -> SSHAuthorizedFormat {
         return try self.wireFormat().toAuthorized()
     }

@@ -30,6 +30,7 @@ let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOn
 protocol PublicKey {
     func verify(_ message:Data, signature:Data) throws -> Bool
     func export() throws -> Data
+    func wireFormat() throws -> SSHWireFormat
     static func importFrom(_ tag:String, publicKeyRaw:Data) throws -> PublicKey
 }
 
