@@ -37,14 +37,15 @@ class SodiumTests: XCTestCase {
 
         log("pk length \(kp.publicKey.count)")
 
-        guard let sealed = box.seal(ptxt, recipientPublicKey: kp.publicKey) else {
+        
+        guard let sealed = box.seal(message: ptxt, recipientPublicKey: kp.publicKey) else {
             XCTFail()
             return
         }
 
         log("ctxt length \(sealed.count)")
-
-        guard let opened = box.open(sealed, recipientPublicKey: kp.publicKey, recipientSecretKey: kp.secretKey) else {
+        
+        guard let opened = box.open(anonymousCipherText: sealed, recipientPublicKey: kp.publicKey, recipientSecretKey: kp.secretKey) else {
             XCTFail()
             return
         }

@@ -38,13 +38,13 @@ extension CryptoError {
                 return "\(parseOSStatus(status))\(t.rawValue)"
             }
             
-            return "unknown error: generating key"
+            return "unknown error: generating key \(t.rawValue)"
         case .sign(let t, let s):
             if let status = s {
                 return "\(parseOSStatus(status))\(t.rawValue)"
             }
             
-            return "unknown error: signing"
+            return "unknown error: signing \(t.rawValue)"
         case .encoding:
             return "encoding error"
             

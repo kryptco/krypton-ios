@@ -44,7 +44,7 @@ protocol KeyPair {
     static func generate(_ tag: String) throws -> KeyPair
     static func destroy(_ tag: String) throws -> Bool
     
-    func sign(data:Data) throws -> String
+    func sign(data:Data) throws -> Data
 
 }
 
@@ -54,7 +54,7 @@ extension KeyPair {
         let pubkeyWire = try publicKey.wireFormat()
         dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
         dataClone.append(pubkeyWire)
-        return try sign(data: dataClone)
+        return try sign(data: dataClone).toBase64()
     }
 
 }

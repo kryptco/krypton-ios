@@ -31,15 +31,19 @@ class KeyManager {
     
     class func sharedInstance() throws -> KeyManager {
         do {
-            let loadStart = Date().timeIntervalSince1970
-            guard let kp = try RSAKeyPair.load(KeyTag.me.rawValue) else {
-                throw KeyManagerError.keyDoesNotExist
+            if let rsaKP = try RSAKeyPair.load(KeyTag.me.rawValue) {
+                return KeyManager(rsaKP)
             }
+            else if let edKP = try Ed25519KeyPair.load(KeyTag.me.rawValue) {
+                return KeyManager(edKP)
+            }
+            
+            throw KeyManagerError.keyDoesNotExist
+
+            /*let loadStart = Date().timeIntervalSince1970
             let loadEnd = Date().timeIntervalSince1970
+            log("keypair load took \(loadEnd - loadStart) seconds")*/
             
-            log("keypair load took \(loadEnd - loadStart) seconds")
-            
-            return KeyManager(kp)
         }
         catch let e {
             log("Crypto Load error -> \(e)", LogType.warning)

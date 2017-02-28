@@ -231,11 +231,11 @@ class RSAKeyPair:KeyPair {
     }
     
     
-    func sign(data:Data) throws -> String {
+    func sign(data:Data) throws -> Data {
         return try sign(digest: data.SHA1)
     }
     
-    func sign(digest:Data) throws -> String {
+    func sign(digest:Data) throws -> Data {
         
         let dataBytes = digest.withUnsafeBytes {
             [UInt8](UnsafeBufferPointer(start: $0, count: digest.count))
@@ -254,7 +254,7 @@ class RSAKeyPair:KeyPair {
         // Create Base64 string of the result
         
         let resultData = Data(bytes: result[0..<sigBufferSize])
-        return resultData.toBase64()
+        return resultData
     }
 }
 
@@ -279,11 +279,11 @@ struct RSAPublicKey:PublicKey {
             [UInt8](UnsafeBufferPointer(start: $0, count: signature.count))
         }
         
-        // Create SHA256 hash of the message
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-        CC_SHA256((message as NSData).bytes, CC_LONG(message.count), &hash)
+        // Create SHA1 hash of the message
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+        CC_SHA1((message as NSData).bytes, CC_LONG(message.count), &hash)
         
-        let status = SecKeyRawVerify(key, SecPadding.PKCS1, hash, hash.count, sigBytes, sigBytes.count)
+        let status = SecKeyRawVerify(key, SecPadding.PKCS1SHA1, hash, hash.count, sigBytes, sigBytes.count)
         
         guard status.isSuccess() else {
             return false

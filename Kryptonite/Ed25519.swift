@@ -42,7 +42,7 @@ class Ed25519KeyPair:KeyPair {
     static func load(_ tag: String) throws -> KeyPair? {
         
         // load the private key
-        let privParams = [String(kSecClass): kSecClassKey,
+        let privParams = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): Ed25519KeychainService,
                       String(kSecAttrAccount): KeyIdentifier.Private.tag(tag),
                       String(kSecReturnData): kCFBooleanTrue,
@@ -61,7 +61,7 @@ class Ed25519KeyPair:KeyPair {
         }
         
         // load the public key
-        let pubParams = [String(kSecClass): kSecClassKey,
+        let pubParams = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Public.tag(tag),
                           String(kSecReturnData): kCFBooleanTrue,
@@ -84,14 +84,14 @@ class Ed25519KeyPair:KeyPair {
     
     static func generate(_ tag: String) throws -> KeyPair {
         guard let newKeypair = try KRSodium.shared().sign.keyPair() else {
-            throw CryptoError.generate(.Ed25519, -1)
+            throw CryptoError.generate(.Ed25519, nil)
         }
         
         let priv = newKeypair.secretKey
         let pub = newKeypair.publicKey
         
         // save the private key
-        let privParams = [String(kSecClass): kSecClassKey,
+        let privParams = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Private.tag(tag),
                           String(kSecValueData): priv,
@@ -110,7 +110,7 @@ class Ed25519KeyPair:KeyPair {
         }
 
         // save the public key
-        let pubParams = [String(kSecClass): kSecClassKey,
+        let pubParams = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Public.tag(tag),
                           String(kSecValueData): pub,
@@ -136,23 +136,25 @@ class Ed25519KeyPair:KeyPair {
     static func destroy(_ tag: String) throws -> Bool {
         
         // destroy the private key
-        let privParams = [String(kSecClass): kSecClassKey,
+        let privParams = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
-                          String(kSecAttrAccount): KeyIdentifier.Private.tag(tag)] as [String : Any]
+                          String(kSecAttrAccount): KeyIdentifier.Private.tag(tag),
+                          String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
         
         let privDeleteStatus = SecItemDelete(privParams as CFDictionary)
-        guard privDeleteStatus.isSuccess()
+        guard privDeleteStatus.isSuccess() || privDeleteStatus == errSecItemNotFound
         else {
             throw CryptoError.destroy(.Ed25519, privDeleteStatus)
         }
         
         // destroy the public key
-        let pubParams = [String(kSecClass): kSecClassKey,
+        let pubParams = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
-                          String(kSecAttrAccount): KeyIdentifier.Public.tag(tag)] as [String : Any]
+                          String(kSecAttrAccount): KeyIdentifier.Public.tag(tag),
+                          String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
         
         let pubDeleteStatus = SecItemDelete(pubParams as CFDictionary)
-        guard pubDeleteStatus.isSuccess()
+        guard pubDeleteStatus.isSuccess() || pubDeleteStatus == errSecItemNotFound
         else {
             throw CryptoError.destroy(.Ed25519, pubDeleteStatus)
         }
@@ -160,12 +162,12 @@ class Ed25519KeyPair:KeyPair {
         return true
     }
     
-    func sign(data:Data) throws -> String {
+    func sign(data:Data) throws -> Data {
         guard let sig =  try KRSodium.shared().sign.sign(message: data, secretKey: self.edKeyPair.secretKey) else {
             throw CryptoError.sign(.Ed25519, nil)
         }
         
-        return sig.toBase64()
+        return sig
     }
 }
 
