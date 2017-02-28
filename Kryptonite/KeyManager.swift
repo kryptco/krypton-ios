@@ -19,7 +19,10 @@ private let KrMeDataKey = "kr_me_email"
 enum KeyManagerError:Error {
     case keyDoesNotExist
 }
+
+
 class KeyManager {
+    
     var keyPair:KeyPair
     
     init(_ keyPair:KeyPair) {
@@ -29,11 +32,11 @@ class KeyManager {
     class func sharedInstance() throws -> KeyManager {
         do {
             let loadStart = Date().timeIntervalSince1970
-            guard let kp = try KeyPair.load(KeyTag.me.rawValue) else {
+            guard let kp = try RSAKeyPair.load(KeyTag.me.rawValue) else {
                 throw KeyManagerError.keyDoesNotExist
             }
             let loadEnd = Date().timeIntervalSince1970
-
+            
             log("keypair load took \(loadEnd - loadStart) seconds")
             
             return KeyManager(kp)
@@ -44,9 +47,14 @@ class KeyManager {
         }
     }
     
-    class func generateKeyPair() throws {
+    class func generateKeyPair(type:KeyType) throws {
         do {
-            let _ = try KeyPair.generate(KeyTag.me.rawValue)
+            switch type {
+            case .RSA:
+                let _ = try RSAKeyPair.generate(KeyTag.me.rawValue)
+            case .Ed25519:
+                fatalError("ed25519 unimplemented")
+            }
         }
         catch let e {
             log("Crypto Generate error -> \(e)", LogType.warning)
@@ -55,24 +63,18 @@ class KeyManager {
     }
     
     class func destroyKeyPair() -> Bool {
-        guard let result = try? KeyPair.destroy(KeyTag.me.rawValue) else {
-            return false
-        }
-        
-        return result
+        let rsaResult = (try? RSAKeyPair.destroy(KeyTag.me.rawValue)) ?? false
+       //let ed25 = try? RSAKeyPair.destroy(KeyTag.me.rawValue) ?? false
+
+        return rsaResult
     }
     
     class func hasKey() -> Bool {
-        do {
-            let kp = try KeyPair.load(KeyTag.me.rawValue)
-            if kp == nil {
-                return false
-            }
-            log("has key is true")
-        } catch {
-            return false
+        if let _ = try? RSAKeyPair.load(KeyTag.me.rawValue) {
+            log("has rsa key is true")
+            return true
         }
-    
+
         return true
     }
     

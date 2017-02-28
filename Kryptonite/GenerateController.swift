@@ -32,7 +32,7 @@ class GenerateController:UIViewController {
         dispatchAsync {
             do {
 
-                try KeyManager.generateKeyPair()
+                try KeyManager.generateKeyPair(type: KeyType.RSA)
 
                 let elapsed = Date().timeIntervalSince(startTime)
                 

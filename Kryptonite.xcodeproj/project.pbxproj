@@ -193,6 +193,12 @@
 		FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */; };
 		FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD361F61DF08F9E00D17BAB /* Connectivity.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
+		FAE45B991E64750E00A583AB /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B981E64750E00A583AB /* RSAKeyPair.swift */; };
+		FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B981E64750E00A583AB /* RSAKeyPair.swift */; };
+		FAE45B9B1E64751700A583AB /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B981E64750E00A583AB /* RSAKeyPair.swift */; };
+		FAE45B9D1E64AA3E00A583AB /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */; };
+		FAE45B9E1E64AA4400A583AB /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */; };
+		FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */; };
 		FAE495711DBD741800A97708 /* ApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495701DBD741800A97708 /* ApproveController.swift */; };
 		FAE495871DBD89F100A97708 /* M13Checkbox+IB.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495731DBD89F000A97708 /* M13Checkbox+IB.swift */; };
 		FAE495881DBD89F100A97708 /* M13Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495741DBD89F000A97708 /* M13Checkbox.swift */; };
@@ -554,6 +560,8 @@
 		FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsEmptyController.swift; sourceTree = "<group>"; };
 		FAD361F61DF08F9E00D17BAB /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		FADD71491D772F8200DA5112 /* Date+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Date+KR.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAE45B981E64750E00A583AB /* RSAKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
+		FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ed25519.swift; sourceTree = "<group>"; };
 		FAE495701DBD741800A97708 /* ApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApproveController.swift; sourceTree = "<group>"; };
 		FAE495731DBD89F000A97708 /* M13Checkbox+IB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "M13Checkbox+IB.swift"; sourceTree = "<group>"; };
 		FAE495741DBD89F000A97708 /* M13Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13Checkbox.swift; sourceTree = "<group>"; };
@@ -1014,6 +1022,8 @@
 			isa = PBXGroup;
 			children = (
 				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
+				FAE45B981E64750E00A583AB /* RSAKeyPair.swift */,
+				FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */,
 				FAFE546E1D7B9C1400391FDD /* Seal.swift */,
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */,
@@ -1606,6 +1616,7 @@
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
+				FAE45B9D1E64AA3E00A583AB /* Ed25519.swift in Sources */,
 				FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */,
 				FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
@@ -1636,6 +1647,7 @@
 				FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
 				FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */,
+				FAE45B991E64750E00A583AB /* RSAKeyPair.swift in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
 				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,
@@ -1659,7 +1671,9 @@
 				FAFE54701D7BB19900391FDD /* Seal.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
 				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
+				FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */,
 				8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */,
+				FAE45B9B1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1682,6 +1696,7 @@
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
 				FAAE819C1E57720D002A9AE6 /* CacheObject.swift in Sources */,
+				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
@@ -1701,6 +1716,7 @@
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
 				FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */,
 				FAAE81931E576FFB002A9AE6 /* Policy+UI.swift in Sources */,
+				FAE45B9E1E64AA4400A583AB /* Ed25519.swift in Sources */,
 				FAAE81941E577063002A9AE6 /* Policy.swift in Sources */,
 				FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,

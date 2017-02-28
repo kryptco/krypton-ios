@@ -11,8 +11,8 @@ import Foundation
 //MARK: Crypto Error
 enum CryptoError : Error {
     case paramCreate
-    case generate(OSStatus?)
-    case sign(OSStatus?)
+    case generate(KeyType, OSStatus?)
+    case sign(KeyType, OSStatus?)
     case encrypt
     case decrypt
     case export(OSStatus?)
@@ -33,15 +33,15 @@ extension CryptoError {
         switch self {
         case .paramCreate:
             return "error creating params for keypair"
-        case .generate(let s):
+        case .generate(let t, let s):
             if let status = s {
-                return parseOSStatus(status)
+                return "\(parseOSStatus(status))\(t.rawValue)"
             }
             
             return "unknown error: generating key"
-        case .sign(let s):
+        case .sign(let t, let s):
             if let status = s {
-                return parseOSStatus(status)
+                return "\(parseOSStatus(status))\(t.rawValue)"
             }
             
             return "unknown error: signing"
