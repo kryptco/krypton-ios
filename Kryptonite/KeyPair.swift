@@ -25,6 +25,7 @@ enum KeyType:String {
     case Ed25519 = "ed25519"
 }
 
+let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
 
 protocol PublicKey {
     func verify(_ message:Data, signature:Data) throws -> Bool

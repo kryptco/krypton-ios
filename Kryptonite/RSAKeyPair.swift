@@ -11,7 +11,6 @@ import Security
 import CommonCrypto
 
 
-let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
 let KeySize = 4096
 
 extension SecKey:PrivateKey {}
@@ -66,7 +65,7 @@ class RSAKeyPair:KeyPair {
         
         guard let privKey = privKeyObject, status.isSuccess()
             else {
-                throw CryptoError.load(status)
+                throw CryptoError.load(.RSA, status)
         }
         
         // get the public key
@@ -84,7 +83,7 @@ class RSAKeyPair:KeyPair {
         
         guard let pubKey = pubKeyObject, status.isSuccess()
             else {
-                throw CryptoError.load(status)
+                throw CryptoError.load(.RSA, status)
         }
         
         // return the keypair
@@ -114,7 +113,7 @@ class RSAKeyPair:KeyPair {
         let genStatus = SecKeyGeneratePair(keyParams as CFDictionary, &pubKey, &privKey)
         
         guard let pub = pubKey, let priv = privKey , genStatus.isSuccess() else {
-            throw CryptoError.generate(genStatus)
+            throw CryptoError.generate(.RSA, genStatus)
         }
         
         // save public key ref
@@ -177,7 +176,7 @@ class RSAKeyPair:KeyPair {
         
         guard status.isSuccess()
             else {
-                throw CryptoError.destroy(status)
+                throw CryptoError.destroy(.RSA, status)
         }
         
         return true
@@ -204,7 +203,7 @@ class RSAKeyPair:KeyPair {
         
         guard status.isSuccess()
             else {
-                throw CryptoError.destroy(status)
+                throw CryptoError.destroy(.RSA, status)
         }
         
         

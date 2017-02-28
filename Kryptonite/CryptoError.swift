@@ -16,8 +16,8 @@ enum CryptoError : Error {
     case encrypt
     case decrypt
     case export(OSStatus?)
-    case load(OSStatus?)
-    case destroy(OSStatus?)
+    case load(KeyType, OSStatus?)
+    case destroy(KeyType, OSStatus?)
     case tagExists
     case encoding
     case random
