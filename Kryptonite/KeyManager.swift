@@ -75,13 +75,16 @@ class KeyManager {
     }
     
     class func hasKey() -> Bool {
-        if let _ = try? RSAKeyPair.load(KeyTag.me.rawValue) {
-            log("has rsa key is true")
-            return true
-        } else if let _ = try? Ed25519KeyPair.load(KeyTag.me.rawValue) {
-            log("has ed25519 key is true")
-            return true
-        }
+        do {
+            if let _ = try RSAKeyPair.load(KeyTag.me.rawValue) {
+                log("has rsa key is true")
+                return true
+            } else if let _ = try Ed25519KeyPair.load(KeyTag.me.rawValue) {
+                log("has ed25519 key is true")
+                return true
+            }
+
+        } catch {}
 
         return false
     }

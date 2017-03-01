@@ -155,7 +155,7 @@ struct MeResponse:Jsonable {
         }
         
         var object: Object {
-            return ["email": email, "rsa_public_key_wire": publicKeyWire.toBase64()]
+            return ["email": email, "public_key_wire": publicKeyWire.toBase64()]
         }
     }
     
