@@ -176,6 +176,10 @@ class Ed25519KeyPair:KeyPair {
 }
 
 extension Sign.PublicKey:PublicKey {
+    var type:KeyType {
+        return KeyType.Ed25519
+    }
+    
     func verify(_ message:Data, signature:Data) throws -> Bool {
         return try KRSodium.shared().sign.verify(message: message, publicKey: self, signature: signature)
     }
@@ -186,11 +190,6 @@ extension Sign.PublicKey:PublicKey {
     static func importFrom(_ tag:String, publicKeyRaw:Data) throws -> PublicKey {
         return publicKeyRaw as Sign.PublicKey
     }
-    
-    func wireFormat() throws -> SSHWireFormat {
-        return self
-    }
-
-
 }
 extension Sign.SecretKey:PrivateKey {}
+

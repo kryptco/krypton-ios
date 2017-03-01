@@ -16,18 +16,16 @@ final class Response:Jsonable {
     var version:Version?
     var approvedUntil:Int?
     var sign:SignResponse?
-    var list:ListResponse?
     var me:MeResponse?
     var unpair:UnpairResponse?
     var ack:AckResponse?
     var trackingID:String?
     
-    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, list:ListResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, ack:AckResponse? = nil, trackingID:String? = nil) {
+    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, ack:AckResponse? = nil, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
         self.approvedUntil = approvedUntil
         self.sign = sign
-        self.list = list
         self.me = me
         self.unpair = unpair
         self.ack = ack
@@ -46,10 +44,6 @@ final class Response:Jsonable {
 
         if let json:Object = try? json ~> "sign_response" {
             self.sign = try SignResponse(json: json)
-        }
-        
-        if let json:Object = try? json ~> "list_response" {
-            self.list = try ListResponse(json: json)
         }
         
         if let json:Object = try? json ~> "me_response" {
@@ -80,10 +74,6 @@ final class Response:Jsonable {
 
         if let s = sign {
             json["sign_response"] = s.object
-        }
-        
-        if let l = list {
-            json["list_response"] = l.object
         }
         
         if let m = me {
@@ -148,29 +138,34 @@ struct SignResponse:Jsonable {
 }
 
 
-// List
-struct ListResponse:Jsonable {
-    var peers:[Peer]
-    
-    init(peers:[Peer]) {
-        self.peers = peers
-    }
-    init(json: Object) throws {
-        self.peers = try [Peer](json: json ~> "profiles")
-    }
-    var object: Object {
-        return ["profiles": peers.objects]
-    }
-}
-
 // Me
 struct MeResponse:Jsonable {
-    var me:Peer
-    init(me:Peer) {
+    
+    struct Me:Jsonable {
+        var email:String
+        var publicKeyWire:Data
+        init(email:String, publicKeyWire:Data) {
+            self.email = email
+            self.publicKeyWire = publicKeyWire
+        }
+        
+        init(json: Object) throws {
+            self.email = try json ~> "email"
+            self.publicKeyWire = try ((json ~> "public_key_wire") as String).fromBase64()
+        }
+        
+        var object: Object {
+            return ["email": email, "rsa_public_key_wire": publicKeyWire.toBase64()]
+        }
+    }
+    
+    var me:Me
+    
+    init(me:Me) {
         self.me = me
     }
     init(json: Object) throws {
-        self.me = try Peer(json: json ~> "me")
+        self.me = try Me(json: json ~> "me")
 
     }
     var object: Object {

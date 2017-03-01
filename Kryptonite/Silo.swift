@@ -370,7 +370,6 @@ class Silo {
         let requestStart = Date().timeIntervalSince1970
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         var sign:SignResponse?
-        var list:ListResponse?
         var me:MeResponse?
         
         if let signRequest = request.sign {
@@ -402,16 +401,14 @@ class Silo {
             sign = SignResponse(sig: sig, err: err)
         }
         
-        if let _ = request.list {
-            list = ListResponse(peers: [])
-        }
         if let _ = request.me {
-            me = MeResponse(me: try KeyManager.sharedInstance().getMe())
+            let keyManager = try KeyManager.sharedInstance()
+            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat()))
         }
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, list: list, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

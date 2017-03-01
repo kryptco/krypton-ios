@@ -83,7 +83,7 @@ class LogManager {
         // update last log
         let defaults = UserDefaults.group
         defaults?.set(theLog.date.toShortTimeString(), forKey: "last_log_time")
-        defaults?.set(theLog.displayName ?? "--", forKey: "last_log_command")
+        defaults?.set(theLog.displayName, forKey: "last_log_command")
         defaults?.set(deviceName, forKey: "last_log_device")
         defaults?.synchronize()
         //

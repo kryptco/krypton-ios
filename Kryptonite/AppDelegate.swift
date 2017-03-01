@@ -252,8 +252,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: "signature", action: "background reject")
             
-        default:
-            log("unhandled approval identifier: \(identifier)", .error)
         }
 
         
@@ -341,8 +339,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //  TODO: since email is only sent on change, users from before this
         //  feature will not publish email unless it is changed we can remove
         //  this once all current beta users have published email
-        if let me = try? KeyManager.sharedInstance().getMe() {
-            dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: me.email) }
+        if let email = try? KeyManager.sharedInstance().getMe() {
+            dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
         }
     }
 

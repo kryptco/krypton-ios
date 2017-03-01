@@ -8,19 +8,25 @@
 
 import Foundation
 import Security
+import Sodium
 
+//MARK: SSH Compatible
+
+protocol SSHKeyCompatible {
+    func wireFormat() throws -> Data
+}
 
 //MARK: SSH Key Type
-
-enum SSHKeyType:String {
-    case rsa = "ssh-rsa"
-    
-    func bytes() throws -> [UInt8] {
-        guard  let keyTypeBytes = self.rawValue.data(using: String.Encoding.utf8)?.bytes
-        else {
-            throw CryptoError.encoding
+extension KeyType {
+    func sshHeader() -> String {
+        return "ssh-\(self.rawValue)"
+    }
+    func sshHeaderBytes() throws -> [UInt8] {
+        guard  let keyTypeBytes = self.sshHeader().data(using: String.Encoding.utf8)?.bytes
+            else {
+                throw CryptoError.encoding
         }
-
+        
         return keyTypeBytes
     }
 }
@@ -61,10 +67,6 @@ extension SSHWireFormat {
     func fingerprint() -> Data {
         return self.SHA256
     }
-    
-    func toAuthorized() -> SSHAuthorizedFormat {
-        return "\(SSHKeyType.rsa.rawValue) \(self.toBase64())"
-    }
 
 }
 
@@ -72,7 +74,7 @@ extension SSHWireFormat {
 
 extension PublicKey {
     func authorizedFormat() throws -> SSHAuthorizedFormat {
-        return try self.wireFormat().toAuthorized()
+        return try "\(self.type.sshHeader()) \(self.wireFormat().toBase64())"
     }
     
     func fingerprint() throws -> Data {
@@ -80,16 +82,51 @@ extension PublicKey {
     }
 }
 
-extension Int32 {
-    init(bigEndianBytes: [UInt8]) {
-        if bigEndianBytes.count < 4 {
-            self.init(0)
-            return
-        }
-        var val : Int32 = 0
-        for i in Int32(0)..<4 {
-            val += Int32(bigEndianBytes[Int(i)]) << ((3 - i) * 8)
-        }
-        self.init(val)
+//MARK: WireFormat
+extension RSAPublicKey {
+    func wireFormat() throws -> Data {
+        
+        // ssh-wire-encoding(ssh-rsa, public exponent, modulus)
+        
+        var wireBytes:[UInt8] = [0x00, 0x00, 0x00, 0x07]
+        wireBytes.append(contentsOf: try self.type.sshHeaderBytes())
+        
+        let components = try self.splitIntoComponents()
+
+        wireBytes.append(contentsOf: components.exponent.bigEndianByteSize())
+        wireBytes.append(contentsOf: components.exponent.bytes)
+        
+        wireBytes.append(contentsOf: components.modulus.bigEndianByteSize())
+        wireBytes.append(contentsOf: components.modulus.bytes)
+        
+        return Data(bytes: wireBytes)
     }
 }
+
+extension Sign.PublicKey {
+    func wireFormat() throws -> Data {
+        // ssh-wire-encoding(ssh-ed25519, len pub key, pub key)
+        
+        var wireBytes:[UInt8] = [0x00, 0x00, 0x00, 0x0B]
+        wireBytes.append(contentsOf: try self.type.sshHeaderBytes())
+        
+        wireBytes.append(contentsOf: self.bigEndianByteSize())
+        wireBytes.append(contentsOf: self.bytes)
+        
+        return Data(bytes: wireBytes)
+    }
+}
+
+
+extension KeyPair {
+    func signAppendingSSHWirePubkeyToPayload(data:Data) throws -> String {
+        var dataClone = Data(data)
+        let pubkeyWire = try publicKey.wireFormat()
+        dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
+        dataClone.append(pubkeyWire)
+        return try sign(data: dataClone).toBase64()
+    }
+    
+}
+
+

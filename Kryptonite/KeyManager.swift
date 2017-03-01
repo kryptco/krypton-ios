@@ -20,7 +20,6 @@ enum KeyManagerError:Error {
     case keyDoesNotExist
 }
 
-
 class KeyManager {
     
     var keyPair:KeyPair
@@ -87,14 +86,9 @@ class KeyManager {
         return false
     }
     
-    func getMe() throws -> Peer {
+    func getMe() throws -> String {
         do {
-            let email = try KeychainStorage().get(key: KrMeDataKey)
-            let publicKey = try keyPair.publicKey.wireFormat()
-            let fp = publicKey.fingerprint()
-            
-            return Peer(email: email, fingerprint: fp, publicKey: publicKey)
-            
+            return try KeychainStorage().get(key: KrMeDataKey)
         } catch (let e) {
             throw e
         }
@@ -116,6 +110,5 @@ class KeyManager {
     }
     
 }
-
 
 

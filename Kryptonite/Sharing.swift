@@ -14,7 +14,7 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
     
     
     // Sending
-    func textDialogue(for peer:Peer, with phone:String? = nil) -> UIViewController {
+    func textDialogue(for me:String, authorizedKey:SSHAuthorizedFormat, with phone:String? = nil) -> UIViewController {
         
         let msgDialogue = MFMessageComposeViewController()
         
@@ -24,17 +24,15 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         msgDialogue.body = "This is my SSH public key. Store your SSH Keypair with Kryptonite (\(Properties.appURL))."
         msgDialogue.messageComposeDelegate = self
         
-
-        let authorizedKey = peer.publicKey.toAuthorized()
         
-        if let pkData = "\(authorizedKey) \(peer.email)".data(using: String.Encoding.utf8) {
-            msgDialogue.addAttachmentData(pkData, typeIdentifier: "public.plain-text", filename: "\(peer.email).txt")
+        if let pkData = authorizedKey.data(using: String.Encoding.utf8) {
+            msgDialogue.addAttachmentData(pkData, typeIdentifier: "public.plain-text", filename: "\(me).txt")
         }
         
         return msgDialogue
     }
     
-    func emailDialogue(for peer:Peer, with email:String? = nil) -> UIViewController {
+    func emailDialogue(for authorizedKey:SSHAuthorizedFormat, with email:String? = nil) -> UIViewController {
         
         guard MFMailComposeViewController.canSendMail() else {
             return unsupportedDialogue()
@@ -48,8 +46,6 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         mailDialogue.setSubject("My SSH Public Key")
         mailDialogue.mailComposeDelegate = self
         
-        let authorizedKey = peer.publicKey.toAuthorized()
-        
         mailDialogue.setMessageBody("My SSH public key is:\n\n\(authorizedKey)\n\n\n--\nSent via Kryptonite (\(Properties.appURL))", isHTML: false)
 
         Resources.makeAppearences()
@@ -57,13 +53,13 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
         return mailDialogue
     }
     
-    func copyDialogue(for peer:Peer) {
-        UIPasteboard.general.string = "\(peer.publicKey.toAuthorized()) \(peer.email)"
+    func copyDialogue(for me:String, authorizedKey:SSHAuthorizedFormat) {
+        UIPasteboard.general.string = authorizedKey.byAdding(comment: me)
         performSegue(withIdentifier: "showSuccess", sender: nil)
     }
     
-    func otherDialogueNative(for peer:Peer) -> UIViewController {
-        let textItem = "\(peer.publicKey.toAuthorized()) \(peer.email)"
+    func otherDialogueNative(for me:String, authorizedKey:SSHAuthorizedFormat) -> UIActivityViewController {
+        let textItem = authorizedKey.byAdding(comment: me)
         
         let otherDialogue = UIActivityViewController(activityItems: [textItem
             ], applicationActivities: nil)
@@ -73,36 +69,28 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
 
     }
     
-    func otherDialogue(for peer:Peer, me:Bool = false) -> UIViewController {
+    func otherDialogue(for me:String, authorizedKey:SSHAuthorizedFormat) -> UIViewController {
         
-        var title:String
-        var message:String
+        let title = "Share My Public Key"
+        let message = "Send your public key so peers can give you access to servers and code repositories. Don't worry, your private key never leaves this device."
         
-        if me {
-            title = "Share My Public Key"
-            message = "Send your public key so peers can give you access to servers and code repositories. Don't worry, your private key never leaves this device."
-        } else {
-            title = "Share \(peer.email)'s Public Key"
-            message = "Send \(peer.email)'s public key so peers can give them access to servers and code repositories."
-        }
-        
-        let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.actionSheet)
+            let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         
         alertController.addAction(UIAlertAction(title: "Mail", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
             
-            self.present(self.emailDialogue(for: peer), animated: true, completion: nil)
+            self.present(self.emailDialogue(for: authorizedKey), animated: true, completion: nil)
         }))
         
         alertController.addAction(UIAlertAction(title: "SMS", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
             
-            self.present(self.textDialogue(for: peer), animated: true, completion: nil)
+            self.present(self.textDialogue(for: me, authorizedKey: authorizedKey), animated: true, completion: nil)
         }))
 
         
         alertController.addAction(UIAlertAction(title: "Other", style: UIAlertActionStyle.default, handler: { (action:UIAlertAction) -> Void in
             
-            self.present(self.otherDialogueNative(for: peer), animated: true, completion: nil)
+            self.present(self.otherDialogueNative(for: me, authorizedKey: authorizedKey), animated: true, completion: nil)
         }))
         
         
@@ -125,28 +113,6 @@ extension UIViewController: UINavigationControllerDelegate, MFMessageComposeView
 
         return alertController
     }
-    
-    func savePublicKeyToFile(key: String) -> URL? {
-        let file = "publickey.kr"
-        
-        guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first  else {
-            
-            return nil
-        }
-        
-        let path = dir.appendingPathComponent(file)
-        
-        //writing
-        do {
-            try key.write(to: path, atomically: false, encoding: String.Encoding.utf8)
-            return path
-        }
-        catch {/* error handling here */}
-        
-        return nil
-
-    }
-    
     
     
     //MARK: Delegates

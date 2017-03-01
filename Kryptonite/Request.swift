@@ -16,7 +16,6 @@ struct Request:Jsonable {
     var sendACK:Bool
     var version:Version?
     var sign:SignRequest?
-    var list:ListRequest?
     var me:MeRequest?
     var unpair:UnpairRequest?
     
@@ -27,10 +26,6 @@ struct Request:Jsonable {
 
         if let json:Object = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
-        }
-        
-        if let json:Object = try? json ~> "list_request" {
-            self.list = try ListRequest(json: json)
         }
         
         if let json:Object = try? json ~> "me_request" {
@@ -56,10 +51,6 @@ struct Request:Jsonable {
             json["sign_request"] = s.object
         }
         
-        if let l = list {
-            json["list_request"] = l.object
-        }
-        
         if let m = me {
             json["me_request"] = m.object
         }
@@ -72,7 +63,7 @@ struct Request:Jsonable {
     }
 
     func isNoOp() -> Bool {
-        return sign == nil && list == nil && me == nil && unpair == nil
+        return sign == nil && me == nil && unpair == nil
     }
 }
 
@@ -142,12 +133,6 @@ struct SignRequest:Jsonable {
 
 }
 
-
-// List
-struct ListRequest:Jsonable {
-    init(json: Object) throws {}
-    var object: Object {return [:]}
-}
 
 // Me
 struct MeRequest:Jsonable {

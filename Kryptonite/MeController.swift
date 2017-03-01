@@ -68,10 +68,12 @@ class MeController:KRBaseController, UITextFieldDelegate {
         
         do {
             
-            let me = try KeyManager.sharedInstance().getMe()
-            tagTextField.text = me.email
+            let keyManager = try KeyManager.sharedInstance()
+            let email = try keyManager.getMe()
+            let publicKeyWire = try keyManager.keyPair.publicKey.wireFormat()
             
-            identiconButton.setImage(IGSimpleIdenticon.from(me.publicKey.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
+            tagTextField.text = email
+            identiconButton.setImage(IGSimpleIdenticon.from(publicKeyWire.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
             
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
@@ -128,14 +130,15 @@ class MeController:KRBaseController, UITextFieldDelegate {
     
     //MARK: Sharing
     @IBAction func shareOtherTapped() {
-        guard let me = try? KeyManager.sharedInstance().getMe()
+        guard   let email = try? KeyManager.sharedInstance().getMe(),
+                let publicKeyAuthorized = try? KeyManager.sharedInstance().keyPair.publicKey.authorizedFormat()
         else {
             return
         }
 
         
         dispatchMain {
-            self.present(self.otherDialogue(for: me, me: true), animated: true, completion: nil)
+            self.present(self.otherDialogue(for: email, authorizedKey: publicKeyAuthorized), animated: true, completion: nil)
         }
     }
     
@@ -173,7 +176,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
         }
         
         if email.isEmpty {
-            tagTextField.text = (try? KeyManager.sharedInstance().getMe().email) ?? ""
+            tagTextField.text = (try? KeyManager.sharedInstance().getMe()) ?? ""
         } else {
            KeyManager.setMe(email: email)
         }

@@ -27,10 +27,10 @@ enum KeyType:String {
 
 let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
 
-protocol PublicKey {
+protocol PublicKey:SSHKeyCompatible {
+    var type:KeyType {  get }
     func verify(_ message:Data, signature:Data) throws -> Bool
     func export() throws -> Data
-    func wireFormat() throws -> SSHWireFormat
     static func importFrom(_ tag:String, publicKeyRaw:Data) throws -> PublicKey
 }
 
@@ -49,15 +49,5 @@ protocol KeyPair {
 
 }
 
-extension KeyPair {
-    func signAppendingSSHWirePubkeyToPayload(data:Data) throws -> String {
-        var dataClone = Data(data)
-        let pubkeyWire = try publicKey.wireFormat()
-        dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
-        dataClone.append(pubkeyWire)
-        return try sign(data: dataClone).toBase64()
-    }
-
-}
 
 

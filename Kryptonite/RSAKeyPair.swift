@@ -261,6 +261,10 @@ class RSAKeyPair:KeyPair {
 struct RSAPublicKey:PublicKey {
     var key:SecKey
     
+    var type:KeyType {
+        return KeyType.RSA
+    }
+    
     func verify(_ message:String, signature:String) throws -> Bool {
         
         guard let data = message.data(using: String.Encoding.utf8)
@@ -351,24 +355,6 @@ struct RSAPublicKey:PublicKey {
         }
         
         return RSAPublicKey(key: pubKey as! SecKey)
-    }
-}
-
-extension RSAPublicKey {
-    func wireFormat() throws -> SSHWireFormat {
-        let components = try self.splitIntoComponents()
-        
-        // ssh-wire-encoding(ssh-rsa, public exponent, modulus)
-        var wireBytes:[UInt8] = [0x00, 0x00, 0x00, 0x07]
-        wireBytes.append(contentsOf: try SSHKeyType.rsa.bytes())
-        
-        wireBytes.append(contentsOf: components.exponent.bigEndianByteSize())
-        wireBytes.append(contentsOf: components.exponent.bytes)
-        
-        wireBytes.append(contentsOf: components.modulus.bigEndianByteSize())
-        wireBytes.append(contentsOf: components.modulus.bytes)
-        
-        return Data(bytes: wireBytes)
     }
 }
 
