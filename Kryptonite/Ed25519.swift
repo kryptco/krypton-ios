@@ -167,7 +167,7 @@ class Ed25519KeyPair:KeyPair {
     }
     
     func sign(data:Data) throws -> Data {
-        guard let sig =  try KRSodium.shared().sign.sign(message: data, secretKey: self.edKeyPair.secretKey) else {
+        guard let sig = try KRSodium.shared().sign.signature(message: data, secretKey: self.edKeyPair.secretKey) else {
             throw CryptoError.sign(.Ed25519, nil)
         }
         
