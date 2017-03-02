@@ -8,10 +8,15 @@
 
 import Foundation
 
+
 class CreateController: UIViewController {
 
     @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var keyTypeButton: UIButton!
+
+    var keyType = KeyType.Ed25519
     
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +37,36 @@ class CreateController: UIViewController {
         
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    @IBAction func switchKeyTypeTapped(sender: AnyObject) {
+        switch keyType {
+        case .Ed25519:
+            keyTypeButton.setTitle(KeyType.RSA.prettyPrint(), for: UIControlState.normal)
+            keyType = .RSA
+        case .RSA:
+            keyTypeButton.setTitle(KeyType.Ed25519.prettyPrint(), for: UIControlState.normal)
+            keyType = .Ed25519
+
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let generateController = segue.destination as? GenerateController {
+            generateController.keyType = self.keyType
+        }
+
+    }    
+
+}
+
+
+extension KeyType {
+    func prettyPrint() -> String{
+        switch self {
+        case .Ed25519:
+            return "Ed25519"
+        case .RSA:
+            return "RSA"
+        }
 
     }
-    
-    
-
 }

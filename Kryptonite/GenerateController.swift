@@ -12,7 +12,8 @@ import UIKit
 class GenerateController:UIViewController {
     
     @IBOutlet weak var animationView:UIView!
-    
+
+    var keyType = KeyType.Ed25519
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,12 +32,12 @@ class GenerateController:UIViewController {
 
         dispatchAsync {
             do {
-
-                try KeyManager.generateKeyPair(type: KeyType.Ed25519)
+                
+                try KeyManager.generateKeyPair(type: self.keyType)
 
                 let elapsed = Date().timeIntervalSince(startTime)
                 
-                Analytics.postEvent(category: "keypair", action: "generate", value: UInt(elapsed))
+                Analytics.postEvent(category: "keypair", action: "generate", label: self.keyType.rawValue, value: UInt(elapsed))
                 
                 let kp = try KeyManager.sharedInstance().keyPair
                 let pk = try kp.publicKey.export().toBase64()
@@ -68,4 +69,5 @@ class GenerateController:UIViewController {
             }
         }
     }
+    
 }
