@@ -13,6 +13,6 @@
 #import <AWSSQS/AWSSQS.h>
 #import <AwesomeCache/AwesomeCache.h>
 
-#import <OpenSSH/key.h>
+#import "sshwire.h"
 
 #endif /* Notify_Bridging_Header_h */

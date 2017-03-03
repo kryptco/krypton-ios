@@ -13,16 +13,13 @@
 		8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
 		8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
-		8D8398FB1E56034F0051C6BA /* OpenSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D8398FA1E56034F0051C6BA /* OpenSSH.framework */; };
 		8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
-		8D83990D1E561C0C0051C6BA /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC6F29D1E54B80C009FAB03 /* libcrypto.a */; };
 		8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
 		8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; };
 		8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8DC6F29F1E54B80C009FAB03 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC6F29D1E54B80C009FAB03 /* libcrypto.a */; };
+		8DC38BC31E689785007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
+		8DC38BC61E689A12007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
-		8DC860C11E578264008CC974 /* OpenSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D8398FA1E56034F0051C6BA /* OpenSSH.framework */; };
-		8DC860C21E578267008CC974 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC6F29D1E54B80C009FAB03 /* libcrypto.a */; };
 		8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		8DE3955C1D942647005D559C /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
 		8DE3955D1D942647005D559C /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
@@ -423,12 +420,12 @@
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		8D7941671D98732600F6E32E /* NetworkProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
-		8D8398FA1E56034F0051C6BA /* OpenSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSH.framework; path = "openssh-portable/Frameworks/OpenSSH.framework"; sourceTree = "<group>"; };
 		8D83990B1E56063A0051C6BA /* HostAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostAuth.swift; sourceTree = "<group>"; };
 		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
 		8DB2EE381DBC18170079E468 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftHTTP.xcodeproj; path = SwiftHTTP/SwiftHTTP.xcodeproj; sourceTree = "<group>"; };
-		8DC6F29D1E54B80C009FAB03 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "OpenSSL-for-iPhone/lib/libcrypto.a"; sourceTree = "<group>"; };
+		8DC38BC21E689785007445B4 /* libsshwire.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsshwire.a; path = "ssh-wire/target/universal/release/libsshwire.a"; sourceTree = "<group>"; };
+		8DC38BC51E689A0F007445B4 /* sshwire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sshwire.h; path = "ssh-wire/src/sshwire.h"; sourceTree = "<group>"; };
 		8DD436A31DF3719000201106 /* CommunicationActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunicationActivity.swift; sourceTree = "<group>"; };
 		8DE395561D942647005D559C /* AwesomeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeCache.h; sourceTree = "<group>"; };
 		8DE395571D942647005D559C /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -603,18 +600,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D8398FB1E56034F0051C6BA /* OpenSSH.framework in Frameworks */,
 				FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */,
 				FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */,
 				FA16827D1D774F3C00A7ED53 /* CoreImage.framework in Frameworks */,
 				FAA6E1F51D79E4FC007D1B3A /* AWSCore.framework in Frameworks */,
 				FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */,
 				FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */,
+				8DC38BC31E689785007445B4 /* libsshwire.a in Frameworks */,
 				FAFDE8E91DD1003100C87C86 /* JSON.framework in Frameworks */,
 				FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */,
 				8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */,
 				FA8141511D714203004FE58C /* Security.framework in Frameworks */,
-				8D83990D1E561C0C0051C6BA /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,7 +618,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DC6F29F1E54B80C009FAB03 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,8 +631,7 @@
 				FAAE81A41E57732C002A9AE6 /* CoreBluetooth.framework in Frameworks */,
 				FAB517C61E54E20E0032DD47 /* Sodium.framework in Frameworks */,
 				FAB517B01E54D5DD0032DD47 /* Security.framework in Frameworks */,
-				8DC860C11E578264008CC974 /* OpenSSH.framework in Frameworks */,
-				8DC860C21E578267008CC974 /* libcrypto.a in Frameworks */,
+				8DC38BC61E689A12007445B4 /* libsshwire.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +662,15 @@
 				8DB2EE521DBC54EF0079E468 /* SwiftHTTP.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8DC38BC41E6899FD007445B4 /* sshwire */ = {
+			isa = PBXGroup;
+			children = (
+				8DC38BC51E689A0F007445B4 /* sshwire.h */,
+				8DC38BC21E689785007445B4 /* libsshwire.a */,
+			);
+			name = sshwire;
 			sourceTree = "<group>";
 		};
 		8DE395551D942647005D559C /* AwesomeCache */ = {
@@ -990,13 +993,12 @@
 			isa = PBXGroup;
 			children = (
 				FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */,
-				8D8398FA1E56034F0051C6BA /* OpenSSH.framework */,
 				FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */,
 				FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */,
 				8DE395551D942647005D559C /* AwesomeCache */,
 				8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */,
 				8D93CD641D9198C7008955B2 /* libsodium-ios.a */,
-				8DC6F29D1E54B80C009FAB03 /* libcrypto.a */,
+				8DC38BC41E6899FD007445B4 /* sshwire */,
 				FACAA4B91D8887FA000B9A01 /* CoreData.framework */,
 				FACAA4AD1D87C44D000B9A01 /* MapKit.framework */,
 				FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */,
@@ -1916,10 +1918,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/openssh-portable/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
@@ -1929,7 +1931,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
-					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
@@ -1951,10 +1953,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/openssh-portable/Frameworks",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
@@ -1965,7 +1967,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
-					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
@@ -2023,10 +2025,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/openssh-portable/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = Notify/Info.plist;
@@ -2034,7 +2036,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2053,10 +2055,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/openssh-portable/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
 				INFOPLIST_FILE = Notify/Info.plist;
@@ -2064,7 +2066,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
 				PRODUCT_NAME = "$(TARGET_NAME)";

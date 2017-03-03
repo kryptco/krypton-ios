@@ -114,7 +114,7 @@ struct SignRequest:Jsonable {
         }
         //  user field starts at bytes[37]
         let userLen = Int32(bigEndianBytes: [UInt8](digestBytes.subdata(in: 37..<41)))
-        if userLen > 0 && digestBytes.count > userLen - 41 {
+        if userLen > 0 && digestBytes.count > Int(userLen + 41) {
             let userCStringBytes = digestBytes.subdata(in: 41..<Int(41+userLen))
             let user = String(bytes: userCStringBytes, encoding: .utf8)
             log("userLen \(userLen) user \(user)")
@@ -124,11 +124,20 @@ struct SignRequest:Jsonable {
     }
 
     var display:String {
-        let host = hostAuth?.hostNames.first ?? "unknown host"
-        guard let user = user else {
-            return host
+        var userString = ""
+        if let user = user {
+            userString = "\(user) @ "
         }
-        return "\(user) @ \(host)"
+        if let sshSessionID = sshSessionID,
+            let hostAuth = hostAuth,
+            let host = hostAuth.hostNames.first {
+            //  TODO: cache verify result
+            if let result = try? hostAuth.verify(sessionID: sshSessionID),
+                result {
+                return userString + host
+            }
+        }
+        return userString + "unknown host"
     }
 
 }

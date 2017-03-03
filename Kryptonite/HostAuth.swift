@@ -36,14 +36,11 @@ struct HostAuth:Jsonable{
         let sigBytes = sigData.withUnsafeMutableBytes{ (bytes: UnsafeMutablePointer<UInt8>) in
             return bytes
         }
-        guard let hostKey = key_from_blob(keyBytes, u_int(keyData.count)) else {
-            return false
-        }
         var sessionIDClone = Data(sessionID)
         let signDataBytes = sessionIDClone.withUnsafeMutableBytes({ (bytes: UnsafeMutablePointer<UInt8>) in
             return bytes
         })
-        let result = key_verify(hostKey, sigBytes, u_int(sigData.count), signDataBytes, u_int(sessionID.count))
+        let result = kr_verify_signature(keyBytes, keyData.count, sigBytes, sigData.count, signDataBytes, sessionIDClone.count)
         if result == 1 {
             return true
         }
