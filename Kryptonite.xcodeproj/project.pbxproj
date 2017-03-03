@@ -127,11 +127,6 @@
 		FAAE819B1E57720D002A9AE6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
 		FAAE819C1E57720D002A9AE6 /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
 		FAAE819D1E577212002A9AE6 /* NSKeyedUnarchiverWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */; };
-		FAAE819F1E5772A1002A9AE6 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAAE81A01E5772A1002A9AE6 /* AWSSNS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAAE81A11E5772A1002A9AE6 /* AWSSQS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAAE81A21E5772AD002A9AE6 /* Sodium.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8D003DE31D90EBB10085ED21 /* Sodium.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAAE81A31E5772BB002A9AE6 /* SwiftHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAAE81A41E57732C002A9AE6 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */; };
 		FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
 		FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; };
@@ -161,7 +156,6 @@
 		FAB517A81E54D5780032DD47 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FAB517B01E54D5DD0032DD47 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
 		FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
-		FAB517B81E54D67E0032DD47 /* JSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FAB517C01E54D7330032DD47 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
 		FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15EB481DA5C6CC00BED16C /* Properties.swift */; };
@@ -392,22 +386,6 @@
 				FAA6E1FC1D79FBE2007D1B3A /* AWSSQS.framework in Embed Frameworks */,
 				FAA6E1FA1D79FBC4007D1B3A /* AWSCore.framework in Embed Frameworks */,
 				8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FAB517B71E54D66C0032DD47 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FAAE81A31E5772BB002A9AE6 /* SwiftHTTP.framework in Embed Frameworks */,
-				FAAE81A21E5772AD002A9AE6 /* Sodium.framework in Embed Frameworks */,
-				FAAE819F1E5772A1002A9AE6 /* AWSCore.framework in Embed Frameworks */,
-				FAAE81A01E5772A1002A9AE6 /* AWSSNS.framework in Embed Frameworks */,
-				FAAE81A11E5772A1002A9AE6 /* AWSSQS.framework in Embed Frameworks */,
-				FAB517B81E54D67E0032DD47 /* JSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1145,10 +1123,9 @@
 			buildPhases = (
 				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
-				FAB517BE1E54D6C90032DD47 /* BuildHashBump */,
 				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
-				FAB517B71E54D66C0032DD47 /* Embed Frameworks */,
 				FAF1E61D1E031BB9003CBEA2 /* Resources */,
+				FAB517BE1E54D6C90032DD47 /* BuildHashBump */,
 			);
 			buildRules = (
 			);
