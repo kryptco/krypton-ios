@@ -104,6 +104,24 @@ class PairingTests: XCTestCase {
         }
     }
     
+    
+    func testVersionOrdering() {
+        let v1 = Version(major: 2, minor: 0, patch: 0)
+        let v2 = Version(major: 1, minor: 0, patch: 4)
+        let v3 = Version(major: 2, minor: 4, patch: 1)
+        let v4 = Version(major: 1, minor: 0, patch: 0)
+        let v5 = Version(major: 1, minor: 0, patch: 0)
+
+        
+        XCTAssert(v4 == v5)
+        XCTAssert(v1 > v5)
+        XCTAssert(v3 > v1)
+        XCTAssert(v3 > v2)
+        XCTAssert(v2 > v5)
+
+
+
+    }
 }
 
 struct TestStruct:Jsonable {

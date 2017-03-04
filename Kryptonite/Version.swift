@@ -56,11 +56,20 @@ func < (lhs:Version, rhs:Version) -> Bool {
         return true
     }
     
-    if lhs.minor < rhs.minor {
+    if  lhs.major == rhs.major &&
+        lhs.minor < rhs.minor
+    {
         return true
     }
     
-    return lhs.patch < rhs.patch
+    if  lhs.major == rhs.major &&
+        lhs.minor == rhs.minor &&
+        lhs.patch < rhs.patch
+    {
+        return true
+    }
+    
+    return false
 }
 
 func ==(lhs:Version, rhs:Version) -> Bool {
