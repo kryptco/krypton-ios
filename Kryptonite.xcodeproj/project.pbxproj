@@ -166,6 +166,12 @@
 		FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */; };
 		FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE3611DC1097B0073C0EF /* PairApproveController.swift */; };
 		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
+		FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
+		FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
+		FAC873F91E6A4DC1003D112E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
+		FAC873FC1E6A4E9C003D112E /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
+		FAC873FF1E6A5148003D112E /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
+		FAC874001E6A5342003D112E /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
 		FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
@@ -515,6 +521,7 @@
 		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FABFE3611DC1097B0073C0EF /* PairApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairApproveController.swift; sourceTree = "<group>"; };
 		FAC07FCB1E42F5D100FEF117 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
+		FAC873F51E6A4D32003D112E /* PairingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTests.swift; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACAA4B01D887904000B9A01 /* SignatureLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureLog.swift; sourceTree = "<group>"; };
 		FACAA4B71D887C19000B9A01 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
@@ -1025,6 +1032,7 @@
 			isa = PBXGroup;
 			children = (
 				FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */,
+				FAC873F51E6A4D32003D112E /* PairingTests.swift */,
 				8D003DF41D90EECE0085ED21 /* SodiumTests.swift */,
 				FAEE049E1D74BCC3002A7AFD /* Info.plist */,
 			);
@@ -1628,15 +1636,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC873FC1E6A4E9C003D112E /* KeychainStorage.swift in Sources */,
 				8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */,
+				FAC873FF1E6A5148003D112E /* JSON+Seal.swift in Sources */,
 				FAEE04A61D74BD47002A7AFD /* SSHKeyFormat.swift in Sources */,
+				FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
+				FAC874001E6A5342003D112E /* String+User.swift in Sources */,
 				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */,
+				FAC873F91E6A4DC1003D112E /* Version.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
+				FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */,
 				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
 				FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */,
 				8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */,
