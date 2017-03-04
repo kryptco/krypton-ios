@@ -127,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let networkMessage = try NetworkMessage(networkData: networkMessageString.fromBase64())
-            let req = try Request(key: session.pairing.symmetricKey, sealed: networkMessage.data)
+            let req = try Request(from: session.pairing, sealed: networkMessage.data)
             try Silo.shared.handle(request: req, session: session, communicationMedium: .remoteNotification, completionHandler: { completionHandler(.newData) })
 
         } catch let e {
@@ -210,7 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 throw InvalidNotification()
         }
         let sealed = try NetworkMessage(networkData: ciphertext).data
-        let request = try Request(key: session.pairing.symmetricKey, sealed: sealed)
+        let request = try Request(from: session.pairing, sealed: sealed)
         return (session, request)
     }
 

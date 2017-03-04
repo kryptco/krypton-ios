@@ -21,20 +21,23 @@ struct Pairing:JsonReadable {
         return uuid.uuidString.uppercased()
     }
     var workstationPublicKey:Box.PublicKey
-    var symmetricKey:SecretBox.Key
+    var keyPair:Box.KeyPair
     
     var displayName:String {
         return name.removeDotLocal()
     }
-
+    
     init(name: String, workstationPublicKey:Box.PublicKey) throws {
-        let symmetricKey = try Data.random(size: KRSodium.shared().secretBox.KeyBytes)
-        try self.init(name: name, workstationPublicKey: workstationPublicKey, symmetricKey: symmetricKey)
+        guard let keyPair = try KRSodium.shared().box.keyPair() else {
+            throw CryptoError.generate(KeyType.Ed25519, nil)
+        }
+        
+        try self.init(name: name, workstationPublicKey: workstationPublicKey, keyPair: keyPair)
     }
 
-    init(name: String, workstationPublicKey:Box.PublicKey, symmetricKey:SecretBox.Key) throws {
+    init(name: String, workstationPublicKey:Box.PublicKey, keyPair:Box.KeyPair) throws {
         self.workstationPublicKey = workstationPublicKey
-        self.symmetricKey = symmetricKey
+        self.keyPair = keyPair
         self.name = name
         self.uuid = CBUUID.init(data: workstationPublicKey.SHA256.subdata(in: 0 ..< 16))
     }
@@ -42,6 +45,7 @@ struct Pairing:JsonReadable {
     init(json: Object) throws {
         let pkB64:String = try json ~> "pk"
         let workstationPublicKey = try pkB64.fromBase64()
+                
         try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey)
     }
 

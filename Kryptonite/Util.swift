@@ -9,6 +9,18 @@
 import Foundation
 
 extension Data {
+    
+    static func random(size:Int) throws -> Data {
+        var result = [UInt8](repeating: 0, count: size)
+        let res = SecRandomCopyBytes(kSecRandomDefault, size, &result)
+        
+        guard res == 0 else {
+            throw CryptoError.random
+        }
+        
+        return Data(bytes: result)
+    }
+    
     func toBase64(_ urlEncoded:Bool = false) -> String {
         var result = self.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         

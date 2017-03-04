@@ -83,7 +83,7 @@ class NotificationService: UNNotificationServiceExtension {
             throw InvalidRemoteNotification()
         }
         let sealed = try NetworkMessage(networkData: ciphertext).data
-        let request = try Request(key: session.pairing.symmetricKey, sealed: sealed)
+        let request = try Request(from: session.pairing, sealed: sealed)
         return (session, request)
     }
 

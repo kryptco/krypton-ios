@@ -144,7 +144,7 @@
 		FAB517981E54D52F0032DD47 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FAB5179A1E54D5370032DD47 /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
 		FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
-		FAB5179C1E54D54F0032DD47 /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
+		FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Wrap.swift */; };
 		FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */; };
 		FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
@@ -219,8 +219,8 @@
 		FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
 		FAFDE8E91DD1003100C87C86 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
 		FAFDE8EA1DD1003100C87C86 /* JSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAFE546F1D7B9C1400391FDD /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
-		FAFE54701D7BB19900391FDD /* Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Seal.swift */; };
+		FAFE546F1D7B9C1400391FDD /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Wrap.swift */; };
+		FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Wrap.swift */; };
 		FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 /* End PBXBuildFile section */
@@ -562,7 +562,7 @@
 		FAF1E6231E031BB9003CBEA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Seal.swift"; sourceTree = "<group>"; };
 		FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = JSON/JSON.xcodeproj; sourceTree = "<group>"; };
-		FAFE546E1D7B9C1400391FDD /* Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seal.swift; sourceTree = "<group>"; };
+		FAFE546E1D7B9C1400391FDD /* Wrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wrap.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -997,7 +997,7 @@
 				FAE45B981E64750E00A583AB /* RSAKeyPair.swift */,
 				FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */,
 				FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */,
-				FAFE546E1D7B9C1400391FDD /* Seal.swift */,
+				FAFE546E1D7B9C1400391FDD /* Wrap.swift */,
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
@@ -1559,7 +1559,7 @@
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
-				FAFE546F1D7B9C1400391FDD /* Seal.swift in Sources */,
+				FAFE546F1D7B9C1400391FDD /* Wrap.swift in Sources */,
 				FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */,
 				FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
@@ -1635,7 +1635,7 @@
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
-				FAFE54701D7BB19900391FDD /* Seal.swift in Sources */,
+				FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
 				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
 				FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */,
@@ -1658,7 +1658,7 @@
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
 				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
 				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
-				FAB5179C1E54D54F0032DD47 /* Seal.swift in Sources */,
+				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
 				FAAE819C1E57720D002A9AE6 /* CacheObject.swift in Sources */,

@@ -8,22 +8,37 @@
 
 import Foundation
 import JSON
+import Sodium
 
 typealias Sealed = Data
 
 extension JsonWritable {
-    func seal(key:Key) throws -> Sealed {
-        return try self.jsonData().seal(key: key)
+    func seal(to pairing:Pairing) throws -> Sealed {
+        
+        let sealedResult:Data? = try KRSodium.shared().box.seal(message: self.jsonData(), recipientPublicKey: pairing.workstationPublicKey, senderSecretKey: pairing.keyPair.secretKey)
+        
+        guard let sealed = sealedResult else {
+            throw CryptoError.encrypt
+        }
+        
+        return sealed
     }
 }
+
 extension JsonReadable {
     
-    init(key:Key, sealedBase64:String) throws {
-        try self.init(key: key, sealed: try sealedBase64.fromBase64())
+    init(from pairing:Pairing , sealedBase64:String) throws {
+        try self.init(from: pairing, sealed: try sealedBase64.fromBase64())
     }
 
-    init(key:Key, sealed:Sealed) throws {
-        let json:Object = try JSON.parse(data: sealed.unseal(key: key))
+    init(from pairing:Pairing, sealed:Sealed) throws {
+        let unsealedResult = try KRSodium.shared().box.open(nonceAndAuthenticatedCipherText: sealed, senderPublicKey: pairing.workstationPublicKey, recipientSecretKey: pairing.keyPair.secretKey)
+        
+        guard let unsealed = unsealedResult else {
+            throw CryptoError.decrypt
+        }
+        
+        let json:Object = try JSON.parse(data: unsealed)
         self = try Self.init(json: json)
     }
     

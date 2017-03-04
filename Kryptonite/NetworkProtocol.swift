@@ -13,8 +13,13 @@ struct NetworkMessage {
 
     enum Header:UInt8 {
         case ciphertext = 0x00
+        
+        // 1.x.x
         case wrappedKey = 0x01
+        
+        case wrappedPublicKey = 0x02
     }
+    
     let header:Header
     let data:Data
 

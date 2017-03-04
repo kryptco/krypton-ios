@@ -51,7 +51,7 @@ class Silo {
         }
         mutex.unlock()
 
-        guard let req = try? Request(key: session.pairing.symmetricKey, sealed: message.data) else {
+        guard let req = try? Request(from: session.pairing, sealed: message.data) else {
             log("request from bluetooth did not parse correctly", .error)
             return
         }
@@ -109,19 +109,19 @@ class Silo {
         }
     }
 
-    func listen(to: Session, completion:((Bool, Error?)->Void)?) {
+    func listen(to session: Session, completion:((Bool, Error?)->Void)?) {
         let api = API()
         
-        log("listening with: \(to.id)", .warning)
+        log("listening with: \(session.id)", .warning)
         
-        api.receive(to.pairing.queue) { (result) in
+        api.receive(session.pairing.queue) { (result) in
         
             log("finished reading from queue")
             
             // check again that the session has not responded
             var isActive = false
             self.mutex.lock {
-                isActive = (self.sessionLabels[to.id] != nil)
+                isActive = (self.sessionLabels[session.id] != nil)
             }
             
             guard isActive else {
@@ -135,8 +135,8 @@ class Silo {
                 for msg in msgs {
                     
                     do {
-                        let req = try Request(key: to.pairing.symmetricKey, sealed: msg.data)
-                        try self.handle(request: req, session: to, communicationMedium: .sqs)
+                        let req = try Request(from: session.pairing, sealed: msg.data)
+                        try self.handle(request: req, session: session, communicationMedium: .sqs)
                     } catch (let e) {
                         log("error responding: \(e)", LogType.error)
                     }
@@ -178,8 +178,8 @@ class Silo {
 
             do {
                 let wrappedKeyMessage = try NetworkMessage(
-                    localData: session.pairing.symmetricKey.wrap(to: session.pairing.workstationPublicKey),
-                    header: .wrappedKey)
+                    localData: session.pairing.keyPair.publicKey.wrap(to: session.pairing.workstationPublicKey),
+                    header: .wrappedPublicKey)
 
                 API().send(to: session.pairing.queue, message: wrappedKeyMessage, handler: { (sendResult) in
                     switch sendResult {
@@ -340,7 +340,7 @@ class Silo {
     
     
     func send(session:Session, response:Response, completionHandler: (()->Void)? = nil) throws {
-        let sealedResponse = try response.seal(key: session.pairing.symmetricKey)
+        let sealedResponse = try response.seal(to: session.pairing)
         let message = NetworkMessage(localData: sealedResponse, header: .ciphertext)
 
         Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, message: message)
