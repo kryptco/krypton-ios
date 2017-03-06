@@ -14,7 +14,6 @@ struct Session:Jsonable {
     var id:String
     var pairing:Pairing
     var created:Date
-    var version:Version?
     
     enum KeychainKey:String {
         case pub = "public"
@@ -39,11 +38,13 @@ struct Session:Jsonable {
         let publicKey = try KeychainStorage().get(key: KeychainKey.pub.tag(for: id)).fromBase64()
         let privateKey = try KeychainStorage().get(key: KeychainKey.priv.tag(for: id)).fromBase64()
 
-        pairing = try Pairing(name: json ~> "name", workstationPublicKey: workstationPublicKey, keyPair: Box.KeyPair(publicKey: publicKey, secretKey: privateKey))
-        
-        if let v:String = try json ~> "v" {
-            version = Version(string: v)
+        var version:Version?
+        if let verString:String = try? json ~> "version" {
+            version = Version(string: verString)
         }
+
+        pairing = try Pairing(name: json ~> "name", workstationPublicKey: workstationPublicKey, keyPair: Box.KeyPair(publicKey: publicKey, secretKey: privateKey), version: version)
+        
 
         created = Date(timeIntervalSince1970: try json ~> "created")
     }
@@ -55,8 +56,8 @@ struct Session:Jsonable {
                          "created": created.timeIntervalSince1970,
                          "workstation_public_key": pairing.workstationPublicKey.toBase64()] as [String : Any]
         
-        if let ver = version {
-            objectMap["v"] = ver
+        if let ver = pairing.version {
+            objectMap["version"] = ver.string
         }
         
         return objectMap

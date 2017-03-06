@@ -27,26 +27,35 @@ struct Pairing:JsonReadable {
         return name.removeDotLocal()
     }
     
-    init(name: String, workstationPublicKey:Box.PublicKey) throws {
+    var version:Version?
+
+    
+    init(name: String, workstationPublicKey:Box.PublicKey, version:Version? = nil) throws {
         guard let keyPair = try KRSodium.shared().box.keyPair() else {
             throw CryptoError.generate(KeyType.Ed25519, nil)
         }
         
-        try self.init(name: name, workstationPublicKey: workstationPublicKey, keyPair: keyPair)
+        try self.init(name: name, workstationPublicKey: workstationPublicKey, keyPair: keyPair, version: version)
     }
 
-    init(name: String, workstationPublicKey:Box.PublicKey, keyPair:Box.KeyPair) throws {
+    init(name: String, workstationPublicKey:Box.PublicKey, keyPair:Box.KeyPair, version:Version? = nil) throws {
         self.workstationPublicKey = workstationPublicKey
         self.keyPair = keyPair
         self.name = name
         self.uuid = CBUUID.init(data: workstationPublicKey.SHA256.subdata(in: 0 ..< 16))
+        self.version = version
     }
 
     init(json: Object) throws {
         let pkB64:String = try json ~> "pk"
         let workstationPublicKey = try pkB64.fromBase64()
-                
-        try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey)
+        
+        var version:Version?
+        if let v:String = try? json ~> "v" {
+            version = Version(string: v)
+        }
+        
+        try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey, version:version)
     }
 
 }

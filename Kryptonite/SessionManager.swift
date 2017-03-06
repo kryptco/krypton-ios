@@ -95,7 +95,7 @@ class SessionManager {
         do {
             try [Session](json: jsonList).forEach({ map[$0.id] = $0 })
         } catch {
-            log("could not parse sessions from persistant storage", .error)
+            log("could not parse sessions from persistant storage: \(error)", .error)
         }
 
         
