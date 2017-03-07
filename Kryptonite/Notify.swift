@@ -29,6 +29,10 @@ class Notify {
     
     func present(request:Request, for session:Session) {
         
+        let noteTitle = "Request from \(session.pairing.displayName)"
+        let noteBody = "\(request.sign?.display ?? "SSH login")"
+
+        
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
                 
@@ -45,7 +49,8 @@ class Notify {
                 }
                 
                 let content = UNMutableNotificationContent()
-                content.body = "Request from \(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
+                content.title = noteTitle
+                content.body = noteBody
                 content.sound = UNNotificationSound.default()
                 content.userInfo = ["session_id": session.id, "request": request.object]
                 content.categoryIdentifier = Policy.authorizeCategoryIdentifier
@@ -63,7 +68,8 @@ class Notify {
             
         } else {
             let notification = UILocalNotification()
-            notification.alertBody = "Request from \(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
+            notification.alertTitle = noteTitle
+            notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.category = Policy.authorizeCategory.identifier
             notification.userInfo = ["session_id": session.id, "request": request.object]
@@ -74,12 +80,17 @@ class Notify {
     
     func presentApproved(request:Request, for session:Session) {
         
+        
+        let noteTitle = "Request from \(session.pairing.displayName) approved"
+        let noteBody = "\(request.sign?.display ?? "SSH login")"
+        
         if #available(iOS 10.0, *) {
             
             let noteId = RequestNotificationIdentifier(request: request, session:session)
             
             let content = UNMutableNotificationContent()
-            content.body = "\(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
+            content.title = noteTitle
+            content.body = noteBody
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_id": session.id, "request": request.object]
             content.categoryIdentifier = Policy.authorizeCategoryIdentifier
@@ -129,8 +140,8 @@ class Notify {
             
         } else {
             let notification = UILocalNotification()
-            
-            notification.alertBody = "\(session.pairing.displayName): \(request.sign?.display ?? "SSH login")"
+            notification.alertTitle = noteTitle
+            notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
             
             UIApplication.shared.presentLocalNotificationNow(notification)

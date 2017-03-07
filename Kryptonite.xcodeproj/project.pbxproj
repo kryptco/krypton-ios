@@ -61,7 +61,6 @@
 		FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682891D77811900A7ED53 /* IGImageGenerator.m */; };
 		FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */ = {isa = PBXBuildFile; fileRef = FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */; };
 		FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682911D77868D00A7ED53 /* FAIcon.swift */; };
-		FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1682921D77868D00A7ED53 /* FontAwesome.ttf */; };
 		FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E706D1D9AC22900A14650 /* FirstPairController.swift */; };
 		FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */; };
 		FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697311D99CA1100FE44D3 /* GenerateController.swift */; };
@@ -166,12 +165,14 @@
 		FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */; };
 		FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE3611DC1097B0073C0EF /* PairApproveController.swift */; };
 		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
+		FAC561191E6F60AE00150FB2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1682921D77868D00A7ED53 /* FontAwesome.ttf */; };
 		FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
 		FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
 		FAC873F91E6A4DC1003D112E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
 		FAC873FC1E6A4E9C003D112E /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
 		FAC873FF1E6A5148003D112E /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
 		FAC874001E6A5342003D112E /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
+		FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC874031E6F0E17003D112E /* Kryptonite.xcdatamodeld */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
 		FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
@@ -522,6 +523,7 @@
 		FABFE3611DC1097B0073C0EF /* PairApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairApproveController.swift; sourceTree = "<group>"; };
 		FAC07FCB1E42F5D100FEF117 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		FAC873F51E6A4D32003D112E /* PairingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTests.swift; sourceTree = "<group>"; };
+		FAC874041E6F0E17003D112E /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACAA4B01D887904000B9A01 /* SignatureLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureLog.swift; sourceTree = "<group>"; };
 		FACAA4B71D887C19000B9A01 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
@@ -1042,6 +1044,7 @@
 		FAF1E6201E031BB9003CBEA2 /* Notify */ = {
 			isa = PBXGroup;
 			children = (
+				FAC874031E6F0E17003D112E /* Kryptonite.xcdatamodeld */,
 				FAB517921E54D40A0032DD47 /* Notify.entitlements */,
 				FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */,
 				FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */,
@@ -1209,6 +1212,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 0;
+							};
 						};
 					};
 				};
@@ -1364,10 +1370,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC561191E6F60AE00150FB2 /* FontAwesome.ttf in Resources */,
 				FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
 				8DE3955E1D942647005D559C /* Info.plist in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
-				FA1682941D77868D00A7ED53 /* FontAwesome.ttf in Resources */,
 				FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
 				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
@@ -1664,6 +1670,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB517981E54D52F0032DD47 /* Session.swift in Sources */,
+				FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
 				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,
 				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
@@ -2125,6 +2132,17 @@
 			);
 			currentVersion = FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */;
 			path = Kryptonite.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		FAC874031E6F0E17003D112E /* Kryptonite.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FAC874041E6F0E17003D112E /* krSSH.xcdatamodel */,
+			);
+			currentVersion = FAC874041E6F0E17003D112E /* krSSH.xcdatamodel */;
+			name = Kryptonite.xcdatamodeld;
+			path = ../Kryptonite/Kryptonite.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

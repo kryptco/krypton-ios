@@ -17,29 +17,43 @@ struct SessionRemovedError:Error{}
 struct InvalidRequestTimeError:Error{}
 struct RequestPendingError:Error{}
 
-private var sharedSilo:Silo?
+struct SiloCacheCreationError:Error{}
+
 class Silo {
     
     var sessionLabels:[SessionLabel:Session] = [:]
     var sessionServiceUUIDS: [String: Session] = [:]
     var mutex = Mutex()
 
-    var bluetoothDelegate: BluetoothDelegate = BluetoothDelegate()
-    var centralManager: CBCentralManager
-    var sessionActivity: [CBUUID:CommunicationActivity] = [:]
+    var bluetoothDelegate:BluetoothDelegate?
+    var centralManager:CBCentralManager?
+    var sessionActivity:[CBUUID:CommunicationActivity] = [:]
 
     var requestCache: Cache<NSData>?
     //  store requests waiting for user approval
     var pendingRequests: Cache<NSString>?
+    
+    // singelton
+    private static var sharedSilo:Silo?
 
-    init() {
-        requestCache = try? Cache<NSData>(name: "SILO_CACHE")
-        pendingRequests = try? Cache<NSString>(name: "SILO_PENDING_REQUESTS")
-        centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
-        bluetoothDelegate.mutex.lock {
-            bluetoothDelegate.silo = self
+
+    init(bluetoothEnabled:Bool = true) {
+        requestCache = try? Cache<NSData>(name: "SILO_CACHE", directory: sharedDirectory)
+        pendingRequests = try? Cache<NSString>(name: "SILO_PENDING_REQUESTS", directory: sharedDirectory)
+        
+        if bluetoothEnabled {
+            bluetoothDelegate = BluetoothDelegate()
+            centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
+            bluetoothDelegate?.mutex.lock {
+                bluetoothDelegate?.silo = self
+            }
+
         }
     }
+    
+    lazy var sharedDirectory:URL? = {
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("cache")
+    }()
 
     func onBluetoothReceive(serviceUUID: CBUUID, message: NetworkMessage) throws {
         mutex.lock()
@@ -66,6 +80,7 @@ class Silo {
         }
         return ss
     }
+    
     
     var shouldPoll:Bool = true
     
@@ -174,14 +189,15 @@ class Silo {
             let cbuuid = session.pairing.uuid
             sessionServiceUUIDS[cbuuid.uuidString] = session
             sessionActivity[cbuuid] = CommunicationActivity()
-            bluetoothDelegate.addServiceUUID(uuid: cbuuid)
+            bluetoothDelegate?.addServiceUUID(uuid: cbuuid)
 
             do {
                 let wrappedKeyMessage = try NetworkMessage(
                     localData: session.pairing.keyPair.publicKey.wrap(to: session.pairing.workstationPublicKey),
                     header: .wrappedPublicKey)
-
-                API().send(to: session.pairing.queue, message: wrappedKeyMessage, handler: { (sendResult) in
+                
+                let api = API()
+                api.send(to: session.pairing.queue, message: wrappedKeyMessage, handler: { (sendResult) in
                     switch sendResult {
                     case .sent:
                         log("success! sent response.")
@@ -191,7 +207,7 @@ class Silo {
                         break
                     }
                 })
-                bluetoothDelegate.writeToServiceUUID(uuid: cbuuid, message: wrappedKeyMessage)
+                bluetoothDelegate?.writeToServiceUUID(uuid: cbuuid, message: wrappedKeyMessage)
 
             } catch let e {
                 log("error wrapping key: \(e)", .error)
@@ -214,7 +230,7 @@ class Silo {
         sessionLabels.removeValue(forKey: session.id)
         let cbuuid = session.pairing.uuid
         sessionServiceUUIDS.removeValue(forKey: cbuuid.uuidString)
-        bluetoothDelegate.removeServiceUUID(uuid: cbuuid)
+        bluetoothDelegate?.removeServiceUUID(uuid: cbuuid)
         sessionActivity.removeValue(forKey: cbuuid)
     }
 
@@ -251,7 +267,6 @@ class Silo {
         return true
     }
     
-
     //MARK: Handle Logic
     func handle(request:Request, session:Session, communicationMedium: CommunicationMedium, completionHandler: (()->Void)? = nil) throws {
         mutex.lock()
@@ -276,7 +291,7 @@ class Silo {
         if let sessionActivity = sessionActivity[session.pairing.uuid] {
             sessionActivity.used(medium: communicationMedium)
             if sessionActivity.isInactive(medium: .bluetooth) {
-                bluetoothDelegate.refreshServiceUUID(uuid: session.pairing.uuid)
+                bluetoothDelegate?.refreshServiceUUID(uuid: session.pairing.uuid)
                 sessionActivity.used(medium: .bluetooth)
             }
         }
@@ -343,9 +358,10 @@ class Silo {
         let sealedResponse = try response.seal(to: session.pairing)
         let message = NetworkMessage(localData: sealedResponse, header: .ciphertext)
 
-        Silo.shared.bluetoothDelegate.writeToServiceUUID(uuid: session.pairing.uuid, message: message)
-
-        API().send(to: session.pairing.queue, message: message, handler: { (sendResult) in
+        self.bluetoothDelegate?.writeToServiceUUID(uuid: session.pairing.uuid, message: message)
+        
+        let api = API()
+        api.send(to: session.pairing.queue, message: message, handler: { (sendResult) in
             switch sendResult {
             case .sent:
                 log("success! sent response.")

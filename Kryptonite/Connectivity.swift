@@ -37,7 +37,7 @@ class Connectivity {
         log("internet offline")
         
         // at least we have bluetooth
-        if Silo.shared.bluetoothDelegate.central?.state == .poweredOn {
+        if Silo.shared.bluetoothDelegate?.central?.state == .poweredOn {
             return
         }
         

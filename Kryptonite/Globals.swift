@@ -10,6 +10,7 @@ import Foundation
 
 //MARK: Keys
 let KR_ENDPOINT_ARN_KEY = "aws_endpoint_arn_key"
+let APP_GROUP_SECURITY_ID = "group.co.krypt.kryptonite"
 
 //MARK: Functions
 func isDebug() -> Bool {
@@ -24,7 +25,7 @@ func isDebug() -> Bool {
 
 extension UserDefaults {
     static var  group:UserDefaults? {
-        return UserDefaults(suiteName: "group.co.krypt.kryptonite")
+        return UserDefaults(suiteName:APP_GROUP_SECURITY_ID)
     }
 }
 

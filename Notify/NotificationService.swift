@@ -9,6 +9,8 @@
 import UserNotifications
 import JSON
 
+
+
 class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
@@ -16,50 +18,73 @@ class NotificationService: UNNotificationServiceExtension {
 
     struct InvalidRemoteNotification:Error{}
 
+    static var shared:NotificationService?
+    
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        self.contentHandler = contentHandler
-        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
+        self.contentHandler = contentHandler
+        self.bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+        
+        NotificationService.shared = self
+
         guard let bestAttemptContent = bestAttemptContent
         else {
             return
         }
+        
+        // provision AWS API
+        guard API.provision() else {
+            log("API provision failed.", LogType.error)
+            
+            bestAttemptContent.title = "Request failed"
+            bestAttemptContent.body = "The incoming request could not be completed. Please try again."
+            bestAttemptContent.userInfo = [:]
+            contentHandler(bestAttemptContent)
 
+            return
+        }
+        
+        
         do {
-            let (session, unsealedRequest) = try unsealRemoteNotification(userInfo: bestAttemptContent.userInfo)
-            bestAttemptContent.title = "Request from \(session.pairing.displayName) [Remote]"
-            bestAttemptContent.body = "\(unsealedRequest.sign?.display ?? "SSH login")"
-            bestAttemptContent.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
-            bestAttemptContent.sound = UNNotificationSound.default()
+            let (session, unsealedRequest) = try NotificationService.unsealRemoteNotification(userInfo: bestAttemptContent.userInfo)
 
-            UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
-                for note in notes {
-                    guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
-                        let deliveredRequest = try? Request(json: requestObject)
-                        else {
-                            continue
+            let silo = Silo(bluetoothEnabled: false)
+            silo.add(sessions: SessionManager.shared.all)
+
+            try silo.handle(request: unsealedRequest, session: session, communicationMedium: .remoteNotification, completionHandler: {
+            
+                UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                    for note in notes {
+                        guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
+                            let deliveredRequest = try? Request(json: requestObject)
+                            else {
+                                continue
+                        }
+                        
+                        if deliveredRequest.id == unsealedRequest.id {
+                            dispatchAfter(delay: 0.2, task: {
+                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                            })
+                            bestAttemptContent.sound = nil
+                        }
                     }
                     
-                    if deliveredRequest.id == unsealedRequest.id {
-                        dispatchAfter(delay: 0.2, task: {
-                            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-                        })
-                        bestAttemptContent.sound = nil
-                    }
-                }
-                
-                contentHandler(bestAttemptContent)
+                    contentHandler(bestAttemptContent)
+                })
+
+            
             })
             
             
         } catch {
+            log("could not hangle incoming remote notification: \(error)")
             
-            let errorMessage = "error: \(error), session count: \(SessionManager.shared.all.count), user info: \(bestAttemptContent.userInfo)"
-            log(errorMessage)
-//            bestAttemptContent.body = errorMessage
-//            contentHandler(bestAttemptContent)
+            bestAttemptContent.title = "Request failed"
+            bestAttemptContent.body = "The incoming request was invalid. Please try again."
+            bestAttemptContent.userInfo = [:]
+            contentHandler(bestAttemptContent)
         }
-
+        
     }
     
     override func serviceExtensionTimeWillExpire() {
@@ -71,7 +96,7 @@ class NotificationService: UNNotificationServiceExtension {
     }
     
     
-    func unsealRemoteNotification(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
+    static func unsealRemoteNotification(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
         
         guard let notificationDict = userInfo?["aps"] as? [String:Any],
             let ciphertextB64 = notificationDict["c"] as? String,

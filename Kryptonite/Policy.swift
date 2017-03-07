@@ -147,7 +147,7 @@ class Policy {
             Policy.removePendingAuthorization(session: $0.session, request: $0.request)
             do {
                 let resp = try Silo.shared.lockResponseFor(request: $0.request, session: $0.session, signatureAllowed: true)
-                try Silo.shared.send(session: $0.session, response: resp, completionHandler: nil)
+                try Silo.shared.send(session: $0.session, response: resp)
                 
                 Policy.notifyUser(session: $0.session, request: $0.request)
                 

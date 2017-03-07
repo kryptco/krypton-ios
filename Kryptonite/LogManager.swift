@@ -123,29 +123,47 @@ class LogManager {
 
     }
     
-    lazy var applicationDocumentsDirectory: URL = {
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls[urls.count-1]
+    lazy var applicationDocumentsDirectory:URL? = {
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("logs")
     }()
     
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = Bundle.main.url(forResource:"Kryptonite", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOf: modelURL)!
+    lazy var managedObjectModel:NSManagedObjectModel? = {
+        guard let modelURL = Bundle.main.url(forResource:"Kryptonite", withExtension: "momd")
+        else {
+            return nil
+        }
+        
+        return NSManagedObjectModel(contentsOf: modelURL)
     }()
     
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("KryptoniteCoreData.sqlite")
+    lazy var persistentStoreCoordinator:NSPersistentStoreCoordinator? = {
+        guard
+            let directoryURL = self.applicationDocumentsDirectory,
+            let managedObjectModel = self.managedObjectModel
+        else {
+            return nil
+        }
+        
+        // db file
+        let url = directoryURL.appendingPathComponent("KryptoniteCoreData.sqlite")
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            // create file if it doesn't exist
+            if !FileManager.default.fileExists(atPath: directoryURL.absoluteString) {
+                try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+            }
+
+            let store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            store.didAdd(to: coordinator)
         } catch let e {
-            log("Persistance manager error: \(e)", .error)
+            log("Persistance store error: \(e)", .error)
         }
         
         return coordinator
     }()
     
-    lazy var managedObjectContext: NSManagedObjectContext = {
+    lazy var managedObjectContext:NSManagedObjectContext = {
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
