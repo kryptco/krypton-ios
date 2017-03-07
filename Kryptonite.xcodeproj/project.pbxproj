@@ -21,10 +21,6 @@
 		8DC38BC61E689A12007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
 		8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
-		8DE3955C1D942647005D559C /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
-		8DE3955D1D942647005D559C /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
-		8DE3955E1D942647005D559C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE395591D942647005D559C /* Info.plist */; };
-		8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */; };
@@ -123,14 +119,10 @@
 		FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
 		FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		FAAE819A1E5770EF002A9AE6 /* AWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* AWS.swift */; };
-		FAAE819B1E57720D002A9AE6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395571D942647005D559C /* Cache.swift */; };
-		FAAE819C1E57720D002A9AE6 /* CacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE395581D942647005D559C /* CacheObject.swift */; };
-		FAAE819D1E577212002A9AE6 /* NSKeyedUnarchiverWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */; };
 		FAAE81A41E57732C002A9AE6 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */; };
 		FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
 		FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; };
 		FAAE81A71E57734B002A9AE6 /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; };
-		FAAE81A81E5773DC002A9AE6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE395591D942647005D559C /* Info.plist */; };
 		FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
 		FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */; };
 		FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
@@ -166,6 +158,9 @@
 		FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE3611DC1097B0073C0EF /* PairApproveController.swift */; };
 		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
 		FAC561191E6F60AE00150FB2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1682921D77868D00A7ED53 /* FontAwesome.ttf */; };
+		FAC5613E1E6F678500150FB2 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
+		FAC5613F1E6F678500150FB2 /* AwesomeCache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAC561441E6F67EC00150FB2 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
 		FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
 		FAC873F91E6A4DC1003D112E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
@@ -331,6 +326,48 @@
 			remoteGlobalIDString = FA1D83F61DCBCFDF00E786E1;
 			remoteInfo = JSON;
 		};
+		FAC561361E6F677000150FB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DC91F981A7C54B200C81E10;
+			remoteInfo = "AwesomeCache-iOS";
+		};
+		FAC561381E6F677000150FB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DC91FA21A7C54B200C81E10;
+			remoteInfo = AwesomeCacheTests;
+		};
+		FAC5613A1E6F677000150FB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D81D4821C416F3C009A66A7;
+			remoteInfo = "AwesomeCache-watchOS";
+		};
+		FAC5613C1E6F677000150FB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D81D48F1C416F6F009A66A7;
+			remoteInfo = "AwesomeCache-tvOS";
+		};
+		FAC561401E6F678500150FB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DC91F971A7C54B200C81E10;
+			remoteInfo = "AwesomeCache-iOS";
+		};
+		FAC561421E6F67B300150FB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DC91F971A7C54B200C81E10;
+			remoteInfo = "AwesomeCache-iOS";
+		};
 		FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
@@ -393,6 +430,7 @@
 				FAA6E1FC1D79FBE2007D1B3A /* AWSSQS.framework in Embed Frameworks */,
 				FAA6E1FA1D79FBC4007D1B3A /* AWSCore.framework in Embed Frameworks */,
 				8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */,
+				FAC5613F1E6F678500150FB2 /* AwesomeCache.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,12 +450,6 @@
 		8DC38BC21E689785007445B4 /* libsshwire.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsshwire.a; path = "ssh-wire/target/universal/release/libsshwire.a"; sourceTree = "<group>"; };
 		8DC38BC51E689A0F007445B4 /* sshwire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sshwire.h; path = "ssh-wire/src/sshwire.h"; sourceTree = "<group>"; };
 		8DD436A31DF3719000201106 /* CommunicationActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunicationActivity.swift; sourceTree = "<group>"; };
-		8DE395561D942647005D559C /* AwesomeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeCache.h; sourceTree = "<group>"; };
-		8DE395571D942647005D559C /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
-		8DE395581D942647005D559C /* CacheObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheObject.swift; sourceTree = "<group>"; };
-		8DE395591D942647005D559C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8DE3955A1D942647005D559C /* NSKeyedUnarchiverWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKeyedUnarchiverWrapper.h; sourceTree = "<group>"; };
-		8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSKeyedUnarchiverWrapper.m; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallMethod.swift; sourceTree = "<group>"; };
@@ -522,6 +554,7 @@
 		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FABFE3611DC1097B0073C0EF /* PairApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairApproveController.swift; sourceTree = "<group>"; };
 		FAC07FCB1E42F5D100FEF117 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
+		FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AwesomeCache.xcodeproj; path = AwesomeCache/AwesomeCache.xcodeproj; sourceTree = "<group>"; };
 		FAC873F51E6A4D32003D112E /* PairingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTests.swift; sourceTree = "<group>"; };
 		FAC874041E6F0E17003D112E /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -590,6 +623,7 @@
 				FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */,
 				FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */,
 				FA16827D1D774F3C00A7ED53 /* CoreImage.framework in Frameworks */,
+				FAC5613E1E6F678500150FB2 /* AwesomeCache.framework in Frameworks */,
 				FAA6E1F51D79E4FC007D1B3A /* AWSCore.framework in Frameworks */,
 				FAA6E1ED1D79E24F007D1B3A /* AWSSNS.framework in Frameworks */,
 				FAA6E1EE1D79E24F007D1B3A /* AWSSQS.framework in Frameworks */,
@@ -612,6 +646,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC561441E6F67EC00150FB2 /* AwesomeCache.framework in Frameworks */,
 				FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */,
 				FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */,
 				FAAE81A71E57734B002A9AE6 /* AWSSNS.framework in Frameworks */,
@@ -658,20 +693,6 @@
 				8DC38BC21E689785007445B4 /* libsshwire.a */,
 			);
 			name = sshwire;
-			sourceTree = "<group>";
-		};
-		8DE395551D942647005D559C /* AwesomeCache */ = {
-			isa = PBXGroup;
-			children = (
-				8DE395561D942647005D559C /* AwesomeCache.h */,
-				8DE395571D942647005D559C /* Cache.swift */,
-				8DE395581D942647005D559C /* CacheObject.swift */,
-				8DE395591D942647005D559C /* Info.plist */,
-				8DE3955A1D942647005D559C /* NSKeyedUnarchiverWrapper.h */,
-				8DE3955B1D942647005D559C /* NSKeyedUnarchiverWrapper.m */,
-			);
-			name = AwesomeCache;
-			path = AwesomeCache/AwesomeCache;
 			sourceTree = "<group>";
 		};
 		FA15EB471DA5C5BB00BED16C /* Data */ = {
@@ -910,6 +931,17 @@
 			name = Transport;
 			sourceTree = "<group>";
 		};
+		FAC561301E6F676F00150FB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAC561371E6F677000150FB2 /* AwesomeCache.framework */,
+				FAC561391E6F677000150FB2 /* AwesomeCacheTests.xctest */,
+				FAC5613B1E6F677000150FB2 /* AwesomeCache.framework */,
+				FAC5613D1E6F677000150FB2 /* AwesomeCache.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		FACBEFEC1D779D71005D71B9 /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -982,7 +1014,7 @@
 				FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */,
 				FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */,
 				FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */,
-				8DE395551D942647005D559C /* AwesomeCache */,
+				FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */,
 				8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */,
 				8D93CD641D9198C7008955B2 /* libsodium-ios.a */,
 				8DC38BC41E6899FD007445B4 /* sshwire */,
@@ -1103,6 +1135,7 @@
 				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,
 				FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */,
 				FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */,
+				FAC561411E6F678500150FB2 /* PBXTargetDependency */,
 			);
 			name = Kryptonite;
 			productName = krSSH;
@@ -1141,6 +1174,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FAC561431E6F67B300150FB2 /* PBXTargetDependency */,
 				FAB517AA1E54D59A0032DD47 /* PBXTargetDependency */,
 			);
 			name = Notify;
@@ -1231,6 +1265,10 @@
 			productRefGroup = FA8141371D70B0F4004FE58C /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = FAC561301E6F676F00150FB2 /* Products */;
+					ProjectRef = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
+				},
 				{
 					ProductGroup = FAFDE8D31DD1000F00C87C86 /* Products */;
 					ProjectRef = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
@@ -1339,6 +1377,34 @@
 			remoteRef = 8DB2EE511DBC54EF0079E468 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		FAC561371E6F677000150FB2 /* AwesomeCache.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AwesomeCache.framework;
+			remoteRef = FAC561361E6F677000150FB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAC561391E6F677000150FB2 /* AwesomeCacheTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AwesomeCacheTests.xctest;
+			remoteRef = FAC561381E6F677000150FB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAC5613B1E6F677000150FB2 /* AwesomeCache.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AwesomeCache.framework;
+			remoteRef = FAC5613A1E6F677000150FB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAC5613D1E6F677000150FB2 /* AwesomeCache.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AwesomeCache.framework;
+			remoteRef = FAC5613C1E6F677000150FB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		FAFDE8D81DD1000F00C87C86 /* JSON.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1372,7 +1438,6 @@
 			files = (
 				FAC561191E6F60AE00150FB2 /* FontAwesome.ttf in Resources */,
 				FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
-				8DE3955E1D942647005D559C /* Info.plist in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
@@ -1396,7 +1461,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAAE81A81E5773DC002A9AE6 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1552,7 +1616,6 @@
 				FAE495931DBD89F100A97708 /* M13CheckboxStrokeController.swift in Sources */,
 				FAE495951DBD89F100A97708 /* M13CheckboxCheckPathGenerator.swift in Sources */,
 				FAE495711DBD741800A97708 /* ApproveController.swift in Sources */,
-				8DE3955D1D942647005D559C /* CacheObject.swift in Sources */,
 				FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */,
 				FAE495981DBD89F100A97708 /* M13CheckboxRadioPathGenerator.swift in Sources */,
 				FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */,
@@ -1561,13 +1624,11 @@
 				8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */,
 				FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
-				8DE3955F1D942647005D559C /* NSKeyedUnarchiverWrapper.m in Sources */,
 				FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				FAE495941DBD89F100A97708 /* M13CheckboxAddRemovePathGenerator.swift in Sources */,
-				8DE3955C1D942647005D559C /* Cache.swift in Sources */,
 				FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */,
 				FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
@@ -1674,7 +1735,6 @@
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
 				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,
 				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
-				FAAE819B1E57720D002A9AE6 /* Cache.swift in Sources */,
 				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
 				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
@@ -1682,7 +1742,6 @@
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
-				FAAE819C1E57720D002A9AE6 /* CacheObject.swift in Sources */,
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */,
@@ -1691,7 +1750,6 @@
 				8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */,
 				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
 				FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */,
-				FAAE819D1E577212002A9AE6 /* NSKeyedUnarchiverWrapper.m in Sources */,
 				FAAE819A1E5770EF002A9AE6 /* AWS.swift in Sources */,
 				FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */,
 				FAB517C01E54D7330032DD47 /* Version.swift in Sources */,
@@ -1724,6 +1782,16 @@
 			isa = PBXTargetDependency;
 			name = JSON;
 			targetProxy = FAB517A91E54D59A0032DD47 /* PBXContainerItemProxy */;
+		};
+		FAC561411E6F678500150FB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "AwesomeCache-iOS";
+			targetProxy = FAC561401E6F678500150FB2 /* PBXContainerItemProxy */;
+		};
+		FAC561431E6F67B300150FB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "AwesomeCache-iOS";
+			targetProxy = FAC561421E6F67B300150FB2 /* PBXContainerItemProxy */;
 		};
 		FAEE04A01D74BCC3002A7AFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1921,7 +1989,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1957,7 +2025,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2028,7 +2096,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Notify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -2058,7 +2126,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AwesomeCache/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Notify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

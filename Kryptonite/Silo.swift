@@ -9,6 +9,7 @@
 import Foundation
 import CoreBluetooth
 import JSON
+import AwesomeCache
 
 typealias SessionLabel = String
 

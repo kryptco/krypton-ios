@@ -3,7 +3,7 @@
 	url  = https://github.com/kryptco/swift-sodium
 [submodule "AwesomeCache"]
 	path = AwesomeCache
-	url = git@github.com:aschuch/AwesomeCache.git
+	url = git@github.com:KryptCo/AwesomeCache.git
 [submodule "SwiftHTTP"]
 	path = SwiftHTTP
 	url = git@github.com:KryptCo/SwiftHTTP.git
