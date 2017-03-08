@@ -36,6 +36,11 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var mutex : Mutex = Mutex()
     var central: CBCentralManager?
     var silo: Silo?
+    
+    override init() {
+        super.init()
+        log("init bluetooth")
+    }
 
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         mutex.lock()

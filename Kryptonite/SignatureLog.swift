@@ -14,15 +14,13 @@ struct SignatureLog {
     var signature:String
     var date:Date
     var displayName:String
-    var command:String?
     
-    init(session:String, digest:String, signature:String, command:String? = nil, displayName:String, date:Date = Date()) {
+    init(session:String, digest:String, signature:String, displayName:String, date:Date = Date()) {
         self.session = session
         self.digest = digest
         self.signature = signature
         self.displayName = displayName
         self.date = date
-        self.command = command
     }
         
 

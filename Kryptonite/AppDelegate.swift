@@ -38,8 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             pendingLink = link
         }
         
-        //TODO: check for remote notification
-        
+        //Weird behavior when we don't re-register?
         if application.isRegisteredForRemoteNotifications {
             self.registerPushNotifications()
         }
@@ -134,18 +133,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             log("error creating or sending response: \(e)")
             completionHandler(.failed)
         }
-    
-
     }
 
     //MARK: Tap local notification
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         log("local notification")
-        
+        handleNotification(userInfo: notification.userInfo)
+    }
+    
+    func handleNotification(userInfo:[AnyHashable : Any]?) {
         if
-            let sessionID = notification.userInfo?["session_id"] as? String,
+            let sessionID = userInfo?["session_id"] as? String,
             let session = SessionManager.shared.get(id: sessionID),
-            let requestObject = notification.userInfo?["request"] as? [String:Any],
+            let requestObject = userInfo?["request"] as? [String:Any],
             let request = try? Request(json: requestObject)
             
         {
@@ -156,6 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 log("handle failed \(error)", .error)
             }
         }
+
     }
     
     //MARK: Allow/Reject

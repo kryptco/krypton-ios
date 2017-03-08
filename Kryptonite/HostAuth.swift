@@ -9,6 +9,7 @@
 import Foundation
 import JSON
 
+
 struct HostAuth:Jsonable{
     let hostKey: String
     let signature: String

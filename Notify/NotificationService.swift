@@ -18,7 +18,14 @@ class NotificationService: UNNotificationServiceExtension {
 
     struct InvalidRemoteNotification:Error{}
 
+    
     static var shared:NotificationService?
+    
+    var bestAttemptMutex = Mutex()
+    
+    var alertTitle:String?
+    var approved:Bool = false
+
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         
@@ -50,31 +57,47 @@ class NotificationService: UNNotificationServiceExtension {
 
             let silo = Silo(bluetoothEnabled: false)
             silo.add(sessions: SessionManager.shared.all)
-
-            try silo.handle(request: unsealedRequest, session: session, communicationMedium: .remoteNotification, completionHandler: {
             
-                UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
-                    for note in notes {
-                        guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
-                            let deliveredRequest = try? Request(json: requestObject)
-                            else {
-                                continue
+            try silo.handle(request: unsealedRequest, session: session, communicationMedium: .remoteNotification, completionHandler: {
+                
+                dispatchMain {
+                    UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                        for note in notes {
+                            guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
+                                let deliveredRequest = try? Request(json: requestObject)
+                                else {
+                                    continue
+                            }
+                            
+                            if deliveredRequest.id == unsealedRequest.id {
+                                dispatchAfter(delay: 0.2, task: {
+                                    UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                                })
+                                
+                                self.bestAttemptMutex.lock {
+                                    bestAttemptContent.sound = nil
+                                }
+                            }
                         }
                         
-                        if deliveredRequest.id == unsealedRequest.id {
-                            dispatchAfter(delay: 0.2, task: {
-                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-                            })
-                            bestAttemptContent.sound = nil
+                        self.bestAttemptMutex.lock {
+                            if let title = self.alertTitle {
+                                bestAttemptContent.title = title
+                            }
+                            
+                            if self.approved {
+                                bestAttemptContent.categoryIdentifier = ""
+                            }
+                            
+                            bestAttemptContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            bestAttemptContent.sound = UNNotificationSound.default()
                         }
-                    }
-                    
-                    contentHandler(bestAttemptContent)
-                })
 
-            
+                        contentHandler(bestAttemptContent)
+                    })
+
+                }
             })
-            
             
         } catch {
             log("could not hangle incoming remote notification: \(error)")

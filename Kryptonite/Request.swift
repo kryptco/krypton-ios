@@ -71,73 +71,67 @@ struct Request:Jsonable {
 
 // Sign
 
+struct HostAuthVerificationFailed:Error{}
+
 struct SignRequest:Jsonable {
-    var digest:String
+    var data:Data
     var fingerprint:String
-    var command:String?
-    var hostAuth:HostAuth?
+    var hostAuth:HostAuth
 
     init(json: Object) throws {
-        self.digest = try json ~> "digest"
-        self.fingerprint = try json ~> "public_key_fingerprint"
-        if let command:String = try? json ~> "command" {
-            self.command = command
-        }
-        if let json:Object = try? json ~> "host_auth" {
-            self.hostAuth = try HostAuth(json: json)
+        data        = try ((json ~> "data") as String).fromBase64()
+        fingerprint = try json ~> "public_key_fingerprint"
+        hostAuth    = try HostAuth(json: json ~> "host_auth")
+        
+        guard
+            let sessionID = self.sshSessionID,
+            try hostAuth.verify(sessionID: sessionID) == true
+        else {
+            throw HostAuthVerificationFailed()
         }
     }
     
     var object: Object {
-        var json:[String:Any] = ["digest": digest,
-                                "public_key_fingerprint": fingerprint]
+        let json:[String:Any] = ["data": data.toBase64(),
+                                 "public_key_fingerprint": fingerprint,
+                                 "host_auth": hostAuth.object]
         
-        if let command = command {
-            json["command"] = command
-        }
         
         return json
     }
 
     var sshSessionID:Data? {
-        guard let digestBytes = try? digest.fromBase64(),
-            digestBytes.count >= 36 else {
+        guard data.count >= 36 else {
             return nil
         }
-        return digestBytes.subdata(in: 4..<36)
+        return data.subdata(in: 4..<36)
     }
 
     var user:String? {
-        guard let digestBytes = try? digest.fromBase64(),
-            digestBytes.count >= 38 else {
+        guard data.count >= 38 else {
             return nil
         }
+        
         //  user field starts at bytes[37]
-        let userLen = Int32(bigEndianBytes: [UInt8](digestBytes.subdata(in: 37..<41)))
-        if userLen > 0 && digestBytes.count > Int(userLen + 41) {
-            let userCStringBytes = digestBytes.subdata(in: 41..<Int(41+userLen))
+        let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: 37..<41)))
+        if userLen > 0 && data.count > Int(userLen + 41) {
+            let userCStringBytes = data.subdata(in: 41..<Int(41+userLen))
             let user = String(bytes: userCStringBytes, encoding: .utf8)
             log("userLen \(userLen) user \(user)")
             return user
         }
+        
         return nil
     }
 
     var display:String {
-        var userString = ""
+        let host = hostAuth.hostNames.first ?? "unknown host"
+        
         if let user = user {
-            userString = "\(user) @ "
+            return "\(user) @ \(host)"
         }
-        if let sshSessionID = sshSessionID,
-            let hostAuth = hostAuth,
-            let host = hostAuth.hostNames.first {
-            //  TODO: cache verify result
-            if let result = try? hostAuth.verify(sessionID: sshSessionID),
-                result {
-                return userString + host
-            }
-        }
-        return userString + "unknown host"
+        
+        return host
     }
 
 }

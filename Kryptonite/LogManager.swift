@@ -9,16 +9,18 @@
 import Foundation
 import CoreData
 
-private var sharedLogManager:LogManager?
 class LogManager {
     
     private var mutex = Mutex()
     private var logs:[SignatureLog] = []
     private var sigs:[String:Bool] = [:]
+    
+    
+    private static var sharedManagerMutex = Mutex()
+    private static var sharedLogManager:LogManager?
+
 
     init() {
-        self.logs = []
-        
         let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
         
         do {
@@ -35,10 +37,9 @@ class LogManager {
                 else {
                     continue
                 }
-                let command = managedLog.value(forKey: "command") as? String
                 
                 if sigs[digest] == nil {
-                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, command: command, displayName: displayName, date: date))
+                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, displayName: displayName, date: date))
                     sigs[digest] = true
                 }
                 
@@ -51,6 +52,9 @@ class LogManager {
     }
     
     class var shared:LogManager {
+        sharedManagerMutex.lock()
+        defer { sharedManagerMutex.unlock() }
+        
         guard let lm = sharedLogManager else {
             sharedLogManager = LogManager()
             return sharedLogManager!
@@ -101,9 +105,6 @@ class LogManager {
         logEntry.setValue(theLog.signature, forKey: "signature")
         logEntry.setValue(theLog.digest, forKey: "digest")
         logEntry.setValue(theLog.date, forKey: "date")
-        if let command = theLog.command {
-            logEntry.setValue(command, forKey: "command")
-        }
         logEntry.setValue(theLog.displayName, forKey: "displayName")
         
         //

@@ -247,6 +247,12 @@ class Silo {
         }
     }
     
+    
+    //MARK: Alter pendingRequestCache
+    func clearPending(request:Request) {
+        pendingRequests?.removeObject(forKey: request.id)
+    }
+    
     //MARK: Session Pairing Completion
     
     func waitForPairing(session:Session, timeout:TimeInterval = 10.0) -> Bool {
@@ -398,16 +404,15 @@ class Silo {
                 
                 if signatureAllowed {
                     // only place where signature should occur
-                    let digestData = try signRequest.digest.fromBase64()
-                    sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: digestData)
+                    sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data)
                     
                     dispatchAsync {
-                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: sig ?? "<err>", command: signRequest.command, displayName: signRequest.display), deviceName: session.pairing.name)
+                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.data.toBase64(), signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                     }
                 } else {
                     err = "rejected"
                     dispatchAsync {
-                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.digest, signature: "rejected", command: signRequest.command, displayName: signRequest.display), deviceName: session.pairing.name)
+                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.data.toBase64(), signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
                     }
                 }
 
