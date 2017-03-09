@@ -7,8 +7,7 @@
 //
 
 import Foundation
-
-
+import JSON
 
 class Policy {
     
@@ -30,8 +29,8 @@ class Policy {
 
     }
     
-    static var pendingAuthorizationMutex = Mutex()
-    static var pendingAuthorizations:[PendingAuthorization] = []
+    //static var pendingAuthorizationMutex = Mutex()
+    //static var pendingAuthorizations:[PendingAuthorization] = []
     
     // Category Identifiers
     static let authorizeCategoryIdentifier = "authorize_identifier"
@@ -114,52 +113,94 @@ class Policy {
         Policy.sendAllowedPendingIfNeeded()
     }
     
-    //MARK: Pending request
+    //MARK: Pending Authoirizations
     
-    struct PendingAuthorization:Equatable {
+    struct PendingAuthorization:Jsonable, Equatable {
         let session:Session
         let request:Request
+        
+        init (session:Session, request:Request) {
+            self.session = session
+            self.request = request
+        }
+        
+        init(json:Object) throws {
+            session = try Session(json: json ~> "session")
+            request = try Request(json: json ~> "request")
+        }
+        
+        var object:Object {
+            return ["session": session.object, "request": request.object]
+        }
+        
+        var cacheKey:String {
+            return "\(session.id)_\(request.id)"
+        }
+        
+    }
+    
+    private static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("policy_cache")
+    
+    static var lastPendingAuthorization:PendingAuthorization? {
+        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
+        cache?.removeExpiredObjects()
+        
+        guard   let pendingData = cache?.allObjects().last,
+                let pending =  try? PendingAuthorization(jsonData: pendingData as Data)
+        else {
+            return nil
+        }
+        
+        return pending
     }
     
     static func addPendingAuthorization(session:Session, request:Request) {
-        Policy.pendingAuthorizationMutex.lock {
-            Policy.pendingAuthorizations.append(PendingAuthorization(session: session, request: request))
+        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
+        let pending = PendingAuthorization(session: session, request: request)
+        
+        do {
+            let pendingData = try pending.jsonData()
+            cache?.setObject(pendingData as NSData, forKey: pending.cacheKey)
+        } catch {
+            log ("json error: \(error)")
         }
     }
     
     static func removePendingAuthorization(session:Session, request:Request) {
-        Policy.pendingAuthorizationMutex.lock {
-            let pending = PendingAuthorization(session: session, request: request)
-            if let pendingIndex = Policy.pendingAuthorizations.index(where: { $0 == pending }) {
-                Policy.pendingAuthorizations.remove(at: pendingIndex)
-            }
-        }
+        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
+        cache?.removeObject(forKey: PendingAuthorization(session: session, request: request).cacheKey)
     }
     
     static func sendAllowedPendingIfNeeded() {
         
-        var pending:[PendingAuthorization]?
-        Policy.pendingAuthorizationMutex.lock {
-            pending = Policy.pendingAuthorizations.filter({ Policy.needsUserApproval(for: $0.session) == false })
-        }
         
-        pending?.forEach {
-            Policy.removePendingAuthorization(session: $0.session, request: $0.request)
+        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
+        cache?.removeExpiredObjects()
+        
+        cache?.allObjects().forEach {
+            
+            guard   let pending = try? PendingAuthorization(jsonData: $0 as Data),
+                    Policy.needsUserApproval(for: pending.session) == false
+            else {
+                return
+            }
+            
+            let session = pending.session
+            let request = pending.request
+            
+            Policy.removePendingAuthorization(session: session, request: request)
             do {
-                let resp = try Silo.shared.lockResponseFor(request: $0.request, session: $0.session, signatureAllowed: true)
-                try Silo.shared.send(session: $0.session, response: resp)
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
+                try Silo.shared.send(session: session, response: resp)
                 
-                Policy.notifyUser(session: $0.session, request: $0.request)
+                Policy.notifyUser(session: session, request: request)
                 
             } catch (let e) {
-                log("handle error \(e)", .error)
+                log("got error \(e)", .error)
                 return
             }
         }
     }
-    
-
-
     
 }
 

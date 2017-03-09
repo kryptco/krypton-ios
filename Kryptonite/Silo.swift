@@ -39,8 +39,8 @@ class Silo {
 
 
     init(bluetoothEnabled:Bool = true) {
-        requestCache = try? Cache<NSData>(name: "SILO_CACHE", directory: sharedDirectory)
-        pendingRequests = try? Cache<NSString>(name: "SILO_PENDING_REQUESTS", directory: sharedDirectory)
+        requestCache = try? Cache<NSData>(name: "silo_cache", directory: sharedDirectory)
+        pendingRequests = try? Cache<NSString>(name: "silo_pending_requests", directory: sharedDirectory)
         
         if bluetoothEnabled {
             bluetoothDelegate = BluetoothDelegate()

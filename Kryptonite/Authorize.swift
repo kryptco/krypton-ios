@@ -74,12 +74,7 @@ extension UIViewController {
         // send and remove pending that are already allowed
         Policy.sendAllowedPendingIfNeeded()
         
-        var pending:Policy.PendingAuthorization?
-        Policy.pendingAuthorizationMutex.lock {
-            pending = Policy.pendingAuthorizations.last
-        }
-        
-        if let pending = pending {
+        if let pending = Policy.lastPendingAuthorization {
             log("requesting pending authorization")
             self.requestUserAuthorization(session: pending.session, request: pending.request)
         }

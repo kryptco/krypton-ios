@@ -24,7 +24,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var discoveredPeripherals : Set<CBPeripheral> = Set()
     var pairedPeripherals: [CBUUID: CBPeripheral] = [:]
     var peripheralCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
-    var recentPeripheralConnections: Cache<NSString>? = try? Cache<NSString>(name: "TRIED_BLUETOOTH_PERIPHERALS_CONNECT")
+    var recentPeripheralConnections: Cache<NSString>? = try? Cache<NSString>(name: "tried_bluetooth_peripherals_connect")
 
     var servicePingEpochs : [CBUUID: UInt] = [:]
     var serviceAckedEpochs : [CBUUID: UInt] = [:]

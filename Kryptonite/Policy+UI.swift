@@ -71,8 +71,17 @@ extension Policy {
             })
             return
         }
-        
+
         guard UIApplication.shared.applicationState != .active else {
+            
+            // current view controller hasn't loaded, but application active
+            if Current.viewController == nil {
+                dispatchAfter(delay: 1.0, task: {
+                    Policy.requestUserAuthorization(session: session, request: request)
+                })
+                return
+            }
+            
             Current.viewController?.requestUserAuthorization(session: session, request: request)
             return
         }

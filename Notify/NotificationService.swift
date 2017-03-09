@@ -90,6 +90,7 @@ class NotificationService: UNNotificationServiceExtension {
                             }
                             
                             bestAttemptContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            bestAttemptContent.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
                             bestAttemptContent.sound = UNNotificationSound.default()
                         }
 
