@@ -48,7 +48,8 @@ class PairController: KRBaseController, KRScanDelegate {
         if let scanner = segue.destination as? KRScanController {
             self.scanViewController = scanner
             scanner.delegate = self
-        } else if
+        }
+        else if
                 let pairingApproval = segue.destination as? PairApproveController,
                 let pairing = sender as? Pairing
         {
@@ -56,25 +57,50 @@ class PairController: KRBaseController, KRScanDelegate {
             pairingApproval.scanController = scanViewController
             pairingApproval.tabController = tabBarController
         }
+        else if let pairingInvalid = segue.destination as? PairInvalidVersionController {
+            pairingInvalid.scanController = scanViewController
+        }
     }
     
     
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
         
-        guard   let value = data.data(using: String.Encoding.utf8),
-                let json = (try? JSONSerialization.jsonObject(with: value, options: JSONSerialization.ReadingOptions.allowFragments)) as? [String:AnyObject]
-        else {
+        guard let pairing = try? Pairing(jsonString: data) else {
+            dispatchMain { self.showInvalidPairingQR() }
             return false
         }
         
-        
-        if let pairing = try? Pairing(json: json) {
-            dispatchMain { self.showPairing(pairing: pairing) }
+        guard pairing.version != nil else {
+            dispatchMain { self.showInvalidWorkstationVersion() }
             return true
         }
         
-        return false
+        
+        dispatchMain { self.showPairing(pairing: pairing) }
+
+        
+        return true
+    }
+    
+    func showInvalidWorkstationVersion() {
+        self.scanViewController?.canScan = false
+        self.performSegue(withIdentifier: "showInvalidPairing", sender: nil)
+    }
+    
+    func showInvalidPairingQR() {
+        let invalidQRAlert = UIAlertController(title: "Invalid Code", message: "The QR you scanned is invalid. Please tap help for assistance installing and using the kr command line utility to pair with Kryptonite.", preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        invalidQRAlert.addAction(UIAlertAction(title: "Help", style: UIAlertActionStyle.default, handler: { (_) in
+            dispatchMain { self.tabBarController?.performSegue(withIdentifier: "showInstall", sender: nil) }
+        }))
+        
+        invalidQRAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { (_) in
+            self.scanViewController?.canScan = true
+        }))
+
+        
+        self.present(invalidQRAlert, animated: true, completion: nil)
     }
     
     func showPairing(pairing: Pairing) {
@@ -85,6 +111,40 @@ class PairController: KRBaseController, KRScanDelegate {
   
 }
 
+
+class PairInvalidVersionController:UIViewController {
+
+    @IBOutlet weak var blurView:UIView!
+    
+    @IBOutlet weak var popupView:UIView!
+    @IBOutlet weak var deviceLabel:UILabel!
+    @IBOutlet weak var messageLabel:UILabel!
+    
+    var scanController:KRScanController?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        popupView.layer.shadowColor = UIColor.black.cgColor
+        popupView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        popupView.layer.shadowOpacity = 0.2
+        popupView.layer.shadowRadius = 3
+        popupView.layer.masksToBounds = false
+
+    }
+    
+    @IBAction func dismissTapped() {
+        
+        if #available(iOS 10.0, *) {
+            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        }
+        
+        self.dismiss(animated: true, completion: {
+            self.scanController?.canScan = true
+        })
+
+    }
+}
 
 
 
