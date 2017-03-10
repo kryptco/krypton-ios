@@ -81,7 +81,7 @@ class Notify {
     func presentApproved(request:Request, for session:Session) {
         
         
-        let noteTitle = "Request from \(session.pairing.displayName) approved"
+        let noteTitle = "Approved request from \(session.pairing.displayName)"
         let noteBody = "\(request.sign?.display ?? "unknown host")"
         
         if #available(iOS 10.0, *) {

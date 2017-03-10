@@ -18,7 +18,7 @@ extension Policy {
     }
     
     class func notifyUser(session:Session, request:Request) {
-        NotificationService.shared?.alertTitle = "Request from \(session.pairing.displayName) approved *"
+        NotificationService.shared?.alertTitle = "Approved request from \(session.pairing.displayName) *"
         NotificationService.shared?.approved = true
     }
 }
