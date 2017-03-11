@@ -104,7 +104,7 @@ class NotificationService: UNNotificationServiceExtension {
             log("could not hangle incoming remote notification: \(error)")
             
             bestAttemptContent.title = "Request failed"
-            bestAttemptContent.body = "The incoming request was invalid. Please try again."
+            bestAttemptContent.body = "The incoming request was invalid. \(error). Please try again."
             bestAttemptContent.userInfo = [:]
             contentHandler(bestAttemptContent)
         }

@@ -23,6 +23,7 @@
 		8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
+		FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03C5841E749A520019649E /* RePairWarningController.swift */; };
 		FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */; };
 		FA15EB3B1DA5B4E600BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
@@ -452,6 +453,7 @@
 		8DD436A31DF3719000201106 /* CommunicationActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunicationActivity.swift; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		FA03C5841E749A520019649E /* RePairWarningController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RePairWarningController.swift; sourceTree = "<group>"; };
 		FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallMethod.swift; sourceTree = "<group>"; };
 		FA15EB481DA5C6CC00BED16C /* Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		FA16824D1D774C2200A7ED53 /* KRScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRScanController.swift; sourceTree = "<group>"; };
@@ -710,6 +712,7 @@
 			children = (
 				FA1682501D774C3900A7ED53 /* PairController.swift */,
 				FABFE3611DC1097B0073C0EF /* PairApproveController.swift */,
+				FA03C5841E749A520019649E /* RePairWarningController.swift */,
 				FA16824D1D774C2200A7ED53 /* KRScanController.swift */,
 			);
 			name = Pair;
@@ -1682,6 +1685,7 @@
 				FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
+				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
 				FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */,
 				FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */,

@@ -31,6 +31,10 @@ class AutoApproveController:UIViewController {
         commandLabel.text = "$ \(command ?? "SSH login request")"
         
         checkBox.animationDuration = 1.0
+        
+        checkBox.checkmarkLineWidth = 2.0
+        checkBox.stateChangeAnimation = .spiral
+        checkBox.boxLineWidth = 2.0
     }
     
     override func viewDidAppear(_ animated: Bool) {

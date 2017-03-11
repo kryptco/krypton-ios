@@ -105,6 +105,16 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             UserDefaults.standard.set(true, forKey: "did_ask_push")
             UserDefaults.standard.synchronize()
         }
+        
+        // Check old version sessions
+        let (hasOld, sessionNames) = SessionManager.hasOldSessions()
+        if hasOld {
+            //TODO: Perform segue, show re-paring dialog for new sessions
+            self.performSegue(withIdentifier: "showRePairWarning", sender: sessionNames)
+            return
+        }
+
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -131,6 +141,16 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     dynamic func helpTapped() {
         self.performSegue(withIdentifier: "showInstall", sender: nil)
+    }
+    
+    //MARK: Prepare for segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if  let rePairWarningController = segue.destination as? RePairWarningController,
+            let sessionNames = sender as? [String]
+        {
+            rePairWarningController.names = sessionNames
+        }
     }
 
 }

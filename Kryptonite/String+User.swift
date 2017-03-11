@@ -10,14 +10,14 @@ import Foundation
 
 //MARK: Helper
 extension String {
-    func getUserOrNil() -> String? {
+    func getDeviceName() -> String {
         let components = self.components(separatedBy: "@")
         
         guard components.count > 1 else {
-            return nil
+            return self
         }
         
-        return components[0]
+        return components[1..<components.count].joined(separator: "")
     }
     
     func removeDotLocal() -> String {

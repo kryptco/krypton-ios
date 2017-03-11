@@ -101,4 +101,37 @@ class SessionManager {
         
         return map
     }
+
+    
+    //MARK: Handling old version sessions 
+    
+    static func oldVersionSessionNames() -> [String] {
+        guard let jsonList = UserDefaults.standard.array(forKey: SessionManager.ListKey) as? [Object]
+        else {
+            return []
+        }
+        
+        var oldSessionNames = [String]()
+        
+        jsonList.forEach {
+            guard   let sessionName = $0["name"] as? String,
+                    $0["version"] == nil
+            else {
+                return
+            }
+            
+            oldSessionNames.append(sessionName)
+        }
+        
+        return oldSessionNames
+    }
+    
+    static func hasOldSessions() -> (Bool, [String]) {
+        let oldSessionNames = SessionManager.oldVersionSessionNames()
+        return (!oldSessionNames.isEmpty, oldSessionNames)
+    }
+    
+    static func clearOldSessions() {
+        UserDefaults.standard.removeObject(forKey: SessionManager.ListKey)
+    }
 }
