@@ -160,7 +160,7 @@ class Policy {
         
         do {
             let pendingData = try pending.jsonData()
-            cache?.setObject(pendingData as NSData, forKey: pending.cacheKey)
+            cache?.setObject(pendingData as NSData, forKey: pending.cacheKey, expires: .seconds(Properties.requestTimeTolerance))
         } catch {
             log ("json error: \(error)")
         }
