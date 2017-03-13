@@ -1112,9 +1112,9 @@
 			buildConfigurationList = FA49F7921D9B6B3300372556 /* Build configuration list for PBXNativeTarget "LastCommand" */;
 			buildPhases = (
 				FA49F7811D9B6B3200372556 /* Sources */,
+				FA309F431DA5947C006D8D81 /* Build Bump */,
 				FA49F7821D9B6B3200372556 /* Frameworks */,
 				FA49F7831D9B6B3200372556 /* Resources */,
-				FA309F431DA5947C006D8D81 /* Build Bump */,
 			);
 			buildRules = (
 			);
@@ -1130,14 +1130,14 @@
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
 				FA8141521D714250004FE58C /* CommonCrypto */,
+				FA03C5961E7609940019649E /* Bump Build */,
+				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
 				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141341D70B0F4004FE58C /* Resources */,
 				FAA6E1F91D79FBB6007D1B3A /* Embed Frameworks */,
 				FA8750601DA2F4B20066C0BE /* StripArch */,
 				FA49F7951D9B6B3300372556 /* Embed App Extensions */,
-				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
-				FA03C5961E7609940019649E /* Bump Build */,
 			);
 			buildRules = (
 			);
@@ -1177,9 +1177,9 @@
 			buildPhases = (
 				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
+				FAB517BE1E54D6C90032DD47 /* Build Bump */,
 				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
 				FAF1E61D1E031BB9003CBEA2 /* Resources */,
-				FAB517BE1E54D6C90032DD47 /* Build Bump */,
 			);
 			buildRules = (
 			);
