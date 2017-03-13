@@ -1,3 +1,5 @@
 *.xcuserdatad/
 Kryptonite.xcodeproj/project.xcworkspace/xcshareddata/
 Kryptonite.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+BUILD
+COMMIT

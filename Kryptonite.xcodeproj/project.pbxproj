@@ -24,6 +24,8 @@
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03C5841E749A520019649E /* RePairWarningController.swift */; };
+		FA03C5991E760CD50019649E /* BUILD in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5971E760CD50019649E /* BUILD */; };
+		FA03C59A1E760CD50019649E /* COMMIT in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5981E760CD50019649E /* COMMIT */; };
 		FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */; };
 		FA15EB3B1DA5B4E600BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
@@ -454,6 +456,8 @@
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA03C5841E749A520019649E /* RePairWarningController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RePairWarningController.swift; sourceTree = "<group>"; };
+		FA03C5971E760CD50019649E /* BUILD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD; sourceTree = "<group>"; };
+		FA03C5981E760CD50019649E /* COMMIT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMMIT; sourceTree = "<group>"; };
 		FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallMethod.swift; sourceTree = "<group>"; };
 		FA15EB481DA5C6CC00BED16C /* Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		FA16824D1D774C2200A7ED53 /* KRScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRScanController.swift; sourceTree = "<group>"; };
@@ -1054,6 +1058,8 @@
 		FAEE048F1D736AE3002A7AFD /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				FA03C5971E760CD50019649E /* BUILD */,
+				FA03C5981E760CD50019649E /* COMMIT */,
 				FAB43B981DFF1FB100496114 /* Info.plist */,
 				FAB43B931DFF1F9200496114 /* Kryptonite-Bridging-Header.h */,
 				FAB43B941DFF1F9200496114 /* Kryptonite.entitlements */,
@@ -1106,7 +1112,7 @@
 			buildConfigurationList = FA49F7921D9B6B3300372556 /* Build configuration list for PBXNativeTarget "LastCommand" */;
 			buildPhases = (
 				FA49F7811D9B6B3200372556 /* Sources */,
-				FA309F431DA5947C006D8D81 /* BuildHashBump */,
+				FA309F431DA5947C006D8D81 /* Build Bump */,
 				FA49F7821D9B6B3200372556 /* Frameworks */,
 				FA49F7831D9B6B3200372556 /* Resources */,
 			);
@@ -1124,7 +1130,8 @@
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
 				FA8141521D714250004FE58C /* CommonCrypto */,
-				FAB28E8B1D93122400B61E6B /* BuildHashBump */,
+				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
+				FA03C5961E7609940019649E /* Bump Build */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
 				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141341D70B0F4004FE58C /* Resources */,
@@ -1172,7 +1179,7 @@
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
 				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
 				FAF1E61D1E031BB9003CBEA2 /* Resources */,
-				FAB517BE1E54D6C90032DD47 /* BuildHashBump */,
+				FAB517BE1E54D6C90032DD47 /* Build Bump */,
 			);
 			buildRules = (
 			);
@@ -1439,12 +1446,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA03C5991E760CD50019649E /* BUILD in Resources */,
 				FAC561191E6F60AE00150FB2 /* FontAwesome.ttf in Resources */,
 				FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
 				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
+				FA03C59A1E760CD50019649E /* COMMIT in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
 				FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
@@ -1470,19 +1479,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		FA309F431DA5947C006D8D81 /* BuildHashBump */ = {
+		FA03C5961E7609940019649E /* Bump Build */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = BuildHashBump;
+			name = "Bump Build";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n";
+			shellScript = "buildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
+		};
+		FA309F431DA5947C006D8D81 /* Build Bump */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Bump";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n";
 		};
 		FA8141521D714250004FE58C /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1512,19 +1535,19 @@
 			shellPath = /bin/sh;
 			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"\n";
 		};
-		FAB28E8B1D93122400B61E6B /* BuildHashBump */ = {
+		FAB28E8B1D93122400B61E6B /* Set Hash and Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = BuildHashBump;
+			name = "Set Hash and Build";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
+			shellScript = "buildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\necho \"$buildNumber\" > \"${PROJECT_DIR}/BUILD\"\necho \"$gitHash\" > \"${PROJECT_DIR}/COMMIT\"\n#/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
 		};
 		FAB517AD1E54D5AB0032DD47 /* Common Crypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1540,19 +1563,19 @@
 			shellPath = /bin/sh;
 			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
 		};
-		FAB517BE1E54D6C90032DD47 /* BuildHashBump */ = {
+		FAB517BE1E54D6C90032DD47 /* Build Bump */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = BuildHashBump;
+			name = "Build Bump";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n";
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n";
 		};
 		FAEE04A41D74BCCF002A7AFD /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;

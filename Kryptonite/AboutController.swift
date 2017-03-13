@@ -21,11 +21,15 @@ class AboutController: KRBaseController {
         analyticsSwitch.isOn = !Analytics.enabled
         
         if  let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-            let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String,
-            let hash = Bundle.main.infoDictionary?["GitHash"] as? String
+            let buildFilePath = Bundle.main.path(forResource: "BUILD", ofType: nil),
+            let build = try? String(contentsOfFile: buildFilePath).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+            let commitFilePath = Bundle.main.path(forResource: "COMMIT", ofType: nil),
+            let commit = try? String(contentsOfFile: commitFilePath).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         {
-            let hashShort = hash.substring(to: hash.index(hash.startIndex, offsetBy: min(6, hash.characters.count)))
+            let hashShort = commit.substring(to: commit.index(commit.startIndex, offsetBy: min(6, commit.characters.count)))
             self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
+        } else {
+            log("could not find version, build, and commit information", .error)
         }
         
     }
