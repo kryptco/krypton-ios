@@ -1112,9 +1112,9 @@
 			buildConfigurationList = FA49F7921D9B6B3300372556 /* Build configuration list for PBXNativeTarget "LastCommand" */;
 			buildPhases = (
 				FA49F7811D9B6B3200372556 /* Sources */,
-				FA309F431DA5947C006D8D81 /* Build Bump */,
 				FA49F7821D9B6B3200372556 /* Frameworks */,
 				FA49F7831D9B6B3200372556 /* Resources */,
+				FA309F431DA5947C006D8D81 /* Build Bump */,
 			);
 			buildRules = (
 			);
@@ -1130,14 +1130,14 @@
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
 				FA8141521D714250004FE58C /* CommonCrypto */,
-				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
-				FA03C5961E7609940019649E /* Bump Build */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
 				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141341D70B0F4004FE58C /* Resources */,
 				FAA6E1F91D79FBB6007D1B3A /* Embed Frameworks */,
 				FA8750601DA2F4B20066C0BE /* StripArch */,
 				FA49F7951D9B6B3300372556 /* Embed App Extensions */,
+				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
+				FA03C5961E7609940019649E /* Bump Build */,
 			);
 			buildRules = (
 			);
@@ -1565,7 +1565,7 @@
 		};
 		FAB517BE1E54D6C90032DD47 /* Build Bump */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -1573,7 +1573,7 @@
 			name = "Build Bump";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n";
 		};
