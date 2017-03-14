@@ -33,6 +33,7 @@ class RePairWarningController:UIViewController {
         popupView.layer.shadowRadius = 3
         popupView.layer.masksToBounds = false
         
+        upgradeLabel.text = UpgradeMethod.current
         
         if names.isEmpty {
             log("re pair warning but no devices.", .error)

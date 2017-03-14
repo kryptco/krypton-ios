@@ -12,7 +12,6 @@
 #import "IGIdenticon.h"
 #import <AWSSNS/AWSSNS.h>
 #import <AWSSQS/AWSSQS.h>
-#import <AwesomeCache/AwesomeCache.h>
 
 #import "sshwire.h"
 

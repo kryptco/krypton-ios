@@ -120,6 +120,8 @@ class PairInvalidVersionController:UIViewController {
     @IBOutlet weak var deviceLabel:UILabel!
     @IBOutlet weak var messageLabel:UILabel!
     
+    @IBOutlet weak var upgradeLabel:UILabel!
+
     var scanController:KRScanController?
     
     override func viewDidLoad() {
@@ -131,6 +133,7 @@ class PairInvalidVersionController:UIViewController {
         popupView.layer.shadowRadius = 3
         popupView.layer.masksToBounds = false
 
+        upgradeLabel.text = UpgradeMethod.current
     }
     
     @IBAction func dismissTapped() {

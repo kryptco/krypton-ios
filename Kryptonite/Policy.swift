@@ -8,6 +8,7 @@
 
 import Foundation
 import JSON
+import AwesomeCache
 
 class Policy {
     

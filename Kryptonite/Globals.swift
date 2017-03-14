@@ -22,11 +22,12 @@ var isDebug:Bool {
 }
 
 var isBeta:Bool {
-    #if BETA
+    
+    if ProcessInfo.processInfo.environment["BETA"] != nil {
         return true
-    #else
-        return false
-    #endif
+    }
+    
+    return false
 }
 
 //MARK: Defaults
