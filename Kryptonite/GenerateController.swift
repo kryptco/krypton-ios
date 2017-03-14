@@ -13,7 +13,7 @@ class GenerateController:UIViewController {
     
     @IBOutlet weak var animationView:UIView!
 
-    var keyType = KeyType.Ed25519
+    var keyType:KeyType!
     
     override func viewDidLoad() {
         super.viewDidLoad()

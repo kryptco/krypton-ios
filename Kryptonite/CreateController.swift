@@ -14,7 +14,7 @@ class CreateController: UIViewController {
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var keyTypeButton: UIButton!
 
-    var keyType = KeyType.Ed25519
+    var keyType = KeyType.RSA
     
 
     
@@ -26,6 +26,8 @@ class CreateController: UIViewController {
         createButton.layer.shadowOpacity = 0.175
         createButton.layer.shadowRadius = 3
         createButton.layer.masksToBounds = false
+        
+        keyTypeButton.setTitle(keyType.prettyPrint(), for: UIControlState.normal)
         
         Analytics.postEvent(category: "onboard", action: "start")
     }
