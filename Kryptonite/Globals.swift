@@ -13,8 +13,16 @@ let KR_ENDPOINT_ARN_KEY = "aws_endpoint_arn_key"
 let APP_GROUP_SECURITY_ID = "group.co.krypt.kryptonite"
 
 //MARK: Functions
-func isDebug() -> Bool {
+var isDebug:Bool {
     #if DEBUG
+        return true
+    #else
+        return false
+    #endif
+}
+
+var isBeta:Bool {
+    #if BETA
         return true
     #else
         return false

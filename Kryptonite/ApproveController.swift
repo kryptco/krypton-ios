@@ -28,7 +28,7 @@ class AutoApproveController:UIViewController {
         contentView.layer.masksToBounds = false
         
         deviceLabel.text = deviceName
-        commandLabel.text = "$ \(command ?? "SSH login request")"
+        commandLabel.text = "\(command ?? "SSH login request")"
         
         checkBox.animationDuration = 1.0
         

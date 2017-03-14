@@ -31,7 +31,7 @@ func log(_ arg:CustomDebugStringConvertible?, _ type:LogType = .info, file:Strin
     let className = URL(fileURLWithPath: file).lastPathComponent.replacingOccurrences(of: ".swift", with: "")
     let statement = "[\(Date().timeIntervalSince1970)] - \(type.getIndicator()) \(className).\(function):\(line)> \(arg ?? "")"
     
-    if isDebug() {
+    if isDebug {
         print(statement)
     }
 }

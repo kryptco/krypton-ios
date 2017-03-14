@@ -98,7 +98,7 @@ class API {
             return
         }
         
-        if isDebug() {
+        if isDebug {
             request.platformApplicationArn = Properties.awsPlatformARN.sandbox
         } else {
             request.platformApplicationArn = Properties.awsPlatformARN.production

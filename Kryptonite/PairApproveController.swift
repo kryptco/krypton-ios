@@ -44,6 +44,10 @@ class PairApproveController: UIViewController {
 
         checkBox.animationDuration = 1.0
         
+        checkBox.checkmarkLineWidth = 2.0
+        checkBox.stateChangeAnimation = .spiral
+        checkBox.boxLineWidth = 2.0
+
         if let pairing = pairing {
             deviceLabel.text = pairing.displayName.uppercased()
         }

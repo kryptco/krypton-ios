@@ -16,6 +16,9 @@ class RePairWarningController:UIViewController {
     @IBOutlet weak var popupView:UIView!
     @IBOutlet weak var messageLabel:UILabel!
     
+    @IBOutlet weak var upgradeLabel:UILabel!
+
+    
     var scanController:KRScanController?
     
     var names:[String] = []

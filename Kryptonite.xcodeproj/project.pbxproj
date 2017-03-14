@@ -163,7 +163,6 @@
 		FAC561191E6F60AE00150FB2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1682921D77868D00A7ED53 /* FontAwesome.ttf */; };
 		FAC5613E1E6F678500150FB2 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FAC5613F1E6F678500150FB2 /* AwesomeCache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAC561441E6F67EC00150FB2 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
 		FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
 		FAC873F91E6A4DC1003D112E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
@@ -652,7 +651,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAC561441E6F67EC00150FB2 /* AwesomeCache.framework in Frameworks */,
 				FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */,
 				FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */,
 				FAAE81A71E57734B002A9AE6 /* AWSSNS.framework in Frameworks */,
@@ -1873,6 +1871,152 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FA03C59B1E786FEF0019649E /* Testflight */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "BETA=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Testflight;
+		};
+		FA03C59C1E786FEF0019649E /* Testflight */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Kryptonite/Kryptonite.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Kryptonite/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/swift-sodium/Sodium",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
+				);
+				OTHER_SWIFT_FLAGS = "-DBETA";
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_INCLUDE_PATHS = "CommonCrytpo/**";
+				SWIFT_OBJC_BRIDGING_HEADER = "Kryptonite/Kryptonite-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Testflight;
+		};
+		FA03C59D1E786FEF0019649E /* Testflight */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_ENTITLEMENTS = LastCommand/LastCommand.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				INFOPLIST_FILE = LastCommand/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.last;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Testflight;
+		};
+		FA03C59E1E786FEF0019649E /* Testflight */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = Notify/Notify.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Notify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.Notify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Notify/Notify-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Testflight;
+		};
+		FA03C59F1E786FEF0019649E /* Testflight */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = KryptoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+				);
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kryptonite.app/Kryptonite";
+			};
+			name = Testflight;
+		};
 		FA49F7931D9B6B3300372556 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2177,6 +2321,7 @@
 			buildConfigurations = (
 				FA49F7931D9B6B3300372556 /* Debug */,
 				FA49F7941D9B6B3300372556 /* Release */,
+				FA03C59D1E786FEF0019649E /* Testflight */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2186,6 +2331,7 @@
 			buildConfigurations = (
 				FA8141461D70B0F4004FE58C /* Debug */,
 				FA8141471D70B0F4004FE58C /* Release */,
+				FA03C59B1E786FEF0019649E /* Testflight */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2195,6 +2341,7 @@
 			buildConfigurations = (
 				FA8141491D70B0F4004FE58C /* Debug */,
 				FA81414A1D70B0F4004FE58C /* Release */,
+				FA03C59C1E786FEF0019649E /* Testflight */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2204,6 +2351,7 @@
 			buildConfigurations = (
 				FAEE04A21D74BCC3002A7AFD /* Debug */,
 				FAEE04A31D74BCC3002A7AFD /* Release */,
+				FA03C59F1E786FEF0019649E /* Testflight */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2213,6 +2361,7 @@
 			buildConfigurations = (
 				FAF1E6271E031BB9003CBEA2 /* Debug */,
 				FAF1E6281E031BB9003CBEA2 /* Release */,
+				FA03C59E1E786FEF0019649E /* Testflight */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
