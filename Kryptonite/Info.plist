@@ -21,13 +21,13 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>429</string>
+	<string>436</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Kryptonite uses bluetooth to communicate to paired devices.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Scan QR codes to pair and record peer&apos;s public keys.</string>
+	<string>Scan QR codes to pair and record peer's public keys.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Your contact list is used to choose people to send public keys to. We will never send your contacts anywhere.</string>
 	<key>UIAppFonts</key>

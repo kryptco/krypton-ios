@@ -45,7 +45,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         commandView.layer.shadowRadius = 3
         commandView.layer.masksToBounds = false
         
-        brewTapped()
+        curlTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {

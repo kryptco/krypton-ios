@@ -35,7 +35,7 @@ class HelpInstallController:KRBaseController {
         commandView.layer.masksToBounds = false
 
         
-        brewTapped()
+        curlTapped()
     }
   
     //MARK: Install Instructions

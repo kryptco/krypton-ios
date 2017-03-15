@@ -1607,7 +1607,7 @@ Cg
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="curl https://krypt.co/kr | sh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="KCd-fj-d49">
                                         <rect key="frame" x="30" y="10" width="285" height="19"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1744,11 +1744,11 @@ Cg
                                     <constraint firstAttribute="height" constant="20" id="Pz2-Mc-oSh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
-                                <state key="normal" title="brew">
+                                <state key="normal" title="curl">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="brewTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="4Jj-AI-iNY"/>
+                                    <action selector="curlTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="hua-Tp-KOS"/>
                                     <action selector="githubTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="XO7-D4-ziT"/>
                                 </connections>
                             </button>
@@ -1786,11 +1786,11 @@ Cg
                                     <constraint firstAttribute="height" constant="20" id="oSp-eM-dxO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
-                                <state key="normal" title="curl">
+                                <state key="normal" title="brew">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="curlTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="s7F-oS-Sf3"/>
+                                    <action selector="brewTapped" destination="jeO-uC-lbZ" eventType="touchUpInside" id="7UH-zU-PiB"/>
                                     <action selector="doTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="dSQ-OF-JhT"/>
                                 </connections>
                             </button>
@@ -1841,11 +1841,11 @@ Cg
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="brewButton" destination="sho-dp-HEe" id="xww-FK-fbZ"/>
-                        <outlet property="brewLine" destination="FAK-Tl-KX9" id="O5q-wc-8sU"/>
+                        <outlet property="brewButton" destination="9zw-y9-THU" id="86f-UJ-UiX"/>
+                        <outlet property="brewLine" destination="v0N-TI-fC7" id="CyD-zy-wX2"/>
                         <outlet property="commandView" destination="px1-ko-Hn4" id="19N-jW-4k4"/>
-                        <outlet property="curlButton" destination="9zw-y9-THU" id="auI-8R-RiZ"/>
-                        <outlet property="curlLine" destination="v0N-TI-fC7" id="IoA-sg-KpT"/>
+                        <outlet property="curlButton" destination="sho-dp-HEe" id="pFm-MG-oUP"/>
+                        <outlet property="curlLine" destination="FAK-Tl-KX9" id="0Eu-6Y-hO9"/>
                         <outlet property="installLabel" destination="KCd-fj-d49" id="wxT-dG-peT"/>
                         <outlet property="npmButton" destination="bep-07-tP2" id="7XQ-S1-LnH"/>
                         <outlet property="npmLine" destination="TmL-5M-gM1" id="Ia3-Wh-H4k"/>
@@ -2759,7 +2759,7 @@ Cg
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="brew install kryptco/tap/kr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-VT-1MR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="curl https://krypt.co/kr | sh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-VT-1MR">
                                         <rect key="frame" x="33" y="10" width="298" height="22"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2806,11 +2806,11 @@ Cg
                                     <constraint firstAttribute="height" constant="20" id="mRI-s7-64S"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="20"/>
-                                <state key="normal" title="brew">
+                                <state key="normal" title="curl">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="brewTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="doL-Q9-bRw"/>
+                                    <action selector="curlTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="bqe-FW-an8"/>
                                     <action selector="githubTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="ncQ-yj-gJy"/>
                                 </connections>
                             </button>
@@ -2848,11 +2848,11 @@ Cg
                                     <constraint firstAttribute="height" constant="20" id="Jdt-tF-PAI"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="20"/>
-                                <state key="normal" title="curl">
+                                <state key="normal" title="brew">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="curlTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="NLa-Du-DO9"/>
+                                    <action selector="brewTapped" destination="hTx-bT-ZFG" eventType="touchUpInside" id="IVE-u9-qHY"/>
                                     <action selector="doTapped" destination="3yk-j0-9Le" eventType="touchUpInside" id="h1v-oU-xLA"/>
                                 </connections>
                             </button>
@@ -2939,11 +2939,11 @@ Cg
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="brewButton" destination="nst-gd-Qlg" id="LME-g9-t8u"/>
-                        <outlet property="brewLine" destination="3cE-Zm-CVu" id="PlZ-de-j5a"/>
+                        <outlet property="brewButton" destination="669-iV-yBH" id="5a4-5I-SB6"/>
+                        <outlet property="brewLine" destination="riR-uG-iAf" id="B9e-M1-N0i"/>
                         <outlet property="commandView" destination="yvW-Mo-dOd" id="n5L-KK-CA4"/>
-                        <outlet property="curlButton" destination="669-iV-yBH" id="41r-7W-VWq"/>
-                        <outlet property="curlLine" destination="riR-uG-iAf" id="8CN-eh-t2l"/>
+                        <outlet property="curlButton" destination="nst-gd-Qlg" id="aZK-tp-iLk"/>
+                        <outlet property="curlLine" destination="3cE-Zm-CVu" id="f0C-RE-hi8"/>
                         <outlet property="installLabel" destination="tBo-VT-1MR" id="vMV-WL-4gG"/>
                         <outlet property="npmButton" destination="cp1-Xm-db7" id="ZAz-4U-MAh"/>
                         <outlet property="npmLine" destination="0gQ-IR-8zG" id="r02-1o-ORh"/>
@@ -3164,8 +3164,8 @@ Let's upgrade and pair.</string>
         <image name="trash" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nqH-Dq-7fH"/>
         <segue reference="0R2-zj-seh"/>
+        <segue reference="0pJ-4c-RGj"/>
         <segue reference="Y5o-pc-uUx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
