@@ -116,6 +116,7 @@ class ApproveController:UIViewController {
         super.viewDidAppear(animated)
         
         arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
+        //arcView.timeoutProgress(lineWidth: checkBox.checkmarkLineWidth, seconds: Properties.requestTimeTolerance)
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     

@@ -43,7 +43,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         let command = defaults?.string(forKey: "last_log_command") ?? "--"
         let device = defaults?.string(forKey: "last_log_device") ?? "--"
         
-        commandLabel.text = "$ \(command)"
+        commandLabel.text = "\(command)"
         deviceLabel.text = device.removeDotLocal().uppercased()
         timeLabel.text = dateString
     }
