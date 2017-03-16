@@ -43,17 +43,26 @@ class NotificationService: UNNotificationServiceExtension {
         guard API.provision() else {
             log("API provision failed.", LogType.error)
             
-            bestAttemptContent.title = "Request failed"
-            bestAttemptContent.body = "The incoming request could not be completed. Please try again."
-            bestAttemptContent.userInfo = [:]
-            contentHandler(bestAttemptContent)
+            failUnknown(with: nil)
+            
+            return
+        }
+        
+        var session:Session
+        var unsealedRequest:Request
+        do {
+            (session, unsealedRequest) = try NotificationService.unsealRemoteNotification(userInfo: bestAttemptContent.userInfo)
+
+        } catch {
+            log("could not processess remote notification content: \(error)")
+            
+            failUnknown(with: error)
 
             return
         }
         
         
         do {
-            let (session, unsealedRequest) = try NotificationService.unsealRemoteNotification(userInfo: bestAttemptContent.userInfo)
 
             let silo = Silo(bluetoothEnabled: false)
             silo.add(sessions: SessionManager.shared.all)
@@ -101,14 +110,55 @@ class NotificationService: UNNotificationServiceExtension {
             })
             
         } catch {
-            log("could not hangle incoming remote notification: \(error)")
             
-            bestAttemptContent.title = "Request failed"
-            bestAttemptContent.body = "The incoming request was invalid. \(error). Please try again."
-            bestAttemptContent.userInfo = [:]
-            contentHandler(bestAttemptContent)
+            UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                for note in notes {
+                    if note.request.identifier == unsealedRequest.id {
+                        let noteContent = note.request.content
+                        
+                        self.bestAttemptMutex.lock {
+                            bestAttemptContent.title = noteContent.title
+                            bestAttemptContent.categoryIdentifier = noteContent.categoryIdentifier
+                            bestAttemptContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            bestAttemptContent.userInfo = noteContent.userInfo
+                            bestAttemptContent.sound = UNNotificationSound.default()
+
+                        }
+                        // remove old note
+                        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                        
+                        // replace with remote with same content
+                        contentHandler(bestAttemptContent)
+                        
+                        return
+                    }
+                }
+                
+                self.failUnknown(with: error)
+            })
         }
         
+    }
+    
+    func failUnknown(with error:Error?) {
+        
+        guard let bestAttemptContent = bestAttemptContent
+            else {
+                return
+        }
+
+        
+        
+        bestAttemptContent.title = "Request failed"
+        if let e = error {
+            bestAttemptContent.body = "The incoming request was invalid. \(e). Please try again."
+        } else {
+            bestAttemptContent.body = "The incoming request was invalid. Please try again."
+        }
+        bestAttemptContent.userInfo = [:]
+        
+        contentHandler?(bestAttemptContent)
+
     }
     
     override func serviceExtensionTimeWillExpire() {
