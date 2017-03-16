@@ -76,37 +76,57 @@ struct HostAuthVerificationFailed:Error{}
 struct SignRequest:Jsonable {
     var data:Data
     var fingerprint:String
-    var hostAuth:HostAuth
+    let hostAuth:HostAuth?
+    
+    struct InvalidSessionData:Error{}
+    struct InvalidHostAuthSignature:Error{}
 
+    
     init(json: Object) throws {
         data        = try ((json ~> "data") as String).fromBase64()
         fingerprint = try json ~> "public_key_fingerprint"
-        hostAuth    = try HostAuth(json: json ~> "host_auth")
         
-        guard
-            let sessionID = self.sshSessionID,
-            try hostAuth.verify(sessionID: sessionID) == true
-        else {
-            throw HostAuthVerificationFailed()
+        do {
+            let json:Object = try json ~> "host_auth"
+            
+            guard data.count >= 36 else {
+                throw InvalidSessionData()
+            }
+
+            let sessionID = data.subdata(in: 4..<36)
+            
+            let auth = try HostAuth(json: json)
+            
+            guard data.count >= 36 else {
+                throw InvalidSessionData()
+            }
+
+            guard try auth.verify(sessionID: sessionID) == true
+            else {
+                throw InvalidHostAuthSignature()
+            }
+            
+            hostAuth = auth
+
+        } catch {
+            log("host auth error: \(error)")
+            hostAuth = nil
         }
     }
     
     var object: Object {
-        let json:[String:Any] = ["data": data.toBase64(),
-                                 "public_key_fingerprint": fingerprint,
-                                 "host_auth": hostAuth.object]
+        var json:[String:Any] = ["data": data.toBase64(),
+                                 "public_key_fingerprint": fingerprint]
         
+        if let auth = hostAuth {
+            json["host_auth"] = auth.object
+        }
         
         return json
     }
-
-    var sshSessionID:Data? {
-        guard data.count >= 36 else {
-            return nil
-        }
-        return data.subdata(in: 4..<36)
-    }
-
+    
+    
+ 
     var user:String? {
         guard data.count >= 38 else {
             return nil
@@ -125,7 +145,7 @@ struct SignRequest:Jsonable {
     }
 
     var display:String {
-        let host = hostAuth.hostNames.first ?? "unknown host"
+        let host = hostAuth?.hostNames.first ?? "unknown host"
         
         if let user = user {
             return "\(user) @ \(host)"
