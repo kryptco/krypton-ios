@@ -59,20 +59,23 @@ extension Policy {
 
     
     class func requestUserAuthorization(session:Session, request:Request) {
-        // if we are already presenting, don't try to present until finished
-        guard Current.viewController?.presentedViewController is ApproveController == false
-            else {
-                return
-        }
         
-        guard UIApplication.shared.applicationState != .inactive else {
+        switch UIApplication.shared.applicationState {
+            
+        case .background: // Background: then present local notification
+            Notify.shared.present(request: request, for: session)
+            
+        case .inactive: // Inactive: wait and try again
             dispatchAfter(delay: 1.0, task: {
                 Policy.requestUserAuthorization(session: session, request: request)
             })
-            return
-        }
 
-        guard UIApplication.shared.applicationState != .active else {
+        case .active:
+            // if we are already presenting, don't try to present until finished
+            guard Current.viewController?.presentedViewController is ApproveController == false
+            else {
+                return
+            }
             
             // current view controller hasn't loaded, but application active
             if Current.viewController == nil {
@@ -82,27 +85,34 @@ extension Policy {
                 return
             }
             
+            // request foreground approval
             Current.viewController?.requestUserAuthorization(session: session, request: request)
-            return
+
         }
-        
-        
-        // present notification
-        Notify.shared.present(request: request, for: session)
     }
     
     class func notifyUser(session:Session, request:Request) {
-        guard Current.viewController?.presentedViewController is AutoApproveController == false
+        
+        
+        switch UIApplication.shared.applicationState {
+            
+        case .background: // Background: then present local notification
+            Notify.shared.presentApproved(request: request, for: session)
+            
+        case .inactive: // Inactive: wait and try again
+            dispatchAfter(delay: 1.0, task: {
+                Policy.notifyUser(session: session, request: request)
+            })
+            
+        case .active:
+            guard Current.viewController?.presentedViewController is AutoApproveController == false
             else {
                 return
-        }
-        
-        guard UIApplication.shared.applicationState != .active else {
+            }
+            
             Current.viewController?.showApprovedRequest(session: session, request: request)
-            return
         }
         
-        // present notification
-        Notify.shared.presentApproved(request: request, for: session)
+        
     }
 }
