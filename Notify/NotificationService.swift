@@ -82,11 +82,11 @@ class NotificationService: UNNotificationServiceExtension {
                             // approved
                             if silo.hasCachedResponse(for: unsealedRequest) {
                                 content.title = "Approved request from \(session.pairing.displayName)."
-                                content.categoryIdentifier = ""
                             }
                             // not approved
                             else {
                                 content.title = "Request from \(session.pairing.displayName)."
+                                content.categoryIdentifier = Policy.authorizeCategoryIdentifier
                             }
                             
                             content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
