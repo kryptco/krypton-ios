@@ -247,6 +247,9 @@ class Silo {
         }
     }
     
+    func hasCachedResponse(for request:Request) -> Bool {
+        return requestCache?[request.id] != nil
+    }
     
     //MARK: Alter pendingRequestCache
     func clearPending(request:Request) {

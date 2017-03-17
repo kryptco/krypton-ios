@@ -14,30 +14,14 @@ import JSON
 class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
-    var bestAttemptContent: UNMutableNotificationContent?
-
+    
     struct InvalidRemoteNotification:Error{}
 
-    
-    static var shared:NotificationService?
-    
     var bestAttemptMutex = Mutex()
-    
-    var alertTitle:String?
-    var approved:Bool = false
-
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         
         self.contentHandler = contentHandler
-        self.bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        
-        NotificationService.shared = self
-
-        guard let bestAttemptContent = bestAttemptContent
-        else {
-            return
-        }
         
         // provision AWS API
         guard API.provision() else {
@@ -51,7 +35,7 @@ class NotificationService: UNNotificationServiceExtension {
         var session:Session
         var unsealedRequest:Request
         do {
-            (session, unsealedRequest) = try NotificationService.unsealRemoteNotification(userInfo: bestAttemptContent.userInfo)
+            (session, unsealedRequest) = try NotificationService.unsealRemoteNotification(userInfo: request.content.userInfo)
 
         } catch {
             log("could not processess remote notification content: \(error)")
@@ -71,6 +55,9 @@ class NotificationService: UNNotificationServiceExtension {
                 
                 dispatchMain {
                     UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                        
+                        var noSound = false
+                        
                         for note in notes {
                             guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
                                 let deliveredRequest = try? Request(json: requestObject)
@@ -83,27 +70,38 @@ class NotificationService: UNNotificationServiceExtension {
                                     UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
                                 })
                                 
-                                self.bestAttemptMutex.lock {
-                                    bestAttemptContent.sound = nil
-                                }
+                                noSound = true
+                                break
                             }
                         }
                         
                         self.bestAttemptMutex.lock {
-                            if let title = self.alertTitle {
-                                bestAttemptContent.title = title
+                            
+                            let content = UNMutableNotificationContent()
+                            
+                            // approved
+                            if silo.hasCachedResponse(for: unsealedRequest) {
+                                content.title = "Approved request from \(session.pairing.displayName)."
+                                content.categoryIdentifier = ""
+                            }
+                            // not approved
+                            else {
+                                content.title = "Request from \(session.pairing.displayName)."
                             }
                             
-                            if self.approved {
-                                bestAttemptContent.categoryIdentifier = ""
+                            content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
+                            
+                            if noSound {
+                                content.sound = nil
+                            } else {
+                                content.sound = UNNotificationSound.default()
                             }
                             
-                            bestAttemptContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
-                            bestAttemptContent.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
-                            bestAttemptContent.sound = UNNotificationSound.default()
+                            contentHandler(content)
+
                         }
 
-                        contentHandler(bestAttemptContent)
                     })
 
                 }
@@ -114,21 +112,23 @@ class NotificationService: UNNotificationServiceExtension {
             UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
                 for note in notes {
                     if note.request.identifier == unsealedRequest.id {
-                        let noteContent = note.request.content
                         
-                        self.bestAttemptMutex.lock {
-                            bestAttemptContent.title = noteContent.title
-                            bestAttemptContent.categoryIdentifier = noteContent.categoryIdentifier
-                            bestAttemptContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
-                            bestAttemptContent.userInfo = noteContent.userInfo
-                            bestAttemptContent.sound = UNNotificationSound.default()
+                        let noteContent = note.request.content
 
+                        self.bestAttemptMutex.lock {
+                            let currentContent = UNMutableNotificationContent()
+                            currentContent.title = noteContent.title
+                            currentContent.categoryIdentifier = noteContent.categoryIdentifier
+                            currentContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            currentContent.userInfo = noteContent.userInfo
+                            currentContent.sound = UNNotificationSound.default()
+                            
+                            contentHandler(currentContent)
                         }
                         // remove old note
                         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
                         
                         // replace with remote with same content
-                        contentHandler(bestAttemptContent)
                         
                         return
                     }
@@ -142,31 +142,29 @@ class NotificationService: UNNotificationServiceExtension {
     
     func failUnknown(with error:Error?) {
         
-        guard let bestAttemptContent = bestAttemptContent
-            else {
-                return
-        }
+        let content = UNMutableNotificationContent()
 
-        
-        
-        bestAttemptContent.title = "Request failed"
+        content.title = "Request failed"
         if let e = error {
-            bestAttemptContent.body = "The incoming request was invalid. \(e). Please try again."
+            content.body = "The incoming request was invalid. \(e). Please try again."
         } else {
-            bestAttemptContent.body = "The incoming request was invalid. Please try again."
+            content.body = "The incoming request was invalid. Please try again."
         }
-        bestAttemptContent.userInfo = [:]
+        content.userInfo = [:]
         
-        contentHandler?(bestAttemptContent)
-
+        contentHandler?(content)
     }
     
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-        if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
-            contentHandler(bestAttemptContent)
-        }
+        
+        let content = UNMutableNotificationContent()
+        
+        content.title = "Request could not be completed"
+        content.body = "The incoming request timed out. Please try again."
+        
+        contentHandler?(content)
     }
     
     
