@@ -123,12 +123,14 @@ class NotificationService: UNNotificationServiceExtension {
                             currentContent.userInfo = noteContent.userInfo
                             currentContent.sound = UNNotificationSound.default()
                             
+                            // remove old note
+                            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+
+                            
+                            // replace with remote with same content
                             contentHandler(currentContent)
                         }
-                        // remove old note
-                        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
                         
-                        // replace with remote with same content
                         
                         return
                     }
