@@ -74,9 +74,10 @@ struct Request:Jsonable {
 struct HostAuthVerificationFailed:Error{}
 
 struct SignRequest:Jsonable {
+    //  https://tools.ietf.org/html/rfc4252 section 7
     var data:Data
     var fingerprint:String
-    let hostAuth:HostAuth?
+    var hostAuth:HostAuth?
     
     struct InvalidSessionData:Error{}
     struct InvalidHostAuthSignature:Error{}
@@ -88,26 +89,37 @@ struct SignRequest:Jsonable {
         
         do {
             let json:Object = try json ~> "host_auth"
-            
-            guard data.count >= 36 else {
+
+            guard data.count >= 4 else {
                 throw InvalidSessionData()
             }
 
-            let sessionID = data.subdata(in: 4..<36)
+            let sessionIDLenBigEndianBytes = data.subdata(in: 0 ..< 4)
+            let sessionIDLen = Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))
+            guard data.count >= Int(4 + sessionIDLen) else {
+                throw InvalidSessionData()
+            }
+
+            let sessionID = data.subdata(in: 4..<Int(4 + sessionIDLen))
             
             let auth = try HostAuth(json: json)
             
-            guard data.count >= 36 else {
-                throw InvalidSessionData()
-            }
-
             guard try auth.verify(sessionID: sessionID) == true
             else {
                 throw InvalidHostAuthSignature()
             }
-            
             hostAuth = auth
 
+            guard data.count >= Int(4 + sessionIDLen + 1 + 4) else {
+                throw InvalidSessionData()
+            }
+
+            let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(4 + sessionIDLen + 1)..<Int(4 + sessionIDLen + 1 + 4))))
+            if userLen > 0 && data.count >= Int(4 + sessionIDLen + 1 + 4 + userLen) {
+                let userCStringBytes = data.subdata(in: Int(4 + sessionIDLen + 1 + 4)..<Int(4+sessionIDLen + 1 + 4 + userLen))
+                let user = String(bytes: userCStringBytes, encoding: .utf8)
+                self.user = user
+            }
         } catch {
             log("host auth error: \(error)")
             hostAuth = nil
@@ -127,22 +139,7 @@ struct SignRequest:Jsonable {
     
     
  
-    var user:String? {
-        guard data.count >= 38 else {
-            return nil
-        }
-        
-        //  user field starts at bytes[37]
-        let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: 37..<41)))
-        if userLen > 0 && data.count > Int(userLen + 41) {
-            let userCStringBytes = data.subdata(in: 41..<Int(41+userLen))
-            let user = String(bytes: userCStringBytes, encoding: .utf8)
-            log("userLen \(userLen) user \(user)")
-            return user
-        }
-        
-        return nil
-    }
+    var user:String?
 
     var display:String {
         let host = hostAuth?.hostNames.first ?? "unknown host"
