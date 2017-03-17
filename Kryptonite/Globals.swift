@@ -21,14 +21,6 @@ var isDebug:Bool {
     #endif
 }
 
-var isBeta:Bool {
-    
-    if ProcessInfo.processInfo.environment["BETA"] != nil {
-        return true
-    }
-    
-    return false
-}
 
 //MARK: Defaults
 

@@ -18,11 +18,9 @@ enum UpgradeMethod:String {
     case beta = "curl https://krypt.co/kr-beta | sh"
     case prod = "kr upgrade"
     
+    @available(iOS, deprecated: 1.0, message: "Testflight only, change to production upgrade instruction before app store release.")
     static var current:String {
-        if isBeta {
-            return UpgradeMethod.beta.rawValue
-        }
-        
-        return UpgradeMethod.prod.rawValue
+        //WARNING: change before app store release
+        return UpgradeMethod.beta.rawValue
     }
 }
