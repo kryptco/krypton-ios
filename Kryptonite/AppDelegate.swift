@@ -204,8 +204,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let sessionUUID = notificationDict["session_uuid"] as? String,
             let session = Silo.shared.sessionServiceUUIDS[sessionUUID],
             let alert = notificationDict["alert"] as? String,
-            alert == "Request from ".appending(session.pairing.displayName)
-            else {
+            alert == "Kryptonite Request"
+        else {
                 log("invalid untrusted encrypted notification", .error)
                 throw InvalidNotification()
         }
