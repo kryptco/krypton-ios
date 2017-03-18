@@ -41,8 +41,10 @@ class Analytics {
         return UserDefaults.group?.string(forKey: "UserAgent")
     }
 
+    static let analyticsUserIDKey = "analyticsUserID"
+
     class var userID : String {
-        if let userID = UserDefaults.group?.string(forKey: "analyticsUserID") {
+        if let userID = UserDefaults.group?.string(forKey: analyticsUserIDKey) {
             return userID
         }
         mutex.lock()
@@ -50,9 +52,20 @@ class Analytics {
         var randBytes = [UInt8](repeating: 0, count: 16)
         let _ = SecRandomCopyBytes(kSecRandomDefault, randBytes.count, &randBytes)
         let id = Data(randBytes).toBase64()
-        UserDefaults.group?.set(id, forKey: "analyticsUserID")
+        UserDefaults.group?.set(id, forKey: analyticsUserIDKey)
         UserDefaults.group?.synchronize()
         return id
+    }
+
+    class func migrateOldIDIfExists() {
+        if let oldUserID = UserDefaults.standard.string(forKey: analyticsUserIDKey) {
+            mutex.lock()
+            defer { mutex.unlock() }
+            UserDefaults.group?.set(oldUserID, forKey: analyticsUserIDKey)
+            UserDefaults.group?.synchronize()
+            UserDefaults.standard.set(nil, forKey: analyticsUserIDKey)
+            UserDefaults.standard.synchronize()
+        }
     }
 
     class func sendEmailToTeamsIfNeeded(email:String) {
