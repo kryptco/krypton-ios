@@ -96,11 +96,13 @@ struct SignRequest:Jsonable {
 
             let sessionIDLenBigEndianBytes = data.subdata(in: 0 ..< 4)
             let sessionIDLen = Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))
-            guard data.count >= Int(4 + sessionIDLen) else {
+            let sessionIDStart = 4
+            let sessionIDEnd = sessionIDStart + sessionIDLen
+            guard data.count >= Int(sessionIDEnd) else {
                 throw InvalidSessionData()
             }
 
-            let sessionID = data.subdata(in: 4..<Int(4 + sessionIDLen))
+            let sessionID = data.subdata(in: sessionIDStart..<Int(sessionIDEnd))
             
             let auth = try HostAuth(json: json)
             
@@ -110,13 +112,17 @@ struct SignRequest:Jsonable {
             }
             hostAuth = auth
 
-            guard data.count >= Int(4 + sessionIDLen + 1 + 4) else {
+            let userLenStart = sessionIDEnd + 1
+            let userLenEnd = userLenStart + 4
+            guard data.count >= Int(userLenEnd) else {
                 throw InvalidSessionData()
             }
 
-            let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(4 + sessionIDLen + 1)..<Int(4 + sessionIDLen + 1 + 4))))
-            if userLen > 0 && data.count >= Int(4 + sessionIDLen + 1 + 4 + userLen) {
-                let userCStringBytes = data.subdata(in: Int(4 + sessionIDLen + 1 + 4)..<Int(4+sessionIDLen + 1 + 4 + userLen))
+            let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(userLenStart)..<Int(userLenEnd))))
+            let userStart = userLenEnd
+            let userEnd = userStart + userLen
+            if userLen > 0 && data.count >= Int(userEnd) {
+                let userCStringBytes = data.subdata(in: Int(userStart)..<Int(userEnd))
                 let user = String(bytes: userCStringBytes, encoding: .utf8)
                 self.user = user
             }
