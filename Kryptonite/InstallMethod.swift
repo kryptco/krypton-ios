@@ -12,6 +12,13 @@ enum InstallMethod:String {
     case brew = "brew install kryptco/tap/kr"
     case npm = "npm install -g krd"
     case curl = "curl https://krypt.co/kr | sh"
+    
+    
+    @available(iOS, deprecated: 1.0, message: "Testflight only, change to production install instruction before app store release.")
+    var command:String {
+        return UpgradeMethod.beta.rawValue
+        //return self.rawValue
+    }
 }
 
 enum UpgradeMethod:String {

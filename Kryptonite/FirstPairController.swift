@@ -93,7 +93,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         
         brewButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         brewLine.backgroundColor = UIColor.app
-        installLabel.text = InstallMethod.brew.rawValue
+        installLabel.text = InstallMethod.brew.command
         
         Analytics.postEvent(category: "install", action: "brew")
     }
@@ -103,7 +103,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         
         npmButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         npmLine.backgroundColor = UIColor.app
-        installLabel.text = InstallMethod.npm.rawValue
+        installLabel.text = InstallMethod.npm.command
         
         Analytics.postEvent(category: "install", action: "npm")
     }
@@ -113,7 +113,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         
         curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         curlLine.backgroundColor = UIColor.app
-        installLabel.text = InstallMethod.curl.rawValue
+        installLabel.text = InstallMethod.curl.command
         
         Analytics.postEvent(category: "install", action: "curl")
     }
