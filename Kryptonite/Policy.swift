@@ -135,7 +135,7 @@ class Policy {
         }
         
         var cacheKey:String {
-            return "\(session.id)_\(request.id)"
+            return CacheKey(session, request)
         }
         
     }

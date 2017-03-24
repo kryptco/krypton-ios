@@ -20,6 +20,14 @@ struct RequestPendingError:Error{}
 
 struct SiloCacheCreationError:Error{}
 
+typealias CacheKey = String
+extension CacheKey {
+    init(_ session:Session, _ request:Request) {
+        self = "\(session.id)_\(request.id)"
+    }
+}
+
+
 class Silo {
     
     var sessionLabels:[SessionLabel:Session] = [:]
@@ -36,7 +44,7 @@ class Silo {
     
     // singelton
     private static var sharedSilo:Silo?
-
+    
 
     init(bluetoothEnabled:Bool = true) {
         requestCache = try? Cache<NSData>(name: "silo_cache", directory: sharedDirectory)
@@ -247,13 +255,8 @@ class Silo {
         }
     }
     
-    func hasCachedResponse(for request:Request) -> Bool {
-        return requestCache?[request.id] != nil
-    }
-    
-    //MARK: Alter pendingRequestCache
-    func clearPending(request:Request) {
-        pendingRequests?.removeObject(forKey: request.id)
+    func hasCachedResponse(for session:Session,with request:Request) -> Bool {
+        return requestCache?[CacheKey(session, request)] != nil
     }
     
     //MARK: Session Pairing Completion
@@ -307,7 +310,7 @@ class Silo {
         }
         
         requestCache?.removeExpiredObjects()
-        if  let cachedResponseData = requestCache?[request.id] as? Data {
+        if  let cachedResponseData = requestCache?[CacheKey(session, request)] as? Data {
             let json:Object = try JSON.parse(data: cachedResponseData)
             let response = try Response(json: json)
             try self.send(session: session, response: response, completionHandler: completionHandler)
@@ -341,10 +344,10 @@ class Silo {
 
     func handleRequestRequiresApproval(request: Request, session: Session, communicationMedium: CommunicationMedium, completionHandler: (() -> ())?) throws {
         pendingRequests?.removeExpiredObjects()
-        if pendingRequests?.object(forKey: request.id) != nil {
+        if pendingRequests?.object(forKey: CacheKey(session, request)) != nil {
             throw RequestPendingError()
         }
-        pendingRequests?.setObject("", forKey: request.id, expires: .seconds(Properties.requestTimeTolerance * 2))
+        pendingRequests?.setObject("", forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
         
         Policy.addPendingAuthorization(session: session, request: request)
         Policy.requestUserAuthorization(session: session, request: request)
@@ -437,7 +440,7 @@ class Silo {
         
         let responseData = try response.jsonData() as NSData
         
-        requestCache?.setObject(responseData, forKey: request.id, expires: .seconds(300))
+        requestCache?.setObject(responseData, forKey: CacheKey(session, request), expires: .seconds(300))
         
         return response
 

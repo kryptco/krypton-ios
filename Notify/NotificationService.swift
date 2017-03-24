@@ -80,7 +80,7 @@ class NotificationService: UNNotificationServiceExtension {
                             let content = UNMutableNotificationContent()
                             
                             // approved
-                            if silo.hasCachedResponse(for: unsealedRequest) {
+                            if silo.hasCachedResponse(for: session, with: unsealedRequest) {
                                 content.title = "Approved request from \(session.pairing.displayName)."
                             }
                             // not approved
