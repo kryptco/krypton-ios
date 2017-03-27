@@ -149,7 +149,7 @@ class LogManager:JsonWritable {
         }
         
         // db file
-        let url = directoryURL.appendingPathComponent("KryptoniteCoreData.sqlite")
+        let url = directoryURL.appendingPathComponent("KryptoniteCoreDataStore.sqlite")
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
 
         do {
@@ -194,6 +194,9 @@ class LogManager:JsonWritable {
     //MARK: Export
     
     var object:Object {
+        mutex.lock()
+        defer { mutex.unlock() }
+
         return ["logs": self.logs.map({ $0.object })]
     }
     

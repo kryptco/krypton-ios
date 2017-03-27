@@ -96,7 +96,6 @@
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
-		FAA536231D8F072500549710 /* UIView+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536221D8F072500549710 /* UIView+KR.swift */; };
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
 		FAA5362F1D8F43D100549710 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362E1D8F43D100549710 /* Links.swift */; };
@@ -530,7 +529,6 @@
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
-		FAA536221D8F072500549710 /* UIView+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+KR.swift"; sourceTree = "<group>"; };
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
 		FAA5362E1D8F43D100549710 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
@@ -966,7 +964,6 @@
 			children = (
 				FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */,
 				FADD71491D772F8200DA5112 /* Date+KR.swift */,
-				FAA536221D8F072500549710 /* UIView+KR.swift */,
 				FABA4B171D9C21BE0057A666 /* String+User.swift */,
 			);
 			name = Extensions;
@@ -1665,7 +1662,6 @@
 				FAE4958F1DBD89F100A97708 /* M13CheckboxFadeController.swift in Sources */,
 				FAAE81911E576FC2002A9AE6 /* Policy+UI.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
-				FAA536231D8F072500549710 /* UIView+KR.swift in Sources */,
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
 				FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,

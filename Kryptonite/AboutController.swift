@@ -52,6 +52,19 @@ class AboutController: KRBaseController {
         Analytics.set(disabled: sender.isOn)
     }
     
+    @IBAction func exportTapped() {
+        do {
+            let logs = try LogManager.shared.exportLogs()
+            
+            let activityController = UIActivityViewController(activityItems: [logs
+                ], applicationActivities: nil)
+            
+            self.present(activityController, animated: true, completion: nil)
+        } catch {
+            self.showWarning(title: "Error", body: "Could not export logs. \(error).")
+        }
+    }
+    
     @IBAction func trashTapped() {
         
         let sheet = UIAlertController(title: "Do you want to destroy your private and public key?", message: "Your private key will be gone forever and you will be asked to generate a new one. You will be unpaired from all devices.", preferredStyle: .actionSheet)
