@@ -197,7 +197,7 @@ class LogManager:JsonWritable {
         mutex.lock()
         defer { mutex.unlock() }
 
-        return ["logs": self.logs.map({ $0.object })]
+        return ["logs": self.logs.sorted(by: { $0.date > $1.date }).map({ $0.object})]
     }
     
     func exportLogs() throws -> String {
