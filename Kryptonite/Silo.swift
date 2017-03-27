@@ -410,12 +410,12 @@ class Silo {
                     sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data)
                     
                     dispatchAsync {
-                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.data.toBase64(), signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
+                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.data.toBase64(), hostAuth: signRequest.hostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                     }
                 } else {
                     err = "rejected"
                     dispatchAsync {
-                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.data.toBase64(), signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
+                        LogManager.shared.save(theLog: SignatureLog(session: session.id, digest: signRequest.data.toBase64(), hostAuth: signRequest.hostAuth, signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
                     }
                 }
 

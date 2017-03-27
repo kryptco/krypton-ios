@@ -8,8 +8,9 @@
 
 import Foundation
 import CoreData
+import JSON
 
-class LogManager {
+class LogManager:JsonWritable {
     
     private var mutex = Mutex()
     private var logs:[SignatureLog] = []
@@ -33,13 +34,14 @@ class LogManager {
                     let digest = managedLog.value(forKey: "digest") as? String,
                     let signature = managedLog.value(forKey: "signature") as? String,
                     let date = managedLog.value(forKey: "date") as? Date,
+                    let hostAuth = managedLog.value(forKey: "host_auth") as? String,
                     let displayName = managedLog.value(forKey: "displayName") as? String
                 else {
                     continue
                 }
                 
                 if sigs[digest] == nil {
-                    logs.append(SignatureLog(session: session, digest: digest, signature: signature, displayName: displayName, date: date))
+                    logs.append(SignatureLog(session: session, digest: digest, hostAuth: hostAuth, signature: signature, displayName: displayName, date: date))
                     sigs[digest] = true
                 }
                 
@@ -105,6 +107,7 @@ class LogManager {
         logEntry.setValue(theLog.signature, forKey: "signature")
         logEntry.setValue(theLog.digest, forKey: "digest")
         logEntry.setValue(theLog.date, forKey: "date")
+        logEntry.setValue(theLog.hostAuth, forKey: "host_auth")
         logEntry.setValue(theLog.displayName, forKey: "displayName")
         
         //
@@ -174,7 +177,7 @@ class LogManager {
     
     
     
-    // MARK: - Core Data Saving support
+    //MARK: - Core Data Saving support
     
     func saveContext () {
         if managedObjectContext.hasChanges {
@@ -187,6 +190,16 @@ class LogManager {
         }
     }
 
+    
+    //MARK: Export
+    
+    var object:Object {
+        return ["logs": self.logs.map({ $0.object })]
+    }
+    
+    func exportLogs() throws -> String {
+        return try self.jsonString()
+    }
 }
 
 extension Session {

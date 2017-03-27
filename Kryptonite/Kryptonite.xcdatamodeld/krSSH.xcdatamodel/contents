@@ -5,10 +5,11 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="digest" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="host_auth" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="session" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SignatureLog" positionX="117" positionY="-18" width="252" height="135"/>
+        <element name="SignatureLog" positionX="117" positionY="-18" width="252" height="150"/>
     </elements>
 </model>
