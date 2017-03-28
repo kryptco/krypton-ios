@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         API().updateSNS(token: token) { (endpoint, err) in
             guard let arn = endpoint else {
-                log("AWS SNS error: \(err)", .error)
+                log("AWS SNS error: \(String(describing: err))", .error)
                 return
             }
             

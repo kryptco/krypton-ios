@@ -61,7 +61,7 @@ class Notify {
                 let request = UNNotificationRequest(identifier: noteId, content: content, trigger: nil)
                 
                 UNUserNotificationCenter.current().add(request) {(error) in
-                    log("error firing notification: \(error)")
+                    log("error firing notification: \(String(describing: error))")
                 }
 
             })
@@ -129,7 +129,7 @@ class Notify {
                 let request = UNNotificationRequest(identifier: noteId.with(count: noteIndex+1), content: content, trigger: nil)
                 
                 UNUserNotificationCenter.current().add(request) {(error) in
-                    log("error firing notification: \(error)")
+                    log("error firing notification: \(String(describing: error))")
                     self.noteMutex.lock {
                         self.pushedNotifications[noteId] = noteIndex+1
                     }
@@ -153,7 +153,7 @@ class Notify {
 typealias RequestNotificationIdentifier = String
 extension RequestNotificationIdentifier {
     init(request:Request, session:Session) {
-        self = "\(session.id)_\(request.sign?.display)"
+        self = "\(session.id)_\(String(describing: request.sign?.display))"
     }
     
     func with(count:Int) -> String {

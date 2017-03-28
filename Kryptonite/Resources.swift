@@ -323,7 +323,7 @@ extension UIView {
         self.layer.addSublayer(innerCircle)
         
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotateAnimation.toValue = CGFloat(M_PI*2.0)
+        rotateAnimation.toValue = CGFloat(Double.pi*2.0)
         rotateAnimation.duration = 2.0
         rotateAnimation.isCumulative = true
         rotateAnimation.repeatCount = .infinity
