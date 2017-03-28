@@ -334,9 +334,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         
-        //  TODO: since email is only sent on change, users from before this
-        //  feature will not publish email unless it is changed we can remove
-        //  this once all current beta users have published email
+        //  Send email again if not sent succesfully
         if let email = try? KeyManager.sharedInstance().getMe() {
             dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
         }
