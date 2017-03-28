@@ -48,7 +48,7 @@ class SessionDetailController: KRBaseTableController {
         if let session = session {
             deviceNameLabel.text = session.pairing.displayName.uppercased()
 
-            logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
+            logs = LogManager.shared.fetch(for: session.id).sorted(by: { $0.date > $1.date })
             lastAccessLabel.text =  "Active as of " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
             
             updateApprovalControl(session: session)
@@ -85,7 +85,7 @@ class SessionDetailController: KRBaseTableController {
         }
         
         dispatchAsync {
-            self.logs = LogManager.shared.all.filter({ $0.session == session.id }).sorted(by: { $0.date > $1.date })
+            self.logs = LogManager.shared.fetch(for: session.id).sorted(by: { $0.date > $1.date })
             
             dispatchMain {                
                 self.lastAccessLabel.text =  "Active as of " + (self.logs.first?.date.timeAgo() ?? session.created.timeAgo())
