@@ -109,13 +109,13 @@ class NotificationService: UNNotificationServiceExtension {
             
         } catch {
             
-            // look for delivered notifications with same request (via bluetooth or silent notifications)
-            UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
-                for note in notes {
-                    if note.request.identifier == unsealedRequest.id {
+            // look for pending notifications with same request (via bluetooth or silent notifications)
+            UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notes) in
+                for request in notes {
+                    if request.identifier == unsealedRequest.id {
                         
-                        let noteContent = note.request.content
-
+                        let noteContent = request.content
+                        
                         self.bestAttemptMutex.lock {
                             let currentContent = UNMutableNotificationContent()
                             currentContent.title = noteContent.title
@@ -125,24 +125,24 @@ class NotificationService: UNNotificationServiceExtension {
                             currentContent.sound = UNNotificationSound.default()
                             
                             // remove old note
-                            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-
+                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
                             
                             // replace with remote with same content
                             contentHandler(currentContent)
                         }
                         
-                        
                         return
                     }
                 }
+
                 
-                // look for pending notifications with same request (via bluetooth or silent notifications)
-                UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notes) in
-                    for request in notes {
-                        if request.identifier == unsealedRequest.id {
+                // look for delivered notifications with same request (via bluetooth or silent notifications)
+                UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                    for note in notes {
+                        
+                        if note.request.identifier == unsealedRequest.id {
                             
-                            let noteContent = request.content
+                            let noteContent = note.request.content
                             
                             self.bestAttemptMutex.lock {
                                 let currentContent = UNMutableNotificationContent()
@@ -153,8 +153,7 @@ class NotificationService: UNNotificationServiceExtension {
                                 currentContent.sound = UNNotificationSound.default()
                                 
                                 // remove old note
-                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
-                                
+                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
                                 
                                 // replace with remote with same content
                                 contentHandler(currentContent)
@@ -164,7 +163,9 @@ class NotificationService: UNNotificationServiceExtension {
                             return
                         }
                     }
+
                     
+                    // if not pending or delivered, fail with unknown error.
                     self.failUnknown(with: error)
                 })
                 
