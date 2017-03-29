@@ -109,6 +109,7 @@ class NotificationService: UNNotificationServiceExtension {
             
         } catch {
             
+            // look for delivered notifications with same request (via bluetooth or silent notifications)
             UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
                 for note in notes {
                     if note.request.identifier == unsealedRequest.id {
@@ -136,7 +137,37 @@ class NotificationService: UNNotificationServiceExtension {
                     }
                 }
                 
-                self.failUnknown(with: error)
+                // look for pending notifications with same request (via bluetooth or silent notifications)
+                UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notes) in
+                    for request in notes {
+                        if request.identifier == unsealedRequest.id {
+                            
+                            let noteContent = request.content
+                            
+                            self.bestAttemptMutex.lock {
+                                let currentContent = UNMutableNotificationContent()
+                                currentContent.title = noteContent.title
+                                currentContent.categoryIdentifier = noteContent.categoryIdentifier
+                                currentContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                                currentContent.userInfo = noteContent.userInfo
+                                currentContent.sound = UNNotificationSound.default()
+                                
+                                // remove old note
+                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
+                                
+                                
+                                // replace with remote with same content
+                                contentHandler(currentContent)
+                            }
+                            
+                            
+                            return
+                        }
+                    }
+                    
+                    self.failUnknown(with: error)
+                })
+                
             })
         }
         
