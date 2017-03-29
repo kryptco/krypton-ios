@@ -109,12 +109,9 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         // Check old version sessions
         let (hasOld, sessionNames) = SessionManager.hasOldSessions()
         if hasOld {
-            //TODO: Perform segue, show re-paring dialog for new sessions
             self.performSegue(withIdentifier: "showRePairWarning", sender: sessionNames)
             return
         }
-
-
     }
     
     override func didReceiveMemoryWarning() {

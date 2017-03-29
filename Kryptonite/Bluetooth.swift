@@ -124,7 +124,8 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
 
         for matchingPeripheral in central.retrieveConnectedPeripherals(withServices: Array(allServiceUUIDS)) {
             if !pairedPeripherals.values.contains(matchingPeripheral) {
-                log("found unpaired connected peripheral with services \(matchingPeripheral.services)")
+                let services = String(describing: matchingPeripheral.services)
+                log("found unpaired connected peripheral with services \(services)")
                 discoveredPeripherals.insert(matchingPeripheral)
                 connectPeripheral(central, matchingPeripheral)
             }
@@ -200,7 +201,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         mutex.lock()
         defer { mutex.unlock() }
-        log("Discovered \(peripheral.name) at RSSI \(RSSI)")
+        log("Discovered \(String(describing: peripheral.name)) at RSSI \(RSSI)")
         //  keep reference so not GCed
         discoveredPeripherals.insert(peripheral)
 
@@ -463,7 +464,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         mutex.lock()
         defer { mutex.unlock() }
-        log("Peripheral \(peripheral.identifier) disconnected, error \(error)")
+        log("Peripheral \(peripheral.identifier) disconnected, error \(String(describing: error))")
 
         recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
         removePeripheralLocked(central: central, peripheral: peripheral)

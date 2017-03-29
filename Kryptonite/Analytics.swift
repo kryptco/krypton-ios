@@ -80,7 +80,7 @@ class Analytics {
             req.start { response in
                 guard let status = response.statusCode, (200..<300).contains(status)
                 else {
-                    log("put email failure: \(response.error)", .error)
+                    log("put email failure: \(String(describing: response.error))", .error)
                     return
                 }
 

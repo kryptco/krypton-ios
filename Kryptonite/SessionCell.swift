@@ -36,7 +36,7 @@ class SessionCell: UITableViewCell {
         deviceNameLabel.text = session.pairing.displayName.uppercased()
         lastAccessLabel.text = (session.lastAccessed?.timeAgo() ?? session.created.timeAgo())
         
-        if let displayName = LogManager.shared.all.filter({$0.session == session.id}).sorted(by: {$0.date > $1.date}).first?.displayName {
+        if let displayName = LogManager.shared.fetch(for: session.id).sorted(by: {$0.date > $1.date}).first?.displayName {
             commandLabel.text = "\(displayName)"
         } else {
             commandLabel.text = "No activity"

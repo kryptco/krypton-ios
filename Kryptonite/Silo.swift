@@ -310,7 +310,7 @@ class Silo {
         }
         
         requestCache?.removeExpiredObjects()
-        if  let cachedResponseData = requestCache?[CacheKey(session, request)] as? Data {
+        if  let cachedResponseData = requestCache?[CacheKey(session, request)] as Data? {
             let json:Object = try JSON.parse(data: cachedResponseData)
             let response = try Response(json: json)
             try self.send(session: session, response: response, completionHandler: completionHandler)

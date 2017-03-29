@@ -97,7 +97,7 @@ struct SignRequest:Jsonable {
             let sessionIDLenBigEndianBytes = data.subdata(in: 0 ..< 4)
             let sessionIDLen = Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))
             let sessionIDStart = 4
-            let sessionIDEnd = sessionIDStart + sessionIDLen
+            let sessionIDEnd = sessionIDStart + Int(sessionIDLen)
             guard data.count >= Int(sessionIDEnd) else {
                 throw InvalidSessionData()
             }
@@ -120,7 +120,7 @@ struct SignRequest:Jsonable {
 
             let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(userLenStart)..<Int(userLenEnd))))
             let userStart = userLenEnd
-            let userEnd = userStart + userLen
+            let userEnd = userStart + Int(userLen)
             if userLen > 0 && data.count >= Int(userEnd) {
                 let userCStringBytes = data.subdata(in: Int(userStart)..<Int(userEnd))
                 let user = String(bytes: userCStringBytes, encoding: .utf8)
