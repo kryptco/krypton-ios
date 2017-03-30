@@ -1,5 +1,5 @@
 //
-//  SecKeyECASN1.swift
+//  SSHKeyFormat.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 8/28/16.

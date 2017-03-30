@@ -228,6 +228,18 @@
 		FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		FA4A84C31E8D5A040082274A /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXContainerItemProxy section */
 		8D003DE21D90EBB10085ED21 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1135,6 +1147,7 @@
 				FA49F7951D9B6B3300372556 /* Embed App Extensions */,
 			);
 			buildRules = (
+				FA4A84C31E8D5A040082274A /* PBXBuildRule */,
 			);
 			dependencies = (
 				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,

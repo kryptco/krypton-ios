@@ -1,5 +1,5 @@
 //
-//  SecStatus.swift
+//  CryptoError.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 8/28/16.
