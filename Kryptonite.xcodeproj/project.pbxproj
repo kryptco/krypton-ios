@@ -1136,6 +1136,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
+				8D45AFEF1E8D718200E84A57 /* Compile ssh-wire */,
 				FA8141521D714250004FE58C /* CommonCrypto */,
 				FA03C5961E7609940019649E /* Bump Build */,
 				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
@@ -1168,6 +1169,7 @@
 				FAEE04961D74BCC3002A7AFD /* Sources */,
 				FAEE04971D74BCC3002A7AFD /* Frameworks */,
 				FAEE04981D74BCC3002A7AFD /* Resources */,
+				8D45AFF01E8D71BE00E84A57 /* Compile ssh-wire */,
 			);
 			buildRules = (
 			);
@@ -1184,6 +1186,7 @@
 			buildConfigurationList = FAF1E6381E031BB9003CBEA2 /* Build configuration list for PBXNativeTarget "Notify" */;
 			buildPhases = (
 				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
+				8D45AFDE1E8D59CB00E84A57 /* Compile ssh-wire */,
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
 				FAB517BE1E54D6C90032DD47 /* Build Bump */,
 				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
@@ -1487,6 +1490,48 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8D45AFDE1E8D59CB00E84A57 /* Compile ssh-wire */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile ssh-wire";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
+		};
+		8D45AFEF1E8D718200E84A57 /* Compile ssh-wire */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile ssh-wire";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
+		};
+		8D45AFF01E8D71BE00E84A57 /* Compile ssh-wire */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile ssh-wire";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
+		};
 		FA03C5961E7609940019649E /* Bump Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
