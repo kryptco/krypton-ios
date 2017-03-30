@@ -14,6 +14,12 @@ struct HostAuth:Jsonable{
     let hostKey: String
     let signature: String
     let hostNames: [String]
+
+    init(hostKey: String, signature: String, hostNames: [String]) {
+        self.hostKey = hostKey
+        self.signature = signature
+        self.hostNames = hostNames
+    }
     
     public init(json: Object) throws {
         hostKey = try json ~> "host_key"

@@ -82,6 +82,51 @@ struct SignRequest:Jsonable {
     struct InvalidSessionData:Error{}
     struct InvalidHostAuthSignature:Error{}
 
+    init(data: Data, fingerprint: String, hostAuth: HostAuth? = nil) throws {
+        self.data = data
+        self.fingerprint = fingerprint
+        if let hostAuth = hostAuth{
+            try verifyAndSetHostAuthAndUser(hostAuth: hostAuth)
+        }
+    }
+
+    mutating func verifyAndSetHostAuthAndUser(hostAuth: HostAuth) throws {
+        guard data.count >= 4 else {
+            throw InvalidSessionData()
+        }
+        
+        let sessionIDLenBigEndianBytes = data.subdata(in: 0 ..< 4)
+        let sessionIDLen = Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))
+        let sessionIDStart = 4
+        let sessionIDEnd = sessionIDStart + Int(sessionIDLen)
+        guard data.count >= Int(sessionIDEnd) else {
+            throw InvalidSessionData()
+        }
+        
+        let sessionID = data.subdata(in: sessionIDStart..<Int(sessionIDEnd))
+        
+        guard try hostAuth.verify(sessionID: sessionID) == true
+            else {
+                log("hostauth verify failed: \(hostAuth) digest \(data.toBase64())")
+                throw InvalidHostAuthSignature()
+        }
+        self.hostAuth = hostAuth
+        
+        let userLenStart = sessionIDEnd + 1
+        let userLenEnd = userLenStart + 4
+        guard data.count >= Int(userLenEnd) else {
+            throw InvalidSessionData()
+        }
+        
+        let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(userLenStart)..<Int(userLenEnd))))
+        let userStart = userLenEnd
+        let userEnd = userStart + Int(userLen)
+        if userLen > 0 && data.count >= Int(userEnd) {
+            let userCStringBytes = data.subdata(in: Int(userStart)..<Int(userEnd))
+            let user = String(bytes: userCStringBytes, encoding: .utf8)
+            self.user = user
+        }
+    }
     
     init(json: Object) throws {
         data        = try ((json ~> "data") as String).fromBase64()
@@ -90,43 +135,8 @@ struct SignRequest:Jsonable {
         do {
             let json:Object = try json ~> "host_auth"
 
-            guard data.count >= 4 else {
-                throw InvalidSessionData()
-            }
-
-            let sessionIDLenBigEndianBytes = data.subdata(in: 0 ..< 4)
-            let sessionIDLen = Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))
-            let sessionIDStart = 4
-            let sessionIDEnd = sessionIDStart + Int(sessionIDLen)
-            guard data.count >= Int(sessionIDEnd) else {
-                throw InvalidSessionData()
-            }
-
-            let sessionID = data.subdata(in: sessionIDStart..<Int(sessionIDEnd))
-            
             let auth = try HostAuth(json: json)
-            
-            guard try auth.verify(sessionID: sessionID) == true
-            else {
-                log("hostauth verify failed: \(auth) digest \(data.toBase64())")
-                throw InvalidHostAuthSignature()
-            }
-            hostAuth = auth
-
-            let userLenStart = sessionIDEnd + 1
-            let userLenEnd = userLenStart + 4
-            guard data.count >= Int(userLenEnd) else {
-                throw InvalidSessionData()
-            }
-
-            let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(userLenStart)..<Int(userLenEnd))))
-            let userStart = userLenEnd
-            let userEnd = userStart + Int(userLen)
-            if userLen > 0 && data.count >= Int(userEnd) {
-                let userCStringBytes = data.subdata(in: Int(userStart)..<Int(userEnd))
-                let user = String(bytes: userCStringBytes, encoding: .utf8)
-                self.user = user
-            }
+            try verifyAndSetHostAuthAndUser(hostAuth: auth)
         } catch {
             log("host auth error: \(error)")
             hostAuth = nil

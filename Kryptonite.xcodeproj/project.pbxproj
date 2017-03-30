@@ -12,6 +12,10 @@
 		8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
+		8D45AFF61E8D739500E84A57 /* SSHVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45AFF51E8D739500E84A57 /* SSHVerificationTests.swift */; };
+		8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
+		8D45B0081E8D7CEA00E84A57 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
+		8D45B00A1E8D7DBB00E84A57 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
 		8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
@@ -455,6 +459,8 @@
 		8D003DF11D90EDE30085ED21 /* Sodium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sodium.swift; sourceTree = "<group>"; };
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
+		8D45AFF51E8D739500E84A57 /* SSHVerificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHVerificationTests.swift; sourceTree = "<group>"; };
+		8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		8D7941671D98732600F6E32E /* NetworkProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		8D83990B1E56063A0051C6BA /* HostAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostAuth.swift; sourceTree = "<group>"; };
 		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
@@ -654,6 +660,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D45B00A1E8D7DBB00E84A57 /* libsshwire.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,6 +1092,8 @@
 				FAC873F51E6A4D32003D112E /* PairingTests.swift */,
 				8D003DF41D90EECE0085ED21 /* SodiumTests.swift */,
 				FAEE049E1D74BCC3002A7AFD /* Info.plist */,
+				8D45AFF51E8D739500E84A57 /* SSHVerificationTests.swift */,
+				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
 			);
 			path = KryptoTests;
 			sourceTree = "<group>";
@@ -1797,11 +1806,14 @@
 				FAC873F91E6A4DC1003D112E /* Version.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
 				FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */,
+				8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */,
 				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
+				8D45AFF61E8D739500E84A57 /* SSHVerificationTests.swift in Sources */,
 				FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */,
 				8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */,
 				FAE45B9B1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
+				8D45B0081E8D7CEA00E84A57 /* HostAuth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2135,10 +2147,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "KryptoTests/Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kryptonite.app/Kryptonite";
 			};
@@ -2153,10 +2167,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "KryptoTests/Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kryptonite.app/Kryptonite";
 			};
