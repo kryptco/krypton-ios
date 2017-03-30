@@ -108,6 +108,7 @@ struct SignRequest:Jsonable {
             
             guard try auth.verify(sessionID: sessionID) == true
             else {
+                log("hostauth verify failed: \(auth) digest \(data.toBase64())")
                 throw InvalidHostAuthSignature()
             }
             hostAuth = auth
