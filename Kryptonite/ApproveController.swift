@@ -142,7 +142,7 @@ class ApproveController:UIViewController {
         
         do {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
-            try Silo.shared.send(session: session, response: resp)
+            try TransportControl.shared.send(resp, for: session)
             
         } catch (let e) {
             isEnabled = true
@@ -191,7 +191,7 @@ class ApproveController:UIViewController {
         do {
             Policy.allow(session: session, for: Policy.Interval.oneHour)
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
-            try Silo.shared.send(session: session, response: resp)
+            try TransportControl.shared.send(resp, for: session)
             
         } catch (let e) {
             isEnabled = true
@@ -240,7 +240,7 @@ class ApproveController:UIViewController {
         do {
             if let request = request, let session = session {
                 let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: false)
-                try Silo.shared.send(session: session, response: resp)
+                try TransportControl.shared.send(resp, for: session)
             }
             
         } catch (let e) {

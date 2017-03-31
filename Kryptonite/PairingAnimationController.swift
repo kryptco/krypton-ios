@@ -43,8 +43,8 @@ class PairingAnimationController:UIViewController {
         let startTime = Date()
         
         dispatchAsync {
-            guard Silo.shared.waitForPairing(session: session) else {
-                Silo.shared.remove(session: session)
+            guard TransportControl.shared.waitForPairing(session: session) else {
+                TransportControl.shared.remove(session: session)
                 self.showWarning(title: "Error Pairing", body: "Timed out. Please make sure Bluetooth is on or you have an internet connection and try again.",
                 then: {
                     (self.presentingViewController as? FirstPairController)?.scanController?.canScan = true

@@ -21,7 +21,7 @@ class CommunicationActivity {
         activtyByMedium[medium] = Date()
     }
 
-    func isInactive(medium: CommunicationMedium) -> Bool {
+    func isInactive(on medium: CommunicationMedium) -> Bool {
         guard Date().timeIntervalSince1970 - created >= Properties.communicationActivityTimeout else {
             return false
         }

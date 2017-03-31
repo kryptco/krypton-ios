@@ -149,21 +149,20 @@ class PairApproveController: UIViewController {
                 
                 if let existing = SessionManager.shared.get(deviceName: pairing.name) {
                     SessionManager.shared.remove(session: existing)
-                    Silo.shared.remove(session: existing)
+                    TransportControl.shared.remove(session: existing)
                     Analytics.postEvent(category: "device", action: "pair", label: "existing")
                 } else {
                     Analytics.postEvent(category: "device", action: "pair", label: "new")
                 }
                 
                 let session = try Session(pairing: pairing)
-                Silo.shared.add(session: session)
-                Silo.shared.poll(session: session)
+                TransportControl.shared.add(session: session)
 
                 Policy.set(needsUserApproval: true, for: session)
 
                 dispatchAsync {
-                    guard Silo.shared.waitForPairing(session: session) else {
-                        Silo.shared.remove(session: session)
+                    guard TransportControl.shared.waitForPairing(session: session) else {
+                        TransportControl.shared.remove(session: session)
                         self.showWarning(title: "Error Pairing", body: "Timed out. Please make sure Bluetooth is on or you have an internet connection and try again.")
                         
                         Analytics.postEvent(category: "device", action: "pair", label: "failed")

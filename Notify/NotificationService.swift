@@ -47,11 +47,8 @@ class NotificationService: UNNotificationServiceExtension {
         
         
         do {
-
-            let silo = Silo(bluetoothEnabled: false)
-            silo.add(sessions: SessionManager.shared.all)
             
-            try silo.handle(request: unsealedRequest, session: session, communicationMedium: .remoteNotification, completionHandler: {
+            try TransportControl.shared.handle(medium: .remoteNotification, with: unsealedRequest, for: session, completionHandler: {
                 
                 dispatchMain {
                     UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
@@ -80,7 +77,7 @@ class NotificationService: UNNotificationServiceExtension {
                             let content = UNMutableNotificationContent()
                             
                             // approved
-                            if silo.hasCachedResponse(for: session, with: unsealedRequest) {
+                            if Silo.shared.hasCachedResponse(for: session, with: unsealedRequest) {
                                 content.title = "Approved request from \(session.pairing.displayName)."
                             }
                             // not approved

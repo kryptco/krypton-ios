@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreBluetooth
 import Sodium
 import JSON
 
@@ -16,7 +15,7 @@ typealias QueueName = String
 struct Pairing:JsonReadable {
 
     var name:String
-    var uuid: CBUUID
+    var uuid: UUID
     var queue:String {
         return uuid.uuidString.uppercased()
     }
@@ -42,7 +41,7 @@ struct Pairing:JsonReadable {
         self.workstationPublicKey = workstationPublicKey
         self.keyPair = keyPair
         self.name = name
-        self.uuid = CBUUID.init(data: workstationPublicKey.SHA256.subdata(in: 0 ..< 16))
+        self.uuid = NSUUID(uuidBytes: workstationPublicKey.SHA256.subdata(in: 0 ..< 16).bytes) as UUID
         self.version = version
     }
 

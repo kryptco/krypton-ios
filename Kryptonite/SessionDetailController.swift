@@ -127,7 +127,7 @@ class SessionDetailController: KRBaseTableController {
         if let session = session {
             Analytics.postEvent(category: "device", action: "unpair", label: "detail")
             SessionManager.shared.remove(session: session)
-            Silo.shared.remove(session: session)
+            TransportControl.shared.remove(session: session)
         }
         let _ = self.navigationController?.popViewController(animated: true)
     }

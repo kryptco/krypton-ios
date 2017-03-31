@@ -10,13 +10,87 @@ import Foundation
 import CoreBluetooth
 import AwesomeCache
 
-let krsshCharUUID = CBUUID(string: "20F53E48-C08D-423A-B2C2-1C797889AF24")
 
-let refreshByte = UInt8(0)
-let pingByte = UInt8(1)
-let pingMsg = Data(bytes: [pingByte])
+class BluetoothManager:TransportMedium {
+    
+    var handler:TransportControlRequestHandler
+    
+    var centralManager:CBCentralManager
+    var bluetoothDelegate:BluetoothDelegate
+    var sessionServiceUUIDS: [String: Session] = [:]
+    var mutex = Mutex()
+    
+    var medium:CommunicationMedium {
+        return .bluetooth
+    }
+    
+    required init(handler: @escaping TransportControlRequestHandler) {
+        self.handler = handler
+        self.bluetoothDelegate = BluetoothDelegate()
+        self.centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
+        self.bluetoothDelegate.onReceive = onBluetoothReceive
+    }
+    
+    //MARK: Transport
+    
+    func send(message:NetworkMessage, for session:Session, completionHandler: (()->Void)?) {
+        //todo: bluetooth completion
+        bluetoothDelegate.writeToServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid), message: message)
+
+    }
+    func add(session:Session) {
+        mutex.lock {
+            let uuid = session.pairing.uuid
+            sessionServiceUUIDS[uuid.uuidString] = session
+            bluetoothDelegate.addServiceUUID(uuid: CBUUID(nsuuid: uuid))
+        }
+
+    }
+    func remove(session:Session) {
+        mutex.lock {
+            let uuid = session.pairing.uuid
+            sessionServiceUUIDS.removeValue(forKey: uuid.uuidString)
+            bluetoothDelegate.removeServiceUUID(uuid: CBUUID(nsuuid: uuid))
+        }
+    }
+    func willEnterBackground() {
+        // do nothing
+    }
+
+    func refresh(for session:Session) {
+        bluetoothDelegate.refreshServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid))
+    }
+
+    
+    // MARK: Bluetooth
+    func onBluetoothReceive(serviceUUID: CBUUID, message: NetworkMessage) throws {
+        mutex.lock()
+        
+        guard let session = sessionServiceUUIDS[serviceUUID.uuidString] else {
+            log("bluetooth session not found \(serviceUUID)", .warning)
+            mutex.unlock()
+            return
+        }
+        mutex.unlock()
+        
+        guard let req = try? Request(from: session.pairing, sealed: message.data) else {
+            log("request from bluetooth did not parse correctly", .error)
+            return
+        }
+        
+        try self.handler(self.medium, req, session, nil)
+    }
+
+}
+
+
+typealias BluetoothOnReceiveCallback = (CBUUID, NetworkMessage) throws -> Void
 
 class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    
+    var central:CBCentralManager?
+    var onReceive:BluetoothOnReceiveCallback?
+    
     var allServiceUUIDS : Set<CBUUID> = Set()
     var scanningServiceUUIDS: Set<CBUUID> = Set()
     var pairedServiceUUIDS: Set<CBUUID> = Set()
@@ -34,10 +108,14 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
 
     var mutex : Mutex = Mutex()
-    var central: CBCentralManager?
-    var silo: Silo?
     
-    override init() {
+    // Constants
+    static let krsshCharUUID = CBUUID(string: "20F53E48-C08D-423A-B2C2-1C797889AF24")
+    static let refreshByte = UInt8(0)
+    static let pingByte = UInt8(1)
+    static let pingMsg = Data(bytes: [pingByte])
+    
+    override init( ) {
         super.init()
         log("init bluetooth")
     }
@@ -57,7 +135,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                         continue
                     }
                     for characteristic in characteristics {
-                        if characteristic.uuid == krsshCharUUID {
+                        if characteristic.uuid == BluetoothDelegate.krsshCharUUID {
                             pairedPeripherals[service.uuid] = peripheral
                             pairedServiceUUIDS.insert(service.uuid)
                             allServiceUUIDS.insert(service.uuid)
@@ -102,6 +180,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         guard let central = central else {
             return
         }
+
         if central.state != .poweredOn {
             if central.isScanning {
                 central.stopScan()
@@ -253,7 +332,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             pairedPeripherals[service.uuid] = peripheral
             pairedServiceUUIDS.insert(service.uuid)
             scanningServiceUUIDS.remove(service.uuid)
-            peripheral.discoverCharacteristics([krsshCharUUID], for: service)
+            peripheral.discoverCharacteristics([BluetoothDelegate.krsshCharUUID], for: service)
         }
         if !foundPairedServiceUUID {
             log("disconnected peripheral with no relevant services \(peripheral.identifier.uuidString)")
@@ -289,7 +368,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             return
         }
         for char in chars {
-            guard char.uuid.isEqual(krsshCharUUID) else {
+            guard char.uuid.isEqual(BluetoothDelegate.krsshCharUUID) else {
                 log("found non-krSSH characteristic \(char.uuid)")
                 continue
             }
@@ -310,7 +389,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func pingService(_ service: CBUUID) {
         let epoch = (servicePingEpochs[service] ?? 0) + 1
         servicePingEpochs[service] = epoch
-        writeToServiceUUIDRawLocked(uuid: service, data: pingMsg)
+        writeToServiceUUIDRawLocked(uuid: service, data: BluetoothDelegate.pingMsg)
         scheduleAliveCheck(forService: service, epoch: epoch)
     }
 
@@ -371,7 +450,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             log("Error changing notification state: \(error.localizedDescription)", .error)
         }
 
-        guard characteristic.uuid.isEqual(krsshCharUUID) else {
+        guard characteristic.uuid.isEqual(BluetoothDelegate.krsshCharUUID) else {
             return
         }
 
@@ -396,11 +475,11 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         if data.count == 1 {
             //  control messages
             switch data[0] {
-            case refreshByte:
+            case BluetoothDelegate.refreshByte:
                 let uuid = characteristic.service.uuid
                 log("received refresh control message")
                 dispatchAfter(delay: 5.0, task: { self.refreshServiceUUID(uuid: uuid) })
-            case pingByte:
+            case BluetoothDelegate.pingByte:
                 onServiceAck(service: characteristic.service.uuid)
             default:
                 break
@@ -444,19 +523,16 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             // buffer complete
             if let (fullBuffer, _) = characteristicMessageBuffersAndLastSplitNumber.removeValue(forKey: characteristic) {
                 log("reconstructed full message of length \(fullBuffer.count)")
-                if let silo = silo {
-                    //  onBluetoothReceive locks mutex
-                    mutex.unlock()
-                    do {
-                        let message = try NetworkMessage(networkData: fullBuffer)
-                        try silo.onBluetoothReceive(serviceUUID: characteristic.service.uuid, message: message)
-                    } catch (let e) {
-                        log("error processing bluetooth message: \(e)")
-                    }
-                    mutex.lock()
-                } else {
-                    log("BluetoothDelegate Silo not set", .error)
+                
+                mutex.unlock()
+                do {
+                    let message = try NetworkMessage(networkData: fullBuffer)
+                    try self.onReceive?(characteristic.service.uuid, message)
+                } catch (let e) {
+                    log("error processing bluetooth message: \(e)")
                 }
+                mutex.lock()
+
             }
         }
     }

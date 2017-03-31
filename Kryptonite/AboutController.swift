@@ -92,7 +92,7 @@ class AboutController: KRBaseController {
             
             let _ = KeyManager.destroyKeyPair()
             KeyManager.clearMe()
-            SessionManager.shared.destory()
+            SessionManager.shared.destroy()
             
             dispatchMain {
                 self.dismiss(animated: true, completion: nil)

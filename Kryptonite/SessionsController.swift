@@ -106,7 +106,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
         if editingStyle == .delete {
             Analytics.postEvent(category: "device", action: "unpair", label: "slide")
             SessionManager.shared.remove(session: sessions[indexPath.row])
-            Silo.shared.remove(session: sessions[indexPath.row])
+            TransportControl.shared.remove(session: sessions[indexPath.row])
             sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
             
             self.emptyView.isHidden = !sessions.isEmpty

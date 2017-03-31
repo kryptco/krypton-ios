@@ -79,6 +79,10 @@
 		FA49F78A1D9B6B3300372556 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7891D9B6B3300372556 /* TodayViewController.swift */; };
 		FA49F78D1D9B6B3300372556 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA49F78B1D9B6B3300372556 /* MainInterface.storyboard */; };
 		FA49F7911D9B6B3300372556 /* LastCommand.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FA49F7851D9B6B3200372556 /* LastCommand.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FA4A84DD1E8D76800082274A /* SQS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DC1E8D76800082274A /* SQS.swift */; };
+		FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
+		FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
+		FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DC1E8D76800082274A /* SQS.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
@@ -528,6 +532,8 @@
 		FA49F78C1D9B6B3300372556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		FA49F78E1D9B6B3300372556 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA49F7961D9B6B6600372556 /* LastCommand.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastCommand.entitlements; sourceTree = "<group>"; };
+		FA4A84DC1E8D76800082274A /* SQS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQS.swift; sourceTree = "<group>"; };
+		FA4A84DE1E8D77910082274A /* TransportControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportControl.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
@@ -851,6 +857,7 @@
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				8D83990B1E56063A0051C6BA /* HostAuth.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
+				8D7941671D98732600F6E32E /* NetworkProtocol.swift */,
 				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
 				FA0322CD1D7A72E800CD7622 /* Session.swift */,
 				FACAA4B01D887904000B9A01 /* SignatureLog.swift */,
@@ -947,8 +954,9 @@
 			children = (
 				FAA6E1F01D79E3ED007D1B3A /* AWS.swift */,
 				8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */,
-				8D7941671D98732600F6E32E /* NetworkProtocol.swift */,
+				FA4A84DC1E8D76800082274A /* SQS.swift */,
 				8DD436A31DF3719000201106 /* CommunicationActivity.swift */,
+				FA4A84DE1E8D77910082274A /* TransportControl.swift */,
 			);
 			name = Transport;
 			sourceTree = "<group>";
@@ -1675,6 +1683,7 @@
 				FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,
+				FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* SSHKeyFormat.swift in Sources */,
 				FAE4958D1DBD89F100A97708 /* M13CheckboxDotController.swift in Sources */,
@@ -1740,6 +1749,7 @@
 				FAE4958E1DBD89F100A97708 /* M13CheckboxExpandController.swift in Sources */,
 				FAA6E1FE1D7A028F007D1B3A /* Pairing.swift in Sources */,
 				FAA536271D8F2EA800549710 /* AboutController.swift in Sources */,
+				FA4A84DD1E8D76800082274A /* SQS.swift in Sources */,
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
 				FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */,
 				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
@@ -1827,6 +1837,7 @@
 				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,
 				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
 				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
+				FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */,
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
 				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
 				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
@@ -1834,6 +1845,7 @@
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
+				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,

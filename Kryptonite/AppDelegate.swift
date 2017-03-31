@@ -29,8 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         AWSLogger.default().logLevel = .none
-        Silo.shared.add(sessions: SessionManager.shared.all)
-        Silo.shared.startPolling()
+        TransportControl.shared.add(sessions: SessionManager.shared.all)
                 
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
@@ -128,7 +127,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let networkMessage = try NetworkMessage(networkData: networkMessageString.fromBase64())
             let req = try Request(from: session.pairing, sealed: networkMessage.data)
-            try Silo.shared.handle(request: req, session: session, communicationMedium: .remoteNotification, completionHandler: { completionHandler(.newData) })
+            
+            try TransportControl.shared.handle(medium: .remoteNotification, with: req, for: session, completionHandler: {
+                completionHandler(.newData)
+            })
 
         } catch let e {
             log("error creating or sending response: \(e)")
@@ -152,7 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             // if approval notification
             do {
-                try Silo.shared.handle(request: request, session: session, communicationMedium: CommunicationMedium.remoteNotification)
+                try TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
             } catch {
                 log("handle failed \(error)", .error)
             }
@@ -204,7 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let ciphertextB64 = notificationDict["c"] as? String,
             let ciphertext = try? ciphertextB64.fromBase64(),
             let sessionUUID = notificationDict["session_uuid"] as? String,
-            let session = Silo.shared.sessionServiceUUIDS[sessionUUID],
+            let session = SessionManager.shared.get(queue: sessionUUID),
             let alert = notificationDict["alert"] as? String,
             alert == "Kryptonite Request"
         else {
@@ -234,7 +236,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let identifier = identifier, let actionIdentifier = Policy.ActionIdentifier(rawValue: identifier)
         else {
             log("nil identifier", .error)
-            try? Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try? TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
             completionHandler()
             return
         }
@@ -259,7 +261,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: signatureAllowed)
-            try Silo.shared.send(session: session, response: resp, completionHandler: completionHandler)
+            
+            try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)
 
         } catch (let e) {
             log("handle error \(e)", .error)
