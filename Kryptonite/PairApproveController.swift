@@ -156,13 +156,16 @@ class PairApproveController: UIViewController {
                 }
                 
                 let session = try Session(pairing: pairing)
-                TransportControl.shared.add(session: session)
+                SessionManager.shared.add(session: session, temporary: true)
+                TransportControl.shared.add(session: session, newPairing: true)
 
                 Policy.set(needsUserApproval: true, for: session)
 
                 dispatchAsync {
                     guard TransportControl.shared.waitForPairing(session: session) else {
+                        SessionManager.shared.remove(session: session)
                         TransportControl.shared.remove(session: session)
+                        
                         self.showWarning(title: "Error Pairing", body: "Timed out. Please make sure Bluetooth is on or you have an internet connection and try again.")
                         
                         Analytics.postEvent(category: "device", action: "pair", label: "failed")

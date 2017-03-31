@@ -26,7 +26,8 @@ class SessionManager {
     
     private var mutex = Mutex()
     private var sessions:[String:Session]
-    
+    private var temporarySessions:[String:Session]
+
     
     private static var sharedSessionManagerMutex = Mutex()
     private static var sharedSessionManager:SessionManager?
@@ -44,6 +45,7 @@ class SessionManager {
     
     init(_ sessions:[String:Session] = [:]) {
         self.sessions = sessions
+        self.temporarySessions = [:]
     }
 
     
@@ -62,7 +64,7 @@ class SessionManager {
         defer { mutex.unlock() }
         mutex.lock()
 
-        return sessions[id]
+        return sessions[id] ?? temporarySessions[id]
     }
     
     func get(deviceName:String) -> Session? {
@@ -70,7 +72,7 @@ class SessionManager {
     }
     
     
-    func add(session:Session) {
+    func add(session:Session, temporary:Bool = false) {
         defer { mutex.unlock() }
         mutex.lock()
 
@@ -78,15 +80,25 @@ class SessionManager {
         let didSavePriv = KeychainStorage().set(key: Session.KeychainKey.priv.tag(for: session.id), value: session.pairing.keyPair.secretKey.toBase64())
 
         if !(didSavePub && didSavePriv) { log("could not save keypair for id: \(session.id)", .error) }
-        sessions[session.id] = session
-        save()
+        
+        if temporary {
+            temporarySessions[session.id] = session
+        } else {
+            sessions[session.id] = session
+            save()
+        }
     }
     
     func remove(session:Session) {
         defer { mutex.unlock() }
         mutex.lock()
 
+        let _ = KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: session.id))
+        let _ = KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: session.id))
+
         sessions.removeValue(forKey: session.id)
+        temporarySessions.removeValue(forKey: session.id)
+        
         save()
     }
     
@@ -97,13 +109,10 @@ class SessionManager {
         UserDefaults.group?.removeObject(forKey: SessionManager.ListKey)
         SessionManager.sharedSessionManager = nil
         sessions = [:]
+        temporarySessions = [:]
     }
     
-    
-    func save() {
-        defer { mutex.unlock() }
-        mutex.lock()
-
+    private func save() {
         let data = sessions.values.map({ $0.object }) as [Any]
         UserDefaults.group?.set(data, forKey: SessionManager.ListKey)
         UserDefaults.group?.synchronize()

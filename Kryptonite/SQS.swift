@@ -76,6 +76,8 @@ class SQSManager:TransportMedium {
         
         let queue = DispatchQueue(label: "read-queue-\(session.id)")
         queue.async {
+            
+            log("polling sqs for \(session.pairing.displayName)")
             var canPoll:Bool = true
             var isActive = false
             
@@ -108,8 +110,6 @@ class SQSManager:TransportMedium {
     
     func listen(to session: Session, completion:((Bool, Error?)->Void)?) {
         let api = API()
-        
-        log("listening with: \(session.id)", .warning)
         
         api.receive(session.pairing.queue) { (result) in
             

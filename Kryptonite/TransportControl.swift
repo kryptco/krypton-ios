@@ -58,8 +58,9 @@ class TransportControl {
     
     //MARK: Handle Incoming Requests
     func handle(medium:CommunicationMedium, with request:Request, for session:Session, completionHandler: (()->Void)? = nil) throws {
-        defer { mutex.unlock() }
         mutex.lock()
+        
+        log("Handle Called: \(sessionActivity.count)")
         
         if let activity = sessionActivity[session.pairing.uuid] {
             activity.used(medium: medium)
@@ -70,6 +71,8 @@ class TransportControl {
                 activity.used(medium: .bluetooth)
             }
         }
+        
+        mutex.unlock()
 
         try Silo.shared.handle(request: request, session: session, communicationMedium: medium, completionHandler: completionHandler)
     }
@@ -79,6 +82,8 @@ class TransportControl {
         let sealedResponse = try response.seal(to: session.pairing)
         let message = NetworkMessage(localData: sealedResponse, header: .ciphertext)
 
+        
+        // FIXME: completion handler may get caleld multiple times
         transports.forEach({ $0.send(message: message, for: session, completionHandler: completionHandler) })
     }
 
