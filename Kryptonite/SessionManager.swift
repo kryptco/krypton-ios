@@ -53,22 +53,21 @@ class SessionManager {
         defer { mutex.unlock() }
         mutex.lock()
         
-        return [Session](sessions.values)
+        var allSessions = [Session](sessions.values)
+        allSessions.append(contentsOf: [Session](temporarySessions.values))
+        return allSessions
     }
     
     func get(queue:QueueName) -> Session? {
         return all.filter({$0.pairing.queue == queue}).first
     }
     
-    func get(id:String) -> Session? {
-        defer { mutex.unlock() }
-        mutex.lock()
-
-        return sessions[id] ?? temporarySessions[id]
-    }
-    
     func get(deviceName:String) -> Session? {
         return all.filter({ $0.pairing.name == deviceName }).first
+    }
+    
+    func get(id:String) -> Session? {
+        return all.filter({ $0.id == id }).first
     }
     
     
@@ -85,6 +84,8 @@ class SessionManager {
             temporarySessions[session.id] = session
         } else {
             sessions[session.id] = session
+            temporarySessions.removeValue(forKey: session.id)
+            
             save()
         }
     }
@@ -105,6 +106,17 @@ class SessionManager {
     func destroy() {
         defer { mutex.unlock() }
         mutex.lock()
+        
+        sessions.values.forEach({
+            let _ = KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
+            let _ = KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
+        })
+        
+        temporarySessions.values.forEach({
+            let _ = KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
+            let _ = KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
+        })
+
 
         UserDefaults.group?.removeObject(forKey: SessionManager.ListKey)
         SessionManager.sharedSessionManager = nil

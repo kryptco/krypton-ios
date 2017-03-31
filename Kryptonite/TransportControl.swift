@@ -31,9 +31,9 @@ protocol TransportMedium {
 
 class TransportControl {
     
-    var mutex = Mutex()
-    var sessionActivity:[UUID:CommunicationActivity] = [:]
-    var transports:[TransportMedium] = []
+    private var mutex = Mutex()
+    private var sessionActivity:[UUID:CommunicationActivity] = [:]
+    private var transports:[TransportMedium] = []
     
     private static var sharedControlMutex = Mutex()
     private static var sharedControl:TransportControl?
@@ -64,11 +64,10 @@ class TransportControl {
         return tc
     }
     
-    init(bluetoothEnabled:Bool = true) {
+    init(bluetoothEnabled:Bool = true) {        
         if bluetoothEnabled {
             transports.append(BluetoothManager(handler: handle))
         }
-        
         transports.append(SQSManager(handler: handle))
     }
     
