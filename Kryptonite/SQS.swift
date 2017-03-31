@@ -72,13 +72,6 @@ class SQSManager:TransportMedium {
         backgroundBoolMutex.lock {
             inBackground = false
         }
-
-        var sessions:[Session] = []
-        mutex.lock {
-            sessions = [Session](self.sessionLabels.values)
-        }
-        
-        sessions.forEach({ self.poll(session: $0)})
     }
     
     func refresh(for session:Session) {
@@ -88,15 +81,6 @@ class SQSManager:TransportMedium {
     
     //MARK: SQS Polling
     func poll(session:Session) {
-        
-        // suspend the polling in the background
-        var isBackground = false
-        backgroundBoolMutex.lock {
-          isBackground = self.inBackground
-        }
-        if isBackground {
-            return
-        }
         
         let queue = DispatchQueue(label: "read-queue-\(session.id)")
         queue.async {
@@ -113,6 +97,18 @@ class SQSManager:TransportMedium {
                 return
             }
             
+            // if in background
+            var isBackground = false
+            self.backgroundBoolMutex.lock {
+                isBackground = self.inBackground
+            }
+            if isBackground {
+                queue.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
+                    self.poll(session: session)
+                })
+                return
+            }
+
             // otherwise listen
             self.listen(to: session, completion: { (success, err) in
                 if let e = err, !(e is NoMessageError) {
