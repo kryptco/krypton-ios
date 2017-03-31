@@ -78,6 +78,8 @@ struct SignRequest:Jsonable {
     var data:Data
     var fingerprint:String
     var hostAuth:HostAuth?
+    var sessionID:Data?
+    var user:String?
     
     struct InvalidSessionData:Error{}
     struct InvalidHostAuthSignature:Error{}
@@ -85,12 +87,14 @@ struct SignRequest:Jsonable {
     init(data: Data, fingerprint: String, hostAuth: HostAuth? = nil) throws {
         self.data = data
         self.fingerprint = fingerprint
+        try setSessionIDAndUser()
+        
         if let hostAuth = hostAuth{
-            try verifyAndSetHostAuthAndUser(hostAuth: hostAuth)
+            try verifyAndSetHostAuth(hostAuth: hostAuth)
         }
     }
 
-    mutating func verifyAndSetHostAuthAndUser(hostAuth: HostAuth) throws {
+    mutating func setSessionIDAndUser() throws {
         guard data.count >= 4 else {
             throw InvalidSessionData()
         }
@@ -102,16 +106,8 @@ struct SignRequest:Jsonable {
         guard data.count >= Int(sessionIDEnd) else {
             throw InvalidSessionData()
         }
-        
-        let sessionID = data.subdata(in: sessionIDStart..<Int(sessionIDEnd))
-        
-        guard try hostAuth.verify(sessionID: sessionID) == true
-            else {
-                log("hostauth verify failed: \(hostAuth) digest \(data.toBase64())")
-                throw InvalidHostAuthSignature()
-        }
-        self.hostAuth = hostAuth
-        
+        self.sessionID = data.subdata(in: sessionIDStart..<Int(sessionIDEnd))
+
         let userLenStart = sessionIDEnd + 1
         let userLenEnd = userLenStart + 4
         guard data.count >= Int(userLenEnd) else {
@@ -127,16 +123,30 @@ struct SignRequest:Jsonable {
             self.user = user
         }
     }
+
+    mutating func verifyAndSetHostAuth(hostAuth: HostAuth) throws {
+        guard let sessionID = sessionID else {
+            return
+        }
+        guard try hostAuth.verify(sessionID: sessionID) == true
+            else {
+                log("hostauth verify failed: \(hostAuth) digest \(data.toBase64())")
+                throw InvalidHostAuthSignature()
+        }
+        self.hostAuth = hostAuth
+    }
     
     init(json: Object) throws {
         data        = try ((json ~> "data") as String).fromBase64()
         fingerprint = try json ~> "public_key_fingerprint"
-        
+
         do {
+            try setSessionIDAndUser()
+            
             let json:Object = try json ~> "host_auth"
 
             let auth = try HostAuth(json: json)
-            try verifyAndSetHostAuthAndUser(hostAuth: auth)
+            try verifyAndSetHostAuth(hostAuth: auth)
         } catch {
             log("host auth error: \(error)")
             hostAuth = nil
@@ -153,11 +163,6 @@ struct SignRequest:Jsonable {
         
         return json
     }
-    
-    
- 
-    var user:String?
-
     var display:String {
         let host = hostAuth?.hostNames.first ?? "unknown host"
         
