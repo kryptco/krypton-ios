@@ -24,6 +24,8 @@ protocol TransportMedium {
     func refresh(for session:Session)
 
     func willEnterBackground()
+    func willEnterForeground()
+
 }
 
 
@@ -48,8 +50,26 @@ class TransportControl {
         return tc
     }
     
-    init() {
-        transports = [ BluetoothManager(handler: handle), SQSManager(handler: handle) ]
+    
+    // create shared instance with custom bluetooth on/off
+    static func shared(bluetoothEnabled:Bool = true) -> TransportControl {
+        defer { sharedControlMutex.unlock() }
+        sharedControlMutex.lock()
+        
+        guard let tc = sharedControl else {
+            sharedControl = TransportControl(bluetoothEnabled: bluetoothEnabled)
+            return sharedControl!
+        }
+        
+        return tc
+    }
+    
+    init(bluetoothEnabled:Bool = true) {
+        if bluetoothEnabled {
+            transports.append(BluetoothManager(handler: handle))
+        }
+        
+        transports.append(SQSManager(handler: handle))
     }
     
     func transport(for medium:CommunicationMedium) -> TransportMedium? {
@@ -153,5 +173,10 @@ class TransportControl {
     func willEnterBackground() {
         transports.forEach({ $0.willEnterBackground() })
     }
+    
+    func willEnterForeground() {
+        transports.forEach({ $0.willEnterForeground() })
+    }
+
 
 }

@@ -56,6 +56,9 @@ class BluetoothManager:TransportMedium {
     func willEnterBackground() {
         // do nothing
     }
+    func willEnterForeground() {
+        // do nothing
+    }
 
     func refresh(for session:Session) {
         bluetoothDelegate.refreshServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid))

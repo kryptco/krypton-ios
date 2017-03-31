@@ -59,35 +59,57 @@ class SQSManager:TransportMedium {
         sessionLabels.removeValue(forKey: session.id)
     }
     
+    private var backgroundBoolMutex = Mutex()
+    private var inBackground:Bool = false
+
     func willEnterBackground() {
-        //TODO: unimplemented
+        backgroundBoolMutex.lock {
+            inBackground = true
+        }
+    }
+    
+    func willEnterForeground() {
+        backgroundBoolMutex.lock {
+            inBackground = false
+        }
+
+        var sessions:[Session] = []
+        mutex.lock {
+            sessions = [Session](self.sessionLabels.values)
+        }
         
+        sessions.forEach({ self.poll(session: $0)})
     }
     
     func refresh(for session:Session) {
         // do nothing, future: refresh connection?
     }
     
-    //MARK: SQS Polling
-        
-    var shouldPoll:Bool = true
     
+    //MARK: SQS Polling
     func poll(session:Session) {
+        
+        // suspend the polling in the background
+        var isBackground = false
+        backgroundBoolMutex.lock {
+          isBackground = self.inBackground
+        }
+        if isBackground {
+            return
+        }
         
         let queue = DispatchQueue(label: "read-queue-\(session.id)")
         queue.async {
             
             log("polling sqs for \(session.pairing.displayName)")
-            var canPoll:Bool = true
             var isActive = false
             
             self.mutex.lock {
                 isActive = (self.sessionLabels[session.id] != nil)
-                canPoll = self.shouldPoll
             }
             
             // check session is still active
-            guard canPoll && isActive else {
+            guard isActive else {
                 return
             }
             
@@ -161,7 +183,6 @@ class SQSManager:TransportMedium {
     func stop() {
         mutex.lock {
             sessionLabels = [:]
-            shouldPoll = false
         }
     }
 }
