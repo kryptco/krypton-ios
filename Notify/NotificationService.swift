@@ -183,7 +183,9 @@ class NotificationService: UNNotificationServiceExtension {
         }
         content.userInfo = [:]
         
-        contentHandler?(content)
+        self.bestAttemptMutex.lock {
+            contentHandler?(content)
+        }
     }
     
     override func serviceExtensionTimeWillExpire() {
@@ -195,7 +197,9 @@ class NotificationService: UNNotificationServiceExtension {
         content.title = "Request could not be completed"
         content.body = "The incoming request timed out. Please try again."
         
-        contentHandler?(content)
+        self.bestAttemptMutex.lock {
+            contentHandler?(content)
+        }
     }
     
     

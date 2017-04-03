@@ -85,7 +85,6 @@ class SQSManager:TransportMedium {
         let queue = DispatchQueue(label: "read-queue-\(session.id)")
         queue.async {
             
-            log("polling sqs for \(session.pairing.displayName)")
             var isActive = false
             
             self.mutex.lock {
@@ -108,6 +107,8 @@ class SQSManager:TransportMedium {
                 })
                 return
             }
+            
+            log("polling sqs for \(session.pairing.displayName)")
 
             // otherwise listen
             self.listen(to: session, completion: { (success, err) in
