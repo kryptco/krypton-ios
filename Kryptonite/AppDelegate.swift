@@ -107,6 +107,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         
         log("got background notification")
+        
+        
+        if let _ = (userInfo["aps"] as? [String: Any])?["mutable-content"], #available(iOS 10.0, *) {
+            log("remote notififcation background handler called, but iOS 10. Ignoring.")
+            completionHandler(.noData)
+            return
+        }
+        
         checkForAppUpdateIfNeededBackground()
         
         guard   let queue = (userInfo["aps"] as? [String: Any])?["queue"] as? QueueName,

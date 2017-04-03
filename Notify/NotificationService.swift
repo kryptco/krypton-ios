@@ -63,9 +63,7 @@ class NotificationService: UNNotificationServiceExtension {
                             }
                             
                             if deliveredRequest.id == unsealedRequest.id {
-                                dispatchAfter(delay: 0.2, task: {
-                                    UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-                                })
+                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
                                 
                                 noSound = true
                                 break
