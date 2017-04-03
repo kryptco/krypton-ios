@@ -36,6 +36,24 @@ class Analytics {
         UserDefaults.group?.synchronize()
     }
 
+    static var cachedPhoneModel: String?
+    class var phoneModel : String? {
+        mutex.lock()
+        defer { mutex.unlock() }
+        if let cachedPhoneModel = cachedPhoneModel {
+            return cachedPhoneModel
+        }
+
+        var systemInfo : utsname = utsname();
+        uname(&systemInfo);
+
+        withUnsafePointer(to: &systemInfo.machine.0, {
+            if let phoneModel = NSString(cString: $0, encoding: String.Encoding.utf8.rawValue){
+                cachedPhoneModel = phoneModel as String
+            }
+        })
+        return cachedPhoneModel
+    }
 
     class var userAgent : String? {
         return UserDefaults.group?.string(forKey: "UserAgent")
@@ -92,16 +110,23 @@ class Analytics {
         }
     }
 
-    class func post(params: [String:String], forceEnable:Bool = false) {
+    private class func post(params: [String:String], forceEnable:Bool = false) {
         guard forceEnable || enabled else {
             return
         }
+
         var analyticsParams : [String:String] = [
             "v": "1",
             "tid": Properties.trackingID,
             "cid": userID,
+            "cd4": "iOS",
+            "cd5": "iOS \(UIDevice.current.systemVersion)"
             ]
+        if let phoneModel = phoneModel {
+            analyticsParams["cd6"] = phoneModel
+        }
 
+        log("\(analyticsParams)")
         for (key, val) in params {
             analyticsParams[key] = val
         }
