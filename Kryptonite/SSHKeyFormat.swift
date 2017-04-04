@@ -96,7 +96,7 @@ extension PublicKey {
 }
 
 //MARK: WireFormat
-extension RSAPublicKey {
+extension RSAPublicKey:SSHPublicKey {
     func wireFormat() throws -> Data {
         
         // ssh-wire-encoding(ssh-rsa, public exponent, modulus)
@@ -116,7 +116,7 @@ extension RSAPublicKey {
     }
 }
 
-extension Sign.PublicKey {
+extension Sign.PublicKey:SSHPublicKey {
     func wireFormat() throws -> Data {
         // ssh-wire-encoding(ssh-ed25519, len pub key, pub key)
         
