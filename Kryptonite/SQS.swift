@@ -10,6 +10,9 @@ import Foundation
 
 typealias SessionID = String
 
+struct NoMessageError:Error{}
+struct BackgroundIgnoreError:Error{}
+
 class SQSManager:TransportMedium {
     
     var handler:TransportControlRequestHandler
@@ -145,6 +148,16 @@ class SQSManager:TransportMedium {
                 return
             }
             
+            
+            // if in background don't try to handle.
+            self.backgroundBoolMutex.lock()
+            if self.inBackground {
+                self.backgroundBoolMutex.unlock()
+                completion?(false, BackgroundIgnoreError())
+                return
+            }
+            self.backgroundBoolMutex.unlock()
+            //
             
             switch result {
             case .message(let msgs):

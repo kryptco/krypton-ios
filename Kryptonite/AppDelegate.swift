@@ -45,11 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Analytics.appLaunch()
 
-
         return true
     }
     
     
+    //MARK: Registering Notifications
     func registerPushNotifications() {
         DispatchQueue.main.async {
             let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: [Policy.authorizeCategory])

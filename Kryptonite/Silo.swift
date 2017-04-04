@@ -11,7 +11,6 @@ import JSON
 import AwesomeCache
 
 
-struct NoMessageError:Error{}
 struct InvalidRequestTimeError:Error{}
 struct RequestPendingError:Error{}
 
