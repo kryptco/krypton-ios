@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -294,16 +294,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9Y-aM-j36" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="573.5" width="375" height="113.5"/>
+                                <rect key="frame" x="10" y="509.5" width="355" height="93.5"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-Mk-LFw" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="113.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="93.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32U-6O-1By">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
                                                 <subviews>
                                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIV-jc-ntL" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
-                                                        <rect key="frame" x="343" y="8" width="24" height="24"/>
+                                                        <rect key="frame" x="323" y="8" width="24" height="24"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="24" id="IK1-wY-S4z"/>
@@ -326,7 +326,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPINNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="E5I-Q2-AML">
-                                                        <rect key="frame" x="12" y="9" width="323" height="22"/>
+                                                        <rect key="frame" x="12" y="9" width="303" height="22"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
@@ -343,10 +343,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="41" width="375" height="52.5"/>
+                                                <rect key="frame" x="0.0" y="41" width="355" height="52.5"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" minimumFontSize="14" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
-                                                        <rect key="frame" x="10" y="16" width="355" height="20.5"/>
+                                                        <rect key="frame" x="10" y="16" width="335" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="16"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -368,7 +368,7 @@
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="HXN-QP-z1c" secondAttribute="bottom" constant="20" id="0o0-O3-WLv"/>
+                                            <constraint firstAttribute="bottom" secondItem="HXN-QP-z1c" secondAttribute="bottom" id="0o0-O3-WLv"/>
                                             <constraint firstItem="32U-6O-1By" firstAttribute="leading" secondItem="Rxp-Mk-LFw" secondAttribute="leading" id="FL0-hr-lTg"/>
                                             <constraint firstAttribute="trailing" secondItem="32U-6O-1By" secondAttribute="trailing" id="KwP-Ds-DKC"/>
                                             <constraint firstItem="HXN-QP-z1c" firstAttribute="leading" secondItem="Rxp-Mk-LFw" secondAttribute="leading" id="emW-oU-Nxl"/>
@@ -378,7 +378,7 @@
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="20"/>
+                                                <real key="value" value="8"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -395,15 +395,15 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="20"/>
+                                        <real key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="f9Y-aM-j36" secondAttribute="trailing" id="1od-FG-bCJ"/>
-                            <constraint firstItem="dA1-6U-hNs" firstAttribute="top" secondItem="f9Y-aM-j36" secondAttribute="bottom" constant="-20" id="8YO-Mu-AkL"/>
-                            <constraint firstItem="f9Y-aM-j36" firstAttribute="leading" secondItem="Flv-tQ-rMU" secondAttribute="leading" id="RQ6-5Y-iQI"/>
+                            <constraint firstAttribute="trailing" secondItem="f9Y-aM-j36" secondAttribute="trailing" constant="10" id="1od-FG-bCJ"/>
+                            <constraint firstItem="dA1-6U-hNs" firstAttribute="top" secondItem="f9Y-aM-j36" secondAttribute="bottom" constant="64" id="8YO-Mu-AkL"/>
+                            <constraint firstItem="f9Y-aM-j36" firstAttribute="leading" secondItem="Flv-tQ-rMU" secondAttribute="leading" constant="10" id="RQ6-5Y-iQI"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
