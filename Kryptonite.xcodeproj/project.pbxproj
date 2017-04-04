@@ -24,6 +24,28 @@
 		8DC38BC31E689785007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC38BC61E689A12007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
+		8DCB60241E9442F300E1B924 /* SiloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB60231E9442F300E1B924 /* SiloTests.swift */; };
+		8DCB60351E94433100E1B924 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
+		8DCB60381E94438C00E1B924 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
+		8DCB60391E9443B600E1B924 /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15EB481DA5C6CC00BED16C /* Properties.swift */; };
+		8DCB603B1E94458000E1B924 /* AnalyticsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */; };
+		8DCB603C1E9445F200E1B924 /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
+		8DCB60401E94468100E1B924 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F21D79E413007D1B3A /* Response.swift */; };
+		8DCB60411E94468100E1B924 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
+		8DCB60421E94468100E1B924 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
+		8DCB60431E94468100E1B924 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
+		8DCB60441E94468B00E1B924 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
+		8DCB60451E94468B00E1B924 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
+		8DCB60461E94469700E1B924 /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
+		8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
+		8DCB604C1E9446D300E1B924 /* AWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* AWS.swift */; };
+		8DCB604D1E9446D300E1B924 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
+		8DCB604E1E9446D300E1B924 /* SQS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DC1E8D76800082274A /* SQS.swift */; };
+		8DCB604F1E9446D300E1B924 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
+		8DCB60541E94470A00E1B924 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; };
+		8DCB60551E94470A00E1B924 /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; };
+		8DCB60561E94470A00E1B924 /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
+		8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */; };
 		8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
@@ -472,6 +494,8 @@
 		8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftHTTP.xcodeproj; path = SwiftHTTP/SwiftHTTP.xcodeproj; sourceTree = "<group>"; };
 		8DC38BC21E689785007445B4 /* libsshwire.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsshwire.a; path = "ssh-wire/target/universal/release/libsshwire.a"; sourceTree = "<group>"; };
 		8DC38BC51E689A0F007445B4 /* sshwire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sshwire.h; path = "ssh-wire/src/sshwire.h"; sourceTree = "<group>"; };
+		8DCB60231E9442F300E1B924 /* SiloTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiloTests.swift; sourceTree = "<group>"; };
+		8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsStub.swift; sourceTree = "<group>"; };
 		8DD436A31DF3719000201106 /* CommunicationActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunicationActivity.swift; sourceTree = "<group>"; };
 		FA0322721D74D39100CD7622 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Globals.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0322CD1D7A72E800CD7622 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -667,6 +691,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D45B00A1E8D7DBB00E84A57 /* libsshwire.a in Frameworks */,
+				8DCB60541E94470A00E1B924 /* AWSCore.framework in Frameworks */,
+				8DCB60551E94470A00E1B924 /* AWSSNS.framework in Frameworks */,
+				8DCB60561E94470A00E1B924 /* AWSSQS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1102,6 +1129,8 @@
 				FAEE049E1D74BCC3002A7AFD /* Info.plist */,
 				8D45AFF51E8D739500E84A57 /* SSHVerificationTests.swift */,
 				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
+				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
+				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
 			);
 			path = KryptoTests;
 			sourceTree = "<group>";
@@ -1801,16 +1830,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DCB60441E94468B00E1B924 /* NetworkProtocol.swift in Sources */,
+				8DCB60411E94468100E1B924 /* KeyManager.swift in Sources */,
 				FAC873FC1E6A4E9C003D112E /* KeychainStorage.swift in Sources */,
+				8DCB604C1E9446D300E1B924 /* AWS.swift in Sources */,
 				8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */,
+				8DCB603C1E9445F200E1B924 /* Silo.swift in Sources */,
+				8DCB60451E94468B00E1B924 /* SignatureLog.swift in Sources */,
 				FAC873FF1E6A5148003D112E /* JSON+Seal.swift in Sources */,
+				8DCB60401E94468100E1B924 /* Response.swift in Sources */,
+				8DCB603B1E94458000E1B924 /* AnalyticsStub.swift in Sources */,
 				FAEE04A61D74BD47002A7AFD /* SSHKeyFormat.swift in Sources */,
+				8DCB604E1E9446D300E1B924 /* SQS.swift in Sources */,
 				FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */,
+				8DCB60461E94469700E1B924 /* Policy.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
+				8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */,
 				FAC874001E6A5342003D112E /* String+User.swift in Sources */,
 				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
+				8DCB60431E94468100E1B924 /* LogManager.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */,
+				8DCB60421E94468100E1B924 /* SessionManager.swift in Sources */,
+				8DCB604F1E9446D300E1B924 /* CommunicationActivity.swift in Sources */,
+				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,
+				8DCB60351E94433100E1B924 /* Session.swift in Sources */,
+				8DCB60391E9443B600E1B924 /* Properties.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */,
 				FAC873F91E6A4DC1003D112E /* Version.swift in Sources */,
@@ -1821,8 +1866,11 @@
 				8D45AFF61E8D739500E84A57 /* SSHVerificationTests.swift in Sources */,
 				FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */,
 				8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */,
+				8DCB60241E9442F300E1B924 /* SiloTests.swift in Sources */,
 				FAE45B9B1E64751700A583AB /* RSAKeyPair.swift in Sources */,
+				8DCB60381E94438C00E1B924 /* Mutex.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
+				8DCB604D1E9446D300E1B924 /* Bluetooth.swift in Sources */,
 				8D45B0081E8D7CEA00E84A57 /* HostAuth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2154,6 +2202,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = KryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2174,6 +2226,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = KryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

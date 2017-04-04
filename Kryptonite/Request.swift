@@ -18,6 +18,16 @@ struct Request:Jsonable {
     var sign:SignRequest?
     var me:MeRequest?
     var unpair:UnpairRequest?
+
+    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version? = nil, sign: SignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
+        self.id = id
+        self.unixSeconds = unixSeconds
+        self.sendACK = sendACK
+        self.version = version
+        self.sign = sign
+        self.me = me
+        self.unpair = unpair
+    }
     
     init(json: Object) throws {
         self.id = try json ~> "request_id"
@@ -100,7 +110,9 @@ struct SignRequest:Jsonable {
         }
         
         let sessionIDLenBigEndianBytes = data.subdata(in: 0 ..< 4)
-        let sessionIDLen = Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))
+        guard let sessionIDLen = UInt32(exactly: Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))) else {
+            throw InvalidSessionData()
+        }
         let sessionIDStart = 4
         let sessionIDEnd = sessionIDStart + Int(sessionIDLen)
         guard data.count >= Int(sessionIDEnd) else {
@@ -114,7 +126,7 @@ struct SignRequest:Jsonable {
             throw InvalidSessionData()
         }
         
-        let userLen = Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(userLenStart)..<Int(userLenEnd))))
+        let userLen = UInt32(Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(userLenStart)..<Int(userLenEnd)))))
         let userStart = userLenEnd
         let userEnd = userStart + Int(userLen)
         if userLen > 0 && data.count >= Int(userEnd) {

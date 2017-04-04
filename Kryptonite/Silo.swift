@@ -155,7 +155,11 @@ class Silo {
         
         if let signRequest = request.sign {
             let kp = try KeyManager.sharedInstance()
-            
+
+            if try kp.keyPair.publicKey.fingerprint() != signRequest.fingerprint.fromBase64() {
+                throw KeyManagerError.keyDoesNotExist
+            }
+
             var sig:String?
             var err:String?
             do {

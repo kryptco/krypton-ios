@@ -9,6 +9,9 @@
 #ifndef Bridging_Header_h
 #define Bridging_Header_h
 
+#import <AWSSNS/AWSSNS.h>
+#import <AWSSQS/AWSSQS.h>
+
 #import "sshwire.h"
 
 #endif /* Bridging_Header_h */
