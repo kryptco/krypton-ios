@@ -10,10 +10,23 @@ import Foundation
 import Security
 import Sodium
 
-//MARK: SSH Compatible
+//MARK: SSH Public Key + Wire Format
 
-protocol SSHKeyCompatible {
+protocol SSHPublicKey {
     func wireFormat() throws -> Data
+}
+
+struct UnknownSSHKeyWireFormat:Error {}
+
+extension PublicKey {
+    func wireFormat() throws -> Data {
+        guard let sshKey = self as? SSHPublicKey
+        else {
+            throw UnknownSSHKeyWireFormat()
+        }
+        
+        return try sshKey.wireFormat()
+    }
 }
 
 //MARK: SSH Key Type
@@ -118,6 +131,7 @@ extension Sign.PublicKey {
 }
 
 
+// MARK: SSH Signature Format 
 extension KeyPair {
     func signAppendingSSHWirePubkeyToPayload(data:Data) throws -> String {
         var dataClone = Data(data)

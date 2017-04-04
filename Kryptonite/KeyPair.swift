@@ -27,7 +27,7 @@ enum KeyType:String {
 
 let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
 
-protocol PublicKey:SSHKeyCompatible {
+protocol PublicKey {
     var type:KeyType {  get }
     func verify(_ message:Data, signature:Data) throws -> Bool
     func export() throws -> Data
