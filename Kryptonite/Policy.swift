@@ -173,8 +173,6 @@ class Policy {
     }
     
     static func sendAllowedPendingIfNeeded() {
-        
-        
         let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
         cache?.removeExpiredObjects()
         
@@ -202,6 +200,33 @@ class Policy {
             }
         }
     }
+    
+    static func rejectAllPendingIfNeeded() {
+        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
+        cache?.removeExpiredObjects()
+        
+        cache?.allObjects().forEach {
+            
+            guard let pending = try? PendingAuthorization(jsonData: $0 as Data)
+            else {
+                return
+            }
+            
+            let session = pending.session
+            let request = pending.request
+            
+            Policy.removePendingAuthorization(session: session, request: request)
+            
+            do {
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: false)
+                try TransportControl.shared.send(resp, for: session)
+            } catch (let e) {
+                log("got error \(e)", .error)
+                return
+            }
+        }
+    }
+
     
 }
 
