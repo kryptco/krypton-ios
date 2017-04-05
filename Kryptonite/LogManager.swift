@@ -74,7 +74,7 @@ class LogManager {
     
     lazy var managedObjectContext:NSManagedObjectContext = {
         let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         
         return managedObjectContext
@@ -120,26 +120,26 @@ class LogManager {
 
         var logs:[SignatureLog] = []
         
-        do {
-            let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
-            
-            for object in (objects ?? []) {
-                guard
-                    let session = object.value(forKey: "session") as? String,
-                    let signature = object.value(forKey: "signature") as? String,
-                    let date = object.value(forKey: "date") as? Date,
-                    let hostAuth = object.value(forKey: "host_auth") as? String,
-                    let displayName = object.value(forKey: "displayName") as? String
+        self.managedObjectContext.performAndWait {
+            do {
+                let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
+                
+                for object in (objects ?? []) {
+                    guard   let session = object.value(forKey: "session") as? String,
+                            let signature = object.value(forKey: "signature") as? String,
+                            let date = object.value(forKey: "date") as? Date,
+                            let hostAuth = object.value(forKey: "host_auth") as? String,
+                            let displayName = object.value(forKey: "displayName") as? String
                     else {
                         continue
+                    }
+                    
+                    logs.append(SignatureLog(session: session, hostAuth: hostAuth, signature: signature, displayName: displayName, date: date))
                 }
-                
-                logs.append(SignatureLog(session: session, hostAuth: hostAuth, signature: signature, displayName: displayName, date: date))
+            } catch let error {
+                log("could not fetch signature logs: \(error)")
             }
-        } catch {
-            log("could not fetch signature logs: \(error)")
         }
-    
 
         return logs
     }
@@ -157,31 +157,32 @@ class LogManager {
         defaults?.set(theLog.displayName, forKey: "last_log_command")
         defaults?.set(deviceName, forKey: "last_log_device")
         defaults?.synchronize()
-        //
         
-        guard
-            let entity =  NSEntityDescription.entity(forEntityName: "SignatureLog", in: managedObjectContext)
-        else {
-            mutex.unlock()
-            return
-        }
         
-        let logEntry = NSManagedObject(entity: entity, insertInto: managedObjectContext)
-        
-        // set attirbutes
-        logEntry.setValue(theLog.session, forKey: "session")
-        logEntry.setValue(theLog.signature, forKey: "signature")
-        logEntry.setValue(theLog.date, forKey: "date")
-        logEntry.setValue(theLog.hostAuth, forKey: "host_auth")
-        logEntry.setValue(theLog.displayName, forKey: "displayName")
-        
-        //
-        do {
-            try self.managedObjectContext.save()
+        self.managedObjectContext.performAndWait {
             
-        } catch let error  {
-            log("Could not save signature log: \(error)", .error)
+            guard let entity =  NSEntityDescription.entity(forEntityName: "SignatureLog", in: self.managedObjectContext)
+            else {
+                self.mutex.unlock()
+                return
+            }
+            
+            let logEntry = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
+            
+            // set attirbutes
+            logEntry.setValue(theLog.session, forKey: "session")
+            logEntry.setValue(theLog.signature, forKey: "signature")
+            logEntry.setValue(theLog.date, forKey: "date")
+            logEntry.setValue(theLog.hostAuth, forKey: "host_auth")
+            logEntry.setValue(theLog.displayName, forKey: "displayName")
+            
+            do {
+                try self.managedObjectContext.save()
+            } catch let error  {
+                log("Could not save signature log: \(error)", .error)
+            }
         }
+
         
         mutex.unlock()
         
@@ -195,13 +196,14 @@ class LogManager {
     func saveContext () {
         defer { mutex.unlock() }
         mutex.lock()
-        
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                log("Persistance manager save error: \(error)", .error)
 
+        managedObjectContext.performAndWait {
+            if self.managedObjectContext.hasChanges {
+                do {
+                    try self.managedObjectContext.save()
+                } catch {
+                    log("Persistance manager save error: \(error)", .error)
+                }
             }
         }
     }

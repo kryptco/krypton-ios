@@ -53,10 +53,6 @@ class KRBaseController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if shouldPostAnalytics() {
-            Analytics.postControllerView(clazz: String(describing: type(of: self)))
-        }
-
         checkForUpdatesIfNeeded()
         connectivity = Connectivity(presenter: self)
     }
@@ -90,9 +86,6 @@ class KRBaseTableController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if shouldPostAnalytics() {
-            Analytics.postControllerView(clazz: String(describing: type(of: self)))
-        }
         checkForUpdatesIfNeeded()
         connectivity = Connectivity(presenter: self)
     }
