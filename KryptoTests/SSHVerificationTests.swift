@@ -82,6 +82,9 @@ class SSHVerificationTests: XCTestCase {
 
     func testInvalidSessionData() {
         do {
+            if !KeyManager.hasKey() {
+                try! KeyManager.generateKeyPair(type: .Ed25519)
+            }
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
             let invalidData = try "jHspdr8xb+91IetQiVJUvA==".fromBase64()
             let sign = try SignRequest(data: invalidData, fingerprint: fp, hostAuth: nil)
