@@ -83,7 +83,7 @@
 		FA1682811D77682C00A7ED53 /* SessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682801D77682C00A7ED53 /* SessionsController.swift */; };
 		FA16828D1D77811900A7ED53 /* IGGitHubIdenticon.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682841D77811900A7ED53 /* IGGitHubIdenticon.m */; };
 		FA16828E1D77811900A7ED53 /* IGHashFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682861D77811900A7ED53 /* IGHashFunctions.m */; };
-		FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682891D77811900A7ED53 /* IGImageGenerator.m */; };
+		FA16828F1D77811900A7ED53 /* IGImageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1682891D77811900A7ED53 /* IGImageGenerator.m */; settings = {COMPILER_FLAGS = "-Wno-objc-designated-initializers"; }; };
 		FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */ = {isa = PBXBuildFile; fileRef = FA16828C1D77811900A7ED53 /* IGSimpleIdenticon.m */; };
 		FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682911D77868D00A7ED53 /* FAIcon.swift */; };
 		FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E706D1D9AC22900A14650 /* FirstPairController.swift */; };

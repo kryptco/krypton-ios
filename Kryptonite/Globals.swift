@@ -12,14 +12,25 @@ import Foundation
 let KR_ENDPOINT_ARN_KEY = "aws_endpoint_arn_key"
 let APP_GROUP_SECURITY_ID = "group.co.krypt.kryptonite"
 
-//MARK: Functions
-var isDebug:Bool {
-    #if DEBUG
-        return true
-    #else
-        return false
-    #endif
+//MARK: Platform Detection
+struct Platform {
+    static let isDebug:Bool = {
+        var debug = false
+        #if DEBUG
+            debug = true
+        #endif
+        return debug
+    }()
+
+    static let isSimulator: Bool = {
+        var sim = false
+        #if arch(i386) || arch(x86_64)
+            sim = true
+        #endif
+        return sim
+    }()
 }
+
 
 
 //MARK: Defaults

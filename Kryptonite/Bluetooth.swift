@@ -515,7 +515,10 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
 
         let n = data[0]
         let data = data.subdata(in: 1..<data.count)
-        if var (buffer, lastN) = characteristicMessageBuffersAndLastSplitNumber[characteristic], lastN > 0, (n == lastN - 1) {
+        
+        let bufferAndLastN = characteristicMessageBuffersAndLastSplitNumber[characteristic]
+        
+        if var buffer = bufferAndLastN?.0, let lastN = bufferAndLastN?.1, lastN > 0, (n == lastN - 1) {
             buffer.append(data)
             characteristicMessageBuffersAndLastSplitNumber[characteristic] = (buffer, n)
         } else {

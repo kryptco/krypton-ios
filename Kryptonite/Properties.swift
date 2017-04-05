@@ -44,7 +44,7 @@ struct Properties {
 
     //MARK: Analytics
     static var trackingID:String {
-        if isDebug {
+        if Platform.isDebug {
             return  "UA-86173430-1"
         }
         

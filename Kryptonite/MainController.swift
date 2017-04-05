@@ -39,7 +39,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
 
     func showPushErrorAlert() {
-        if TARGET_IPHONE_SIMULATOR == 1 {
+        if Platform.isSimulator {
             return
         }
 
