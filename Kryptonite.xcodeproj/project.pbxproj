@@ -2258,7 +2258,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
@@ -2283,7 +2282,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OpenSSL-for-iPhone/lib",
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "";

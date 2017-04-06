@@ -87,7 +87,7 @@ class SSHVerificationTests: XCTestCase {
             }
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
             let invalidData = try "jHspdr8xb+91IetQiVJUvA==".fromBase64()
-            let sign = try SignRequest(data: invalidData, fingerprint: fp, hostAuth: nil)
+            let _ = try SignRequest(data: invalidData, fingerprint: fp, hostAuth: nil)
             XCTFail("expected exception")
         } catch let e {
             guard let _ = e as? SignRequest.InvalidSessionData else {
