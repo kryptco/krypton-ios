@@ -580,11 +580,11 @@
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
 		FAA5362E1D8F43D100549710 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
-		FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSNS.framework; sourceTree = "<group>"; };
-		FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSSQS.framework; sourceTree = "<group>"; };
+		FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSNS.framework; path = "aws-sdk-ios/builtFramework/framework/AWSSNS.framework"; sourceTree = "<group>"; };
+		FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSQS.framework; path = "aws-sdk-ios/builtFramework/framework/AWSSQS.framework"; sourceTree = "<group>"; };
 		FAA6E1F01D79E3ED007D1B3A /* AWS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWS.swift; sourceTree = "<group>"; };
 		FAA6E1F21D79E413007D1B3A /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
+		FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = "aws-sdk-ios/builtFramework/framework/AWSCore.framework"; sourceTree = "<group>"; };
 		FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pairing.swift; sourceTree = "<group>"; };
 		FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1183,6 +1183,7 @@
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
 				8D45AFEF1E8D718200E84A57 /* Compile ssh-wire */,
+				FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */,
 				FA8141521D714250004FE58C /* CommonCrypto */,
 				FA03C5961E7609940019649E /* Bump Build */,
 				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
@@ -1216,6 +1217,7 @@
 				FAEE04971D74BCC3002A7AFD /* Frameworks */,
 				FAEE04981D74BCC3002A7AFD /* Resources */,
 				8D45AFF01E8D71BE00E84A57 /* Compile ssh-wire */,
+				FA1951121E96D00E0036B425 /* Compile AWS Core, SQS, SNS */,
 			);
 			buildRules = (
 			);
@@ -1233,6 +1235,7 @@
 			buildPhases = (
 				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
 				8D45AFDE1E8D59CB00E84A57 /* Compile ssh-wire */,
+				FA1951111E96CFF70036B425 /* Compile AWS Core,SQS,SNS */,
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
 				FAB517BE1E54D6C90032DD47 /* Build Bump */,
 				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
@@ -1591,6 +1594,48 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
+		};
+		FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile AWS Core, SQS, SNS";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		FA1951111E96CFF70036B425 /* Compile AWS Core,SQS,SNS */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile AWS Core,SQS,SNS";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${PROJECT_DIR}/aws-sdk-ios\"\ncurrentCommit=$(git rev-parse HEAD)\n\nfunction compile {\n    sh Scripts/SdkPackage.sh AWSCore\n    sh Scripts/SdkPackage.sh AWSSQS\n    sh Scripts/SdkPackage.sh AWSSNS\n    \n    echo \"${currentCommit}\" > \"${PROJECT_DIR}/AWS_COMMIT\"\n}\n\nif [ ! -f \"${PROJECT_DIR}/AWS_COMMIT\" ]; then\n    echo \"AWS_COMMIT not recorded. Compile AWS.\"\n    compile\n\nelif [ $(cat \"${PROJECT_DIR}/AWS_COMMIT\") != \"${currentCommit}\" ]; then\n    echo \"AWS_COMMIT is out dated. Compile AWS.\"\n    compile\n\nelif ls \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSCore.framework\" \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSSQS.framework\" \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSSNS.framework\" 2>/dev/null; then\n    echo \"AWS Frameworks up to date, skipping re compilation.\"\nelse\n    echo \"Missing AWS Framework. Compiling\"\n    compile\nfi\n";
+		};
+		FA1951121E96D00E0036B425 /* Compile AWS Core, SQS, SNS */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile AWS Core, SQS, SNS";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
 		};
 		FA309F431DA5947C006D8D81 /* Build Bump */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2139,6 +2184,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
@@ -2174,6 +2220,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = "";
@@ -2205,6 +2252,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				INFOPLIST_FILE = KryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2229,6 +2277,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				INFOPLIST_FILE = KryptoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2258,6 +2307,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Notify/Info.plist;
@@ -2288,6 +2338,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Notify/Info.plist;

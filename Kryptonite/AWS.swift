@@ -48,10 +48,10 @@ class API {
         let secretKey = Properties.awsSecretKey
         
         let snsCreds = AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
-        let snsConf = AWSServiceConfiguration(region: AWSRegionType.usEast1, credentialsProvider: snsCreds)
+        let snsConf = AWSServiceConfiguration(region: AWSRegionType.USEast1, credentialsProvider: snsCreds)
         
         let sqsCreds = AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
-        let sqsConf = AWSServiceConfiguration(region: AWSRegionType.usEast1, credentialsProvider: sqsCreds)
+        let sqsConf = AWSServiceConfiguration(region: AWSRegionType.USEast1, credentialsProvider: sqsCreds)
 
         guard let sns = snsConf, let sqs = sqsConf else {
             return false
