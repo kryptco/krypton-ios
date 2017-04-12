@@ -153,7 +153,7 @@ class ApproveController:UIViewController {
         
         swipeDownRejectGesture.isEnabled = false
 
-        self.resultLabel.text = "Allowed once".uppercased()
+        self.resultLabel.text = "Allow once".uppercased()
         
         UIView.animate(withDuration: 0.3, animations: {
             
@@ -175,7 +175,7 @@ class ApproveController:UIViewController {
 
     }
     
-    @IBAction func approveOneHour() {
+    @IBAction func approveThreeHours() {
         
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
@@ -189,7 +189,7 @@ class ApproveController:UIViewController {
         isEnabled = false
         
         do {
-            Policy.allow(session: session, for: Policy.Interval.oneHour)
+            Policy.allow(session: session, for: Policy.Interval.threeHours)
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
             try TransportControl.shared.send(resp, for: session)
             
@@ -202,7 +202,7 @@ class ApproveController:UIViewController {
         
         swipeDownRejectGesture.isEnabled = false
 
-        self.resultLabel.text = "Allowed for 1 hour".uppercased()
+        self.resultLabel.text = "Allow for 3 hours".uppercased()
         
         UIView.animate(withDuration: 0.3, animations: {
             
@@ -219,7 +219,7 @@ class ApproveController:UIViewController {
             }
         }
 
-        Analytics.postEvent(category: "signature", action: "foreground approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
+        Analytics.postEvent(category: "signature", action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
 
     }
     

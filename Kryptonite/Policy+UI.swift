@@ -37,7 +37,7 @@ extension Policy {
         var approve = UIMutableUserNotificationAction()
         
         approve.identifier = ActionIdentifier.temporary.rawValue
-        approve.title = "Allow for 1 hour"
+        approve.title = "Allow for 3 hours"
         approve.activationMode = UIUserNotificationActivationMode.background
         approve.isDestructive = false
         approve.isAuthenticationRequired = true

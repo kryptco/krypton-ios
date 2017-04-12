@@ -257,8 +257,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Analytics.postEvent(category: "signature", action: "background approve", label: "once")
             
         case Policy.ActionIdentifier.temporary:
-            Policy.allow(session: session, for: Policy.Interval.oneHour)
-            Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.oneHour.rawValue))
+            Policy.allow(session: session, for: Policy.Interval.threeHours)
+            Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
         case Policy.ActionIdentifier.reject:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
