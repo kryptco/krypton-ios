@@ -110,15 +110,15 @@ class SessionDetailController: KRBaseTableController {
             Policy.set(needsUserApproval: true, for: session)
 
         case .timed:
-            Analytics.postEvent(category: "manual approval", action: "time", value: UInt(Policy.Interval.oneHour.rawValue))
-            Policy.allow(session: session, for: Policy.Interval.oneHour)
+            Analytics.postEvent(category: "manual approval", action: "time", value: UInt(Policy.Interval.threeHours.rawValue))
+            Policy.allow(session: session, for: Policy.Interval.threeHours)
 
         case .off:
             Analytics.postEvent(category: "manual approval", action: String(false))
             Policy.set(needsUserApproval: false, for: session)
         }
         
-        approvalSegmentedControl.setTitle("Don't ask for 1hr", forSegmentAt: ApprovalControl.timed.rawValue)
+        approvalSegmentedControl.setTitle("Don't ask for 3hrs", forSegmentAt: ApprovalControl.timed.rawValue)
     }
 
 
