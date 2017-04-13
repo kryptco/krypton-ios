@@ -118,7 +118,7 @@ class SessionDetailController: KRBaseTableController {
             Policy.set(needsUserApproval: false, for: session)
         }
         
-        approvalSegmentedControl.setTitle("Don't ask for 1hr", forSegmentAt: ApprovalControl.timed.rawValue)
+        approvalSegmentedControl.setTitle("Don't ask for 3hrs", forSegmentAt: ApprovalControl.timed.rawValue)
     }
 
 
