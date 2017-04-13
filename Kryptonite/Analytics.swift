@@ -15,7 +15,7 @@ class Analytics {
     static var enabled : Bool {
         mutex.lock()
         defer { mutex.unlock() }
-        return !(UserDefaults.group?.bool(forKey: "analytics_disabled") ?? false)
+        return !(UserDefaults.group?.bool(forKey: analyticsDisabledKey) ?? false)
     }
 
     static var publishedEmail:String? {
@@ -26,14 +26,27 @@ class Analytics {
             UserDefaults.group?.synchronize()
         }
     }
-    
+
+    static let analyticsDisabledKey = "analytics_disabled"
     class func set(disabled: Bool) {
         postEvent(category: "analytics", action: disabled ? "disabled" : "enabled", forceEnable: true)
 
         mutex.lock()
         defer { mutex.unlock() }
-        UserDefaults.group?.set(disabled, forKey: "analytics_disabled")
+        UserDefaults.group?.set(disabled, forKey: analyticsDisabledKey)
         UserDefaults.group?.synchronize()
+    }
+
+    class func migrateAnalyticsDisabled() {
+        mutex.lock()
+        defer { mutex.unlock() }
+
+        if UserDefaults.standard.bool(forKey: analyticsDisabledKey) {
+            UserDefaults.group?.set(true, forKey: analyticsDisabledKey)
+            UserDefaults.group?.synchronize()
+            UserDefaults.standard.set(false, forKey: analyticsDisabledKey)
+            UserDefaults.standard.synchronize()
+        }
     }
 
     static var cachedPhoneModel: String?
