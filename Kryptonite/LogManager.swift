@@ -196,9 +196,3 @@ class LogManager:JsonWritable {
         return try self.jsonString()
     }
 }
-
-extension Session {
-    var lastAccessed:Date? {
-        return LogManager.shared.fetchAll().filter({ $0.session == self.id }).sorted(by: { $0.date < $1.date }).last?.date
-    }
-}

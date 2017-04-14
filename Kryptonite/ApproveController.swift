@@ -247,7 +247,7 @@ class ApproveController:UIViewController {
             log("send error \(e)", .error)
         }
         
-        self.resultLabel.text = "Rejected".uppercased()
+        self.resultLabel.text = "Reject".uppercased()
         self.resultView.backgroundColor = rejectColor
         self.checkBox.secondaryCheckmarkTintColor = rejectColor
         self.checkBox.tintColor = rejectColor
