@@ -60,6 +60,10 @@ extension Date {
             return "\(Int(time))s\(suffix)"
         } else if time < TimeSeconds.hour.rawValue {
             return "\(Int(time/TimeSeconds.minute.rawValue))m\(suffix)"
+        } else if time < 10*TimeSeconds.hour.rawValue {
+            let hour = Int(time/TimeSeconds.hour.rawValue)
+            let minutes = (Int(time) % Int(TimeSeconds.hour.rawValue))/Int(TimeSeconds.minute.rawValue)
+            return "\(hour)h \(minutes)m\(suffix)"
         } else if time < TimeSeconds.day.rawValue {
             return "\(Int(time/TimeSeconds.hour.rawValue))h\(suffix)"
         } else if time < TimeSeconds.week.rawValue {
