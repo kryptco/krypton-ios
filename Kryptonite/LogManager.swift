@@ -82,8 +82,18 @@ class LogManager:JsonWritable {
     func fetch(for session:String) -> [SignatureLog] {
         let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
         fetchRequest.predicate = NSPredicate(format: "session = '\(session)'")
-        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+
         return fetchObjects(for: fetchRequest)
+    }
+    
+    func fetchLatest(for session:String) -> SignatureLog? {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
+        fetchRequest.predicate = NSPredicate(format: "session = '\(session)'")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        
+        return fetchObjects(for: fetchRequest).first
     }
 
     func fetchAll() -> [SignatureLog] {

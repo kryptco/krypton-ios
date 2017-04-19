@@ -53,16 +53,13 @@ class AboutController: KRBaseController {
     }
     
     @IBAction func exportTapped() {
-        do {
-            let logs = try LogManager.shared.exportLogs()
-            
-            let activityController = UIActivityViewController(activityItems: [logs
-                ], applicationActivities: nil)
-            
-            self.present(activityController, animated: true, completion: nil)
-        } catch {
-            self.showWarning(title: "Error", body: "Could not export logs. \(error).")
-        }
+        let logDBPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)!.appendingPathComponent("logs").appendingPathComponent("KryptoniteCoreDataStore.sqlite")
+        
+        let activityController = UIActivityViewController(activityItems: [logDBPath
+            ], applicationActivities: nil)
+        
+        self.present(activityController, animated: true, completion: nil)
+
     }
     
     @IBAction func trashTapped() {
