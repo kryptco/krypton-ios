@@ -35,7 +35,7 @@ class SessionCell: UITableViewCell {
 
         deviceNameLabel.text = session.pairing.displayName.uppercased()
         
-        if let lastLog = LogManager.shared.fetch(for: session.id).sorted(by: {$0.date > $1.date}).first {
+        if let lastLog = LogManager.shared.fetchLatest(for: session.id) {
             commandLabel.text = "\(lastLog.displayName)"
             lastAccessLabel.text = lastLog.date.timeAgo()
         } else {
