@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import JSON
 
-class LogManager:JsonWritable {
+class LogManager {
     
     private var mutex = Mutex()
     
@@ -113,7 +113,6 @@ class LogManager:JsonWritable {
             for object in (objects ?? []) {
                 guard
                     let session = object.value(forKey: "session") as? String,
-                    let digest = object.value(forKey: "digest") as? String,
                     let signature = object.value(forKey: "signature") as? String,
                     let date = object.value(forKey: "date") as? Date,
                     let hostAuth = object.value(forKey: "host_auth") as? String,
@@ -122,7 +121,7 @@ class LogManager:JsonWritable {
                         continue
                 }
                 
-                logs.append(SignatureLog(session: session, digest: digest, hostAuth: hostAuth, signature: signature, displayName: displayName, date: date))
+                logs.append(SignatureLog(session: session, hostAuth: hostAuth, signature: signature, displayName: displayName, date: date))
             }
         } catch {
             log("could not fetch signature logs: \(error)")
@@ -159,7 +158,6 @@ class LogManager:JsonWritable {
         // set attirbutes
         logEntry.setValue(theLog.session, forKey: "session")
         logEntry.setValue(theLog.signature, forKey: "signature")
-        logEntry.setValue(theLog.digest, forKey: "digest")
         logEntry.setValue(theLog.date, forKey: "date")
         logEntry.setValue(theLog.hostAuth, forKey: "host_auth")
         logEntry.setValue(theLog.displayName, forKey: "displayName")
@@ -191,18 +189,5 @@ class LogManager:JsonWritable {
 
             }
         }
-    }
-
-    
-    //MARK: Export
-    
-    var object:Object {
-        let logs = self.fetchAll()
-        
-        return ["logs": logs.sorted(by: { $0.date > $1.date }).map({ $0.object})]
-    }
-    
-    func exportLogs() throws -> String {
-        return try self.jsonString()
     }
 }
