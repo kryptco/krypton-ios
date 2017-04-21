@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="SignatureLog" syncable="YES">
-        <attribute name="command" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="digest" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="host_auth" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SignatureLog" positionX="117" positionY="-18" width="252" height="150"/>
+        <element name="SignatureLog" positionX="117" positionY="-18" width="252" height="120"/>
     </elements>
 </model>
