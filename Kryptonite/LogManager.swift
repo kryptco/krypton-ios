@@ -84,7 +84,7 @@ class LogManager {
     // MARK: Fetching
     func fetch(for session:String) -> [SignatureLog] {
         let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
-        fetchRequest.predicate = NSPredicate(format: "session = '\(session)'")
+        fetchRequest.predicate = sessionEqualsPredicate(for: session)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
 
         return fetchObjects(for: fetchRequest)
@@ -92,11 +92,21 @@ class LogManager {
     
     func fetchLatest(for session:String) -> SignatureLog? {
         let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
-        fetchRequest.predicate = NSPredicate(format: "session = '\(session)'")
+        fetchRequest.predicate = sessionEqualsPredicate(for: session)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         fetchRequest.fetchLimit = 1
         
         return fetchObjects(for: fetchRequest).first
+    }
+
+    private func sessionEqualsPredicate(for session:String) -> NSPredicate {
+        return NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: "session"),
+            rightExpression: NSExpression(forConstantValue: session),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
     }
 
     func fetchAll() -> [SignatureLog] {
