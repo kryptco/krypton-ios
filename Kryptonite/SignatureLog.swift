@@ -19,7 +19,7 @@ struct SignatureLog {
     init(session:String, hostAuth:HostAuth?, signature:String, displayName:String, date:Date = Date()) {
         
         var theHostAuth:String
-        if let host = hostAuth, let hostJson = try? host.jsonString(prettyPrinted: false) {
+        if let host = hostAuth, let hostJson = try? host.jsonString() {
             theHostAuth = hostJson
         } else {
             theHostAuth = "unknown"
