@@ -133,7 +133,9 @@ class Analytics {
             "tid": Properties.trackingID,
             "cid": userID,
             "cd4": "iOS",
-            "cd5": "iOS \(UIDevice.current.systemVersion)"
+            "cd5": "iOS \(UIDevice.current.systemVersion)",
+            "cd7": userID,
+            "cd9": Properties.currentVersion.string,
             ]
         if let phoneModel = phoneModel {
             analyticsParams["cd6"] = phoneModel
