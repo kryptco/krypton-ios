@@ -410,8 +410,10 @@
                     <connections>
                         <outlet property="checkBox" destination="qIV-jc-ntL" id="m4g-lc-Caa"/>
                         <outlet property="commandLabel" destination="qkt-sF-Z2B" id="6nK-S8-vAD"/>
+                        <outlet property="commandView" destination="HXN-QP-z1c" id="WaO-qp-nhQ"/>
                         <outlet property="contentView" destination="f9Y-aM-j36" id="OK1-H5-IDt"/>
                         <outlet property="deviceLabel" destination="E5I-Q2-AML" id="ytV-60-mEd"/>
+                        <outlet property="deviceView" destination="32U-6O-1By" id="6RG-wN-EyO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WtT-kU-obP" userLabel="First Responder" sceneMemberID="firstResponder"/>

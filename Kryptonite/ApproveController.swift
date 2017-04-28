@@ -38,7 +38,8 @@ class AutoApproveController:UIViewController {
         if let error = errorMessage  {
             commandLabel.text = error
             commandView.backgroundColor = rejectColor
-            deviceLabel.backgroundColor = rejectColor
+            deviceView.backgroundColor = rejectColor
+            checkBox.secondaryTintColor = rejectColor
         } else {
             commandLabel.text = "\(command ?? "SSH login request")"
         }

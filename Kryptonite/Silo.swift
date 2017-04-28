@@ -106,8 +106,12 @@ class Silo {
         
         if response.sign != nil {
             Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
-
-            Policy.notifyUser(session: session, request: request)
+            
+            if let error = response.sign?.error {
+                Policy.notifyUser(errorMessage: error, session: session)
+            } else {
+                Policy.notifyUser(session: session, request: request)
+            }
         }
         
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
