@@ -147,7 +147,6 @@ class LogManager {
     
     //MARK: Saving
     func save(theLog:SignatureLog, deviceName:String) {
-        defer { mutex.unlock() }
         mutex.lock()
         
         log("saving \(theLog)")
@@ -163,6 +162,7 @@ class LogManager {
         guard
             let entity =  NSEntityDescription.entity(forEntityName: "SignatureLog", in: managedObjectContext)
         else {
+            mutex.unlock()
             return
         }
         
@@ -182,6 +182,8 @@ class LogManager {
         } catch let error  {
             log("Could not save signature log: \(error)", .error)
         }
+        
+        mutex.unlock()
         
         // notify we have a new log
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
