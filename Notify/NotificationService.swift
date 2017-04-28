@@ -74,9 +74,16 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             let content = UNMutableNotificationContent()
                             
+                            var errorMessage:String?
+                            
                             // approved
-                            if Silo.shared.hasCachedResponse(for: session, with: unsealedRequest) {
-                                content.title = "Approved request from \(session.pairing.displayName)."
+                            if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
+                                if let err = resp.sign?.error {
+                                    errorMessage = err
+                                    content.title = "Failed approval for \(session.pairing.displayName)."
+                                } else {
+                                    content.title = "Approved request from \(session.pairing.displayName)."
+                                }
                             }
                             // not approved
                             else {
@@ -84,8 +91,12 @@ class NotificationService: UNNotificationServiceExtension {
                                 content.categoryIdentifier = Policy.authorizeCategoryIdentifier
                             }
                             
-                            content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
-                            content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
+                            if let error = errorMessage {
+                                content.body = error
+                            } else {
+                                content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                                content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
+                            }
                             
                             if noSound {
                                 content.sound = nil

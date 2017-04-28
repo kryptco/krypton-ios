@@ -165,6 +165,13 @@ class Silo {
             do {
                 
                 if signatureAllowed {
+                    
+                    if let hostAuth = signRequest.hostAuth {
+                        for hostName in hostAuth.hostNames {
+                            try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
+                        }
+                    }
+                    
                     // only place where signature should occur
                     sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data)
                     
@@ -174,8 +181,8 @@ class Silo {
                     LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.hostAuth, signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
                 }
 
-            } catch let e {
-                err = "\(e)"
+            } catch {
+                err = "\(error)"
             }
 
             sign = SignResponse(sig: sig, err: err)
@@ -198,8 +205,15 @@ class Silo {
 
     }
     
-    func hasCachedResponse(for session:Session,with request:Request) -> Bool {
-        return requestCache?[CacheKey(session, request)] != nil
+    func cachedResponse(for session:Session,with request:Request) -> Response? {
+        if  let cachedResponseData = requestCache?[CacheKey(session, request)] as Data?,
+            let json:Object = try? JSON.parse(data: cachedResponseData),
+            let response = try? Response(json: json)
+        {
+            return response
+        }
+
+        return nil
     }
 
 }
