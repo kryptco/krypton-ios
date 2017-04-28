@@ -324,8 +324,9 @@ class ApproveController:UIViewController {
                 self.animateDismiss()
             }
         }
-
-        Analytics.postEvent(category: "signature", action: "failed foreground approve", label: errorMessage)
+        
+        let errorLabel = HostMistmatchError.isMismatchErrorString(err: errorMessage) ? "host mistmatch" : "crypto error"
+        Analytics.postEvent(category: "signature", action: "failed foreground approve", label: errorLabel)
     }
     
     func animateDismiss(allowed:Bool = false) {

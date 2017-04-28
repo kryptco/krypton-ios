@@ -16,8 +16,17 @@ struct HostMistmatchError:Error, CustomDebugStringConvertible {
     var hostName:String
     var expectedPublicKey:String
     
+    static let prefix = "Host public key mismatched for"
+    
     var debugDescription:String {
-        return "Host public key mismatched"
+        return "\(HostMistmatchError.prefix) \(hostName)"
+    }
+    
+    // check if an error message is a host mismatch
+    // used to indicate what kind of error occured to analytics
+    // without exposing the hostName to the analytics service
+    static func isMismatchErrorString(err:String) -> Bool {
+        return err.contains(HostMistmatchError.prefix)
     }
 }
 
