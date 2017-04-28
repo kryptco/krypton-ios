@@ -23,7 +23,7 @@ class AutoApproveController:UIViewController {
     var command:String?
     var errorMessage:String?
 
-    var rejectColor = UIColor(hex: 0xFF6361)
+    var rejectColor = UIColor.reject
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +93,7 @@ class ApproveController:UIViewController {
 
     @IBOutlet weak var swipeDownRejectGesture:UIGestureRecognizer!
 
-    var rejectColor = UIColor(hex: 0xFF6361)
+    var rejectColor = UIColor.reject
     
     var heightCover:CGFloat = 234.0
     

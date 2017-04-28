@@ -94,6 +94,7 @@
 		FA1682A41EB2B2D500D9CE40 /* KnownHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */; };
 		FA1682A51EB2B2D500D9CE40 /* KnownHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */; };
 		FA1682A81EB2C51C00D9CE40 /* KnownHosts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A61EB2C51C00D9CE40 /* KnownHosts.xcdatamodeld */; };
+		FA1682AA1EB3856600D9CE40 /* KnownHostsEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A91EB3856600D9CE40 /* KnownHostsEditController.swift */; };
 		FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E706D1D9AC22900A14650 /* FirstPairController.swift */; };
 		FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */; };
 		FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697311D99CA1100FE44D3 /* GenerateController.swift */; };
@@ -552,6 +553,7 @@
 		FA16829E1EB2B2B200D9CE40 /* KnownHostManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHostManager.swift; sourceTree = "<group>"; };
 		FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHost.swift; sourceTree = "<group>"; };
 		FA1682A71EB2C51C00D9CE40 /* KnownHosts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KnownHosts.xcdatamodel; sourceTree = "<group>"; };
+		FA1682A91EB3856600D9CE40 /* KnownHostsEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHostsEditController.swift; sourceTree = "<group>"; };
 		FA1E706D1D9AC22900A14650 /* FirstPairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPairController.swift; sourceTree = "<group>"; };
 		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
 		FA2697311D99CA1100FE44D3 /* GenerateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateController.swift; sourceTree = "<group>"; };
@@ -863,6 +865,7 @@
 				FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */,
 				FA81413B1D70B0F4004FE58C /* MainController.swift */,
 				FAA536261D8F2EA800549710 /* AboutController.swift */,
+				FA1682A91EB3856600D9CE40 /* KnownHostsEditController.swift */,
 				FA309F411DA42C69006D8D81 /* HelpController.swift */,
 				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
 				FAAE818E1E576DB8002A9AE6 /* Authorize.swift */,
@@ -1796,6 +1799,7 @@
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
 				FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */,
 				FAE495881DBD89F100A97708 /* M13Checkbox.swift in Sources */,
+				FA1682AA1EB3856600D9CE40 /* KnownHostsEditController.swift in Sources */,
 				FA15EB491DA5C6CC00BED16C /* Properties.swift in Sources */,
 				FA1682901D77811900A7ED53 /* IGSimpleIdenticon.m in Sources */,
 				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,

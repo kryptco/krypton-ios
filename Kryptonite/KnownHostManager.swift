@@ -168,24 +168,47 @@ class KnownHostManager {
         return knownHosts
     }
     
+    //MARK: Delete entry
+    
+    func delete(_ knownHost:KnownHost) {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "KnownHost")
+        fetchRequest.predicate = hostNameEqualsPredicate(for: knownHost.hostName)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: true)]
+        fetchRequest.fetchLimit = 1
+
+        guard   let object = ((try? self.managedObjectContext.fetch(fetchRequest)) as? [NSManagedObject])?.first,
+                let publicKey = object.value(forKey: "public_key") as? String,
+                let hostName = object.value(forKey: "host_name") as? String,
+                hostName == knownHost.hostName,
+                publicKey == knownHost.publicKey
+        else {
+            return
+        }
+        
+        self.managedObjectContext.delete(object)
+    }
     
     //MARK: Saving
     private func save(knownHost:KnownHost) {
-        defer { mutex.unlock() }
         mutex.lock()
         
         guard
             let entity =  NSEntityDescription.entity(forEntityName: "KnownHost", in: managedObjectContext)
             else {
+                mutex.unlock()
                 return
         }
         
-        let logEntry = NSManagedObject(entity: entity, insertInto: managedObjectContext)
+        let hostEntry = NSManagedObject(entity: entity, insertInto: managedObjectContext)
         
         // set attirbutes
-        logEntry.setValue(knownHost.hostName, forKey: "host_name")
-        logEntry.setValue(knownHost.publicKey, forKey: "public_key")
-        logEntry.setValue(knownHost.dateAdded, forKey: "date_added")
+        hostEntry.setValue(knownHost.hostName, forKey: "host_name")
+        hostEntry.setValue(knownHost.publicKey, forKey: "public_key")
+        hostEntry.setValue(knownHost.dateAdded, forKey: "date_added")
         
         //
         do {
@@ -194,6 +217,8 @@ class KnownHostManager {
         } catch let error  {
             log("Could not save known host: \(error)", .error)
         }
+        
+        mutex.unlock()
         
         // notify we have a new log
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_known_host"), object: nil)

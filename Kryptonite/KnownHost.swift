@@ -19,3 +19,7 @@ struct KnownHost {
         self.dateAdded = dateAdded
     }
 }
+
+func ==(l:KnownHost, r:KnownHost) -> Bool {
+    return l.hostName == r.hostName && l.publicKey == r.publicKey
+}
