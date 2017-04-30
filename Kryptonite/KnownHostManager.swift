@@ -210,7 +210,6 @@ class KnownHostManager {
         hostEntry.setValue(knownHost.publicKey, forKey: "public_key")
         hostEntry.setValue(knownHost.dateAdded, forKey: "date_added")
         
-        //
         do {
             try self.managedObjectContext.save()
             

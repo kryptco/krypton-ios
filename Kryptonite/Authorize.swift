@@ -69,8 +69,6 @@ extension UIViewController {
     
     func showFailedResponse(errorMessage:String, session:Session) {
         
-        //TODO
-        
         // don't show if user is asked to approve manual
         guard self.presentedViewController is ApproveController == false
             else {

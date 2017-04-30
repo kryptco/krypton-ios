@@ -16,6 +16,12 @@ struct RequestPendingError:Error{}
 
 struct SiloCacheCreationError:Error{}
 
+struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
+    var debugDescription:String {
+        return "No hostnames provided"
+    }
+}
+
 typealias CacheKey = String
 extension CacheKey {
     init(_ session:Session, _ request:Request) {
@@ -170,7 +176,11 @@ class Silo {
                 
                 if signatureAllowed {
                     
+                    // if host auth provided, check known hosts
                     if let hostAuth = signRequest.hostAuth {
+                        guard hostAuth.hostNames.isEmpty == false else {
+                            throw HostAuthHasNoHostnames{}
+                        }
                         for hostName in hostAuth.hostNames {
                             try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
                         }
