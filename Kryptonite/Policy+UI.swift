@@ -93,6 +93,10 @@ extension Policy {
     
     class func notifyUser(session:Session, request:Request) {
         
+        guard Policy.shouldShowApprovedNotifications(for: session) else {
+            log("forgo sending notification due to policy setting")
+            return
+        }
         
         switch UIApplication.shared.applicationState {
             

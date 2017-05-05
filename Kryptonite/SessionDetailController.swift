@@ -18,6 +18,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     @IBOutlet var headerView:UIView!
 
     @IBOutlet weak var approvalSegmentedControl:UISegmentedControl!
+    @IBOutlet weak var hideApprovedNotificationsToggle:UISwitch!
 
     enum ApprovalControl:Int {
         case on = 0
@@ -47,7 +48,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         if let session = session {
             deviceNameField.text = session.pairing.displayName.uppercased()
-
+            hideApprovedNotificationsToggle.isOn = Policy.shouldShowApprovedNotifications(for: session)
+            
             logs = LogManager.shared.fetch(for: session.id)
             lastAccessLabel.text =  "Active " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
             
@@ -104,6 +106,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             return
         }
         
+        if #available(iOS 10.0, *) {
+            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        }
+
         switch approvalControlType {
         case .on:
             Analytics.postEvent(category: "manual approval", action: String(true))
@@ -124,6 +130,11 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
     //MARK: Revoke
     @IBAction func revokeTapped() {
+        
+        if #available(iOS 10.0, *) {
+            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        }
+
         if let session = session {
             Analytics.postEvent(category: "device", action: "unpair", label: "detail")
             SessionManager.shared.remove(session: session)
@@ -168,6 +179,15 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         return true
     }
 
+
+    //MARK: Hide Approved Notifications Toggle
+    @IBAction func hideApprovedNotificationsToggled(sender:UISwitch) {
+        guard let session = session else {
+            return
+        }
+        
+        Policy.set(shouldShowApprovedNotifications: sender.isOn, for: session)
+    }
 
     
     
