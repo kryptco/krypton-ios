@@ -8,9 +8,9 @@
 
 import UIKit
 
-class SessionDetailController: KRBaseTableController {
+class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
-    @IBOutlet var deviceNameLabel:UILabel!
+    @IBOutlet var deviceNameField:UITextField!
     @IBOutlet var lastAccessLabel:UILabel!
 
     @IBOutlet var revokeButton:UIButton!
@@ -46,10 +46,10 @@ class SessionDetailController: KRBaseTableController {
 
         
         if let session = session {
-            deviceNameLabel.text = session.pairing.displayName.uppercased()
+            deviceNameField.text = session.pairing.displayName.uppercased()
 
             logs = LogManager.shared.fetch(for: session.id)
-            lastAccessLabel.text =  "Active as of " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
+            lastAccessLabel.text =  "Active " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
             
             updateApprovalControl(session: session)
 
@@ -144,6 +144,30 @@ class SessionDetailController: KRBaseTableController {
             approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.off.rawValue
         }
     }
+    
+    //MARK: Edit Device Session Name
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        guard let name = textField.text, let session = session else {
+            return false
+        }
+        
+        if name.isEmpty {
+            deviceNameField.text = session.pairing.displayName.uppercased()
+        } else {
+            SessionManager.shared.changeSessionPairingName(of: session.id, to: name)
+            deviceNameField.text = name.uppercased()
+        }
+        
+        textField.resignFirstResponder()
+        return true
+    }
+
 
     
     

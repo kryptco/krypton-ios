@@ -70,6 +70,13 @@ class SessionManager {
         return all.filter({ $0.id == id }).first
     }
     
+    func changeSessionPairingName(of id:String, to name:String) {
+        defer { mutex.unlock() }
+        mutex.lock()
+
+        sessions[id]?.pairing.name = name
+        save()
+    }
     
     func add(session:Session, temporary:Bool = false) {
         defer { mutex.unlock() }
