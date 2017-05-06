@@ -187,6 +187,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         }
         
         Policy.set(shouldShowApprovedNotifications: sender.isOn, for: session)
+        
+        Analytics.postEvent(category: "show auto-approved notifications", action: "\(sender.isOn)")
     }
 
     

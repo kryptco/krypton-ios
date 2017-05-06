@@ -119,7 +119,13 @@ class Policy {
     }
     
     class func shouldShowApprovedNotifications(for session:Session) -> Bool {
-        return UserDefaults.group?.bool(forKey: StorageKey.showApprovedNotifications.key(id: session.id)) ?? true
+        
+        guard let shouldShow = UserDefaults.group?.object(forKey: StorageKey.showApprovedNotifications.key(id: session.id)) as? Bool
+        else {
+            return true
+        }
+        
+        return shouldShow
     }
     
     
