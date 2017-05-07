@@ -40,7 +40,7 @@ class PairController: KRBaseController, KRScanDelegate {
 
         if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == AVAuthorizationStatus.denied
         {
-            self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. We need the camera to scan your computer's QR code to pair with it. Pairing enables your computer to ask your phone for SSH logins.")
+            self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. Kryptonite needs the camera to scan your computer's QR code and pair. Pairing enables your computer to ask your phone for SSH logins.")
         }
     }
     

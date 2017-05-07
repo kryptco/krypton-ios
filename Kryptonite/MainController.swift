@@ -37,29 +37,6 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         self.navigationItem.rightBarButtonItem = helpButton
     }
     
-
-    func showPushErrorAlert() {
-        if Platform.isSimulator {
-            return
-        }
-
-        let alertController = UIAlertController(title: "Push Notifications",
-                                                message: "Push notifications are not enabled. Please enable push notifications to get real-time notifications when your private key is used for ssh. Push notifications also enable the app to work in the background. Tap `Settings` to continue.",
-                                                preferredStyle: .alert)
-        
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
-            
-            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.openURL(appSettings)
-            }
-        }
-        alertController.addAction(settingsAction)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -96,15 +73,6 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
 
-        
-        // check push
-        //if push allow reauthorized just incase
-        if !UIApplication.shared.isRegisteredForRemoteNotifications && !UserDefaults.standard.bool(forKey: "did_ask_push")
-        {
-            (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
-            UserDefaults.standard.set(true, forKey: "did_ask_push")
-            UserDefaults.standard.synchronize()
-        }
         
         // Check old version sessions
         let (hasOld, sessionNames) = SessionManager.hasOldSessions()

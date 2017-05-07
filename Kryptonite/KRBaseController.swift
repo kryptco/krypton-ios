@@ -46,6 +46,8 @@ class KRBaseController: UIViewController {
         if shouldPostAnalytics() {
             Analytics.postControllerView(clazz: String(describing: type(of: self)))
         }
+        
+        checkIfPushEnabled()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +81,8 @@ class KRBaseTableController: UITableViewController {
         if shouldPostAnalytics() {
             Analytics.postControllerView(clazz: String(describing: type(of: self)))
         }
+        
+        checkIfPushEnabled()
     }
     
     var connectivity:Connectivity?
@@ -105,6 +109,23 @@ class KRBaseTableController: UITableViewController {
 }
 
 extension UIViewController {
+    
+    //MARK: Check For push notifications
+    func checkIfPushEnabled() {
+        if Platform.isSimulator {
+            return
+        }
+
+        // check app is registered for push notifications
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+        }
+        else if  let settings = UIApplication.shared.currentUserNotificationSettings,
+            settings.types.contains(.alert) == false
+        {
+            self.showSettings(with: "Please Enable Push Notifications", message: "If you enable push notifications you will be able to receive SSH login requests when your phone is locked or the app is not open. Tap \"Settings\" to continue.")
+        }
+    }
 
     //MARK: Updates
     func checkForUpdatesIfNeeded() {

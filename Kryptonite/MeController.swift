@@ -61,13 +61,10 @@ class MeController:KRBaseController, UITextFieldDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
     
-     func redrawMe() {
-        
+    func redrawMe() {
         do {
-            
             let keyManager = try KeyManager.sharedInstance()
             let email = try keyManager.getMe()
             let publicKeyWire = try keyManager.keyPair.publicKey.wireFormat()
