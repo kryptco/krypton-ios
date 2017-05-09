@@ -187,7 +187,7 @@ class Silo {
                     }
                     
                     // only place where signature should occur
-                    sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType)
+                    sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
                     
                     LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.hostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                 } else {

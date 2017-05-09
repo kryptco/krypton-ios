@@ -8,6 +8,8 @@
 
 import Foundation
 
+struct InvalidVersionStringError:Error{}
+
 class Version: Comparable {
     let major:UInt
     let minor:UInt
@@ -26,18 +28,18 @@ class Version: Comparable {
     }
     
     //MARK: To/From String
-    init?(string:String) {
+    init(string:String) throws {
         let versionComponents = string.components(separatedBy: ".")
         
         guard versionComponents.count == 3 else {
-            return nil
+            throw InvalidVersionStringError()
         }
         
         guard   let major = UInt(versionComponents[0]),
                 let minor = UInt(versionComponents[1]),
                 let patch = UInt(versionComponents[2])
         else {
-            return nil
+            throw InvalidVersionStringError()
         }
         
         self.major = major

@@ -14,12 +14,12 @@ struct Request:Jsonable {
     var id:String
     var unixSeconds:Int
     var sendACK:Bool
-    var version:Version?
+    var version:Version
     var sign:SignRequest?
     var me:MeRequest?
     var unpair:UnpairRequest?
 
-    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version? = nil, sign: SignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
+    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, sign: SignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
         self.id = id
         self.unixSeconds = unixSeconds
         self.sendACK = sendACK
@@ -27,12 +27,14 @@ struct Request:Jsonable {
         self.sign = sign
         self.me = me
         self.unpair = unpair
+        
     }
     
     init(json: Object) throws {
         self.id = try json ~> "request_id"
         self.unixSeconds = try json ~> "unix_seconds"
         self.sendACK = (try? json ~> "a") ?? false
+        self.version = try Version(string: json ~> "v")
 
         if let json:Object = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
@@ -44,10 +46,6 @@ struct Request:Jsonable {
 
         if let json:Object = try? json ~> "unpair_request" {
             self.unpair = try UnpairRequest(json: json)
-        }
-
-        if let verString:String = try? json ~> "v" {
-            self.version = Version(string: verString)
         }
     }
     

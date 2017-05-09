@@ -40,7 +40,7 @@ struct Session:Jsonable {
 
         var version:Version?
         if let verString:String = try? json ~> "version" {
-            version = Version(string: verString)
+            version = try Version(string: verString)
         }
 
         pairing = try Pairing(name: json ~> "name", workstationPublicKey: workstationPublicKey, keyPair: Box.KeyPair(publicKey: publicKey, secretKey: privateKey), version: version)
