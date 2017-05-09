@@ -25,14 +25,13 @@ class Policy {
         case userLastApproved = "policy_user_last_approved"
         case userApprovalInterval = "policy_user_approval_interval"
         
+        case showApprovedNotifications = "policy_show_approved_notifications"
+        
         func key(id:String) -> String {
             return "\(self.rawValue)_\(id)"
         }
 
     }
-    
-    //static var pendingAuthorizationMutex = Mutex()
-    //static var pendingAuthorizations:[PendingAuthorization] = []
     
     // Category Identifiers
     static let authorizeCategoryIdentifier = "authorize_identifier"
@@ -43,7 +42,7 @@ class Policy {
         case reject = "reject_identifier"
     }
     
-    
+    // MARK: Setters for Policy Settings
     class func set(needsUserApproval:Bool, for session:Session) {
         UserDefaults.group?.set(needsUserApproval, forKey: StorageKey.userApproval.key(id: session.id))
         UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id))
@@ -51,6 +50,20 @@ class Policy {
         UserDefaults.group?.synchronize()
     }
     
+    class func allow(session:Session, for time:Interval) {
+        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
+        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        UserDefaults.group?.synchronize()
+        
+        Policy.sendAllowedPendingIfNeeded()
+    }
+
+    class func set(shouldShowApprovedNotifications:Bool, for session:Session) {
+        UserDefaults.group?.set(shouldShowApprovedNotifications, forKey: StorageKey.showApprovedNotifications.key(id: session.id))
+        UserDefaults.group?.synchronize()
+    }
+    
+    // MARK: Getters for Policy Settings
     class func needsUserApproval(for session:Session) -> Bool {
         if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
         {
@@ -105,15 +118,16 @@ class Policy {
         return nil
     }
     
-
-    
-    static func allow(session:Session, for time:Interval) {
-        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
-        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
-        UserDefaults.group?.synchronize()
+    class func shouldShowApprovedNotifications(for session:Session) -> Bool {
         
-        Policy.sendAllowedPendingIfNeeded()
+        guard let shouldShow = UserDefaults.group?.object(forKey: StorageKey.showApprovedNotifications.key(id: session.id)) as? Bool
+        else {
+            return true
+        }
+        
+        return shouldShow
     }
+    
     
     //MARK: Pending Authoirizations
     
