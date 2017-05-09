@@ -179,7 +179,7 @@ class Silo {
                     // if host auth provided, check known hosts
                     if let hostAuth = signRequest.hostAuth {
                         guard hostAuth.hostNames.isEmpty == false else {
-                            throw HostAuthHasNoHostnames{}
+                            throw HostAuthHasNoHostnames()
                         }
                         for hostName in hostAuth.hostNames {
                             try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
