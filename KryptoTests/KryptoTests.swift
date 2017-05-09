@@ -13,6 +13,7 @@ class KryptoTests: XCTestCase {
     
     var keypairClasses:[KeyPair.Type] = [RSAKeyPair.self, Ed25519KeyPair.self]
     var publicKeyClasses:[PublicKey.Type] = [RSAPublicKey.self, Sign.PublicKey.self]
+    var digestTypes:[[DigestType]] = [[.sha1, .sha256, .sha512], [.ed25519]]
 
     override func setUp() {
         super.setUp()
@@ -94,25 +95,28 @@ class KryptoTests: XCTestCase {
     
     func testGenSignVerify() {
         
-        for KPClass in keypairClasses {
-            log("running test for \(KPClass)")
+        for (index, KPClass) in keypairClasses.enumerated() {
             
-            do {
-                let _ = try KPClass.destroy("test")
-                let kp = try KPClass.generate("test")
-                let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!)
-                
-                let resYes = try kp.publicKey.verify("hellllo".data(using: String.Encoding.utf8)!, signature: sig)
-                XCTAssert(resYes, "sig is supposed to be correct!")
-                
-                let resNo = try kp.publicKey.verify("byyyye".data(using: String.Encoding.utf8)!, signature: sig)
-                XCTAssert(!resNo, "sig is supposed to be wrong!")
-                
-            } catch (let e) {
-                if let ce = e as? CryptoError {
-                    XCTFail("test failed: \(ce.getError())")
-                } else {
-                    XCTFail(e.localizedDescription)
+            for digestType in digestTypes[index] {
+                log("running test for: \(KPClass), using digest algorithm: \(digestType)")
+
+                do {
+                    let _ = try KPClass.destroy("test")
+                    let kp = try KPClass.generate("test")
+                    let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!, digestType: digestType)
+                    
+                    let resYes = try kp.publicKey.verify("hellllo".data(using: String.Encoding.utf8)!, signature: sig, digestType:  digestType)
+                    XCTAssert(resYes, "sig is supposed to be correct!")
+                    
+                    let resNo = try kp.publicKey.verify("byyyye".data(using: String.Encoding.utf8)!, signature: sig, digestType:  digestType)
+                    XCTAssert(!resNo, "sig is supposed to be wrong!")
+                    
+                } catch (let e) {
+                    if let ce = e as? CryptoError {
+                        XCTFail("test failed: \(ce.getError())")
+                    } else {
+                        XCTFail(e.localizedDescription)
+                    }
                 }
             }
         }
@@ -123,33 +127,34 @@ class KryptoTests: XCTestCase {
     
     func testLoadSignVerify() {
         
-        for KPClass in keypairClasses {
-            log("running test for \(KPClass)")
+        for (index, KPClass) in keypairClasses.enumerated() {
+            
+            for digestType in digestTypes[index] {
+                log("running test for: \(KPClass), using digest algorithm: \(digestType)")
 
-            do {
-                let _ = try KPClass.destroy("test")
-                let _ = try KPClass.generate("test")
-                
-                guard let loadedKp = try KPClass.load("test")
-                    else {
-                        XCTFail("test failed: no KeyPair loaded")
-                        return
-                }
-                
-                let sig = try loadedKp.sign(data: "hellllo".data(using: String.Encoding.utf8)!)
-                let resYes = try loadedKp.publicKey.verify("hellllo".data(using: String.Encoding.utf8)!, signature: sig)
-                
-                XCTAssert(resYes, "sig is supposed to be correct!")
-                
-            } catch (let e) {
-                if let ce = e as? CryptoError {
-                    XCTFail("test failed: \(ce.getError())")
-                } else {
-                    XCTFail(e.localizedDescription)
+                do {
+                    let _ = try KPClass.destroy("test")
+                    let _ = try KPClass.generate("test")
+                    
+                    guard let loadedKp = try KPClass.load("test")
+                        else {
+                            XCTFail("test failed: no KeyPair loaded")
+                            return
+                    }
+                    
+                    let sig = try loadedKp.sign(data: "hellllo".data(using: String.Encoding.utf8)!, digestType: digestType)
+                    let resYes = try loadedKp.publicKey.verify("hellllo".data(using: String.Encoding.utf8)!, signature: sig, digestType:  digestType)
+                    
+                    XCTAssert(resYes, "sig is supposed to be correct!")
+                    
+                } catch (let e) {
+                    if let ce = e as? CryptoError {
+                        XCTFail("test failed: \(ce.getError())")
+                    } else {
+                        XCTFail(e.localizedDescription)
+                    }
                 }
             }
-
-            
         }
     }
     
@@ -182,31 +187,33 @@ class KryptoTests: XCTestCase {
     func testGenSignExportVerify() {
         
         for (index, KPClass) in keypairClasses.enumerated() {
-            log("running test for \(KPClass)")
             let PKClass = publicKeyClasses[index]
 
-            do {
-                let _ = try KPClass.destroy("test")
-                let kp = try KPClass.generate("test")
-                let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!)
-                
-                let pub = try kp.publicKey.export()
-                let impPubKey = try PKClass.importFrom("test", publicKeyRaw: pub)
-                
-                let resYes = try impPubKey.verify("hellllo".data(using: String.Encoding.utf8)!, signature: sig)
-                XCTAssert(resYes, "sig is supposed to be correct!")
-                
-                let resNo = try impPubKey.verify("byyyye".data(using: String.Encoding.utf8)!, signature: sig)
-                XCTAssert(!resNo, "sig is supposed to be wrong!")
-                
-            } catch (let e) {
-                if let ce = e as? CryptoError {
-                    XCTFail("test failed: \(ce.getError())")
-                } else {
-                    XCTFail(e.localizedDescription)
+            for digestType in digestTypes[index] {
+                log("running test for: \(KPClass), using digest algorithm: \(digestType)")
+
+                do {
+                    let _ = try KPClass.destroy("test")
+                    let kp = try KPClass.generate("test")
+                    let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!, digestType: digestType)
+                    
+                    let pub = try kp.publicKey.export()
+                    let impPubKey = try PKClass.importFrom("test", publicKeyRaw: pub)
+                    
+                    let resYes = try impPubKey.verify("hellllo".data(using: String.Encoding.utf8)!, signature: sig, digestType:  digestType)
+                    XCTAssert(resYes, "sig is supposed to be correct!")
+                    
+                    let resNo = try impPubKey.verify("byyyye".data(using: String.Encoding.utf8)!, signature: sig, digestType: digestType)
+                    XCTAssert(!resNo, "sig is supposed to be wrong!")
+                    
+                } catch (let e) {
+                    if let ce = e as? CryptoError {
+                        XCTFail("test failed: \(ce.getError())")
+                    } else {
+                        XCTFail(e.localizedDescription)
+                    }
                 }
             }
-
         }
     }
     

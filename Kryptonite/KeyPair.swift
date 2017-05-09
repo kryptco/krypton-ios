@@ -36,7 +36,7 @@ let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOn
 
 protocol PublicKey {
     var type:KeyType {  get }
-    func verify(_ message:Data, signature:Data) throws -> Bool
+    func verify(_ message:Data, signature:Data, digestType:DigestType) throws -> Bool
     func export() throws -> Data
     static func importFrom(_ tag:String, publicKeyRaw:Data) throws -> PublicKey
 }

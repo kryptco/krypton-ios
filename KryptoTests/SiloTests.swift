@@ -29,7 +29,7 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
 
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion)
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
             XCTFail("expected exception")
         } catch let e {
@@ -47,7 +47,7 @@ class SiloTests: XCTestCase {
 
             SessionManager.shared.add(session: session, temporary: true)
 
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion)
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
         } catch let e {
             XCTFail("\(e)")
@@ -61,7 +61,7 @@ class SiloTests: XCTestCase {
 
             SessionManager.shared.add(session: session, temporary: true)
 
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion)
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
 
             SessionManager.shared.remove(session: session)
@@ -83,9 +83,9 @@ class SiloTests: XCTestCase {
     func testPendingRequest() {
         do {
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
-            let data = try "AAAAIPETRn52JvtGonHlvKDDzk02/9p8GKioagvG+nEU3+h9AAAAAAVrZXZpbgo=".fromBase64()
+            let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, sign: sign)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, sign: sign)
             let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
@@ -109,9 +109,9 @@ class SiloTests: XCTestCase {
     func testOldRequest() {
         do {
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
-            let data = try "AAAAIPETRn52JvtGonHlvKDDzk02/9p8GKioagvG+nEU3+h9AAAAAAVrZXZpbgo=".fromBase64()
+            let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970 - Properties.requestTimeTolerance * 3), sendACK: false, sign: sign)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970 - Properties.requestTimeTolerance * 3), sendACK: false, version: Properties.currentVersion, sign: sign)
             let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
@@ -135,9 +135,9 @@ class SiloTests: XCTestCase {
     func testFutureRequest() {
         do {
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
-            let data = try "AAAAIPETRn52JvtGonHlvKDDzk02/9p8GKioagvG+nEU3+h9AAAAAAVrZXZpbgo=".fromBase64()
+            let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970 + Properties.requestTimeTolerance * 3), sendACK: false, sign: sign)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970 + Properties.requestTimeTolerance * 3), sendACK: false, version: Properties.currentVersion, sign: sign)
             let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
@@ -161,9 +161,9 @@ class SiloTests: XCTestCase {
     func testValidKey() {
         do {
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
-            let data = try "AAAAIPETRn52JvtGonHlvKDDzk02/9p8GKioagvG+nEU3+h9AAAAAAVrZXZpbgo=".fromBase64()
+            let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, sign: sign)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, sign: sign)
             let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
@@ -179,9 +179,9 @@ class SiloTests: XCTestCase {
     func testValidKeyTwice() {
         do {
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
-            let data = try "AAAAIPETRn52JvtGonHlvKDDzk02/9p8GKioagvG+nEU3+h9AAAAAAVrZXZpbgo=".fromBase64()
+            let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, sign: sign)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, sign: sign)
             let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
@@ -198,9 +198,9 @@ class SiloTests: XCTestCase {
     func testInvalidKey() {
         do {
             let randomFp = try Data.random(size: 32).toBase64()
-            let data = try "AAAAIPETRn52JvtGonHlvKDDzk02/9p8GKioagvG+nEU3+h9AAAAAAVrZXZpbgo=".fromBase64()
+            let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: randomFp, hostAuth: nil)
-            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, sign: sign)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, sign: sign)
             let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 

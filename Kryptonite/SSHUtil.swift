@@ -18,14 +18,10 @@ extension SSHMessage {
             throw SSHMessageParsingError()
         }
         
-        let len = 1
-        let start = 0
-        let end = start + len
+        let out = self.bytes[0]
         
-        let out = self.subdata(in: start ..< end ).bytes[0]
-        
-        if self.count > end {
-            self = self.subdata(in: end ..< self.count)
+        if self.count > 1 {
+            self = self.subdata(in: 1 ..< self.count)
         } else {
             self = Data()
         }
@@ -50,6 +46,9 @@ extension SSHMessage {
         let start = 4
         let end = start + Int(len)
         
+        guard self.count >= end else {
+            throw SSHMessageParsingError()
+        }
         let out = self.subdata(in: start ..< end )
         
         if self.count > end {

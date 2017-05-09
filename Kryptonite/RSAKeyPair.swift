@@ -275,29 +275,28 @@ struct RSAPublicKey:PublicKey {
         return KeyType.RSA
     }
     
-    func verify(_ message:String, signature:String) throws -> Bool {
+    func verify(_ message: Data, signature: Data, digestType:DigestType) throws -> Bool {
         
-        guard let data = message.data(using: String.Encoding.utf8)
-            else {
-                throw CryptoError.encoding
+        var hash:[UInt8]
+        var padding:SecPadding
+        
+        switch digestType {
+        case .sha1:
+            hash    = message.SHA1.bytes
+            padding = .PKCS1SHA1
+        case .sha256:
+            hash    = message.SHA256.bytes
+            padding = .PKCS1SHA256
+        case .sha512:
+            hash    = message.SHA512.bytes
+            padding = .PKCS1SHA512
+        default:
+            throw CryptoError.unsupportedSignatureDigestAlgorithmType
         }
         
-        let sigData = try signature.fromBase64()
+        let sigBytes = signature.bytes
         
-        return try verify(data, signature: sigData)
-    }
-    
-    func verify(_ message: Data, signature: Data) throws -> Bool {
-        
-        let sigBytes = signature.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: signature.count))
-        }
-        
-        // Create SHA1 hash of the message
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
-        CC_SHA1((message as NSData).bytes, CC_LONG(message.count), &hash)
-        
-        let status = SecKeyRawVerify(key, SecPadding.PKCS1SHA1, hash, hash.count, sigBytes, sigBytes.count)
+        let status = SecKeyRawVerify(key, padding, hash, hash.count, sigBytes, sigBytes.count)
         
         guard status.isSuccess() else {
             return false

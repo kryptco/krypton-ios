@@ -183,7 +183,10 @@ extension Sign.PublicKey:PublicKey {
         return KeyType.Ed25519
     }
     
-    func verify(_ message:Data, signature:Data) throws -> Bool {
+    func verify(_ message:Data, signature:Data, digestType:DigestType) throws -> Bool {
+        guard digestType == .ed25519 else {
+            throw CryptoError.unsupportedSignatureDigestAlgorithmType
+        }
         return try KRSodium.shared().sign.verify(message: message, publicKey: self, signature: signature)
     }
     func export() throws -> Data {
