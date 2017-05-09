@@ -1,5 +1,5 @@
 //
-//  SSHKeyFormat.swift
+//  SSHFormat.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 8/28/16.
@@ -130,15 +130,33 @@ extension Sign.PublicKey:SSHPublicKey {
     }
 }
 
+// MARK: SSH Digest Type
+struct UnsupportedSSHDigestAlgorithm:Error {}
+extension DigestType {
+    init(algorithmName:String) throws {
+        switch algorithmName {
+            case KeyType.RSA.sshHeader():
+                self = .sha1
+            case "rsa-sha2-256":
+                self = .sha256
+            case "rsa-sha2-512":
+                self = .sha512
+            case KeyType.Ed25519.sshHeader():
+                self = .ed25519
+            default:
+                throw UnsupportedSSHDigestAlgorithm()
+        }
+    }
+}
 
 // MARK: SSH Signature Format 
 extension KeyPair {
-    func signAppendingSSHWirePubkeyToPayload(data:Data) throws -> String {
+    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
         var dataClone = Data(data)
         let pubkeyWire = try publicKey.wireFormat()
         dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
         dataClone.append(pubkeyWire)
-        return try sign(data: dataClone).toBase64()
+        return try sign(data: dataClone, digestType: digestType).toBase64()
     }
     
 }

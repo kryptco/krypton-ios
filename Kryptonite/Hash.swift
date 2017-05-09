@@ -9,6 +9,15 @@
 import Foundation
 import CommonCrypto
 extension Data {
+    var SHA512:Data {
+        var dataBytes = self.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
+        }
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA512_DIGEST_LENGTH))
+        CC_SHA512(&dataBytes, CC_LONG(self.count), &hash)
+        
+        return Data(bytes: hash)
+    }
     var SHA256:Data {
         var dataBytes = self.withUnsafeBytes {
             [UInt8](UnsafeBufferPointer(start: $0, count: self.count))

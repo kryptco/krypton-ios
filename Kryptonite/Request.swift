@@ -84,85 +84,92 @@ struct Request:Jsonable {
 struct HostAuthVerificationFailed:Error{}
 
 struct SignRequest:Jsonable {
-    //  https://tools.ietf.org/html/rfc4252 section 7
-    var data:Data
+    var data:SSHMessage //SSH_MSG_USERAUTH_REQUEST
     var fingerprint:String
     var hostAuth:HostAuth?
-    var sessionID:Data?
-    var user:String?
     
-    struct InvalidSessionData:Error{}
+    var session:Data
+    var user:String
+    var digestType:DigestType
+    
     struct InvalidHostAuthSignature:Error{}
 
     init(data: Data, fingerprint: String, hostAuth: HostAuth? = nil) throws {
-        self.data = data
+        self.data = SSHMessage(data)
         self.fingerprint = fingerprint
-        try setSessionIDAndUser()
-        
-        if let hostAuth = hostAuth{
-            try verifyAndSetHostAuth(hostAuth: hostAuth)
-        }
-    }
 
-    mutating func setSessionIDAndUser() throws {
-        guard data.count >= 4 else {
-            throw InvalidSessionData()
-        }
-        
-        let sessionIDLenBigEndianBytes = data.subdata(in: 0 ..< 4)
-        guard let sessionIDLen = UInt32(exactly: Int32(bigEndianBytes: [UInt8](sessionIDLenBigEndianBytes))) else {
-            throw InvalidSessionData()
-        }
-        let sessionIDStart = 4
-        let sessionIDEnd = sessionIDStart + Int(sessionIDLen)
-        guard data.count >= Int(sessionIDEnd) else {
-            throw InvalidSessionData()
-        }
-        self.sessionID = data.subdata(in: sessionIDStart..<Int(sessionIDEnd))
+        (session, user, digestType) = try SignRequest.parse(requestData: data)
 
-        let userLenStart = sessionIDEnd + 1
-        let userLenEnd = userLenStart + 4
-        guard data.count >= Int(userLenEnd) else {
-            throw InvalidSessionData()
-        }
-        
-        let userLen = UInt32(Int32(bigEndianBytes: [UInt8](data.subdata(in: Int(userLenStart)..<Int(userLenEnd)))))
-        let userStart = userLenEnd
-        let userEnd = userStart + Int(userLen)
-        if userLen > 0 && data.count >= Int(userEnd) {
-            let userCStringBytes = data.subdata(in: Int(userStart)..<Int(userEnd))
-            let user = String(bytes: userCStringBytes, encoding: .utf8)
-            self.user = user
-        }
-    }
-
-    mutating func verifyAndSetHostAuth(hostAuth: HostAuth) throws {
-        guard let sessionID = sessionID else {
-            return
-        }
-        guard try hostAuth.verify(sessionID: sessionID) == true
+        if let potentialHostAuth = hostAuth{
+            guard try potentialHostAuth.verify(sessionID: session) == true
             else {
-                log("hostauth verify failed: \(hostAuth) digest \(data.toBase64())")
                 throw InvalidHostAuthSignature()
+            }
+
+            self.hostAuth = potentialHostAuth
         }
-        self.hostAuth = hostAuth
     }
-    
+
     init(json: Object) throws {
         data        = try ((json ~> "data") as String).fromBase64()
         fingerprint = try json ~> "public_key_fingerprint"
 
+        (session, user, digestType) = try SignRequest.parse(requestData: data)
+        
         do {
-            try setSessionIDAndUser()
+            let potentialHostAuth = try HostAuth(json: json ~> "host_auth")
             
-            let json:Object = try json ~> "host_auth"
+            guard try potentialHostAuth.verify(sessionID: session) == true
+            else {
+                throw InvalidHostAuthSignature()
+            }
 
-            let auth = try HostAuth(json: json)
-            try verifyAndSetHostAuth(hostAuth: auth)
+            self.hostAuth = potentialHostAuth
         } catch {
             log("host auth error: \(error)")
             hostAuth = nil
         }
+    }
+    
+    /**
+     Parse request data to get session, user, and digest algorithm type
+     - throws: InvalidRequestData if data doesn't parse correctly.
+     
+     Parses according to the SSH packet protocol: https://tools.ietf.org/html/rfc4252#section-7
+     
+     Packet Format (SSH_MSG_USERAUTH_REQUEST):
+         string    session identifier
+         byte      SSH_MSG_USERAUTH_REQUEST
+         string    user name
+         string    service name
+         string    "publickey"
+         boolean   TRUE
+         string    public key algorithm name
+         
+         /// Note: krd removes this to save space
+         string    public key to be used for authentication
+     */
+    static func parse(requestData:SSHMessage) throws -> (session:Data, user:String, digestType:DigestType) {
+        var data = Data(requestData)
+        // session
+        let session = try data.popData()
+        
+        // type
+        let _ = try data.popByte()
+        
+        // user
+        let user = try data.popString()
+        
+        // service, method, sign
+        let _ = try data.popString()
+        let _ = try data.popString()
+        let _ = try data.popBool()
+
+        let algo = try data.popString()
+        
+        let digestType = try DigestType(algorithmName: algo)
+        
+        return (session, user, digestType)
     }
     
     var object: Object {
@@ -177,12 +184,8 @@ struct SignRequest:Jsonable {
     }
     var display:String {
         let host = hostAuth?.hostNames.first ?? "unknown host"
-        
-        if let user = user {
-            return "\(user) @ \(host)"
-        }
-        
-        return host
+
+        return "\(user) @ \(host)"
     }
 
 }
