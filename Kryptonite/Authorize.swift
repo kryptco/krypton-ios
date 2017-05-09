@@ -67,6 +67,35 @@ extension UIViewController {
         }
     }
     
+    func showFailedResponse(errorMessage:String, session:Session) {
+        
+        // don't show if user is asked to approve manual
+        guard self.presentedViewController is ApproveController == false
+            else {
+                return
+        }
+        
+        // proceed to show auto approval
+        let autoApproveController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "AutoApproveController")
+        autoApproveController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        
+        (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
+        (autoApproveController as? AutoApproveController)?.errorMessage = errorMessage
+        
+        
+        dispatchMain {
+            if self.presentedViewController is AutoApproveController {
+                self.presentedViewController?.dismiss(animated: false, completion: {
+                    self.present(autoApproveController, animated: true, completion: nil)
+                })
+            } else {
+                self.present(autoApproveController, animated: true, completion: nil)
+            }
+        }
+    }
+
+    
     func approveControllerDismissed(allowed:Bool) {
         let result = allowed ? "allowed" : "rejected"
         log("approve modal finished with result: \(result)")

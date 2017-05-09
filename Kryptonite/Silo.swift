@@ -16,6 +16,12 @@ struct RequestPendingError:Error{}
 
 struct SiloCacheCreationError:Error{}
 
+struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
+    var debugDescription:String {
+        return "No hostnames provided"
+    }
+}
+
 typealias CacheKey = String
 extension CacheKey {
     init(_ session:Session, _ request:Request) {
@@ -106,8 +112,12 @@ class Silo {
         
         if response.sign != nil {
             Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
-
-            Policy.notifyUser(session: session, request: request)
+            
+            if let error = response.sign?.error {
+                Policy.notifyUser(errorMessage: error, session: session)
+            } else {
+                Policy.notifyUser(session: session, request: request)
+            }
         }
         
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
@@ -165,6 +175,17 @@ class Silo {
             do {
                 
                 if signatureAllowed {
+                    
+                    // if host auth provided, check known hosts
+                    if let hostAuth = signRequest.hostAuth {
+                        guard hostAuth.hostNames.isEmpty == false else {
+                            throw HostAuthHasNoHostnames()
+                        }
+                        for hostName in hostAuth.hostNames {
+                            try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
+                        }
+                    }
+                    
                     // only place where signature should occur
                     sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data)
                     
@@ -174,8 +195,8 @@ class Silo {
                     LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.hostAuth, signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
                 }
 
-            } catch let e {
-                err = "\(e)"
+            } catch {
+                err = "\(error)"
             }
 
             sign = SignResponse(sig: sig, err: err)
@@ -198,8 +219,15 @@ class Silo {
 
     }
     
-    func hasCachedResponse(for session:Session,with request:Request) -> Bool {
-        return requestCache?[CacheKey(session, request)] != nil
+    func cachedResponse(for session:Session,with request:Request) -> Response? {
+        if  let cachedResponseData = requestCache?[CacheKey(session, request)] as Data?,
+            let json:Object = try? JSON.parse(data: cachedResponseData),
+            let response = try? Response(json: json)
+        {
+            return response
+        }
+
+        return nil
     }
 
 }

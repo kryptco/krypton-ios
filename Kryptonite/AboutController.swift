@@ -165,6 +165,9 @@ class AboutController: KRBaseController {
         }
     }
 
+    @IBAction func dismissKnownHostsEditor(segue: UIStoryboardSegue) {
+        
+    }
 
     //MARK: Delegates
     public override func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

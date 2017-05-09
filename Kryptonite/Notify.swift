@@ -170,6 +170,31 @@ class Notify {
         }
 
     }
+    
+    
+    func presentError(message:String, session:Session) {
+        let noteTitle = "Failed approval for \(session.pairing.displayName)"
+        let noteBody = message
+        
+        if #available(iOS 10.0, *) {
+            let content = UNMutableNotificationContent()
+            content.title = noteTitle
+            content.body = noteBody
+            content.sound = UNNotificationSound.default()
+            
+            let request = UNNotificationRequest(identifier: "\(message.hash)", content: content, trigger: nil)
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        } else {
+            let notification = UILocalNotification()
+            notification.alertTitle = noteTitle
+            notification.alertBody = noteBody
+            notification.soundName = UILocalNotificationDefaultSoundName
+            
+            UIApplication.shared.presentLocalNotificationNow(notification)
+        }
+        
+    }
+
 }
 
 typealias RequestNotificationIdentifier = String

@@ -63,6 +63,10 @@ extension UIColor {
     static var app:UIColor {
         return UIColor(hex: 0x5BC894)
     }
+    
+    static var reject:UIColor {
+        return UIColor(hex: 0xFF6361)
+    }
 }
 
 

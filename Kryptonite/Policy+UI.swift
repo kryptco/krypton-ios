@@ -115,4 +115,29 @@ extension Policy {
         
         
     }
+    
+    
+    class func notifyUser(errorMessage:String, session:Session) {
+        
+        switch UIApplication.shared.applicationState {
+            
+        case .background: // Background: then present local notification
+            Notify.shared.presentError(message: errorMessage, session: session)
+            
+        case .inactive: // Inactive: wait and try again
+            dispatchAfter(delay: 1.0, task: {
+                Policy.notifyUser(errorMessage: errorMessage, session: session)
+            })
+            
+        case .active:
+            guard Current.viewController?.presentedViewController is AutoApproveController == false
+                else {
+                    return
+            }
+            
+            Current.viewController?.showFailedResponse(errorMessage: errorMessage, session: session)
+        }
+        
+        
+    }
 }

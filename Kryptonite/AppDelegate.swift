@@ -270,8 +270,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: signatureAllowed)
-            
             try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)
+            
+            if let errorMessage = resp.sign?.error {
+                Notify.shared.presentError(message: errorMessage, session: session)
+            }
 
         } catch (let e) {
             log("handle error \(e)", .error)

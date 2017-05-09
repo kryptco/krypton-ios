@@ -14,10 +14,17 @@ class AutoApproveController:UIViewController {
     @IBOutlet weak var commandLabel:UILabel!
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var contentView:UIView!
+    
+    @IBOutlet weak var commandView:UIView!
+    @IBOutlet weak var deviceView:UIView!
+
 
     var deviceName:String?
     var command:String?
-    
+    var errorMessage:String?
+
+    var rejectColor = UIColor.reject
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +35,14 @@ class AutoApproveController:UIViewController {
         contentView.layer.masksToBounds = false
         
         deviceLabel.text = deviceName
-        commandLabel.text = "\(command ?? "SSH login request")"
+        if let error = errorMessage  {
+            commandLabel.text = error
+            commandView.backgroundColor = rejectColor
+            deviceView.backgroundColor = rejectColor
+            checkBox.secondaryTintColor = rejectColor
+        } else {
+            commandLabel.text = "\(command ?? "SSH login request")"
+        }
         
         checkBox.animationDuration = 1.0
         
@@ -45,7 +59,11 @@ class AutoApproveController:UIViewController {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
         
-        checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
+        if let _ = errorMessage {
+            checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
+        } else {
+            checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
+        }
         dispatchAfter(delay: 4.0) {
             self.dismiss()
         }
@@ -75,7 +93,7 @@ class ApproveController:UIViewController {
 
     @IBOutlet weak var swipeDownRejectGesture:UIGestureRecognizer!
 
-    var rejectColor = UIColor(hex: 0xFF6361)
+    var rejectColor = UIColor.reject
     
     var heightCover:CGFloat = 234.0
     
@@ -126,9 +144,6 @@ class ApproveController:UIViewController {
     
     //MARK: Response
     @IBAction func approveOnce() {
-        
-        
-        
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
@@ -143,6 +158,12 @@ class ApproveController:UIViewController {
         do {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
             try TransportControl.shared.send(resp, for: session)
+            
+            if let errorMessage = resp.sign?.error {
+                isEnabled = true
+                self.dismissResponseFailed(errorMessage: errorMessage)
+                return
+            }
             
         } catch (let e) {
             isEnabled = true
@@ -193,6 +214,12 @@ class ApproveController:UIViewController {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
             try TransportControl.shared.send(resp, for: session)
             
+            if let errorMessage = resp.sign?.error {
+                isEnabled = true
+                self.dismissResponseFailed(errorMessage: errorMessage)
+                return
+            }
+            
         } catch (let e) {
             isEnabled = true
             log("send error \(e)", .error)
@@ -223,10 +250,8 @@ class ApproveController:UIViewController {
 
     }
     
-    
-    
     @IBAction func dismissReject() {
-
+        
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         }
@@ -264,9 +289,44 @@ class ApproveController:UIViewController {
                 self.animateDismiss()
             }
         }
-
+        
         Analytics.postEvent(category: "signature", action: "foreground reject")
+        
+    }
+    
 
+    func dismissResponseFailed(errorMessage:String) {
+
+        if #available(iOS 10.0, *) {
+            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        }
+        
+        guard isEnabled else {
+            return
+        }
+        
+        isEnabled = false
+        
+        self.resultLabel.text = errorMessage.uppercased()
+        self.resultView.backgroundColor = rejectColor
+        self.checkBox.secondaryCheckmarkTintColor = rejectColor
+        self.checkBox.tintColor = rejectColor
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.resultLabel.alpha = 1.0
+            self.arcView.alpha = 0
+            self.resultViewHeight.constant = self.heightCover
+            self.view.layoutIfNeeded()
+            
+        }) { (_) in
+            self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
+            dispatchAfter(delay: 2.0) {
+                self.animateDismiss()
+            }
+        }
+        
+        let errorLabel = HostMistmatchError.isMismatchErrorString(err: errorMessage) ? "host mistmatch" : "crypto error"
+        Analytics.postEvent(category: "signature", action: "failed foreground approve", label: errorLabel)
     }
     
     func animateDismiss(allowed:Bool = false) {
