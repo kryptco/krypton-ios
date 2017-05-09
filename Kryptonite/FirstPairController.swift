@@ -63,7 +63,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         }
         
         if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            self.askConfirmationIn(title: "Enable Push notifications?", text: "Push notifications are used to notify you when your private key is used. Push notifications signficiantly improve the app experience.", accept: "Enable", cancel: "Later")
+            self.askConfirmationIn(title: "Enable Push notifications?", text: "Push notifications are used to send you SSH login requests that you can approve without opening the app. Push notifications significantly improve the app experience.", accept: "Enable", cancel: "Later")
             { (enable) in
                 
                 if enable {
