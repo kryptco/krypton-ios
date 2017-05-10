@@ -22,12 +22,12 @@ struct Resources {
         UINavigationBar.appearance().tintColor = UIColor.app
         
         
-        if let font = UIFont(name: "AvenirNext-DemiBold", size: 17) {
+        
+        if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
             UINavigationBar.appearance().titleTextAttributes = [
-                NSForegroundColorAttributeName: UIColor.black,
+                NSForegroundColorAttributeName: UIColor(hex: 0x555555),
                 NSFontAttributeName: font,
             ]
-    
         }
 
 
