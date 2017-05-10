@@ -54,6 +54,7 @@ struct Request:Jsonable {
         json["request_id"] = id
         json["unix_seconds"] = unixSeconds
         json["a"] = sendACK
+        json["v"] = version.string
 
         if let s = sign {
             json["sign_request"] = s.object
