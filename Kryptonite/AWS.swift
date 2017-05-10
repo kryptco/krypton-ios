@@ -75,7 +75,7 @@ class API {
                 
                 guard let jsonObject = (try? JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments)) as? [String:Any],
                       let semVer = jsonObject["iOS"] as? String,
-                      let version = Version(string: semVer)
+                      let version = try? Version(string: semVer)
                 else {
                     completionHandler(nil, UnknownRemoteAppVersionError())
                     return

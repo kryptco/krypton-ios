@@ -16,6 +16,7 @@ let KeySize = 4096
 extension SecKey:PrivateKey {}
 
 class RSAKeyPair:KeyPair {
+
     
     var rsaPublicKey:RSAPublicKey
     var rsaPrivateKey:SecKey
@@ -231,11 +232,20 @@ class RSAKeyPair:KeyPair {
     }
     
     
-    func sign(data:Data) throws -> Data {
-        return try sign(digest: data.SHA1)
+    func sign(data:Data, digestType:DigestType) throws -> Data {
+        switch digestType {
+        case .sha1:
+            return try sign(digest: data.SHA1, padding: SecPadding.PKCS1SHA1)
+        case .sha256:
+            return try sign(digest: data.SHA256, padding: SecPadding.PKCS1SHA256)
+        case .sha512:
+            return try sign(digest: data.SHA512, padding: SecPadding.PKCS1SHA512)
+        default:
+            throw CryptoError.unsupportedSignatureDigestAlgorithmType
+        }
     }
     
-    func sign(digest:Data) throws -> Data {
+    private func sign(digest:Data, padding:SecPadding) throws -> Data {
         
         let dataBytes = digest.withUnsafeBytes {
             [UInt8](UnsafeBufferPointer(start: $0, count: digest.count))
@@ -245,7 +255,7 @@ class RSAKeyPair:KeyPair {
         var sigBufferSize = SecKeyGetBlockSize(self.rsaPrivateKey)
         var result = [UInt8](repeating: 0, count: sigBufferSize)
         
-        let status = SecKeyRawSign(rsaPrivateKey, SecPadding.PKCS1SHA1, dataBytes, dataBytes.count, &result, &sigBufferSize)
+        let status = SecKeyRawSign(rsaPrivateKey, padding, dataBytes, dataBytes.count, &result, &sigBufferSize)
         
         guard status.isSuccess() else {
             throw CryptoError.sign(.RSA, status)
@@ -265,29 +275,28 @@ struct RSAPublicKey:PublicKey {
         return KeyType.RSA
     }
     
-    func verify(_ message:String, signature:String) throws -> Bool {
+    func verify(_ message: Data, signature: Data, digestType:DigestType) throws -> Bool {
         
-        guard let data = message.data(using: String.Encoding.utf8)
-            else {
-                throw CryptoError.encoding
+        var hash:[UInt8]
+        var padding:SecPadding
+        
+        switch digestType {
+        case .sha1:
+            hash    = message.SHA1.bytes
+            padding = .PKCS1SHA1
+        case .sha256:
+            hash    = message.SHA256.bytes
+            padding = .PKCS1SHA256
+        case .sha512:
+            hash    = message.SHA512.bytes
+            padding = .PKCS1SHA512
+        default:
+            throw CryptoError.unsupportedSignatureDigestAlgorithmType
         }
         
-        let sigData = try signature.fromBase64()
+        let sigBytes = signature.bytes
         
-        return try verify(data, signature: sigData)
-    }
-    
-    func verify(_ message: Data, signature: Data) throws -> Bool {
-        
-        let sigBytes = signature.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: signature.count))
-        }
-        
-        // Create SHA1 hash of the message
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
-        CC_SHA1((message as NSData).bytes, CC_LONG(message.count), &hash)
-        
-        let status = SecKeyRawVerify(key, SecPadding.PKCS1SHA1, hash, hash.count, sigBytes, sigBytes.count)
+        let status = SecKeyRawVerify(key, padding, hash, hash.count, sigBytes, sigBytes.count)
         
         guard status.isSuccess() else {
             return false

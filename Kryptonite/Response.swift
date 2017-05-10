@@ -36,7 +36,7 @@ final class Response:Jsonable {
     init(json: Object) throws {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
-        self.version = Version(string: try json ~> "v")
+        self.version = try Version(string: json ~> "v")
 
         if let approvedUntil:Int = try? json ~> "approved_until" {
             self.approvedUntil = approvedUntil

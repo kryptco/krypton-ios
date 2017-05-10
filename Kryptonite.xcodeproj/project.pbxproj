@@ -12,7 +12,7 @@
 		8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
-		8D45AFF61E8D739500E84A57 /* SSHVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45AFF51E8D739500E84A57 /* SSHVerificationTests.swift */; };
+		8D45AFF61E8D739500E84A57 /* SSHHostVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */; };
 		8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
 		8D45B0081E8D7CEA00E84A57 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
 		8D45B00A1E8D7DBB00E84A57 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
@@ -178,7 +178,7 @@
 		FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
 		FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Wrap.swift */; };
 		FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
-		FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */; };
+		FAB5179E1E54D54F0032DD47 /* SSHFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHFormat.swift */; };
 		FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAB517A11E54D54F0032DD47 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
 		FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
@@ -219,6 +219,10 @@
 		FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFEA1D779D6E005D71B9 /* CreateController.swift */; };
 		FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFED1D77A2B7005D71B9 /* SetupController.swift */; };
 		FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */; };
+		FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33541EC186DC003EC6C0 /* SSHUtil.swift */; };
+		FACE33661EC186E8003EC6C0 /* SSHUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33541EC186DC003EC6C0 /* SSHUtil.swift */; };
+		FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33541EC186DC003EC6C0 /* SSHUtil.swift */; };
+		FACE33691EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */; };
 		FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD361F61DF08F9E00D17BAB /* Connectivity.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FAE45B991E64750E00A583AB /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B981E64750E00A583AB /* RSAKeyPair.swift */; };
@@ -247,13 +251,13 @@
 		FAE495971DBD89F100A97708 /* M13CheckboxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495851DBD89F000A97708 /* M13CheckboxPathGenerator.swift */; };
 		FAE495981DBD89F100A97708 /* M13CheckboxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495861DBD89F000A97708 /* M13CheckboxRadioPathGenerator.swift */; };
 		FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE495991DBD98C400A97708 /* Approval.storyboard */; };
-		FAEE048C1D7369C3002A7AFD /* SSHKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */; };
+		FAEE048C1D7369C3002A7AFD /* SSHFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHFormat.swift */; };
 		FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */ = {isa = PBXBuildFile; fileRef = FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */; };
 		FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
 		FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */; };
 		FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
-		FAEE04A61D74BD47002A7AFD /* SSHKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */; };
+		FAEE04A61D74BD47002A7AFD /* SSHFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* SSHFormat.swift */; };
 		FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
 		FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */; };
@@ -494,7 +498,7 @@
 		8D003DF11D90EDE30085ED21 /* Sodium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sodium.swift; sourceTree = "<group>"; };
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
-		8D45AFF51E8D739500E84A57 /* SSHVerificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHVerificationTests.swift; sourceTree = "<group>"; };
+		8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHHostVerificationTests.swift; sourceTree = "<group>"; };
 		8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		8D7941671D98732600F6E32E /* NetworkProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		8D83990B1E56063A0051C6BA /* HostAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostAuth.swift; sourceTree = "<group>"; };
@@ -633,6 +637,8 @@
 		FACBEFEA1D779D6E005D71B9 /* CreateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateController.swift; sourceTree = "<group>"; };
 		FACBEFED1D77A2B7005D71B9 /* SetupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupController.swift; sourceTree = "<group>"; };
 		FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsEmptyController.swift; sourceTree = "<group>"; };
+		FACE33541EC186DC003EC6C0 /* SSHUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHUtil.swift; sourceTree = "<group>"; };
+		FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigestAlgorithmParsingTests.swift; sourceTree = "<group>"; };
 		FAD361F61DF08F9E00D17BAB /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		FADD71491D772F8200DA5112 /* Date+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Date+KR.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAE45B981E64750E00A583AB /* RSAKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
@@ -657,7 +663,7 @@
 		FAE495851DBD89F000A97708 /* M13CheckboxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxPathGenerator.swift; sourceTree = "<group>"; };
 		FAE495861DBD89F000A97708 /* M13CheckboxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxRadioPathGenerator.swift; sourceTree = "<group>"; };
 		FAE4959A1DBD98C400A97708 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Approval.storyboard; sourceTree = "<group>"; };
-		FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SSHKeyFormat.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAEE048B1D7369C3002A7AFD /* SSHFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SSHFormat.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SoftwareLibraries; sourceTree = "<group>"; };
 		FAEE04921D73CDD2002A7AFD /* CryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CryptoError.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE04941D73ECE2002A7AFD /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Util.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1111,13 +1117,14 @@
 				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
 				FAE45B981E64750E00A583AB /* RSAKeyPair.swift */,
 				FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */,
-				FAEE048B1D7369C3002A7AFD /* SSHKeyFormat.swift */,
+				FAEE048B1D7369C3002A7AFD /* SSHFormat.swift */,
 				FAFE546E1D7B9C1400391FDD /* Wrap.swift */,
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
 				FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */,
 				8D003DF11D90EDE30085ED21 /* Sodium.swift */,
+				FACE33541EC186DC003EC6C0 /* SSHUtil.swift */,
 			);
 			name = Krypto;
 			sourceTree = "<group>";
@@ -1145,9 +1152,10 @@
 				FAC873F51E6A4D32003D112E /* PairingTests.swift */,
 				8D003DF41D90EECE0085ED21 /* SodiumTests.swift */,
 				FAEE049E1D74BCC3002A7AFD /* Info.plist */,
-				8D45AFF51E8D739500E84A57 /* SSHVerificationTests.swift */,
+				8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */,
 				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
 				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
+				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
 				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
 			);
 			path = KryptoTests;
@@ -1778,7 +1786,7 @@
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,
 				FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
-				FAEE048C1D7369C3002A7AFD /* SSHKeyFormat.swift in Sources */,
+				FAEE048C1D7369C3002A7AFD /* SSHFormat.swift in Sources */,
 				FAE4958D1DBD89F100A97708 /* M13CheckboxDotController.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
 				FA16828B1EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld in Sources */,
@@ -1851,6 +1859,7 @@
 				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */,
+				FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
 				FAE45B9D1E64AA3E00A583AB /* Ed25519.swift in Sources */,
 				FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */,
@@ -1901,6 +1910,7 @@
 				8DCB60441E94468B00E1B924 /* NetworkProtocol.swift in Sources */,
 				8DCB60411E94468100E1B924 /* KeyManager.swift in Sources */,
 				FAC873FC1E6A4E9C003D112E /* KeychainStorage.swift in Sources */,
+				FACE33691EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift in Sources */,
 				8DCB604C1E9446D300E1B924 /* AWS.swift in Sources */,
 				8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */,
 				8DCB603C1E9445F200E1B924 /* Silo.swift in Sources */,
@@ -1908,9 +1918,10 @@
 				FAC873FF1E6A5148003D112E /* JSON+Seal.swift in Sources */,
 				8DCB60401E94468100E1B924 /* Response.swift in Sources */,
 				8DCB603B1E94458000E1B924 /* AnalyticsStub.swift in Sources */,
-				FAEE04A61D74BD47002A7AFD /* SSHKeyFormat.swift in Sources */,
+				FAEE04A61D74BD47002A7AFD /* SSHFormat.swift in Sources */,
 				8DCB604E1E9446D300E1B924 /* SQS.swift in Sources */,
 				FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */,
+				FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */,
 				8DCB60461E94469700E1B924 /* Policy.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
 				8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */,
@@ -1932,7 +1943,7 @@
 				FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */,
 				8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */,
 				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
-				8D45AFF61E8D739500E84A57 /* SSHVerificationTests.swift in Sources */,
+				8D45AFF61E8D739500E84A57 /* SSHHostVerificationTests.swift in Sources */,
 				FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */,
 				8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */,
 				8DCB60241E9442F300E1B924 /* SiloTests.swift in Sources */,
@@ -1953,6 +1964,7 @@
 				FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
 				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,
+				FACE33661EC186E8003EC6C0 /* SSHUtil.swift in Sources */,
 				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
 				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
 				FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */,
@@ -1967,7 +1979,7 @@
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FA1682A01EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
-				FAB5179E1E54D54F0032DD47 /* SSHKeyFormat.swift in Sources */,
+				FAB5179E1E54D54F0032DD47 /* SSHFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
 				FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */,
 				8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */,

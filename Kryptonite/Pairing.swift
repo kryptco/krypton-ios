@@ -51,7 +51,7 @@ struct Pairing:JsonReadable {
         
         var version:Version?
         if let v:String = try? json ~> "v" {
-            version = Version(string: v)
+            version = try Version(string: v)
         }
         
         try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey, version:version)

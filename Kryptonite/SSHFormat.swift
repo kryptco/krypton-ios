@@ -1,5 +1,5 @@
 //
-//  SSHKeyFormat.swift
+//  SSHFormat.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 8/28/16.
@@ -130,15 +130,70 @@ extension Sign.PublicKey:SSHPublicKey {
     }
 }
 
+// MARK: SSH Digest Type
+struct UnsupportedSSHDigestAlgorithm:Error {}
 
-// MARK: SSH Signature Format 
+extension DigestType {
+    
+    /**
+     Select a signature digest algorithm based on `algorithmName` found in
+     SSH_MSG_USERAUTH_REQUEST. 
+     
+     2.1.0 adds support for rsa sha256/512 signatures per: https://tools.ietf.org/html/draft-rsa-dsa-sha2-256-03
+     */
+    init(algorithmName:String) throws {
+        switch algorithmName {
+            case KeyType.RSA.sshHeader():
+                self = .sha1
+            case "rsa-sha2-256":
+                self = .sha256
+            case "rsa-sha2-512":
+                self = .sha512
+            case KeyType.Ed25519.sshHeader():
+                self = .ed25519
+            default:
+                throw UnsupportedSSHDigestAlgorithm()
+        }
+    }
+    
+    
+    /**
+        Modify digest type based on a request's version for
+        backwards compatibility. Note that before 2.1.0, sha1 was 
+        always used for RSA signatures.
+     
+        OpenSSH still accepts it even though the server asks for a different digest algorithm.
+        Furthermore OpenSSH releases less than 7.2 (and a bug introduced in OpenSSH 7.4) still
+        use sha1 for RSA signatures (read: many servers still ask for sha1 signatures).
+        The current release of OpenSSH resolves this: https://www.openssh.com/txt/release-7.5
+     
+        Since the session (in the data payload being signed) is a sha2 hash, the risk of sha1
+        is smaller, but still should be avoided.
+
+        TODO: remove this after majority of users >2.1.0
+     */
+    func based(on version:Version) -> DigestType {
+        
+        let introduced = Version(major: 2, minor: 1, patch: 0)
+        
+        switch self {
+        case .sha256 where version < introduced,
+             .sha512 where version < introduced:
+            return .sha1
+        default:
+            return self
+        }
+    }
+}
+
+// MARK: SSH Signature Format
 extension KeyPair {
-    func signAppendingSSHWirePubkeyToPayload(data:Data) throws -> String {
+    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
         var dataClone = Data(data)
         let pubkeyWire = try publicKey.wireFormat()
         dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
         dataClone.append(pubkeyWire)
-        return try sign(data: dataClone).toBase64()
+        return try sign(data: dataClone, digestType: digestType).toBase64()
     }
     
 }

@@ -13,6 +13,7 @@ enum CryptoError : Error {
     case paramCreate
     case generate(KeyType, OSStatus?)
     case sign(KeyType, OSStatus?)
+    case unsupportedSignatureDigestAlgorithmType
     case encrypt
     case decrypt
     case export(OSStatus?)

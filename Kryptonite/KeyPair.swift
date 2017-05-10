@@ -25,11 +25,18 @@ enum KeyType:String {
     case Ed25519 = "ed25519"
 }
 
+enum DigestType {
+    case ed25519
+    case sha1
+    case sha256
+    case sha512
+}
+
 let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
 
 protocol PublicKey {
     var type:KeyType {  get }
-    func verify(_ message:Data, signature:Data) throws -> Bool
+    func verify(_ message:Data, signature:Data, digestType:DigestType) throws -> Bool
     func export() throws -> Data
     static func importFrom(_ tag:String, publicKeyRaw:Data) throws -> PublicKey
 }
@@ -39,14 +46,13 @@ protocol PrivateKey {}
 protocol KeyPair {
     var publicKey:PublicKey { get }
     var privateKey:PrivateKey { get }
-        
+    
     static func loadOrGenerate(_ tag: String) throws -> KeyPair
     static func load(_ tag: String) throws -> KeyPair?
     static func generate(_ tag: String) throws -> KeyPair
     static func destroy(_ tag: String) throws -> Bool
     
-    func sign(data:Data) throws -> Data
-
+    func sign(data:Data, digestType:DigestType) throws -> Data
 }
 
 
