@@ -13,7 +13,11 @@ import JSON
 struct HostAuth:Jsonable{
     let hostKey: String
     let signature: String
-    let hostNames: [String]
+    private let hostNames: [String]
+    
+    var hostName:String? {
+        return hostNames.first
+    }
 
     init(hostKey: String, signature: String, hostNames: [String]) {
         self.hostKey = hostKey

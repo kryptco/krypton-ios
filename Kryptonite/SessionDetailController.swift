@@ -14,6 +14,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     @IBOutlet var lastAccessLabel:UILabel!
 
     @IBOutlet var revokeButton:UIButton!
+    @IBOutlet var unknownHostSwitch:UISwitch!
 
     @IBOutlet var headerView:UIView!
 
@@ -47,7 +48,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         if let session = session {
             deviceNameField.text = session.pairing.displayName.uppercased()
-
+            unknownHostSwitch.isOn = Policy.needsUnknownHostApproval(for: session)
+            
             logs = LogManager.shared.fetch(for: session.id)
             lastAccessLabel.text =  "Active " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
             
@@ -121,6 +123,13 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         approvalSegmentedControl.setTitle("Don't ask for 3hrs", forSegmentAt: ApprovalControl.timed.rawValue)
     }
 
+    @IBAction func unknownHostApprovalChanged(sender:UISwitch) {
+        guard let session = session else {
+            return
+        }
+        
+        Policy.set(manualUnknownHostApprovals: sender.isOn, for: session)
+    }
 
     //MARK: Revoke
     @IBAction func revokeTapped() {

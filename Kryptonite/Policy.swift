@@ -24,7 +24,8 @@ class Policy {
         case userApproval = "policy_user_approval"
         case userLastApproved = "policy_user_last_approved"
         case userApprovalInterval = "policy_user_approval_interval"
-        
+        case manualUnknownHostApprovals = "policy_manual_host_approvals"
+
         func key(id:String) -> String {
             return "\(self.rawValue)_\(id)"
         }
@@ -44,6 +45,7 @@ class Policy {
     }
     
     
+    //MARK: Setters
     class func set(needsUserApproval:Bool, for session:Session) {
         UserDefaults.group?.set(needsUserApproval, forKey: StorageKey.userApproval.key(id: session.id))
         UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id))
@@ -51,6 +53,22 @@ class Policy {
         UserDefaults.group?.synchronize()
     }
     
+    class func set(manualUnknownHostApprovals:Bool, for session:Session) {
+        UserDefaults.group?.set(manualUnknownHostApprovals, forKey: StorageKey.manualUnknownHostApprovals.key(id: session.id))
+        UserDefaults.group?.synchronize()
+    }
+    
+    
+    static func allow(session:Session, for time:Interval) {
+        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
+        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        UserDefaults.group?.synchronize()
+        
+        Policy.sendAllowedPendingIfNeeded()
+    }
+
+    
+    //MARK: Getters
     class func needsUserApproval(for session:Session) -> Bool {
         if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
         {
@@ -71,6 +89,29 @@ class Policy {
         
         return needsApproval
     }
+    
+    class func needsUnknownHostApproval(for session:Session) -> Bool {
+        guard let needsApproval = UserDefaults.group?.object(forKey: StorageKey.manualUnknownHostApprovals.key(id: session.id)) as? Bool else {
+            return true
+        }
+        
+        return needsApproval
+    }
+    
+    
+    class func needsUserApproval(for session:Session, with signRequest:SignRequest) -> Bool {
+        if Policy.needsUserApproval(for: session) {
+            return true
+        }
+        
+        if  Policy.needsUnknownHostApproval(for: session) && signRequest.isUnknownHost
+        {
+            return true
+        }
+        
+        return false
+    }
+    
 
     class func approvedUntil(for session:Session) -> Date? {
         guard
@@ -107,13 +148,6 @@ class Policy {
     
 
     
-    static func allow(session:Session, for time:Interval) {
-        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
-        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
-        UserDefaults.group?.synchronize()
-        
-        Policy.sendAllowedPendingIfNeeded()
-    }
     
     //MARK: Pending Authoirizations
     
@@ -180,7 +214,8 @@ class Policy {
         cache?.allObjects().forEach {
             
             guard   let pending = try? PendingAuthorization(jsonData: $0 as Data),
-                    Policy.needsUserApproval(for: pending.session) == false
+                    let signRequest = pending.request.sign,
+                    Policy.needsUserApproval(for: pending.session, with: signRequest) == false
             else {
                 return
             }

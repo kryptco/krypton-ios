@@ -94,11 +94,10 @@ class Silo {
             return
         }
         
-        // logic
         
-        // if signature request AND we need a user approval, 
-        // then exit and wait for it
-        if request.sign != nil && Policy.needsUserApproval(for: session) {
+        // if it's signature request: check if we need a user approval
+        // then exit and wait for approval
+        if let signRequest = request.sign, Policy.needsUserApproval(for: session, with: signRequest) {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
@@ -178,12 +177,10 @@ class Silo {
                     
                     // if host auth provided, check known hosts
                     if let hostAuth = signRequest.hostAuth {
-                        guard hostAuth.hostNames.isEmpty == false else {
+                        guard let hostName = hostAuth.hostName else {
                             throw HostAuthHasNoHostnames()
                         }
-                        for hostName in hostAuth.hostNames {
-                            try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
-                        }
+                        try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
                     }
                     
                     // only place where signature should occur

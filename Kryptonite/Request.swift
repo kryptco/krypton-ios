@@ -92,6 +92,10 @@ struct SignRequest:Jsonable {
     var digestType:DigestType
     
     struct InvalidHostAuthSignature:Error{}
+    
+    var isUnknownHost:Bool {
+        return hostAuth?.hostName == nil
+    }
 
     init(data: Data, fingerprint: String, hostAuth: HostAuth? = nil) throws {
         self.data = SSHMessage(data)
@@ -104,6 +108,8 @@ struct SignRequest:Jsonable {
             else {
                 throw InvalidHostAuthSignature()
             }
+            
+            
 
             self.hostAuth = potentialHostAuth
         }
@@ -182,7 +188,7 @@ struct SignRequest:Jsonable {
         return json
     }
     var display:String {
-        let host = hostAuth?.hostNames.first ?? "unknown host"
+        let host = hostAuth?.hostName ?? "unknown host"
 
         return "\(user) @ \(host)"
     }
