@@ -12,6 +12,11 @@ struct Properties {
     
     //MARK: Version
     static let currentVersion = Version(major: 2, minor: 1, patch: 0)
+    
+    struct Compatibility {
+        static let rsaSha256Sha512Support = Version(major: 2, minor: 1, patch: 0)
+    }
+    
     static let appVersionURL = "https://s3.amazonaws.com/kr-versions/versions"
     
     static let updateCheckIntervalForeground = TimeSeconds.hour.multiplied(by: 6)

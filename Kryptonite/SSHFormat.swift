@@ -174,7 +174,7 @@ extension DigestType {
      */
     func based(on version:Version) -> DigestType {
         
-        let introduced = Version(major: 2, minor: 1, patch: 0)
+        let introduced = Properties.Compatibility.rsaSha256Sha512Support
         
         switch self {
         case .sha256 where version < introduced,
