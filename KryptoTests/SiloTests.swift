@@ -186,6 +186,7 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
+            Policy.set(manualUnknownHostApprovals: false, for: session)
             Policy.set(needsUserApproval: false, for: session)
 
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
@@ -205,6 +206,7 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
+            Policy.set(manualUnknownHostApprovals: false, for: session)
             Policy.set(needsUserApproval: false, for: session)
 
             do {

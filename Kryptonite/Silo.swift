@@ -16,11 +16,6 @@ struct RequestPendingError:Error{}
 
 struct SiloCacheCreationError:Error{}
 
-struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
-    var debugDescription:String {
-        return "No hostnames provided"
-    }
-}
 
 typealias CacheKey = String
 extension CacheKey {
@@ -97,7 +92,7 @@ class Silo {
         
         // if it's signature request: check if we need a user approval
         // then exit and wait for approval
-        if let signRequest = request.sign, Policy.needsUserApproval(for: session, with: signRequest) {
+        if let signRequest = request.sign, Policy.needsUserApproval(for: session, and: signRequest) {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
@@ -176,20 +171,18 @@ class Silo {
                 if signatureAllowed {
                     
                     // if host auth provided, check known hosts
-                    if let hostAuth = signRequest.hostAuth {
-                        guard let hostName = hostAuth.hostName else {
-                            throw HostAuthHasNoHostnames()
-                        }
-                        try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
+                    // fails in invalid signature -or- hostname not provided
+                    if let verifiedHostAuth = signRequest.verifiedHostAuth {
+                        try KnownHostManager.shared.checkOrAdd(verifiedHostAuth: verifiedHostAuth)
                     }
                     
                     // only place where signature should occur
                     sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
                     
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.hostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
+                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                 } else {
                     err = "rejected"
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.hostAuth, signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
+                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
                 }
 
             } catch {

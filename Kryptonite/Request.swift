@@ -85,16 +85,15 @@ struct HostAuthVerificationFailed:Error{}
 struct SignRequest:Jsonable {
     var data:SSHMessage //SSH_MSG_USERAUTH_REQUEST
     var fingerprint:String
-    var hostAuth:HostAuth?
+    var verifiedHostAuth:VerifiedHostAuth?
     
     var session:Data
     var user:String
     var digestType:DigestType
     
-    struct InvalidHostAuthSignature:Error{}
     
     var isUnknownHost:Bool {
-        return hostAuth?.hostName == nil
+        return verifiedHostAuth?.hostName == nil
     }
 
     init(data: Data, fingerprint: String, hostAuth: HostAuth? = nil) throws {
@@ -103,15 +102,8 @@ struct SignRequest:Jsonable {
 
         (session, user, digestType) = try SignRequest.parse(requestData: data)
 
-        if let potentialHostAuth = hostAuth{
-            guard try potentialHostAuth.verify(sessionID: session) == true
-            else {
-                throw InvalidHostAuthSignature()
-            }
-            
-            
-
-            self.hostAuth = potentialHostAuth
+        if let potentialHostAuth = hostAuth {
+            self.verifiedHostAuth = try VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
         }
     }
 
@@ -121,18 +113,8 @@ struct SignRequest:Jsonable {
 
         (session, user, digestType) = try SignRequest.parse(requestData: data)
         
-        do {
-            let potentialHostAuth = try HostAuth(json: json ~> "host_auth")
-            
-            guard try potentialHostAuth.verify(sessionID: session) == true
-            else {
-                throw InvalidHostAuthSignature()
-            }
-
-            self.hostAuth = potentialHostAuth
-        } catch {
-            log("host auth error: \(error)")
-            hostAuth = nil
+        if let potentialHostAuth = try? HostAuth(json: json ~> "host_auth") {
+            verifiedHostAuth = try VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
         }
     }
     
@@ -181,18 +163,18 @@ struct SignRequest:Jsonable {
         var json:[String:Any] = ["data": data.toBase64(),
                                  "public_key_fingerprint": fingerprint]
         
-        if let auth = hostAuth {
+        if let auth = verifiedHostAuth {
             json["host_auth"] = auth.object
         }
         
         return json
     }
+    
     var display:String {
-        let host = hostAuth?.hostName ?? "unknown host"
+        let host = verifiedHostAuth?.hostName ?? "unknown host"
 
         return "\(user) @ \(host)"
     }
-
 }
 
 

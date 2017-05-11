@@ -99,11 +99,26 @@ class Policy {
     }
     
     
-    class func needsUserApproval(for session:Session, with signRequest:SignRequest) -> Bool {
+    /**
+        Session + SignRequest need approval if any of:
+            - Session requires approval
+            - SignRequest's hostName does not have a KnownHost entry
+            - SignRequest's hostName is unknown (and user has not turned off this policy check)
+     */
+    class func needsUserApproval(for session:Session, and signRequest:SignRequest) -> Bool {
+        // check policy for session
         if Policy.needsUserApproval(for: session) {
             return true
         }
         
+        // check if verifedHostAuth's 'hostName' does NOT have a KnownHost attached to it
+        if  let hostName = signRequest.verifiedHostAuth?.hostName,
+            KnownHostManager.shared.entryExists(for: hostName) == false
+        {
+            return true
+        }
+        
+        // check if unknown host and check policy for unknown hosts
         if  Policy.needsUnknownHostApproval(for: session) && signRequest.isUnknownHost
         {
             return true
@@ -215,7 +230,7 @@ class Policy {
             
             guard   let pending = try? PendingAuthorization(jsonData: $0 as Data),
                     let signRequest = pending.request.sign,
-                    Policy.needsUserApproval(for: pending.session, with: signRequest) == false
+                    Policy.needsUserApproval(for: pending.session, and: signRequest) == false
             else {
                 return
             }

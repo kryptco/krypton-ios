@@ -30,6 +30,13 @@ struct HostMistmatchError:Error, CustomDebugStringConvertible {
     }
 }
 
+struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
+    var debugDescription:String {
+        return "No hostnames provided"
+    }
+}
+
+
 class KnownHostManager {
     
     private var mutex = Mutex()
@@ -100,23 +107,53 @@ class KnownHostManager {
         return managedObjectContext
     }()
     
-    // MARK: Match public key to existing host name or add it if it doesn't exist
-    // if exists and doesn't match throw error
-    func checkOrAdd(knownHost:KnownHost) throws {
+    
+    /**
+     Check if we have a public key verifiedHostAuth's hostName
+     - if known host and does match: return true
+     - if not known host or public key does not match: return false
+     */
+    func entryExists(for hostName:String) -> Bool {
         
-        guard let existingKnownHost = try self.fetch(for: knownHost.hostName) else {
+        guard let _ = try? self.fetch(for: hostName)
+        else {
+            return false
+        }
+        
+        return true
+    }
+    
+    /**
+     
+        Match verifiedHostAuth (hostName, publicKey to a known host:
+            - if hostName not supplied: throw HostAuthHasNoHostnames
+            - if hostName found and publicKey does match: do nothing
+            - if hostName found and publicKey does NOT match: throw HostMistmatchError
+            - if hostName does not exists: ping hostName <- publicKey and save it
+     */
+    func checkOrAdd(verifiedHostAuth:VerifiedHostAuth) throws {
+        
+        guard let hostName = verifiedHostAuth.hostName
+        else {
+            throw HostAuthHasNoHostnames()
+        }
+        
+        let hostPublicKey = verifiedHostAuth.hostKey
+        
+        guard let existingKnownHost = try self.fetch(for: hostName)
+        else {
             // known host doesn't exist
             // save it
             
-            self.save(knownHost: knownHost)
+            self.save(knownHost: KnownHost(hostName: hostName, publicKey: hostPublicKey))
             return
         }
         
-        guard existingKnownHost.publicKey == knownHost.publicKey else {
-            throw HostMistmatchError(hostName: knownHost.hostName, expectedPublicKey: existingKnownHost.publicKey)
+        guard existingKnownHost.publicKey == hostPublicKey
+        else {
+            throw HostMistmatchError(hostName: hostName, expectedPublicKey: existingKnownHost.publicKey)
         }
     }
-    
     
     // MARK: Fetching
     private func fetch(for hostName:String) throws -> KnownHost? {
