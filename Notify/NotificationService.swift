@@ -51,65 +51,39 @@ class NotificationService: UNNotificationServiceExtension {
             try TransportControl.shared(bluetoothEnabled: false).handle(medium: .remoteNotification, with: unsealedRequest, for: session, completionHandler: {
                 
                 dispatchMain {
-                    UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                    self.bestAttemptMutex.lock {
                         
-                        var noSound = false
+                        let content = UNMutableNotificationContent()
                         
-                        for note in notes {
-                            guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
-                                let deliveredRequest = try? Request(json: requestObject)
-                                else {
-                                    continue
-                            }
-                            
-                            if deliveredRequest.id == unsealedRequest.id {
-                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-                                
-                                noSound = true
-                                break
+                        var errorMessage:String?
+                        
+                        // approved
+                        if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
+                            if let err = resp.sign?.error {
+                                errorMessage = err
+                                content.title = "Failed approval for \(session.pairing.displayName)."
+                            } else {
+                                content.title = "Approved request from \(session.pairing.displayName)."
                             }
                         }
-                        
-                        self.bestAttemptMutex.lock {
-                            
-                            let content = UNMutableNotificationContent()
-                            
-                            var errorMessage:String?
-                            
-                            // approved
-                            if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
-                                if let err = resp.sign?.error {
-                                    errorMessage = err
-                                    content.title = "Failed approval for \(session.pairing.displayName)."
-                                } else {
-                                    content.title = "Approved request from \(session.pairing.displayName)."
-                                }
-                            }
                             // not approved
-                            else {
-                                content.title = "Request from \(session.pairing.displayName)."
-                                content.categoryIdentifier = Policy.authorizeCategoryIdentifier
-                            }
-                            
-                            if let error = errorMessage {
-                                content.body = error
-                            } else {
-                                content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
-                                content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
-                            }
-                            
-                            if noSound {
-                                content.sound = nil
-                            } else {
-                                content.sound = UNNotificationSound.default()
-                            }
-                            
-                            contentHandler(content)
-
+                        else {
+                            content.title = "Request from \(session.pairing.displayName)."
+                            content.categoryIdentifier = Policy.authorizeCategoryIdentifier
                         }
+                        
+                        if let error = errorMessage {
+                            content.body = error
+                        } else {
+                            content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
+                        }
+                        
+                        content.sound = UNNotificationSound.default()
 
-                    })
-
+                        
+                        contentHandler(content)
+                    }
                 }
             })
             
