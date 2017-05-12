@@ -12,11 +12,11 @@ import JSON
 
 
 class NotificationService: UNNotificationServiceExtension {
-
+    
     var contentHandler: ((UNNotificationContent) -> Void)?
     
     struct InvalidRemoteNotification:Error{}
-
+    
     var bestAttemptMutex = Mutex()
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
@@ -36,12 +36,12 @@ class NotificationService: UNNotificationServiceExtension {
         var unsealedRequest:Request
         do {
             (session, unsealedRequest) = try NotificationService.unsealRemoteNotification(userInfo: request.content.userInfo)
-
+            
         } catch {
             log("could not processess remote notification content: \(error)")
             
             failUnknown(with: error)
-
+            
             return
         }
         
@@ -51,39 +51,65 @@ class NotificationService: UNNotificationServiceExtension {
             try TransportControl.shared(bluetoothEnabled: false).handle(medium: .remoteNotification, with: unsealedRequest, for: session, completionHandler: {
                 
                 dispatchMain {
-                    self.bestAttemptMutex.lock {
+                    UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
                         
-                        let content = UNMutableNotificationContent()
+                        var noSound = false
                         
-                        var errorMessage:String?
-                        
-                        // approved
-                        if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
-                            if let err = resp.sign?.error {
-                                errorMessage = err
-                                content.title = "Failed approval for \(session.pairing.displayName)."
-                            } else {
-                                content.title = "Approved request from \(session.pairing.displayName)."
+                        for note in notes {
+                            guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
+                                let deliveredRequest = try? Request(json: requestObject)
+                                else {
+                                    continue
+                            }
+                            
+                            if deliveredRequest.id == unsealedRequest.id {
+                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                                
+                                noSound = true
+                                break
                             }
                         }
-                            // not approved
-                        else {
-                            content.title = "Request from \(session.pairing.displayName)."
-                            content.categoryIdentifier = Policy.authorizeCategoryIdentifier
+                        
+                        self.bestAttemptMutex.lock {
+                            
+                            let content = UNMutableNotificationContent()
+                            
+                            var errorMessage:String?
+                            
+                            // approved
+                            if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
+                                if let err = resp.sign?.error {
+                                    errorMessage = err
+                                    content.title = "Failed approval for \(session.pairing.displayName)."
+                                } else {
+                                    content.title = "Approved request from \(session.pairing.displayName)."
+                                }
+                            }
+                                // not approved
+                            else {
+                                content.title = "Request from \(session.pairing.displayName)."
+                                content.categoryIdentifier = Policy.authorizeCategoryIdentifier
+                            }
+                            
+                            if let error = errorMessage {
+                                content.body = error
+                            } else {
+                                content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                                content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
+                            }
+                            
+                            if noSound {
+                                content.sound = nil
+                            } else {
+                                content.sound = UNNotificationSound.default()
+                            }
+                            
+                            contentHandler(content)
+                            
                         }
                         
-                        if let error = errorMessage {
-                            content.body = error
-                        } else {
-                            content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
-                            content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
-                        }
-                        
-                        content.sound = UNNotificationSound.default()
-
-                        
-                        contentHandler(content)
-                    }
+                    })
+                    
                 }
             })
             
@@ -114,7 +140,7 @@ class NotificationService: UNNotificationServiceExtension {
                         return
                     }
                 }
-
+                
                 
                 // look for delivered notifications with same request (via bluetooth or silent notifications)
                 UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
@@ -143,7 +169,7 @@ class NotificationService: UNNotificationServiceExtension {
                             return
                         }
                     }
-
+                    
                     
                     // if not pending or delivered, fail with unknown error.
                     self.failUnknown(with: error)
@@ -157,7 +183,7 @@ class NotificationService: UNNotificationServiceExtension {
     func failUnknown(with error:Error?) {
         
         let content = UNMutableNotificationContent()
-
+        
         content.title = "Request failed"
         if let e = error {
             content.body = "The incoming request was invalid. \(e). Please try again."
@@ -193,14 +219,14 @@ class NotificationService: UNNotificationServiceExtension {
             let ciphertext = try? ciphertextB64.fromBase64(),
             let sessionUUID = notificationDict["session_uuid"] as? String,
             let session = SessionManager.shared.get(queue: sessionUUID)
-        else {
-            log("invalid untrusted encrypted notification", .error)
-            throw InvalidRemoteNotification()
+            else {
+                log("invalid untrusted encrypted notification", .error)
+                throw InvalidRemoteNotification()
         }
         let sealed = try NetworkMessage(networkData: ciphertext).data
         let request = try Request(from: session.pairing, sealed: sealed)
         return (session, request)
     }
-
-
+    
+    
 }
