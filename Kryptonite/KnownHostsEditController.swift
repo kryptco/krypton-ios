@@ -10,6 +10,8 @@ import Foundation
 
 class KnownHostsEditController:KRBaseTableController {
     
+    @IBOutlet var emptyView:UIView!
+
     var knownHosts:[KnownHost] = []
     
     override func viewDidLoad() {
@@ -31,6 +33,8 @@ class KnownHostsEditController:KRBaseTableController {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(KnownHostsEditController.newKnownHost), name: NSNotification.Name(rawValue: "new_known_host"), object: nil)
+        
+        self.addRemoveEmptyViewAsNeeded()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,11 +49,22 @@ class KnownHostsEditController:KRBaseTableController {
             do {
                 self.knownHosts = try KnownHostManager.shared.fetchAll()
                 self.tableView.reloadData()
+                self.addRemoveEmptyViewAsNeeded()
             } catch {
                 log("error fetching known hosts: \(error)")
             }
         }
  
+    }
+    
+    func addRemoveEmptyViewAsNeeded() {
+        emptyView.removeFromSuperview()
+
+        if self.knownHosts.isEmpty {
+            emptyView.center = self.view.center
+            self.view.addSubview(emptyView)
+        }
+
     }
 
     //MARK: TableViewDelegate
@@ -78,7 +93,7 @@ class KnownHostsEditController:KRBaseTableController {
             KnownHostManager.shared.delete(self.knownHosts[indexPath.row])
             self.knownHosts.remove(at: indexPath.row)
             self.tableView.reloadData()
-
+            self.addRemoveEmptyViewAsNeeded()
         }
         action.backgroundColor = UIColor.reject
         return [action]

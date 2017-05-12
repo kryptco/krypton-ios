@@ -2747,16 +2747,85 @@ Cg
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="emptyView" destination="jVn-Ru-r1q" id="f5Z-TL-Q2y"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KMn-1h-ZBJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationBar contentMode="scaleToFill" id="foR-XW-reX">
+                <view contentMode="scaleToFill" id="nyi-5a-dCE">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <items>
-                        <navigationItem title="Title" id="3gv-w8-Jah"/>
-                    </items>
-                </navigationBar>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <exit id="PSc-2u-cIX" userLabel="Exit" sceneMemberID="exit"/>
+                <view contentMode="scaleToFill" id="jVn-Ru-r1q">
+                    <rect key="frame" x="0.0" y="0.0" width="361" height="120"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttR-fo-ler">
+                            <rect key="frame" x="141" y="12" width="79" height="25"/>
+                            <attributedString key="attributedText">
+                                <fragment content="No Hosts">
+                                    <attributes>
+                                        <color key="NSColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" size="18" name="AvenirNext-Bold"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sou-Yi-8nJ" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <rect key="frame" x="74.5" y="60" width="211.5" height="42"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n19-8o-yrQ">
+                                    <rect key="frame" x="10" y="10" width="20.5" height="21.5"/>
+                                    <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="17"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AP3-RZ-yks">
+                                    <rect key="frame" x="38.5" y="10" width="153" height="21.5"/>
+                                    <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="AP3-RZ-yks" firstAttribute="centerY" secondItem="n19-8o-yrQ" secondAttribute="centerY" id="11S-10-NcJ"/>
+                                <constraint firstAttribute="trailing" secondItem="AP3-RZ-yks" secondAttribute="trailing" constant="20" id="16e-Zp-fFx"/>
+                                <constraint firstItem="n19-8o-yrQ" firstAttribute="leading" secondItem="sou-Yi-8nJ" secondAttribute="leading" constant="10" id="HUp-y3-4BD"/>
+                                <constraint firstItem="AP3-RZ-yks" firstAttribute="leading" secondItem="n19-8o-yrQ" secondAttribute="trailing" constant="8" id="ODl-EO-3jP"/>
+                                <constraint firstItem="n19-8o-yrQ" firstAttribute="top" secondItem="sou-Yi-8nJ" secondAttribute="top" constant="10" id="R3g-if-Q6k"/>
+                                <constraint firstAttribute="bottom" secondItem="n19-8o-yrQ" secondAttribute="bottom" constant="10" id="Y7G-7P-5wc"/>
+                                <constraint firstAttribute="trailing" secondItem="AP3-RZ-yks" secondAttribute="trailing" constant="20" id="rCi-AZ-acE"/>
+                                <constraint firstAttribute="height" constant="42" id="tdG-w9-2OY"/>
+                                <constraint firstAttribute="width" constant="211.5" id="ylz-4R-OpP"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Try adding one by running:" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8i-kg-q9x">
+                            <rect key="frame" x="106" y="33" width="149" height="17"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="M8i-kg-q9x" firstAttribute="top" secondItem="ttR-fo-ler" secondAttribute="bottom" constant="-4" id="113-Ts-ywD"/>
+                        <constraint firstItem="sou-Yi-8nJ" firstAttribute="centerX" secondItem="jVn-Ru-r1q" secondAttribute="centerX" id="9hz-5W-eJO"/>
+                        <constraint firstItem="ttR-fo-ler" firstAttribute="centerX" secondItem="jVn-Ru-r1q" secondAttribute="centerX" id="Zhw-VP-IZL"/>
+                        <constraint firstItem="sou-Yi-8nJ" firstAttribute="top" secondItem="M8i-kg-q9x" secondAttribute="bottom" constant="10" id="eUF-Ih-aK5"/>
+                        <constraint firstItem="sou-Yi-8nJ" firstAttribute="top" secondItem="jVn-Ru-r1q" secondAttribute="centerY" id="ohU-q0-ky6"/>
+                        <constraint firstItem="M8i-kg-q9x" firstAttribute="centerX" secondItem="jVn-Ru-r1q" secondAttribute="centerX" id="voa-lL-Ndd"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="2324" y="1803"/>
         </scene>
