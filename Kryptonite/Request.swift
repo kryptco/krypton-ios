@@ -103,7 +103,7 @@ struct SignRequest:Jsonable {
         (session, user, digestType) = try SignRequest.parse(requestData: data)
 
         if let potentialHostAuth = hostAuth {
-            self.verifiedHostAuth = try VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
+            self.verifiedHostAuth = try? VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
         }
     }
 
@@ -114,7 +114,7 @@ struct SignRequest:Jsonable {
         (session, user, digestType) = try SignRequest.parse(requestData: data)
         
         if let potentialHostAuth = try? HostAuth(json: json ~> "host_auth") {
-            verifiedHostAuth = try VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
+            verifiedHostAuth = try? VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
         }
     }
     
