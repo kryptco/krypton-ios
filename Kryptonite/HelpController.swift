@@ -21,6 +21,9 @@ class HelpInstallController:KRBaseController {
     @IBOutlet weak var npmButton:UIButton!
     @IBOutlet weak var npmLine:UIView!
 
+    @IBOutlet weak var moreButton:UIButton!
+    @IBOutlet weak var moreLine:UIView!
+
     @IBOutlet weak var commandView:UIView!
 
     @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
@@ -46,6 +49,8 @@ class HelpInstallController:KRBaseController {
         brewButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         brewLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.brew.command
+        
+        Analytics.postEvent(category: "help_install", action: "curl")
     }
     
     @IBAction func npmTapped() {
@@ -55,7 +60,7 @@ class HelpInstallController:KRBaseController {
         npmLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.npm.command
         
-        Analytics.postEvent(category: "install", action: "bpm")
+        Analytics.postEvent(category: "help_install", action: "npm")
     }
     
     @IBAction func curlTapped() {
@@ -65,8 +70,19 @@ class HelpInstallController:KRBaseController {
         curlLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.curl.command
         
-        Analytics.postEvent(category: "install", action: "curl")
+        Analytics.postEvent(category: "help_install", action: "curl")
     }
+    
+    @IBAction func moreTapped() {
+        disableAllInstallButtons()
+        
+        moreButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        moreLine.backgroundColor = UIColor.app
+        installLabel.text = InstallMethod.more.command
+        
+        Analytics.postEvent(category: "help_install", action: "more")
+    }
+
     
     
     func disableAllInstallButtons() {
@@ -74,11 +90,12 @@ class HelpInstallController:KRBaseController {
         brewButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
         curlButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
         npmButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
-        
+        moreButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+
         brewLine.backgroundColor = UIColor.clear
         curlLine.backgroundColor = UIColor.clear
         npmLine.backgroundColor = UIColor.clear
-        
+        moreLine.backgroundColor = UIColor.clear
     }
     
     @IBAction func goToHelpInstall(segue: UIStoryboardSegue) {
