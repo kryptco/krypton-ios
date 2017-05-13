@@ -50,7 +50,7 @@ class HelpInstallController:KRBaseController {
         brewLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.brew.command
         
-        Analytics.postEvent(category: "help_install", action: "curl")
+        Analytics.postEvent(category: "help_install", action: "brew")
     }
     
     @IBAction func npmTapped() {
