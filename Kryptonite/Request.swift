@@ -102,6 +102,9 @@ struct SignRequest:Jsonable {
 
         (session, user, digestType) = try SignRequest.parse(requestData: data)
 
+        // TODO: Phase out "unknown host" asap
+        // currently requests made while agent forwarding (ssh -A) aren't able to pass 
+        // host_auth data to kr.
         if let potentialHostAuth = hostAuth {
             self.verifiedHostAuth = try? VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
         }

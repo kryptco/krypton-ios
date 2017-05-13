@@ -24,7 +24,7 @@ class Policy {
         case userApproval = "policy_user_approval"
         case userLastApproved = "policy_user_last_approved"
         case userApprovalInterval = "policy_user_approval_interval"
-        case manualUnknownHostApprovals = "policy_manual_host_approvals"
+        case manualUnknownHostApprovals = "policy_manual_unknown_host_approvals"
 
         func key(id:String) -> String {
             return "\(self.rawValue)_\(id)"
