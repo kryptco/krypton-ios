@@ -108,14 +108,9 @@ struct SignRequest:Jsonable {
     }
 
     init(json: Object) throws {
-        data        = try ((json ~> "data") as String).fromBase64()
-        fingerprint = try json ~> "public_key_fingerprint"
-
-        (session, user, digestType) = try SignRequest.parse(requestData: data)
-        
-        if let potentialHostAuth = try? HostAuth(json: json ~> "host_auth") {
-            verifiedHostAuth = try? VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
-        }
+        try self.init(data: ((json ~> "data") as String).fromBase64(),
+                      fingerprint: json ~> "public_key_fingerprint",
+                      hostAuth: try? HostAuth(json: json ~> "host_auth"))
     }
     
     /**
