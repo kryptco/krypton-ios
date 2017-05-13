@@ -173,7 +173,8 @@ class Notify {
     
     
     func presentError(message:String, session:Session) {
-        guard message != "rejected" else {
+        
+        if UserRejectedError.isRejected(errorString: message) {
             return
         }
         

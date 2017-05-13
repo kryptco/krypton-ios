@@ -16,7 +16,7 @@ struct HostMistmatchError:Error, CustomDebugStringConvertible {
     var hostName:String
     var expectedPublicKey:String
     
-    static let prefix = "Host public key mismatched for"
+    static let prefix = "host public key mismatched for"
     
     var debugDescription:String {
         return "\(HostMistmatchError.prefix) \(hostName)"

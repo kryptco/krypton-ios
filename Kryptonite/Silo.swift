@@ -16,6 +16,18 @@ struct RequestPendingError:Error{}
 
 struct SiloCacheCreationError:Error{}
 
+struct UserRejectedError:Error, CustomDebugStringConvertible {
+    static let rejectedConstant = "rejected"
+    
+    var debugDescription:String {
+        return UserRejectedError.rejectedConstant
+    }
+    
+    static func isRejected(errorString:String) -> Bool {
+        return errorString == rejectedConstant
+    }
+}
+
 
 typealias CacheKey = String
 extension CacheKey {
@@ -181,11 +193,19 @@ class Silo {
                     
                     LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                 } else {
-                    err = "rejected"
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
+                    throw UserRejectedError()
                 }
 
-            } catch {
+            }
+            catch let error as UserRejectedError {
+                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
+                err = "\(error)"
+            }
+            catch let error as HostMistmatchError {
+                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
+                err = "\(error)"
+            }
+            catch {
                 err = "\(error)"
             }
 
