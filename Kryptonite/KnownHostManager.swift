@@ -273,6 +273,8 @@ class KnownHostManager {
                 try self.managedObjectContext.save()
                 
             } catch let error  {
+                // if save failed, delete cached object
+                self.managedObjectContext.delete(hostEntry)
                 log("Could not save known host: \(error)", .error)
             }
         }

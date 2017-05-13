@@ -4,6 +4,11 @@
         <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="host_name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="host_name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
         <element name="KnownHost" positionX="-63" positionY="-18" width="128" height="90"/>
