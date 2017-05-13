@@ -48,7 +48,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         commandView.layer.shadowRadius = 3
         commandView.layer.masksToBounds = false
         
-        curlTapped()
+        setCurlState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,12 +111,16 @@ class FirstPairController:UIViewController, KRScanDelegate {
         Analytics.postEvent(category: "onboard_install", action: "npm")
     }
     
-    @IBAction func curlTapped() {
+    func setCurlState() {
         disableAllInstallButtons()
         
         curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         curlLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.curl.command
+    }
+    
+    @IBAction func curlTapped() {
+        setCurlState()
         
         Analytics.postEvent(category: "onboard_install", action: "curl")
     }

@@ -43,10 +43,9 @@ class MeController:KRBaseController, UITextFieldDelegate {
             v?.layer.shadowRadius = 3
             v?.layer.masksToBounds = false
         }
-
-        githubTapped()
-
         
+        setGitHubState()
+
         NotificationCenter.default.addObserver(self, selector: #selector(MeController.redrawMe), name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
     }
     
@@ -86,22 +85,30 @@ class MeController:KRBaseController, UITextFieldDelegate {
         case aws = "kr aws"
     }
     
-    @IBAction func githubTapped() {
+    
+    
+    func setGitHubState() {
         disableAllUploadMethods()
         
         githubButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         githubLine.backgroundColor = UIColor.app
         addCommandLabel.text = UploadMethod.github.rawValue
-        
     }
-
+    
+    @IBAction func githubTapped() {
+        setGitHubState()
+        Analytics.postEvent(category: "add key", action: "GitHub")
+    }
+    
+    
     @IBAction func doTapped() {
         disableAllUploadMethods()
         
         doButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         doLine.backgroundColor = UIColor.app
         addCommandLabel.text = UploadMethod.digitalOcean.rawValue
-        
+     
+        Analytics.postEvent(category: "add key", action: "DigitalOcean")
     }
 
     @IBAction func awsTapped() {
@@ -110,7 +117,8 @@ class MeController:KRBaseController, UITextFieldDelegate {
         awsButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         awsLine.backgroundColor = UIColor.app
         addCommandLabel.text = UploadMethod.aws.rawValue
-
+        
+        Analytics.postEvent(category: "add key", action: "AWS")
     }
     
     func disableAllUploadMethods() {

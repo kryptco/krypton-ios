@@ -94,6 +94,9 @@ class KnownHostsEditController:KRBaseTableController {
             self.knownHosts.remove(at: indexPath.row)
             self.tableView.reloadData()
             self.addRemoveEmptyViewAsNeeded()
+            
+            Analytics.postEvent(category: "known_host", action: "delete")
+
         }
         action.backgroundColor = UIColor.reject
         return [action]

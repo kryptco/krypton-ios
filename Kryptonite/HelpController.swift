@@ -36,9 +36,8 @@ class HelpInstallController:KRBaseController {
         commandView.layer.shadowOpacity = 0.175
         commandView.layer.shadowRadius = 3
         commandView.layer.masksToBounds = false
-
         
-        curlTapped()
+        setCurlState()
     }
   
     //MARK: Install Instructions
@@ -63,13 +62,16 @@ class HelpInstallController:KRBaseController {
         Analytics.postEvent(category: "help_install", action: "npm")
     }
     
-    @IBAction func curlTapped() {
+    func setCurlState() {
         disableAllInstallButtons()
         
         curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         curlLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.curl.command
-        
+    }
+    
+    @IBAction func curlTapped() {
+        setCurlState()
         Analytics.postEvent(category: "help_install", action: "curl")
     }
     

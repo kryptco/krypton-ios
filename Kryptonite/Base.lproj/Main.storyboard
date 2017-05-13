@@ -2247,7 +2247,7 @@ Cg
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="635.5"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6s-yD-bs0" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="135" y="511" width="104.5" height="40"/>
+                                                <rect key="frame" x="135.5" y="511" width="104.5" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Software"/>
                                                 <state key="highlighted">
@@ -2281,7 +2281,7 @@ Cg
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-U7-8S5" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="10" y="511" width="105" height="40"/>
+                                                <rect key="frame" x="10" y="511" width="105.5" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="fwP-fK-MT7"/>
                                                 </constraints>
@@ -2306,7 +2306,7 @@ Cg
                                                 </connections>
                                             </button>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n2-Yv-erL" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="259.5" y="511" width="105.5" height="40"/>
+                                                <rect key="frame" x="260" y="511" width="105" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Privacy"/>
                                                 <state key="highlighted">

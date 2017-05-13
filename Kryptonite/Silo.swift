@@ -124,6 +124,10 @@ class Silo {
             } else {
                 Policy.notifyUser(session: session, request: request)
             }
+            
+            if request.sign?.verifiedHostAuth == nil {
+                Analytics.postEvent(category: "host", action: "unknown")
+            }
         }
         
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
