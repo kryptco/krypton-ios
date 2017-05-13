@@ -173,6 +173,11 @@ class Notify {
     
     
     func presentError(message:String, session:Session) {
+        
+        if UserRejectedError.isRejected(errorString: message) {
+            return
+        }
+        
         let noteTitle = "Failed approval for \(session.pairing.displayName)"
         let noteBody = message
         
@@ -182,7 +187,7 @@ class Notify {
             content.body = noteBody
             content.sound = UNNotificationSound.default()
             
-            let request = UNNotificationRequest(identifier: "\(message.hash)", content: content, trigger: nil)
+            let request = UNNotificationRequest(identifier: "\(session.id)_\(message.hash)", content: content, trigger: nil)
             UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         } else {
             let notification = UILocalNotification()

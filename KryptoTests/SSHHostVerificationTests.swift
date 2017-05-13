@@ -82,7 +82,7 @@ class SSHHostVerificationTests: XCTestCase {
                     )
             )
             XCTAssert(signRequest.user == "git")
-            XCTAssert(signRequest.hostAuth != nil)
+            XCTAssert(signRequest.verifiedHostAuth != nil)
         } catch let e {
             XCTFail("\(e)")
         }

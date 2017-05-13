@@ -85,13 +85,16 @@ struct HostAuthVerificationFailed:Error{}
 struct SignRequest:Jsonable {
     var data:SSHMessage //SSH_MSG_USERAUTH_REQUEST
     var fingerprint:String
-    var hostAuth:HostAuth?
+    var verifiedHostAuth:VerifiedHostAuth?
     
     var session:Data
     var user:String
     var digestType:DigestType
     
-    struct InvalidHostAuthSignature:Error{}
+    
+    var isUnknownHost:Bool {
+        return verifiedHostAuth?.hostName == nil
+    }
 
     init(data: Data, fingerprint: String, hostAuth: HostAuth? = nil) throws {
         self.data = SSHMessage(data)
@@ -99,35 +102,18 @@ struct SignRequest:Jsonable {
 
         (session, user, digestType) = try SignRequest.parse(requestData: data)
 
-        if let potentialHostAuth = hostAuth{
-            guard try potentialHostAuth.verify(sessionID: session) == true
-            else {
-                throw InvalidHostAuthSignature()
-            }
-
-            self.hostAuth = potentialHostAuth
+        // TODO: Phase out "unknown host" asap
+        // currently requests made while agent forwarding (ssh -A) aren't able to pass 
+        // host_auth data to kr.
+        if let potentialHostAuth = hostAuth {
+            self.verifiedHostAuth = try? VerifiedHostAuth(session: session, hostAuth: potentialHostAuth)
         }
     }
 
     init(json: Object) throws {
-        data        = try ((json ~> "data") as String).fromBase64()
-        fingerprint = try json ~> "public_key_fingerprint"
-
-        (session, user, digestType) = try SignRequest.parse(requestData: data)
-        
-        do {
-            let potentialHostAuth = try HostAuth(json: json ~> "host_auth")
-            
-            guard try potentialHostAuth.verify(sessionID: session) == true
-            else {
-                throw InvalidHostAuthSignature()
-            }
-
-            self.hostAuth = potentialHostAuth
-        } catch {
-            log("host auth error: \(error)")
-            hostAuth = nil
-        }
+        try self.init(data: ((json ~> "data") as String).fromBase64(),
+                      fingerprint: json ~> "public_key_fingerprint",
+                      hostAuth: try? HostAuth(json: json ~> "host_auth"))
     }
     
     /**
@@ -175,18 +161,18 @@ struct SignRequest:Jsonable {
         var json:[String:Any] = ["data": data.toBase64(),
                                  "public_key_fingerprint": fingerprint]
         
-        if let auth = hostAuth {
+        if let auth = verifiedHostAuth {
             json["host_auth"] = auth.object
         }
         
         return json
     }
+    
     var display:String {
-        let host = hostAuth?.hostNames.first ?? "unknown host"
+        let host = verifiedHostAuth?.hostName ?? "unknown host"
 
         return "\(user) @ \(host)"
     }
-
 }
 
 

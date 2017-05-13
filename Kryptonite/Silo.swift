@@ -16,11 +16,18 @@ struct RequestPendingError:Error{}
 
 struct SiloCacheCreationError:Error{}
 
-struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
+struct UserRejectedError:Error, CustomDebugStringConvertible {
+    static let rejectedConstant = "rejected"
+    
     var debugDescription:String {
-        return "No hostnames provided"
+        return UserRejectedError.rejectedConstant
+    }
+    
+    static func isRejected(errorString:String) -> Bool {
+        return errorString == rejectedConstant
     }
 }
+
 
 typealias CacheKey = String
 extension CacheKey {
@@ -94,11 +101,10 @@ class Silo {
             return
         }
         
-        // logic
         
-        // if signature request AND we need a user approval, 
-        // then exit and wait for it
-        if request.sign != nil && Policy.needsUserApproval(for: session) {
+        // if it's signature request: check if we need a user approval
+        // then exit and wait for approval
+        if let signRequest = request.sign, Policy.needsUserApproval(for: session, and: signRequest) {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
@@ -117,6 +123,10 @@ class Silo {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
                 Policy.notifyUser(session: session, request: request)
+            }
+            
+            if request.sign?.verifiedHostAuth == nil {
+                Analytics.postEvent(category: "host", action: "unknown")
             }
         }
         
@@ -177,25 +187,29 @@ class Silo {
                 if signatureAllowed {
                     
                     // if host auth provided, check known hosts
-                    if let hostAuth = signRequest.hostAuth {
-                        guard hostAuth.hostNames.isEmpty == false else {
-                            throw HostAuthHasNoHostnames()
-                        }
-                        for hostName in hostAuth.hostNames {
-                            try KnownHostManager.shared.checkOrAdd(knownHost: KnownHost(hostName: hostName, publicKey: hostAuth.hostKey))
-                        }
+                    // fails in invalid signature -or- hostname not provided
+                    if let verifiedHostAuth = signRequest.verifiedHostAuth {
+                        try KnownHostManager.shared.checkOrAdd(verifiedHostAuth: verifiedHostAuth)
                     }
                     
                     // only place where signature should occur
                     sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
                     
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.hostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
+                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                 } else {
-                    err = "rejected"
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.hostAuth, signature: "rejected", displayName: signRequest.display), deviceName: session.pairing.name)
+                    throw UserRejectedError()
                 }
 
-            } catch {
+            }
+            catch let error as UserRejectedError {
+                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
+                err = "\(error)"
+            }
+            catch let error as HostMistmatchError {
+                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
+                err = "\(error)"
+            }
+            catch {
                 err = "\(error)"
             }
 

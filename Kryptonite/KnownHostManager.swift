@@ -16,7 +16,7 @@ struct HostMistmatchError:Error, CustomDebugStringConvertible {
     var hostName:String
     var expectedPublicKey:String
     
-    static let prefix = "Host public key mismatched for"
+    static let prefix = "host public key mismatched for"
     
     var debugDescription:String {
         return "\(HostMistmatchError.prefix) \(hostName)"
@@ -29,6 +29,13 @@ struct HostMistmatchError:Error, CustomDebugStringConvertible {
         return err.contains(HostMistmatchError.prefix)
     }
 }
+
+struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
+    var debugDescription:String {
+        return "No hostnames provided"
+    }
+}
+
 
 class KnownHostManager {
     
@@ -94,29 +101,61 @@ class KnownHostManager {
     
     lazy var managedObjectContext:NSManagedObjectContext = {
         let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         
         return managedObjectContext
     }()
     
-    // MARK: Match public key to existing host name or add it if it doesn't exist
-    // if exists and doesn't match throw error
-    func checkOrAdd(knownHost:KnownHost) throws {
+    
+    /**
+     Check if we have a public key verifiedHostAuth's hostName
+     - if known host and does match: return true
+     - if not known host or public key does not match: return false
+     */
+    func entryExists(for hostName:String) -> Bool {
+        do {
+            if let _ = try self.fetch(for: hostName) {
+                return true
+            }
+        } catch {
+            log("error fetching known host for: \(hostName)")
+        }
         
-        guard let existingKnownHost = try self.fetch(for: knownHost.hostName) else {
+        return false
+    }
+    
+    /**
+     
+        Match verifiedHostAuth (hostName, publicKey to a known host:
+            - if hostName not supplied: throw HostAuthHasNoHostnames
+            - if hostName found and publicKey does match: do nothing
+            - if hostName found and publicKey does NOT match: throw HostMistmatchError
+            - if hostName does not exists: ping hostName <- publicKey and save it
+     */
+    func checkOrAdd(verifiedHostAuth:VerifiedHostAuth) throws {
+        
+        guard let hostName = verifiedHostAuth.hostName
+        else {
+            throw HostAuthHasNoHostnames()
+        }
+        
+        let hostPublicKey = verifiedHostAuth.hostKey
+        
+        guard let existingKnownHost = try self.fetch(for: hostName)
+        else {
             // known host doesn't exist
             // save it
             
-            self.save(knownHost: knownHost)
+            self.save(knownHost: KnownHost(hostName: hostName, publicKey: hostPublicKey))
             return
         }
         
-        guard existingKnownHost.publicKey == knownHost.publicKey else {
-            throw HostMistmatchError(hostName: knownHost.hostName, expectedPublicKey: existingKnownHost.publicKey)
+        guard existingKnownHost.publicKey == hostPublicKey
+        else {
+            throw HostMistmatchError(hostName: hostName, expectedPublicKey: existingKnownHost.publicKey)
         }
     }
-    
     
     // MARK: Fetching
     private func fetch(for hostName:String) throws -> KnownHost? {
@@ -150,20 +189,31 @@ class KnownHostManager {
         
         var knownHosts:[KnownHost] = []
         
-        let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
-        
-        for object in (objects ?? []) {
-            guard
-                let publicKey = object.value(forKey: "public_key") as? String,
-                let dateAdded = object.value(forKey: "date_added") as? Date,
-                let hostName = object.value(forKey: "host_name") as? String
-                else {
-                    continue
-            }
-            
-            knownHosts.append(KnownHost(hostName: hostName, publicKey: publicKey, dateAdded: dateAdded))
-        }
+        var caughtError:Error?
+        self.managedObjectContext.performAndWait {
+            do {
+                let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
+                
+                for object in (objects ?? []) {
+                    guard
+                        let publicKey = object.value(forKey: "public_key") as? String,
+                        let dateAdded = object.value(forKey: "date_added") as? Date,
+                        let hostName = object.value(forKey: "host_name") as? String
+                        else {
+                            continue
+                    }
+                    
+                    knownHosts.append(KnownHost(hostName: hostName, publicKey: publicKey, dateAdded: dateAdded))
+                }
 
+            } catch {
+                caughtError = error
+            }
+        }
+        
+        if let error = caughtError {
+            throw error
+        }
         
         return knownHosts
     }
@@ -174,47 +224,59 @@ class KnownHostManager {
         defer { mutex.unlock() }
         mutex.lock()
         
-
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "KnownHost")
-        fetchRequest.predicate = hostNameEqualsPredicate(for: knownHost.hostName)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: true)]
-        fetchRequest.fetchLimit = 1
-
-        guard   let object = ((try? self.managedObjectContext.fetch(fetchRequest)) as? [NSManagedObject])?.first,
+        self.managedObjectContext.performAndWait {
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "KnownHost")
+            fetchRequest.predicate = self.hostNameEqualsPredicate(for: knownHost.hostName)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: true)]
+            fetchRequest.fetchLimit = 1
+            
+            guard   let object = ((try? self.managedObjectContext.fetch(fetchRequest)) as? [NSManagedObject])?.first,
                 let publicKey = object.value(forKey: "public_key") as? String,
                 let hostName = object.value(forKey: "host_name") as? String,
                 hostName == knownHost.hostName,
                 publicKey == knownHost.publicKey
-        else {
-            return
+                else {
+                    return
+            }
+            
+            self.managedObjectContext.delete(object)
+            
+            do {
+                try self.managedObjectContext.save()
+                
+            } catch let error  {
+                log("Could not save known host: \(error)", .error)
+            }
         }
-        
-        self.managedObjectContext.delete(object)
+
     }
     
     //MARK: Saving
     private func save(knownHost:KnownHost) {
         mutex.lock()
         
-        guard
-            let entity =  NSEntityDescription.entity(forEntityName: "KnownHost", in: managedObjectContext)
-            else {
-                mutex.unlock()
-                return
-        }
-        
-        let hostEntry = NSManagedObject(entity: entity, insertInto: managedObjectContext)
-        
-        // set attirbutes
-        hostEntry.setValue(knownHost.hostName, forKey: "host_name")
-        hostEntry.setValue(knownHost.publicKey, forKey: "public_key")
-        hostEntry.setValue(knownHost.dateAdded, forKey: "date_added")
-        
-        do {
-            try self.managedObjectContext.save()
+        self.managedObjectContext.performAndWait {
+            guard
+                let entity =  NSEntityDescription.entity(forEntityName: "KnownHost", in: self.managedObjectContext)
+                else {
+                    return
+            }
             
-        } catch let error  {
-            log("Could not save known host: \(error)", .error)
+            let hostEntry = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
+            
+            // set attirbutes
+            hostEntry.setValue(knownHost.hostName, forKey: "host_name")
+            hostEntry.setValue(knownHost.publicKey, forKey: "public_key")
+            hostEntry.setValue(knownHost.dateAdded, forKey: "date_added")
+            
+            do {
+                try self.managedObjectContext.save()
+                
+            } catch let error  {
+                // if save failed, delete cached object
+                self.managedObjectContext.delete(hostEntry)
+                log("Could not save known host: \(error)", .error)
+            }
         }
         
         mutex.unlock()
@@ -230,12 +292,14 @@ class KnownHostManager {
         defer { mutex.unlock() }
         mutex.lock()
         
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                log("Persistance manager save error: \(error)", .error)
-                
+        self.managedObjectContext.performAndWait {
+            if self.managedObjectContext.hasChanges {
+                do {
+                    try self.managedObjectContext.save()
+                } catch {
+                    log("Persistance manager save error: \(error)", .error)
+                    
+                }
             }
         }
     }

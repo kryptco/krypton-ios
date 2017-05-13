@@ -22,6 +22,9 @@ class FirstPairController:UIViewController, KRScanDelegate {
     @IBOutlet weak var npmButton:UIButton!
     @IBOutlet weak var npmLine:UIView!
 
+    @IBOutlet weak var moreButton:UIButton!
+    @IBOutlet weak var moreLine:UIView!
+
     @IBOutlet weak var installLabel:UILabel!
     
     @IBOutlet weak var commandView:UIView!
@@ -45,7 +48,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         commandView.layer.shadowRadius = 3
         commandView.layer.masksToBounds = false
         
-        curlTapped()
+        setCurlState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,7 +98,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
         brewLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.brew.command
         
-        Analytics.postEvent(category: "install", action: "brew")
+        Analytics.postEvent(category: "onboard_install", action: "brew")
     }
     
     @IBAction func npmTapped() {
@@ -105,17 +108,31 @@ class FirstPairController:UIViewController, KRScanDelegate {
         npmLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.npm.command
         
-        Analytics.postEvent(category: "install", action: "npm")
+        Analytics.postEvent(category: "onboard_install", action: "npm")
     }
     
-    @IBAction func curlTapped() {
+    func setCurlState() {
         disableAllInstallButtons()
         
         curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
         curlLine.backgroundColor = UIColor.app
         installLabel.text = InstallMethod.curl.command
+    }
+    
+    @IBAction func curlTapped() {
+        setCurlState()
         
-        Analytics.postEvent(category: "install", action: "curl")
+        Analytics.postEvent(category: "onboard_install", action: "curl")
+    }
+    
+    @IBAction func moreTapped() {
+        disableAllInstallButtons()
+        
+        moreButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        moreLine.backgroundColor = UIColor.app
+        installLabel.text = InstallMethod.more.command
+        
+        Analytics.postEvent(category: "onboard_install", action: "more")
     }
     
     
@@ -124,12 +141,14 @@ class FirstPairController:UIViewController, KRScanDelegate {
         brewButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
         curlButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
         npmButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
-
+        moreButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        
         brewLine.backgroundColor = UIColor.clear
         curlLine.backgroundColor = UIColor.clear
         npmLine.backgroundColor = UIColor.clear
-
+        moreLine.backgroundColor = UIColor.clear
     }
+
 
     //MARK: Camera
     
