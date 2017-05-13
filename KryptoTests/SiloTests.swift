@@ -222,4 +222,30 @@ class SiloTests: XCTestCase {
             XCTFail("\(e)")
         }
     }
+    
+    func testManualUnknownHostApprovalRequired() {
+        do {
+            let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
+            let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
+            let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
+            let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, sign: sign)
+            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let session = try Session(pairing: pairing)
+            
+            SessionManager.shared.add(session: session, temporary: true)
+            
+            Policy.set(needsUserApproval: false, for: session)
+            
+            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            XCTFail("expected RequestPendingError")
+
+        } catch {
+            guard error is RequestPendingError else {
+                XCTFail("\(error)")
+                return
+            }
+            
+        }
+    }
 }
