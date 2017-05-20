@@ -53,6 +53,9 @@
 		FA03C5991E760CD50019649E /* BUILD in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5971E760CD50019649E /* BUILD */; };
 		FA03C59A1E760CD50019649E /* COMMIT in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5981E760CD50019649E /* COMMIT */; };
 		FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */; };
+		FA12EAB41ECFA942001603BF /* CodeSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */; };
+		FA12EAB51ECFA96C001603BF /* PGPFormat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA12EAA41ECFA917001603BF /* PGPFormat.framework */; };
+		FA12EABD1ED0D213001603BF /* pubkey_ed25519.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA12EABC1ED0D213001603BF /* pubkey_ed25519.txt */; };
 		FA15EB3B1DA5B4E600BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA15EB441DA5B4F100BED16C /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
@@ -368,6 +371,20 @@
 			remoteGlobalIDString = 5C135FA91C4737E200AA3A01;
 			remoteInfo = SwiftHTTPWatchOS;
 		};
+		FA12EAA31ECFA917001603BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FACE33B81EC9E779003EC6C0;
+			remoteInfo = PGPFormat;
+		};
+		FA12EAA51ECFA917001603BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAEA70561ECC192D00920AAB;
+			remoteInfo = PGPFormatTests;
+		};
 		FA49F78F1D9B6B3300372556 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
@@ -516,6 +533,9 @@
 		FA03C5971E760CD50019649E /* BUILD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD; sourceTree = "<group>"; };
 		FA03C5981E760CD50019649E /* COMMIT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMMIT; sourceTree = "<group>"; };
 		FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallMethod.swift; sourceTree = "<group>"; };
+		FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PGPFormat.xcodeproj; path = "swift-pgp/PGPFormat.xcodeproj"; sourceTree = "<group>"; };
+		FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSigningTests.swift; sourceTree = "<group>"; };
+		FA12EABC1ED0D213001603BF /* pubkey_ed25519.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pubkey_ed25519.txt; sourceTree = "<group>"; };
 		FA15EB481DA5C6CC00BED16C /* Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		FA16824D1D774C2200A7ED53 /* KRScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRScanController.swift; sourceTree = "<group>"; };
 		FA1682501D774C3900A7ED53 /* PairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairController.swift; sourceTree = "<group>"; };
@@ -721,6 +741,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA12EAB51ECFA96C001603BF /* PGPFormat.framework in Frameworks */,
 				FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */,
 				FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */,
 				FAAE81A71E57734B002A9AE6 /* AWSSNS.framework in Frameworks */,
@@ -767,6 +788,15 @@
 				8DC38BC21E689785007445B4 /* libsshwire.a */,
 			);
 			name = sshwire;
+			sourceTree = "<group>";
+		};
+		FA12EA9B1ECFA917001603BF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA12EAA41ECFA917001603BF /* PGPFormat.framework */,
+				FA12EAA61ECFA917001603BF /* PGPFormatTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		FA15EB471DA5C5BB00BED16C /* Data */ = {
@@ -1091,6 +1121,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */,
 				FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */,
 				FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */,
 				FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */,
@@ -1149,6 +1180,7 @@
 			isa = PBXGroup;
 			children = (
 				FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */,
+				FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */,
 				FAC873F51E6A4D32003D112E /* PairingTests.swift */,
 				8D003DF41D90EECE0085ED21 /* SodiumTests.swift */,
 				FAEE049E1D74BCC3002A7AFD /* Info.plist */,
@@ -1157,6 +1189,7 @@
 				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
 				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
 				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
+				FA12EABC1ED0D213001603BF /* pubkey_ed25519.txt */,
 			);
 			path = KryptoTests;
 			sourceTree = "<group>";
@@ -1371,6 +1404,10 @@
 					ProjectRef = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
 				},
 				{
+					ProductGroup = FA12EA9B1ECFA917001603BF /* Products */;
+					ProjectRef = FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */;
+				},
+				{
 					ProductGroup = 8D003DD91D90EBB10085ED21 /* Products */;
 					ProjectRef = 8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */;
 				},
@@ -1474,6 +1511,20 @@
 			remoteRef = 8DB2EE511DBC54EF0079E468 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		FA12EAA41ECFA917001603BF /* PGPFormat.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PGPFormat.framework;
+			remoteRef = FA12EAA31ECFA917001603BF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FA12EAA61ECFA917001603BF /* PGPFormatTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PGPFormatTests.xctest;
+			remoteRef = FA12EAA51ECFA917001603BF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		FAC561371E6F677000150FB2 /* AwesomeCache.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1552,6 +1603,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA12EABD1ED0D213001603BF /* pubkey_ed25519.txt in Resources */,
 				FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1949,6 +2001,7 @@
 				8DCB60241E9442F300E1B924 /* SiloTests.swift in Sources */,
 				FAE45B9B1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FA1682A11EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
+				FA12EAB41ECFA942001603BF /* CodeSigningTests.swift in Sources */,
 				8DCB60381E94438C00E1B924 /* Mutex.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
 				8DCB604D1E9446D300E1B924 /* Bluetooth.swift in Sources */,
