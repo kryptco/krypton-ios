@@ -28,7 +28,7 @@ class CodeSigningTests: XCTestCase {
             let _ = try RSAKeyPair.destroy("test")
             let keypair = try RSAKeyPair.generate("test")
 
-            let armoredPubKey = try keypair.createAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
+            let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
             print(armoredPubKey.toString())
             
             let packets  = try [Packet](data: armoredPubKey.packetData)
@@ -50,7 +50,7 @@ class CodeSigningTests: XCTestCase {
         do {
             let _ = try Ed25519KeyPair.destroy("test")
             let keypair = try Ed25519KeyPair.generate("test")
-            let armoredPubKey = try keypair.createAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
+            let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
             print(armoredPubKey.toString())
             
             let packets  = try [Packet](data: armoredPubKey.packetData)
@@ -75,7 +75,7 @@ class CodeSigningTests: XCTestCase {
         do  {
             let _ = try RSAKeyPair.destroy("test")
             let keypair = try RSAKeyPair.generate("test")
-            let packets = try [Packet](data: keypair.createAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
+            let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
             
             let publicKey = try PGPFormat.PublicKey(packet: packets[0])
             let userID = try UserID(packet: packets[1])
@@ -132,7 +132,7 @@ class CodeSigningTests: XCTestCase {
         do  {
             let _ = try Ed25519KeyPair.destroy("test")
             let keypair = try Ed25519KeyPair.generate("test")
-            let packets = try [Packet](data: keypair.createAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
+            let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
             
             let publicKey = try PGPFormat.PublicKey(packet: packets[0])
             let userID = try UserID(packet: packets[1])
