@@ -81,9 +81,9 @@ class CodeSigningTests: XCTestCase {
             let userID = try UserID(packet: packets[1])
             let signature = try Signature(packet: packets[2])
             
-            let pubKeyToSign = PublicKeyIdentityToSign(publicKey: publicKey, userID: userID)
+            var pubKeyToSign = try SignedPublicKeyIdentity(publicKey: publicKey, userID: userID, hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
             
-            let dataToHash = try pubKeyToSign.dataToHash(hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
+            let dataToHash = try pubKeyToSign.dataToHash()
             
             var hash:Data
             var digestType:DigestType
@@ -106,10 +106,10 @@ class CodeSigningTests: XCTestCase {
                 digestType = .sha512
             }
             
-            let leftTwoBytes = [UInt8](hash.bytes[0...1])
+            try pubKeyToSign.set(hash: hash, signedHash: signature.signature)
             
-            guard leftTwoBytes == signature.leftTwoHashBytes else {
-                XCTFail("Left two hash bytes don't match: \nGot: \(leftTwoBytes)\nExpected: \(signature.leftTwoHashBytes)")
+            guard pubKeyToSign.signature.leftTwoHashBytes == signature.leftTwoHashBytes else {
+                XCTFail("Left two hash bytes don't match: \nGot: \(pubKeyToSign.signature.leftTwoHashBytes)\nExpected: \(signature.leftTwoHashBytes)")
                 return
             }
             
@@ -138,9 +138,9 @@ class CodeSigningTests: XCTestCase {
             let userID = try UserID(packet: packets[1])
             let signature = try Signature(packet: packets[2])
             
-            let pubKeyToSign = PublicKeyIdentityToSign(publicKey: publicKey, userID: userID)
+            var pubKeyToSign = try SignedPublicKeyIdentity(publicKey: publicKey, userID: userID, hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
             
-            let dataToHash = try pubKeyToSign.dataToHash(hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
+            let dataToHash = try pubKeyToSign.dataToHash()
             
             var hash:Data
             
@@ -157,10 +157,10 @@ class CodeSigningTests: XCTestCase {
                 hash = dataToHash.SHA512
             }
             
-            let leftTwoBytes = [UInt8](hash.bytes[0...1])
+            try pubKeyToSign.set(hash: hash, signedHash: signature.signature)
             
-            guard leftTwoBytes == signature.leftTwoHashBytes else {
-                XCTFail("Left two hash bytes don't match: \nGot: \(leftTwoBytes)\nExpected: \(signature.leftTwoHashBytes)")
+            guard pubKeyToSign.signature.leftTwoHashBytes == signature.leftTwoHashBytes else {
+                XCTFail("Left two hash bytes don't match: \nGot: \(pubKeyToSign.signature.leftTwoHashBytes)\nExpected: \(signature.leftTwoHashBytes)")
                 return
             }
             

@@ -85,14 +85,15 @@ extension KeyPair {
         
         // create the public key
         let pgpPublicKey = try PGPFormat.PublicKey(create: self.publicKey.type.pgpKeyType, publicKeyData: self.publicKey.pgpPublicKey())
-        
         let userID = PGPFormat.UserID(content: identity)
-        let pubKeyToSign = PGPFormat.PublicKeyIdentityToSign(publicKey: pgpPublicKey, userID: userID)
+        let subpackets:[SignatureSubpacketable] = [
+            PGPFormat.SignatureCreated(date: pgpPublicKey.created),
+            PGPFormat.SignatureKeyFlags(flagTypes: [PGPFormat.KeyFlagType.signData])]
+
+        var signedPublicKey = try PGPFormat.SignedPublicKeyIdentity(publicKey: pgpPublicKey, userID: userID, hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
         
         // ready the data to hash
-        let subpackets:[SignatureSubpacketable] = [SignatureCreated(date: pgpPublicKey.created), PGPFormat.SignatureKeyFlags(flagTypes: [PGPFormat.KeyFlagType.signData])]
-        
-        let dataToHash = try pubKeyToSign.dataToHash(hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
+        let dataToHash = try signedPublicKey.dataToHash()
         
         // hash it
         var hash:Data
@@ -119,8 +120,7 @@ extension KeyPair {
         }
 
         // compile the signed public key packets
-        let signedPublicKey = try pubKeyToSign.signedPublicKey(hash: hash, hashAlgorithm: PGPFormat.Signature.HashAlgorithm.sha512, hashedSubpacketables: subpackets, signatureData: signedHash)
-        
+        try signedPublicKey.set(hash: hash, signedHash: signedHash)        
         return try signedPublicKey.toPackets()
     }
     
