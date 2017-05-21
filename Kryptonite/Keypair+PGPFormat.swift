@@ -81,7 +81,7 @@ extension Sign.PublicKey:PGPPublicKeyConvertible {
 // Keypair extension to create self-signed PGP keys
 extension KeyPair {
     
-    private func createPGPPublicKeyPackets(with identity:String, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> [Packet] {
+    private func createPGPPublicKeyPackets(for identity:String, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> [Packet] {
         
         // create the public key
         let pgpPublicKey = try PGPFormat.PublicKey(create: self.publicKey.type.pgpKeyType, publicKeyData: self.publicKey.pgpPublicKey())
@@ -124,8 +124,8 @@ extension KeyPair {
         return try signedPublicKey.toPackets()
     }
     
-    func createAsciiArmoredPGPPublicKey(with identity:String) throws -> AsciiArmorMessage {
-        let packets = try createPGPPublicKeyPackets(with: identity)
+    func createAsciiArmoredPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
+        let packets = try createPGPPublicKeyPackets(for: identity)
         
         return try AsciiArmorMessage(packets: packets, blockType: ArmorMessageBlock.publicKey, comment: KryptonitePGPComment)
     }
