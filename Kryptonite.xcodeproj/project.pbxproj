@@ -56,6 +56,9 @@
 		FA12EAB41ECFA942001603BF /* CodeSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */; };
 		FA12EAB51ECFA96C001603BF /* PGPFormat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA12EAA41ECFA917001603BF /* PGPFormat.framework */; };
 		FA12EABD1ED0D213001603BF /* pubkey_ed25519.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA12EABC1ED0D213001603BF /* pubkey_ed25519.txt */; };
+		FA12EABF1ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */; };
+		FA12EAC01ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */; };
+		FA12EAC11ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */; };
 		FA15EB3B1DA5B4E600BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA15EB441DA5B4F100BED16C /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
@@ -536,6 +539,7 @@
 		FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PGPFormat.xcodeproj; path = "swift-pgp/PGPFormat.xcodeproj"; sourceTree = "<group>"; };
 		FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSigningTests.swift; sourceTree = "<group>"; };
 		FA12EABC1ED0D213001603BF /* pubkey_ed25519.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pubkey_ed25519.txt; sourceTree = "<group>"; };
+		FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Keypair+PGPFormat.swift"; sourceTree = "<group>"; };
 		FA15EB481DA5C6CC00BED16C /* Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		FA16824D1D774C2200A7ED53 /* KRScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRScanController.swift; sourceTree = "<group>"; };
 		FA1682501D774C3900A7ED53 /* PairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairController.swift; sourceTree = "<group>"; };
@@ -1149,6 +1153,7 @@
 				FAE45B981E64750E00A583AB /* RSAKeyPair.swift */,
 				FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */,
 				FAEE048B1D7369C3002A7AFD /* SSHFormat.swift */,
+				FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */,
 				FAFE546E1D7B9C1400391FDD /* Wrap.swift */,
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
@@ -1845,6 +1850,7 @@
 				8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */,
 				FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */,
 				FAE495921DBD89F100A97708 /* M13CheckboxSpiralController.swift in Sources */,
+				FA12EABF1ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				FA1682811D77682C00A7ED53 /* SessionsController.swift in Sources */,
 				8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
@@ -1993,6 +1999,7 @@
 				FAC873F91E6A4DC1003D112E /* Version.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
 				FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */,
+				FA12EAC11ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */,
 				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
 				8D45AFF61E8D739500E84A57 /* SSHHostVerificationTests.swift in Sources */,
@@ -2015,6 +2022,7 @@
 			files = (
 				FAB517981E54D52F0032DD47 /* Session.swift in Sources */,
 				FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */,
+				FA12EAC01ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
 				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,
 				FACE33661EC186E8003EC6C0 /* SSHUtil.swift in Sources */,
