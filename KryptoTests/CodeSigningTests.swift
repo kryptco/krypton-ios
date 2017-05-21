@@ -69,7 +69,7 @@ class CodeSigningTests: XCTestCase {
             let keypair = try Ed25519KeyPair.generate("test")
             let publicKey = keypair.publicKey as! Sign.PublicKey
             
-            let pubKeyBytes = publicKey.bytes
+//            let pubKeyBytes = publicKey.bytes
             
             let pgpPublicKey = PGPFormat.PublicKey(create: PublicKeyAlgorithm.ecc, publicKeyData: PGPFormat.ECCPublicKey(rawData: publicKey))
             let userID = PGPFormat.UserID(name: "alex grinman", email: "me@alexgr.in")
@@ -148,7 +148,7 @@ class CodeSigningTests: XCTestCase {
             }
             
             let edPubKey = (publicKey.publicKeyData as! ECCPublicKey).rawData as Sign.PublicKey
-                        
+            
             guard try edPubKey.verify(hash, signature: signature.signature, digestType: DigestType.ed25519) else {
                 XCTFail("signature doesn't match!")
                 return

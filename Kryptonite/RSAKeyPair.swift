@@ -236,8 +236,12 @@ class RSAKeyPair:KeyPair {
         switch digestType {
         case .sha1:
             return try sign(digest: data.SHA1, padding: SecPadding.PKCS1SHA1)
+        case .sha224:
+            return try sign(digest: data.SHA224, padding: SecPadding.PKCS1SHA224)
         case .sha256:
             return try sign(digest: data.SHA256, padding: SecPadding.PKCS1SHA256)
+        case .sha384:
+            return try sign(digest: data.SHA384, padding: SecPadding.PKCS1SHA384)
         case .sha512:
             return try sign(digest: data.SHA512, padding: SecPadding.PKCS1SHA512)
         default:
@@ -284,9 +288,15 @@ struct RSAPublicKey:PublicKey {
         case .sha1:
             hash    = message.SHA1.bytes
             padding = .PKCS1SHA1
+        case .sha224:
+            hash    = message.SHA224.bytes
+            padding = .PKCS1SHA224
         case .sha256:
             hash    = message.SHA256.bytes
             padding = .PKCS1SHA256
+        case .sha384:
+            hash    = message.SHA384.bytes
+            padding = .PKCS1SHA384
         case .sha512:
             hash    = message.SHA512.bytes
             padding = .PKCS1SHA512
