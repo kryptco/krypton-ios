@@ -78,9 +78,54 @@ extension Sign.PublicKey:PGPPublicKeyConvertible {
     }
 }
 
-// Keypair extension to create self-signed PGP keys
+/** 
+    Extend Keypair Signatures to hash and return hash + signed hash
+ */
+
 extension KeyPair {
     
+    /** 
+        Return the hash and the signed hash
+        Note: Ed25519 signs the hash itself as per OpenPGP RFC for Ed25519.
+     */
+    func sign(data:Data, using hashAlgorithm:Signature.HashAlgorithm) throws -> (hash:Data, signedHash:Data) {
+        var hash:Data
+        var signedHash:Data
+        
+        switch hashAlgorithm {
+        case .sha1:
+            hash = data.SHA1
+        case .sha224:
+            hash = data.SHA224
+        case .sha256:
+            hash = data.SHA256
+        case .sha384:
+            hash = data.SHA384
+        case .sha512:
+            hash = data.SHA512
+        }
+        
+        let digestType = self.publicKey.type.digestType(for: hashAlgorithm)
+        
+        switch self.publicKey.type {
+        case .Ed25519: // sign the hash for Ed25519
+            signedHash = try self.sign(data: hash, digestType: digestType)
+        case .RSA: // sign the pre hashed data (data will be hashed before signed)
+            signedHash = try self.sign(data: data, digestType: digestType)
+        }
+        
+        return (hash, signedHash)
+    }
+}
+
+/** 
+    Extend Keypair to export self-signed PGP keys and create PGP Signatures
+*/
+extension KeyPair {
+    
+    /** 
+        Create PGP Signed Public Key: (PublicKey, UserID, Signature Packets)
+    */
     private func createPGPPublicKeyPackets(for identity:String, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> [Packet] {
         
         // create the public key
@@ -95,39 +140,45 @@ extension KeyPair {
         // ready the data to hash
         let dataToHash = try signedPublicKey.dataToHash()
         
-        // hash it
-        var hash:Data
-        switch hashAlgorithm {
-        case .sha1:
-            hash = dataToHash.SHA1
-        case .sha224:
-            hash = dataToHash.SHA224
-        case .sha256:
-            hash = dataToHash.SHA256
-        case .sha384:
-            hash = dataToHash.SHA384
-        case .sha512:
-            hash = dataToHash.SHA512
-        }
+        // sign it and get hash back
+        let (hash, signedHash) = try self.sign(data: dataToHash, using: hashAlgorithm)
         
-        // sign it
-        var signedHash:Data
-        switch self.publicKey.type {
-        case .Ed25519: // sign the hash for ed25519
-            signedHash = try self.sign(data: hash, digestType: self.publicKey.type.digestType(for: hashAlgorithm))
-        case .RSA: // sign the pre hashed data (data will be hashed before signed)
-            signedHash = try self.sign(data: dataToHash, digestType: self.publicKey.type.digestType(for: hashAlgorithm))
-        }
-
         // compile the signed public key packets
         try signedPublicKey.set(hash: hash, signedHash: signedHash)        
         return try signedPublicKey.toPackets()
     }
     
-    func createAsciiArmoredPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
+    /**
+        Export a public key as a PGP Public Key by
+        creating a self-signed PGP PublicKey
+    */
+    func exportAsciiArmoredPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
         let packets = try createPGPPublicKeyPackets(for: identity)
         
         return try AsciiArmorMessage(packets: packets, blockType: ArmorMessageBlock.publicKey, comment: KryptonitePGPComment)
+    }
+    
+    /** 
+        Create a PGP signature over a binary document
+    */
+    func createAsciiArmoredBinaryDocumentSignature(for binaryData:Data, using hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> AsciiArmorMessage {
+        
+        let subpackets:[SignatureSubpacketable] = [
+            PGPFormat.SignatureCreated(date: Date())]
+
+        var signedBinary = SignedBinaryDocument(binary: binaryData, publicKeyAlgorithm: self.publicKey.type.pgpKeyType, hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
+        
+        // ready the data to hash
+        let dataToHash = try signedBinary.dataToHash()
+        
+        // sign it and get hash back
+        let (hash, signedHash) = try self.sign(data: dataToHash, using: hashAlgorithm)
+        
+        // compile the signed public key packets
+        try signedBinary.set(hash: hash, signedHash: signedHash)
+
+        // return ascii armored signature
+        return try AsciiArmorMessage(packets: signedBinary.toPackets(), blockType: ArmorMessageBlock.signature)
     }
 
 }
