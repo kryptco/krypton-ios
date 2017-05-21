@@ -21,6 +21,10 @@
 		8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
 		8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; };
 		8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8DC2639C1ED23C4C00BF2E17 /* PGPFormat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA12EAA41ECFA917001603BF /* PGPFormat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8DC2639E1ED2459300BF2E17 /* CommitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */; };
+		8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */; };
+		8DC263A01ED246B800BF2E17 /* CommitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */; };
 		8DC38BC31E689785007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC38BC61E689A12007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
@@ -500,6 +504,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8DC2639C1ED23C4C00BF2E17 /* PGPFormat.framework in Embed Frameworks */,
 				8D003DF01D90EBBD0085ED21 /* Sodium.framework in Embed Frameworks */,
 				FAA6E1FB1D79FBE2007D1B3A /* AWSSNS.framework in Embed Frameworks */,
 				FAFDE8EA1DD1003100C87C86 /* JSON.framework in Embed Frameworks */,
@@ -525,6 +530,7 @@
 		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
 		8DB2EE381DBC18170079E468 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftHTTP.xcodeproj; path = SwiftHTTP/SwiftHTTP.xcodeproj; sourceTree = "<group>"; };
+		8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitInfo.swift; sourceTree = "<group>"; };
 		8DC38BC21E689785007445B4 /* libsshwire.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsshwire.a; path = "ssh-wire/target/universal/release/libsshwire.a"; sourceTree = "<group>"; };
 		8DC38BC51E689A0F007445B4 /* sshwire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sshwire.h; path = "ssh-wire/src/sshwire.h"; sourceTree = "<group>"; };
 		8DCB60231E9442F300E1B924 /* SiloTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiloTests.swift; sourceTree = "<group>"; };
@@ -938,6 +944,7 @@
 				FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */,
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
+				8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */,
 				8D83990B1E56063A0051C6BA /* HostAuth.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
 				8D7941671D98732600F6E32E /* NetworkProtocol.swift */,
@@ -1883,6 +1890,7 @@
 				FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
 				FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */,
+				8DC2639E1ED2459300BF2E17 /* CommitInfo.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
@@ -1994,6 +2002,7 @@
 				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,
 				8DCB60351E94433100E1B924 /* Session.swift in Sources */,
 				8DCB60391E9443B600E1B924 /* Properties.swift in Sources */,
+				8DC263A01ED246B800BF2E17 /* CommitInfo.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */,
 				FAC873F91E6A4DC1003D112E /* Version.swift in Sources */,
@@ -2060,6 +2069,7 @@
 				FAE45B9E1E64AA4400A583AB /* Ed25519.swift in Sources */,
 				FAAE81941E577063002A9AE6 /* Policy.swift in Sources */,
 				FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */,
+				8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
