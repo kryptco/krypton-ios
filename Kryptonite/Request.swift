@@ -187,29 +187,41 @@ struct SignRequest:Jsonable {
 
 struct GitSignRequest:Jsonable {
     var commit:CommitInfo
-    var fingerprint:String
+    var userId:String
     
-    init(commit: CommitInfo, fingerprint: String) {
+    init(commit: CommitInfo, userId: String) {
         self.commit = commit
-        self.fingerprint = fingerprint
+        self.userId = userId
     }
 
     init(json: Object) throws {
         self.init(
             commit: try CommitInfo(json: json ~> "commit"),
-            fingerprint: try json ~> "public_key_fingerprint"
+            userId: try json ~> "user_id"
         )
     }
     
     var object: Object {
-        return ["commit": commit.object, "public_key_fingerprint": fingerprint]
+        return ["commit": commit.object, "user_id": userId]
     }
 }
 
 // Me
 struct MeRequest:Jsonable {
-    init(json: Object) throws {}
-    var object: Object {return [:]}
+    var pgpUserId: String?
+    init(pgpUserId: String? = nil) {
+        self.pgpUserId = pgpUserId
+    }
+    init(json: Object) throws {
+        pgpUserId = try? json ~> "pgp_user_id"
+    }
+    var object: Object {
+        var json:Object = [:]
+        if let pgpUserId = pgpUserId {
+            json["pgp_user_id"] = pgpUserId
+        }
+        return json
+    }
 }
 
 // Unpair
