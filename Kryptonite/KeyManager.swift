@@ -125,6 +125,7 @@ extension KeyTag {
         return "pgpkey.public.\(self.rawValue)"
     }
 }
+struct GetPGPPublicKeyIDError:Error{}
 extension KeyManager {
     func loadPGPPublicKey() throws -> AsciiArmorMessage {
         do { // try to load saved pgp public key
@@ -141,6 +142,18 @@ extension KeyManager {
         } catch {
             throw error
         }
+    }
+    
+    func getPGPPublicKeyID() throws -> Data {
+        let pgpPublicKeyData = try self.loadPGPPublicKey().packetData
+        let packets = try [Packetable](data: pgpPublicKeyData)
+        
+        guard let publicKey = packets.filter({ $0 is PGPFormat.PublicKey}).first as? PGPFormat.PublicKey
+        else {
+            throw GetPGPPublicKeyIDError()
+        }
+        
+        return try publicKey.keyID()
     }
 }
 

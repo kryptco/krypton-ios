@@ -222,8 +222,13 @@ class Silo {
             var err:String?
             do {
                 let keyManager = try KeyManager.sharedInstance()
-                //TODO: Verify key fingerprint
-                sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit).toString().utf8Data().toBase64()
+                let keyID = try keyManager.getPGPPublicKeyID()
+                
+                //TODO: Verify key fingerprint    
+                log("keyID: \(keyID.hex)")
+                log("commit info: \n\(try gitSignRequest.commit.toData().utf8String())")
+                sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit, keyID: keyID).packetData.toBase64()
+                
             }  catch {
                 err = "\(error)"
             }
