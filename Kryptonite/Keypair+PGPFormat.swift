@@ -185,5 +185,12 @@ extension KeyPair {
         // return ascii armored signature
         return try AsciiArmorMessage(packets: signedBinary.toPackets(), blockType: ArmorMessageBlock.signature)
     }
-
+    
+    /**
+        Create a PGP Signature over a Git Commit
+     */
+    func signGitCommit(with commitInfo:CommitInfo) throws -> AsciiArmorMessage {
+        let commitData = try commitInfo.toData()
+        return try self.createAsciiArmoredBinaryDocumentSignature(for: commitData)
+    }
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import PGPFormat
 
 enum KeyTag:String {
     case me = "me"
@@ -70,8 +70,9 @@ class KeyManager {
     class func destroyKeyPair() -> Bool {
         let rsaResult = (try? RSAKeyPair.destroy(KeyTag.me.rawValue)) ?? false
         let edResult = (try? Ed25519KeyPair.destroy(KeyTag.me.rawValue)) ?? false
-
-        return rsaResult || edResult
+        let pgpResult = KeychainStorage().delete(key: KeyTag.me.publicPGPStorageKey)
+        
+        return (rsaResult || edResult) && pgpResult
     }
     
     class func hasKey() -> Bool {
@@ -112,6 +113,35 @@ class KeyManager {
         }
     }
     
+}
+
+/**
+    Extend KeyManager and KeyTag to pull out the same self-signed PGP Public Key
+    for the current keypair.
+ */
+
+extension KeyTag {
+    var publicPGPStorageKey:String {
+        return "pgpkey.public.\(self.rawValue)"
+    }
+}
+extension KeyManager {
+    func loadPGPPublicKey() throws -> AsciiArmorMessage {
+        do { // try to load saved pgp public key
+            let pgpPublicKeyData = try KeychainStorage().getData(key: KeyTag.me.publicPGPStorageKey)
+            let packets = try [Packet](data: pgpPublicKeyData)
+            return try AsciiArmorMessage(packets: packets, blockType: ArmorMessageBlock.publicKey)
+        
+        } catch KeychainStorageError.notFound { // doesn't exist so create it
+            let me = try self.getMe()
+            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: " <\(me)>")
+            let _ = KeychainStorage().setData(key: KeyTag.me.publicPGPStorageKey, data: pgpPublicKey.packetData)
+            
+            return pgpPublicKey
+        } catch {
+            throw error
+        }
+    }
 }
 
 
