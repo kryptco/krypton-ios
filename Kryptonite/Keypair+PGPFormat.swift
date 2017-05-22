@@ -166,13 +166,15 @@ extension KeyPair {
     /** 
         Create a PGP signature over a binary document
     */
-    func createAsciiArmoredBinaryDocumentSignature(for binaryData:Data, using hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> AsciiArmorMessage {
+    func createAsciiArmoredBinaryDocumentSignature(for binaryData:Data, using hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512, keyID:Data) throws -> AsciiArmorMessage {
         
         let subpackets:[SignatureSubpacketable] = [
             PGPFormat.SignatureCreated(date: Date())]
 
         var signedBinary = SignedBinaryDocument(binary: binaryData, publicKeyAlgorithm: self.publicKey.type.pgpKeyType, hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
         
+        signedBinary.signature.unhashedSubpacketables = [SignatureIssuer(keyID: keyID)]
+
         // ready the data to hash
         let dataToHash = try signedBinary.dataToHash()
         
@@ -189,8 +191,8 @@ extension KeyPair {
     /**
         Create a PGP Signature over a Git Commit
      */
-    func signGitCommit(with commitInfo:CommitInfo) throws -> AsciiArmorMessage {
+    func signGitCommit(with commitInfo:CommitInfo, keyID:Data) throws -> AsciiArmorMessage {
         let commitData = try commitInfo.toData()
-        return try self.createAsciiArmoredBinaryDocumentSignature(for: commitData)
+        return try self.createAsciiArmoredBinaryDocumentSignature(for: commitData, keyID: keyID)
     }
 }

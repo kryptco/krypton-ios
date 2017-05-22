@@ -67,14 +67,12 @@ struct CommitInfo: Jsonable {
         try data.append("committer ".utf8Data())
         data.append(committer)
         
-        try data.append("\n".utf8Data())
-        
         // empty line
         try data.append("\n".utf8Data())
         
         // message
         data.append(message)
-        
+
         return data
     }
 }
