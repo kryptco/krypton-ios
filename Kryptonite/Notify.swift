@@ -30,7 +30,19 @@ class Notify {
     func present(request:Request, for session:Session) {
         
         let noteTitle = "Request from \(session.pairing.displayName)"
-        let noteBody = "\(request.sign?.display ?? "unknown host")"
+        
+        var noteSubtitle:String
+        var noteBody:String
+        if let signRequest = request.sign {
+            noteSubtitle = "SSH Login"
+            noteBody = signRequest.display
+        } else if let gitSignRequest = request.gitSign {
+            noteSubtitle = "Git Commit Signature"
+            noteBody = gitSignRequest.commit.shortDisplay
+        } else {
+            noteSubtitle = ""
+            noteBody = "Unknown"
+        }
 
         
         if #available(iOS 10.0, *) {
@@ -69,6 +81,7 @@ class Notify {
                     // otherwise, no notificiation so display it:
                     let content = UNMutableNotificationContent()
                     content.title = noteTitle
+                    content.subtitle = noteSubtitle
                     content.body = noteBody
                     content.sound = UNNotificationSound.default()
                     content.userInfo = ["session_id": session.id, "request": request.object]
@@ -105,7 +118,20 @@ class Notify {
         
         
         let noteTitle = "Approved request from \(session.pairing.displayName)"
-        let noteBody = "\(request.sign?.display ?? "unknown host")"
+        
+        var noteSubtitle:String
+        var noteBody:String
+        if let signRequest = request.sign {
+            noteSubtitle = "SSH Login"
+            noteBody = signRequest.display
+        } else if let gitSignRequest = request.gitSign {
+            noteSubtitle = "Git Commit Signature"
+            noteBody = gitSignRequest.commit.shortDisplay
+        } else {
+            noteSubtitle = ""
+            noteBody = "Unknown"
+        }
+
         
         if #available(iOS 10.0, *) {
             
@@ -113,6 +139,7 @@ class Notify {
             
             let content = UNMutableNotificationContent()
             content.title = noteTitle
+            content.subtitle = noteSubtitle
             content.body = noteBody
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_id": session.id, "request": request.object]
