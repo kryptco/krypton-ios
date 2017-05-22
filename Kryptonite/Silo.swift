@@ -223,7 +223,7 @@ class Silo {
             do {
                 let keyManager = try KeyManager.sharedInstance()
                 //TODO: Verify key fingerprint
-                sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit).toString()
+                sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit).toString().utf8Data().toBase64()
             }  catch {
                 err = "\(error)"
             }
