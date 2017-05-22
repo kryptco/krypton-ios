@@ -125,18 +125,40 @@ extension KeyTag {
         return "pgpkey.public.\(self.rawValue)"
     }
 }
-struct GetPGPPublicKeyIDError:Error{}
+
+enum PGPPublicKeyStorage:String {
+    case created = "created"
+    case userID = "userid"
+    
+    func key(tag:KeyTag) -> String {
+        return "pgp.pub.\(tag.rawValue).\(self.rawValue)"
+    }
+}
+
 extension KeyManager {
-    func loadPGPPublicKey() throws -> AsciiArmorMessage {
-        do { // try to load saved pgp public key
-            let pgpPublicKeyData = try KeychainStorage().getData(key: KeyTag.me.publicPGPStorageKey)
-            let packets = try [Packet](data: pgpPublicKeyData)
-            return try AsciiArmorMessage(packets: packets, blockType: ArmorMessageBlock.publicKey)
+    
+    func loadPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
         
+        do { // try to load saved pgp public key
+            
+            // get the created time
+            guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: .me)))
+            else {
+                throw KeychainStorageError.notFound
+            }
+            
+            let created = Date(timeIntervalSince1970: pgpPublicKeyCreated)
+            return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: identity, created: created)
+            
         } catch KeychainStorageError.notFound { // doesn't exist so create it
-            let me = try self.getMe()
-            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: " <\(me)>")
-            let _ = KeychainStorage().setData(key: KeyTag.me.publicPGPStorageKey, data: pgpPublicKey.packetData)
+
+            let created = Date()
+            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: identity, created: created)
+            
+            // save the created date
+            let _ = KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: .me), value: "\(created.timeIntervalSince1970)")
+            
+            // TODO: save the userid
             
             return pgpPublicKey
         } catch {
@@ -145,15 +167,18 @@ extension KeyManager {
     }
     
     func getPGPPublicKeyID() throws -> Data {
-        let pgpPublicKeyData = try self.loadPGPPublicKey().packetData
-        let packets = try [Packetable](data: pgpPublicKeyData)
         
-        guard let publicKey = packets.filter({ $0 is PGPFormat.PublicKey}).first as? PGPFormat.PublicKey
+        // get the created time
+        guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: .me)))
         else {
-            throw GetPGPPublicKeyIDError()
+            throw KeychainStorageError.notFound
         }
         
-        return try publicKey.keyID()
+        let created = Date(timeIntervalSince1970: pgpPublicKeyCreated)
+
+        let pgpPublicKey = try PGPFormat.PublicKey(create: self.keyPair.publicKey.type.pgpKeyType, publicKeyData: self.keyPair.publicKey.pgpPublicKey(), date: created)
+
+        return try pgpPublicKey.keyID()
     }
 }
 

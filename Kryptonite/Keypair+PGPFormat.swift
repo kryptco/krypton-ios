@@ -131,13 +131,13 @@ extension KeyPair {
     /** 
         Create PGP Signed Public Key: (PublicKey, UserID, Signature Packets)
     */
-    private func createPGPPublicKeyPackets(for identity:String, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> [Packet] {
+    private func createPGPPublicKeyPackets(for identity:String, created:Date, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> [Packet] {
         
         // create the public key
-        let pgpPublicKey = try PGPFormat.PublicKey(create: self.publicKey.type.pgpKeyType, publicKeyData: self.publicKey.pgpPublicKey())
+        let pgpPublicKey = try PGPFormat.PublicKey(create: self.publicKey.type.pgpKeyType, publicKeyData: self.publicKey.pgpPublicKey(), date: created)
         let userID = PGPFormat.UserID(content: identity)
         let subpackets:[SignatureSubpacketable] = [
-            PGPFormat.SignatureCreated(date: pgpPublicKey.created),
+            PGPFormat.SignatureCreated(date: Date()),
             PGPFormat.SignatureKeyFlags(flagTypes: [PGPFormat.KeyFlagType.signData])]
 
         var signedPublicKey = try PGPFormat.SignedPublicKeyIdentity(publicKey: pgpPublicKey, userID: userID, hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
@@ -157,8 +157,8 @@ extension KeyPair {
         Export a public key as a PGP Public Key by
         creating a self-signed PGP PublicKey
     */
-    func exportAsciiArmoredPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
-        let packets = try createPGPPublicKeyPackets(for: identity)
+    func exportAsciiArmoredPGPPublicKey(for identity:String, created:Date = Date()) throws -> AsciiArmorMessage {
+        let packets = try createPGPPublicKeyPackets(for: identity, created: created)
         
         return try AsciiArmorMessage(packets: packets, blockType: ArmorMessageBlock.publicKey, comment: KryptonitePGPComment)
     }
