@@ -51,6 +51,7 @@ protocol PGPPublicKeyConvertible {
 }
 
 struct UnknownPGPKeyFormat:Error {}
+struct ModulusTooShort:Error {}
 
 extension PublicKey {
     func pgpPublicKey() throws -> PGPFormat.PublicKeyData {
@@ -66,6 +67,10 @@ extension PublicKey {
 extension RSAPublicKey:PGPPublicKeyConvertible {
     func pgpPublicKeyData() throws -> PGPFormat.PublicKeyData {
         let (modulus, exponent) = try self.splitIntoComponents()
+        guard modulus.count >= 1 else {
+            throw ModulusTooShort()
+        }
+        
         let modulusFixed = Data(bytes: modulus.bytes[1 ..< modulus.count])
         
         return PGPFormat.RSAPublicKey(modulus: modulusFixed, exponent: exponent)
