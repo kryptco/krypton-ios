@@ -16,15 +16,17 @@ struct Request:Jsonable {
     var sendACK:Bool
     var version:Version
     var sign:SignRequest?
+    var gitSign:GitSignRequest?
     var me:MeRequest?
     var unpair:UnpairRequest?
 
-    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, sign: SignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
+    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, sign: SignRequest? = nil, gitSign: GitSignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
         self.id = id
         self.unixSeconds = unixSeconds
         self.sendACK = sendACK
         self.version = version
         self.sign = sign
+        self.gitSign = gitSign
         self.me = me
         self.unpair = unpair
         
@@ -38,6 +40,10 @@ struct Request:Jsonable {
 
         if let json:Object = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
+        }
+
+        if let json:Object = try? json ~> "git_sign_request" {
+            self.gitSign = try GitSignRequest(json: json)
         }
         
         if let json:Object = try? json ~> "me_request" {
@@ -59,6 +65,10 @@ struct Request:Jsonable {
         if let s = sign {
             json["sign_request"] = s.object
         }
+
+        if let gitSign = gitSign {
+            json["git_sign_request"] = gitSign.object
+        }
         
         if let m = me {
             json["me_request"] = m.object
@@ -72,7 +82,7 @@ struct Request:Jsonable {
     }
 
     func isNoOp() -> Bool {
-        return sign == nil && me == nil && unpair == nil
+        return sign == nil && gitSign == nil && me == nil && unpair == nil
     }
 }
 
@@ -175,6 +185,26 @@ struct SignRequest:Jsonable {
     }
 }
 
+struct GitSignRequest:Jsonable {
+    var commit:CommitInfo
+    var fingerprint:String
+    
+    init(commit: CommitInfo, fingerprint: String) {
+        self.commit = commit
+        self.fingerprint = fingerprint
+    }
+
+    init(json: Object) throws {
+        self.init(
+            commit: try CommitInfo(json: json ~> "commit"),
+            fingerprint: try json ~> "public_key_fingerprint"
+        )
+    }
+    
+    var object: Object {
+        return ["commit": commit.object, "public_key_fingerprint": fingerprint]
+    }
+}
 
 // Me
 struct MeRequest:Jsonable {
