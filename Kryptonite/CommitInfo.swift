@@ -41,4 +41,40 @@ struct CommitInfo: Jsonable {
             "message": message.toBase64()
         ]
     }
+    
+    func toData() throws -> Data {
+        var data = Data()
+        
+        // tree
+        try data.append("tree ".utf8Data())
+        data.append(tree)
+        
+        try data.append("\n".utf8Data())
+
+        // parent
+        try data.append("parent ".utf8Data())
+        data.append(parent)
+        
+        try data.append("\n".utf8Data())
+        
+        // author
+        try data.append("author ".utf8Data())
+        data.append(author)
+        
+        try data.append("\n".utf8Data())
+        
+        // committer
+        try data.append("committer ".utf8Data())
+        data.append(committer)
+        
+        try data.append("\n".utf8Data())
+        
+        // empty line
+        try data.append("\n".utf8Data())
+        
+        // message
+        data.append(message)
+        
+        return data
+    }
 }

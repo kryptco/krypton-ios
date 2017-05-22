@@ -23,12 +23,7 @@ class KeychainStorage {
         self.service = service
     }
     
-    
-    func set(key:String, value:String) -> Bool {
-        guard let data = value.data(using: String.Encoding.utf8) else {
-            return false
-        }
-        
+    func setData(key:String, data:Data) -> Bool {
         let params = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): service,
                       String(kSecAttrAccount): key,
@@ -37,20 +32,29 @@ class KeychainStorage {
         
         let deleteStatus = SecItemDelete(params as CFDictionary)
         guard deleteStatus == errSecItemNotFound || deleteStatus.isSuccess()
-        else {
-            log("could not delete item first", .error)
-            return false
+            else {
+                log("could not delete item first", .error)
+                return false
         }
         
         let status = SecItemAdd(params as CFDictionary, nil)
         guard status.isSuccess() else {
             return false
         }
-
+        
         return true
     }
+
     
-    func get(key:String) throws -> String {
+    func set(key:String, value:String) -> Bool {
+        guard let data = value.data(using: String.Encoding.utf8) else {
+            return false
+        }
+        
+        return self.setData(key: key, data: data)
+    }
+    
+    func getData(key:String) throws -> Data {
         let params = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): service,
                       String(kSecAttrAccount): key,
@@ -65,12 +69,17 @@ class KeychainStorage {
             throw KeychainStorageError.notFound
         }
         
-        guard let data = object as? Data, let value = String(data: data, encoding: String.Encoding.utf8), status.isSuccess() else {
+        guard let data = object as? Data, status.isSuccess() else {
             throw KeychainStorageError.unknown(status)
         }
         
-        return value
+        return data
     }
+    
+    func get(key:String) throws -> String {
+        return try self.getData(key: key).utf8String()
+    }
+
     
     func delete(key:String) -> Bool {
         let params = [String(kSecClass): kSecClassGenericPassword,

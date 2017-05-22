@@ -8,6 +8,7 @@
 
 import Foundation
 
+struct UTF8EncodingError:Error {}
 extension Data {
     
     static func random(size:Int) throws -> Data {
@@ -75,6 +76,13 @@ extension Data {
             [UInt8](UnsafeBufferPointer(start: $0, count: self.count))
         }
     }
+    
+    func utf8String() throws -> String {
+        guard let utf8String = String(data: self, encoding: String.Encoding.utf8) else {
+            throw UTF8EncodingError()
+        }
+        return utf8String
+    }
 }
 
 extension NSMutableData {
@@ -92,6 +100,14 @@ extension NSMutableData {
 }
 
 extension String {
+    func utf8Data() throws -> Data {
+        guard let utf8Data = self.data(using: String.Encoding.utf8) else {
+            throw UTF8EncodingError()
+        }
+        return utf8Data
+    }
+
+    
     func fromBase64() throws -> Data {
         var urlDecoded = self
         urlDecoded = urlDecoded.replacingOccurrences(of: "_", with: "/")
