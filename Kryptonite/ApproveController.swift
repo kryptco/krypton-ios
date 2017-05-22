@@ -9,73 +9,6 @@
 import UIKit
 import AVFoundation
 
-class AutoApproveController:UIViewController {
-    @IBOutlet weak var deviceLabel:UILabel!
-    @IBOutlet weak var commandLabel:UILabel!
-    @IBOutlet weak var checkBox:M13Checkbox!
-    @IBOutlet weak var contentView:UIView!
-    
-    @IBOutlet weak var commandView:UIView!
-    @IBOutlet weak var deviceView:UIView!
-
-
-    var deviceName:String?
-    var command:String?
-    var errorMessage:String?
-
-    var rejectColor = UIColor.reject
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        contentView.layer.shadowOpacity = 0.3
-        contentView.layer.shadowRadius = 3
-        contentView.layer.masksToBounds = false
-        
-        deviceLabel.text = deviceName
-        if let error = errorMessage  {
-            commandLabel.text = error
-            commandView.backgroundColor = rejectColor
-            deviceView.backgroundColor = rejectColor
-            checkBox.secondaryTintColor = rejectColor
-        } else {
-            commandLabel.text = "\(command ?? "SSH login request")"
-        }
-        
-        checkBox.animationDuration = 1.0
-        
-        checkBox.checkmarkLineWidth = 2.0
-        checkBox.stateChangeAnimation = .spiral
-        checkBox.boxLineWidth = 2.0
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-        
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
-        if let _ = errorMessage {
-            checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
-        } else {
-            checkBox.setCheckState(M13Checkbox.CheckState.checked, animated: true)
-        }
-        dispatchAfter(delay: 4.0) {
-            self.dismiss()
-        }
-    }
-    
-    @IBAction func dismiss() {
-        self.dismiss(animated: true, completion: {
-        })
-    }
-}
-
-
 class ApproveController:UIViewController {
     
     @IBOutlet weak var contentView:UIView!
@@ -116,9 +49,16 @@ class ApproveController:UIViewController {
         resultViewHeight.constant = 0
         resultLabel.alpha = 0
         
-        if let session = session, let request = request {
+        if let session = session {
             deviceLabel.text = session.pairing.displayName.uppercased()
-            commandLabel.text = request.sign?.display ?? "Unknown"
+        }
+        
+        if let sshSign = request?.sign {
+            commandLabel.text = sshSign.display
+        } else if let gitSign = request?.gitSign {
+            commandLabel.text = gitSign.commit.display
+        } else {
+            commandLabel.text = "Unknown"
         }
     }
     

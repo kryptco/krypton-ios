@@ -93,10 +93,15 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             if let error = errorMessage {
                                 content.body = error
-                            } else {
-                                content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            } else if let signRequest = unsealedRequest.sign {
+                                content.body = signRequest.display
+                                content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
+                            } else if let gitSignRequest = unsealedRequest.gitSign
+                            {
+                                content.body = gitSignRequest.commit.shortDisplay
                                 content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
                             }
+
                             
                             if noSound {
                                 content.sound = nil

@@ -132,6 +132,7 @@
 		FA632E451DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */; };
 		FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
 		FA632E471DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
+		FA6491121ED38314008C04A7 /* AutoApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6491111ED38314008C04A7 /* AutoApproveController.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
 		FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
@@ -612,6 +613,7 @@
 		FA61EF4C1D8492D5009FD899 /* MeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeController.swift; sourceTree = "<group>"; };
 		FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Bold.ttf"; sourceTree = "<group>"; };
 		FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Regular.ttf"; sourceTree = "<group>"; };
+		FA6491111ED38314008C04A7 /* AutoApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoApproveController.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8141361D70B0F4004FE58C /* Kryptonite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kryptonite.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -915,6 +917,7 @@
 				FA309F411DA42C69006D8D81 /* HelpController.swift */,
 				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
 				FAAE818E1E576DB8002A9AE6 /* Authorize.swift */,
+				FA6491111ED38314008C04A7 /* AutoApproveController.swift */,
 				FAE495701DBD741800A97708 /* ApproveController.swift */,
 				FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
@@ -1914,6 +1917,7 @@
 				FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
+				FA6491121ED38314008C04A7 /* AutoApproveController.swift in Sources */,
 				FA1682931D77868D00A7ED53 /* FAIcon.swift in Sources */,
 				FACAA4BC1D888AB9000B9A01 /* SessionDetailController.swift in Sources */,
 				FAE4958E1DBD89F100A97708 /* M13CheckboxExpandController.swift in Sources */,

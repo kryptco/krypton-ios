@@ -53,7 +53,12 @@ extension UIViewController {
         autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
         (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
-        (autoApproveController as? AutoApproveController)?.command = request.sign?.display ?? "Unknown"
+        
+        if let signRequest = request.sign {
+            (autoApproveController as? AutoApproveController)?.command = signRequest.display
+        } else if let gitSignRequest = request.gitSign {
+            (autoApproveController as? AutoApproveController)?.command = gitSignRequest.commit.display
+        }
         
         
         dispatchMain {

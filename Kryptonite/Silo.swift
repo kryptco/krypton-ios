@@ -108,6 +108,13 @@ class Silo {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
+        
+        // if it's a git-commit signature request: check if we need user approval
+        // then exit and wait for approval
+        if let _ = request.gitSign, Policy.needsUserApproval(for: session) {
+            try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
+            return
+        }
 
         if request.isNoOp() {
             return
@@ -116,6 +123,7 @@ class Silo {
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
+        // analytics / notify user on error for sign response
         if response.sign != nil {
             Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
             
@@ -129,6 +137,18 @@ class Silo {
                 Analytics.postEvent(category: "host", action: "unknown")
             }
         }
+        
+        // analytics / notify user on error for gitSign response
+        if response.gitSign != nil {
+            Analytics.postEvent(category: "git-commit-signature", action: "automatic approval", label: communicationMedium.rawValue)
+            
+            if let error = response.gitSign?.error {
+                Policy.notifyUser(errorMessage: error, session: session)
+            } else {
+                Policy.notifyUser(session: session, request: request)
+            }
+        }
+
         
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
     }
@@ -220,14 +240,21 @@ class Silo {
         if let gitSignRequest = request.gitSign {            
             var sig:String?
             var err:String?
-            do {
-                let keyManager = try KeyManager.sharedInstance()
-                let keyID = try keyManager.getPGPPublicKeyID()
-                
-                //TODO: Verify key fingerprint    
-                log("keyID: \(keyID.hex)")
-                log("commit info: \n\(try gitSignRequest.commit.toData().utf8String())")
-                sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit, keyID: keyID).packetData.toBase64()
+            do {                
+                if signatureAllowed {
+                    
+                    let keyManager = try KeyManager.sharedInstance()
+                    let keyID = try keyManager.getPGPPublicKeyID()
+                    
+                    //TODO: Verify key fingerprint
+                    log("keyID: \(keyID.hex)")
+                    log("commit info: \n\(gitSignRequest.commit.display)")
+                    
+                    // only place where git signature should occur
+                    sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit, keyID: keyID).packetData.toBase64()
+                } else {
+                    throw UserRejectedError()
+                }
                 
             }  catch {
                 err = "\(error)"
@@ -236,11 +263,15 @@ class Silo {
             gitSign = GitSignResponse(sig: sig, err: err)
         }
         
-        if let _ = request.me {
+        if let meRequest = request.me {
             let keyManager = try KeyManager.sharedInstance()
-            let email = try keyManager.getMe()
-            let pgpPublicKey = try keyManager.loadPGPPublicKey(for: "<\(email)>")
-            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey.packetData))
+            
+            var pgpPublicKey:Data?
+            if let pgpUserID = meRequest.pgpUserId {
+                pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
+            }
+            
+            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey))
         }
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
