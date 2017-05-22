@@ -172,6 +172,7 @@ class Silo {
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         var sign:SignResponse?
         var me:MeResponse?
+        var gitSign:GitSignResponse?
         
         if let signRequest = request.sign {
             let kp = try KeyManager.sharedInstance()
@@ -216,14 +217,29 @@ class Silo {
             sign = SignResponse(sig: sig, err: err)
         }
         
+        if let gitSignRequest = request.gitSign {            
+            var sig:String?
+            var err:String?
+            do {
+                let keyManager = try KeyManager.sharedInstance()
+                //TODO: Verify key fingerprint
+                sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit).toString()
+            }  catch {
+                err = "\(error)"
+            }
+            
+            gitSign = GitSignResponse(sig: sig, err: err)
+        }
+        
         if let _ = request.me {
             let keyManager = try KeyManager.sharedInstance()
-            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat()))
+            let pgpPublicKey = try keyManager.loadPGPPublicKey()
+            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey.packetData))
         }
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, gitSign: gitSign, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         
