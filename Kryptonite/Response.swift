@@ -16,16 +16,18 @@ final class Response:Jsonable {
     var version:Version?
     var approvedUntil:Int?
     var sign:SignResponse?
+    var gitSign:GitSignResponse?
     var me:MeResponse?
     var unpair:UnpairResponse?
     var ack:AckResponse?
     var trackingID:String?
-    
-    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, ack:AckResponse? = nil, trackingID:String? = nil) {
+
+    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, gitSign:GitSignResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, ack:AckResponse? = nil, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
         self.approvedUntil = approvedUntil
         self.sign = sign
+        self.gitSign = gitSign
         self.me = me
         self.unpair = unpair
         self.ack = ack
@@ -44,6 +46,10 @@ final class Response:Jsonable {
 
         if let json:Object = try? json ~> "sign_response" {
             self.sign = try SignResponse(json: json)
+        }
+
+        if let json:Object = try? json ~> "git_sign_response" {
+            self.gitSign = try GitSignResponse(json: json)
         }
         
         if let json:Object = try? json ~> "me_response" {
@@ -74,6 +80,10 @@ final class Response:Jsonable {
 
         if let s = sign {
             json["sign_response"] = s.object
+        }
+
+        if let gitSign = gitSign {
+            json["git_sign_response"] = gitSign.object
         }
         
         if let m = me {
@@ -126,6 +136,39 @@ struct SignResponse:Jsonable {
     
     var object: Object {
         var map = [String:Any]()
+
+        if let sig = signature {
+            map["signature"] = sig
+        }
+        if let err = error {
+            map["error"] = err
+        }
+        return map
+    }
+}
+
+struct GitSignResponse:Jsonable {
+    var signature:String?
+    var error:String?
+    
+    init(sig:String?, err:String? = nil) {
+        self.signature = sig
+        self.error = err
+    }
+    
+    init(json: Object) throws {
+        
+        if let sig:String = try? json ~> "signature" {
+            self.signature = sig
+        }
+        
+        if let err:String = try? json ~> "error" {
+            self.error = err
+        }
+    }
+    
+    var object: Object {
+        var map = [String:Any]()
         
         if let sig = signature {
             map["signature"] = sig
@@ -138,24 +181,33 @@ struct SignResponse:Jsonable {
 }
 
 
+
 // Me
 struct MeResponse:Jsonable {
     
     struct Me:Jsonable {
         var email:String
         var publicKeyWire:Data
-        init(email:String, publicKeyWire:Data) {
+        var pgpPublicKey:Data?
+        
+        init(email:String, publicKeyWire:Data, pgpPublicKey: Data? = nil) {
             self.email = email
             self.publicKeyWire = publicKeyWire
+            self.pgpPublicKey = pgpPublicKey
         }
         
         init(json: Object) throws {
             self.email = try json ~> "email"
             self.publicKeyWire = try ((json ~> "public_key_wire") as String).fromBase64()
+            self.pgpPublicKey = try ((json ~> "pgp_pk") as String).fromBase64()
         }
         
         var object: Object {
-            return ["email": email, "public_key_wire": publicKeyWire.toBase64()]
+            var json = ["email": email, "public_key_wire": publicKeyWire.toBase64()]
+            if let pgpPublicKey = pgpPublicKey {
+                json["pgp_pk"] = pgpPublicKey.toBase64()
+            }
+            return json
         }
     }
     
