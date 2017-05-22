@@ -238,7 +238,8 @@ class Silo {
         
         if let _ = request.me {
             let keyManager = try KeyManager.sharedInstance()
-            let pgpPublicKey = try keyManager.loadPGPPublicKey()
+            let email = try keyManager.getMe()
+            let pgpPublicKey = try keyManager.loadPGPPublicKey(for: "<\(email)>")
             me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey.packetData))
         }
         
