@@ -510,7 +510,7 @@
         <scene sceneID="Atm-Dh-fQZ">
             <objects>
                 <navigationController id="QdC-wE-jq3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2809,7 +2809,7 @@ Cg
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AP3-RZ-yks">
-                                    <rect key="frame" x="38.5" y="10.5" width="153" height="21.5"/>
+                                    <rect key="frame" x="38.5" y="11" width="153" height="21.5"/>
                                     <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -2857,7 +2857,7 @@ Cg
         <scene sceneID="tFV-Od-SVC">
             <objects>
                 <navigationController id="QEh-xy-HRh" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="q7O-0g-nZJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="q7O-0g-nZJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

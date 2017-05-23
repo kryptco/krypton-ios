@@ -248,7 +248,7 @@ class Silo {
                     
                     //TODO: Verify key fingerprint
                     log("keyID: \(keyID.hex)")
-                    log("commit info: \n\(gitSignRequest.commit.display)")
+                    log("commit info: \n\(String(describing: try? gitSignRequest.commit.data.utf8String()))")
                     
                     // only place where git signature should occur
                     sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit, keyID: keyID).packetData.toBase64()

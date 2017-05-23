@@ -56,7 +56,7 @@ class ApproveController:UIViewController {
         if let sshSign = request?.sign {
             commandLabel.text = sshSign.display
         } else if let gitSign = request?.gitSign {
-            commandLabel.text = gitSign.commit.display
+            commandLabel.text = gitSign.commit.shortDisplay
         } else {
             commandLabel.text = "Unknown"
         }

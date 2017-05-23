@@ -57,7 +57,7 @@ extension UIViewController {
         if let signRequest = request.sign {
             (autoApproveController as? AutoApproveController)?.command = signRequest.display
         } else if let gitSignRequest = request.gitSign {
-            (autoApproveController as? AutoApproveController)?.command = gitSignRequest.commit.display
+            (autoApproveController as? AutoApproveController)?.command = gitSignRequest.commit.shortDisplay
         }
         
         

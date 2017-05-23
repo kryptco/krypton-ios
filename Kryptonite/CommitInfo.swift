@@ -10,14 +10,15 @@ import JSON
 
 struct InvalidCommitInfo:Error {}
 struct CommitInfo: Jsonable {
-    var tree: Data
+    let tree: Data
     var parent: Data?
-    var author: Data
-    var committer: Data
-    var message: Data
+    let author: Data
+    let committer: Data
+    let message: Data
 
-    var display:String
-    var shortDisplay:String
+    // computed properties
+    let data:Data
+    let shortDisplay:String
     
     init(tree: Data, parent: Data?, author: Data, committer: Data, message: Data) throws {
         self.tree = tree
@@ -26,28 +27,57 @@ struct CommitInfo: Jsonable {
         self.committer = committer
         self.message = message
         
-        // create the string displays
-        let treeHash = try tree.utf8String()
-        let treeString = "tree \(treeHash)"
+        /** 
+            Put the commit info in the correct byte sequence
+        */
+        var data = Data()
         
-        var parentString = ""
-        if let theParent = parent {
-            parentString = try "\nparent \(theParent.utf8String())"
+        let newLine = try "\n".utf8Data()
+        
+        // tree
+        try data.append("tree ".utf8Data())
+        data.append(tree)
+        
+        data.append(newLine)
+        
+        // parent
+        if let parent = self.parent {
+            try data.append("parent ".utf8Data())
+            data.append(parent)
+            data.append(newLine)
         }
         
-        let authorString = try "\nauthor \(author.utf8String())"
-        let committerString = try "commiter \(committer.utf8String())"
-        let messageString = try message.utf8String()
+        // author
+        try data.append("author ".utf8Data())
+        data.append(author)
+        
+        data.append(newLine)
+        
+        // committer
+        try data.append("committer ".utf8Data())
+        data.append(committer)
+        
+        // empty line
+        data.append(newLine)
+        
+        // message
+        data.append(message)
 
-        guard treeHash.characters.count >= 6
-        else {
-            throw InvalidCommitInfo()
+        self.data = data
+        
+        
+        /**
+            Create a human-readable display
+         */
+        let authorString = try author.utf8String()
+        let committerString = try committer.utf8String()
+        let messageString = try message.utf8String()
+        
+        if authorString == committerString {
+            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(authorString)]"
+        } else {
+            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(authorString)]\n[committer: \(committerString)]"
         }
-        
-        self.display = "\(treeString)\(parentString)\n\(authorString)\n\(committerString)\n\(messageString)".trimmingCharacters(in: CharacterSet.newlines)
-        
-        let shortCommit = treeHash.substring(to: treeHash.index(treeHash.startIndex, offsetBy: 6))
-        self.shortDisplay = "\(shortCommit): \(messageString.trimmingCharacters(in: CharacterSet.newlines))"
     }
     
     init(json: Object) throws {
@@ -79,42 +109,5 @@ struct CommitInfo: Jsonable {
         }
         
         return map
-    }
-    
-    func toData() throws -> Data {
-        var data = Data()
-        
-        let newLine = try "\n".utf8Data()
-
-        // tree
-        try data.append("tree ".utf8Data())
-        data.append(tree)
-        
-        data.append(newLine)
-
-        // parent
-        if let parent = self.parent {
-            try data.append("parent ".utf8Data())
-            data.append(parent)
-            data.append(newLine)
-        }
-        
-        // author
-        try data.append("author ".utf8Data())
-        data.append(author)
-        
-        data.append(newLine)
-        
-        // committer
-        try data.append("committer ".utf8Data())
-        data.append(committer)
-        
-        // empty line
-        data.append(newLine)
-        
-        // message
-        data.append(message)
-
-        return data
     }
 }
