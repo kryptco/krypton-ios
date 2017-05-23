@@ -53,5 +53,5 @@ enum GitInfo:Jsonable {
         case .tag(let t):
             return t.shortDisplay
         }
-    }
+    }    
 }

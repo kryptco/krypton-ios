@@ -9,6 +9,8 @@
 import JSON
 
 struct InvalidCommitInfo:Error {}
+struct InvalidCommitHash:Error {}
+
 struct CommitInfo: Jsonable {
     let tree: String
     var parent: String?
@@ -17,6 +19,7 @@ struct CommitInfo: Jsonable {
     let message: Data
 
     // computed properties
+    let messageString:String
     let data:Data
     let shortDisplay:String
     
@@ -69,7 +72,7 @@ struct CommitInfo: Jsonable {
         /**
             Create a human-readable display
          */
-        let messageString = try message.utf8String()
+        messageString = (try? message.utf8String()) ?? "message decoding error"
         
         if author == committer {
             shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(author)]"
@@ -102,4 +105,70 @@ struct CommitInfo: Jsonable {
         
         return map
     }
+    
+    func commitHash(asciiArmoredSignature:String) throws -> Data {
+        
+        let newLine = try "\n".utf8Data()
+
+        var commitData = Data()
+    
+        // tree
+        try commitData.append("tree ".utf8Data())
+        try commitData.append(tree.utf8Data())
+        
+        commitData.append(newLine)
+        
+        // parent
+        if let parent = self.parent {
+            try commitData.append("parent ".utf8Data())
+            try commitData.append(parent.utf8Data())
+            commitData.append(newLine)
+        }
+        
+        // author
+        try commitData.append("author ".utf8Data())
+        try commitData.append(author.utf8Data())
+        
+        commitData.append(newLine)
+        
+        // committer
+        try commitData.append("committer ".utf8Data())
+        try commitData.append(committer.utf8Data())
+        commitData.append(newLine)
+
+        // append gpgsig
+        try commitData.append("gpgsig".utf8Data())        
+        let spaceAdjustedAsciiArmor = asciiArmoredSignature.components(separatedBy: .newlines).map({ " " + $0}).joined(separator: "\n")
+        try commitData.append(spaceAdjustedAsciiArmor.utf8Data())
+        commitData.append(newLine)
+        
+        // message
+        commitData.append(message)
+        
+        // prepend precommit data: "commit LEN\0"
+        let commitDataLength = commitData.count
+        var preCommitData = try Data("commit \(commitDataLength)".utf8Data())
+        preCommitData.append(contentsOf: [0x00])
+        
+        // append remainder of commitData
+        preCommitData.append(commitData)
+        
+
+        // compute sha1 and return
+        return preCommitData.SHA1
+    }
+    
+    func shortCommitHash(asciiArmoredSignature:String) throws -> String {
+        let commitHash = try self.commitHash(asciiArmoredSignature: asciiArmoredSignature)
+        
+        guard commitHash.count >= 3 else {
+            throw InvalidCommitHash()
+        }
+        
+        return Data(commitHash.subdata(in: 0 ..< 3)).hex
+    }
 }
+
+
+
+

@@ -249,15 +249,32 @@ class Silo {
                     
                     //TODO: Verify key fingerprint
                     log("keyID: \(keyID.hex)")
+                    
+                    var logDisplay:String
+                    
                     switch gitSignRequest.git {
                     case .commit(let commit):
-                        log("commit info: \n\(String(describing: try? commit.data.utf8String()))")
-                        sig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID).packetData.toBase64()
+                        
+                        let asciiArmoredSig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID)
+                        sig = asciiArmoredSig.packetData.toBase64()
+                        
+                        let commitHash = try commit.shortCommitHash(asciiArmoredSignature: asciiArmoredSig.toString())
+                        
+                        logDisplay = "[\(commitHash)] \(commit.messageString)"
+                        
                     case .tag(let tag):
-                        log("tag info: \n\(String(describing: try? tag.data.utf8String()))")
+
                         sig = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
+                        
+                        logDisplay = tag.shortDisplay
                     }
+                    
+                    
+                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: nil, signature: (sig ?? err) ?? "<err>", displayName: logDisplay), deviceName: session.pairing.name)
+                    
                 } else {
+                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: nil, signature: "request failed", displayName: "rejected: \(gitSignRequest.git.shortDisplay)"), deviceName: session.pairing.name)
+
                     throw UserRejectedError()
                 }
                 

@@ -185,7 +185,7 @@ extension KeyPair {
         try signedBinary.set(hash: hash, signedHash: signedHash)
 
         // return ascii armored signature
-        return try AsciiArmorMessage(packets: signedBinary.toPackets(), blockType: ArmorMessageBlock.signature)
+        return try AsciiArmorMessage(packets: signedBinary.toPackets(), blockType: ArmorMessageBlock.signature, comment: "Created With Kryptonite")
     }
     
     /**

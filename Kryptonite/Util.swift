@@ -82,7 +82,7 @@ extension Data {
             throw UTF8EncodingError()
         }
         return utf8String
-    }
+    }    
 }
 
 extension NSMutableData {

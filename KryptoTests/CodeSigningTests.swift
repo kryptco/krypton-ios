@@ -175,4 +175,29 @@ class CodeSigningTests: XCTestCase {
             
         }
     }
+    
+    func testComputeCommitHash() {
+        do  {
+            let packetData = try ("iF4EABYKAAYFAlkkmD8ACgkQ4eT0x9ceFp1gNQD+LWiJFax8iQqgr0yJ1P7JFGvMwuZc8r05h6U+X+lyKYEBAK939lEX1rvBmcetftVbRlOMX5oQZwBLt/NJh+nQ3ssC").fromBase64()
+            let sigPackets = try [Packet](data: packetData)
+            let commitInfo = try CommitInfo(tree: "2c4df4a89ac5b0b8b21fd2aad4d9b19cd91e7049",
+                                        parent: "1cd97d0545a25c578e3f4da5283106606276eadf",
+                                        author: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
+                                        committer: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
+                                        message: "\ntest1234\n".utf8Data())
+            
+            let asciiArmored = try AsciiArmorMessage(packets: sigPackets, blockType: ArmorMessageBlock.signature, comment: "Created With Kryptonite").toString()
+            
+            let commitHash = try commitInfo.commitHash(asciiArmoredSignature: asciiArmored).hex
+            
+            guard commitHash == "84e09dac58d81b1f3fc4806b1b4cb18af3cca0ea" else {
+                XCTFail("Commit hash does not match, got: \(commitHash)")
+                return
+            }
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+            
+        }
+    }
+
 }

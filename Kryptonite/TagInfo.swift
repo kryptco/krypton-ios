@@ -8,14 +8,18 @@
 
 import JSON
 
+struct InvalidTagInfo:Error{}
+
 struct TagInfo: Jsonable {
     let _object: String
     let type: String
     let tag: String
     let tagger: String
     let message: Data
+    
 
     // computed properties
+    let messageString:String
     let data:Data
     let shortDisplay:String
     
@@ -67,9 +71,13 @@ struct TagInfo: Jsonable {
         /**
             Create a human-readable display
          */
-        let messageString = try message.utf8String()
+        guard object.characters.count >= 6 else {
+            throw InvalidTagInfo()
+        }
+        let objectShort = object.substring(to: object.index(object.startIndex, offsetBy: 6))
+        messageString = (try? message.utf8String()) ?? "message decoding error"
         
-        shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[tagger: \(tagger)]"
+        shortDisplay = "[\(self.tag) \(objectShort)] \(messageString.trimmingCharacters(in: CharacterSet.newlines))"
     }
     
     init(json: Object) throws {
