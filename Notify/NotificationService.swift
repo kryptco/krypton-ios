@@ -98,7 +98,7 @@ class NotificationService: UNNotificationServiceExtension {
                                 content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
                             } else if let gitSignRequest = unsealedRequest.gitSign
                             {
-                                content.body = gitSignRequest.commit.shortDisplay
+                                content.body = gitSignRequest.git.shortDisplay
                                 content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
                             }
 

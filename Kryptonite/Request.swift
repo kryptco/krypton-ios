@@ -186,23 +186,27 @@ struct SignRequest:Jsonable {
 }
 
 struct GitSignRequest:Jsonable {
-    var commit:CommitInfo
-    var userId:String
+    let userId:String
+    let git: GitInfo
     
-    init(commit: CommitInfo, userId: String) {
-        self.commit = commit
+    init(userId: String, git: GitInfo) {
         self.userId = userId
+        self.git = git
     }
 
     init(json: Object) throws {
         self.init(
-            commit: try CommitInfo(json: json ~> "commit"),
-            userId: try json ~> "user_id"
+            userId: try json ~> "user_id",
+            git: try GitInfo(json: json)
         )
     }
     
     var object: Object {
-        return ["commit": commit.object, "user_id": userId]
+        var json = git.object
+        
+        json["user_id"] = userId
+        
+        return json
     }
 }
 
