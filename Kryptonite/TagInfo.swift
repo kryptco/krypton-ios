@@ -71,10 +71,10 @@ struct TagInfo: Jsonable {
         /**
             Create a human-readable display
          */
-        guard object.characters.count >= 6 else {
+        guard object.characters.count >= 7 else {
             throw InvalidTagInfo()
         }
-        let objectShort = object.substring(to: object.index(object.startIndex, offsetBy: 6))
+        let objectShort = object.substring(to: object.index(object.startIndex, offsetBy: 7))
         messageString = (try? message.utf8String()) ?? "message decoding error"
         
         shortDisplay = "[\(self.tag) \(objectShort)] \(messageString.trimmingCharacters(in: CharacterSet.newlines))"

@@ -159,13 +159,15 @@ struct CommitInfo: Jsonable {
     }
     
     func shortCommitHash(asciiArmoredSignature:String) throws -> String {
-        let commitHash = try self.commitHash(asciiArmoredSignature: asciiArmoredSignature)
+        let commitHash = try self.commitHash(asciiArmoredSignature: asciiArmoredSignature).hex
         
-        guard commitHash.count >= 3 else {
+        guard commitHash.characters.count >= 7 else {
             throw InvalidCommitHash()
         }
+        let commitHashShort = commitHash.substring(to: commitHash.index(commitHash.startIndex, offsetBy: 7))
         
-        return Data(commitHash.subdata(in: 0 ..< 3)).hex
+        
+        return commitHashShort
     }
 }
 
