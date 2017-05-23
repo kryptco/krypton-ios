@@ -194,4 +194,11 @@ extension KeyPair {
     func signGitCommit(with commitInfo:CommitInfo, keyID:Data) throws -> AsciiArmorMessage {
         return try self.createAsciiArmoredBinaryDocumentSignature(for: commitInfo.data, keyID: keyID)
     }
+    
+    /**
+        Create a PGP Signature over a Git Tag
+     */
+    func signGitTag(with tagInfo:TagInfo, keyID:Data) throws -> AsciiArmorMessage {
+        return try self.createAsciiArmoredBinaryDocumentSignature(for: tagInfo.data, keyID: keyID)
+    }
 }

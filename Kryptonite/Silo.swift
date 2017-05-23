@@ -242,16 +242,21 @@ class Silo {
             var err:String?
             do {                
                 if signatureAllowed {
+                    // only place where git signature should occur
                     
                     let keyManager = try KeyManager.sharedInstance()
                     let keyID = try keyManager.getPGPPublicKeyID()
                     
                     //TODO: Verify key fingerprint
                     log("keyID: \(keyID.hex)")
-                    log("commit info: \n\(String(describing: try? gitSignRequest.commit.data.utf8String()))")
-                    
-                    // only place where git signature should occur
-                    sig = try keyManager.keyPair.signGitCommit(with: gitSignRequest.commit, keyID: keyID).packetData.toBase64()
+                    switch gitSignRequest.git {
+                    case .commit(let commit):
+                        log("commit info: \n\(String(describing: try? commit.data.utf8String()))")
+                        sig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID).packetData.toBase64()
+                    case .tag(let tag):
+                        log("tag info: \n\(String(describing: try? tag.data.utf8String()))")
+                        sig = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
+                    }
                 } else {
                     throw UserRejectedError()
                 }

@@ -37,8 +37,8 @@ class Notify {
             noteSubtitle = "SSH Login"
             noteBody = signRequest.display
         } else if let gitSignRequest = request.gitSign {
-            noteSubtitle = "Git Commit Signature"
-            noteBody = gitSignRequest.commit.shortDisplay
+            noteSubtitle = gitSignRequest.git.subtitle + " Signature"
+            noteBody = gitSignRequest.git.shortDisplay
         } else {
             noteSubtitle = ""
             noteBody = "Unknown"
@@ -125,8 +125,8 @@ class Notify {
             noteSubtitle = "SSH Login"
             noteBody = signRequest.display
         } else if let gitSignRequest = request.gitSign {
-            noteSubtitle = "Git Commit Signature"
-            noteBody = gitSignRequest.commit.shortDisplay
+            noteSubtitle = gitSignRequest.git.subtitle + " Signature"
+            noteBody = gitSignRequest.git.shortDisplay
         } else {
             noteSubtitle = ""
             noteBody = "Unknown"

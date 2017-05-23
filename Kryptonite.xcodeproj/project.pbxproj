@@ -11,6 +11,12 @@
 		8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
 		8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
+		8D05CB1F1ED3DCC000CCCC38 /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */; };
+		8D05CB321ED3E08500CCCC38 /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */; };
+		8D05CB331ED3E08500CCCC38 /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */; };
+		8D05CB351ED3E25E00CCCC38 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */; };
+		8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */; };
+		8D05CB371ED3E4BD00CCCC38 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
 		8D45AFF61E8D739500E84A57 /* SSHHostVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */; };
 		8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
@@ -523,6 +529,8 @@
 		8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sodium.xcodeproj; path = "swift-sodium/Sodium.xcodeproj"; sourceTree = "<group>"; };
 		8D003DF11D90EDE30085ED21 /* Sodium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sodium.swift; sourceTree = "<group>"; };
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
+		8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagInfo.swift; sourceTree = "<group>"; };
+		8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitInfo.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHHostVerificationTests.swift; sourceTree = "<group>"; };
 		8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -948,6 +956,8 @@
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */,
+				8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */,
+				8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */,
 				8D83990B1E56063A0051C6BA /* HostAuth.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
 				8D7941671D98732600F6E32E /* NetworkProtocol.swift */,
@@ -1851,6 +1861,7 @@
 				FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,
+				8D05CB1F1ED3DCC000CCCC38 /* TagInfo.swift in Sources */,
 				FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* Keypair+SSHFormat.swift in Sources */,
@@ -1900,6 +1911,7 @@
 				FAE495941DBD89F100A97708 /* M13CheckboxAddRemovePathGenerator.swift in Sources */,
 				FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */,
 				FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */,
+				8D05CB351ED3E25E00CCCC38 /* GitInfo.swift in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
@@ -1985,6 +1997,7 @@
 				8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */,
 				8DCB603C1E9445F200E1B924 /* Silo.swift in Sources */,
 				8DCB60451E94468B00E1B924 /* SignatureLog.swift in Sources */,
+				8D05CB331ED3E08500CCCC38 /* TagInfo.swift in Sources */,
 				FAC873FF1E6A5148003D112E /* JSON+Seal.swift in Sources */,
 				8DCB60401E94468100E1B924 /* Response.swift in Sources */,
 				8DCB603B1E94458000E1B924 /* AnalyticsStub.swift in Sources */,
@@ -1992,6 +2005,7 @@
 				8DCB604E1E9446D300E1B924 /* SQS.swift in Sources */,
 				FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */,
 				FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */,
+				8D05CB371ED3E4BD00CCCC38 /* GitInfo.swift in Sources */,
 				8DCB60461E94469700E1B924 /* Policy.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
 				8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */,
@@ -2049,6 +2063,7 @@
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
+				8D05CB321ED3E08500CCCC38 /* TagInfo.swift in Sources */,
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
@@ -2067,6 +2082,7 @@
 				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
 				FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */,
+				8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
 				FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */,
 				FAAE81931E576FFB002A9AE6 /* Policy+UI.swift in Sources */,

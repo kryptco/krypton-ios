@@ -10,17 +10,17 @@ import JSON
 
 struct InvalidCommitInfo:Error {}
 struct CommitInfo: Jsonable {
-    let tree: Data
-    var parent: Data?
-    let author: Data
-    let committer: Data
+    let tree: String
+    var parent: String?
+    let author: String
+    let committer: String
     let message: Data
 
     // computed properties
     let data:Data
     let shortDisplay:String
     
-    init(tree: Data, parent: Data?, author: Data, committer: Data, message: Data) throws {
+    init(tree: String, parent: String?, author: String, committer: String, message: Data) throws {
         self.tree = tree
         self.parent = parent
         self.author = author
@@ -36,27 +36,27 @@ struct CommitInfo: Jsonable {
         
         // tree
         try data.append("tree ".utf8Data())
-        data.append(tree)
+        try data.append(tree.utf8Data())
         
         data.append(newLine)
         
         // parent
         if let parent = self.parent {
             try data.append("parent ".utf8Data())
-            data.append(parent)
+            try data.append(parent.utf8Data())
             data.append(newLine)
         }
         
         // author
         try data.append("author ".utf8Data())
-        data.append(author)
+        try data.append(author.utf8Data())
         
         data.append(newLine)
         
         // committer
         try data.append("committer ".utf8Data())
-        data.append(committer)
-        
+        try data.append(committer.utf8Data())
+
         // empty line
         data.append(newLine)
         
@@ -69,43 +69,35 @@ struct CommitInfo: Jsonable {
         /**
             Create a human-readable display
          */
-        let authorString = try author.utf8String()
-        let committerString = try committer.utf8String()
         let messageString = try message.utf8String()
         
-        if authorString == committerString {
-            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(authorString)]"
+        if author == committer {
+            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(author)]"
         } else {
-            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(authorString)]\n[committer: \(committerString)]"
+            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(author)]\n[committer: \(committer)]"
         }
     }
     
     init(json: Object) throws {
-        
-        var parent:Data?
-        if let parentBase64:String = try? json ~> "parent" {
-            parent = try parentBase64.fromBase64()
-        }
-        
         try self.init(
-            tree: try ((json ~> "tree") as String).fromBase64(),
-            parent: parent,
-            author: try ((json ~> "author") as String).fromBase64(),
-            committer: try ((json ~> "committer") as String).fromBase64(),
+            tree: try json ~> "tree",
+            parent: try? json ~> "parent",
+            author: try json ~> "author",
+            committer: json ~> "committer",
             message: try ((json ~> "message") as String).fromBase64()
         )
     }
-    
+
     var object: Object {
-        var map = [
-            "tree": tree.toBase64(),
-            "author": author.toBase64(),
-            "committer": committer.toBase64(),
+        var map : Object = [
+            "tree": tree,
+            "author": author,
+            "committer": committer,
             "message": message.toBase64()
         ]
         
         if let parent = self.parent {
-            map["parent"] = parent.toBase64()
+            map["parent"] = parent
         }
         
         return map

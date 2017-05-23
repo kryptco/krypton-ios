@@ -1,0 +1,94 @@
+//
+//  TagInfo.swift
+//  Kryptonite
+//
+//  Created by Kevin King on 5/22/17.
+//  Copyright © 2017 KryptCo. All rights reserved.
+//
+
+import JSON
+
+struct TagInfo: Jsonable {
+    let _object: String
+    let type: String
+    let tag: String
+    let tagger: String
+    let message: Data
+
+    // computed properties
+    let data:Data
+    let shortDisplay:String
+    
+    init(object: String, type: String, tag: String, tagger: String, message: Data) throws {
+        self._object = object
+        self.type = type
+        self.tag = tag
+        self.tagger = tagger
+        self.message = message
+        
+        /** 
+            Put the tag info in the correct byte sequence
+        */
+        var data = Data()
+        
+        let newLine = try "\n".utf8Data()
+        
+        // object
+        try data.append("object ".utf8Data())
+        try data.append(object.utf8Data())
+        
+        data.append(newLine)
+
+        // type
+        try data.append("type ".utf8Data())
+        try data.append(type.utf8Data())
+        
+        data.append(newLine)
+        
+        // tag
+        try data.append("tag ".utf8Data())
+        try data.append(tag.utf8Data())
+        
+        data.append(newLine)
+        
+        // tagger
+        try data.append("tagger ".utf8Data())
+        try data.append(tagger.utf8Data())
+
+        // empty line
+        data.append(newLine)
+        
+        // message
+        data.append(message)
+
+        self.data = data
+        
+        
+        /**
+            Create a human-readable display
+         */
+        let messageString = try message.utf8String()
+        
+        shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[tagger: \(tagger)]"
+    }
+    
+    init(json: Object) throws {
+        try self.init(
+            object: try json ~> "object",
+            type: try json ~> "type",
+            tag: try json ~> "tag",
+            tagger: json ~> "tagger",
+            message: try ((json ~> "message") as String).fromBase64()
+        )
+    }
+
+    var object: Object {
+        return [
+            "object": _object,
+            "type": type,
+            "tag": tag,
+            "tagger": tagger,
+            "message": message.toBase64()
+        ]
+    }
+}
