@@ -72,12 +72,12 @@ struct CommitInfo: Jsonable {
         /**
             Create a human-readable display
          */
-        messageString = (try? message.utf8String()) ?? "message decoding error"
+        messageString = (try? message.utf8String().trimmingCharacters(in: CharacterSet.newlines)) ?? "message decoding error"
         
         if author == committer {
-            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(author)]"
+            shortDisplay = "\(messageString) [\(author)]"
         } else {
-            shortDisplay = "\(messageString.trimmingCharacters(in: CharacterSet.newlines))\n[author: \(author)]\n[committer: \(committer)]"
+            shortDisplay = "\(messageString) [\(author)]\n[committer: \(committer)]"
         }
     }
     

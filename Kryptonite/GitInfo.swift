@@ -7,6 +7,7 @@
 //
 
 import JSON
+import PGPFormat
 
 struct InvalidGitInfo:Error{}
 
@@ -54,4 +55,38 @@ enum GitInfo:Jsonable {
             return t.shortDisplay
         }
     }    
+}
+
+typealias UserID = String
+extension String {
+    var userIdAndDateString:(userID:UserID, dateString:String) {
+        let components = self.components(separatedBy: " ")
+        let count = components.count
+
+        let emptyDate = "--"
+
+        // <name> <email> <epoch time> <timezone>
+        guard count >= 4 else {
+            return (self, emptyDate)
+        }
+        
+        // userid: <name> <email>
+        let userID = components[0 ..< (count - 2)].joined(separator: " ")
+        
+        // timeSeconds
+        guard let timeSeconds = Double(components[count - 2])
+        else {
+            return (userID, emptyDate)
+        }
+        
+        let dateString = Date(timeIntervalSince1970: timeSeconds).toShortTimeString()
+        
+        return (userID, dateString)
+    }
+}
+
+extension UserID {
+    var parseEmail:String {
+        return PGPFormat.UserID(content: self).email ?? self
+    }
 }

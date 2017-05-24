@@ -19,6 +19,7 @@ struct TagInfo: Jsonable {
     
 
     // computed properties
+    let objectShortHash:String
     let messageString:String
     let data:Data
     let shortDisplay:String
@@ -74,10 +75,10 @@ struct TagInfo: Jsonable {
         guard object.characters.count >= 7 else {
             throw InvalidTagInfo()
         }
-        let objectShort = object.substring(to: object.index(object.startIndex, offsetBy: 7))
+        objectShortHash = object.substring(to: object.index(object.startIndex, offsetBy: 7))
         messageString = (try? message.utf8String()) ?? "message decoding error"
         
-        shortDisplay = "[\(self.tag) \(objectShort)] \(messageString.trimmingCharacters(in: CharacterSet.newlines))"
+        shortDisplay = "[\(self.tag) \(objectShortHash)] \(messageString.trimmingCharacters(in: CharacterSet.newlines))"
     }
     
     init(json: Object) throws {

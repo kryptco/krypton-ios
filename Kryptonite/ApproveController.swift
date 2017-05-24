@@ -19,7 +19,6 @@ class ApproveController:UIViewController {
 
     
     @IBOutlet weak var deviceLabel:UILabel!
-    @IBOutlet weak var commandLabel:UILabel!
     
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var arcView:UIView!
@@ -34,6 +33,12 @@ class ApproveController:UIViewController {
     var session:Session?
     
     var isEnabled = true
+    
+    var defaultCategory = "signature"
+    
+    var category:String {
+        return defaultCategory
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,13 +58,6 @@ class ApproveController:UIViewController {
             deviceLabel.text = session.pairing.displayName.uppercased()
         }
         
-        if let sshSign = request?.sign {
-            commandLabel.text = sshSign.display
-        } else if let gitSign = request?.gitSign {
-            commandLabel.text = gitSign.git.shortDisplay
-        } else {
-            commandLabel.text = "Unknown"
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,7 +130,7 @@ class ApproveController:UIViewController {
                 }
         }
 
-        Analytics.postEvent(category: "signature", action: "foreground approve", label: "once")
+        Analytics.postEvent(category: category, action: "foreground approve", label: "once")
 
     }
     
@@ -186,7 +184,7 @@ class ApproveController:UIViewController {
             }
         }
 
-        Analytics.postEvent(category: "signature", action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
+        Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
 
     }
     
@@ -230,7 +228,7 @@ class ApproveController:UIViewController {
             }
         }
         
-        Analytics.postEvent(category: "signature", action: "foreground reject")
+        Analytics.postEvent(category: category, action: "foreground reject")
         
     }
     
@@ -266,7 +264,7 @@ class ApproveController:UIViewController {
         }
         
         let errorLabel = HostMistmatchError.isMismatchErrorString(err: errorMessage) ? "host mistmatch" : "crypto error"
-        Analytics.postEvent(category: "signature", action: "failed foreground approve", label: errorLabel)
+        Analytics.postEvent(category: category, action: "failed foreground approve", label: errorLabel)
     }
     
     func animateDismiss(allowed:Bool = false) {
@@ -280,3 +278,118 @@ class ApproveController:UIViewController {
         })
     }
 }
+
+class SSHApproveController:ApproveController {
+    
+    @IBOutlet weak var commandLabel:UILabel!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let sshSign = request?.sign {
+            commandLabel.text = sshSign.display
+        } else {
+            commandLabel.text = "Unknown"
+        }
+    }
+
+}
+
+class CommitApproveController:ApproveController {
+    
+    @IBOutlet weak var messageLabel:UILabel!
+    @IBOutlet weak var authorLabel:UILabel!
+    @IBOutlet weak var authorDateLabel:UILabel!
+    
+    @IBOutlet weak var committerLabel:UILabel!
+
+    override var category:String {
+        return "git-commit-signtaure"
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let gitSign = request?.gitSign else {
+            clear()
+            return
+        }
+        
+        switch gitSign.git {
+        case .commit(let commit):
+            messageLabel.text = commit.messageString
+            
+            if commit.author == commit.committer {
+                let (author, date) = commit.author.userIdAndDateString
+                authorLabel.text = author
+                authorDateLabel.text = date
+                committerLabel.text = ""
+            } else {
+                let (author, _) = commit.author.userIdAndDateString
+                let (committer, committerDate) = commit.committer.userIdAndDateString
+
+                authorLabel.text = "A: " + author
+                committerLabel.text = "C: " + committer
+                authorDateLabel.text = committerDate
+            }
+            
+        
+            
+        default:
+            clear()
+            return
+        }
+
+    }
+
+    func clear() {
+        messageLabel.text = "--"
+        authorLabel.text = "--"
+        authorDateLabel.text = "--"
+        committerLabel.text = "--"
+    }
+
+}
+
+class TagApproveController:ApproveController {
+    
+    @IBOutlet weak var messageLabel:UILabel!
+    @IBOutlet weak var objectHashLabel:UILabel!
+    @IBOutlet weak var tagLabel:UILabel!
+    @IBOutlet weak var taggerLabel:UILabel!
+    @IBOutlet weak var taggerDate:UILabel!
+    
+    override var category:String {
+        return "git-tag-signtaure"
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let gitSign = request?.gitSign else {
+            clear()
+            return
+        }
+        
+        switch gitSign.git {
+        case .tag(let _):
+            break
+            
+        default:
+            clear()
+            return
+        }
+        
+    }
+    
+    func clear() {
+        messageLabel.text = "--"
+        objectHashLabel.text = "--"
+        tagLabel.text = "--"
+        taggerLabel.text = "--"
+        taggerDate.text = "--"
+    }
+    
+}
+
+

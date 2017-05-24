@@ -9,6 +9,23 @@
 import Foundation
 import UIKit
 
+extension Request {
+    var approveController:ApproveController? {
+        if let _ = self.sign {
+            return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SSHApproveController") as? SSHApproveController
+        } else if let gitSign = self.gitSign {
+            switch gitSign.git {
+            case .commit:
+                return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
+            default:
+                return nil
+            }
+        }
+        
+        return nil
+    }
+}
+
 extension UIViewController {
     
     
@@ -18,12 +35,16 @@ extension UIViewController {
         Policy.removePendingAuthorization(session: session, request: request)
         
         // proceed to show approval request
-        let approvalController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController")
+        guard let approvalController = request.approveController else {
+            log("nil approve controller", .error)
+            return
+        }
+        
         approvalController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         approvalController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
-        (approvalController as? ApproveController)?.session = session
-        (approvalController as? ApproveController)?.request = request
+        approvalController.session = session
+        approvalController.request = request
         
         dispatchMain {
             if self.presentedViewController is AutoApproveController {
