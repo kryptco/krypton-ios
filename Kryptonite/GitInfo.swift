@@ -57,9 +57,9 @@ enum GitInfo:Jsonable {
     }    
 }
 
-typealias UserID = String
+typealias GitUserID = String
 extension String {
-    var userIdAndDateString:(userID:UserID, dateString:String) {
+    var userIdAndDateString:(userID:GitUserID, dateString:String) {
         let components = self.components(separatedBy: " ")
         let count = components.count
 
@@ -85,7 +85,7 @@ extension String {
     }
 }
 
-extension UserID {
+extension GitUserID {
     var parseEmail:String {
         return PGPFormat.UserID(content: self).email ?? self
     }

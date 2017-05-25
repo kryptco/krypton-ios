@@ -76,7 +76,7 @@ struct TagInfo: Jsonable {
             throw InvalidTagInfo()
         }
         objectShortHash = object.substring(to: object.index(object.startIndex, offsetBy: 7))
-        messageString = (try? message.utf8String()) ?? "message decoding error"
+        messageString = (try? message.utf8String().trimmingCharacters(in: CharacterSet.newlines)) ?? "message decoding error"
         
         shortDisplay = "[\(self.tag) \(objectShortHash)] \(messageString.trimmingCharacters(in: CharacterSet.newlines))"
     }

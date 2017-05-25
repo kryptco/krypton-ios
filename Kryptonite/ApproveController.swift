@@ -372,8 +372,14 @@ class TagApproveController:ApproveController {
         }
         
         switch gitSign.git {
-        case .tag(let _):
-            break
+        case .tag(let tag):
+            
+            messageLabel.text = tag.messageString
+            objectHashLabel.text = tag.objectShortHash
+            tagLabel.text = tag.tag
+            let (tagger, date) = tag.tagger.userIdAndDateString
+            taggerLabel.text = tagger
+            taggerDate.text = date
             
         default:
             clear()

@@ -17,8 +17,8 @@ extension Request {
             switch gitSign.git {
             case .commit:
                 return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
-            default:
-                return nil
+            case .tag:
+                return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TagApproveController") as? TagApproveController
             }
         }
         

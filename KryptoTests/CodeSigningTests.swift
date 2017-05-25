@@ -78,7 +78,7 @@ class CodeSigningTests: XCTestCase {
             let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
             
             let publicKey = try PGPFormat.PublicKey(packet: packets[0])
-            let userID = try UserID(packet: packets[1])
+            let userID = try PGPFormat.UserID(packet: packets[1])
             let signature = try Signature(packet: packets[2])
             
             var pubKeyToSign = try SignedPublicKeyIdentity(publicKey: publicKey, userID: userID, hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
@@ -135,7 +135,7 @@ class CodeSigningTests: XCTestCase {
             let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
             
             let publicKey = try PGPFormat.PublicKey(packet: packets[0])
-            let userID = try UserID(packet: packets[1])
+            let userID = try PGPFormat.UserID(packet: packets[1])
             let signature = try Signature(packet: packets[2])
             
             var pubKeyToSign = try SignedPublicKeyIdentity(publicKey: publicKey, userID: userID, hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
@@ -179,7 +179,7 @@ class CodeSigningTests: XCTestCase {
     func testComputeCommitHash() {
         do  {
             let packetData = try ("iF4EABYKAAYFAlkkmD8ACgkQ4eT0x9ceFp1gNQD+LWiJFax8iQqgr0yJ1P7JFGvMwuZc8r05h6U+X+lyKYEBAK939lEX1rvBmcetftVbRlOMX5oQZwBLt/NJh+nQ3ssC").fromBase64()
-            let sigPackets = try [Packet](data: packetData)
+            let sigPackets = try Array<PGPFormat.Packet>(data: packetData)
             let commitInfo = try CommitInfo(tree: "2c4df4a89ac5b0b8b21fd2aad4d9b19cd91e7049",
                                         parent: "1cd97d0545a25c578e3f4da5283106606276eadf",
                                         author: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
