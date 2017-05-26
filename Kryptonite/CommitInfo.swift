@@ -73,11 +73,15 @@ struct CommitInfo: Jsonable {
             Create a human-readable display
          */
         messageString = (try? message.utf8String().trimmingCharacters(in: CharacterSet.newlines)) ?? "message decoding error"
-        
-        if author == committer {
-            shortDisplay = "\(messageString) [\(author)]"
+
+        if let object = parent {
+            guard object.characters.count >= 7 else {
+                throw InvalidTagInfo()
+            }
+            let objectShortHash = object.substring(to: object.index(object.startIndex, offsetBy: 7))
+            shortDisplay = "[commit on \(objectShortHash)] \(messageString)"
         } else {
-            shortDisplay = "\(messageString) [\(author)]\n[committer: \(committer)]"
+            shortDisplay = "[first commit] \(messageString)"
         }
     }
     

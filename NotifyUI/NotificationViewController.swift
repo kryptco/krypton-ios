@@ -187,15 +187,14 @@ class CommitController:UIViewController {
         
         messageLabel.text = commit.messageString
         
-        if commit.author == commit.committer {
-            let (author, date) = commit.author.userIdAndDateString
+        let (author, date) = commit.author.userIdAndDateString
+        let (committer, committerDate) = commit.committer.userIdAndDateString
+        
+        if author == committer {
             authorLabel.text = author
             authorDateLabel.text = date
             committerLabel.text = ""
-        } else {
-            let (author, _) = commit.author.userIdAndDateString
-            let (committer, committerDate) = commit.committer.userIdAndDateString
-            
+        } else {            
             authorLabel.text = "A: " + author
             committerLabel.text = "C: " + committer
             authorDateLabel.text = committerDate
