@@ -82,6 +82,7 @@ class NotificationService: UNNotificationServiceExtension {
                                 } else {
                                     content.title = "Approved request from \(session.pairing.displayName)."
                                 }
+                                content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
                             }
                             // not approved
                             else {
@@ -91,13 +92,19 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             if let error = errorMessage {
                                 content.body = error
-                            } else if let signRequest = unsealedRequest.sign {
+                            }
+                            else if let signRequest = unsealedRequest.sign {
                                 content.body = signRequest.display
-                                content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": unsealedRequest.object]
-                            } else if let gitSignRequest = unsealedRequest.gitSign
+                                content.userInfo = ["session_display": session.pairing.displayName,
+                                                    "session_id": session.id,
+                                                    "request": unsealedRequest.object]
+                            }
+                            else if let gitSignRequest = unsealedRequest.gitSign
                             {
                                 content.body = gitSignRequest.git.shortDisplay
-                                content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": unsealedRequest.object]
+                                content.userInfo = ["session_display": session.pairing.displayName,
+                                                    "session_id": session.id,
+                                                    "request": unsealedRequest.object]
                             }
 
                             
@@ -129,7 +136,7 @@ class NotificationService: UNNotificationServiceExtension {
                             let currentContent = UNMutableNotificationContent()
                             currentContent.title = noteContent.title
                             currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                            currentContent.body = noteContent.body
+                            currentContent.body = "test1"
                             currentContent.userInfo = noteContent.userInfo
                             currentContent.sound = UNNotificationSound.default()
                             
@@ -157,7 +164,7 @@ class NotificationService: UNNotificationServiceExtension {
                                 let currentContent = UNMutableNotificationContent()
                                 currentContent.title = noteContent.title
                                 currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                                currentContent.body = noteContent.body
+                                currentContent.body = "test2"
                                 currentContent.userInfo = noteContent.userInfo
                                 currentContent.sound = UNNotificationSound.default()
                                 

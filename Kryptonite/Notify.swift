@@ -141,6 +141,7 @@ class Notify {
             content.title = noteTitle
             content.subtitle = noteSubtitle
             content.body = noteBody
+            content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
 
@@ -192,6 +193,7 @@ class Notify {
             notification.alertTitle = noteTitle
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
+            notification.category = Policy.autoAuthorizedCategoryIdentifier
             
             UIApplication.shared.presentLocalNotificationNow(notification)
         }

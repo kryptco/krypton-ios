@@ -36,6 +36,7 @@ class Policy {
     //static var pendingAuthorizations:[PendingAuthorization] = []
     
     // Category Identifiers
+    static let autoAuthorizedCategoryIdentifier = "auto_authorized_identifier"
     static let authorizeCategoryIdentifier = "authorize_identifier"
     
     enum ActionIdentifier:String {

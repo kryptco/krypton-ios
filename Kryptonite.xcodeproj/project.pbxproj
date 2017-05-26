@@ -184,6 +184,8 @@
 		FA8B543A1ED775C700891161 /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D003DE31D90EBB10085ED21 /* Sodium.framework */; };
 		FA8B543E1ED7794D00891161 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA8B543F1ED7887800891161 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
+		FA8B54401ED7BD0900891161 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
+		FA8B54411ED7BD1200891161 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
@@ -447,13 +449,6 @@
 			remoteGlobalIDString = FA49F7841D9B6B3200372556;
 			remoteInfo = LastCommand;
 		};
-		FAB517A91E54D59A0032DD47 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FA1D83F61DCBCFDF00E786E1;
-			remoteInfo = JSON;
-		};
 		FAC561361E6F677000150FB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
@@ -483,13 +478,6 @@
 			remoteInfo = "AwesomeCache-tvOS";
 		};
 		FAC561401E6F678500150FB2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4DC91F971A7C54B200C81E10;
-			remoteInfo = "AwesomeCache-iOS";
-		};
-		FAC561421E6F67B300150FB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
 			proxyType = 1;
@@ -818,6 +806,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8B54411ED7BD1200891161 /* AwesomeCache.framework in Frameworks */,
+				FA8B54401ED7BD0900891161 /* JSON.framework in Frameworks */,
 				FAFF1E821ED67FB80063C44C /* UserNotificationsUI.framework in Frameworks */,
 				FA12EAB51ECFA96C001603BF /* PGPFormat.framework in Frameworks */,
 				FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */,
@@ -1370,9 +1360,9 @@
 				FA4A84C31E8D5A040082274A /* PBXBuildRule */,
 			);
 			dependencies = (
+				FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */,
 				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,
 				FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */,
-				FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */,
 				FAC561411E6F678500150FB2 /* PBXTargetDependency */,
 				FAFF1E931ED6816B0063C44C /* PBXTargetDependency */,
 			);
@@ -1417,8 +1407,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FAC561431E6F67B300150FB2 /* PBXTargetDependency */,
-				FAB517AA1E54D59A0032DD47 /* PBXTargetDependency */,
 			);
 			name = Notify;
 			productName = Notify;
@@ -2298,20 +2286,10 @@
 			target = FA49F7841D9B6B3200372556 /* LastCommand */;
 			targetProxy = FA49F78F1D9B6B3300372556 /* PBXContainerItemProxy */;
 		};
-		FAB517AA1E54D59A0032DD47 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JSON;
-			targetProxy = FAB517A91E54D59A0032DD47 /* PBXContainerItemProxy */;
-		};
 		FAC561411E6F678500150FB2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "AwesomeCache-iOS";
 			targetProxy = FAC561401E6F678500150FB2 /* PBXContainerItemProxy */;
-		};
-		FAC561431E6F67B300150FB2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "AwesomeCache-iOS";
-			targetProxy = FAC561421E6F67B300150FB2 /* PBXContainerItemProxy */;
 		};
 		FAEE04A01D74BCC3002A7AFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

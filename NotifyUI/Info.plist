@@ -25,7 +25,10 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>UNNotificationExtensionCategory</key>
-			<string>authorize_identifier</string>
+			<array>
+				<string>auto_authorized_identifier</string>
+				<string>authorize_identifier</string>
+			</array>
 			<key>UNNotificationExtensionInitialContentSizeRatio</key>
 			<real>0.5</real>
 			<key>UNNotificationExtensionDefaultContentHidden</key>
