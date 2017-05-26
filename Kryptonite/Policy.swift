@@ -246,6 +246,8 @@ class Policy {
                 
                 if let errorMessage = resp.sign?.error {
                     Policy.notifyUser(errorMessage: errorMessage, session: session)
+                } else if let errorMessage = resp.gitSign?.error {
+                    Policy.notifyUser(errorMessage: errorMessage, session: session)
                 } else {
                     Policy.notifyUser(session: session, request: request)
                 }                

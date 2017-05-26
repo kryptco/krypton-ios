@@ -231,10 +231,21 @@ class Notify {
 
 }
 
+extension Request {
+    var notificationIdentifer:String {
+        if let sign = self.sign {
+            return sign.display
+        } else if let gitSign = self.gitSign {
+            return gitSign.git.shortDisplay
+        } else {
+            return self.id
+        }
+    }
+}
 typealias RequestNotificationIdentifier = String
 extension RequestNotificationIdentifier {
     init(request:Request, session:Session) {
-        self = "\(session.id)_\(String(describing: request.sign?.display))"
+        self = "\(session.id)_\(request.notificationIdentifer)"
     }
     
     func with(count:Int) -> String {

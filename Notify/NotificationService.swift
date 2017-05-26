@@ -78,7 +78,10 @@ class NotificationService: UNNotificationServiceExtension {
                             if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
                                 if let err = resp.sign?.error {
                                     errorMessage = err
-                                    content.title = "Failed approval for \(session.pairing.displayName)."
+                                    content.title = "Failed SSH approval for \(session.pairing.displayName)."
+                                } else if let err = resp.gitSign?.error {
+                                    errorMessage = err
+                                    content.title = "Failed Git approval for \(session.pairing.displayName)."
                                 } else {
                                     content.title = "Approved request from \(session.pairing.displayName)."
                                 }

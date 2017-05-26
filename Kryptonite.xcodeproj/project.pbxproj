@@ -449,6 +449,13 @@
 			remoteGlobalIDString = FA49F7841D9B6B3200372556;
 			remoteInfo = LastCommand;
 		};
+		FA8B54441ED7F70700891161 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF1E61E1E031BB9003CBEA2;
+			remoteInfo = Notify;
+		};
 		FAC561361E6F677000150FB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
@@ -477,26 +484,12 @@
 			remoteGlobalIDString = 4D81D48F1C416F6F009A66A7;
 			remoteInfo = "AwesomeCache-tvOS";
 		};
-		FAC561401E6F678500150FB2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4DC91F971A7C54B200C81E10;
-			remoteInfo = "AwesomeCache-iOS";
-		};
 		FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FA8141351D70B0F4004FE58C;
 			remoteInfo = krSSH;
-		};
-		FAF1E6241E031BB9003CBEA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FAF1E61E1E031BB9003CBEA2;
-			remoteInfo = Notify;
 		};
 		FAFDE8D71DD1000F00C87C86 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -511,13 +504,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = FA1D84001DCBCFDF00E786E1;
 			remoteInfo = JSONTests;
-		};
-		FAFDE8EB1DD1003100C87C86 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FA1D83F61DCBCFDF00E786E1;
-			remoteInfo = JSON;
 		};
 		FAFF1E921ED6816B0063C44C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1360,11 +1346,8 @@
 				FA4A84C31E8D5A040082274A /* PBXBuildRule */,
 			);
 			dependencies = (
-				FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */,
-				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,
-				FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */,
-				FAC561411E6F678500150FB2 /* PBXTargetDependency */,
 				FAFF1E931ED6816B0063C44C /* PBXTargetDependency */,
+				FA49F7901D9B6B3300372556 /* PBXTargetDependency */,
 			);
 			name = Kryptonite;
 			productName = krSSH;
@@ -1417,15 +1400,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAFF1E951ED6816B0063C44C /* Build configuration list for PBXNativeTarget "NotifyUI" */;
 			buildPhases = (
-				FA8B541B1ED7748500891161 /* CommonCrypto */,
-				FA8B54371ED7752300891161 /* compile-sshwire */,
+				FA8B54471ED7F89200891161 /* Common Crypto */,
 				FAFF1E831ED6816B0063C44C /* Sources */,
+				FA8B54461ED7F84B00891161 /* Build Bump */,
 				FAFF1E841ED6816B0063C44C /* Frameworks */,
 				FAFF1E851ED6816B0063C44C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FA8B54451ED7F70700891161 /* PBXTargetDependency */,
 			);
 			name = NotifyUI;
 			productName = NotifyUI;
@@ -1550,8 +1534,8 @@
 			targets = (
 				FA8141351D70B0F4004FE58C /* Kryptonite */,
 				FA49F7841D9B6B3200372556 /* LastCommand */,
-				FAF1E61E1E031BB9003CBEA2 /* Notify */,
 				FAFF1E861ED6816B0063C44C /* NotifyUI */,
+				FAF1E61E1E031BB9003CBEA2 /* Notify */,
 				FAEE04991D74BCC3002A7AFD /* KryptoTests */,
 			);
 		};
@@ -1899,33 +1883,33 @@
 			shellPath = /bin/sh;
 			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"\n";
 		};
-		FA8B541B1ED7748500891161 /* CommonCrypto */ = {
+		FA8B54461ED7F84B00891161 /* Build Bump */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = CommonCrypto;
+			name = "Build Bump";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/NotifyUI/Info.plist\"\n";
+		};
+		FA8B54471ED7F89200891161 /* Common Crypto */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Common Crypto";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
-		};
-		FA8B54371ED7752300891161 /* compile-sshwire */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "compile-sshwire";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
 		FAB28E8B1D93122400B61E6B /* Set Hash and Build */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2286,25 +2270,15 @@
 			target = FA49F7841D9B6B3200372556 /* LastCommand */;
 			targetProxy = FA49F78F1D9B6B3300372556 /* PBXContainerItemProxy */;
 		};
-		FAC561411E6F678500150FB2 /* PBXTargetDependency */ = {
+		FA8B54451ED7F70700891161 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "AwesomeCache-iOS";
-			targetProxy = FAC561401E6F678500150FB2 /* PBXContainerItemProxy */;
+			target = FAF1E61E1E031BB9003CBEA2 /* Notify */;
+			targetProxy = FA8B54441ED7F70700891161 /* PBXContainerItemProxy */;
 		};
 		FAEE04A01D74BCC3002A7AFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FA8141351D70B0F4004FE58C /* Kryptonite */;
 			targetProxy = FAEE049F1D74BCC3002A7AFD /* PBXContainerItemProxy */;
-		};
-		FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FAF1E61E1E031BB9003CBEA2 /* Notify */;
-			targetProxy = FAF1E6241E031BB9003CBEA2 /* PBXContainerItemProxy */;
-		};
-		FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JSON;
-			targetProxy = FAFDE8EB1DD1003100C87C86 /* PBXContainerItemProxy */;
 		};
 		FAFF1E931ED6816B0063C44C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
