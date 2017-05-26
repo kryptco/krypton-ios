@@ -34,7 +34,7 @@ enum GitInfo:Jsonable {
         case .commit(let c):
             return ["commit": c.object]
         case .tag(let t):
-            return ["tag": t._object]
+            return ["tag": t.object]
         }
     }
     

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Notify</string>
+	<string>NotifyUI</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,25 +17,29 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.1</string>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>522</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string>1</string>
 	<key>NSExtension</key>
 	<dict>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>UNNotificationExtensionCategory</key>
+			<string>authorize_identifier</string>
+			<key>UNNotificationExtensionInitialContentSizeRatio</key>
+			<real>0.5</real>
+			<key>UNNotificationExtensionDefaultContentHidden</key>
+			<true/>
+		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.usernotifications.service</string>
-		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).NotificationService</string>
+		<string>com.apple.usernotifications.content-extension</string>
 	</dict>
-	<key>UIBackgroundModes</key>
+	<key>UIAppFonts</key>
 	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-		<string>bluetooth-central</string>
+		<string>SourceCodePro-Regular</string>
+		<string>SourceCodePro-Bold</string>
 	</array>
 </dict>
 </plist>

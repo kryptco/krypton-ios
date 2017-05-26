@@ -84,7 +84,7 @@ class Notify {
                     content.subtitle = noteSubtitle
                     content.body = noteBody
                     content.sound = UNNotificationSound.default()
-                    content.userInfo = ["session_id": session.id, "request": request.object]
+                    content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
                     content.categoryIdentifier = Policy.authorizeCategoryIdentifier
                     content.threadIdentifier = request.id
                     
@@ -108,7 +108,7 @@ class Notify {
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.category = Policy.authorizeCategory.identifier
-            notification.userInfo = ["session_id": session.id, "request": request.object]
+            notification.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
             
             UIApplication.shared.presentLocalNotificationNow(notification)
         }
@@ -142,7 +142,7 @@ class Notify {
             content.subtitle = noteSubtitle
             content.body = noteBody
             content.sound = UNNotificationSound.default()
-            content.userInfo = ["session_id": session.id, "request": request.object]
+            content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
 
             
             // check grouping index for same notification

@@ -149,6 +149,41 @@
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
 		FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
+		FA8B540C1ED73C7E00891161 /* SourceCodePro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */; };
+		FA8B540D1ED73C7E00891161 /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
+		FA8B540E1ED773EE00891161 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
+		FA8B540F1ED773EE00891161 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */; };
+		FA8B54101ED773EE00891161 /* CommitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */; };
+		FA8B54111ED773EE00891161 /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */; };
+		FA8B54121ED773EE00891161 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
+		FA8B54131ED773EE00891161 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F21D79E413007D1B3A /* Response.swift */; };
+		FA8B54141ED773EE00891161 /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
+		FA8B54151ED773EE00891161 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
+		FA8B54161ED773EE00891161 /* KnownHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */; };
+		FA8B54171ED773EE00891161 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
+		FA8B54181ED7740700891161 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
+		FA8B54191ED7740C00891161 /* PGPFormat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA12EAA41ECFA917001603BF /* PGPFormat.framework */; };
+		FA8B541A1ED7745900891161 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
+		FA8B54281ED774C100891161 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
+		FA8B54291ED774C100891161 /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B981E64750E00A583AB /* RSAKeyPair.swift */; };
+		FA8B542A1ED774C100891161 /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */; };
+		FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* Keypair+SSHFormat.swift */; };
+		FA8B542C1ED774C100891161 /* Keypair+PGPFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */; };
+		FA8B542D1ED774C100891161 /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Wrap.swift */; };
+		FA8B542E1ED774C100891161 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
+		FA8B542F1ED774C100891161 /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
+		FA8B54301ED774C100891161 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
+		FA8B54311ED774C100891161 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
+		FA8B54321ED774C100891161 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
+		FA8B54331ED774C100891161 /* SSHUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33541EC186DC003EC6C0 /* SSHUtil.swift */; };
+		FA8B54341ED774F700891161 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
+		FA8B54351ED774F700891161 /* String+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA4B171D9C21BE0057A666 /* String+User.swift */; };
+		FA8B54361ED7750B00891161 /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15EB481DA5C6CC00BED16C /* Properties.swift */; };
+		FA8B54381ED7755000891161 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
+		FA8B54391ED7756200891161 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
+		FA8B543A1ED775C700891161 /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D003DE31D90EBB10085ED21 /* Sodium.framework */; };
+		FA8B543E1ED7794D00891161 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
+		FA8B543F1ED7887800891161 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
@@ -286,6 +321,12 @@
 		FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Wrap.swift */; };
 		FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
+		FAFF1E821ED67FB80063C44C /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFF1E811ED67FB80063C44C /* UserNotificationsUI.framework */; };
+		FAFF1E891ED6816B0063C44C /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFF1E881ED6816B0063C44C /* UserNotifications.framework */; };
+		FAFF1E8A1ED6816B0063C44C /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFF1E811ED67FB80063C44C /* UserNotificationsUI.framework */; };
+		FAFF1E8D1ED6816B0063C44C /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF1E8C1ED6816B0063C44C /* NotificationViewController.swift */; };
+		FAFF1E901ED6816B0063C44C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAFF1E8E1ED6816B0063C44C /* MainInterface.storyboard */; };
+		FAFF1E941ED6816B0063C44C /* NotifyUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FAFF1E871ED6816B0063C44C /* NotifyUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -490,6 +531,13 @@
 			remoteGlobalIDString = FA1D83F61DCBCFDF00E786E1;
 			remoteInfo = JSON;
 		};
+		FAFF1E921ED6816B0063C44C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAFF1E861ED6816B0063C44C;
+			remoteInfo = NotifyUI;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -500,6 +548,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				FA49F7911D9B6B3300372556 /* LastCommand.appex in Embed App Extensions */,
+				FAFF1E941ED6816B0063C44C /* NotifyUI.appex in Embed App Extensions */,
 				FAF1E6261E031BB9003CBEA2 /* Notify.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -632,6 +681,8 @@
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FA8523C91DBFDA5200D465D2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		FA8B543B1ED775FF00891161 /* NotifyUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotifyUI-Bridging-Header.h"; sourceTree = "<group>"; };
+		FA8B543D1ED7780500891161 /* NotifyUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifyUI.entitlements; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
@@ -716,6 +767,12 @@
 		FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Seal.swift"; sourceTree = "<group>"; };
 		FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = JSON/JSON.xcodeproj; sourceTree = "<group>"; };
 		FAFE546E1D7B9C1400391FDD /* Wrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wrap.swift; sourceTree = "<group>"; };
+		FAFF1E811ED67FB80063C44C /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		FAFF1E871ED6816B0063C44C /* NotifyUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotifyUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAFF1E881ED6816B0063C44C /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		FAFF1E8C1ED6816B0063C44C /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		FAFF1E8F1ED6816B0063C44C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		FAFF1E911ED6816B0063C44C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -761,6 +818,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFF1E821ED67FB80063C44C /* UserNotificationsUI.framework in Frameworks */,
 				FA12EAB51ECFA96C001603BF /* PGPFormat.framework in Frameworks */,
 				FAAE81A51E57734B002A9AE6 /* AWSSQS.framework in Frameworks */,
 				FAAE81A61E57734B002A9AE6 /* AWSCore.framework in Frameworks */,
@@ -769,6 +827,19 @@
 				FAB517C61E54E20E0032DD47 /* Sodium.framework in Frameworks */,
 				FAB517B01E54D5DD0032DD47 /* Security.framework in Frameworks */,
 				8DC38BC61E689A12007445B4 /* libsshwire.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAFF1E841ED6816B0063C44C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA8B543A1ED775C700891161 /* Sodium.framework in Frameworks */,
+				FA8B54191ED7740C00891161 /* PGPFormat.framework in Frameworks */,
+				FA8B54181ED7740700891161 /* JSON.framework in Frameworks */,
+				FAFF1E8A1ED6816B0063C44C /* UserNotificationsUI.framework in Frameworks */,
+				FA8B541A1ED7745900891161 /* libsshwire.a in Frameworks */,
+				FAFF1E891ED6816B0063C44C /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -992,6 +1063,7 @@
 				FA1682521D774C8000A7ED53 /* Lib */,
 				FA49F7881D9B6B3300372556 /* LastCommand */,
 				FAF1E6201E031BB9003CBEA2 /* Notify */,
+				FAFF1E8B1ED6816B0063C44C /* NotifyUI */,
 				FAEE04871D7368C1002A7AFD /* Frameworks */,
 				FAEE048F1D736AE3002A7AFD /* Other */,
 				FA8141371D70B0F4004FE58C /* Products */,
@@ -1005,6 +1077,7 @@
 				FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */,
 				FA49F7851D9B6B3200372556 /* LastCommand.appex */,
 				FAF1E61F1E031BB9003CBEA2 /* Notify.appex */,
+				FAFF1E871ED6816B0063C44C /* NotifyUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1145,6 +1218,7 @@
 		FAEE04871D7368C1002A7AFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAFF1E811ED67FB80063C44C /* UserNotificationsUI.framework */,
 				FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */,
 				FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */,
 				FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */,
@@ -1162,6 +1236,7 @@
 				FA8141501D714203004FE58C /* Security.framework */,
 				8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */,
 				FA49F7861D9B6B3300372556 /* NotificationCenter.framework */,
+				FAFF1E881ED6816B0063C44C /* UserNotifications.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1242,6 +1317,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FAFF1E8B1ED6816B0063C44C /* NotifyUI */ = {
+			isa = PBXGroup;
+			children = (
+				FA8B543D1ED7780500891161 /* NotifyUI.entitlements */,
+				FAFF1E8C1ED6816B0063C44C /* NotificationViewController.swift */,
+				FAFF1E8E1ED6816B0063C44C /* MainInterface.storyboard */,
+				FAFF1E911ED6816B0063C44C /* Info.plist */,
+				FA8B543B1ED775FF00891161 /* NotifyUI-Bridging-Header.h */,
+			);
+			path = NotifyUI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1287,6 +1374,7 @@
 				FAFDE8EC1DD1003100C87C86 /* PBXTargetDependency */,
 				FAF1E6251E031BB9003CBEA2 /* PBXTargetDependency */,
 				FAC561411E6F678500150FB2 /* PBXTargetDependency */,
+				FAFF1E931ED6816B0063C44C /* PBXTargetDependency */,
 			);
 			name = Kryptonite;
 			productName = krSSH;
@@ -1337,13 +1425,32 @@
 			productReference = FAF1E61F1E031BB9003CBEA2 /* Notify.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		FAFF1E861ED6816B0063C44C /* NotifyUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAFF1E951ED6816B0063C44C /* Build configuration list for PBXNativeTarget "NotifyUI" */;
+			buildPhases = (
+				FA8B541B1ED7748500891161 /* CommonCrypto */,
+				FA8B54371ED7752300891161 /* compile-sshwire */,
+				FAFF1E831ED6816B0063C44C /* Sources */,
+				FAFF1E841ED6816B0063C44C /* Frameworks */,
+				FAFF1E851ED6816B0063C44C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotifyUI;
+			productName = NotifyUI;
+			productReference = FAFF1E871ED6816B0063C44C /* NotifyUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		FA81412E1D70B0F4004FE58C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = KryptCo;
 				TargetAttributes = {
@@ -1406,6 +1513,16 @@
 							};
 						};
 					};
+					FAFF1E861ED6816B0063C44C = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = W7AMYM5LPN;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = FA8141311D70B0F4004FE58C /* Build configuration list for PBXProject "Kryptonite" */;
@@ -1446,6 +1563,7 @@
 				FA8141351D70B0F4004FE58C /* Kryptonite */,
 				FA49F7841D9B6B3200372556 /* LastCommand */,
 				FAF1E61E1E031BB9003CBEA2 /* Notify */,
+				FAFF1E861ED6816B0063C44C /* NotifyUI */,
 				FAEE04991D74BCC3002A7AFD /* KryptoTests */,
 			);
 		};
@@ -1640,6 +1758,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FAFF1E851ED6816B0063C44C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAFF1E901ED6816B0063C44C /* MainInterface.storyboard in Resources */,
+				FA8B540D1ED73C7E00891161 /* SourceCodePro-Regular.ttf in Resources */,
+				FA8B540C1ED73C7E00891161 /* SourceCodePro-Bold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1782,6 +1910,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"\n";
+		};
+		FA8B541B1ED7748500891161 /* CommonCrypto */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = CommonCrypto;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
+		};
+		FA8B54371ED7752300891161 /* compile-sshwire */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "compile-sshwire";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
 		FAB28E8B1D93122400B61E6B /* Set Hash and Build */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2097,6 +2253,43 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FAFF1E831ED6816B0063C44C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA8B54101ED773EE00891161 /* CommitInfo.swift in Sources */,
+				FAFF1E8D1ED6816B0063C44C /* NotificationViewController.swift in Sources */,
+				FA8B54381ED7755000891161 /* Log.swift in Sources */,
+				FA8B543F1ED7887800891161 /* Resources.swift in Sources */,
+				FA8B542C1ED774C100891161 /* Keypair+PGPFormat.swift in Sources */,
+				FA8B54141ED773EE00891161 /* Pairing.swift in Sources */,
+				FA8B543E1ED7794D00891161 /* Mutex.swift in Sources */,
+				FA8B54161ED773EE00891161 /* KnownHost.swift in Sources */,
+				FA8B540F1ED773EE00891161 /* GitInfo.swift in Sources */,
+				FA8B54341ED774F700891161 /* Date+KR.swift in Sources */,
+				FA8B54121ED773EE00891161 /* HostAuth.swift in Sources */,
+				FA8B54301ED774C100891161 /* Util.swift in Sources */,
+				FA8B542E1ED774C100891161 /* Hash.swift in Sources */,
+				FA8B54111ED773EE00891161 /* TagInfo.swift in Sources */,
+				FA8B54391ED7756200891161 /* Globals.swift in Sources */,
+				FA8B54291ED774C100891161 /* RSAKeyPair.swift in Sources */,
+				FA8B54331ED774C100891161 /* SSHUtil.swift in Sources */,
+				FA8B54311ED774C100891161 /* KeychainStorage.swift in Sources */,
+				FA8B540E1ED773EE00891161 /* Request.swift in Sources */,
+				FA8B542A1ED774C100891161 /* Ed25519.swift in Sources */,
+				FA8B54131ED773EE00891161 /* Response.swift in Sources */,
+				FA8B54351ED774F700891161 /* String+User.swift in Sources */,
+				FA8B54281ED774C100891161 /* KeyPair.swift in Sources */,
+				FA8B54151ED773EE00891161 /* Session.swift in Sources */,
+				FA8B54361ED7750B00891161 /* Properties.swift in Sources */,
+				FA8B542F1ED774C100891161 /* CryptoError.swift in Sources */,
+				FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */,
+				FA8B54171ED773EE00891161 /* Version.swift in Sources */,
+				FA8B54321ED774C100891161 /* Sodium.swift in Sources */,
+				FA8B542D1ED774C100891161 /* Wrap.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2135,6 +2328,11 @@
 			name = JSON;
 			targetProxy = FAFDE8EB1DD1003100C87C86 /* PBXContainerItemProxy */;
 		};
+		FAFF1E931ED6816B0063C44C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAFF1E861ED6816B0063C44C /* NotifyUI */;
+			targetProxy = FAFF1E921ED6816B0063C44C /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2168,6 +2366,14 @@
 				FAE4959A1DBD98C400A97708 /* Base */,
 			);
 			name = Approval.storyboard;
+			sourceTree = "<group>";
+		};
+		FAFF1E8E1ED6816B0063C44C /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAFF1E8F1ED6816B0063C44C /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2485,6 +2691,55 @@
 			};
 			name = Release;
 		};
+		FAFF1E961ED6816B0063C44C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = NotifyUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.NotifyUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "NotifyUI/NotifyUI-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		FAFF1E971ED6816B0063C44C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = NotifyUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.NotifyUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "NotifyUI/NotifyUI-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2529,6 +2784,15 @@
 			buildConfigurations = (
 				FAF1E6271E031BB9003CBEA2 /* Debug */,
 				FAF1E6281E031BB9003CBEA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAFF1E951ED6816B0063C44C /* Build configuration list for PBXNativeTarget "NotifyUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAFF1E961ED6816B0063C44C /* Debug */,
+				FAFF1E971ED6816B0063C44C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
