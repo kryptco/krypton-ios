@@ -216,18 +216,18 @@ class Silo {
                     // only place where signature should occur
                     sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
                     
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
+                    LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                 } else {
                     throw UserRejectedError()
                 }
 
             }
             catch let error as UserRejectedError {
-                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
+                LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
                 err = "\(error)"
             }
             catch let error as HostMistmatchError {
-                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
+                LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
                 err = "\(error)"
             }
             catch {
@@ -249,31 +249,33 @@ class Silo {
                     
                     //TODO: Verify key fingerprint
                     log("keyID: \(keyID.hex)")
-                    
-                    var logDisplay:String
-                    
+                                        
                     switch gitSignRequest.git {
                     case .commit(let commit):
                         
                         let asciiArmoredSig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID)
-                        sig = asciiArmoredSig.packetData.toBase64()
+                        let signature = asciiArmoredSig.packetData.toBase64()
+                        sig = signature
                         
-                        let commitHash = try commit.shortCommitHash(asciiArmoredSignature: asciiArmoredSig.toString())
-                        
-                        logDisplay = "[\(commitHash)] \(commit.messageString)"
-                        
+                        let commitHash = try commit.commitHash(asciiArmoredSignature: asciiArmoredSig.toString()).hex
+                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: signature, commitHash: commitHash, commit: commit), deviceName: session.pairing.name)
+
                     case .tag(let tag):
 
-                        sig = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
+                        let signature = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
+                        sig = signature
                         
-                        logDisplay = tag.shortDisplay
+                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: signature, tag: tag), deviceName: session.pairing.name)
                     }
                     
-                    
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: nil, signature: (sig ?? err) ?? "<err>", displayName: logDisplay), deviceName: session.pairing.name)
-                    
                 } else {
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: nil, signature: "request failed", displayName: "rejected: \(gitSignRequest.git.shortDisplay)"), deviceName: session.pairing.name)
+                    
+                    switch gitSignRequest.git {
+                    case .commit(let commit):
+                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: "", commitHash: "", commit: commit), deviceName: session.pairing.name)
+                    case .tag(let tag):
+                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: "", tag: tag), deviceName: session.pairing.name)
+                    }
 
                     throw UserRejectedError()
                 }

@@ -17,7 +17,7 @@ class LogCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func set(log:SignatureLog) {
+    func set(log:SSHSignatureLog) {
         signatureLabel.text = log.displayName
         timeLabel.text = log.date.timeAgo()
     }

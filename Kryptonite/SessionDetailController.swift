@@ -25,7 +25,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         case timed = 1
         case off = 2
     }
-    var logs:[SignatureLog] = []
+    var logs:[SSHSignatureLog] = []
     var session:Session?
     
     var timer:Timer?
