@@ -52,7 +52,7 @@ class SessionCell: UITableViewCell {
         
         
         // set the last log
-        if let lastLog = latestLogs.max(by: { $0.date < $1.date }) {
+        if let lastLog = LogManager.shared.fetchCompleteLatest(for: session.id) {
             commandLabel.text = "\(lastLog.displayName)"
             lastAccessLabel.text = lastLog.date.timeAgo()
         } else {

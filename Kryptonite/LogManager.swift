@@ -90,6 +90,25 @@ class LogManager {
         return fetchObjects(for: fetchRequest)
     }
     
+    func fetchCompleteLatest(for session:String) -> LogStatement? {
+        // find latest log
+        var latestLogs:[LogStatement] = []
+        
+        if let sshLog:SSHSignatureLog = self.fetchLatest(for: session) {
+            latestLogs.append(sshLog)
+        }
+        
+        if let commitLog:CommitSignatureLog = self.fetchLatest(for: session) {
+            latestLogs.append(commitLog)
+        }
+        
+        if let tagLog:TagSignatureLog = self.fetchLatest(for: session) {
+            latestLogs.append(tagLog)
+        }
+        
+        return latestLogs.max(by: { $0.date < $1.date })
+    }
+    
     func fetchLatest<L:LogStatement>(for session:String) -> L? {
         let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: L.entityName)
         fetchRequest.predicate = sessionEqualsPredicate(for: session)
@@ -98,6 +117,7 @@ class LogManager {
         
         return fetchObjects(for: fetchRequest).first
     }
+    
 
     private func sessionEqualsPredicate(for session:String) -> NSPredicate {
         return NSComparisonPredicate(

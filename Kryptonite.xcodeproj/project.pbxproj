@@ -267,7 +267,6 @@
 		FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
 		FACAA4BA1D8887FA000B9A01 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4B91D8887FA000B9A01 /* CoreData.framework */; };
 		FACAA4BC1D888AB9000B9A01 /* SessionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */; };
-		FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C31D897BC0000B9A01 /* LogGraph.swift */; };
 		FACAA4C61D89FEB5000B9A01 /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
 		FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFE81D77968D005D71B9 /* SessionCell.swift */; };
 		FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBEFEA1D779D6E005D71B9 /* CreateController.swift */; };
@@ -696,7 +695,6 @@
 		FACAA4B71D887C19000B9A01 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		FACAA4B91D8887FA000B9A01 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDetailController.swift; sourceTree = "<group>"; };
-		FACAA4C31D897BC0000B9A01 /* LogGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogGraph.swift; path = ../Lib/LogGraph.swift; sourceTree = "<group>"; };
 		FACAA4C51D89FEB5000B9A01 /* Policy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Policy.swift; sourceTree = "<group>"; };
 		FACBEFE81D77968D005D71B9 /* SessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCell.swift; sourceTree = "<group>"; };
 		FACBEFEA1D779D6E005D71B9 /* CreateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateController.swift; sourceTree = "<group>"; };
@@ -1026,7 +1024,6 @@
 				FACBEFE81D77968D005D71B9 /* SessionCell.swift */,
 				FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */,
 				FA61EF481D835EEB009FD899 /* LogCell.swift */,
-				FACAA4C31D897BC0000B9A01 /* LogGraph.swift */,
 			);
 			name = Devices;
 			sourceTree = "<group>";
@@ -2072,7 +2069,6 @@
 				FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
 				FAE45B9D1E64AA3E00A583AB /* Ed25519.swift in Sources */,
-				FACAA4C41D897BC0000B9A01 /* LogGraph.swift in Sources */,
 				FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
