@@ -2710,8 +2710,8 @@ Cg
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="github.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMC-hM-gr2">
-                                            <rect key="frame" x="20" y="16" width="100.5" height="33.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="github.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMC-hM-gr2">
+                                            <rect key="frame" x="20" y="16" width="271" height="33.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                             <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -2732,6 +2732,7 @@ Cg
                                     <constraints>
                                         <constraint firstItem="qMC-hM-gr2" firstAttribute="top" secondItem="1iD-KI-Cwy" secondAttribute="topMargin" constant="8" id="1HZ-au-fOM"/>
                                         <constraint firstItem="EpN-16-ihi" firstAttribute="top" secondItem="qMC-hM-gr2" secondAttribute="bottom" id="3YC-QL-RPm"/>
+                                        <constraint firstItem="C2V-dQ-diq" firstAttribute="leading" secondItem="qMC-hM-gr2" secondAttribute="trailing" constant="4" id="9du-YC-9bg"/>
                                         <constraint firstItem="qMC-hM-gr2" firstAttribute="leading" secondItem="1iD-KI-Cwy" secondAttribute="leading" constant="20" id="OuT-IA-EWP"/>
                                         <constraint firstItem="EpN-16-ihi" firstAttribute="trailing" secondItem="C2V-dQ-diq" secondAttribute="trailing" id="StB-hh-K8v"/>
                                         <constraint firstItem="EpN-16-ihi" firstAttribute="leading" secondItem="qMC-hM-gr2" secondAttribute="leading" id="XSB-YR-rfO"/>
