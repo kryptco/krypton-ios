@@ -9,11 +9,12 @@
 //
 
 import UIKit
+import UserNotifications
 
 struct InvalidNotification:Error{}
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var pendingLink:Link?
@@ -45,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Analytics.appLaunch()
-
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        }
         return true
     }
     
@@ -197,6 +201,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         handleAction(userInfo: notification.userInfo, identifier: identifier, completionHandler: completionHandler)
         
     }
+    
+    // UNUserNotificationCenterDelegate
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,withCompletionHandler completionHandler: @escaping () -> Void) {
+    
+        handleAction(userInfo: response.notification.request.content.userInfo, identifier: response.actionIdentifier, completionHandler: completionHandler)
+    }
+
 
     func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
 
