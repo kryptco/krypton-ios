@@ -79,7 +79,7 @@ extension String {
             return (userID, emptyDate)
         }
         
-        let dateString = Date(timeIntervalSince1970: timeSeconds).toShortTimeString()
+        let dateString = Date(timeIntervalSince1970: timeSeconds).trailingTimeAgo()
         
         return (userID, dateString)
     }
