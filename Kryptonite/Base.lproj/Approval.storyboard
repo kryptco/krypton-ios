@@ -500,7 +500,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpM-im-LI7" userLabel="dot_bg" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="194" width="16" height="16"/>
+                                        <rect key="frame" x="16" y="194.5" width="16" height="16"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="B5G-Xb-UUl"/>
@@ -516,7 +516,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNR-sN-qxi" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="14" y="192" width="20" height="20"/>
+                                        <rect key="frame" x="14" y="192.5" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="mpk-3Y-Kqk"/>
                                             <constraint firstAttribute="height" constant="20" id="oof-jB-5w8"/>
@@ -844,14 +844,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IzZ-o5-Cxe" userLabel="line">
-                                        <rect key="frame" x="20" y="164.5" width="8" height="117.5"/>
+                                        <rect key="frame" x="20" y="164" width="8" height="118"/>
                                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="8" id="FgN-PB-1PL"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lph-Dp-3WR" userLabel="dot_inner" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="155" width="18" height="18"/>
+                                        <rect key="frame" x="15" y="154.5" width="18" height="18"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="956-vK-5zs"/>
@@ -867,7 +867,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uv1-oc-H9H" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="14" y="154.5" width="20" height="20"/>
+                                        <rect key="frame" x="14" y="154" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="55L-bK-mbC"/>
                                             <constraint firstAttribute="width" constant="20" id="g67-sX-AZR"/>
@@ -920,7 +920,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="v1.0.4" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="nJy-cj-gMc">
-                                        <rect key="frame" x="104.5" y="153" width="250.5" height="23"/>
+                                        <rect key="frame" x="104.5" y="152.5" width="250.5" height="23"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
