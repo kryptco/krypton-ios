@@ -139,7 +139,7 @@ class NotificationService: UNNotificationServiceExtension {
                             let currentContent = UNMutableNotificationContent()
                             currentContent.title = noteContent.title
                             currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                            currentContent.body = "test1"
+                            currentContent.body = noteContent.body + "." // period for testing
                             currentContent.userInfo = noteContent.userInfo
                             currentContent.sound = UNNotificationSound.default()
                             
@@ -167,7 +167,7 @@ class NotificationService: UNNotificationServiceExtension {
                                 let currentContent = UNMutableNotificationContent()
                                 currentContent.title = noteContent.title
                                 currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                                currentContent.body = "test2"
+                                currentContent.body = noteContent.body + "." // period for testing
                                 currentContent.userInfo = noteContent.userInfo
                                 currentContent.sound = UNNotificationSound.default()
                                 
