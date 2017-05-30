@@ -22,8 +22,6 @@ class CommitLogDetailController:UIViewController {
     @IBOutlet weak var authorTimeLabel:UILabel!
     @IBOutlet weak var commitTimeLabel:UILabel!
 
-    @IBOutlet weak var signatureLabel:UILabel!
-
     var commitLog:CommitSignatureLog?
     
     
@@ -57,8 +55,6 @@ class CommitLogDetailController:UIViewController {
         let (committer, committerDate) = log.commit.committer.userIdAndDateString
         comitterLabel.text = committer
         commitTimeLabel.text = committerDate
-        
-        signatureLabel.text = try? AsciiArmorMessage(message: PGPFormat.Message(base64: log.signature), blockType: ArmorMessageBlock.signature, comment: Properties.pgpMessageComment).toString()
     }
 }
 
@@ -98,29 +94,25 @@ class TagLogDetailController:UIViewController {
         self.title = "Git Tag"
 
         guard let (tagLog, commitLog) = tagCommitLogPair else {
-            commitView.alpha = 0
             return
         }
         
         // set the tag log part
         tagLabel.text = tagLog.tag.tag
         typeLabel.text = tagLog.tag.type.capitalized
+        messageLabel.text = tagLog.tag.messageString
         
         let (tagUserID, tagDate) = tagLog.tag.tagger.userIdAndDateString
         taggerLabel.text = tagUserID
         tagCreatedLabel.text = tagDate
         
+        commitHashLabel.text = tagLog.tag.objectShortHash
+        
+        
         // set the commit log part
         guard let log = commitLog else {
+            commitView.isHidden = true
             return
-        }
-        // hash
-        let hash = log.commitHash
-        
-        if hash.characters.count >= 7 {
-            commitHashLabel.text = hash.substring(to: hash.index(hash.startIndex, offsetBy: 7))
-        } else {
-            commitHashLabel.text = hash
         }
         
         // labels
