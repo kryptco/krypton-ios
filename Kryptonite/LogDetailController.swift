@@ -30,11 +30,11 @@ class CommitLogDetailController:UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Git Commit"
+
         guard let log = commitLog else {
             return
         }
-        
-        self.title = "Git Commit"
         
         // hash
         let hash = log.commitHash
@@ -74,8 +74,6 @@ class TagLogDetailController:UIViewController {
     @IBOutlet weak var typeLabel:UILabel!
     @IBOutlet weak var taggerLabel:UILabel!
     @IBOutlet weak var tagCreatedLabel:UILabel!
-    @IBOutlet weak var signatureLabel:UILabel!
-
     
     // commit
     @IBOutlet weak var commitView:UIView!
@@ -90,8 +88,6 @@ class TagLogDetailController:UIViewController {
     @IBOutlet weak var comitterLabel:UILabel!
     @IBOutlet weak var authorTimeLabel:UILabel!
     @IBOutlet weak var commitTimeLabel:UILabel!
-    
-    @IBOutlet weak var commitSignatureLabel:UILabel!
     
     var tagCommitLogPair:TagCommitLogPair?
     
@@ -108,12 +104,11 @@ class TagLogDetailController:UIViewController {
         
         // set the tag log part
         tagLabel.text = tagLog.tag.tag
-        typeLabel.text = tagLog.tag.type.uppercased()
+        typeLabel.text = tagLog.tag.type.capitalized
         
         let (tagUserID, tagDate) = tagLog.tag.tagger.userIdAndDateString
         taggerLabel.text = tagUserID
         tagCreatedLabel.text = tagDate
-        signatureLabel.text = try? AsciiArmorMessage(message: PGPFormat.Message(base64: tagLog.signature), blockType: ArmorMessageBlock.signature, comment: Properties.pgpMessageComment).toString()
         
         // set the commit log part
         guard let log = commitLog else {
@@ -140,7 +135,5 @@ class TagLogDetailController:UIViewController {
         let (committer, committerDate) = log.commit.committer.userIdAndDateString
         comitterLabel.text = committer
         commitTimeLabel.text = committerDate
-        
-        commitSignatureLabel.text = try? AsciiArmorMessage(message: PGPFormat.Message(base64: log.signature), blockType: ArmorMessageBlock.signature, comment: Properties.pgpMessageComment).toString()
     }
 }
