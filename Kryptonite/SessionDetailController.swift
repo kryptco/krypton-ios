@@ -306,6 +306,17 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         return UITableViewCell()
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let log = logs[indexPath.row]
+        
+        if let commitLog = log as? CommitSignatureLog {
+            self.performSegue(withIdentifier: "showCommitLogDetail", sender: commitLog)
+            
+        } else if let _ = log as? TagSignatureLog {
+        }
+    }
  
 //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        return 80.0
@@ -355,5 +366,14 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if  let commitLog = sender as? CommitSignatureLog,
+            let logDetailController = segue.destination as? CommitLogDetailController
+        {
+            logDetailController.commitLog = commitLog
+        }
+    }
 
 }

@@ -11,8 +11,6 @@ import Sodium
 import CommonCrypto
 import PGPFormat
 
-private let KryptonitePGPComment = "Made with Kryptonite (v\(Properties.currentVersion.string))"
-
 extension KeyType {
     var pgpKeyType:PGPFormat.PublicKeyAlgorithm {
         switch self {
@@ -131,7 +129,7 @@ extension KeyPair {
     /** 
         Create PGP Signed Public Key: (PublicKey, UserID, Signature Packets)
     */
-    private func createPGPPublicKeyPackets(for identity:String, created:Date, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> [Packet] {
+    private func createPGPPublicKeyMessage(for identity:String, created:Date, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> PGPFormat.Message {
         
         // create the public key
         let pgpPublicKey = try PGPFormat.PublicKey(create: self.publicKey.type.pgpKeyType, publicKeyData: self.publicKey.pgpPublicKey(), date: created)
@@ -150,7 +148,7 @@ extension KeyPair {
         
         // compile the signed public key packets
         try signedPublicKey.set(hash: hash, signedHash: signedHash)        
-        return try signedPublicKey.toPackets()
+        return try signedPublicKey.toMessage()
     }
     
     /**
@@ -158,9 +156,9 @@ extension KeyPair {
         creating a self-signed PGP PublicKey
     */
     func exportAsciiArmoredPGPPublicKey(for identity:String, created:Date = Date()) throws -> AsciiArmorMessage {
-        let packets = try createPGPPublicKeyPackets(for: identity, created: created)
+        let message = try createPGPPublicKeyMessage(for: identity, created: created)
         
-        return try AsciiArmorMessage(packets: packets, blockType: ArmorMessageBlock.publicKey, comment: KryptonitePGPComment)
+        return try AsciiArmorMessage(message: message, blockType: ArmorMessageBlock.publicKey, comment: Properties.pgpMessageComment)
     }
     
     /** 
@@ -185,7 +183,7 @@ extension KeyPair {
         try signedBinary.set(hash: hash, signedHash: signedHash)
 
         // return ascii armored signature
-        return try AsciiArmorMessage(packets: signedBinary.toPackets(), blockType: ArmorMessageBlock.signature, comment: "Created With Kryptonite")
+        return try AsciiArmorMessage(message: signedBinary.toMessage(), blockType: ArmorMessageBlock.signature, comment: Properties.pgpMessageComment)
     }
     
     /**

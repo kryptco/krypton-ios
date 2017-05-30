@@ -178,15 +178,14 @@ class CodeSigningTests: XCTestCase {
     
     func testComputeCommitHash() {
         do  {
-            let packetData = try ("iF4EABYKAAYFAlkkmD8ACgkQ4eT0x9ceFp1gNQD+LWiJFax8iQqgr0yJ1P7JFGvMwuZc8r05h6U+X+lyKYEBAK939lEX1rvBmcetftVbRlOMX5oQZwBLt/NJh+nQ3ssC").fromBase64()
-            let sigPackets = try Array<PGPFormat.Packet>(data: packetData)
+            let sigMessage = try Message(base64: "iF4EABYKAAYFAlkkmD8ACgkQ4eT0x9ceFp1gNQD+LWiJFax8iQqgr0yJ1P7JFGvMwuZc8r05h6U+X+lyKYEBAK939lEX1rvBmcetftVbRlOMX5oQZwBLt/NJh+nQ3ssC")
             let commitInfo = try CommitInfo(tree: "2c4df4a89ac5b0b8b21fd2aad4d9b19cd91e7049",
                                         parent: "1cd97d0545a25c578e3f4da5283106606276eadf",
                                         author: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
                                         committer: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
                                         message: "\ntest1234\n".utf8Data())
             
-            let asciiArmored = try AsciiArmorMessage(packets: sigPackets, blockType: ArmorMessageBlock.signature, comment: "Created With Kryptonite").toString()
+            let asciiArmored = try AsciiArmorMessage(message: sigMessage, blockType: ArmorMessageBlock.signature, comment: Properties.pgpMessageComment).toString()
             
             let commitHash = try commitInfo.commitHash(asciiArmoredSignature: asciiArmored).hex
             
