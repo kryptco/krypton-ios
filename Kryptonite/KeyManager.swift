@@ -70,9 +70,15 @@ class KeyManager {
     class func destroyKeyPair() -> Bool {
         let rsaResult = (try? RSAKeyPair.destroy(KeyTag.me.rawValue)) ?? false
         let edResult = (try? Ed25519KeyPair.destroy(KeyTag.me.rawValue)) ?? false
-        let pgpResult = KeychainStorage().delete(key: KeyTag.me.publicPGPStorageKey)
         
-        return (rsaResult || edResult) && pgpResult
+        do {
+            try KeychainStorage().delete(key: PGPPublicKeyStorage.created.key(tag: KeyTag.me))
+            try KeychainStorage().delete(key: PGPPublicKeyStorage.userIDs.key(tag: KeyTag.me))
+        } catch {
+            return false
+        }
+        
+        return (rsaResult || edResult)
     }
     
     class func hasKey() -> Bool {
@@ -91,25 +97,24 @@ class KeyManager {
     }
     
     func getMe() throws -> String {
-        do {
-            return try KeychainStorage().get(key: KrMeDataKey)
-        } catch (let e) {
-            throw e
-        }
+        return try KeychainStorage().get(key: KrMeDataKey)
     }
     
     class func setMe(email:String) {
-        let success = KeychainStorage().set(key: KrMeDataKey, value: email)
-        if !success {
-            log("failed to store `me` email.", LogType.error)
+        do {
+            try KeychainStorage().set(key: KrMeDataKey, value: email)
+        } catch {
+            log("failed to store `me` email: \(error)", .error)
         }
+        
         dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
     }
     
     class func clearMe() {
-        let success = KeychainStorage().delete(key: KrMeDataKey)
-        if !success {
-            log("failed to delete `me` email.", LogType.error)
+        do {
+            try KeychainStorage().delete(key: KrMeDataKey)
+        } catch {
+            log("failed to delete `me` email: \(error)", .error)
         }
     }
     
@@ -128,7 +133,7 @@ extension KeyTag {
 
 enum PGPPublicKeyStorage:String {
     case created = "created"
-    case userID = "userid"
+    case userIDs = "userid-list"
     
     func key(tag:KeyTag) -> String {
         return "pgp.pub.\(tag.rawValue).\(self.rawValue)"
@@ -147,18 +152,30 @@ extension KeyManager {
                 throw KeychainStorageError.notFound
             }
             
+            // update userid list
+            var userIdList = try UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))
+            if !userIdList.ids.contains(identity) {
+                userIdList = userIdList.by(adding: identity)
+                try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
+            }
+            
             let created = Date(timeIntervalSince1970: pgpPublicKeyCreated)
-            return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: identity, created: created)
+            return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIdList.ids, created: created)
             
         } catch KeychainStorageError.notFound { // doesn't exist so create it
 
+            // save the userid if needed
+            var userIdList = try UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))
+            if !userIdList.ids.contains(identity) {
+                userIdList = userIdList.by(adding: identity)
+                try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
+            }
+
             let created = Date()
-            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: identity, created: created)
+            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIdList.ids, created: created)
             
             // save the created date
-            let _ = KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: .me), value: "\(created.timeIntervalSince1970)")
-            
-            // TODO: save the userid
+            try KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: .me), value: "\(created.timeIntervalSince1970)")
             
             return pgpPublicKey
         } catch {

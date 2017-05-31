@@ -129,26 +129,44 @@ extension KeyPair {
     /** 
         Create PGP Signed Public Key: (PublicKey, UserID, Signature Packets)
     */
-    private func createPGPPublicKeyMessage(for identity:String, created:Date, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> PGPFormat.Message {
+    private func createPGPPublicKeyMessage(for identities:[String], created:Date, hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> PGPFormat.Message {
         
         // create the public key
         let pgpPublicKey = try PGPFormat.PublicKey(create: self.publicKey.type.pgpKeyType, publicKeyData: self.publicKey.pgpPublicKey(), date: created)
-        let userID = PGPFormat.UserID(content: identity)
         let subpackets:[SignatureSubpacketable] = [
             PGPFormat.SignatureCreated(date: Date()),
             PGPFormat.SignatureKeyFlags(flagTypes: [PGPFormat.KeyFlagType.signData])]
 
-        var signedPublicKey = try PGPFormat.SignedPublicKeyIdentity(publicKey: pgpPublicKey, userID: userID, hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
+        // signature for each userid
+        var signedPublicKeys:[PGPFormat.SignedPublicKeyIdentity] = []
+        try identities.forEach {
+            let userID = PGPFormat.UserID(content: $0)
+
+            var signedPublicKey = try PGPFormat.SignedPublicKeyIdentity(publicKey: pgpPublicKey, userID: userID, hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
+            
+            // ready the data to hash
+            let dataToHash = try signedPublicKey.dataToHash()
+            
+            // sign it and get hash back
+            let (hash, signedHash) = try self.sign(data: dataToHash, using: hashAlgorithm)
+            
+            // compile the signed public key packets
+            try signedPublicKey.set(hash: hash, signedHash: signedHash)
+
+            // join the signed public keys
+            signedPublicKeys.append(signedPublicKey)
+        }
         
-        // ready the data to hash
-        let dataToHash = try signedPublicKey.dataToHash()
-        
-        // sign it and get hash back
-        let (hash, signedHash) = try self.sign(data: dataToHash, using: hashAlgorithm)
-        
-        // compile the signed public key packets
-        try signedPublicKey.set(hash: hash, signedHash: signedHash)        
-        return try signedPublicKey.toMessage()
+        return try signedPublicKeys.joinedMessage()
+    }
+    
+    /**
+        Export a public key as a PGP Public Key by
+        creating a self-signed PGP PublicKey for multiple identities
+     */
+    func exportAsciiArmoredPGPPublicKey(for identities:[String], created:Date = Date()) throws -> AsciiArmorMessage {
+        let message = try createPGPPublicKeyMessage(for: identities, created: created)
+        return try AsciiArmorMessage(message: message, blockType: ArmorMessageBlock.publicKey, comment: Properties.pgpMessageComment)
     }
     
     /**
@@ -156,12 +174,10 @@ extension KeyPair {
         creating a self-signed PGP PublicKey
     */
     func exportAsciiArmoredPGPPublicKey(for identity:String, created:Date = Date()) throws -> AsciiArmorMessage {
-        let message = try createPGPPublicKeyMessage(for: identity, created: created)
-        
-        return try AsciiArmorMessage(message: message, blockType: ArmorMessageBlock.publicKey, comment: Properties.pgpMessageComment)
+        return try self.exportAsciiArmoredPGPPublicKey(for: [identity])
     }
     
-    /** 
+    /**
         Create a PGP signature over a binary document
     */
     func createAsciiArmoredBinaryDocumentSignature(for binaryData:Data, using hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512, keyID:Data) throws -> AsciiArmorMessage {

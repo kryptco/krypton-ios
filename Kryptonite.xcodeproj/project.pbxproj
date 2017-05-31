@@ -116,6 +116,10 @@
 		FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697311D99CA1100FE44D3 /* GenerateController.swift */; };
 		FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */; };
 		FA2949CB1EDCB77800A5C70B /* LogDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2949CA1EDCB77800A5C70B /* LogDetailController.swift */; };
+		FA2949E31EDE379900A5C70B /* UserIDList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2949E21EDE379900A5C70B /* UserIDList.swift */; };
+		FA2949E41EDE379900A5C70B /* UserIDList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2949E21EDE379900A5C70B /* UserIDList.swift */; };
+		FA2949E51EDE379900A5C70B /* UserIDList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2949E21EDE379900A5C70B /* UserIDList.swift */; };
+		FA2949E61EDE379900A5C70B /* UserIDList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2949E21EDE379900A5C70B /* UserIDList.swift */; };
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
@@ -625,6 +629,7 @@
 		FA2697311D99CA1100FE44D3 /* GenerateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateController.swift; sourceTree = "<group>"; };
 		FA2697331D99D05A00FE44D3 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		FA2949CA1EDCB77800A5C70B /* LogDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogDetailController.swift; sourceTree = "<group>"; };
+		FA2949E21EDE379900A5C70B /* UserIDList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserIDList.swift; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA2F22A11DC3C3CA0094076E /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
@@ -1013,6 +1018,7 @@
 				FACAA4B01D887904000B9A01 /* SignatureLog.swift */,
 				FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */,
 				FA8523C91DBFDA5200D465D2 /* Version.swift */,
+				FA2949E21EDE379900A5C70B /* UserIDList.swift */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 			);
 			name = Core;
@@ -2032,6 +2038,7 @@
 				8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */,
 				FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
+				FA2949E31EDE379900A5C70B /* UserIDList.swift in Sources */,
 				FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */,
 				8DC2639E1ED2459300BF2E17 /* CommitInfo.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
@@ -2136,6 +2143,7 @@
 				8D05CB371ED3E4BD00CCCC38 /* GitInfo.swift in Sources */,
 				8DCB60461E94469700E1B924 /* Policy.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
+				FA2949E61EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */,
 				FAC874001E6A5342003D112E /* String+User.swift in Sources */,
 				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
@@ -2210,6 +2218,7 @@
 				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
 				FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */,
+				FA2949E51EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
 				FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */,
@@ -2257,6 +2266,7 @@
 				FA8B542F1ED774C100891161 /* CryptoError.swift in Sources */,
 				FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */,
 				FA8B54171ED773EE00891161 /* Version.swift in Sources */,
+				FA2949E41EDE379900A5C70B /* UserIDList.swift in Sources */,
 				FA8B54321ED774C100891161 /* Sodium.swift in Sources */,
 				FA8B542D1ED774C100891161 /* Wrap.swift in Sources */,
 			);

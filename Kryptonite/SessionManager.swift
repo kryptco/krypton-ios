@@ -82,11 +82,13 @@ class SessionManager {
         defer { mutex.unlock() }
         mutex.lock()
 
-        let didSavePub = KeychainStorage().set(key: Session.KeychainKey.pub.tag(for: session.id), value: session.pairing.keyPair.publicKey.toBase64())
-        let didSavePriv = KeychainStorage().set(key: Session.KeychainKey.priv.tag(for: session.id), value: session.pairing.keyPair.secretKey.toBase64())
+        do {
+            try KeychainStorage().set(key: Session.KeychainKey.pub.tag(for: session.id), value: session.pairing.keyPair.publicKey.toBase64())
+            try KeychainStorage().set(key: Session.KeychainKey.priv.tag(for: session.id), value: session.pairing.keyPair.secretKey.toBase64())
+        } catch {
+            log("could not save keypair for id: \(session.id)", .error)
+        }
 
-        if !(didSavePub && didSavePriv) { log("could not save keypair for id: \(session.id)", .error) }
-        
         if temporary {
             temporarySessions[session.id] = session
         } else {
@@ -101,8 +103,12 @@ class SessionManager {
         defer { mutex.unlock() }
         mutex.lock()
 
-        let _ = KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: session.id))
-        let _ = KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: session.id))
+        do {
+            try KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: session.id))
+            try KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: session.id))
+        } catch {
+            log("could not remove session pub/priv keypair: \(error).")
+        }
 
         sessions.removeValue(forKey: session.id)
         temporarySessions.removeValue(forKey: session.id)
@@ -115,13 +121,13 @@ class SessionManager {
         mutex.lock()
         
         sessions.values.forEach({
-            let _ = KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
-            let _ = KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
+            try? KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
+            try? KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
         })
         
         temporarySessions.values.forEach({
-            let _ = KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
-            let _ = KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
+            try? KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
+            try? KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
         })
 
 

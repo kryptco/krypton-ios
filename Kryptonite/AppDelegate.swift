@@ -84,8 +84,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 return
             }
             
-            let res = KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
-            if !res { log("Could not save push ARN", .error) }
+            do {
+                try KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
+            } catch {
+                log("Could not save push ARN", .error)
+            }
             
             API().setEndpointEnabledSNS(endpointArn: arn, completionHandler: { (err) in
                 if let err = err {
