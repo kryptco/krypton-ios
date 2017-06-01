@@ -245,11 +245,9 @@ class Silo {
                     // only place where git signature should occur
                     
                     let keyManager = try KeyManager.sharedInstance()
-                    let keyID = try keyManager.getPGPPublicKeyID()
+                    let keyID = try keyManager.getPGPPublicKeyID()                    
+                    let _ = keyManager.updatedUserIDs(for: gitSignRequest.userId)
                     
-                    //TODO: Verify key fingerprint
-                    log("keyID: \(keyID.hex)")
-                                        
                     switch gitSignRequest.git {
                     case .commit(let commit):
                         

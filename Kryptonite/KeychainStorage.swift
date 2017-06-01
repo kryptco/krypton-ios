@@ -32,10 +32,7 @@ class KeychainStorage {
                       String(kSecValueData): data,
                       String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
         
-        let deleteStatus = SecItemDelete(params as CFDictionary)
-        if deleteStatus == errSecItemNotFound || deleteStatus.isSuccess() {
-            log("could not delete item first", .error)
-        }
+        let _ = SecItemDelete(params as CFDictionary)
         
         let status = SecItemAdd(params as CFDictionary, nil)
         guard status.isSuccess() else {

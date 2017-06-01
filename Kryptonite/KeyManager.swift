@@ -152,27 +152,19 @@ extension KeyManager {
                 throw KeychainStorageError.notFound
             }
             
-            // update userid list
-            var userIdList = try UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))
-            if !userIdList.ids.contains(identity) {
-                userIdList = userIdList.by(adding: identity)
-                try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
-            }
+            // get and update userid list if needed
+            let userIds = self.updatedUserIDs(for: identity)
             
             let created = Date(timeIntervalSince1970: pgpPublicKeyCreated)
-            return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIdList.ids, created: created)
+            return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
             
         } catch KeychainStorageError.notFound { // doesn't exist so create it
 
-            // save the userid if needed
-            var userIdList = try UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))
-            if !userIdList.ids.contains(identity) {
-                userIdList = userIdList.by(adding: identity)
-                try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
-            }
-
+            // get and update userid list if needed
+            let userIds = self.updatedUserIDs(for: identity)
+            
             let created = Date()
-            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIdList.ids, created: created)
+            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
             
             // save the created date
             try KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: .me), value: "\(created.timeIntervalSince1970)")
@@ -180,6 +172,27 @@ extension KeyManager {
             return pgpPublicKey
         } catch {
             throw error
+        }
+    }
+    
+    func updatedUserIDs(for identity:String) -> [String] {
+        
+        var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))) ?? UserIDList.empty
+        
+        // if exists return
+        guard !userIdList.ids.contains(identity) else {
+            return userIdList.ids
+        }
+        
+        do {
+            // add new identity
+            userIdList = try userIdList.by(adding: identity)
+            try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
+            return userIdList.ids
+            
+        } catch {
+            log("could not save pgp identity to keychain: \(error)", .error)
+            return userIdList.ids
         }
     }
     
