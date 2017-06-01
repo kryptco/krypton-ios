@@ -77,6 +77,8 @@ class TransportControl {
     
     //MARK: Handle Incoming Requests
     func handle(medium:CommunicationMedium, with request:Request, for session:Session, completionHandler: (()->Void)? = nil) throws {
+        try Silo.shared.handle(request: request, session: session, communicationMedium: medium, completionHandler: completionHandler)
+
         mutex.lock()
         
         log("Handle Called: \(sessionActivity.count)")
@@ -92,8 +94,6 @@ class TransportControl {
         }
         
         mutex.unlock()
-
-        try Silo.shared.handle(request: request, session: session, communicationMedium: medium, completionHandler: completionHandler)
     }
     
     //MARK: Send Outgoing Requests
