@@ -12,8 +12,8 @@ struct InvalidCommitInfo:Error {}
 struct InvalidCommitHash:Error {}
 
 struct CommitInfo: Jsonable {
-    let tree: String
-    var parent: String?
+    let tree: GitHash
+    var parent: GitHash?
     let author: String
     let committer: String
     let message: Data

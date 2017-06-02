@@ -9,6 +9,7 @@
 import Foundation
 import PGPFormat
 
+
 class CommitLogDetailController:UIViewController {
     
     @IBOutlet weak var commitHashLabel:UILabel!
@@ -35,13 +36,7 @@ class CommitLogDetailController:UIViewController {
         }
         
         // hash
-        let hash = log.commitHash
-        
-        if hash.characters.count >= 7 {
-            commitHashLabel.text = hash.substring(to: hash.index(hash.startIndex, offsetBy: 7))
-        } else {
-            commitHashLabel.text = hash
-        }
+        commitHashLabel.text = log.commitHash.shortHash
         
         // labels
         messageLabel.text = log.commit.messageString
@@ -56,6 +51,15 @@ class CommitLogDetailController:UIViewController {
         comitterLabel.text = committer
         commitTimeLabel.text = committerDate
     }
+    
+    @IBAction func fullHashToggle() {
+        if commitHashLabel.text == commitLog?.commitHash {
+            commitHashLabel.text = commitLog?.commitHash.shortHash
+        } else {
+            commitHashLabel.text = commitLog?.commitHash
+        }
+    }
+    
 }
 
 
@@ -128,4 +132,15 @@ class TagLogDetailController:UIViewController {
         comitterLabel.text = committer
         commitTimeLabel.text = committerDate
     }
+    
+    @IBAction func fullHashToggle() {
+        let tagLog = tagCommitLogPair?.0
+        
+        if commitHashLabel.text == tagLog?.tag._object {
+            commitHashLabel.text = tagLog?.tag.objectShortHash
+        } else {
+            commitHashLabel.text = tagLog?.tag._object
+        }
+    }
+
 }

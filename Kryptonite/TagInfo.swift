@@ -11,7 +11,7 @@ import JSON
 struct InvalidTagInfo:Error{}
 
 struct TagInfo: Jsonable {
-    let _object: String
+    let _object: GitHash
     let type: String
     let tag: String
     let tagger: String

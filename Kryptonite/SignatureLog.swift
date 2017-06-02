@@ -85,7 +85,7 @@ struct CommitSignatureLog:LogStatement {
     let signature:String
 
     let commit:CommitInfo
-    let commitHash:String
+    let commitHash:GitHash
     
     var displayName:String {
         guard !signature.isEmpty else {

@@ -90,3 +90,18 @@ extension GitUserID {
         return PGPFormat.UserID(content: self).email ?? self
     }
 }
+
+
+typealias GitHash = String
+extension GitHash {
+    var shortHash:String {
+        let hash = self
+        if hash.characters.count >= 7 {
+            return hash.substring(to: hash.index(hash.startIndex, offsetBy: 7))
+        } else {
+            return hash
+        }
+        
+    }
+}
+
