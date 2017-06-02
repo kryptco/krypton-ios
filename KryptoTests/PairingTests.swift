@@ -111,16 +111,15 @@ class PairingTests: XCTestCase {
         let v3 = Version(major: 2, minor: 4, patch: 1)
         let v4 = Version(major: 1, minor: 0, patch: 0)
         let v5 = Version(major: 1, minor: 0, patch: 0)
-
+        let v6 = Version(major: 2, minor: 1, patch: 0)
+        let v7 = Version(major: 2, minor: 1, patch: 1)
         
         XCTAssert(v4 == v5)
         XCTAssert(v1 > v5)
         XCTAssert(v3 > v1)
         XCTAssert(v3 > v2)
         XCTAssert(v2 > v5)
-
-
-
+        XCTAssert(v7 > v6)
     }
 }
 
