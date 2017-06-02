@@ -227,7 +227,7 @@ class Silo {
         
         let responseData = try response.jsonData() as NSData
         
-        requestCache?.setObject(responseData, forKey: CacheKey(session, request), expires: .seconds(300))
+        requestCache?.setObject(responseData, forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
         
         return response
 
