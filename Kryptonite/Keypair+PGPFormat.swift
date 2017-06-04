@@ -15,7 +15,7 @@ extension KeyType {
     var pgpKeyType:PGPFormat.PublicKeyAlgorithm {
         switch self {
         case .Ed25519:
-            return PGPFormat.PublicKeyAlgorithm.ecc
+            return PGPFormat.PublicKeyAlgorithm.ed25519
         case .RSA:
             return PGPFormat.PublicKeyAlgorithm.rsaSignOnly
         }
@@ -77,7 +77,7 @@ extension RSAPublicKey:PGPPublicKeyConvertible {
 
 extension Sign.PublicKey:PGPPublicKeyConvertible {
     func pgpPublicKeyData() throws -> PGPFormat.PublicKeyData {
-        return PGPFormat.ECCPublicKey(rawData: self)
+        return PGPFormat.Ed25519PublicKey(rawData: self)
     }
 }
 
@@ -135,7 +135,7 @@ extension KeyPair {
         let pgpPublicKey = try PGPFormat.PublicKey(create: self.publicKey.type.pgpKeyType, publicKeyData: self.publicKey.pgpPublicKey(), date: created)
         let subpackets:[SignatureSubpacketable] = [
             PGPFormat.SignatureCreated(date: Date()),
-            PGPFormat.SignatureKeyFlags(flagTypes: [PGPFormat.KeyFlagType.signData])]
+            PGPFormat.SignatureKeyFlags(flagTypes: [PGPFormat.SignatureKeyFlags.FlagType.signData])]
 
         // signature for each userid
         var signedPublicKeys:[PGPFormat.SignedPublicKeyIdentity] = []
@@ -157,7 +157,7 @@ extension KeyPair {
             signedPublicKeys.append(signedPublicKey)
         }
         
-        return try signedPublicKeys.joinedMessage()
+        return try SignedPublicKeyIdentities(signedPublicKeys).toMessage()
     }
     
     /**
