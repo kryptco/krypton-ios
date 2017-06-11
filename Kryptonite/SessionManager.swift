@@ -104,10 +104,15 @@ class SessionManager {
         mutex.lock()
 
         do {
-            try KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: session.id))
             try KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: session.id))
         } catch {
-            log("could not remove session pub/priv keypair: \(error).")
+            log("could not remove session private key: \(error).")
+        }
+        
+        do {
+            try KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: session.id))
+        } catch {
+            log("could not remove session public key: \(error).")
         }
 
         sessions.removeValue(forKey: session.id)

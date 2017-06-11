@@ -270,9 +270,9 @@ class Silo {
                     
                     switch gitSignRequest.git {
                     case .commit(let commit):
-                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: "", commitHash: "", commit: commit), deviceName: session.pairing.name)
+                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: CommitSignatureLog.rejectedConstant, commitHash: "", commit: commit), deviceName: session.pairing.name)
                     case .tag(let tag):
-                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: "", tag: tag), deviceName: session.pairing.name)
+                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: TagSignatureLog.rejectedConstant, tag: tag), deviceName: session.pairing.name)
                     }
 
                     throw UserRejectedError()

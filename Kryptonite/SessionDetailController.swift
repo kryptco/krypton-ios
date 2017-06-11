@@ -311,11 +311,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         let log = logs[indexPath.row]
         
-        if let commitLog = log as? CommitSignatureLog {
+        if let commitLog = log as? CommitSignatureLog, !commitLog.isRejected {
             self.performSegue(withIdentifier: "showCommitLogDetail", sender: commitLog)
             
-        } else if let tagLog = log as? TagSignatureLog {
-            
+        } else if let tagLog = log as? TagSignatureLog, !tagLog.isRejected {
             let commitLog = self.logs.filter({ ($0 as? CommitSignatureLog)?.commitHash == tagLog.tag._object }).first
             self.performSegue(withIdentifier: "showTagLogDetail", sender: (tagLog, commitLog))
         }

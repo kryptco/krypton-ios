@@ -1227,8 +1227,8 @@
 			isa = PBXGroup;
 			children = (
 				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
-				FAE45B981E64750E00A583AB /* RSAKeyPair.swift */,
 				FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */,
+				FAE45B981E64750E00A583AB /* RSAKeyPair.swift */,
 				FAEE048B1D7369C3002A7AFD /* Keypair+SSHFormat.swift */,
 				FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */,
 				FAFE546E1D7B9C1400391FDD /* Wrap.swift */,

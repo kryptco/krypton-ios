@@ -88,8 +88,8 @@ struct CommitSignatureLog:LogStatement {
     let commitHash:GitHash
     
     var displayName:String {
-        guard !signature.isEmpty else {
-            return "rejected: \(commit.shortDisplay)"
+        guard !isRejected else {
+            return "Rejected: \(commit.shortDisplay)"
         }
         
         guard commitHash.characters.count >= 7 else {
@@ -123,7 +123,6 @@ struct CommitSignatureLog:LogStatement {
         try self.init(session: session, signature: signature, commitHash: commitHash, date: date, commit: CommitInfo(tree: tree, parent: parent, author: author, committer: committer, message: message.fromBase64()))
     }
 
-
     init(session:String, signature:String, commitHash:String, date:Date = Date(), commit:CommitInfo) {
         self.session = session
         self.signature = signature
@@ -151,8 +150,8 @@ struct TagSignatureLog:LogStatement {
     let tag:TagInfo
     
     var displayName:String {
-        guard !signature.isEmpty else {
-            return "rejected: \(tag.shortDisplay)"
+        guard !isRejected else {
+            return "Rejected: \(tag.shortDisplay)"
         }
 
         return tag.shortDisplay
@@ -194,5 +193,24 @@ struct TagSignatureLog:LogStatement {
         object["date"] = date
         object["signature"] = signature
         return object
+    }
+}
+
+/** 
+    Git Signature Logs, identify rejections 
+ */
+protocol GitSignatureLog:LogStatement {}
+
+extension CommitSignatureLog:GitSignatureLog {}
+extension TagSignatureLog:GitSignatureLog {}
+
+extension GitSignatureLog {
+    
+    static var rejectedConstant:String {
+        return "rejected"
+    }
+    
+    var isRejected:Bool {
+        return signature == Self.rejectedConstant
     }
 }

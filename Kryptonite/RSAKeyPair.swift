@@ -143,20 +143,12 @@ class RSAKeyPair:KeyPair {
         return RSAKeyPair(pub: pub, priv: priv)
     }
     
-    class func destroy(_ tag: String) throws -> Bool {
-        
-        do {
-            let privDelete = try RSAKeyPair.destroyPrivateKey(tag)
-            let pubDelete  = try RSAKeyPair.destroyPublicKey(tag)
-            
-            return privDelete || pubDelete
-        } catch (let e) {
-            throw e
-        }
-        
+    class func destroy(_ tag: String) throws {
+        try RSAKeyPair.destroyPrivateKey(tag)
+        try RSAKeyPair.destroyPublicKey(tag)
     }
     
-    class func destroyPublicKey(_ tag:String) throws -> Bool {
+    class func destroyPublicKey(_ tag:String) throws {
         // delete the public key
         let pubTag = KeyIdentifier.Public.tag(tag)
         
@@ -169,23 +161,16 @@ class RSAKeyPair:KeyPair {
         params[String(kSecAttrIsPermanent)] = kCFBooleanTrue
         params[String(kSecReturnRef)] = kCFBooleanTrue
         
-        
         let status = SecItemDelete(params as CFDictionary)
-        if status == errSecItemNotFound {
-            return false
-        }
         
-        guard status.isSuccess()
-            else {
-                throw CryptoError.destroy(.RSA, status)
-        }
-        
-        return true
-        
+        guard status.isSuccess() || status == errSecItemNotFound
+        else {
+            throw CryptoError.destroy(.RSA, status)
+        }        
     }
     
     
-    class func destroyPrivateKey(_ tag:String) throws -> Bool {
+    class func destroyPrivateKey(_ tag:String) throws {
         // delete the private key
         let privTag = KeyIdentifier.Private.tag(tag)
         
@@ -198,17 +183,11 @@ class RSAKeyPair:KeyPair {
         
         
         let status = SecItemDelete(params as CFDictionary)
-        if status == errSecItemNotFound {
-            return false
+        
+        guard status.isSuccess() || status == errSecItemNotFound
+        else {
+            throw CryptoError.destroy(.RSA, status)
         }
-        
-        guard status.isSuccess()
-            else {
-                throw CryptoError.destroy(.RSA, status)
-        }
-        
-        
-        return true
     }
     
     private class func getPrivateKeyParamsFor(tag:String, keySize:Int) -> [String:Any]? {

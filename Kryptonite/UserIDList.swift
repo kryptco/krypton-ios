@@ -12,7 +12,11 @@ import JSON
 struct TooManyUserIDs:Error{}
 struct UserIDList:Jsonable {
     private static let key = "user_ids"
-    private static let upperBound = 10240 // upper bound on
+    
+    /** 
+        Upper bound on number of bytes allowed for sum of all PGP userIDs
+     */
+    private static let upperBound = 10240
     
     let ids:[String]
     

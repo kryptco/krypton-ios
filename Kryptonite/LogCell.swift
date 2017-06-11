@@ -32,6 +32,10 @@ class GitCommitLogCell: UITableViewCell {
     @IBOutlet var messageLabel:UILabel!
     @IBOutlet var timeLabel:UILabel!
     
+    @IBOutlet var dotView:KRView!
+    @IBOutlet var commitView:KRView!
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -56,6 +60,20 @@ class GitCommitLogCell: UITableViewCell {
         topLine.alpha = 0.0
         bottomLine.alpha = 0.0
         
+        dotView.borderColor = UIColor.app
+        commitView.backgroundColor = UIColor.app
+        commitView.borderColor = UIColor.app
+        commitHashLabel.tintColor = UIColor.app
+        
+        if log.isRejected {
+            dotView.borderColor = UIColor.reject
+            commitView.backgroundColor = UIColor.reject
+            commitView.borderColor = UIColor.reject
+            commitHashLabel.text = "Rejected"
+            commitHashLabel.tintColor = UIColor.reject
+            return
+        }
+        
         // set the lines
         if  let parent = log.commit.parent,
             let previous = previousLog,
@@ -69,9 +87,7 @@ class GitCommitLogCell: UITableViewCell {
         {
             topLine.alpha = 1.0
         }
-
     }
-    
 }
 
 class GitTagLogCell: UITableViewCell {
@@ -80,6 +96,10 @@ class GitTagLogCell: UITableViewCell {
     @IBOutlet var commitHashLabel:UILabel!
     @IBOutlet var messageLabel:UILabel!
     @IBOutlet var timeLabel:UILabel!
+
+    @IBOutlet var tagImage:UIImageView!
+    @IBOutlet var tagView:KRView!
+    @IBOutlet var commitView:KRView!
 
     
     override func awakeFromNib() {
@@ -91,6 +111,22 @@ class GitTagLogCell: UITableViewCell {
         commitHashLabel.text = log.tag.objectShortHash
         messageLabel.text = log.tag.messageString
         timeLabel.text = log.date.trailingTimeAgo()
+        
+        tagImage.tintColor = UIColor.app
+        tagLabel.textColor = UIColor.app
+        tagView.borderColor = UIColor.app
+        tagView.borderColor = UIColor.app
+        commitView.backgroundColor = UIColor.app
+        commitHashLabel.tintColor = UIColor.app
+
+        if log.isRejected {
+            tagImage.tintColor = UIColor.reject
+            tagLabel.textColor = UIColor.reject
+            tagLabel.text = "Rejected: \(log.tag.tag)"
+            tagView.borderColor = UIColor.reject
+            commitView.backgroundColor = UIColor.reject
+            commitHashLabel.tintColor = UIColor.reject
+        }
     }
     
 }

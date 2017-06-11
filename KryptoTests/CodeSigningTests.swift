@@ -25,7 +25,7 @@ class CodeSigningTests: XCTestCase {
     
     func testCreatePGPPublicKeyRSA() {
         do {
-            let _ = try RSAKeyPair.destroy("test")
+            try RSAKeyPair.destroy("test")
             let keypair = try RSAKeyPair.generate("test")
 
             let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
@@ -48,7 +48,7 @@ class CodeSigningTests: XCTestCase {
     
     func testCreatePGPPublicKeyEd25519() {
         do {
-            let _ = try Ed25519KeyPair.destroy("test")
+            try Ed25519KeyPair.destroy("test")
             let keypair = try Ed25519KeyPair.generate("test")
             let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
             print(armoredPubKey.toString())
@@ -68,12 +68,10 @@ class CodeSigningTests: XCTestCase {
         }
     }
     
-    
-    
     func testVerifyRSAPublicKey() {
         
         do  {
-            let _ = try RSAKeyPair.destroy("test")
+            try RSAKeyPair.destroy("test")
             let keypair = try RSAKeyPair.generate("test")
             let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
             
@@ -130,7 +128,7 @@ class CodeSigningTests: XCTestCase {
     
     func testVerifyEd25519PublicKey() {
         do  {
-            let _ = try Ed25519KeyPair.destroy("test")
+            try Ed25519KeyPair.destroy("test")
             let keypair = try Ed25519KeyPair.generate("test")
             let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
             

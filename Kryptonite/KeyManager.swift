@@ -67,18 +67,34 @@ class KeyManager {
         }
     }
     
-    class func destroyKeyPair() -> Bool {
-        let rsaResult = (try? RSAKeyPair.destroy(KeyTag.me.rawValue)) ?? false
-        let edResult = (try? Ed25519KeyPair.destroy(KeyTag.me.rawValue)) ?? false
+    class func destroyKeyPair() {
         
+        // destroy rsa
         do {
-            try KeychainStorage().delete(key: PGPPublicKeyStorage.created.key(tag: KeyTag.me))
-            try KeychainStorage().delete(key: PGPPublicKeyStorage.userIDs.key(tag: KeyTag.me))
+            try RSAKeyPair.destroy(KeyTag.me.rawValue)
         } catch {
-            return false
+            log("failed to destroy RSA Keypair: \(error)")
         }
         
-        return (rsaResult || edResult)
+        // destroy ed
+        do {
+            try Ed25519KeyPair.destroy(KeyTag.me.rawValue)
+        } catch {
+            log("failed to destroy Ed25519 Keypair: \(error)")
+        }
+        
+        // destroy PGP public entities
+        do {
+            try KeychainStorage().delete(key: PGPPublicKeyStorage.created.key(tag: KeyTag.me))
+        } catch {
+            log("failed to destroy PGP created date: \(error)")
+        }
+        
+        do {
+            try KeychainStorage().delete(key: PGPPublicKeyStorage.userIDs.key(tag: KeyTag.me))
+        } catch {
+            log("failed to destroy PGP userIDs: \(error)")
+        }
     }
     
     class func hasKey() -> Bool {

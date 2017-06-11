@@ -52,7 +52,7 @@ protocol KeyPair {
     static func loadOrGenerate(_ tag: String) throws -> KeyPair
     static func load(_ tag: String) throws -> KeyPair?
     static func generate(_ tag: String) throws -> KeyPair
-    static func destroy(_ tag: String) throws -> Bool
+    static func destroy(_ tag: String) throws
     
     func sign(data:Data, digestType:DigestType) throws -> Data    
 }
