@@ -82,22 +82,42 @@ class LogManager {
 
     
     // MARK: Fetching
-    func fetch(for session:String) -> [SignatureLog] {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
+    func fetch<L:LogStatement>(for session:String) -> [L] {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: L.entityName)
         fetchRequest.predicate = sessionEqualsPredicate(for: session)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
 
         return fetchObjects(for: fetchRequest)
     }
     
-    func fetchLatest(for session:String) -> SignatureLog? {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
+    func fetchCompleteLatest(for session:String) -> LogStatement? {
+        // find latest log
+        var latestLogs:[LogStatement] = []
+        
+        if let sshLog:SSHSignatureLog = self.fetchLatest(for: session) {
+            latestLogs.append(sshLog)
+        }
+        
+        if let commitLog:CommitSignatureLog = self.fetchLatest(for: session) {
+            latestLogs.append(commitLog)
+        }
+        
+        if let tagLog:TagSignatureLog = self.fetchLatest(for: session) {
+            latestLogs.append(tagLog)
+        }
+        
+        return latestLogs.max(by: { $0.date < $1.date })
+    }
+    
+    func fetchLatest<L:LogStatement>(for session:String) -> L? {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: L.entityName)
         fetchRequest.predicate = sessionEqualsPredicate(for: session)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         fetchRequest.fetchLimit = 1
         
         return fetchObjects(for: fetchRequest).first
     }
+    
 
     private func sessionEqualsPredicate(for session:String) -> NSPredicate {
         return NSComparisonPredicate(
@@ -109,35 +129,31 @@ class LogManager {
         )
     }
 
-    func fetchAll() -> [SignatureLog] {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SignatureLog")
+    func fetchAll<L:LogStatement>() -> [L] {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: L.entityName)
         return fetchObjects(for: fetchRequest)
     }
     
-    private func fetchObjects(for request:NSFetchRequest<NSFetchRequestResult>) -> [SignatureLog] {
+    private func fetchObjects<L:LogStatement>(for request:NSFetchRequest<NSFetchRequestResult>) -> [L] {
         defer { mutex.unlock() }
         mutex.lock()
 
-        var logs:[SignatureLog] = []
+        var logs:[L] = []
         
         self.managedObjectContext.performAndWait {
             do {
                 let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
                 
                 for object in (objects ?? []) {
-                    guard   let session = object.value(forKey: "session") as? String,
-                            let signature = object.value(forKey: "signature") as? String,
-                            let date = object.value(forKey: "date") as? Date,
-                            let hostAuth = object.value(forKey: "host_auth") as? String,
-                            let displayName = object.value(forKey: "displayName") as? String
+                    guard let log = try? L(object: object)
                     else {
                         continue
                     }
                     
-                    logs.append(SignatureLog(session: session, hostAuth: hostAuth, signature: signature, displayName: displayName, date: date))
+                    logs.append(log)
                 }
             } catch let error {
-                log("could not fetch signature logs: \(error)")
+                log("could not fetch <\(L.entityName)> logs: \(error)")
             }
         }
 
@@ -146,7 +162,7 @@ class LogManager {
     
     
     //MARK: Saving
-    func save(theLog:SignatureLog, deviceName:String) {
+    func save<L:LogStatement>(theLog:L, deviceName:String) {
         mutex.lock()
         
         log("saving \(theLog)")
@@ -161,7 +177,7 @@ class LogManager {
         
         self.managedObjectContext.performAndWait {
             
-            guard let entity =  NSEntityDescription.entity(forEntityName: "SignatureLog", in: self.managedObjectContext)
+            guard let entity =  NSEntityDescription.entity(forEntityName: L.entityName, in: self.managedObjectContext)
             else {
                 self.mutex.unlock()
                 return
@@ -170,11 +186,9 @@ class LogManager {
             let logEntry = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
             
             // set attirbutes
-            logEntry.setValue(theLog.session, forKey: "session")
-            logEntry.setValue(theLog.signature, forKey: "signature")
-            logEntry.setValue(theLog.date, forKey: "date")
-            logEntry.setValue(theLog.hostAuth, forKey: "host_auth")
-            logEntry.setValue(theLog.displayName, forKey: "displayName")
+            for (k,v) in theLog.managedObject {
+                logEntry.setValue(v, forKey: k)
+            }
             
             do {
                 try self.managedObjectContext.save()

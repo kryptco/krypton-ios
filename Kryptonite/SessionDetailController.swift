@@ -20,16 +20,23 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
     @IBOutlet weak var approvalSegmentedControl:UISegmentedControl!
 
+    @IBOutlet var sshLogButton:UIButton!
+    @IBOutlet var gitLogButton:UIButton!
+
     enum ApprovalControl:Int {
         case on = 0
         case timed = 1
         case off = 2
     }
-    var logs:[SignatureLog] = []
+    
+    enum LogType {
+        case ssh, git
+    }
+    
+    var logType = LogType.ssh
+    
+    var logs:[LogStatement] = []
     var session:Session?
-    
-    var timer:Timer?
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,11 +57,21 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             deviceNameField.text = session.pairing.displayName.uppercased()
             unknownHostSwitch.isOn = Policy.needsUnknownHostApproval(for: session)
             
-            logs = LogManager.shared.fetch(for: session.id)
-            lastAccessLabel.text =  "Active " + (logs.first?.date.timeAgo() ?? session.created.timeAgo())
-            
-            updateApprovalControl(session: session)
+            if let lastLog = LogManager.shared.fetchCompleteLatest(for: session.id) {
+                switch lastLog {
+                case is SSHSignatureLog:
+                    logType = .ssh
+                case is CommitSignatureLog, is TagSignatureLog:
+                    logType = .git
+                default:
+                    break
+                }
+                
+                showLogs(for: logType)
+            }
 
+        
+            updateLogs()
         }
     }
 
@@ -80,24 +97,75 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    dynamic func newLogLine() {
-        log("new log")
+    // MARK: Changing Log Type
+    
+    @IBAction func sshLogsTapepd() {
+        let type = LogType.ssh
+        showLogs(for: type)
+        logType = type
+        updateLogs()
+    }
+    
+    @IBAction func gitLogsTapepd() {
+        let type = LogType.git
+        showLogs(for: type)
+        logType = type
+        updateLogs()
+    }
+    
+    func showLogs(for type:LogType) {
+        switch type {
+        case .ssh:
+            gitLogButton.alpha = 0.5
+            sshLogButton.alpha = 1.0
+        case .git:
+            sshLogButton.alpha = 0.5
+            gitLogButton.alpha = 1.0
+        }
+    }
+    
+    // MARK: Updating logs
+    func updateLogs() {
         guard let session = session else {
             return
         }
         
         dispatchAsync {
-            self.logs = LogManager.shared.fetch(for: session.id).sorted(by: { $0.date > $1.date })
             
-            dispatchMain {                
-                self.lastAccessLabel.text =  "Active as of " + (self.logs.first?.date.timeAgo() ?? session.created.timeAgo())
+            let lastLog = LogManager.shared.fetchCompleteLatest(for: session.id)
+            
+            switch self.logType {
+            case .ssh:
+                let sshLogs:[SSHSignatureLog] = LogManager.shared.fetch(for: session.id)
+                self.logs = sshLogs
+
+            case .git:
+                let commitLogs:[CommitSignatureLog] = LogManager.shared.fetch(for: session.id)
+                let tagLogs:[TagSignatureLog] = LogManager.shared.fetch(for: session.id)
+
+                self.logs = ((commitLogs as [LogStatement]) + (tagLogs as [LogStatement])).sorted {
+                    $0.date > $1.date
+                }
+            }
+            
+            dispatchMain {
+                if let log = lastLog {
+                    self.lastAccessLabel.text =  "Active as of " + log.date.timeAgo()
+                } else {
+                    self.lastAccessLabel.text = ""
+                }
                 self.tableView.reloadData()
             }
         }
         
         dispatchMain {
-           self.updateApprovalControl(session: session)
+            self.updateApprovalControl(session: session)
         }
+    }
+    
+    dynamic func newLogLine() {
+        log("new log")
+        updateLogs()
     }
 
     @IBAction func userApprovalSettingChanged(sender:UISegmentedControl) {
@@ -199,62 +267,72 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Access Logs"
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") as! LogCell
-        cell.set(log: logs[indexPath.row])
-        return cell
+        
+        let log = logs[indexPath.row]
+        
+        if let sshLog = log as? SSHSignatureLog {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SSHLogCell") as! SSHLogCell
+            cell.set(log: sshLog)
+            
+            return cell
+            
+        } else if let commitLog = log as? CommitSignatureLog {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GitCommitLogCell") as! GitCommitLogCell
+            
+            var previous:CommitSignatureLog?
+            var next:CommitSignatureLog?
+            
+            if (0 ..< logs.count).contains(indexPath.row - 1) {
+                next = logs[indexPath.row - 1] as? CommitSignatureLog
+            }
+
+            if (0 ..< logs.count).contains(indexPath.row + 1) {
+                previous = logs[indexPath.row + 1] as? CommitSignatureLog
+            }
+            cell.set(log: commitLog, previousLog: previous, nextLog: next)
+            
+            return cell
+            
+        } else if let tagLog = log as? TagSignatureLog {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GitTagLogCell") as! GitTagLogCell
+            cell.set(log: tagLog)
+            
+            return cell
+        }
+        
+        return UITableViewCell()
     }
- 
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 80.0
-//        
-//    }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let log = logs[indexPath.row]
+        
+        if let commitLog = log as? CommitSignatureLog, !commitLog.isRejected {
+            self.performSegue(withIdentifier: "showCommitLogDetail", sender: commitLog)
+            
+        } else if let tagLog = log as? TagSignatureLog, !tagLog.isRejected {
+            let commitLog = self.logs.filter({ ($0 as? CommitSignatureLog)?.commitHash == tagLog.tag._object }).first
+            self.performSegue(withIdentifier: "showTagLogDetail", sender: (tagLog, commitLog))
+        }
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    // MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if  let commitLog = sender as? CommitSignatureLog,
+            let logDetailController = segue.destination as? CommitLogDetailController
+        {
+            logDetailController.commitLog = commitLog
+        }
+        else if let tagCommitPair = sender as? TagCommitLogPair,
+                let logDetailController = segue.destination as? TagLogDetailController
+        {
+            logDetailController.tagCommitLogPair = tagCommitPair
+        }
     }
-    */
 
 }

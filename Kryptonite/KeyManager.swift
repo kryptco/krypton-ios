@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import PGPFormat
 
 enum KeyTag:String {
     case me = "me"
@@ -67,11 +67,34 @@ class KeyManager {
         }
     }
     
-    class func destroyKeyPair() -> Bool {
-        let rsaResult = (try? RSAKeyPair.destroy(KeyTag.me.rawValue)) ?? false
-        let edResult = (try? Ed25519KeyPair.destroy(KeyTag.me.rawValue)) ?? false
-
-        return rsaResult || edResult
+    class func destroyKeyPair() {
+        
+        // destroy rsa
+        do {
+            try RSAKeyPair.destroy(KeyTag.me.rawValue)
+        } catch {
+            log("failed to destroy RSA Keypair: \(error)")
+        }
+        
+        // destroy ed
+        do {
+            try Ed25519KeyPair.destroy(KeyTag.me.rawValue)
+        } catch {
+            log("failed to destroy Ed25519 Keypair: \(error)")
+        }
+        
+        // destroy PGP public entities
+        do {
+            try KeychainStorage().delete(key: PGPPublicKeyStorage.created.key(tag: KeyTag.me))
+        } catch {
+            log("failed to destroy PGP created date: \(error)")
+        }
+        
+        do {
+            try KeychainStorage().delete(key: PGPPublicKeyStorage.userIDs.key(tag: KeyTag.me))
+        } catch {
+            log("failed to destroy PGP userIDs: \(error)")
+        }
     }
     
     class func hasKey() -> Bool {
@@ -90,28 +113,119 @@ class KeyManager {
     }
     
     func getMe() throws -> String {
-        do {
-            return try KeychainStorage().get(key: KrMeDataKey)
-        } catch (let e) {
-            throw e
-        }
+        return try KeychainStorage().get(key: KrMeDataKey)
     }
     
     class func setMe(email:String) {
-        let success = KeychainStorage().set(key: KrMeDataKey, value: email)
-        if !success {
-            log("failed to store `me` email.", LogType.error)
+        do {
+            try KeychainStorage().set(key: KrMeDataKey, value: email)
+        } catch {
+            log("failed to store `me` email: \(error)", .error)
         }
+        
         dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
     }
     
     class func clearMe() {
-        let success = KeychainStorage().delete(key: KrMeDataKey)
-        if !success {
-            log("failed to delete `me` email.", LogType.error)
+        do {
+            try KeychainStorage().delete(key: KrMeDataKey)
+        } catch {
+            log("failed to delete `me` email: \(error)", .error)
         }
     }
     
+}
+
+/**
+    Extend KeyManager and KeyTag to pull out the same self-signed PGP Public Key
+    for the current keypair.
+ */
+
+extension KeyTag {
+    var publicPGPStorageKey:String {
+        return "pgpkey.public.\(self.rawValue)"
+    }
+}
+
+enum PGPPublicKeyStorage:String {
+    case created = "created"
+    case userIDs = "userid-list"
+    
+    func key(tag:KeyTag) -> String {
+        return "pgp.pub.\(tag.rawValue).\(self.rawValue)"
+    }
+}
+
+extension KeyManager {
+    
+    func loadPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
+        
+        do { // try to load saved pgp public key
+            
+            // get the created time
+            guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: .me)))
+            else {
+                throw KeychainStorageError.notFound
+            }
+            
+            // get and update userid list if needed
+            let userIds = self.updatedUserIDs(for: identity)
+            
+            let created = Date(timeIntervalSince1970: pgpPublicKeyCreated)
+            return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
+            
+        } catch KeychainStorageError.notFound { // doesn't exist so create it
+
+            // get and update userid list if needed
+            let userIds = self.updatedUserIDs(for: identity)
+            
+            let created = Date()
+            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
+            
+            // save the created date
+            try KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: .me), value: "\(created.timeIntervalSince1970)")
+            
+            return pgpPublicKey
+        } catch {
+            throw error
+        }
+    }
+    
+    func updatedUserIDs(for identity:String) -> [String] {
+        
+        var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))) ?? UserIDList.empty
+        
+        // if exists return
+        guard !userIdList.ids.contains(identity) else {
+            return userIdList.ids
+        }
+        
+        do {
+            // add new identity
+            userIdList = try userIdList.by(adding: identity)
+            try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
+            return userIdList.ids
+            
+        } catch {
+            log("could not save pgp identity to keychain: \(error)", .error)
+            return userIdList.ids
+        }
+    }
+    
+    func getPGPPublicKeyID() throws -> Data {
+        
+        // get the created time
+        guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: .me)))
+        else {
+            throw KeychainStorageError.notFound
+        }
+        
+        let created = Date(timeIntervalSince1970: pgpPublicKeyCreated)
+
+        let pgpPublicKey = try PGPFormat.PublicKey(create: self.keyPair.publicKey.type.pgpKeyType, publicKeyData: self.keyPair.publicKey.pgpPublicKey(), date: created)
+
+        return try pgpPublicKey.keyID()
+    }
 }
 
 

@@ -35,7 +35,24 @@ class SessionCell: UITableViewCell {
 
         deviceNameLabel.text = session.pairing.displayName.uppercased()
         
-        if let lastLog = LogManager.shared.fetchLatest(for: session.id) {
+        // find latest log
+        var latestLogs:[LogStatement] = []
+        
+        if let sshLog:SSHSignatureLog = LogManager.shared.fetchLatest(for: session.id) {
+            latestLogs.append(sshLog)
+        }
+        
+        if let commitLog:CommitSignatureLog = LogManager.shared.fetchLatest(for: session.id) {
+           latestLogs.append(commitLog)
+        }
+        
+        if let tagLog:TagSignatureLog = LogManager.shared.fetchLatest(for: session.id) {
+            latestLogs.append(tagLog)
+        }
+        
+        
+        // set the last log
+        if let lastLog = LogManager.shared.fetchCompleteLatest(for: session.id) {
             commandLabel.text = "\(lastLog.displayName)"
             lastAccessLabel.text = lastLog.date.timeAgo()
         } else {
@@ -43,7 +60,6 @@ class SessionCell: UITableViewCell {
             lastAccessLabel.text = "--"
         }
         
-//        colorView.backgroundColor = UIColor.colorFromString(string: session.id).withAlphaComponent(0.3)
     }
 
 }

@@ -30,9 +30,9 @@ struct Onboarding {
             defer { mutex.unlock() }
 
             if active {
-                let _ = KeychainStorage().set(key: key, value: "true")
+                try? KeychainStorage().set(key: key, value: "true")
             } else {
-                let _ = KeychainStorage().delete(key: key)
+                try? KeychainStorage().delete(key: key)
             }
         }
     }

@@ -72,5 +72,25 @@ extension Date {
             return "\(Int(time/TimeSeconds.week.rawValue))wk\(suffix)"
         }
     }
+    
+    func trailingTimeAgo(suffix:String = " ago") -> String {
+        
+        let time = abs(self.timeIntervalSinceNow)
+        let formatter = DateFormatter()
+        
+        if time < TimeSeconds.minute.rawValue {
+            return "\(Int(time))s\(suffix)"
+        } else if time < TimeSeconds.hour.rawValue {
+            return "\(Int(time/TimeSeconds.minute.rawValue))m\(suffix)"
+        } else if time < TimeSeconds.day.rawValue {
+            formatter.dateStyle = DateFormatter.Style.none
+            formatter.timeStyle = DateFormatter.Style.short
+            return formatter.string(from: self)
+        } else {
+            formatter.dateStyle = DateFormatter.Style.short
+            formatter.timeStyle = DateFormatter.Style.short
+            return formatter.string(from: self)
+        }
+    }
  
 }

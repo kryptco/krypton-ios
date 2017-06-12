@@ -133,7 +133,7 @@ class Ed25519KeyPair:KeyPair {
         return Ed25519KeyPair(keypair: newKeypair)
     }
     
-    static func destroy(_ tag: String) throws -> Bool {
+    static func destroy(_ tag: String) throws {
         
         // destroy the private key
         let privParams = [String(kSecClass): kSecClassGenericPassword,
@@ -142,11 +142,8 @@ class Ed25519KeyPair:KeyPair {
                           String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
         
         let privDeleteStatus = SecItemDelete(privParams as CFDictionary)
-        if privDeleteStatus == errSecItemNotFound {
-            return false
-        }
         
-        guard privDeleteStatus.isSuccess()
+        guard privDeleteStatus.isSuccess() || privDeleteStatus == errSecItemNotFound
         else {
             throw CryptoError.destroy(.Ed25519, privDeleteStatus)
         }
@@ -158,12 +155,11 @@ class Ed25519KeyPair:KeyPair {
                           String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
         
         let pubDeleteStatus = SecItemDelete(pubParams as CFDictionary)
-        guard pubDeleteStatus.isSuccess()
+        
+        guard pubDeleteStatus.isSuccess() || pubDeleteStatus == errSecItemNotFound
         else {
             throw CryptoError.destroy(.Ed25519, pubDeleteStatus)
         }
-        
-        return true
     }
     
     func sign(data:Data, digestType:DigestType) throws -> Data {

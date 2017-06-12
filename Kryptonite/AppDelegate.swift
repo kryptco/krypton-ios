@@ -9,11 +9,12 @@
 //
 
 import UIKit
+import UserNotifications
 
 struct InvalidNotification:Error{}
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var pendingLink:Link?
@@ -45,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Analytics.appLaunch()
-
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        }
         return true
     }
     
@@ -80,8 +84,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             
-            let res = KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
-            if !res { log("Could not save push ARN", .error) }
+            do {
+                try KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
+            } catch {
+                log("Could not save push ARN", .error)
+            }
             
             API().setEndpointEnabledSNS(endpointArn: arn, completionHandler: { (err) in
                 if let err = err {
@@ -197,6 +204,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         handleAction(userInfo: notification.userInfo, identifier: identifier, completionHandler: completionHandler)
         
     }
+    
+    // UNUserNotificationCenterDelegate
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,withCompletionHandler completionHandler: @escaping () -> Void) {
+    
+        handleAction(userInfo: response.notification.request.content.userInfo, identifier: response.actionIdentifier, completionHandler: completionHandler)
+    }
+
 
     func handleAction(userInfo:[AnyHashable : Any]?, identifier:String?, completionHandler:@escaping ()->Void) {
 

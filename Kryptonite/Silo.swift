@@ -108,6 +108,13 @@ class Silo {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
+        
+        // if it's a git-commit signature request: check if we need user approval
+        // then exit and wait for approval
+        if let _ = request.gitSign, Policy.needsUserApproval(for: session) {
+            try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
+            return
+        }
 
         if request.isNoOp() {
             return
@@ -116,6 +123,7 @@ class Silo {
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
+        // analytics / notify user on error for sign response
         if response.sign != nil {
             Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
             
@@ -129,6 +137,18 @@ class Silo {
                 Analytics.postEvent(category: "host", action: "unknown")
             }
         }
+        
+        // analytics / notify user on error for gitSign response
+        if response.gitSign != nil {
+            Analytics.postEvent(category: "git-commit-signature", action: "automatic approval", label: communicationMedium.rawValue)
+            
+            if let error = response.gitSign?.error {
+                Policy.notifyUser(errorMessage: error, session: session)
+            } else {
+                Policy.notifyUser(session: session, request: request)
+            }
+        }
+
         
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
     }
@@ -172,6 +192,7 @@ class Silo {
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         var sign:SignResponse?
         var me:MeResponse?
+        var gitSign:GitSignResponse?
         
         if let signRequest = request.sign {
             let kp = try KeyManager.sharedInstance()
@@ -195,18 +216,18 @@ class Silo {
                     // only place where signature should occur
                     sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
                     
-                    LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
+                    LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
                 } else {
                     throw UserRejectedError()
                 }
 
             }
             catch let error as UserRejectedError {
-                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
+                LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
                 err = "\(error)"
             }
             catch let error as HostMistmatchError {
-                LogManager.shared.save(theLog: SignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
+                LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
                 err = "\(error)"
             }
             catch {
@@ -216,14 +237,68 @@ class Silo {
             sign = SignResponse(sig: sig, err: err)
         }
         
-        if let _ = request.me {
+        if let gitSignRequest = request.gitSign {            
+            var sig:String?
+            var err:String?
+            do {                
+                if signatureAllowed {
+                    // only place where git signature should occur
+                    
+                    let keyManager = try KeyManager.sharedInstance()
+                    let keyID = try keyManager.getPGPPublicKeyID()                    
+                    let _ = keyManager.updatedUserIDs(for: gitSignRequest.userId)
+                    
+                    switch gitSignRequest.git {
+                    case .commit(let commit):
+                        
+                        let asciiArmoredSig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID)
+                        let signature = asciiArmoredSig.packetData.toBase64()
+                        sig = signature
+                        
+                        let commitHash = try commit.commitHash(asciiArmoredSignature: asciiArmoredSig.toString()).hex
+                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: signature, commitHash: commitHash, commit: commit), deviceName: session.pairing.name)
+
+                    case .tag(let tag):
+
+                        let signature = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
+                        sig = signature
+                        
+                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: signature, tag: tag), deviceName: session.pairing.name)
+                    }
+                    
+                } else {
+                    
+                    switch gitSignRequest.git {
+                    case .commit(let commit):
+                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: CommitSignatureLog.rejectedConstant, commitHash: "", commit: commit), deviceName: session.pairing.name)
+                    case .tag(let tag):
+                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: TagSignatureLog.rejectedConstant, tag: tag), deviceName: session.pairing.name)
+                    }
+
+                    throw UserRejectedError()
+                }
+                
+            }  catch {
+                err = "\(error)"
+            }
+            
+            gitSign = GitSignResponse(sig: sig, err: err)
+        }
+        
+        if let meRequest = request.me {
             let keyManager = try KeyManager.sharedInstance()
-            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat()))
+            
+            var pgpPublicKey:Data?
+            if let pgpUserID = meRequest.pgpUserId {
+                pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
+            }
+            
+            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey))
         }
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, gitSign: gitSign, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         
