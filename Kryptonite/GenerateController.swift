@@ -25,8 +25,8 @@ class GenerateController:UIViewController {
         SwiftSpinner.useContainerView(animationView)
         SwiftSpinner.show("", animated: true)
         
-        let didDestroy = KeyManager.destroyKeyPair()
-        log("destroyed keypair: \(didDestroy)")
+        // destroy the existing keypair before re-generating
+        KeyManager.destroyKeyPair()
         
         let startTime = Date()
 

@@ -28,7 +28,9 @@ enum KeyType:String {
 enum DigestType {
     case ed25519
     case sha1
+    case sha224
     case sha256
+    case sha384
     case sha512
 }
 
@@ -50,9 +52,9 @@ protocol KeyPair {
     static func loadOrGenerate(_ tag: String) throws -> KeyPair
     static func load(_ tag: String) throws -> KeyPair?
     static func generate(_ tag: String) throws -> KeyPair
-    static func destroy(_ tag: String) throws -> Bool
+    static func destroy(_ tag: String) throws
     
-    func sign(data:Data, digestType:DigestType) throws -> Data
+    func sign(data:Data, digestType:DigestType) throws -> Data    
 }
 
 

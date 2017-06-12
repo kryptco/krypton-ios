@@ -143,20 +143,12 @@ class RSAKeyPair:KeyPair {
         return RSAKeyPair(pub: pub, priv: priv)
     }
     
-    class func destroy(_ tag: String) throws -> Bool {
-        
-        do {
-            let privDelete = try RSAKeyPair.destroyPrivateKey(tag)
-            let pubDelete  = try RSAKeyPair.destroyPublicKey(tag)
-            
-            return privDelete || pubDelete
-        } catch (let e) {
-            throw e
-        }
-        
+    class func destroy(_ tag: String) throws {
+        try RSAKeyPair.destroyPrivateKey(tag)
+        try RSAKeyPair.destroyPublicKey(tag)
     }
     
-    class func destroyPublicKey(_ tag:String) throws -> Bool {
+    class func destroyPublicKey(_ tag:String) throws {
         // delete the public key
         let pubTag = KeyIdentifier.Public.tag(tag)
         
@@ -169,23 +161,16 @@ class RSAKeyPair:KeyPair {
         params[String(kSecAttrIsPermanent)] = kCFBooleanTrue
         params[String(kSecReturnRef)] = kCFBooleanTrue
         
-        
         let status = SecItemDelete(params as CFDictionary)
-        if status == errSecItemNotFound {
-            return false
-        }
         
-        guard status.isSuccess()
-            else {
-                throw CryptoError.destroy(.RSA, status)
-        }
-        
-        return true
-        
+        guard status.isSuccess() || status == errSecItemNotFound
+        else {
+            throw CryptoError.destroy(.RSA, status)
+        }        
     }
     
     
-    class func destroyPrivateKey(_ tag:String) throws -> Bool {
+    class func destroyPrivateKey(_ tag:String) throws {
         // delete the private key
         let privTag = KeyIdentifier.Private.tag(tag)
         
@@ -198,17 +183,11 @@ class RSAKeyPair:KeyPair {
         
         
         let status = SecItemDelete(params as CFDictionary)
-        if status == errSecItemNotFound {
-            return false
+        
+        guard status.isSuccess() || status == errSecItemNotFound
+        else {
+            throw CryptoError.destroy(.RSA, status)
         }
-        
-        guard status.isSuccess()
-            else {
-                throw CryptoError.destroy(.RSA, status)
-        }
-        
-        
-        return true
     }
     
     private class func getPrivateKeyParamsFor(tag:String, keySize:Int) -> [String:Any]? {
@@ -236,8 +215,12 @@ class RSAKeyPair:KeyPair {
         switch digestType {
         case .sha1:
             return try sign(digest: data.SHA1, padding: SecPadding.PKCS1SHA1)
+        case .sha224:
+            return try sign(digest: data.SHA224, padding: SecPadding.PKCS1SHA224)
         case .sha256:
             return try sign(digest: data.SHA256, padding: SecPadding.PKCS1SHA256)
+        case .sha384:
+            return try sign(digest: data.SHA384, padding: SecPadding.PKCS1SHA384)
         case .sha512:
             return try sign(digest: data.SHA512, padding: SecPadding.PKCS1SHA512)
         default:
@@ -284,9 +267,15 @@ struct RSAPublicKey:PublicKey {
         case .sha1:
             hash    = message.SHA1.bytes
             padding = .PKCS1SHA1
+        case .sha224:
+            hash    = message.SHA224.bytes
+            padding = .PKCS1SHA224
         case .sha256:
             hash    = message.SHA256.bytes
             padding = .PKCS1SHA256
+        case .sha384:
+            hash    = message.SHA384.bytes
+            padding = .PKCS1SHA384
         case .sha512:
             hash    = message.SHA512.bytes
             padding = .PKCS1SHA512

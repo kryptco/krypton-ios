@@ -16,15 +16,17 @@ struct Request:Jsonable {
     var sendACK:Bool
     var version:Version
     var sign:SignRequest?
+    var gitSign:GitSignRequest?
     var me:MeRequest?
     var unpair:UnpairRequest?
 
-    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, sign: SignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
+    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, sign: SignRequest? = nil, gitSign: GitSignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
         self.id = id
         self.unixSeconds = unixSeconds
         self.sendACK = sendACK
         self.version = version
         self.sign = sign
+        self.gitSign = gitSign
         self.me = me
         self.unpair = unpair
         
@@ -38,6 +40,10 @@ struct Request:Jsonable {
 
         if let json:Object = try? json ~> "sign_request" {
             self.sign = try SignRequest(json: json)
+        }
+
+        if let json:Object = try? json ~> "git_sign_request" {
+            self.gitSign = try GitSignRequest(json: json)
         }
         
         if let json:Object = try? json ~> "me_request" {
@@ -59,6 +65,10 @@ struct Request:Jsonable {
         if let s = sign {
             json["sign_request"] = s.object
         }
+
+        if let gitSign = gitSign {
+            json["git_sign_request"] = gitSign.object
+        }
         
         if let m = me {
             json["me_request"] = m.object
@@ -72,7 +82,7 @@ struct Request:Jsonable {
     }
 
     func isNoOp() -> Bool {
-        return sign == nil && me == nil && unpair == nil
+        return sign == nil && gitSign == nil && me == nil && unpair == nil
     }
 }
 
@@ -175,11 +185,47 @@ struct SignRequest:Jsonable {
     }
 }
 
+struct GitSignRequest:Jsonable {
+    let userId:String
+    let git: GitInfo
+    
+    init(userId: String, git: GitInfo) {
+        self.userId = userId
+        self.git = git
+    }
+
+    init(json: Object) throws {
+        self.init(
+            userId: try json ~> "user_id",
+            git: try GitInfo(json: json)
+        )
+    }
+    
+    var object: Object {
+        var json = git.object
+        
+        json["user_id"] = userId
+        
+        return json
+    }
+}
 
 // Me
 struct MeRequest:Jsonable {
-    init(json: Object) throws {}
-    var object: Object {return [:]}
+    var pgpUserId: String?
+    init(pgpUserId: String? = nil) {
+        self.pgpUserId = pgpUserId
+    }
+    init(json: Object) throws {
+        pgpUserId = try? json ~> "pgp_user_id"
+    }
+    var object: Object {
+        var json:Object = [:]
+        if let pgpUserId = pgpUserId {
+            json["pgp_user_id"] = pgpUserId
+        }
+        return json
+    }
 }
 
 // Unpair

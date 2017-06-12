@@ -58,7 +58,9 @@ struct Properties {
 
     static let communicationActivityTimeout = 60.0
     static let requestTimeTolerance = TimeSeconds.minute.multiplied(by: 15)
+    
+    //MARK: PGP Constant
+    static let pgpMessageComment = "Created With Kryptonite"
 
     init() {}
-    
 }

@@ -29,7 +29,7 @@ class KryptoTests: XCTestCase {
             log("running test for \(KPClass)")
             
             do {
-                let _ = try KPClass.destroy("test")
+                try KPClass.destroy("test")
                 let _ = try KPClass.generate("test")
                 
             } catch (let e) {
@@ -49,7 +49,7 @@ class KryptoTests: XCTestCase {
 
             do {
                 
-                let _ = try KPClass.destroy("test")
+                try KPClass.destroy("test")
                 let _ = try KPClass.generate("test")
                 guard let _ = try KPClass.load("test")
                 else {
@@ -73,13 +73,13 @@ class KryptoTests: XCTestCase {
             log("running test for \(KPClass)")
 
             do {
-                let _ = try KPClass.destroy("test")
+                try KPClass.destroy("test")
                 let _ = try KPClass.generate("test")
                 
-                let result = try KPClass.destroy("test")
+                try KPClass.destroy("test")
                 let lkp = try KPClass.load("test")
                 
-                XCTAssert(result && lkp == nil, "destroying keypair failed")
+                XCTAssert(lkp == nil, "destroying keypair failed")
                 
             } catch (let e) {
                 if let ce = e as? CryptoError {
@@ -101,7 +101,7 @@ class KryptoTests: XCTestCase {
                 log("running test for: \(KPClass), using digest algorithm: \(digestType)")
 
                 do {
-                    let _ = try KPClass.destroy("test")
+                    try KPClass.destroy("test")
                     let kp = try KPClass.generate("test")
                     let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!, digestType: digestType)
                     
@@ -133,7 +133,7 @@ class KryptoTests: XCTestCase {
                 log("running test for: \(KPClass), using digest algorithm: \(digestType)")
 
                 do {
-                    let _ = try KPClass.destroy("test")
+                    try KPClass.destroy("test")
                     let _ = try KPClass.generate("test")
                     
                     guard let loadedKp = try KPClass.load("test")
@@ -164,7 +164,7 @@ class KryptoTests: XCTestCase {
             log("running test for \(KPClass)")
 
             do {
-                let _ = try KPClass.destroy("test")
+                try KPClass.destroy("test")
                 let kp = try KPClass.generate("test")
                 
                 let rawPub = try kp.publicKey.export()
@@ -193,7 +193,7 @@ class KryptoTests: XCTestCase {
                 log("running test for: \(KPClass), using digest algorithm: \(digestType)")
 
                 do {
-                    let _ = try KPClass.destroy("test")
+                    try KPClass.destroy("test")
                     let kp = try KPClass.generate("test")
                     let sig = try kp.sign(data: "hellllo".data(using: String.Encoding.utf8)!, digestType: digestType)
                     
@@ -225,7 +225,7 @@ class KryptoTests: XCTestCase {
             let PKClass = publicKeyClasses[index]
 
             do {
-                let _ = try KPClass.destroy("test")
+                try KPClass.destroy("test")
                 let kp = try KPClass.generate("test")
                 
                 let pub = try kp.publicKey.export()
@@ -250,7 +250,7 @@ class KryptoTests: XCTestCase {
         
         do {
             
-            let _ = try RSAKeyPair.destroy("test")
+            try RSAKeyPair.destroy("test")
 
             let pkRSA = "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0fAZp+DuQKltrL5b0NPY9awpDVbg4aEedPKsAGReE1d/m96OvlswV5WOjd9sz7Qr0q1WxM+LHbIiORRLrEunHaSdkICVWc7SLV8LI/vsxIs+x8w/2llreutAVFBwhU5I4SK9bFdlDu1BTxQi83oRiM2oECqOZd34qCww16TmnSCLKUeRDigB4bSwgav807BB+wDi5Pg6FneI41XyQY+TaMtEm+h3fxnE+J+2XlG4tuwAv7n2N4lN2gsl2b1PITtQgzeeHRjpDKFVfhUApacCIu3Ia8kaQXDKC6zCBCk8pbWcLtrp35a8G/WPqgxvvVsGrWHmY1gtTwVhOYk5AtkaUjGudWspoTRO5lB59IGNhsr4xcSwK/SbxgYelB/Lj7GLIuxUZLwRZm+jjK7BlKg5883YrwZmTg5BFcjOLw7phbygrPyf7HzUMFyZaBr5dLN5m5nzUs1lxIY/moRkmcZKsxPOfh2DO91kdess7U6/wXowfB3OS1jme2cpefX8pTfxfVLZJxf7Qpll6PZLpMyg5zLnEIkvzwicHK0CJeA94p6eaXtO53li3psrYRvRrxAS5TkyHOR6//EOfxsBLol7jHpAkMEN6ljs9uivSEH/TYW+itde10StIZ36IXmJsHvDEi6AqM01QGz4aI55V9zLk7GkiJOVh3IueAuAvlt7syMCAwEAAQ=="
             

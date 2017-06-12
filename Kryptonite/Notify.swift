@@ -30,7 +30,19 @@ class Notify {
     func present(request:Request, for session:Session) {
         
         let noteTitle = "Request from \(session.pairing.displayName)"
-        let noteBody = "\(request.sign?.display ?? "unknown host")"
+        
+        var noteSubtitle:String
+        var noteBody:String
+        if let signRequest = request.sign {
+            noteSubtitle = "SSH Login"
+            noteBody = signRequest.display
+        } else if let gitSignRequest = request.gitSign {
+            noteSubtitle = gitSignRequest.git.subtitle + " Signature"
+            noteBody = gitSignRequest.git.shortDisplay
+        } else {
+            noteSubtitle = ""
+            noteBody = "Unknown"
+        }
 
         
         if #available(iOS 10.0, *) {
@@ -69,9 +81,10 @@ class Notify {
                     // otherwise, no notificiation so display it:
                     let content = UNMutableNotificationContent()
                     content.title = noteTitle
+                    content.subtitle = noteSubtitle
                     content.body = noteBody
                     content.sound = UNNotificationSound.default()
-                    content.userInfo = ["session_id": session.id, "request": request.object]
+                    content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
                     content.categoryIdentifier = Policy.authorizeCategoryIdentifier
                     content.threadIdentifier = request.id
                     
@@ -95,7 +108,7 @@ class Notify {
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.category = Policy.authorizeCategory.identifier
-            notification.userInfo = ["session_id": session.id, "request": request.object]
+            notification.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
             
             UIApplication.shared.presentLocalNotificationNow(notification)
         }
@@ -105,7 +118,20 @@ class Notify {
         
         
         let noteTitle = "Approved request from \(session.pairing.displayName)"
-        let noteBody = "\(request.sign?.display ?? "unknown host")"
+        
+        var noteSubtitle:String
+        var noteBody:String
+        if let signRequest = request.sign {
+            noteSubtitle = "SSH Login"
+            noteBody = signRequest.display
+        } else if let gitSignRequest = request.gitSign {
+            noteSubtitle = gitSignRequest.git.subtitle + " Signature"
+            noteBody = gitSignRequest.git.shortDisplay
+        } else {
+            noteSubtitle = ""
+            noteBody = "Unknown"
+        }
+
         
         if #available(iOS 10.0, *) {
             
@@ -113,9 +139,11 @@ class Notify {
             
             let content = UNMutableNotificationContent()
             content.title = noteTitle
+            content.subtitle = noteSubtitle
             content.body = noteBody
+            content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
             content.sound = UNNotificationSound.default()
-            content.userInfo = ["session_id": session.id, "request": request.object]
+            content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
 
             
             // check grouping index for same notification
@@ -165,6 +193,7 @@ class Notify {
             notification.alertTitle = noteTitle
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
+            notification.category = Policy.autoAuthorizedCategoryIdentifier
             
             UIApplication.shared.presentLocalNotificationNow(notification)
         }
@@ -202,10 +231,21 @@ class Notify {
 
 }
 
+extension Request {
+    var notificationIdentifer:String {
+        if let sign = self.sign {
+            return sign.display
+        } else if let gitSign = self.gitSign {
+            return gitSign.git.shortDisplay
+        } else {
+            return self.id
+        }
+    }
+}
 typealias RequestNotificationIdentifier = String
 extension RequestNotificationIdentifier {
     init(request:Request, session:Session) {
-        self = "\(session.id)_\(String(describing: request.sign?.display))"
+        self = "\(session.id)_\(request.notificationIdentifer)"
     }
     
     func with(count:Int) -> String {

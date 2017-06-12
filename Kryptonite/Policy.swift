@@ -36,6 +36,7 @@ class Policy {
     //static var pendingAuthorizations:[PendingAuthorization] = []
     
     // Category Identifiers
+    static let autoAuthorizedCategoryIdentifier = "auto_authorized_identifier"
     static let authorizeCategoryIdentifier = "authorize_identifier"
     
     enum ActionIdentifier:String {
@@ -244,6 +245,8 @@ class Policy {
                 try TransportControl.shared.send(resp, for: session)
                 
                 if let errorMessage = resp.sign?.error {
+                    Policy.notifyUser(errorMessage: errorMessage, session: session)
+                } else if let errorMessage = resp.gitSign?.error {
                     Policy.notifyUser(errorMessage: errorMessage, session: session)
                 } else {
                     Policy.notifyUser(session: session, request: request)

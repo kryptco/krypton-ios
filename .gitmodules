@@ -16,3 +16,6 @@
 [submodule "aws-sdk-ios"]
 	path = aws-sdk-ios
 	url = git@github.com:aws/aws-sdk-ios.git
+[submodule "swift-pgp"]
+	path = swift-pgp
+	url = git@github.com:kryptco/swift-pgp.git

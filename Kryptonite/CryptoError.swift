@@ -25,6 +25,7 @@ enum CryptoError : Error {
     case integrity
     case fingerprint
     case certImport
+    case keyNotFound
 }
 
 

@@ -9,8 +9,6 @@
 import UserNotifications
 import JSON
 
-
-
 class NotificationService: UNNotificationServiceExtension {
     
     var contentHandler: ((UNNotificationContent) -> Void)?
@@ -80,12 +78,16 @@ class NotificationService: UNNotificationServiceExtension {
                             if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
                                 if let err = resp.sign?.error {
                                     errorMessage = err
-                                    content.title = "Failed approval for \(session.pairing.displayName)."
+                                    content.title = "Failed SSH approval for \(session.pairing.displayName)."
+                                } else if let err = resp.gitSign?.error {
+                                    errorMessage = err
+                                    content.title = "Failed Git approval for \(session.pairing.displayName)."
                                 } else {
                                     content.title = "Approved request from \(session.pairing.displayName)."
                                 }
+                                content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
                             }
-                                // not approved
+                            // not approved
                             else {
                                 content.title = "Request from \(session.pairing.displayName)."
                                 content.categoryIdentifier = Policy.authorizeCategoryIdentifier
@@ -93,10 +95,21 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             if let error = errorMessage {
                                 content.body = error
-                            } else {
-                                content.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
-                                content.userInfo = ["session_id": session.id, "request": unsealedRequest.object]
                             }
+                            else if let signRequest = unsealedRequest.sign {
+                                content.body = signRequest.display
+                                content.userInfo = ["session_display": session.pairing.displayName,
+                                                    "session_id": session.id,
+                                                    "request": unsealedRequest.object]
+                            }
+                            else if let gitSignRequest = unsealedRequest.gitSign
+                            {
+                                content.body = gitSignRequest.git.shortDisplay
+                                content.userInfo = ["session_display": session.pairing.displayName,
+                                                    "session_id": session.id,
+                                                    "request": unsealedRequest.object]
+                            }
+
                             
                             if noSound {
                                 content.sound = nil
@@ -126,7 +139,7 @@ class NotificationService: UNNotificationServiceExtension {
                             let currentContent = UNMutableNotificationContent()
                             currentContent.title = noteContent.title
                             currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                            currentContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                            currentContent.body = noteContent.body + "." // period for testing
                             currentContent.userInfo = noteContent.userInfo
                             currentContent.sound = UNNotificationSound.default()
                             
@@ -154,7 +167,7 @@ class NotificationService: UNNotificationServiceExtension {
                                 let currentContent = UNMutableNotificationContent()
                                 currentContent.title = noteContent.title
                                 currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                                currentContent.body = "\(unsealedRequest.sign?.display ?? "unknown host")"
+                                currentContent.body = noteContent.body + "." // period for testing
                                 currentContent.userInfo = noteContent.userInfo
                                 currentContent.sound = UNNotificationSound.default()
                                 
