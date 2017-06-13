@@ -165,8 +165,7 @@ extension KeyPair {
         creating a self-signed PGP PublicKey for multiple identities
      */
     func exportAsciiArmoredPGPPublicKey(for identities:[String], created:Date = Date()) throws -> AsciiArmorMessage {
-        let message = try createPGPPublicKeyMessage(for: identities, created: created)
-        return try AsciiArmorMessage(message: message, blockType: ArmorMessageBlock.publicKey, comment: Properties.pgpMessageComment)
+        return try createPGPPublicKeyMessage(for: identities, created: created).armoredMessage(blockType: .publicKey, comment: Properties.pgpMessageComment)
     }
     
     /**
@@ -199,7 +198,7 @@ extension KeyPair {
         try signedBinary.set(hash: hash, signedHash: signedHash)
 
         // return ascii armored signature
-        return try AsciiArmorMessage(message: signedBinary.toMessage(), blockType: ArmorMessageBlock.signature, comment: Properties.pgpMessageComment)
+        return try signedBinary.toMessage().armoredMessage(blockType: .signature, comment: Properties.pgpMessageComment)
     }
     
     /**
