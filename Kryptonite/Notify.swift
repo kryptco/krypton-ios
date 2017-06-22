@@ -12,6 +12,62 @@ import UIKit
 import UserNotifications
 import JSON
 
+struct NonPresentableRequestError:Error {}
+
+extension Request {
+    
+    /**
+     Get a notification title and body message
+     */
+    func notificationDetails() throws  -> (subtitle:String, body:String) {
+        switch self.type {
+        case .ssh(let sshSign):
+            return ("SSH Login", sshSign.display)
+        case .git(let gitSign):
+            let git = gitSign.git
+            return (git.subtitle + " Signature", git.shortDisplay)
+        default:
+            throw NonPresentableRequestError()
+        }
+    }
+    
+    /**
+        An identifier to group identical requests by
+        only acceptable for SSH signature requests
+     */
+    var groupableNotificationIdentifer:String {
+        switch self.type {
+        case .ssh(let sshSign):
+            return sshSign.display
+        default:
+            return self.id
+        }
+    }
+}
+
+/**
+    Show an auto-approved local notification
+    group identical requests with the number of times they appeared.
+    i.e.: "root@server.com (5)"
+ */
+typealias GroupableRequestNotificationIdentifier = String
+extension GroupableRequestNotificationIdentifier {
+    init(request:Request, session:Session) {
+        self = "\(session.id)_\(request.groupableNotificationIdentifer)"
+    }
+    
+    func with(count:Int) -> String {
+        return "\(self)_\(count)"
+    }
+}
+
+
+/**
+    Handle presenting local request notifications to the user.
+    presents:
+        - approvable requests: need users response
+        - auto-approved: policy settings already approved, notify user it happened
+ */
 class Notify {
     private static var _shared:Notify?
     static var shared:Notify {
@@ -33,17 +89,13 @@ class Notify {
         
         var noteSubtitle:String
         var noteBody:String
-        if let signRequest = request.sign {
-            noteSubtitle = "SSH Login"
-            noteBody = signRequest.display
-        } else if let gitSignRequest = request.gitSign {
-            noteSubtitle = gitSignRequest.git.subtitle + " Signature"
-            noteBody = gitSignRequest.git.shortDisplay
-        } else {
-            noteSubtitle = ""
-            noteBody = "Unknown"
+        
+        do {
+            (noteSubtitle, noteBody) = try request.notificationDetails()
+        } catch {
+            // request is not presentable
+            return
         }
-
         
         if #available(iOS 10.0, *) {
             
@@ -114,6 +166,8 @@ class Notify {
         }
     }
     
+
+    
     func presentApproved(request:Request, for session:Session) {
         
         
@@ -121,21 +175,18 @@ class Notify {
         
         var noteSubtitle:String
         var noteBody:String
-        if let signRequest = request.sign {
-            noteSubtitle = "SSH Login"
-            noteBody = signRequest.display
-        } else if let gitSignRequest = request.gitSign {
-            noteSubtitle = gitSignRequest.git.subtitle + " Signature"
-            noteBody = gitSignRequest.git.shortDisplay
-        } else {
-            noteSubtitle = ""
-            noteBody = "Unknown"
+        
+        do {
+            (noteSubtitle, noteBody) = try request.notificationDetails()
+        } catch {
+            // request is not presentable
+            return
         }
 
         
         if #available(iOS 10.0, *) {
             
-            let noteId = RequestNotificationIdentifier(request: request, session:session)
+            let noteId = GroupableRequestNotificationIdentifier(request: request, session:session)
             
             let content = UNMutableNotificationContent()
             content.title = noteTitle
@@ -200,7 +251,9 @@ class Notify {
 
     }
     
-    
+    /**
+        Show "error" local notification
+    */
     func presentError(message:String, session:Session) {
         
         if UserRejectedError.isRejected(errorString: message) {
@@ -266,27 +319,6 @@ class Notify {
 
 }
 
-extension Request {
-    var notificationIdentifer:String {
-        if let sign = self.sign {
-            return sign.display
-        } else if let gitSign = self.gitSign {
-            return gitSign.git.shortDisplay
-        } else {
-            return self.id
-        }
-    }
-}
-typealias RequestNotificationIdentifier = String
-extension RequestNotificationIdentifier {
-    init(request:Request, session:Session) {
-        self = "\(session.id)_\(request.notificationIdentifer)"
-    }
-    
-    func with(count:Int) -> String {
-        return "\(self)_\(count)"
-    }
-}
 
 
 

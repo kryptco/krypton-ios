@@ -97,15 +97,14 @@ class NotificationService: UNNotificationServiceExtension {
                             if let error = errorMessage {
                                 content.body = error
                             }
-                            else if let signRequest = unsealedRequest.sign {
+                            else if case .ssh(let signRequest) = unsealedRequest.type {
                                 content.body = signRequest.display
                                 content.userInfo = ["session_display": session.pairing.displayName,
                                                     "session_id": session.id,
                                                     "request": unsealedRequest.object]
                             }
-                            else if let gitSignRequest = unsealedRequest.gitSign
-                            {
-                                content.body = gitSignRequest.git.shortDisplay
+                            else if case .git(let signRequest) = unsealedRequest.type {
+                                content.body = signRequest.git.shortDisplay
                                 content.userInfo = ["session_display": session.pairing.displayName,
                                                     "session_id": session.id,
                                                     "request": unsealedRequest.object]

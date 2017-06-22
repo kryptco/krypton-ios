@@ -11,18 +11,32 @@ import UIKit
 
 extension Request {
     var approveController:ApproveController? {
-        if let _ = self.sign {
+        
+        switch self.type {
+        case .ssh:
             return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SSHApproveController") as? SSHApproveController
-        } else if let gitSign = self.gitSign {
+        case .git(let gitSign):
             switch gitSign.git {
             case .commit:
                 return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
             case .tag:
                 return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TagApproveController") as? TagApproveController
             }
+        default:
+            return nil
         }
-        
-        return nil
+    }
+    
+    var autoApproveDisplay:String? {
+        switch self.type {
+        case .ssh(let sshRequest):
+            return sshRequest.display
+        case .git(let gitSign):
+            return gitSign.git.shortDisplay
+
+        default:
+            return nil
+        }
     }
 }
 
@@ -74,13 +88,7 @@ extension UIViewController {
         autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
         (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
-        
-        if let signRequest = request.sign {
-            (autoApproveController as? AutoApproveController)?.command = signRequest.display
-        } else if let gitSignRequest = request.gitSign {
-            (autoApproveController as? AutoApproveController)?.command = gitSignRequest.git.shortDisplay
-        }
-        
+        (autoApproveController as? AutoApproveController)?.command = request.autoApproveDisplay        
         
         dispatchMain {
             if self.presentedViewController is AutoApproveController {

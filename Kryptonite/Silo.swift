@@ -13,7 +13,7 @@ import AwesomeCache
 
 struct InvalidRequestTimeError:Error{}
 struct RequestPendingError:Error{}
-
+struct ResponseNotNeededError:Error{}
 struct SiloCacheCreationError:Error{}
 
 struct UserRejectedError:Error, CustomDebugStringConvertible {
@@ -75,24 +75,18 @@ class Silo {
         mutex.lock()
         defer { mutex.unlock() }
 
+        // ensure session is still active
         guard let _ = SessionManager.shared.get(id: session.id) else {
             throw SessionRemovedError()
         }
-
-        if let _ = request.unpair {
-            Analytics.postEvent(category: "device", action: "unpair", label: "request")
-            
-            SessionManager.shared.remove(session: session)
-            TransportControl.shared.remove(session: session, sendUnpairResponse: false)
-            
-            throw SessionRemovedError()
-        }
-
+        
+        // ensure request has not expired
         let now = Date().timeIntervalSince1970
         if abs(now - Double(request.unixSeconds)) > Properties.requestTimeTolerance {
             throw InvalidRequestTimeError()
         }
         
+        // check if the request has already been receieved and cached
         requestCache?.removeExpiredObjects()
         if  let cachedResponseData = requestCache?[CacheKey(session, request)] as Data? {
             let json:Object = try JSON.parse(data: cachedResponseData)
@@ -100,26 +94,36 @@ class Silo {
             try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
             return
         }
-        
-        
-        // if it's signature request: check if we need a user approval
-        // then exit and wait for approval
-        if let signRequest = request.sign, Policy.needsUserApproval(for: session, and: signRequest) {
+
+
+        // decide if request type can be responded to immediately
+        // or doesn't need response,
+        // or needs user's approval first
+        switch request.type {
+        case .unpair:
+            Analytics.postEvent(category: "device", action: "unpair", label: "request")
+            
+            SessionManager.shared.remove(session: session)
+            TransportControl.shared.remove(session: session, sendUnpairResponse: false)
+            
+            throw SessionRemovedError()
+            
+        case .noOp:
+            return
+    
+        case .ssh(let sshRequest) where Policy.needsUserApproval(for: session, and: sshRequest):
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
-        }
-        
-        // if it's a git-commit signature request: check if we need user approval
-        // then exit and wait for approval
-        if let _ = request.gitSign, Policy.needsUserApproval(for: session) {
+            
+        case .git where Policy.needsUserApproval(for: session):
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
+            
+        default:
+            break
         }
 
-        if request.isNoOp() {
-            return
-        }
-
+        
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
@@ -133,7 +137,7 @@ class Silo {
                 Policy.notifyUser(session: session, request: request)
             }
             
-            if request.sign?.verifiedHostAuth == nil {
+            if case .ssh(let sshRequest) = request.type, sshRequest.verifiedHostAuth == nil {
                 Analytics.postEvent(category: "host", action: "unknown")
             }
         }
@@ -190,17 +194,21 @@ class Silo {
     func responseFor(request:Request, session:Session, signatureAllowed:Bool) throws -> Response {
         let requestStart = Date().timeIntervalSince1970
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
+        
         var sign:SignResponse?
         var me:MeResponse?
         var gitSign:GitSignResponse?
         
-        if let signRequest = request.sign {
+        // craft a response to the reuqest type
+        // given the user's approval: `signatureAllowed`
+        switch request.type {
+        case .ssh(let signRequest):
             let kp = try KeyManager.sharedInstance()
-
+            
             if try kp.keyPair.publicKey.fingerprint() != signRequest.fingerprint.fromBase64() {
                 throw KeyManagerError.keyDoesNotExist
             }
-
+            
             var sig:String?
             var err:String?
             do {
@@ -220,7 +228,7 @@ class Silo {
                 } else {
                     throw UserRejectedError()
                 }
-
+                
             }
             catch let error as UserRejectedError {
                 LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
@@ -233,21 +241,21 @@ class Silo {
             catch {
                 err = "\(error)"
             }
-
+            
             sign = SignResponse(sig: sig, err: err)
-        }
-        
-        if let gitSignRequest = request.gitSign {            
+
+            
+        case .git(let gitSignRequest):
             var sig:String?
             var err:String?
-            do {                
+            do {
                 if signatureAllowed {
                     // only place where git signature should occur
                     
                     let keyManager = try KeyManager.sharedInstance()
                     let keyID = try keyManager.getPGPPublicKeyID()                    
                     let _ = keyManager.updatePGPUserIDPreferences(for: gitSignRequest.userId)
-                    
+
                     switch gitSignRequest.git {
                     case .commit(let commit):
                         
@@ -257,9 +265,9 @@ class Silo {
                         
                         let commitHash = try commit.commitHash(asciiArmoredSignature: asciiArmoredSig.toString()).hex
                         LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: signature, commitHash: commitHash, commit: commit), deviceName: session.pairing.name)
-
+                        
                     case .tag(let tag):
-
+                        
                         let signature = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
                         sig = signature
                         
@@ -274,7 +282,7 @@ class Silo {
                     case .tag(let tag):
                         LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: TagSignatureLog.rejectedConstant, tag: tag), deviceName: session.pairing.name)
                     }
-
+                    
                     throw UserRejectedError()
                 }
                 
@@ -283,9 +291,9 @@ class Silo {
             }
             
             gitSign = GitSignResponse(sig: sig, err: err)
-        }
-        
-        if let meRequest = request.me {
+
+            
+        case .me(let meRequest):
             let keyManager = try KeyManager.sharedInstance()
             
             var pgpPublicKey:Data?
@@ -294,6 +302,9 @@ class Silo {
             }
             
             me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey))
+
+        default:
+            throw ResponseNotNeededError()
         }
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""

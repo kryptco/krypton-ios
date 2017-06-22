@@ -26,7 +26,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     var errorController:ErrorController?
 
     enum ContainerType {
-        case ssh(String), commit(CommitInfo), tag(TagInfo), error
+        case ssh(String), commit(CommitInfo), tag(TagInfo), error(String)
     }
 
     override func viewDidLoad() {
@@ -52,26 +52,25 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             // set request specifcs
             let request = try Request(json: requestObject)
             
-            if let signRequest = request.sign {
+            switch request.type {
+            case .ssh(let signRequest):
                 showView(type: .ssh(signRequest.display), deviceName: sessionName)
-            } else if let gitSign = request.gitSign {
-                
-                switch gitSign.git {
+            case .git(let gitSignRequest):
+                switch gitSignRequest.git {
                 case .commit(let commit):
                     showView(type: ContainerType.commit(commit), deviceName: sessionName)
                 case .tag(let tag):
                     showView(type: ContainerType.tag(tag), deviceName: sessionName)
                 }
-                
-            } else {
+            default:
                 throw InvalidNotificationError.requestTypeUnknown(sessionName)
             }
-
+            
         } catch InvalidNotificationError.requestTypeUnknown(let deviceName) {
-            showView(type: .error, deviceName: deviceName.uppercased())
+            showView(type: .error("Cannot display the unhandled request type"), deviceName: deviceName)
         }
         catch {
-            showView(type: .error, deviceName: "Unknown".uppercased())
+            showView(type: .error("\(error)"), deviceName: "Unknown")
         }
     }
     
@@ -91,14 +90,16 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         case .tag(let tag):
             tagController?.set(tag: tag, sessionName: deviceName)
             removeAllBut(view: tagContainerView)
-        case .error:
-            break
+        case .error(let message):
+            errorController?.set(errorMessage: message, deviceName: deviceName)
+            removeAllBut(view: errorContainerView)
+
         }
     }
     
     func removeAllBut(view:UIView) {
         //errorContainerView.isHidden = true
-        for v in [sshContainerView, commitContainerView, tagContainerView] {
+        for v in [sshContainerView, commitContainerView, tagContainerView, errorContainerView] {
             guard v != view else {
                 continue
             }
@@ -125,26 +126,23 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 }
 
 class ErrorController:UIViewController {
-
-    @IBOutlet weak var titleLabel:UILabel!
-    @IBOutlet weak var subtitleLabel:UILabel!
+    
+    @IBOutlet weak var deviceNameLabel:UILabel!
+    @IBOutlet weak var errorLabel:UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any required interface initialization here.
         
-        titleLabel.text = ""
-        subtitleLabel.text = ""
-        
+        errorLabel.text = ""
     }
     
-    func set(title:String, subtitle:String) {
-        titleLabel.text = title
-        subtitleLabel.text = subtitle
+    func set(errorMessage:String, deviceName:String) {
+        errorLabel.text = errorMessage
+        deviceNameLabel.text = deviceName.uppercased()
     }
-
+    
 }
-
 class SSHLoginController:UIViewController {
     
     @IBOutlet weak var deviceNameLabel:UILabel!

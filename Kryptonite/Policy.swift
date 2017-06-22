@@ -229,13 +229,24 @@ class Policy {
         
         cache?.allObjects().forEach {
             
-            guard   let pending = try? PendingAuthorization(jsonData: $0 as Data),
-                    let signRequest = pending.request.sign,
-                    Policy.needsUserApproval(for: pending.session, and: signRequest) == false
+            guard  let pending = try? PendingAuthorization(jsonData: $0 as Data)
             else {
                 return
             }
             
+            // ensure that session + request are auto-allowed by policy
+            switch pending.request.type {
+            case .ssh(let signRequest) where false == Policy.needsUserApproval(for: pending.session, and: signRequest):
+                break
+                
+            case .git where false == Policy.needsUserApproval(for: pending.session):
+                break
+                
+            // otherwise request will not be auto-handled
+            default:
+                return
+            }
+
             let session = pending.session
             let request = pending.request
             

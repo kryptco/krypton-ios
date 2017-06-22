@@ -286,7 +286,7 @@ class SSHApproveController:ApproveController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let sshSign = request?.sign {
+        if let type = request?.type, case .ssh(let sshSign) = type {
             commandLabel.text = sshSign.display
         } else {
             commandLabel.text = "Unknown"
@@ -311,35 +311,27 @@ class CommitApproveController:ApproveController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let gitSign = request?.gitSign else {
+        guard   let type = request?.type,
+                case .git(let gitSign) = type,
+                case .commit(let commit) = gitSign.git
+        else {
             clear()
             return
         }
         
-        switch gitSign.git {
-        case .commit(let commit):
-            sizedMessageLabel.text = commit.messageString
-            messageLabel.text = commit.messageString
-            let (author, date) = commit.author.userIdAndDateString
-            let (committer, committerDate) = commit.committer.userIdAndDateString
-
-            if author == committer {
-                authorLabel.text = author
-                authorDateLabel.text = date
-                committerLabel.text = ""
-            } else {
-                authorLabel.text = "A: " + author
-                committerLabel.text = "C: " + committer
-                authorDateLabel.text = committerDate
-            }
-            
+        messageLabel.text = commit.messageString
+        let (author, date) = commit.author.userIdAndDateString
+        let (committer, committerDate) = commit.committer.userIdAndDateString
         
-            
-        default:
-            clear()
-            return
+        if author == committer {
+            authorLabel.text = author
+            authorDateLabel.text = date
+            committerLabel.text = ""
+        } else {
+            authorLabel.text = "A: " + author
+            committerLabel.text = "C: " + committer
+            authorDateLabel.text = committerDate
         }
-
     }
 
     func clear() {
@@ -367,27 +359,20 @@ class TagApproveController:ApproveController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let gitSign = request?.gitSign else {
+        guard let type = request?.type,
+            case .git(let gitSign) = type,
+            case .tag(let tag) = gitSign.git
+        else {
             clear()
             return
         }
         
-        switch gitSign.git {
-        case .tag(let tag):
-            
-            sizedMessageLabel.text = tag.messageString
-            messageLabel.text = tag.messageString
-            objectHashLabel.text = tag.objectShortHash
-            tagLabel.text = tag.tag
-            let (tagger, date) = tag.tagger.userIdAndDateString
-            taggerLabel.text = tagger
-            taggerDate.text = date
-            
-        default:
-            clear()
-            return
-        }
-        
+        messageLabel.text = tag.messageString
+        objectHashLabel.text = tag.objectShortHash
+        tagLabel.text = tag.tag
+        let (tagger, date) = tag.tagger.userIdAndDateString
+        taggerLabel.text = tagger
+        taggerDate.text = date
     }
     
     func clear() {

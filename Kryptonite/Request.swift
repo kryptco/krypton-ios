@@ -15,21 +15,15 @@ struct Request:Jsonable {
     var unixSeconds:Int
     var sendACK:Bool
     var version:Version
-    var sign:SignRequest?
-    var gitSign:GitSignRequest?
-    var me:MeRequest?
-    var unpair:UnpairRequest?
+    var type:RequestType
+    
 
-    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, sign: SignRequest? = nil, gitSign: GitSignRequest? = nil, me: MeRequest? = nil, unpair: UnpairRequest? = nil) {
+    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, type:RequestType) {
         self.id = id
         self.unixSeconds = unixSeconds
         self.sendACK = sendACK
         self.version = version
-        self.sign = sign
-        self.gitSign = gitSign
-        self.me = me
-        self.unpair = unpair
-        
+        self.type = type
     }
     
     init(json: Object) throws {
@@ -37,58 +31,89 @@ struct Request:Jsonable {
         self.unixSeconds = try json ~> "unix_seconds"
         self.sendACK = (try? json ~> "a") ?? false
         self.version = try Version(string: json ~> "v")
-
-        if let json:Object = try? json ~> "sign_request" {
-            self.sign = try SignRequest(json: json)
-        }
-
-        if let json:Object = try? json ~> "git_sign_request" {
-            self.gitSign = try GitSignRequest(json: json)
-        }
-        
-        if let json:Object = try? json ~> "me_request" {
-            self.me = try MeRequest(json: json)
-        }
-
-        if let json:Object = try? json ~> "unpair_request" {
-            self.unpair = try UnpairRequest(json: json)
-        }
+        self.type = try RequestType(json: json)
     }
     
     var object:Object {
-        var json:[String:Any] = [:]
+        var json = type.object
+        
         json["request_id"] = id
         json["unix_seconds"] = unixSeconds
         json["a"] = sendACK
         json["v"] = version.string
 
-        if let s = sign {
-            json["sign_request"] = s.object
-        }
-
-        if let gitSign = gitSign {
-            json["git_sign_request"] = gitSign.object
-        }
-        
-        if let m = me {
-            json["me_request"] = m.object
-        }
-
-        if let u = unpair {
-            json["unpair_request"] = u.object
-        }
-
         return json
-    }
-
-    func isNoOp() -> Bool {
-        return sign == nil && gitSign == nil && me == nil && unpair == nil
     }
 }
 
-//MARK: Requests
+struct MultipleRequestsError:Error {}
 
-// Sign
+enum RequestType:Jsonable {
+    case me(MeRequest)
+    case ssh(SignRequest)
+    case git(GitSignRequest)
+    case unpair(UnpairRequest)
+    case noOp
+    
+    init(json:Object) throws {
+        
+        var requests:[RequestType] = []
+        
+        // parse the requests
+        if let json:Object = try? json ~> "me_request" {
+            requests.append(.me(try MeRequest(json: json)))
+        }
+
+        if let json:Object = try? json ~> "sign_request" {
+            requests.append(.ssh(try SignRequest(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "git_sign_request" {
+            requests.append(.git(try GitSignRequest(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "unpair_request" {
+            requests.append(.unpair(try UnpairRequest(json: json)))
+        }
+        
+        
+        // if no requests, it's a noOp
+        if requests.isEmpty {
+            self = .noOp
+            return
+        }
+        
+        // if more than one request, it's an error
+        if requests.count > 1 {
+            throw MultipleRequestsError()
+        }
+        
+        // set the request type
+        self = requests[0]
+    }
+    
+    var object:Object {
+        var json = Object()
+        
+        switch self {
+        case .me(let m):
+            json["me_request"] = m.object
+        case .ssh(let s):
+            json["sign_request"] = s.object
+        case .git(let g):
+            json["git_sign_request"] = g.object
+        case .unpair(let u):
+            json["unpair_request"] = u.object
+        case .noOp:
+            break
+        }
+        
+        return json
+    }
+}
+
+
+//MARK: Requests
 
 struct HostAuthVerificationFailed:Error{}
 
