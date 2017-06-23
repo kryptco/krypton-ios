@@ -15,22 +15,15 @@ final class Response:Jsonable {
     var snsEndpointARN:String
     var version:Version?
     var approvedUntil:Int?
-    var sign:SignResponse?
-    var gitSign:GitSignResponse?
-    var me:MeResponse?
-    var unpair:UnpairResponse?
-    var ack:AckResponse?
     var trackingID:String?
+    
+    var type:ResponseType
 
-    init(requestID:String, endpoint:String, approvedUntil:Int? = nil, sign:SignResponse? = nil, gitSign:GitSignResponse? = nil, me:MeResponse? = nil, unpair:UnpairResponse? = nil, ack:AckResponse? = nil, trackingID:String? = nil) {
+    init(requestID:String, endpoint:String, type:ResponseType, approvedUntil:Int? = nil, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
         self.approvedUntil = approvedUntil
-        self.sign = sign
-        self.gitSign = gitSign
-        self.me = me
-        self.unpair = unpair
-        self.ack = ack
+        self.type = type
         self.trackingID = trackingID
         self.version = Properties.currentVersion
     }
@@ -39,29 +32,10 @@ final class Response:Jsonable {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
         self.version = try Version(string: json ~> "v")
-
+        self.type = try ResponseType(json: json)
+        
         if let approvedUntil:Int = try? json ~> "approved_until" {
             self.approvedUntil = approvedUntil
-        }
-
-        if let json:Object = try? json ~> "sign_response" {
-            self.sign = try SignResponse(json: json)
-        }
-
-        if let json:Object = try? json ~> "git_sign_response" {
-            self.gitSign = try GitSignResponse(json: json)
-        }
-        
-        if let json:Object = try? json ~> "me_response" {
-            self.me = try MeResponse(json: json)
-        }
-
-        if let json:Object = try? json ~> "unpair_response" {
-            self.unpair = UnpairResponse(json: json)
-        }
-
-        if let json:Object = try? json ~> "ack_response" {
-            self.ack = AckResponse(json: json)
         }
 
         if let trackingID:String = try? json ~> "tracking_id" {
@@ -70,32 +44,12 @@ final class Response:Jsonable {
     }
     
     var object:Object {
-        var json:[String:Any] = [:]
+        var json = type.object
         json["request_id"] = requestID
         json["sns_endpoint_arn"] = snsEndpointARN
         
         if let approvedUntil = approvedUntil {
             json["approved_until"] = approvedUntil
-        }
-
-        if let s = sign {
-            json["sign_response"] = s.object
-        }
-
-        if let gitSign = gitSign {
-            json["git_sign_response"] = gitSign.object
-        }
-        
-        if let m = me {
-            json["me_response"] = m.object
-        }
-
-        if let u = unpair {
-            json["unpair_response"] = u.object
-        }
-
-        if let a = ack {
-            json["ack_response"] = a.object
         }
 
         if let trackingID = self.trackingID {
@@ -110,9 +64,83 @@ final class Response:Jsonable {
     }
 }
 
-//MARK: Responses
+struct MultipleResponsesError:Error {}
 
-// Sign
+enum ResponseType {
+    case me(MeResponse)
+    case ssh(SignResponse)
+    case git(GitSignResponse)
+    case ack(AckResponse)
+    case unpair(UnpairResponse)
+    
+    init(json:Object) throws {
+        
+        var responses:[ResponseType] = []
+        
+        // parse the requests
+        if let json:Object = try? json ~> "me_response" {
+            responses.append(.me(try MeResponse(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "sign_response" {
+            responses.append(.ssh(try SignResponse(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "git_sign_response" {
+            responses.append(.git(try GitSignResponse(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "unpair_response" {
+            responses.append(.unpair(try UnpairResponse(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "ack_response" {
+            responses.append(.ack(try AckResponse(json: json)))
+        }
+        
+        // if more than one request, it's an error
+        if responses.count > 1 {
+            throw MultipleResponsesError()
+        }
+        
+        // set the request type
+        self = responses[0]
+    }
+    
+    var object:Object {
+        var json = Object()
+        
+        switch self {
+        case .me(let m):
+            json["me_response"] = m.object
+        case .ssh(let s):
+            json["sign_response"] = s.object
+        case .git(let g):
+            json["git_sign_response"] = g.object
+        case .ack(let a):
+            json["ack_response"] = a.object
+        case .unpair(let u):
+            json["unpair_response"] = u.object
+        }
+        
+        return json
+    }
+    
+    var error:String? {
+        switch self {
+        case .ssh(let sign):
+            return sign.error
+            
+        case .git(let gitSign):
+            return gitSign.error
+            
+        case .me, .unpair, .ack:
+            return nil
+        }
+    }
+}
+
+//MARK: Responses
 
 struct SignResponse:Jsonable {
     var signature:String?
@@ -228,7 +256,7 @@ struct MeResponse:Jsonable {
 // Unpair
 struct UnpairResponse:Jsonable {
     init(){}
-    init(json: Object) {
+    init(json: Object) throws {
 
     }
     var object: Object {
@@ -239,9 +267,7 @@ struct UnpairResponse:Jsonable {
 // Ack
 struct AckResponse:Jsonable {
     init(){}
-    init(json: Object) {
-        
-    }
+    init(json: Object) throws { }
     var object: Object {
         return [:]
     }}

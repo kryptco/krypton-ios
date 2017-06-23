@@ -55,6 +55,17 @@ enum RequestType:Jsonable {
     case unpair(UnpairRequest)
     case noOp
     
+    
+    var isApprovable:Bool {
+        switch self {
+        case .ssh, .git:
+            return true
+        case .me, .unpair, .noOp:
+            return false
+        }
+    }
+
+    
     init(json:Object) throws {
         
         var requests:[RequestType] = []

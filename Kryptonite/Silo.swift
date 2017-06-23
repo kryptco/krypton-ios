@@ -127,11 +127,12 @@ class Silo {
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
-        // analytics / notify user on error for sign response
-        if response.sign != nil {
+        // analytics / notify user on error for signature response
+        switch response.type {
+        case .ssh(let sign):
             Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
             
-            if let error = response.sign?.error {
+            if let error = sign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
                 Policy.notifyUser(session: session, request: request)
@@ -140,19 +141,19 @@ class Silo {
             if case .ssh(let sshRequest) = request.type, sshRequest.verifiedHostAuth == nil {
                 Analytics.postEvent(category: "host", action: "unknown")
             }
-        }
-        
-        // analytics / notify user on error for gitSign response
-        if response.gitSign != nil {
+
+        case .git(let gitSign):
             Analytics.postEvent(category: "git-commit-signature", action: "automatic approval", label: communicationMedium.rawValue)
             
-            if let error = response.gitSign?.error {
+            if let error = gitSign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
                 Policy.notifyUser(session: session, request: request)
             }
-        }
 
+        default:
+            break
+        }
         
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
     }
@@ -169,7 +170,7 @@ class Silo {
         
         if request.sendACK {
             let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
-            let ack = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), ack: AckResponse(), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            let ack = Response(requestID: request.id, endpoint: arn, type: .ack(AckResponse()), approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
             do {
                 try TransportControl.shared.send(ack, for: session)
             } catch (let e) {
@@ -195,9 +196,8 @@ class Silo {
         let requestStart = Date().timeIntervalSince1970
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         
-        var sign:SignResponse?
-        var me:MeResponse?
-        var gitSign:GitSignResponse?
+        // the response type
+        var responseType:ResponseType
         
         // craft a response to the reuqest type
         // given the user's approval: `signatureAllowed`
@@ -242,7 +242,7 @@ class Silo {
                 err = "\(error)"
             }
             
-            sign = SignResponse(sig: sig, err: err)
+            responseType = .ssh(SignResponse(sig: sig, err: err))
 
             
         case .git(let gitSignRequest):
@@ -290,8 +290,7 @@ class Silo {
                 err = "\(error)"
             }
             
-            gitSign = GitSignResponse(sig: sig, err: err)
-
+            responseType = .git(GitSignResponse(sig: sig, err: err))
             
         case .me(let meRequest):
             let keyManager = try KeyManager.sharedInstance()
@@ -301,7 +300,7 @@ class Silo {
                 pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
             }
             
-            me = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey))
+            responseType = .me(MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
 
         default:
             throw ResponseNotNeededError()
@@ -309,7 +308,7 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), sign: sign, gitSign: gitSign, me: me, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, type: responseType, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

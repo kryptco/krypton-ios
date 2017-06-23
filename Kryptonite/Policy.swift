@@ -255,9 +255,7 @@ class Policy {
                 let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
                 try TransportControl.shared.send(resp, for: session)
                 
-                if let errorMessage = resp.sign?.error {
-                    Policy.notifyUser(errorMessage: errorMessage, session: session)
-                } else if let errorMessage = resp.gitSign?.error {
+                if let errorMessage = resp.type.error {
                     Policy.notifyUser(errorMessage: errorMessage, session: session)
                 } else {
                     Policy.notifyUser(session: session, request: request)

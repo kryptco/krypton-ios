@@ -287,7 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: signatureAllowed)
             try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)
             
-            if let errorMessage = resp.sign?.error {
+            if let errorMessage = resp.type.error {
                 Notify.shared.presentError(message: errorMessage, session: session)
             }
 

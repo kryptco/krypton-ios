@@ -15,22 +15,6 @@ import JSON
 struct NonPresentableRequestError:Error {}
 
 extension Request {
-    
-    /**
-     Get a notification title and body message
-     */
-    func notificationDetails() throws  -> (subtitle:String, body:String) {
-        switch self.type {
-        case .ssh(let sshSign):
-            return ("SSH Login", sshSign.display)
-        case .git(let gitSign):
-            let git = gitSign.git
-            return (git.subtitle + " Signature", git.shortDisplay)
-        default:
-            throw NonPresentableRequestError()
-        }
-    }
-    
     /**
         An identifier to group identical requests by
         only acceptable for SSH signature requests
@@ -85,17 +69,14 @@ class Notify {
     
     func present(request:Request, for session:Session) {
         
-        let noteTitle = "Request from \(session.pairing.displayName)"
-        
-        var noteSubtitle:String
-        var noteBody:String
-        
-        do {
-            (noteSubtitle, noteBody) = try request.notificationDetails()
-        } catch {
-            // request is not presentable
+        guard request.type.isApprovable else {
+            log("trying to present approval notification for non approvable request type", .error)
             return
         }
+        
+        let noteTitle = "Request from \(session.pairing.displayName)"
+        let (noteSubtitle, noteBody) = request.notificationDetails()
+
         
         if #available(iOS 10.0, *) {
             
@@ -170,20 +151,14 @@ class Notify {
     
     func presentApproved(request:Request, for session:Session) {
         
-        
-        let noteTitle = "Approved request from \(session.pairing.displayName)"
-        
-        var noteSubtitle:String
-        var noteBody:String
-        
-        do {
-            (noteSubtitle, noteBody) = try request.notificationDetails()
-        } catch {
-            // request is not presentable
+        guard request.type.isApprovable else {
+            log("trying to present auto-approved notification for non approvable request type", .error)
             return
         }
-
         
+        let noteTitle = "Approved request from \(session.pairing.displayName)"
+        let (noteSubtitle, noteBody) = request.notificationDetails()
+
         if #available(iOS 10.0, *) {
             
             let noteId = GroupableRequestNotificationIdentifier(request: request, session:session)
