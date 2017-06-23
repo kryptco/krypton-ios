@@ -127,9 +127,10 @@ class NotificationService: UNNotificationServiceExtension {
                         
                         self.bestAttemptMutex.lock {
                             let currentContent = UNMutableNotificationContent()
-                            currentContent.title = noteContent.title
+                            currentContent.title = noteContent.title + "." // period for testing
+                            currentContent.subtitle = noteContent.subtitle
                             currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                            currentContent.body = noteContent.body + "." // period for testing
+                            currentContent.body = noteContent.body
                             currentContent.userInfo = noteContent.userInfo
                             currentContent.sound = UNNotificationSound.default()
                             
@@ -155,9 +156,10 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             self.bestAttemptMutex.lock {
                                 let currentContent = UNMutableNotificationContent()
-                                currentContent.title = noteContent.title
+                                currentContent.title = noteContent.title  + "." // period for testing
+                                currentContent.subtitle = noteContent.subtitle
                                 currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                                currentContent.body = noteContent.body + "." // period for testing
+                                currentContent.body = noteContent.body
                                 currentContent.userInfo = noteContent.userInfo
                                 currentContent.sound = UNNotificationSound.default()
                                 

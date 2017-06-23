@@ -137,7 +137,7 @@ class Notify {
             
         } else {
             let notification = UILocalNotification()
-            notification.alertTitle = noteTitle
+            notification.alertTitle = "[\(noteSubtitle)] " + noteTitle
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.category = Policy.authorizeCategory.identifier
@@ -196,8 +196,6 @@ class Notify {
                     UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [prevRequestIdentifier])
                     content.body = "\(content.body) (\( noteIndex + 1))"
                     content.sound = UNNotificationSound(named: "")
-
-                    
                 }
                 self.noteMutex.unlock()
                 
@@ -216,7 +214,7 @@ class Notify {
             
         } else {
             let notification = UILocalNotification()
-            notification.alertTitle = noteTitle
+            notification.alertTitle = "[\(noteSubtitle)] " + noteTitle
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.category = Policy.autoAuthorizedCategoryIdentifier
