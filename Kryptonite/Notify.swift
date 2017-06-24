@@ -228,6 +228,41 @@ class Notify {
         }
         
     }
+    
+    /**
+        Tell the user that their PGP Key was exported
+     */
+    func presentExportedSignedPGPKey(identities:[String], fingerprint:Data) {
+        
+        let noteTitle = "Succesfully Exported PGP Public Key"
+        let noteSubtitle = "\(fingerprint.hexPretty)"
+        
+        var noteBody = ""
+        if identities.count == 1 {
+            noteBody = "Signed user identity: \(identities[0])."
+        } else if identities.count > 1 {
+            noteBody = "Signed user identities: \(identities.joined(separator: ", "))."
+        }
+        
+        if #available(iOS 10.0, *) {
+            let content = UNMutableNotificationContent()
+            content.title = noteTitle
+            content.subtitle = noteSubtitle
+            content.body = noteBody
+            content.sound = UNNotificationSound.default()
+            
+            let request = UNNotificationRequest(identifier: "pgp_export", content: content, trigger: nil)
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        } else {
+            let notification = UILocalNotification()
+            notification.alertTitle = noteTitle
+            notification.alertBody = noteBody
+            notification.soundName = UILocalNotificationDefaultSoundName
+            
+            UIApplication.shared.presentLocalNotificationNow(notification)
+        }
+
+    }
 
 }
 
