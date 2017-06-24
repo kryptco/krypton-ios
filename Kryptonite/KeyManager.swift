@@ -22,6 +22,7 @@ enum KeyManagerError:Error {
 
 class KeyManager {
     
+    var mutex = Mutex()
     var keyPair:KeyPair
     
     init(_ keyPair:KeyPair) {
@@ -148,61 +149,48 @@ extension KeyTag {
 }
 
 enum PGPPublicKeyStorage:String {
-    case created = "created"
-    case userIDs = "userid-list"
+    case created         = "created"
+    case userIDs         = "userid-list"
     
     func key(tag:KeyTag) -> String {
         return "pgp.pub.\(tag.rawValue).\(self.rawValue)"
     }
 }
-
 extension KeyManager {
     
     func loadPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
         
-        do { // try to load saved pgp public key
-            
-            // get the created time
-            guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: .me)))
-            else {
-                throw KeychainStorageError.notFound
+        // get and update userid list if needed
+        let userIds = self.updatePGPUserIDPreferences(for: identity)
+        
+        // get the created time or instantiate it and save it
+        var created:Date
+        do {
+            guard let savedCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: .me)))
+                else {
+                    throw KeychainStorageError.notFound
             }
             
-            // get and update userid list if needed
-            let userIds = self.updatedUserIDs(for: identity)
+            created = Date(timeIntervalSince1970: savedCreated)
             
-            let created = Date(timeIntervalSince1970: pgpPublicKeyCreated)
-            return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
-            
-        } catch KeychainStorageError.notFound { // doesn't exist so create it
-
-            // get and update userid list if needed
-            let userIds = self.updatedUserIDs(for: identity)
-            
-            let created = Date()
-            let pgpPublicKey = try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
-            
-            // save the created date
+        } catch KeychainStorageError.notFound {
+            created = Date()
             try KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: .me), value: "\(created.timeIntervalSince1970)")
             
-            return pgpPublicKey
-        } catch {
-            throw error
+            log("Set the PGP public key created date to: \(created)", .warning)
         }
+        
+        // sign the public key and return it
+        return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
     }
     
-    func updatedUserIDs(for identity:String) -> [String] {
+    func updatePGPUserIDPreferences(for identity:String) -> [String] {
         
         var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))) ?? UserIDList.empty
         
-        // if exists return
-        guard !userIdList.ids.contains(identity) else {
-            return userIdList.ids
-        }
-        
         do {
             // add new identity
-            userIdList = try userIdList.by(adding: identity)
+            userIdList = try userIdList.by(updating: identity)
             try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
             return userIdList.ids
             

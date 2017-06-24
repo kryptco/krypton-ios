@@ -246,7 +246,7 @@ class Silo {
                     
                     let keyManager = try KeyManager.sharedInstance()
                     let keyID = try keyManager.getPGPPublicKeyID()                    
-                    let _ = keyManager.updatedUserIDs(for: gitSignRequest.userId)
+                    let _ = keyManager.updatePGPUserIDPreferences(for: gitSignRequest.userId)
                     
                     switch gitSignRequest.git {
                     case .commit(let commit):

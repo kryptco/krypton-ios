@@ -20,12 +20,16 @@ enum KeychainStorageError:Error {
 class KeychainStorage {
     
     var service:String
+    var mutex = Mutex()
     
     init(service:String = KrKeychainServiceName) {
         self.service = service
     }
     
     func setData(key:String, data:Data) throws {
+        mutex.lock()
+        defer { self.mutex.unlock() }
+        
         let params = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): service,
                       String(kSecAttrAccount): key,
@@ -47,6 +51,9 @@ class KeychainStorage {
     }
     
     func getData(key:String) throws -> Data {
+        mutex.lock()
+        defer { self.mutex.unlock() }
+
         let params = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): service,
                       String(kSecAttrAccount): key,
@@ -74,6 +81,9 @@ class KeychainStorage {
 
     
     func delete(key:String) throws {
+        mutex.lock()
+        defer { self.mutex.unlock() }
+
         let params = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): service,
                       String(kSecAttrAccount): key] as [String : Any]
