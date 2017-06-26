@@ -34,7 +34,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     }
     
     enum InvalidNotificationError:Error {
-        case requestTypeUnknown(String)
+        case unexpectedRequestBody(String)
         case invalidData
     }
     
@@ -62,12 +62,12 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
                 case .tag(let tag):
                     showView(type: ContainerType.tag(tag), deviceName: sessionName)
                 }
-            default:
-                throw InvalidNotificationError.requestTypeUnknown(sessionName)
+            case .me, .noOp, .unpair:
+                throw InvalidNotificationError.unexpectedRequestBody(sessionName)
             }
             
-        } catch InvalidNotificationError.requestTypeUnknown(let deviceName) {
-            showView(type: .error("Cannot display the unhandled request type"), deviceName: deviceName)
+        } catch InvalidNotificationError.unexpectedRequestBody(let deviceName) {
+            showView(type: .error("Cannot display this request (unexpected request type)."), deviceName: deviceName)
         }
         catch {
             showView(type: .error("\(error)"), deviceName: "Unknown")

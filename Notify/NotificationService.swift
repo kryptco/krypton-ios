@@ -76,7 +76,7 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             content.subtitle = noteSubtitle
                             
-                            // auto-approved
+                            // cached
                             if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
 
                                 if let error = resp.body.error {
@@ -89,7 +89,7 @@ class NotificationService: UNNotificationServiceExtension {
                                 
                                 content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
                             }
-                            // pending approval
+                            // pending response
                             else {
                                 content.title = "Request from \(session.pairing.displayName)."
                                 content.categoryIdentifier = Policy.authorizeCategoryIdentifier

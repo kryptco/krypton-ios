@@ -106,23 +106,30 @@ class Policy {
             - SignRequest's hostName does not have a KnownHost entry
             - SignRequest's hostName is unknown (and user has not turned off this policy check)
      */
-    class func needsUserApproval(for session:Session, and signRequest:SignRequest) -> Bool {
-        // check policy for session
+    class func needsUserApproval(for session:Session, and requestBody:RequestBody) -> Bool {
+        
+        // MUST CHECK policy for session
         if Policy.needsUserApproval(for: session) {
             return true
         }
         
-        // check if verifedHostAuth's 'hostName' does NOT have a KnownHost attached to it
-        if  let hostName = signRequest.verifiedHostAuth?.hostName,
-            KnownHostManager.shared.entryExists(for: hostName) == false
-        {
-            return true
-        }
-        
-        // check if unknown host and check policy for unknown hosts
-        if  Policy.needsUnknownHostApproval(for: session) && signRequest.isUnknownHost
-        {
-            return true
+        switch requestBody {
+        case .ssh(let sshSign):
+            // check if verifedHostAuth's 'hostName' does NOT have a KnownHost attached to it
+            if  let hostName = sshSign.verifiedHostAuth?.hostName,
+                KnownHostManager.shared.entryExists(for: hostName) == false
+            {
+                return true
+            }
+            
+            // check if unknown host and check policy for unknown hosts
+            if  Policy.needsUnknownHostApproval(for: session) && sshSign.isUnknownHost
+            {
+                return true
+            }
+            
+        case .git, .me, .noOp, .unpair:
+            break
         }
         
         return false
@@ -162,11 +169,7 @@ class Policy {
         return nil
     }
     
-
-    
-    
     //MARK: Pending Authoirizations
-    
     struct PendingAuthorization:Jsonable, Equatable {
         let session:Session
         let request:Request
@@ -229,24 +232,12 @@ class Policy {
         
         cache?.allObjects().forEach {
             
-            guard  let pending = try? PendingAuthorization(jsonData: $0 as Data)
+            guard   let pending = try? PendingAuthorization(jsonData: $0 as Data),
+                    false == Policy.needsUserApproval(for: pending.session, and: pending.request.body)
             else {
                 return
             }
             
-            // ensure that session + request are auto-allowed by policy
-            switch pending.request.body {
-            case .ssh(let signRequest) where false == Policy.needsUserApproval(for: pending.session, and: signRequest):
-                break
-                
-            case .git where false == Policy.needsUserApproval(for: pending.session):
-                break
-                
-            // otherwise request will not be auto-handled
-            default:
-                return
-            }
-
             let session = pending.session
             let request = pending.request
             

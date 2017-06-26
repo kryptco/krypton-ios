@@ -86,7 +86,7 @@ class Silo {
             throw InvalidRequestTimeError()
         }
         
-        // check if the request has already been receieved and cached
+        // check if the request has already been received and cached
         requestCache?.removeExpiredObjects()
         if  let cachedResponseData = requestCache?[CacheKey(session, request)] as Data? {
             let json:Object = try JSON.parse(data: cachedResponseData)
@@ -96,7 +96,7 @@ class Silo {
         }
 
 
-        // decide if request type can be responded to immediately
+        // decide if request body can be responded to immediately
         // or doesn't need response,
         // or needs user's approval first
         switch request.body {
@@ -110,20 +110,17 @@ class Silo {
             
         case .noOp:
             return
-    
-        case .ssh(let sshRequest) where Policy.needsUserApproval(for: session, and: sshRequest):
+            
+        case .ssh where Policy.needsUserApproval(for: session, and: request.body),
+             .git where Policy.needsUserApproval(for: session, and: request.body):
+            
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
             
-        case .git where Policy.needsUserApproval(for: session):
-            try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
-            return
-            
-        default:
+        case .me, .ssh, .git:
             break
         }
 
-        
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
@@ -151,7 +148,7 @@ class Silo {
                 Policy.notifyUser(session: session, request: request)
             }
 
-        default:
+        case .me, .ack, .unpair:
             break
         }
         
@@ -192,14 +189,14 @@ class Silo {
     }
     
     // precondition: mutex locked
-    func responseFor(request:Request, session:Session, signatureAllowed:Bool) throws -> Response {
+    private func responseFor(request:Request, session:Session, signatureAllowed:Bool) throws -> Response {
         let requestStart = Date().timeIntervalSince1970
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         
         // the response type
         var responseType:ResponseBody
         
-        // craft a response to the reuqest type
+        // craft a response to the request type
         // given the user's approval: `signatureAllowed`
         switch request.body {
         case .ssh(let signRequest):
@@ -302,7 +299,7 @@ class Silo {
             
             responseType = .me(MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
 
-        default:
+        case .noOp, .unpair:
             throw ResponseNotNeededError()
         }
         
