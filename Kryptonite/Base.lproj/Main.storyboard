@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QdC-wE-jq3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QdC-wE-jq3">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -520,10 +520,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-es-AG2" userLabel="objHashView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                            <rect key="frame" x="89" y="13.5" width="67" height="26"/>
+                                            <rect key="frame" x="260" y="14.5" width="68" height="24.5"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kbd-BB-wNL">
-                                                    <rect key="frame" x="4" y="4" width="59" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kbd-BB-wNL">
+                                                    <rect key="frame" x="4" y="4" width="60" height="16.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="1FC-iV-sIu"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -549,18 +552,18 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="some really interesting tag message" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTi-dW-V5G">
-                                            <rect key="frame" x="33" y="43.5" width="332" height="16.5"/>
+                                            <rect key="frame" x="33" y="44.5" width="332" height="15.5"/>
                                             <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="13"/>
                                             <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="21m ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GP2-7Q-DAl">
-                                            <rect key="frame" x="158" y="20.5" width="207" height="11"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" text="21m ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GP2-7Q-DAl">
+                                            <rect key="frame" x="332" y="21" width="33" height="11"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="8"/>
                                             <color key="textColor" red="0.35694760019999999" green="0.35694760019999999" blue="0.35694760019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="git_tag" translatesAutoresizingMaskIntoConstraints="NO" id="1Ej-HJ-pBB">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="git_tag" translatesAutoresizingMaskIntoConstraints="NO" id="1Ej-HJ-pBB">
                                             <rect key="frame" x="5" y="22.5" width="16" height="8"/>
                                             <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -569,10 +572,10 @@
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ap5-ZE-pwi" userLabel="tagView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                            <rect key="frame" x="29" y="10" width="50" height="31.5"/>
+                                            <rect key="frame" x="29" y="10" width="227" height="32.5"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="v1.01" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="VE0-xr-bJ6" userLabel="v1.01">
-                                                    <rect key="frame" x="4" y="4" width="42" height="23.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="751" text="a really long taga really long taga really long tag" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VE0-xr-bJ6" userLabel="v1.01">
+                                                    <rect key="frame" x="4" y="4" width="219" height="25"/>
                                                     <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="14"/>
                                                     <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -606,13 +609,12 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="dpP-es-AG2" firstAttribute="leading" secondItem="ap5-ZE-pwi" secondAttribute="trailing" constant="10" id="3Az-Np-Shd"/>
+                                        <constraint firstItem="dpP-es-AG2" firstAttribute="leading" secondItem="ap5-ZE-pwi" secondAttribute="trailing" constant="4" id="3Az-Np-Shd"/>
                                         <constraint firstItem="sTi-dW-V5G" firstAttribute="top" secondItem="ap5-ZE-pwi" secondAttribute="bottom" constant="2" id="8Ag-PX-qHw"/>
                                         <constraint firstItem="dpP-es-AG2" firstAttribute="centerY" secondItem="ap5-ZE-pwi" secondAttribute="centerY" id="9VZ-YX-2wk"/>
                                         <constraint firstItem="ap5-ZE-pwi" firstAttribute="leading" secondItem="1Ej-HJ-pBB" secondAttribute="trailing" constant="8" id="Bwr-4m-tAx"/>
                                         <constraint firstItem="GP2-7Q-DAl" firstAttribute="centerY" secondItem="dpP-es-AG2" secondAttribute="centerY" id="CWo-X2-qRw"/>
                                         <constraint firstItem="sTi-dW-V5G" firstAttribute="leading" secondItem="VE0-xr-bJ6" secondAttribute="leading" id="Fej-ma-phr"/>
-                                        <constraint firstItem="GP2-7Q-DAl" firstAttribute="leading" secondItem="dpP-es-AG2" secondAttribute="trailing" constant="2" id="GTd-0X-keq"/>
                                         <constraint firstItem="1Ej-HJ-pBB" firstAttribute="leading" secondItem="d4H-Tq-IOK" secondAttribute="leading" constant="5" id="Zld-vD-f0A"/>
                                         <constraint firstAttribute="bottom" secondItem="sTi-dW-V5G" secondAttribute="bottom" constant="10" id="cbT-hT-sMB"/>
                                         <constraint firstItem="epF-1x-d1p" firstAttribute="leading" secondItem="d4H-Tq-IOK" secondAttribute="leading" id="f6m-eH-4N3"/>
@@ -622,6 +624,7 @@
                                         <constraint firstAttribute="trailing" secondItem="epF-1x-d1p" secondAttribute="trailing" id="p3B-JU-fUO"/>
                                         <constraint firstItem="ap5-ZE-pwi" firstAttribute="top" secondItem="d4H-Tq-IOK" secondAttribute="top" constant="10" id="pIm-PJ-yGI"/>
                                         <constraint firstAttribute="trailing" secondItem="sTi-dW-V5G" secondAttribute="trailing" constant="10" id="pWa-33-puN"/>
+                                        <constraint firstItem="GP2-7Q-DAl" firstAttribute="leading" secondItem="dpP-es-AG2" secondAttribute="trailing" constant="4" id="za2-9g-bN0"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -727,10 +730,10 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QjT-vz-V5G" userLabel="objHashView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                            <rect key="frame" x="28.5" y="10" width="67" height="24"/>
+                                            <rect key="frame" x="28.5" y="10" width="62" height="24"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ahN-nK-zDI">
-                                                    <rect key="frame" x="4" y="4" width="59" height="16"/>
+                                                    <rect key="frame" x="4" y="4" width="54" height="16"/>
                                                     <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -757,7 +760,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="21m ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxh-Lb-758">
-                                            <rect key="frame" x="103.5" y="16.5" width="261.5" height="11"/>
+                                            <rect key="frame" x="98.5" y="16.5" width="266.5" height="11"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="8"/>
                                             <color key="textColor" red="0.35694760019999999" green="0.35694760019999999" blue="0.35694760019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -832,7 +835,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5RS-2j-zVj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3758" y="836"/>
+            <point key="canvasLocation" x="3757.5999999999999" y="834.33283358320841"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Atm-Dh-fQZ">
@@ -3268,7 +3271,7 @@ Cg
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="635.5"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6s-yD-bs0" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="135.5" y="511" width="104.5" height="40"/>
+                                                <rect key="frame" x="135" y="511" width="104.5" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Software"/>
                                                 <state key="highlighted">
@@ -3302,7 +3305,7 @@ Cg
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-U7-8S5" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="10" y="511" width="105.5" height="40"/>
+                                                <rect key="frame" x="10" y="511" width="105" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="fwP-fK-MT7"/>
                                                 </constraints>
@@ -3327,7 +3330,7 @@ Cg
                                                 </connections>
                                             </button>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n2-Yv-erL" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="260" y="511" width="105" height="40"/>
+                                                <rect key="frame" x="259.5" y="511" width="105.5" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Privacy"/>
                                                 <state key="highlighted">
@@ -3970,16 +3973,16 @@ Cg
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEE-NW-20Z" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="21" width="335" height="61"/>
+                                        <rect key="frame" x="20" y="21" width="335" height="59"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGJ-lB-iTU">
-                                                <rect key="frame" x="10" y="28" width="22" height="23"/>
+                                                <rect key="frame" x="10" y="28" width="15.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr me" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0j6-Ck-408">
-                                                <rect key="frame" x="40" y="28" width="275" height="23"/>
+                                                <rect key="frame" x="33.5" y="28" width="281.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4010,16 +4013,16 @@ Cg
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iUN-2V-sar" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="102" width="335" height="61"/>
+                                        <rect key="frame" x="20" y="100" width="335" height="59"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6qI-xQ-UFF">
-                                                <rect key="frame" x="10" y="28" width="22" height="23"/>
+                                                <rect key="frame" x="10" y="28" width="15.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr github" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brY-1m-Edf">
-                                                <rect key="frame" x="40" y="28" width="275" height="23"/>
+                                                <rect key="frame" x="33.5" y="28" width="281.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4063,7 +4066,7 @@ Cg
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tfa-NT-hZv">
-                                        <rect key="frame" x="43.5" y="173" width="63" height="20"/>
+                                        <rect key="frame" x="43.5" y="169" width="63" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="5gZ-YO-Ss9"/>
                                         </constraints>
@@ -4076,7 +4079,7 @@ Cg
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5q1-B0-xJU">
-                                        <rect key="frame" x="269.5" y="173" width="42" height="20"/>
+                                        <rect key="frame" x="269.5" y="169" width="42" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Ox8-s5-VKW"/>
                                         </constraints>
@@ -4089,7 +4092,7 @@ Cg
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RM8-vx-TIw">
-                                        <rect key="frame" x="130.5" y="173" width="115" height="20"/>
+                                        <rect key="frame" x="130.5" y="169" width="115" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="ej1-Gw-s1M"/>
                                         </constraints>
@@ -4102,21 +4105,21 @@ Cg
                                         </connections>
                                     </button>
                                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ess-4f-QFz">
-                                        <rect key="frame" x="43.5" y="195" width="63" height="1"/>
+                                        <rect key="frame" x="43.5" y="191" width="63" height="1"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Itd-6Y-Rpm"/>
                                         </constraints>
                                     </view>
                                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0W-uV-TqU">
-                                        <rect key="frame" x="130.5" y="195" width="115" height="1"/>
+                                        <rect key="frame" x="130.5" y="191" width="115" height="1"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="rxE-UL-wbN"/>
                                         </constraints>
                                     </view>
                                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Lq-u0-HJT">
-                                        <rect key="frame" x="269.5" y="195" width="42" height="1"/>
+                                        <rect key="frame" x="269.5" y="191" width="42" height="1"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="XI5-MJ-tRE"/>
@@ -4223,7 +4226,7 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHU-EO-R8o">
-                                <rect key="frame" x="20" y="221.5" width="335" height="25"/>
+                                <rect key="frame" x="20" y="224.5" width="335" height="25"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Install and Pair">
                                         <attributes>
@@ -4249,28 +4252,28 @@ Cg
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvW-Mo-dOd" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                <rect key="frame" x="12" y="256.5" width="351" height="77"/>
+                                <rect key="frame" x="12" y="259.5" width="351" height="74"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2U4-Xi-sTy">
-                                        <rect key="frame" x="4" y="10" width="20.5" height="21.5"/>
+                                        <rect key="frame" x="4" y="10" width="14.5" height="20"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="curl https://krypt.co/kr | sh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="tBo-VT-1MR">
-                                        <rect key="frame" x="32.5" y="10" width="308.5" height="21.5"/>
+                                        <rect key="frame" x="26.5" y="10" width="314.5" height="20"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3d-Dv-Mjv">
-                                        <rect key="frame" x="4" y="45.5" width="20.5" height="21.5"/>
+                                        <rect key="frame" x="4" y="44" width="14.5" height="20"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr pair" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o16-fR-Tq3">
-                                        <rect key="frame" x="32.5" y="45.5" width="308.5" height="21.5"/>
+                                        <rect key="frame" x="26.5" y="44" width="314.5" height="20"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -4299,7 +4302,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nst-gd-Qlg">
-                                <rect key="frame" x="43.5" y="341.5" width="48" height="20"/>
+                                <rect key="frame" x="53.5" y="341.5" width="33" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="mRI-s7-64S"/>
                                 </constraints>
@@ -4312,7 +4315,7 @@ Cg
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cp1-Xm-db7">
-                                <rect key="frame" x="131.5" y="341.5" width="36" height="20"/>
+                                <rect key="frame" x="126.5" y="341.5" width="41" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Plk-Ff-gSW"/>
                                 </constraints>
@@ -4325,21 +4328,21 @@ Cg
                                 </connections>
                             </button>
                             <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cE-Zm-CVu">
-                                <rect key="frame" x="43.5" y="363.5" width="48" height="1"/>
+                                <rect key="frame" x="53.5" y="363.5" width="33" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="ZOf-xD-d2e"/>
                                 </constraints>
                             </view>
                             <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0gQ-IR-8zG">
-                                <rect key="frame" x="131.5" y="363.5" width="36" height="1"/>
+                                <rect key="frame" x="126.5" y="363.5" width="41" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="hdc-1A-LTP"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="669-iV-yBH">
-                                <rect key="frame" x="207.5" y="341.5" width="48" height="20"/>
+                                <rect key="frame" x="207.5" y="341.5" width="45" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Jdt-tF-PAI"/>
                                 </constraints>
@@ -4352,7 +4355,7 @@ Cg
                                 </connections>
                             </button>
                             <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="riR-uG-iAf">
-                                <rect key="frame" x="207.5" y="363.5" width="48" height="1"/>
+                                <rect key="frame" x="207.5" y="363.5" width="45" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="sb0-Qd-PyV"/>
@@ -4397,14 +4400,14 @@ Cg
                                 </connections>
                             </button>
                             <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUn-iK-jGg" userLabel="more line">
-                                <rect key="frame" x="295.5" y="363.5" width="48" height="1"/>
+                                <rect key="frame" x="292.5" y="363.5" width="46" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="w1z-iW-wrR"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTd-sM-5jE" userLabel="more">
-                                <rect key="frame" x="295.5" y="341.5" width="48" height="20"/>
+                                <rect key="frame" x="292.5" y="341.5" width="46" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="1l4-fW-bp3"/>
                                 </constraints>

@@ -297,6 +297,7 @@ class SSHApproveController:ApproveController {
 
 class CommitApproveController:ApproveController {
     
+    @IBOutlet weak var sizedMessageLabel:UILabel!
     @IBOutlet weak var messageLabel:UILabel!
     @IBOutlet weak var authorLabel:UILabel!
     @IBOutlet weak var authorDateLabel:UILabel!
@@ -317,6 +318,7 @@ class CommitApproveController:ApproveController {
         
         switch gitSign.git {
         case .commit(let commit):
+            sizedMessageLabel.text = commit.messageString
             messageLabel.text = commit.messageString
             let (author, date) = commit.author.userIdAndDateString
             let (committer, committerDate) = commit.committer.userIdAndDateString
@@ -351,6 +353,7 @@ class CommitApproveController:ApproveController {
 
 class TagApproveController:ApproveController {
     
+    @IBOutlet weak var sizedMessageLabel:UILabel!
     @IBOutlet weak var messageLabel:UILabel!
     @IBOutlet weak var objectHashLabel:UILabel!
     @IBOutlet weak var tagLabel:UILabel!
@@ -372,6 +375,7 @@ class TagApproveController:ApproveController {
         switch gitSign.git {
         case .tag(let tag):
             
+            sizedMessageLabel.text = tag.messageString
             messageLabel.text = tag.messageString
             objectHashLabel.text = tag.objectShortHash
             tagLabel.text = tag.tag
