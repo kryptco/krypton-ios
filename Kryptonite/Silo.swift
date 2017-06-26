@@ -128,7 +128,7 @@ class Silo {
         let response = try responseFor(request: request, session: session, signatureAllowed: true)
         
         // analytics / notify user on error for signature response
-        switch response.type {
+        switch response.body {
         case .ssh(let sign):
             Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
             
@@ -170,7 +170,7 @@ class Silo {
         
         if request.sendACK {
             let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
-            let ack = Response(requestID: request.id, endpoint: arn, type: .ack(AckResponse()), approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            let ack = Response(requestID: request.id, endpoint: arn, body: .ack(AckResponse()), approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
             do {
                 try TransportControl.shared.send(ack, for: session)
             } catch (let e) {
@@ -197,7 +197,7 @@ class Silo {
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         
         // the response type
-        var responseType:ResponseType
+        var responseType:ResponseBody
         
         // craft a response to the reuqest type
         // given the user's approval: `signatureAllowed`
@@ -308,7 +308,7 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, type: responseType, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, body: responseType, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

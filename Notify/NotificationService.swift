@@ -79,7 +79,7 @@ class NotificationService: UNNotificationServiceExtension {
                             // auto-approved
                             if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
 
-                                if let error = resp.type.error {
+                                if let error = resp.body.error {
                                     content.title = "Failed approval for \(session.pairing.displayName)."
                                     content.body = error
                                 } else {

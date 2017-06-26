@@ -17,13 +17,13 @@ final class Response:Jsonable {
     var approvedUntil:Int?
     var trackingID:String?
     
-    var type:ResponseType
+    var body:ResponseBody
 
-    init(requestID:String, endpoint:String, type:ResponseType, approvedUntil:Int? = nil, trackingID:String? = nil) {
+    init(requestID:String, endpoint:String, body:ResponseBody, approvedUntil:Int? = nil, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
         self.approvedUntil = approvedUntil
-        self.type = type
+        self.body = body
         self.trackingID = trackingID
         self.version = Properties.currentVersion
     }
@@ -32,7 +32,7 @@ final class Response:Jsonable {
         self.requestID = try json ~> "request_id"
         self.snsEndpointARN = try json ~> "sns_endpoint_arn"
         self.version = try Version(string: json ~> "v")
-        self.type = try ResponseType(json: json)
+        self.body = try ResponseBody(json: json)
         
         if let approvedUntil:Int = try? json ~> "approved_until" {
             self.approvedUntil = approvedUntil
@@ -44,7 +44,7 @@ final class Response:Jsonable {
     }
     
     var object:Object {
-        var json = type.object
+        var json = body.object
         json["request_id"] = requestID
         json["sns_endpoint_arn"] = snsEndpointARN
         
@@ -66,7 +66,7 @@ final class Response:Jsonable {
 
 struct MultipleResponsesError:Error {}
 
-enum ResponseType {
+enum ResponseBody {
     case me(MeResponse)
     case ssh(SignResponse)
     case git(GitSignResponse)
@@ -75,7 +75,7 @@ enum ResponseType {
     
     init(json:Object) throws {
         
-        var responses:[ResponseType] = []
+        var responses:[ResponseBody] = []
         
         // parse the requests
         if let json:Object = try? json ~> "me_response" {

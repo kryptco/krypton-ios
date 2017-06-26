@@ -162,7 +162,7 @@ class TransportControl {
         }
         
         if sendUnpairResponse {
-            let response = Response(requestID: "", endpoint: "", type: .unpair(UnpairResponse()))
+            let response = Response(requestID: "", endpoint: "", body: .unpair(UnpairResponse()))
             try? self.send(response, for: session)
         }
         
