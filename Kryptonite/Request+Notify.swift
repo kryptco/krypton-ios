@@ -14,7 +14,7 @@ extension Request {
         Get a notification subtitle and body message
      */
     func notificationDetails()  -> (subtitle:String, body:String) {
-        switch self.type {
+        switch self.body {
         case .ssh(let sshSign):
             return ("SSH Login", sshSign.display)
         case .git(let gitSign):

@@ -12,7 +12,7 @@ import UIKit
 extension Request {
     var approveController:ApproveController? {
         
-        switch self.type {
+        switch self.body {
         case .ssh:
             return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SSHApproveController") as? SSHApproveController
         case .git(let gitSign):
@@ -28,7 +28,7 @@ extension Request {
     }
     
     var autoApproveDisplay:String? {
-        switch self.type {
+        switch self.body {
         case .ssh(let sshRequest):
             return sshRequest.display
         case .git(let gitSign):

@@ -15,15 +15,15 @@ struct Request:Jsonable {
     var unixSeconds:Int
     var sendACK:Bool
     var version:Version
-    var type:RequestType
+    var body:RequestBody
     
 
-    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, type:RequestType) {
+    init(id: String, unixSeconds: Int, sendACK: Bool, version: Version, body:RequestBody) {
         self.id = id
         self.unixSeconds = unixSeconds
         self.sendACK = sendACK
         self.version = version
-        self.type = type
+        self.body = body
     }
     
     init(json: Object) throws {
@@ -31,11 +31,11 @@ struct Request:Jsonable {
         self.unixSeconds = try json ~> "unix_seconds"
         self.sendACK = (try? json ~> "a") ?? false
         self.version = try Version(string: json ~> "v")
-        self.type = try RequestType(json: json)
+        self.body = try RequestBody(json: json)
     }
     
     var object:Object {
-        var json = type.object
+        var json = body.object
         
         json["request_id"] = id
         json["unix_seconds"] = unixSeconds
@@ -48,7 +48,7 @@ struct Request:Jsonable {
 
 struct MultipleRequestsError:Error {}
 
-enum RequestType:Jsonable {
+enum RequestBody:Jsonable {
     case me(MeRequest)
     case ssh(SignRequest)
     case git(GitSignRequest)
@@ -68,7 +68,7 @@ enum RequestType:Jsonable {
     
     init(json:Object) throws {
         
-        var requests:[RequestType] = []
+        var requests:[RequestBody] = []
         
         // parse the requests
         if let json:Object = try? json ~> "me_request" {

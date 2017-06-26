@@ -286,7 +286,7 @@ class SSHApproveController:ApproveController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let type = request?.type, case .ssh(let sshSign) = type {
+        if let type = request?.body, case .ssh(let sshSign) = type {
             commandLabel.text = sshSign.display
         } else {
             commandLabel.text = "Unknown"
@@ -311,8 +311,8 @@ class CommitApproveController:ApproveController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard   let type = request?.type,
-                case .git(let gitSign) = type,
+        guard   let body = request?.body,
+                case .git(let gitSign) = body,
                 case .commit(let commit) = gitSign.git
         else {
             clear()
@@ -359,8 +359,8 @@ class TagApproveController:ApproveController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let type = request?.type,
-            case .git(let gitSign) = type,
+        guard let body = request?.body,
+            case .git(let gitSign) = body,
             case .tag(let tag) = gitSign.git
         else {
             clear()

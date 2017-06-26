@@ -99,7 +99,7 @@ class Silo {
         // decide if request type can be responded to immediately
         // or doesn't need response,
         // or needs user's approval first
-        switch request.type {
+        switch request.body {
         case .unpair:
             Analytics.postEvent(category: "device", action: "unpair", label: "request")
             
@@ -138,7 +138,7 @@ class Silo {
                 Policy.notifyUser(session: session, request: request)
             }
             
-            if case .ssh(let sshRequest) = request.type, sshRequest.verifiedHostAuth == nil {
+            if case .ssh(let sshRequest) = request.body, sshRequest.verifiedHostAuth == nil {
                 Analytics.postEvent(category: "host", action: "unknown")
             }
 
@@ -201,7 +201,7 @@ class Silo {
         
         // craft a response to the reuqest type
         // given the user's approval: `signatureAllowed`
-        switch request.type {
+        switch request.body {
         case .ssh(let signRequest):
             let kp = try KeyManager.sharedInstance()
             

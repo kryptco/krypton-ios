@@ -52,7 +52,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             // set request specifcs
             let request = try Request(json: requestObject)
             
-            switch request.type {
+            switch request.body {
             case .ssh(let signRequest):
                 showView(type: .ssh(signRequest.display), deviceName: sessionName)
             case .git(let gitSignRequest):

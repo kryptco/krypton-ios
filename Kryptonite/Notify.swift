@@ -20,7 +20,7 @@ extension Request {
         only acceptable for SSH signature requests
      */
     var groupableNotificationIdentifer:String {
-        switch self.type {
+        switch self.body {
         case .ssh(let sshSign):
             return sshSign.display
         default:
@@ -69,7 +69,7 @@ class Notify {
     
     func present(request:Request, for session:Session) {
         
-        guard request.type.isApprovable else {
+        guard request.body.isApprovable else {
             log("trying to present approval notification for non approvable request type", .error)
             return
         }
@@ -151,7 +151,7 @@ class Notify {
     
     func presentApproved(request:Request, for session:Session) {
         
-        guard request.type.isApprovable else {
+        guard request.body.isApprovable else {
             log("trying to present auto-approved notification for non approvable request type", .error)
             return
         }

@@ -235,7 +235,7 @@ class Policy {
             }
             
             // ensure that session + request are auto-allowed by policy
-            switch pending.request.type {
+            switch pending.request.body {
             case .ssh(let signRequest) where false == Policy.needsUserApproval(for: pending.session, and: signRequest):
                 break
                 
