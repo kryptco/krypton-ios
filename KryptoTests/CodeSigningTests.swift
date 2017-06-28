@@ -200,68 +200,59 @@ class CodeSigningTests: XCTestCase {
     func testPGPUserIDs() {
         
         // test max init
-        do {
-            let _ = try UserIDList(ids: ["alice", "bob", "eve", "alex"])
-            XCTFail("Error: more user ids than allowed")
-        } catch is TooManyUserIDs {
-            // success
-        } catch {
-            XCTFail("Unexpected error: \(error)")
+        var users = UserIDList(ids: ["alice", "bob", "eve", "alex"])
+        if users.ids.count > 3 {
+            XCTFail("too many user ids: \(users.ids.count)")
         }
+        
+        if users.ids != ["alice", "bob", "eve"]{
+            XCTFail("incorrect user_ids: \(users.ids)")
+        }
+
         
         // test max updating
-        do {
-            var users = try UserIDList(ids: ["alice", "bob"])
-            users = try users.by(updating: "eve")
-            users = try users.by(updating: "alex")
-            
-            if users.ids.count != 3 {
-                XCTFail("incorrect number of user ids: \(users.ids.count)")
-            }
-        }
-        catch {
-            XCTFail("Unexpected error: \(error)")
-        }
+        users = UserIDList(ids: ["alice", "bob"])
+        users = users.by(updating: "eve")
+        users = users.by(updating: "alex")
         
+        if users.ids.count != 3 {
+            XCTFail("incorrect number of user ids: \(users.ids.count)")
+        }
+
         
         // test order updating
-        do {
-            var users = try UserIDList(ids: [])
-            users = try users.by(updating: "eve")
-            users = try users.by(updating: "alex")
-            users = try users.by(updating: "bob")
-            
-            if users.ids != ["bob", "alex", "eve"] {
-                XCTFail("invalid order of user ids: \(users.ids)")
-            }
-            
-            // update existing one
-            users = try users.by(updating: "eve")
-            if users.ids != ["eve", "bob", "alex"] {
-                XCTFail("invalid order of user ids: \(users.ids)")
-            }
-            
-            // add new one
-            users = try users.by(updating: "alice")
-            if users.ids != ["alice", "eve", "bob"] {
-                XCTFail("invalid order of user ids: \(users.ids)")
-            }
-            
-            // update existing one
-            users = try users.by(updating: "bob")
-            if users.ids != ["bob", "alice", "eve"] {
-                XCTFail("invalid order of user ids: \(users.ids)")
-            }
-            
-            // add new one, not full
-            users = try UserIDList(ids: ["alice", "bob"])
-            users = try users.by(updating: "eve")
-            if users.ids != ["eve", "alice", "bob"] {
-                XCTFail("invalid order of user ids: \(users.ids)")
-            }
+        users = UserIDList(ids: [])
+        users = users.by(updating: "eve")
+        users = users.by(updating: "alex")
+        users = users.by(updating: "bob")
+        
+        if users.ids != ["bob", "alex", "eve"] {
+            XCTFail("invalid order of user ids: \(users.ids)")
         }
-        catch {
-            XCTFail("Unexpected error: \(error)")
+        
+        // update existing one
+        users = users.by(updating: "eve")
+        if users.ids != ["eve", "bob", "alex"] {
+            XCTFail("invalid order of user ids: \(users.ids)")
+        }
+        
+        // add new one
+        users = users.by(updating: "alice")
+        if users.ids != ["alice", "eve", "bob"] {
+            XCTFail("invalid order of user ids: \(users.ids)")
+        }
+        
+        // update existing one
+        users = users.by(updating: "bob")
+        if users.ids != ["bob", "alice", "eve"] {
+            XCTFail("invalid order of user ids: \(users.ids)")
+        }
+        
+        // add new one, not full
+        users = UserIDList(ids: ["alice", "bob"])
+        users = users.by(updating: "eve")
+        if users.ids != ["eve", "alice", "bob"] {
+            XCTFail("invalid order of user ids: \(users.ids)")
         }
 
 

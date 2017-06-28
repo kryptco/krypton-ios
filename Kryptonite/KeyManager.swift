@@ -22,7 +22,6 @@ enum KeyManagerError:Error {
 
 class KeyManager {
     
-    var mutex = Mutex()
     var keyPair:KeyPair
     
     init(_ keyPair:KeyPair) {
@@ -188,9 +187,10 @@ extension KeyManager {
         
         var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))) ?? UserIDList.empty
         
+        // add new identity
+        userIdList = userIdList.by(updating: identity)
+
         do {
-            // add new identity
-            userIdList = try userIdList.by(updating: identity)
             try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: .me), value: userIdList.jsonString())
             return userIdList.ids
             

@@ -9,7 +9,6 @@
 import Foundation
 import JSON
 
-struct TooManyUserIDs:Error{}
 struct UserIDList:Jsonable {
     private static let key = "user_ids"
     
@@ -17,11 +16,15 @@ struct UserIDList:Jsonable {
     
     let ids:[String]
     
-    init(ids:[String]) throws {
-        guard ids.count <= UserIDList.maxCount else {
-            throw TooManyUserIDs()
+    init(ids:[String]) {
+        var idsToSet = [String](ids)
+        
+        // take only the most recently used (the first `maxCount` # of ids)
+        if ids.count > UserIDList.maxCount {
+            idsToSet = [String](idsToSet[0 ..< UserIDList.maxCount])
         }
-        self.ids = ids
+        
+        self.ids = idsToSet
     }
     
     init(json: Object) throws {
@@ -45,7 +48,7 @@ struct UserIDList:Jsonable {
             - if the id exists, update it's priority (lower index = more recently used)
             - otherwise, add the id to the front, cutting off id's > maxCount
      */
-    func by(updating userID:String) throws -> UserIDList {
+    func by(updating userID:String) -> UserIDList {
         
         // if the id is already here, repriortize it
         if let idIndex = ids.index(of: userID) {
@@ -53,16 +56,10 @@ struct UserIDList:Jsonable {
             newIDs.remove(at: idIndex)
             newIDs.insert(userID, at: 0)
             
-            return try UserIDList(ids: newIDs)
+            return UserIDList(ids: newIDs)
         }
-        
-        var newIDs = [userID] + ids
-        
-        if newIDs.count > UserIDList.maxCount {
-            newIDs = [String](newIDs[0 ..< UserIDList.maxCount])
-        }
-        
-        return try UserIDList(ids: newIDs)
+                
+        return UserIDList(ids: [userID] + ids)
     }
     
     static var empty:UserIDList {
