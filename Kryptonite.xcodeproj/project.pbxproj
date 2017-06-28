@@ -321,6 +321,7 @@
 		FAEE04A61D74BD47002A7AFD /* Keypair+SSHFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* Keypair+SSHFormat.swift */; };
 		FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
 		FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04941D73ECE2002A7AFD /* Util.swift */; };
+		FAF0B0981F04500400F65E04 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0B0971F04500400F65E04 /* UtilTests.swift */; };
 		FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */; };
 		FAF1E6261E031BB9003CBEA2 /* Notify.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FAF1E61F1E031BB9003CBEA2 /* Notify.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
@@ -744,6 +745,7 @@
 		FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KryptoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE049E1D74BCC3002A7AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAF0B0971F04500400F65E04 /* UtilTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
 		FAF1E61F1E031BB9003CBEA2 /* Notify.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Notify.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		FAF1E6231E031BB9003CBEA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1275,6 +1277,7 @@
 				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
 				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
 				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
+				FAF0B0971F04500400F65E04 /* UtilTests.swift */,
 				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
 				FA12EABC1ED0D213001603BF /* pubkey_ed25519.txt */,
 			);
@@ -2157,6 +2160,7 @@
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */,
 				FA1682A51EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
+				FAF0B0981F04500400F65E04 /* UtilTests.swift in Sources */,
 				8DCB60421E94468100E1B924 /* SessionManager.swift in Sources */,
 				8DCB604F1E9446D300E1B924 /* CommunicationActivity.swift in Sources */,
 				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,

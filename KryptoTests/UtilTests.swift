@@ -41,4 +41,11 @@ class UtilTests: XCTestCase {
 
     }
     
+    func testShiftedDate() {        
+        let now = Date()
+        let skewed = Date().shifted(by: -60*15)
+        
+        XCTAssert(skewed.timeIntervalSince1970  == now.timeIntervalSince1970 - 60*15)
+    }
+    
 }

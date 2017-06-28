@@ -173,7 +173,10 @@ extension KeyManager {
             created = Date(timeIntervalSince1970: savedCreated)
             
         } catch KeychainStorageError.notFound {
-            created = Date()
+            
+            // shift to 15m ago to avoid clock skew errors of a "future" key
+            created = Date().shifted(by: -Properties.allowedClockSkew)
+            
             try KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: .me), value: "\(created.timeIntervalSince1970)")
             
             log("Set the PGP public key created date to: \(created)", .warning)

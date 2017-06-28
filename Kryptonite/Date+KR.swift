@@ -92,5 +92,9 @@ extension Date {
             return formatter.string(from: self)
         }
     }
+    
+    func shifted(by shiftedInterval:TimeInterval) -> Date {    
+        return Date(timeIntervalSince1970: self.timeIntervalSince1970 + shiftedInterval)
+    }
  
 }
