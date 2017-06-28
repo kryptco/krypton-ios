@@ -139,7 +139,7 @@ class Policy {
                 return true
             }
             
-        case .git, .me, .noOp, .unpair:
+        case .git, .blob, .me, .noOp, .unpair:
             break
         }
         

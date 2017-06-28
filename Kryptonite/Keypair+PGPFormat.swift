@@ -202,6 +202,33 @@ extension KeyPair {
     }
     
     /**
+        Create an attached PGP signature over a binary document, including the binary document
+     */
+    func createAsciiArmoredAttachedBinaryDocumentSignature(for binaryData:Data, using hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512, keyID:Data) throws -> AsciiArmorMessage {
+        
+        let subpackets:[SignatureSubpacketable] = [
+            PGPFormat.SignatureCreated(date: Date())]
+        
+        
+        var signedBinary = SignedAttachedBinaryDocument(binaryData: binaryData, keyID: keyID, publicKeyAlgorithm: self.publicKey.type.pgpKeyType, hashAlgorithm: hashAlgorithm, hashedSubpacketables: subpackets)
+        
+        signedBinary.signature.unhashedSubpacketables = [SignatureIssuer(keyID: keyID)]
+        
+        // ready the data to hash
+        let dataToHash = try signedBinary.dataToHash()
+        
+        // sign it and get hash back
+        let (hash, signedHash) = try self.sign(data: dataToHash, using: hashAlgorithm)
+        
+        // compile the signed public key packets
+        try signedBinary.set(hash: hash, signedHash: signedHash)
+        
+        // return ascii armored signature
+        return try signedBinary.toMessage().armoredMessage(blockType: .signature, comment: Properties.pgpMessageComment)
+    }
+
+    
+    /**
         Create a PGP Signature over a Git Commit
      */
     func signGitCommit(with commitInfo:CommitInfo, keyID:Data) throws -> AsciiArmorMessage {

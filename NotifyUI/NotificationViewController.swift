@@ -14,19 +14,19 @@ import JSON
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
     
     
-    @IBOutlet weak var sshContainerView:UIView!
+    @IBOutlet weak var simpleContainerView:UIView!
     @IBOutlet weak var commitContainerView:UIView!
     @IBOutlet weak var tagContainerView:UIView!
     @IBOutlet weak var errorContainerView:UIView!
 
     
-    var sshController:SSHLoginController?
+    var simpleController:SimpleController?
     var commitController:CommitController?
     var tagController:TagController?
     var errorController:ErrorController?
 
     enum ContainerType {
-        case ssh(String), commit(CommitInfo), tag(TagInfo), error(String)
+        case simple(title:String, body:String), commit(CommitInfo), tag(TagInfo), error(String)
     }
 
     override func viewDidLoad() {
@@ -53,8 +53,9 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             let request = try Request(json: requestObject)
             
             switch request.body {
-            case .ssh(let signRequest):
-                showView(type: .ssh(signRequest.display), deviceName: sessionName)
+            case .ssh, .blob:
+                let (title, body) = request.notificationDetails()
+                showView(type: .simple(title: title, body: body), deviceName: sessionName)
             case .git(let gitSignRequest):
                 switch gitSignRequest.git {
                 case .commit(let commit):
@@ -77,9 +78,9 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     func showView(type: ContainerType, deviceName:String) {
         
         switch type {
-        case .ssh(let display):
-            sshController?.set(display: display, sessionName: deviceName)
-            removeAllBut(view: sshContainerView)
+        case .simple(let title, let body):
+            simpleController?.set(title: title, body: body, sessionName: deviceName)
+            removeAllBut(view: simpleContainerView)
         case .commit(let commit):
             commitController?.set(commit: commit, sessionName: deviceName)
             removeAllBut(view: commitContainerView)
@@ -95,7 +96,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     func removeAllBut(view:UIView) {
         //errorContainerView.isHidden = true
-        for v in [sshContainerView, commitContainerView, tagContainerView, errorContainerView] {
+        for v in [simpleContainerView, commitContainerView, tagContainerView, errorContainerView] {
             guard v != view else {
                 continue
             }
@@ -106,8 +107,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let ssh = segue.destination as? SSHLoginController {
-            self.sshController = ssh
+        if let ssh = segue.destination as? SimpleController {
+            self.simpleController = ssh
         } else if let commit = segue.destination as? CommitController {
             self.commitController = commit
         } else if let tag = segue.destination as? TagController {
@@ -139,10 +140,13 @@ class ErrorController:UIViewController {
     }
     
 }
-class SSHLoginController:UIViewController {
+class SimpleController:UIViewController {
     
     @IBOutlet weak var deviceNameLabel:UILabel!
     @IBOutlet weak var sshDisplayLabel:UILabel!
+
+    @IBOutlet weak var titleLabel:UILabel!
+    @IBOutlet weak var bodyLabel:UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,8 +157,9 @@ class SSHLoginController:UIViewController {
         
     }
     
-    func set(display:String, sessionName:String) {
-        sshDisplayLabel.text = display
+    func set(title:String, body:String, sessionName:String) {
+        titleLabel.text = title.uppercased()
+        bodyLabel.text = body
         deviceNameLabel.text = sessionName.uppercased()
     }
 

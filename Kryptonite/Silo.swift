@@ -9,7 +9,7 @@
 import Foundation
 import JSON
 import AwesomeCache
-
+import PGPFormat
 
 struct InvalidRequestTimeError:Error{}
 struct RequestPendingError:Error{}
@@ -112,12 +112,13 @@ class Silo {
             return
             
         case .ssh where Policy.needsUserApproval(for: session, and: request.body),
-             .git where Policy.needsUserApproval(for: session, and: request.body):
+             .git where Policy.needsUserApproval(for: session, and: request.body),
+             .blob where Policy.needsUserApproval(for: session, and: request.body):
             
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
             
-        case .me, .ssh, .git:
+        case .me, .ssh, .git, .blob:
             break
         }
 
@@ -147,10 +148,19 @@ class Silo {
             } else {
                 Policy.notifyUser(session: session, request: request)
             }
+        
+        case .blob(let blobSign):
+            //TODO: Analytics
+            
+            if let error = blobSign.error {
+                Policy.notifyUser(errorMessage: error, session: session)
+            } else {
+                Policy.notifyUser(session: session, request: request)
+            }
 
         case .me, .ack, .unpair:
             break
-        }
+        }        
         
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
     }
@@ -296,6 +306,40 @@ class Silo {
             
             responseType = .git(GitSignResponse(sig: sig, err: err))
             
+        case .blob(let blobSign):
+            var sig:String?
+            var err:String?
+            do {
+                if signatureAllowed {
+                    // only place where git signature should occur
+                    
+                    let keyManager = try KeyManager.sharedInstance()
+                    let keyID = try keyManager.getPGPPublicKeyID()
+                    let blobData = Data(bytes: [UInt8](blobSign.blob.utf8))
+                    
+                    var asciiArmoredSig:AsciiArmorMessage                    
+                    if blobSign.isDetached {
+                        asciiArmoredSig = try keyManager.keyPair.createAsciiArmoredBinaryDocumentSignature(for: blobData, keyID: keyID)
+                    } else {
+                        asciiArmoredSig = try keyManager.keyPair.createAsciiArmoredAttachedBinaryDocumentSignature(for: blobData, keyID: keyID)
+                    }
+
+                    let signature = asciiArmoredSig.packetData.toBase64()
+                    sig = signature
+                    
+                    //TODO Log BlobSignature
+                } else {
+                    
+                    //TODO: Log BlobSignature
+                    throw UserRejectedError()
+                }
+                
+            }  catch {
+                err = "\(error)"
+            }
+            
+            responseType = .blob(BlobSignResponse(sig: sig, err: err))
+
         case .me(let meRequest):
             let keyManager = try KeyManager.sharedInstance()
             
