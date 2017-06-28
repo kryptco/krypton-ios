@@ -27,7 +27,7 @@ class ApproveController:UIViewController {
 
     var rejectColor = UIColor.reject
     
-    var heightCover:CGFloat = 234.0
+    var heightCover:CGFloat = 215.0
     
     var request:Request?
     var session:Session?
@@ -75,9 +75,6 @@ class ApproveController:UIViewController {
         //arcView.timeoutProgress(lineWidth: checkBox.checkmarkLineWidth, seconds: Properties.requestTimeTolerance)
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
-    
-    
-
     
     
     //MARK: Response
@@ -297,7 +294,6 @@ class SSHApproveController:ApproveController {
 
 class CommitApproveController:ApproveController {
     
-    @IBOutlet weak var sizedMessageLabel:UILabel!
     @IBOutlet weak var messageLabel:UILabel!
     @IBOutlet weak var authorLabel:UILabel!
     @IBOutlet weak var authorDateLabel:UILabel!
@@ -345,7 +341,6 @@ class CommitApproveController:ApproveController {
 
 class TagApproveController:ApproveController {
     
-    @IBOutlet weak var sizedMessageLabel:UILabel!
     @IBOutlet weak var messageLabel:UILabel!
     @IBOutlet weak var objectHashLabel:UILabel!
     @IBOutlet weak var tagLabel:UILabel!

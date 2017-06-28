@@ -362,4 +362,51 @@ extension UIView {
 }
 
 
+class RoundedView:UIView {
+    
+    @IBInspectable var cornerRadius:CGFloat = 0
 
+    @IBInspectable var topLeft:Bool = false
+    @IBInspectable var topRight:Bool = false
+    @IBInspectable var bottomLeft:Bool = false
+    @IBInspectable var bottomRight:Bool = false
+
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func layoutSubviews() {
+        var corners = UIRectCorner.allCorners
+        
+        if !topLeft {
+            corners.remove(.topLeft)
+        }
+        
+        if !bottomLeft {
+            corners.remove(.bottomLeft)
+        }
+        
+        if !bottomRight {
+            corners.remove(.bottomRight)
+        }
+        if !topRight {
+            corners.remove(.topRight)
+        }
+        
+        self.set(corners: corners, radius: cornerRadius)
+    }
+    
+    func set(corners: UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
+
+    
+}
