@@ -38,7 +38,7 @@
                             <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="8tx-Ui-MS8" userLabel="command" customClass="KRView" customModule="NotifyUI" customModuleProvider="target">
                                 <rect key="frame" x="69" y="51" width="182.5" height="61"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="748" text="root@server.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="20M-kb-6P7">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="748" text="root@server.com" lineBreakMode="tailTruncation" numberOfLines="8" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="20M-kb-6P7">
                                         <rect key="frame" x="10" y="28" width="162.5" height="23"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
