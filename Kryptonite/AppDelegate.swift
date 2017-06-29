@@ -260,6 +260,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         guard let identifier = identifier, let actionIdentifier = Policy.ActionIdentifier(rawValue: identifier)
         else {
             log("nil identifier", .error)
+            Silo.shared.removePending(request: request, for: session)
             try? TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
             completionHandler()
             return

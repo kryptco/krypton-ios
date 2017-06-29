@@ -179,6 +179,13 @@ class Silo {
         completionHandler?()
     }
     
+    // MARK: Pending
+    func removePending(request:Request, for session:Session) {
+        mutex.lock()
+        defer { mutex.unlock() }
+        
+        pendingRequests?.removeObject(forKey: CacheKey(session, request))
+    }
     
     // MARK: Response
     
