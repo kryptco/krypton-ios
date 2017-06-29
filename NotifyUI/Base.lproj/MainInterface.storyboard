@@ -311,7 +311,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="owm-6M-25M" userLabel="dot" customClass="KRView" customModule="NotifyUI" customModuleProvider="target">
-                                <rect key="frame" x="14" y="94" width="20" height="20"/>
+                                <rect key="frame" x="14" y="94.5" width="20" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Ewc-7i-OfI"/>
@@ -521,7 +521,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" text="v1.0.4" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ayl-cY-goa">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" text="v1.0.4" lineBreakMode="headTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ayl-cY-goa">
                                 <rect key="frame" x="105" y="53.5" width="250" height="23"/>
                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                 <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -538,7 +538,6 @@
                             <constraint firstItem="NWx-x8-s8b" firstAttribute="centerX" secondItem="YpI-Bb-3Us" secondAttribute="centerX" id="C90-ZH-N5b"/>
                             <constraint firstAttribute="trailing" secondItem="jVC-qA-8AK" secondAttribute="trailing" constant="20" id="CnB-Qg-sSP"/>
                             <constraint firstItem="ayl-cY-goa" firstAttribute="leading" secondItem="Pc3-YZ-ayq" secondAttribute="trailing" constant="8" id="D4I-53-iWm"/>
-                            <constraint firstItem="Pc3-YZ-ayq" firstAttribute="top" secondItem="ayt-TO-RQe" secondAttribute="bottom" constant="10" id="FbL-FR-4C3"/>
                             <constraint firstItem="LLA-hJ-Qk7" firstAttribute="centerY" secondItem="Ljp-N4-D0z" secondAttribute="centerY" id="GDM-uP-nUO"/>
                             <constraint firstItem="aX9-E5-uGC" firstAttribute="top" secondItem="Ljp-N4-D0z" secondAttribute="centerY" id="JLW-4E-nBi"/>
                             <constraint firstItem="ayt-TO-RQe" firstAttribute="leading" secondItem="YpI-Bb-3Us" secondAttribute="leading" constant="10" id="Lhw-FN-BQu"/>
@@ -547,6 +546,7 @@
                             <constraint firstItem="jVC-qA-8AK" firstAttribute="top" secondItem="Pc3-YZ-ayq" secondAttribute="bottom" constant="8" id="RVL-VS-ad0"/>
                             <constraint firstAttribute="trailing" secondItem="ayt-TO-RQe" secondAttribute="trailing" constant="10" id="UPW-x8-8sZ"/>
                             <constraint firstItem="aX9-E5-uGC" firstAttribute="centerX" secondItem="Ljp-N4-D0z" secondAttribute="centerX" id="bUt-yU-bdd"/>
+                            <constraint firstItem="ayl-cY-goa" firstAttribute="top" secondItem="ayt-TO-RQe" secondAttribute="bottom" constant="10" id="bun-lX-9s5"/>
                             <constraint firstItem="Oj8-za-Dtn" firstAttribute="trailing" secondItem="jVC-qA-8AK" secondAttribute="trailing" id="duV-EK-oev"/>
                             <constraint firstItem="jVC-qA-8AK" firstAttribute="top" secondItem="ayl-cY-goa" secondAttribute="bottom" constant="8" id="e3i-LM-OhA"/>
                             <constraint firstItem="Oj8-za-Dtn" firstAttribute="baseline" secondItem="aX9-E5-uGC" secondAttribute="bottom" id="iwU-cA-ghv"/>
@@ -569,7 +569,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KON-C1-8IT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="852" y="518"/>
+            <point key="canvasLocation" x="852" y="517.24137931034488"/>
         </scene>
     </scenes>
 </document>
