@@ -275,17 +275,32 @@ struct GitSignRequest:Jsonable {
 
 struct BlobSignRequest:Jsonable {
     let blob:String
-    let isDetached:Bool
+    let sigType:SigType
     
-    init(blob:String, isDetached:Bool) {
+    struct InvalidSigType:Error {}
+    enum SigType:String {
+        case detach    = "detach"
+        case attach    = "attach"
+        case clearsign = "clearsign"
+        
+        init(type:String) throws {
+            guard let sigType = SigType(rawValue: type) else {
+                throw InvalidSigType()
+            }
+            
+            self = sigType
+        }
+    }
+    
+    init(blob:String, sigType:SigType) {
         self.blob = blob
-        self.isDetached = isDetached
+        self.sigType = sigType
     }
     
     init(json: Object) throws {
         self.init(
             blob:       try json ~> "blob",
-            isDetached: try json ~> "detached"
+            sigType:    try SigType(type: json ~> "sig_type")
         )
     }
     
@@ -293,7 +308,7 @@ struct BlobSignRequest:Jsonable {
         var json = Object()
         
         json["blob"] = blob
-        json["detached"] = isDetached
+        json["sig_type"] = sigType.rawValue
 
         return json
     }

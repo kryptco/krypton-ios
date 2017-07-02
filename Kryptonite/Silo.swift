@@ -317,10 +317,12 @@ class Silo {
                     let keyID = try keyManager.getPGPPublicKeyID()
                     let blobData = Data(bytes: [UInt8](blobSign.blob.utf8))
                     
-                    var asciiArmoredSig:AsciiArmorMessage                    
-                    if blobSign.isDetached {
+                    var asciiArmoredSig:AsciiArmorMessage
+                    
+                    switch blobSign.sigType {
+                    case .detach, .clearsign:
                         asciiArmoredSig = try keyManager.keyPair.createAsciiArmoredBinaryDocumentSignature(for: blobData, keyID: keyID)
-                    } else {
+                    case .attach:
                         asciiArmoredSig = try keyManager.keyPair.createAsciiArmoredAttachedBinaryDocumentSignature(for: blobData, keyID: keyID)
                     }
 
