@@ -10,14 +10,15 @@ import Foundation
 import UIKit
 
 class MeController:KRBaseController, UITextFieldDelegate {
-    @IBOutlet var identiconButton:KRSimpleButton!
+    //@IBOutlet var identiconButton:KRSimpleButton!
     @IBOutlet var tagTextField:UITextField!
 
-    @IBOutlet var shareButton:UIButton!
+    //@IBOutlet var shareButton:UIButton!
 
     
     @IBOutlet var meCommandWindow:UIView!
     @IBOutlet var otherCommandWindow:UIView!
+    @IBOutlet var codeSigningWindow:UIView!
 
     @IBOutlet var addCommandLabel:UILabel!
 
@@ -36,7 +37,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for v in [meCommandWindow, otherCommandWindow] {
+        for v in [meCommandWindow, otherCommandWindow, codeSigningWindow] {
             v?.layer.shadowColor = UIColor.black.cgColor
             v?.layer.shadowOffset = CGSize(width: 0, height: 0)
             v?.layer.shadowOpacity = 0.175
@@ -52,7 +53,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        shareButton.setBorder(color: UIColor.clear, cornerRadius: 20, borderWidth: 0.0)
+        //shareButton.setBorder(color: UIColor.clear, cornerRadius: 20, borderWidth: 0.0)
 
         redrawMe()
         Current.viewController = self
@@ -69,7 +70,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
             let publicKeyWire = try keyManager.keyPair.publicKey.wireFormat()
             
             tagTextField.text = email
-            identiconButton.setImage(IGSimpleIdenticon.from(publicKeyWire.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
+            //identiconButton.setImage(IGSimpleIdenticon.from(publicKeyWire.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
             
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
