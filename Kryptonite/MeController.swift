@@ -141,14 +141,16 @@ class MeController:KRBaseController, UITextFieldDelegate {
             return
         }
 
-        
+        Analytics.postEvent(category: "me share", action: "public key")
+
         dispatchMain {
             self.present(self.otherDialogue(for: email, authorizedKey: publicKeyAuthorized), animated: true, completion: nil)
         }
     }
     
     @IBAction func getMyTeamTapped() {
-        
+        Analytics.postEvent(category: "me share", action: "kryptonite with team")
+
         let textItem = "Team, please use Kryptonite to securely store your SSH private key on your phone. You no longer have to worry that your plain-text keys in the ~/.ssh/ directory are vulnerable. Kryptonite ensures the private key never leaves the device, and gives you ability to know everytime your key is used. Simply pair your phone with your computer once, and you're all set. "
         
         var items:[Any] = [textItem]
