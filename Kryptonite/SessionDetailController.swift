@@ -31,6 +31,15 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     
     enum LogType {
         case ssh, git
+        
+        var emptyCell:String {
+            switch self {
+            case .ssh:
+                return "EmptySSHCell"
+            case .git:
+                return "EmptyGitCell"
+            }
+        }
     }
     
     var logType = LogType.ssh
@@ -154,6 +163,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
                 } else {
                     self.lastAccessLabel.text = ""
                 }
+                
                 self.tableView.reloadData()
             }
         }
@@ -263,6 +273,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if logs.isEmpty {
+            return 1
+        }
+        
         return logs.count
     }
 
@@ -271,6 +285,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard !logs.isEmpty else {
+            return tableView.dequeueReusableCell(withIdentifier: logType.emptyCell)!
+        }
         
         let log = logs[indexPath.row]
         
@@ -308,6 +326,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard !logs.isEmpty else {
+            return
+        }
         
         let log = logs[indexPath.row]
         

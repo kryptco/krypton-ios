@@ -10,10 +10,8 @@ import UIKit
 
 class SetupController: UIViewController, UITextFieldDelegate {
 
-    @IBOutlet var keyIcon:UILabel!
     @IBOutlet var keyLabel:UILabel!
     
-    @IBOutlet var identiconButton:KRSimpleButton!
     @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var doneButton: UIButton!
 
@@ -21,8 +19,6 @@ class SetupController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         Onboarding.isActive = true
-                
-        keyIcon.FAIcon = FAType.FAKey
         
         do {
             let km = try KeyManager.sharedInstance()
@@ -37,7 +33,6 @@ class SetupController: UIViewController, UITextFieldDelegate {
             }
             
             keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
-            identiconButton.setImage(IGSimpleIdenticon.from(pk.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
             
         } catch (let e) {
             self.showWarning(title: "Crypto Error", body: "\(e)")

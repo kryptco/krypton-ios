@@ -9,7 +9,6 @@
 #ifndef Kryptonite_Bridging_Header_h
 #define Kryptonite_Bridging_Header_h
 
-#import "IGIdenticon.h"
 #import <AWSSNS/AWSSNS.h>
 #import <AWSSQS/AWSSQS.h>
 
