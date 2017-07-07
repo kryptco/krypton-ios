@@ -75,31 +75,33 @@ class NotificationService: UNNotificationServiceExtension {
                             let (noteSubtitle, noteBody) = unsealedRequest.notificationDetails()
                             
                             content.subtitle = noteSubtitle
-                            
+                            content.body = noteBody
+
+                            // special case: me request
+                            if case .me = unsealedRequest.body {
+                                content.title = "\(session.pairing.displayName)."
+                            }
                             // cached
-                            if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
+                            else if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
 
                                 if let error = resp.body.error {
                                     content.title = "Failed approval for \(session.pairing.displayName)."
                                     content.body = error
                                 } else {
                                     content.title = "Approved request from \(session.pairing.displayName)."
-                                    content.body = noteBody
+                                    content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
                                 }
-                                
-                                content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
                             }
                             // pending response
                             else {
                                 content.title = "Request from \(session.pairing.displayName)."
                                 content.categoryIdentifier = Policy.authorizeCategoryIdentifier
-                                content.body = noteBody
-                                content.userInfo = ["session_display": session.pairing.displayName,
-                                                    "session_id": session.id,
-                                                    "request": unsealedRequest.object]
-
                             }
                             
+                            content.userInfo = ["session_display": session.pairing.displayName,
+                                                "session_id": session.id,
+                                                "request": unsealedRequest.object]
+
                             
                             if noSound {
                                 content.sound = nil

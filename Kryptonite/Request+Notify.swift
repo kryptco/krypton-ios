@@ -21,7 +21,7 @@ extension Request {
             let git = gitSign.git
             return (git.subtitle + " Signature", git.shortDisplay)
         case .me:
-            return ("Me", "")
+            return ("Identity Request", "Public key exported")
         case .unpair:
             return ("Unpair", "Device has been unpaired")
         case .noOp:
