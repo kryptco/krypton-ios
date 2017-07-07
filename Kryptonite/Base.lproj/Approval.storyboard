@@ -32,7 +32,7 @@
                                 <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnG-qN-IfJ" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="-0.5" y="150" width="375" height="456"/>
+                                        <rect key="frame" x="-0.5" y="120" width="375" height="456"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caZ-UN-vmz">
                                                 <rect key="frame" x="20" y="253" width="335" height="50"/>
@@ -276,7 +276,7 @@
                                     <constraint firstItem="xnG-qN-IfJ" firstAttribute="leading" secondItem="wYZ-70-qbu" secondAttribute="leading" id="9Vh-As-StB"/>
                                     <constraint firstAttribute="trailing" secondItem="xnG-qN-IfJ" secondAttribute="trailing" id="DYd-Cu-DmQ"/>
                                     <constraint firstAttribute="bottom" secondItem="xnG-qN-IfJ" secondAttribute="bottom" id="cXX-jF-d4T"/>
-                                    <constraint firstItem="xnG-qN-IfJ" firstAttribute="top" secondItem="wYZ-70-qbu" secondAttribute="top" constant="150" id="vf9-GX-U0Q"/>
+                                    <constraint firstItem="xnG-qN-IfJ" firstAttribute="top" secondItem="wYZ-70-qbu" secondAttribute="top" constant="120" id="vf9-GX-U0Q"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -532,7 +532,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpM-im-LI7" userLabel="dot_bg" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="194.5" width="16" height="16"/>
+                                                <rect key="frame" x="16" y="194" width="16" height="16"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="B5G-Xb-UUl"/>
@@ -548,7 +548,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNR-sN-qxi" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="14" y="192.5" width="20" height="20"/>
+                                                <rect key="frame" x="14" y="192" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="mpk-3Y-Kqk"/>
                                                     <constraint firstAttribute="height" constant="20" id="oof-jB-5w8"/>
@@ -943,7 +943,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IAp-LW-OfN" userLabel="objHashView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="38" y="152" width="58.5" height="23.5"/>
+                                                <rect key="frame" x="38" y="152.5" width="58.5" height="23.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ai1-7o-Xey">
                                                         <rect key="frame" x="4" y="4" width="50.5" height="15.5"/>
