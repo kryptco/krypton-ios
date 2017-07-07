@@ -107,11 +107,4 @@ class SetupController: UIViewController, UITextFieldDelegate {
             firstPair.firstTime = true
         }
     }
-    
-    //MARK: Identicon
-    @IBAction func identiconTapped() {
-        let alert = UIAlertController(title: "Public Key Identicon", message: "This is your public key identicon. It is a visual representation of the hash of your SSH public key.", preferredStyle: UIAlertControllerStyle.actionSheet)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
 }

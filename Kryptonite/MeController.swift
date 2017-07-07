@@ -10,11 +10,7 @@ import Foundation
 import UIKit
 
 class MeController:KRBaseController, UITextFieldDelegate {
-    //@IBOutlet var identiconButton:KRSimpleButton!
     @IBOutlet var tagTextField:UITextField!
-
-    //@IBOutlet var shareButton:UIButton!
-
     
     @IBOutlet var meCommandWindow:UIView!
     @IBOutlet var otherCommandWindow:UIView!
@@ -67,11 +63,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
         do {
             let keyManager = try KeyManager.sharedInstance()
             let email = try keyManager.getMe()
-            let publicKeyWire = try keyManager.keyPair.publicKey.wireFormat()
-            
             tagTextField.text = email
-            //identiconButton.setImage(IGSimpleIdenticon.from(publicKeyWire.toBase64(), size: CGSize(width: 80, height: 80)), for: UIControlState.normal)
-            
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
             showWarning(title: "Error", body: "Could not get user data. \(e)")
@@ -196,13 +188,5 @@ class MeController:KRBaseController, UITextFieldDelegate {
     //MARK: Segue
     @IBAction func dismissQR(segue: UIStoryboardSegue) {
     }
-    
-    //MARK: Identicon
-    @IBAction func identiconTapped() {
-        let alert = UIAlertController(title: "Public Key Identicon", message: "This is your public key identicon. It is a visual representation of the hash of your SSH public key.", preferredStyle: UIAlertControllerStyle.actionSheet)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
     
 }
