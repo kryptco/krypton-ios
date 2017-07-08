@@ -29,7 +29,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8tx-Ui-MS8" userLabel="command" customClass="KRView" customModule="NotifyUI" customModuleProvider="target">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="8tx-Ui-MS8" userLabel="command" customClass="KRView" customModule="NotifyUI" customModuleProvider="target">
                                 <rect key="frame" x="69" y="51" width="182.5" height="61"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="748" text="root@server.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="20M-kb-6P7">
@@ -76,7 +76,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="8tx-Ui-MS8" secondAttribute="bottom" priority="999" constant="10" id="BuB-MS-HZe"/>
-                            <constraint firstItem="8tx-Ui-MS8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="S3S-Oj-5AN" secondAttribute="leading" constant="10" id="FnN-5x-lBg"/>
+                            <constraint firstItem="8tx-Ui-MS8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="S3S-Oj-5AN" secondAttribute="leading" constant="20" id="FnN-5x-lBg"/>
                             <constraint firstItem="uxw-eQ-V8K" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" constant="10" id="G1C-fu-Zfw"/>
                             <constraint firstItem="sS1-c8-3fA" firstAttribute="centerX" secondItem="S3S-Oj-5AN" secondAttribute="centerX" id="Jap-zd-a8g"/>
                             <constraint firstItem="8tx-Ui-MS8" firstAttribute="top" secondItem="uxw-eQ-V8K" secondAttribute="bottom" constant="8" id="MHy-hV-now"/>
@@ -311,7 +311,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="owm-6M-25M" userLabel="dot" customClass="KRView" customModule="NotifyUI" customModuleProvider="target">
-                                <rect key="frame" x="14" y="94.5" width="20" height="20"/>
+                                <rect key="frame" x="14" y="94" width="20" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Ewc-7i-OfI"/>
