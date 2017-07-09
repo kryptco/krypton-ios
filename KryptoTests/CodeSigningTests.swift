@@ -41,29 +41,30 @@ class CodeSigningTests: XCTestCase {
             if let ce = e as? CryptoError {
                 XCTFail("test failed: \(ce.getError())")
             } else {
-                XCTFail(e.localizedDescription)
+                XCTFail("\(e)")
             }
         }
     }
     
-    func testCreatePGPPublicKeyEd25519() {
+    func testCreatePGPPublicKeyEd25519(i:Int) {
         do {
             try Ed25519KeyPair.destroy("test")
             let keypair = try Ed25519KeyPair.generate("test")
+
             let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
-            print(armoredPubKey.toString())
-            
+
             let packets  = try [Packet](data: armoredPubKey.packetData)
             
             let _ = try PGPFormat.PublicKey(packet: packets[0])
             let _ = try PGPFormat.UserID(packet: packets[1])
             let _ = try PGPFormat.Signature(packet: packets[2])
-            
+
         } catch (let e) {
             if let ce = e as? CryptoError {
                 XCTFail("test failed: \(ce.getError())")
             } else {
-                XCTFail(e.localizedDescription)
+                print("failed at \(i)")
+                XCTFail("\(e)")
             }
         }
     }

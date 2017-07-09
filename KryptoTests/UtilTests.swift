@@ -37,15 +37,5 @@ class UtilTests: XCTestCase {
             XCTAssertEqual(oneH59m.timeAgo(suffix: suffix), "1h 59m\(suffix)")
             XCTAssertEqual(tw0H59m59s.timeAgo(suffix: suffix), "2h 59m\(suffix)")
         }
-
-
     }
-    
-    func testShiftedDate() {        
-        let now = Date()
-        let skewed = Date().shifted(by: -60*15)
-        
-        XCTAssert(skewed.timeIntervalSince1970  == now.timeIntervalSince1970 - 60*15)
-    }
-    
 }
