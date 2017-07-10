@@ -34,10 +34,8 @@ class ApproveController:UIViewController {
     
     var isEnabled = true
     
-    var defaultCategory = "signature"
-    
     var category:String {
-        return defaultCategory
+        return request?.body.analyticsCategory ?? "unknown-request"
     }
     
     override func viewDidLoad() {
@@ -299,10 +297,6 @@ class CommitApproveController:ApproveController {
     @IBOutlet weak var authorDateLabel:UILabel!
     
     @IBOutlet weak var committerLabel:UILabel!
-
-    override var category:String {
-        return "git-commit-signtaure"
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -346,10 +340,6 @@ class TagApproveController:ApproveController {
     @IBOutlet weak var tagLabel:UILabel!
     @IBOutlet weak var taggerLabel:UILabel!
     @IBOutlet weak var taggerDate:UILabel!
-    
-    override var category:String {
-        return "git-tag-signtaure"
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

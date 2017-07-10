@@ -271,15 +271,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         switch actionIdentifier {
         case Policy.ActionIdentifier.approve:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
-            Analytics.postEvent(category: "signature", action: "background approve", label: "once")
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "once")
             
         case Policy.ActionIdentifier.temporary:
             Policy.allow(session: session, for: Policy.Interval.threeHours)
-            Analytics.postEvent(category: "signature", action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
         case Policy.ActionIdentifier.reject:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
-            Analytics.postEvent(category: "signature", action: "background reject")
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "background reject")
             
         }
 

@@ -127,7 +127,7 @@ class Silo {
         // analytics / notify user on error for signature response
         switch response.body {
         case .ssh(let sign):
-            Analytics.postEvent(category: "signature", action: "automatic approval", label: communicationMedium.rawValue)
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
             
             if let error = sign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
@@ -140,7 +140,7 @@ class Silo {
             }
 
         case .git(let gitSign):
-            Analytics.postEvent(category: "git-commit-signature", action: "automatic approval", label: communicationMedium.rawValue)
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
             
             if let error = gitSign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
@@ -175,7 +175,7 @@ class Silo {
             }
         }
         
-        Analytics.postEvent(category: "signature", action: "requires approval", label:communicationMedium.rawValue)
+        Analytics.postEvent(category: request.body.analyticsCategory, action: "requires approval", label:communicationMedium.rawValue)
         completionHandler?()
     }
     

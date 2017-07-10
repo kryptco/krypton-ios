@@ -121,6 +121,26 @@ enum RequestBody:Jsonable {
         
         return json
     }
+    
+    var analyticsCategory:String {
+        switch self {
+        case .ssh:
+            return "signature"
+        case .git(let g):
+            switch g.git {
+            case .commit:
+                return "git-commit-signature"
+            case .tag:
+                return "git-tag-signature"
+            }
+        case .me:
+            return "me"
+        case .noOp:
+            return "noOp"
+        case .unpair:
+            return "unpair"
+        }
+    }
 }
 
 
