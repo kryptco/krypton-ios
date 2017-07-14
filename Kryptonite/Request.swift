@@ -140,6 +140,8 @@ enum RequestBody:Jsonable {
             case .tag:
                 return "git-tag-signature"
             }
+        case .blob:
+            return "blob-signature"
         case .me:
             return "me"
         case .noOp:
