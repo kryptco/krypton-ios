@@ -25,6 +25,7 @@ class Policy {
         case userLastApproved = "policy_user_last_approved"
         case userApprovalInterval = "policy_user_approval_interval"
         case manualUnknownHostApprovals = "policy_manual_unknown_host_approvals"
+        case showApprovedNotifications = "policy_show_approved_notifications"
 
         func key(id:String) -> String {
             return "\(self.rawValue)_\(id)"
@@ -32,8 +33,6 @@ class Policy {
 
     }
     
-    //static var pendingAuthorizationMutex = Mutex()
-    //static var pendingAuthorizations:[PendingAuthorization] = []
     
     // Category Identifiers
     static let autoAuthorizedCategoryIdentifier = "auto_authorized_identifier"
@@ -59,6 +58,10 @@ class Policy {
         UserDefaults.group?.synchronize()
     }
     
+    class func set(shouldShowApprovedNotifications:Bool, for session:Session) {
+        UserDefaults.group?.set(shouldShowApprovedNotifications, forKey: StorageKey.showApprovedNotifications.key(id: session.id))
+        UserDefaults.group?.synchronize()
+    }
     
     static func allow(session:Session, for time:Interval) {
         UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
@@ -99,6 +102,14 @@ class Policy {
         return needsApproval
     }
     
+    class func shouldShowApprovedNotifications(for session:Session) -> Bool {
+        guard let shouldShow = UserDefaults.group?.object(forKey: StorageKey.showApprovedNotifications.key(id: session.id)) as? Bool
+        else {
+            return true
+        }
+        
+        return shouldShow
+    }
     
     /**
         Session + SignRequest need approval if any of:

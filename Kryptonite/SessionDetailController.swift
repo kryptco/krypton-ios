@@ -15,6 +15,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
     @IBOutlet var revokeButton:UIButton!
     @IBOutlet var unknownHostSwitch:UISwitch!
+    @IBOutlet var silenceApprovedSwitch:UISwitch!
 
     @IBOutlet var headerView:UIView!
 
@@ -65,6 +66,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         if let session = session {
             deviceNameField.text = session.pairing.displayName.uppercased()
             unknownHostSwitch.isOn = Policy.needsUnknownHostApproval(for: session)
+            silenceApprovedSwitch.isOn = Policy.shouldShowApprovedNotifications(for: session)
             
             if let lastLog = LogManager.shared.fetchCompleteLatest(for: session.id) {
                 switch lastLog {
@@ -184,6 +186,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             return
         }
         
+        if #available(iOS 10.0, *) {
+            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        }
+        
         switch approvalControlType {
         case .on:
             Analytics.postEvent(category: "manual approval", action: String(true))
@@ -208,6 +214,14 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         Policy.set(manualUnknownHostApprovals: sender.isOn, for: session)
     }
+    
+    @IBAction func silenceApproveToggled(sender:UISwitch) {
+        guard let session = session else {
+            return
+        }
+        
+        Policy.set(shouldShowApprovedNotifications: sender.isOn, for: session)
+    }
 
     //MARK: Revoke
     @IBAction func revokeTapped() {
@@ -216,6 +230,11 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             SessionManager.shared.remove(session: session)
             TransportControl.shared.remove(session: session)
         }
+        
+        if #available(iOS 10.0, *) {
+            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        }
+        
         let _ = self.navigationController?.popViewController(animated: true)
     }
     

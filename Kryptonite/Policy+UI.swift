@@ -97,6 +97,11 @@ extension Policy {
         switch UIApplication.shared.applicationState {
             
         case .background: // Background: then present local notification
+            guard Policy.shouldShowApprovedNotifications(for: session) else {
+                log("skip sending push notification on approved request due to policy setting")
+                return
+            }
+          
             Notify.shared.presentApproved(request: request, for: session)
             
         case .inactive: // Inactive: wait and try again
