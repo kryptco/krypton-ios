@@ -61,7 +61,7 @@ struct Properties {
     static let requestTimeTolerance = allowedClockSkew
     
     //MARK: PGP Constant
-    static let pgpMessageComment = "Created With Kryptonite"
+    static let pgpMessageComment = "Created with Kryptonite"
 
     init() {}
 }
