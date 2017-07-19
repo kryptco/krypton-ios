@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import JSON
 
 class PairController: KRBaseController, KRScanDelegate {
     
@@ -41,6 +42,23 @@ class PairController: KRBaseController, KRScanDelegate {
         if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == AVAuthorizationStatus.denied
         {
             self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. Kryptonite needs the camera to scan your computer's QR code and pair. Pairing enables your computer to ask your phone for SSH logins.")
+        }
+        
+        do {
+            let pairingPath = "/Users/Alex/.kr/pairing.json"
+            let pairingData = try Data(contentsOf: URL(fileURLWithPath: pairingPath))
+            let pairingJSON:JSON.Object = try JSON.parse(data: pairingData)
+            
+            guard   let publicKey = pairingJSON["WorkstationPublicKey"] as? String else {
+                log("couldn't find pairing.json at: \(pairingPath)")
+                return
+            }
+            
+            let jsonString = "{ \"pk\": \"\(publicKey)\", \"v\": \"\(Properties.currentVersion.string)\", \"n\": \"Macbook Pro\"}"
+            self.onFound(data: jsonString)
+            
+        } catch {
+            log("\(error)")
         }
     }
     
