@@ -184,7 +184,7 @@ class CodeSigningTests: XCTestCase {
                                         committer: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
                                         message: "\ntest1234\n".utf8Data())
             
-            let asciiArmored = AsciiArmorMessage(message: sigMessage, blockType: ArmorMessageBlock.signature, comment: Properties.pgpMessageComment).toString()
+            let asciiArmored = AsciiArmorMessage(message: sigMessage, blockType: ArmorMessageBlock.signature, comment: "Created With Kryptonite").toString()
             
             let commitHash = try commitInfo.commitHash(asciiArmoredSignature: asciiArmored).hex
             
