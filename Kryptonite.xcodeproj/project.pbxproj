@@ -146,6 +146,8 @@
 		FA6BCBEE1F211807006F716F /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* Identity.swift */; };
 		FA6BCBEF1F211807006F716F /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* Identity.swift */; };
 		FA6BCBF01F211807006F716F /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* Identity.swift */; };
+		FA6BCBF21F213C9B006F716F /* Team.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6BCBF11F213C9B006F716F /* Team.storyboard */; };
+		FA6BCBF51F214ADB006F716F /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
 		FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
 		FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8141391D70B0F4004FE58C /* AppDelegate.swift */; };
@@ -645,6 +647,8 @@
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA6BCBD51F211470006F716F /* IdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityManager.swift; sourceTree = "<group>"; };
 		FA6BCBED1F211807006F716F /* Identity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
+		FA6BCBF11F213C9B006F716F /* Team.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Team.storyboard; sourceTree = "<group>"; };
+		FA6BCBF41F214ADB006F716F /* TeamInvite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInvite.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8141361D70B0F4004FE58C /* Kryptonite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kryptonite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -952,6 +956,7 @@
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16824F1D774C2700A7ED53 /* Pair */,
 				FA61EF501D85DB19009FD899 /* Devices */,
+				FA6BCBF31F2145EE006F716F /* Team */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -989,6 +994,7 @@
 				FA8523C91DBFDA5200D465D2 /* Version.swift */,
 				FA2949E21EDE379900A5C70B /* UserIDList.swift */,
 				FA6BCBED1F211807006F716F /* Identity.swift */,
+				FA6BCBF41F214ADB006F716F /* TeamInvite.swift */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 			);
 			name = Core;
@@ -1005,6 +1011,13 @@
 				FA2949CA1EDCB77800A5C70B /* LogDetailController.swift */,
 			);
 			name = Devices;
+			sourceTree = "<group>";
+		};
+		FA6BCBF31F2145EE006F716F /* Team */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Team;
 			sourceTree = "<group>";
 		};
 		FA81412D1D70B0F4004FE58C = {
@@ -1053,6 +1066,7 @@
 				FA29779E1D7746CC003EB1F7 /* Resources.swift */,
 				FA81413D1D70B0F4004FE58C /* Main.storyboard */,
 				FAE495991DBD98C400A97708 /* Approval.storyboard */,
+				FA6BCBF11F213C9B006F716F /* Team.storyboard */,
 				FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */,
 				FA8141401D70B0F4004FE58C /* Assets.xcassets */,
 			);
@@ -1684,6 +1698,7 @@
 				FA03C59A1E760CD50019649E /* COMMIT in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
 				FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */,
+				FA6BCBF21F213C9B006F716F /* Team.storyboard in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
 				FA632E441DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */,
 			);
@@ -2072,6 +2087,7 @@
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
 				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
+				FA6BCBF51F214ADB006F716F /* TeamInvite.swift in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,

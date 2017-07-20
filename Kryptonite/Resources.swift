@@ -15,6 +15,7 @@ struct Resources {
     struct Storyboard {
         static let Main = UIStoryboard(name: "Main", bundle: Bundle.main)
         static let Approval = UIStoryboard(name: "Approval", bundle: Bundle.main)
+        static let Approval = UIStoryboard(name: "Team", bundle: Bundle.main)
     }
     
     static func makeAppearences() {

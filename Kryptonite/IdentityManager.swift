@@ -9,8 +9,18 @@
 import Foundation
 import Sodium
 
+
+protocol IdentityKeyPointer {
+    var tag:String { get }
+}
+
+extension Identity:IdentityKeyPointer {
+    var tag:String {
+        return "me_\(id)"
+    }
+}
+
 class IdentityManager {
-    
     /**
         Singelton
      */
@@ -54,6 +64,14 @@ class IdentityManager {
     private var mutex = Mutex()
 
     
+    /**
+        The default, 'personal', identity
+     */
+    struct DefaultIdentity:IdentityKeyPointer {
+        var tag:String {
+            return "me"
+        }
+    }
     
     /**
         Saves a (potentially) new identity

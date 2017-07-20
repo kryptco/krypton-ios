@@ -14,23 +14,29 @@ struct Identity:Jsonable {
     let id:String
     let email:String
     let team:Team
+    let keyPair:SodiumKeyPair
     
-    init(email:String, team:Team) throws {
-        try self.init(id: Data.random(size: 32).toBase64(), email: email, team: team)
+    init(email:String, team:Team, keyPair:SodiumKeyPair) throws {
+        try self.init(id: Data.random(size: 32).toBase64(), email: email, team: team, keyPair: keyPair)
     }
     
-    private init(id:String, email:String, team:Team) {
+    private init(id:String, email:String, team:Team, keyPair:SodiumKeyPair) {
         self.id = id
         self.email = email
         self.team = team
+        self.keyPair = keyPair
     }
     
     init(json: Object) throws {
-        try self.init(id: json ~> "id", email: json ~> "email", team: Team(json: json ~> "team"))
+        try self.init(id: json ~> "id",
+                      email: json ~> "email",
+                      team: Team(json: json ~> "team"),
+                      keyPair: SodiumKeyPair(publicKey: ((json ~> "pk") as String).fromBase64(),
+                                             secretKey: ((json ~> "sk") as String).fromBase64()))
     }
     
     var object: Object {
-        return ["id": id, "email": email, "team": team.object]
+        return ["id": id, "email": email, "team": team.object, "pk": keyPair.publicKey.toBase64(), "sk": keyPair.secretKey.toBase64()]
     }
 }
 
