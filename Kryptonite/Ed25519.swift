@@ -13,7 +13,7 @@ private let Ed25519KeychainService = "com.kryptco.keys.ed25519"
 
 class Ed25519KeyPair:KeyPair {
 
-    var edKeyPair:Sign.KeyPair
+    var edKeyPair:SodiumKeyPair
     
     var publicKey:PublicKey {
         return edKeyPair.publicKey
@@ -23,7 +23,7 @@ class Ed25519KeyPair:KeyPair {
         return edKeyPair.secretKey
     }
     
-    init(keypair: Sign.KeyPair) {
+    init(keypair: SodiumKeyPair) {
         self.edKeyPair = keypair
     }
     

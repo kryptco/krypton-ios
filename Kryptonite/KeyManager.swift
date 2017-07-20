@@ -11,7 +11,6 @@ import PGPFormat
 
 enum KeyTag:String {
     case me = "me"
-    case peer = "peer"
 }
 
 private let KrMeDataKey = "kr_me_email"
