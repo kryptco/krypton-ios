@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
-            let link = Link(url: url)
+            let link = try? Link(url: url)
         {
             pendingLink = link
         }
@@ -303,14 +303,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        guard let link = Link(url: url) else {
-            log("invalid kr url: \(url)", .error)
+        do {
+            self.pendingLink = try Link(url: url)
+            NotificationCenter.default.post(name: Link.notificationName, object: self.pendingLink, userInfo: nil)
+            return true
+        } catch {
+            log("invalid link: \(url.absoluteString)", .error)
             return false
         }
-        
-        self.pendingLink = link
-        NotificationCenter.default.post(name: Link.notificationName, object: link, userInfo: nil)
-        return true
     }
     
     //MARK: Update Checking in the Background

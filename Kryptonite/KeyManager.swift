@@ -23,7 +23,7 @@ class KeyManager {
         case keyDoesNotExist
     }
     
-    class func sharedInstance(keyPointer:IdentityKeyPointer = IdentityManager.DefaultIdentity()) throws -> KeyManager {
+    class func sharedInstance(for keyPointer:IdentityKeyPointer = DefaultIdentity()) throws -> KeyManager {
         do {
             if let rsaKP = try RSAKeyPair.load(keyPointer.tag) {
                 return KeyManager(rsaKP)
@@ -47,7 +47,7 @@ class KeyManager {
         }
     }
 
-    class func generateKeyPair(type:KeyType, for keyPointer:IdentityKeyPointer = IdentityManager.DefaultIdentity()) throws {
+    class func generateKeyPair(type:KeyType, for keyPointer:IdentityKeyPointer = DefaultIdentity()) throws {
         do {
             switch type {
             case .RSA:
@@ -62,7 +62,7 @@ class KeyManager {
         }
     }
     
-    class func destroyKeyPair(keyPointer:IdentityKeyPointer = IdentityManager.DefaultIdentity()) {
+    class func destroyKeyPair(for keyPointer:IdentityKeyPointer = DefaultIdentity()) {
         
         // destroy rsa
         do {
@@ -92,7 +92,7 @@ class KeyManager {
         }
     }
     
-    class func hasKey(keyPointer:IdentityKeyPointer = IdentityManager.DefaultIdentity()) -> Bool {
+    class func hasKey(keyPointer:IdentityKeyPointer = DefaultIdentity()) -> Bool {
         do {
             if let _ = try RSAKeyPair.load(keyPointer.tag) {
                 log("has rsa key is true")
@@ -152,7 +152,7 @@ enum PGPPublicKeyStorage:String {
 }
 extension KeyManager {
     
-    func loadPGPPublicKey(for identity:String, with keyPointer:IdentityKeyPointer = IdentityManager.DefaultIdentity()) throws -> AsciiArmorMessage {
+    func loadPGPPublicKey(for identity:String, with keyPointer:IdentityKeyPointer = DefaultIdentity()) throws -> AsciiArmorMessage {
         
         // get and update userid list if needed
         let userIds = self.updatePGPUserIDPreferences(for: identity)
@@ -181,7 +181,7 @@ extension KeyManager {
         return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
     }
     
-    func updatePGPUserIDPreferences(for identity:String, with keyPointer:IdentityKeyPointer = IdentityManager.DefaultIdentity()) -> [String] {
+    func updatePGPUserIDPreferences(for identity:String, with keyPointer:IdentityKeyPointer = DefaultIdentity()) -> [String] {
         
         var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: keyPointer.tag)))) ?? UserIDList.empty
         
@@ -198,7 +198,7 @@ extension KeyManager {
         }
     }
     
-    func getPGPPublicKeyID(with keyPointer:IdentityKeyPointer = IdentityManager.DefaultIdentity()) throws -> Data {
+    func getPGPPublicKeyID(with keyPointer:IdentityKeyPointer = DefaultIdentity()) throws -> Data {
         
         // get the created time
         guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: keyPointer.tag)))

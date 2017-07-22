@@ -11,7 +11,6 @@ import UIKit
 class MainController: UITabBarController, UITabBarControllerDelegate {
 
     var blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
-
     
     lazy var aboutButton:UIBarButtonItem = {
         return UIBarButtonItem(image: UIImage(named: "gear"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.aboutTapped))
@@ -97,6 +96,10 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         self.selectedIndex = 1
     }
     
+    @IBAction func dismissJoinTeam(segue: UIStoryboardSegue) {
+        self.selectedIndex = 2
+    }
+
     
     //MARK: Nav Bar Buttons
     

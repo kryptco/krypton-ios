@@ -9,17 +9,6 @@
 import Foundation
 import Sodium
 
-
-protocol IdentityKeyPointer {
-    var tag:String { get }
-}
-
-extension Identity:IdentityKeyPointer {
-    var tag:String {
-        return "me_\(id)"
-    }
-}
-
 class IdentityManager {
     /**
         Singelton
@@ -42,7 +31,7 @@ class IdentityManager {
         Store all data in Keychain for security, reliability, and persistance
      */
     private static let keychainService = "com.kryptco.identity"
-    lazy var keychain:KeychainStorage = {
+    private lazy var keychain:KeychainStorage = {
         return KeychainStorage(service: IdentityManager.keychainService)
     }()
 
@@ -65,15 +54,6 @@ class IdentityManager {
 
     
     /**
-        The default, 'personal', identity
-     */
-    struct DefaultIdentity:IdentityKeyPointer {
-        var tag:String {
-            return "me"
-        }
-    }
-    
-    /**
         Saves a (potentially) new identity
             - if it exists, update it
             - if it's new, add it to id_list and save id
@@ -82,7 +62,12 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        var ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
+        var ids:[String]
+        do {
+            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
+        } catch KeychainStorageError.notFound {
+            ids = []
+        }
         
         // if not a previous known id, index it.
         if !ids.contains(identity.id) {
