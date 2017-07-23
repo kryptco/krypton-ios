@@ -23,7 +23,13 @@ class TeamDetailController: KRBaseTableController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Team"
+        
+        if let count = try? IdentityManager.shared.count(), count == 1 {
+            self.title = identity.team.name
+        } else {
+            self.title = "Team"
+        }
+        
         
         teamLabel.text = identity.team.name
         emailLabel.text = identity.email
@@ -88,7 +94,7 @@ class TeamDetailController: KRBaseTableController {
     func authenticate(completion:@escaping (Bool)->Void) {
         let context = LAContext()
         let policy = LAPolicy.deviceOwnerAuthentication
-        let reason = "Leave the \(identity.team) team?"
+        let reason = "Leave the \(identity.team.name) team?"
         
         var err:NSError?
         guard context.canEvaluatePolicy(policy, error: &err) else {

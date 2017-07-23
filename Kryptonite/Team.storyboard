@@ -309,7 +309,7 @@
         <scene sceneID="h3Q-cj-CaP">
             <objects>
                 <navigationController id="X9I-6v-wDf" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="BYg-dS-hlD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="BYg-dS-hlD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -842,7 +842,7 @@
                         <outlet property="leaveTeamButton" destination="xsH-wJ-UQ0" id="NOh-t2-yF5"/>
                         <outlet property="teamLabel" destination="o2b-L8-kGx" id="yRT-Pi-eHV"/>
                         <outlet property="unknownHostsLabel" destination="z7z-LY-gFe" id="QA7-0A-dcK"/>
-                        <segue destination="BfM-3Y-riT" kind="unwind" identifier="showLeaveTeam" unwindAction="dismissOnboardingWithSegue:" id="FAR-AA-miD"/>
+                        <segue destination="BfM-3Y-riT" kind="unwind" identifier="showLeaveTeam" unwindAction="didDeleteTeamWithSegue:" id="FAR-AA-miD"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gWN-64-wyk" userLabel="First Responder" sceneMemberID="firstResponder"/>

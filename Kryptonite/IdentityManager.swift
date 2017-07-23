@@ -46,8 +46,27 @@ class IdentityManager {
     enum Errors:Error {
         case doesNotExist
     }
+    
+    /**
+        Get/Set ID list
+     */
+    private func getIDs() throws -> [String] {
+        var ids:[String]
+        do {
+            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",").filter({ $0.isEmpty == false })
+        } catch KeychainStorageError.notFound {
+            ids = []
+        }
+        
+        return ids
+    }
+    
+    private func set(ids:[String]) throws {
+        try self.keychain.set(key: Storage.identityList.key, value: ids.joined(separator: ","))
+    }
 
-    /** 
+
+    /**
         Internal state members
      */
     private var mutex = Mutex()
@@ -62,17 +81,12 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        var ids:[String]
-        do {
-            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
-        } catch KeychainStorageError.notFound {
-            ids = []
-        }
+        var ids = try getIDs()
         
         // if not a previous known id, index it.
         if !ids.contains(identity.id) {
             ids.append(identity.id)
-            try self.keychain.set(key: Storage.identityList.key, value: ids.joined(separator: ","))
+            try set(ids: ids)
         }
         
         // save the updated identity
@@ -90,12 +104,7 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        var ids:[String]
-        do {
-            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
-        } catch KeychainStorageError.notFound {
-            return []
-        }
+        let ids = try getIDs()
         
         var identities:[Identity] = []
         for id in ids {
@@ -118,11 +127,7 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        do {
-            return try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",").count
-        } catch KeychainStorageError.notFound {
-            return 0
-        }
+        return try getIDs().count
     }
     
     
@@ -137,17 +142,11 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
+        var ids = try getIDs()
 
-        var ids:[String]
-        do {
-            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
-        } catch KeychainStorageError.notFound {
-            ids = []
-        }
-        
         if let idIndex = ids.index(of: identity.id) {
             ids.remove(at: idIndex)
-            try self.keychain.set(key: Storage.identityList.key, value: ids.joined(separator: ","))
+            try set(ids: ids)
         }
         
         try self.keychain.delete(key: identity.id)
@@ -157,12 +156,7 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        var ids:[String]
-        do {
-            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
-        } catch KeychainStorageError.notFound {
-            ids = []
-        }
+        let ids = try getIDs()
         
         for id in ids {
             try? self.keychain.delete(key: id)
