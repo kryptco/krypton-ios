@@ -133,6 +133,8 @@
 		FA5A73691F22A2F80087D3CF /* TeamInvitationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */; };
 		FA5A737F1F22C1870087D3CF /* TeamGenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A737E1F22C1870087D3CF /* TeamGenerateController.swift */; };
 		FA5A73811F22C41A0087D3CF /* TeamJoinCompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */; };
+		FA5A73861F23F71C0087D3CF /* TeamListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73851F23F71C0087D3CF /* TeamListController.swift */; };
+		FA5A73881F23F8610087D3CF /* TeamDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73871F23F8610087D3CF /* TeamDetailController.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
@@ -643,6 +645,8 @@
 		FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInvitationController.swift; sourceTree = "<group>"; };
 		FA5A737E1F22C1870087D3CF /* TeamGenerateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamGenerateController.swift; sourceTree = "<group>"; };
 		FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamJoinCompleteController.swift; sourceTree = "<group>"; };
+		FA5A73851F23F71C0087D3CF /* TeamListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamListController.swift; sourceTree = "<group>"; };
+		FA5A73871F23F8610087D3CF /* TeamDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDetailController.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
@@ -978,6 +982,16 @@
 			path = LastCommand;
 			sourceTree = "<group>";
 		};
+		FA5A73841F23F6EF0087D3CF /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */,
+				FA5A737E1F22C1870087D3CF /* TeamGenerateController.swift */,
+				FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */,
+			);
+			name = Invite;
+			sourceTree = "<group>";
+		};
 		FA61EF471D831A77009FD899 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1022,9 +1036,9 @@
 		FA6BCBF31F2145EE006F716F /* Team */ = {
 			isa = PBXGroup;
 			children = (
-				FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */,
-				FA5A737E1F22C1870087D3CF /* TeamGenerateController.swift */,
-				FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */,
+				FA5A73851F23F71C0087D3CF /* TeamListController.swift */,
+				FA5A73871F23F8610087D3CF /* TeamDetailController.swift */,
+				FA5A73841F23F6EF0087D3CF /* Invite */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -2078,6 +2092,7 @@
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
 				FA6BCBEE1F211807006F716F /* Identity.swift in Sources */,
+				FA5A73861F23F71C0087D3CF /* TeamListController.swift in Sources */,
 				FAAE818F1E576DB8002A9AE6 /* Authorize.swift in Sources */,
 				FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
@@ -2108,6 +2123,7 @@
 				FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */,
 				FAE45B991E64750E00A583AB /* RSAKeyPair.swift in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
+				FA5A73881F23F8610087D3CF /* TeamDetailController.swift in Sources */,
 				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,
 				FAA6E1F11D79E3ED007D1B3A /* AWS.swift in Sources */,

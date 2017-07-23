@@ -90,18 +90,89 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        var identities:[Identity] = []
+        var ids:[String]
+        do {
+            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
+        } catch KeychainStorageError.notFound {
+            return []
+        }
         
-        for id in try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",") {
-            let identity = try Identity(jsonData: self.keychain.getData(key: id))
-            identities.append(identity)
+        var identities:[Identity] = []
+        for id in ids {
+            do {
+                let identityData = try self.keychain.getData(key: id)
+                let identity = try Identity(jsonData: identityData)
+                identities.append(identity)
+            } catch {
+                log("couldn't parse identity data for: \(id) because: \(error)", .error)
+            }
         }
         
         return identities
     }
     
+    /**
+        Returns number of identities
+     */
+    func count() throws -> Int {
+        mutex.lock()
+        defer { mutex.unlock() }
+        
+        do {
+            return try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",").count
+        } catch KeychainStorageError.notFound {
+            return 0
+        }
+    }
     
+    
+    /**
+     Returns number of identities
+     Note: requires two Keychain writes, one read:
+         1. fetch id list
+         2. remove id from list
+         3. remove id object
+     */
+    func remove(identity:Identity) throws {
+        mutex.lock()
+        defer { mutex.unlock() }
+        
+
+        var ids:[String]
+        do {
+            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
+        } catch KeychainStorageError.notFound {
+            ids = []
+        }
+        
+        if let idIndex = ids.index(of: identity.id) {
+            ids.remove(at: idIndex)
+            try self.keychain.set(key: Storage.identityList.key, value: ids.joined(separator: ","))
+        }
+        
+        try self.keychain.delete(key: identity.id)
+    }
+    
+    func destroyAll() throws {
+        mutex.lock()
+        defer { mutex.unlock() }
+        
+        var ids:[String]
+        do {
+            ids = try self.keychain.get(key: Storage.identityList.key).components(separatedBy: ",")
+        } catch KeychainStorageError.notFound {
+            ids = []
+        }
+        
+        for id in ids {
+            try? self.keychain.delete(key: id)
+        }
+        
+        try self.keychain.delete(key: Storage.identityList.key)
+    }
+
 }
+
 
 
 

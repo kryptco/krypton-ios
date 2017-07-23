@@ -19,7 +19,11 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     lazy var helpButton:UIBarButtonItem = {
         return UIBarButtonItem(title: "Help", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.helpTapped))
     }()
-
+    
+    enum TabsCount:Int {
+        case noTeam = 3
+        case hasTeam = 4
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +49,9 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         if !KeyManager.hasKey() {
             self.blurView.isHidden = false
         }
+        
+        // set the right 4th tab if needed
+        createTeamTabIfNeeded()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -96,8 +103,14 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         self.selectedIndex = 1
     }
     
+    
+    var shouldSwitchToTeams:Bool = false
     @IBAction func dismissJoinTeam(segue: UIStoryboardSegue) {
-        self.selectedIndex = 2
+        if self.tabBar.items?.count == TabsCount.hasTeam.rawValue {
+            self.selectedIndex = 3
+        } else {
+            shouldSwitchToTeams = true
+        }
     }
 
     
@@ -109,6 +122,78 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     @objc dynamic func helpTapped() {
         self.performSegue(withIdentifier: "showInstall", sender: nil)
+    }
+    
+    //MARK: Teams tab
+    
+    func createTeamTabIfNeeded() {
+        
+        // load the identients
+        var identities:[Identity]
+        do {
+            identities = try IdentityManager.shared.list()
+            guard !identities.isEmpty else {
+                return
+            }
+        } catch {
+            log("error loading identites: \(error)", .error)
+            return
+        }
+
+        
+        // already have 4th team tab
+        if let viewControllers = self.viewControllers, viewControllers.count == TabsCount.hasTeam.rawValue {
+            switch (identities.count, viewControllers[3]) {
+                
+            // no more teams, remove the 4th tab
+            case (0, _):
+                self.setViewControllers([UIViewController](viewControllers[0 ..< 3]), animated: true)
+                
+                if let items = self.tabBar.items, items.count == TabsCount.hasTeam.rawValue {
+                    self.tabBar.setItems([UITabBarItem](items[0 ..< 3]), animated: true)
+                }
+                
+                self.selectedIndex = 0
+                return
+            
+            // only one team now, remove the 4th tab to change to team detail controller
+            case let (c, v) where c == 1 && v is TeamListController:
+                self.setViewControllers([UIViewController](viewControllers[0 ..< 3]), animated: true)
+
+            // more than one team now, remove the 4th tab to change to team list controller
+            case let (c, v) where c > 1 && v is TeamDetailController:
+                self.setViewControllers([UIViewController](viewControllers[0 ..< 3]), animated: true)
+                
+            // the tab is set correctly, return
+            default:
+                return
+            }
+        }
+        
+        var controller:UIViewController
+        var tabBarItem:UITabBarItem
+        
+        if identities.count == 1 {
+            let detailController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamDetailController") as! TeamDetailController
+            detailController.identity = identities[0]
+            controller = detailController
+            tabBarItem = UITabBarItem(title: identities[0].team.name, image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
+            
+        } else if identities.count > 1 {
+            controller = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamListController")
+            tabBarItem = UITabBarItem(title: "Teams", image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
+
+        } else { //empty
+            return
+        }
+        
+        self.setViewControllers((self.viewControllers ?? []) + [controller], animated: true)
+        controller.tabBarItem = tabBarItem
+        
+        if shouldSwitchToTeams {
+            self.selectedIndex = 3
+            shouldSwitchToTeams = false
+        }
     }
     
     //MARK: Prepare for segue

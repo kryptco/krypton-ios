@@ -35,15 +35,15 @@ class TeamGenerateController:KRBaseController {
         SwiftSpinner.useContainerView(animationView)
         SwiftSpinner.show("", animated: true)
         
-        // destroy the existing keypair before re-generating
-        KeyManager.destroyKeyPair(for: self.identity)
-        
         let startTime = Date()
         
         dispatchAsync {
             do {
                 
-                try KeyManager.generateKeyPair(type: self.keyType, for: self.identity)
+                //TODO: remove double check that it's not default key
+                if self.identity.usesDefaultKey == false {
+                    try KeyManager.generateKeyPair(type: self.keyType, for: self.identity)
+                }
                 
                 let elapsed = Date().timeIntervalSince(startTime)
                 
