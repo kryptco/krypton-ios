@@ -28,15 +28,7 @@ extension Request {
     }
     
     var autoApproveDisplay:String? {
-        switch self.body {
-        case .ssh(let sshRequest):
-            return sshRequest.display
-        case .git(let gitSign):
-            return gitSign.git.shortDisplay
-
-        default:
-            return nil
-        }
+        return self.notificationDetails().body
     }
 }
 
