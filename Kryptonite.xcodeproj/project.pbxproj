@@ -131,9 +131,7 @@
 		FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DC1E8D76800082274A /* SQS.swift */; };
 		FA5A73691F22A2F80087D3CF /* TeamInvitationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */; };
-		FA5A737F1F22C1870087D3CF /* TeamGenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A737E1F22C1870087D3CF /* TeamGenerateController.swift */; };
 		FA5A73811F22C41A0087D3CF /* TeamJoinCompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */; };
-		FA5A73861F23F71C0087D3CF /* TeamListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73851F23F71C0087D3CF /* TeamListController.swift */; };
 		FA5A73881F23F8610087D3CF /* TeamDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73871F23F8610087D3CF /* TeamDetailController.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
@@ -145,12 +143,9 @@
 		FA632E471DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
 		FA6491121ED38314008C04A7 /* AutoApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6491111ED38314008C04A7 /* AutoApproveController.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
-		FA6BCBD61F211470006F716F /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBD51F211470006F716F /* IdentityManager.swift */; };
-		FA6BCBD71F211470006F716F /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBD51F211470006F716F /* IdentityManager.swift */; };
-		FA6BCBD81F211470006F716F /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBD51F211470006F716F /* IdentityManager.swift */; };
-		FA6BCBEE1F211807006F716F /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* Identity.swift */; };
-		FA6BCBEF1F211807006F716F /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* Identity.swift */; };
-		FA6BCBF01F211807006F716F /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* Identity.swift */; };
+		FA6BCBEE1F211807006F716F /* TeamIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* TeamIdentity.swift */; };
+		FA6BCBEF1F211807006F716F /* TeamIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* TeamIdentity.swift */; };
+		FA6BCBF01F211807006F716F /* TeamIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* TeamIdentity.swift */; };
 		FA6BCBF21F213C9B006F716F /* Team.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6BCBF11F213C9B006F716F /* Team.storyboard */; };
 		FA6BCBF51F214ADB006F716F /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
@@ -289,6 +284,10 @@
 		FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33541EC186DC003EC6C0 /* SSHUtil.swift */; };
 		FACE33691EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */; };
 		FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD361F61DF08F9E00D17BAB /* Connectivity.swift */; };
+		FADA19BE1F2952C1004AE6B0 /* TeamIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* TeamIdentity.swift */; };
+		FADA19BF1F2952C1004AE6B0 /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
+		FADA19C01F2952C9004AE6B0 /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
+		FADA19C11F2952C9004AE6B0 /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
 		FADDE2831EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
@@ -643,9 +642,7 @@
 		FA4A84DC1E8D76800082274A /* SQS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQS.swift; sourceTree = "<group>"; };
 		FA4A84DE1E8D77910082274A /* TransportControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportControl.swift; sourceTree = "<group>"; };
 		FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInvitationController.swift; sourceTree = "<group>"; };
-		FA5A737E1F22C1870087D3CF /* TeamGenerateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamGenerateController.swift; sourceTree = "<group>"; };
 		FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamJoinCompleteController.swift; sourceTree = "<group>"; };
-		FA5A73851F23F71C0087D3CF /* TeamListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamListController.swift; sourceTree = "<group>"; };
 		FA5A73871F23F8610087D3CF /* TeamDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDetailController.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
@@ -655,8 +652,7 @@
 		FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Regular.ttf"; sourceTree = "<group>"; };
 		FA6491111ED38314008C04A7 /* AutoApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoApproveController.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
-		FA6BCBD51F211470006F716F /* IdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityManager.swift; sourceTree = "<group>"; };
-		FA6BCBED1F211807006F716F /* Identity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
+		FA6BCBED1F211807006F716F /* TeamIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamIdentity.swift; sourceTree = "<group>"; };
 		FA6BCBF11F213C9B006F716F /* Team.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Team.storyboard; sourceTree = "<group>"; };
 		FA6BCBF41F214ADB006F716F /* TeamInvite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInvite.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -883,7 +879,6 @@
 		FA15EB471DA5C5BB00BED16C /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				FA6BCBD51F211470006F716F /* IdentityManager.swift */,
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
 				FA61EF421D81D150009FD899 /* SessionManager.swift */,
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
@@ -982,16 +977,6 @@
 			path = LastCommand;
 			sourceTree = "<group>";
 		};
-		FA5A73841F23F6EF0087D3CF /* Invite */ = {
-			isa = PBXGroup;
-			children = (
-				FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */,
-				FA5A737E1F22C1870087D3CF /* TeamGenerateController.swift */,
-				FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */,
-			);
-			name = Invite;
-			sourceTree = "<group>";
-		};
 		FA61EF471D831A77009FD899 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1013,7 +998,7 @@
 				FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */,
 				FA8523C91DBFDA5200D465D2 /* Version.swift */,
 				FA2949E21EDE379900A5C70B /* UserIDList.swift */,
-				FA6BCBED1F211807006F716F /* Identity.swift */,
+				FA6BCBED1F211807006F716F /* TeamIdentity.swift */,
 				FA6BCBF41F214ADB006F716F /* TeamInvite.swift */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 			);
@@ -1036,9 +1021,9 @@
 		FA6BCBF31F2145EE006F716F /* Team */ = {
 			isa = PBXGroup;
 			children = (
-				FA5A73851F23F71C0087D3CF /* TeamListController.swift */,
 				FA5A73871F23F8610087D3CF /* TeamDetailController.swift */,
-				FA5A73841F23F6EF0087D3CF /* Invite */,
+				FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */,
+				FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -2004,7 +1989,6 @@
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,
 				8D05CB1F1ED3DCC000CCCC38 /* TagInfo.swift in Sources */,
 				FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */,
-				FA6BCBD61F211470006F716F /* IdentityManager.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* Keypair+SSHFormat.swift in Sources */,
 				FAE4958D1DBD89F100A97708 /* M13CheckboxDotController.swift in Sources */,
@@ -2020,7 +2004,6 @@
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAE495971DBD89F100A97708 /* M13CheckboxPathGenerator.swift in Sources */,
 				FAE4958B1DBD89F100A97708 /* M13CheckboxGestureRecognizer.swift in Sources */,
-				FA5A737F1F22C1870087D3CF /* TeamGenerateController.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
 				FACAA4C61D89FEB5000B9A01 /* Policy.swift in Sources */,
 				FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */,
@@ -2091,8 +2074,7 @@
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
-				FA6BCBEE1F211807006F716F /* Identity.swift in Sources */,
-				FA5A73861F23F71C0087D3CF /* TeamListController.swift in Sources */,
+				FA6BCBEE1F211807006F716F /* TeamIdentity.swift in Sources */,
 				FAAE818F1E576DB8002A9AE6 /* Authorize.swift in Sources */,
 				FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
@@ -2152,7 +2134,8 @@
 				FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */,
 				FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */,
 				8D05CB371ED3E4BD00CCCC38 /* GitInfo.swift in Sources */,
-				FA6BCBF01F211807006F716F /* Identity.swift in Sources */,
+				FADA19C11F2952C9004AE6B0 /* TeamInvite.swift in Sources */,
+				FA6BCBF01F211807006F716F /* TeamIdentity.swift in Sources */,
 				8DCB60461E94469700E1B924 /* Policy.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
 				FA2949E61EDE379900A5C70B /* UserIDList.swift in Sources */,
@@ -2169,7 +2152,6 @@
 				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,
 				8DCB60351E94433100E1B924 /* Session.swift in Sources */,
 				8DCB60391E9443B600E1B924 /* Properties.swift in Sources */,
-				FA6BCBD81F211470006F716F /* IdentityManager.swift in Sources */,
 				8DC263A01ED246B800BF2E17 /* CommitInfo.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */,
@@ -2206,7 +2188,6 @@
 				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
 				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
 				FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */,
-				FA6BCBD71F211470006F716F /* IdentityManager.swift in Sources */,
 				FA1682A81EB2C51C00D9CE40 /* KnownHosts.xcdatamodeld in Sources */,
 				FADDE2841EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
@@ -2219,7 +2200,7 @@
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
-				FA6BCBEF1F211807006F716F /* Identity.swift in Sources */,
+				FA6BCBEF1F211807006F716F /* TeamIdentity.swift in Sources */,
 				FA1682A01EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* Keypair+SSHFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
@@ -2235,6 +2216,7 @@
 				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
 				FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */,
+				FADA19C01F2952C9004AE6B0 /* TeamInvite.swift in Sources */,
 				FA2949E51EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
@@ -2258,6 +2240,7 @@
 				FA8B54101ED773EE00891161 /* CommitInfo.swift in Sources */,
 				FAFF1E8D1ED6816B0063C44C /* NotificationViewController.swift in Sources */,
 				FA8B54381ED7755000891161 /* Log.swift in Sources */,
+				FADA19BF1F2952C1004AE6B0 /* TeamInvite.swift in Sources */,
 				FA8B543F1ED7887800891161 /* Resources.swift in Sources */,
 				FA8B542C1ED774C100891161 /* Keypair+PGPFormat.swift in Sources */,
 				FA8B54141ED773EE00891161 /* Pairing.swift in Sources */,
@@ -2277,6 +2260,7 @@
 				FA8B542A1ED774C100891161 /* Ed25519.swift in Sources */,
 				FA8B54131ED773EE00891161 /* Response.swift in Sources */,
 				FA8B54351ED774F700891161 /* String+User.swift in Sources */,
+				FADA19BE1F2952C1004AE6B0 /* TeamIdentity.swift in Sources */,
 				FA8B54281ED774C100891161 /* KeyPair.swift in Sources */,
 				FA8B54151ED773EE00891161 /* Session.swift in Sources */,
 				FA8B54361ED7750B00891161 /* Properties.swift in Sources */,

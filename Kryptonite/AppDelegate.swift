@@ -369,7 +369,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         
         //  Send email again if not sent succesfully
-        if let email = try? KeyManager.sharedInstance().getMe() {
+        if let email = try? KeyManager.getMe() {
             dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
         }
     }

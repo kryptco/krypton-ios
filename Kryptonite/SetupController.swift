@@ -25,7 +25,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
             let pk = try km.keyPair.publicKey.wireFormat()
             let fp = pk.fingerprint().hexPretty
             
-            if let email = try? km.getMe() {
+            if let email = try? KeyManager.getMe() {
                 nameTextfield.text = email
                 showNext()
             } else {

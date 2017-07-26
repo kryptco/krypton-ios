@@ -19,17 +19,12 @@ class TeamDetailController: KRBaseTableController {
     @IBOutlet weak var approvalWindowLabel:UILabel!
     @IBOutlet weak var unknownHostsLabel:UILabel!
 
-    var identity:Identity!
+    var identity:TeamIdentity!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let count = try? IdentityManager.shared.count(), count == 1 {
-            self.title = identity.team.name
-        } else {
-            self.title = "Team"
-        }
-        
+        self.title = identity.team.name
         
         teamLabel.text = identity.team.name
         emailLabel.text = identity.email
@@ -47,14 +42,7 @@ class TeamDetailController: KRBaseTableController {
     
     @IBAction func leaveTeamTapped() {
         
-        let defaultMessage = "You will no longer have access to the team's data and your team admin will be notified that you are leaving the team."
-        
-        var message = defaultMessage
-        if identity.usesDefaultKey == false {
-            message += " Your team key pair will also be gone forever."
-        }
-        
-        message += " Are you sure you want to continue?"
+        let message = "You will no longer have access to the team's data and your team admin will be notified that you are leaving the team. Are you sure you want to continue?"
         
         let sheet = UIAlertController(title: "Do you want to leave the \(identity.team.name) team?", message: message, preferredStyle: .actionSheet)
         
@@ -76,10 +64,7 @@ class TeamDetailController: KRBaseTableController {
             }
             
             do {
-                try IdentityManager.shared.remove(identity: self.identity)
-                if !self.identity.usesDefaultKey {
-                    KeyManager.destroyKeyPair(for: self.identity)
-                }
+                try KeyManager.removeTeamIdentity()
             } catch {
                 self.showWarning(title: "Error", body: "Cannot leave team: \(error)")
                 return

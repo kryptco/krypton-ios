@@ -23,7 +23,7 @@ class TeamJoinCompleteController:KRBaseController {
 
 
     var invite:TeamInvite!
-    var identity:Identity!
+    var identity:TeamIdentity!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,7 @@ class TeamJoinCompleteController:KRBaseController {
         
         // 1. save the identity
         do {
-            try IdentityManager.shared.save(identity: identity)
+            try KeyManager.setTeam(identity: identity)
         } catch {
             self.showWarning(title: "Error", body: "Could not save team identity: \(error).", then: {
                 self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)

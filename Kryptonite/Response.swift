@@ -240,17 +240,28 @@ struct MeResponse:Jsonable {
     }
     
     var me:Me
-    var team:Team
+    var team:Team?
     
-    init(me:Me) {
+    init(me:Me, team:Team? = nil) {
         self.me = me
+        self.team = team
     }
     init(json: Object) throws {
         self.me = try Me(json: json ~> "me")
+        
+        if let object:Object = try? json ~> "team" {
+            self.team = try Team(json: object)
+        }
 
     }
     var object: Object {
-        return ["me": me.object]
+        var map = ["me": me.object]
+        
+        if let team = self.team {
+            map["team"] = team.object
+        }
+        
+        return map
     }
 }
 

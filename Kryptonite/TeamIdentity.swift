@@ -10,58 +10,29 @@ import Foundation
 import Sodium
 import JSON
 
-/**
-    Map an identity to a key pair using it's tag
- */
-protocol IdentityKeyPointer {
-    var tag:String { get }
-}
-
-
-/**
-    The default, 'personal', identity
- */
-struct DefaultIdentity:IdentityKeyPointer {
-    var tag:String {
-        return "me"
-    }
-}
-
-
-
-struct Identity:Jsonable, IdentityKeyPointer {
+struct TeamIdentity:Jsonable {
     let id:String
     let email:String
     let team:Team
     let keyPair:SodiumKeyPair
-    let usesDefaultKey:Bool
     
-    var tag:String {
-        if usesDefaultKey {
-            return DefaultIdentity().tag
-        }
-        
-        return "me_\(id)"
-    }
-
     /**
         Create a new identity with an email for use with `team`
      */
-    init(email:String, team:Team, usesDefaultKey:Bool) throws {
+    init(email:String, team:Team) throws {
         let id = try Data.random(size: 32).toBase64()
         guard let keyPair = try KRSodium.shared().sign.keyPair() else {
             throw CryptoError.generate(KeyType.Ed25519, nil)
         }
         
-        self.init(id: id, email: email, team: team, keyPair: keyPair, usesDefaultKey: usesDefaultKey)
+        self.init(id: id, email: email, team: team, keyPair: keyPair)
     }
     
-    private init(id:String, email:String, team:Team, keyPair:SodiumKeyPair, usesDefaultKey:Bool) {
+    private init(id:String, email:String, team:Team, keyPair:SodiumKeyPair) {
         self.id = id
         self.email = email
         self.team = team
         self.keyPair = keyPair
-        self.usesDefaultKey = usesDefaultKey
     }
     
     init(json: Object) throws {
@@ -69,8 +40,7 @@ struct Identity:Jsonable, IdentityKeyPointer {
                       email: json ~> "email",
                       team: Team(json: json ~> "team"),
                       keyPair: SodiumKeyPair(publicKey: ((json ~> "pk") as String).fromBase64(),
-                                             secretKey: ((json ~> "sk") as String).fromBase64()),
-                      usesDefaultKey: json ~> "uses_default_key")
+                                             secretKey: ((json ~> "sk") as String).fromBase64()))
     }
     
     var object: Object {
@@ -78,8 +48,7 @@ struct Identity:Jsonable, IdentityKeyPointer {
                 "email": email,
                 "team": team.object,
                 "pk": keyPair.publicKey.toBase64(),
-                "sk": keyPair.secretKey.toBase64(),
-                "uses_default_key": usesDefaultKey]
+                "sk": keyPair.secretKey.toBase64()]
     }
 }
 

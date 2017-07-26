@@ -16,12 +16,6 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     @IBOutlet weak var teamNameLabel:UILabel!
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var joinButton:UIButton!
-    @IBOutlet weak var newKeyToggle:UISwitch!
-    
-    @IBOutlet weak var keyTypeLabel:UILabel!
-    @IBOutlet weak var keyTypeButton:UIButton!
-    
-    var keyType = KeyType.RSA
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,23 +34,9 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         teamNameLabel.text = invite.team.name
         emailTextfield.text = invite.email
         
-        keyTypeButton.setTitle(keyType.prettyPrint(), for: UIControlState.normal)
-        
-        newKeyToggleValueChanged()
         setJoin(valid: !invite.email.isEmpty)
     }
     
-    @IBAction func switchKeyTypeTapped(sender: AnyObject) {
-        switch keyType {
-        case .Ed25519:
-            keyTypeButton.setTitle(KeyType.RSA.prettyPrint(), for: UIControlState.normal)
-            keyType = .RSA
-        case .RSA:
-            keyTypeButton.setTitle(KeyType.Ed25519.prettyPrint(), for: UIControlState.normal)
-            keyType = .Ed25519
-            
-        }
-    }
     
     func setJoin(valid:Bool) {
         
@@ -69,15 +49,6 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func newKeyToggleValueChanged() {
-        if newKeyToggle.isOn {
-            keyTypeLabel.isHidden = false
-            keyTypeButton.isHidden = false
-        } else {
-            keyTypeLabel.isHidden = true
-            keyTypeButton.isHidden = true
-        }
-    }
     
     @IBAction func joinTapped() {
         
@@ -89,23 +60,16 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
             return
         }
         
-        let useDefaultKey = !newKeyToggle.isOn
-
-        // 1. create an identity and save it
-        var identity:Identity
+        // create an identity and save it
+        var identity:TeamIdentity
         do {
-            identity = try Identity(email: email, team: invite.team, usesDefaultKey: useDefaultKey)
+            identity = try TeamIdentity(email: email, team: invite.team)
         } catch {
             self.showWarning(title: "Error", body: "Could not join team. Error creating team identity: \(error).")
             return
         }
         
-        // 2. if new key, generate it. otherwise skip to complete
-        if useDefaultKey {
-            self.performSegue(withIdentifier: "showTeamsComplete", sender: identity)
-        } else {
-            self.performSegue(withIdentifier: "showTeamsGenerate", sender: identity)
-        }
+        self.performSegue(withIdentifier: "showTeamsComplete", sender: identity)
     }
     
     @IBAction func unwindToTeamInvitation(segue: UIStoryboardSegue) {}
@@ -135,16 +99,12 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        guard let identity = sender as? Identity else {
+        guard let identity = sender as? TeamIdentity else {
             log("performing segue without identity", .error)
             return
         }
         
-        if let generateController = segue.destination as? TeamGenerateController {
-            generateController.keyType = keyType
-            generateController.invite = invite
-            generateController.identity = identity
-        } else if let completeController = segue.destination as? TeamJoinCompleteController {
+        if let completeController = segue.destination as? TeamJoinCompleteController {
             completeController.invite = invite
             completeController.identity = identity
         }

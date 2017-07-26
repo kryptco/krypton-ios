@@ -63,7 +63,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             return
         }
         
-        guard  let _ = try? KeyManager.sharedInstance().getMe()
+        guard  let _ = try? KeyManager.getMe()
         else {
             self.performSegue(withIdentifier: "showOnboardEmail", sender: nil)
             return
@@ -137,21 +137,21 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     func createTeamTabIfNeeded() {
         
         // load the identients
-        var identities:[Identity]
+        var teamIdentity:TeamIdentity?
         do {
-            identities = try IdentityManager.shared.list()
+            teamIdentity = try KeyManager.getTeamIdentity()
         } catch {
-            log("error loading identites: \(error)", .error)
+            log("error loading team: \(error)", .error)
             return
         }
 
         
         // already have 4th team tab
         if let viewControllers = self.viewControllers, viewControllers.count == TabsCount.hasTeam.rawValue {
-            switch (identities.count, viewControllers[3]) {
+            switch (teamIdentity, viewControllers[3]) {
                 
-            // no more teams, remove the 4th tab
-            case (0, _):
+            // no more team, remove the 4th tab
+            case (nil, _):
                 self.selectedIndex = 0
 
                 self.setViewControllers([UIViewController](viewControllers[0 ..< 3]), animated: true)
@@ -161,16 +161,6 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
                 }
                 
                 return
-            
-            // only one team now, remove the 4th tab to change to team detail controller
-            case let (c, v) where c == 1 && v is TeamListController:
-                self.setViewControllers([UIViewController](viewControllers[0 ..< 3]), animated: true)
-                shouldSwitchToTeams = true
-
-            // more than one team now, remove the 4th tab to change to team list controller
-            case let (c, v) where c > 1 && v is TeamDetailController:
-                self.setViewControllers([UIViewController](viewControllers[0 ..< 3]), animated: true)
-                shouldSwitchToTeams = true
                 
             // the tab is set correctly, return
             default:
@@ -178,21 +168,14 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             }
         }
         
-        var controller:UIViewController
-        var tabBarItem:UITabBarItem
-        
-        switch identities.count {
-        case 0:
+        // if there's a team
+        guard let identity = teamIdentity else {
             return
-        case 1:
-            let detailController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamDetailController") as! TeamDetailController
-            detailController.identity = identities[0]
-            controller = detailController
-            tabBarItem = UITabBarItem(title: identities[0].team.name, image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
-        default:
-            controller = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamListController")
-            tabBarItem = UITabBarItem(title: "Teams", image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
         }
+        
+        let controller = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamDetailController") as! TeamDetailController
+        controller.identity = identity
+        let tabBarItem = UITabBarItem(title: identity.team.name, image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
         
         self.setViewControllers((self.viewControllers ?? []) + [controller], animated: true)
         controller.tabBarItem = tabBarItem
