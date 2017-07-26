@@ -12,9 +12,11 @@ import PGPFormat
 class KeyManager {
     
     var keyPair:KeyPair
+    var tag:String
     
-    init(_ keyPair:KeyPair) {
+    init(_ keyPair:KeyPair, tag:String) {
         self.keyPair = keyPair
+        self.tag = tag
     }
     
     private static let meKey = "kr_me_email"
@@ -26,10 +28,10 @@ class KeyManager {
     class func sharedInstance(for keyPointer:IdentityKeyPointer = DefaultIdentity()) throws -> KeyManager {
         do {
             if let rsaKP = try RSAKeyPair.load(keyPointer.tag) {
-                return KeyManager(rsaKP)
+                return KeyManager(rsaKP, tag: keyPointer.tag)
             }
             else if let edKP = try Ed25519KeyPair.load(keyPointer.tag) {
-                return KeyManager(edKP)
+                return KeyManager(edKP, tag: keyPointer.tag)
             }
             else {
                 throw Errors.keyDoesNotExist
@@ -152,7 +154,7 @@ enum PGPPublicKeyStorage:String {
 }
 extension KeyManager {
     
-    func loadPGPPublicKey(for identity:String, with keyPointer:IdentityKeyPointer = DefaultIdentity()) throws -> AsciiArmorMessage {
+    func loadPGPPublicKey(for identity:String) throws -> AsciiArmorMessage {
         
         // get and update userid list if needed
         let userIds = self.updatePGPUserIDPreferences(for: identity)
@@ -160,7 +162,7 @@ extension KeyManager {
         // get the created time or instantiate it and save it
         var created:Date
         do {
-            guard let savedCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: keyPointer.tag)))
+            guard let savedCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: self.tag)))
                 else {
                     throw KeychainStorageError.notFound
             }
@@ -172,7 +174,7 @@ extension KeyManager {
             // shift to 15m ago to avoid clock skew errors of a "future" key
             created = Date().shifted(by: -Properties.allowedClockSkew)
             
-            try KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: keyPointer.tag), value: "\(created.timeIntervalSince1970)")
+            try KeychainStorage().set(key: PGPPublicKeyStorage.created.key(tag: self.tag), value: "\(created.timeIntervalSince1970)")
             
             log("Set the PGP public key created date to: \(created)", .warning)
         }
@@ -181,15 +183,20 @@ extension KeyManager {
         return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
     }
     
-    func updatePGPUserIDPreferences(for identity:String, with keyPointer:IdentityKeyPointer = DefaultIdentity()) -> [String] {
+    var pgpUserIDs:[String] {
+        let userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: self.tag)))) ?? UserIDList.empty
+        return userIdList.ids
+    }
+
+    func updatePGPUserIDPreferences(for identity:String) -> [String] {
         
-        var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: keyPointer.tag)))) ?? UserIDList.empty
+        var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: self.tag)))) ?? UserIDList.empty
         
         // add new identity
         userIdList = userIdList.by(updating: identity)
 
         do {
-            try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: keyPointer.tag), value: userIdList.jsonString())
+            try KeychainStorage().set(key: PGPPublicKeyStorage.userIDs.key(tag: self.tag), value: userIdList.jsonString())
             return userIdList.ids
             
         } catch {
@@ -198,10 +205,10 @@ extension KeyManager {
         }
     }
     
-    func getPGPPublicKeyID(with keyPointer:IdentityKeyPointer = DefaultIdentity()) throws -> Data {
+    func getPGPPublicKeyID() throws -> Data {
         
         // get the created time
-        guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: keyPointer.tag)))
+        guard let pgpPublicKeyCreated = Double(try KeychainStorage().get(key: PGPPublicKeyStorage.created.key(tag: self.tag)))
         else {
             throw KeychainStorageError.notFound
         }

@@ -17,6 +17,7 @@ protocol IdentityKeyPointer {
     var tag:String { get }
 }
 
+
 /**
     The default, 'personal', identity
  */
@@ -25,6 +26,7 @@ struct DefaultIdentity:IdentityKeyPointer {
         return "me"
     }
 }
+
 
 
 struct Identity:Jsonable, IdentityKeyPointer {

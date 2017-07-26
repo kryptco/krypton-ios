@@ -130,6 +130,32 @@ class IdentityManager {
         return try getIDs().count
     }
     
+    /**
+        Select the identity that could respond to a `request`
+     */
+    func selectIdentities(for requestBody:RequestBody) throws -> Identity? {
+        let all = try list()
+        
+        switch requestBody {
+        case .noOp, .unpair:
+            return nil
+        case .me:
+            return nil
+            
+        case .ssh(let signRequest):
+            let publicKeyFingerprint = try signRequest.fingerprint.fromBase64()
+            
+            return try all.filter({
+                return try publicKeyFingerprint == KeyManager.sharedInstance(for: $0).keyPair.publicKey.wireFormat().SHA256
+            }).first
+            
+        case .git(let gitSign):
+            return try all.filter({
+                return try KeyManager.sharedInstance(for: $0).pgpUserIDs.contains(gitSign.userId)
+            }).first
+        }
+    }
+
     
     /**
      Returns number of identities
@@ -166,8 +192,6 @@ class IdentityManager {
     }
 
 }
-
-
 
 
 

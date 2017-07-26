@@ -207,7 +207,8 @@ class Silo {
         // given the user's approval: `signatureAllowed`
         switch request.body {
         case .ssh(let signRequest):
-            let kp = try KeyManager.sharedInstance()
+            let identity = try IdentityManager.shared.selectIdentities(for: request.body)
+            let kp = try KeyManager.sharedInstance(for: identity ?? DefaultIdentity())
             
             if try kp.keyPair.publicKey.fingerprint() != signRequest.fingerprint.fromBase64() {
                 throw KeyManager.Errors.keyDoesNotExist
@@ -255,8 +256,9 @@ class Silo {
             do {
                 if signatureAllowed {
                     // only place where git signature should occur
+                    let identity = try IdentityManager.shared.selectIdentities(for: request.body)
+                    let keyManager = try KeyManager.sharedInstance(for: identity ?? DefaultIdentity())
                     
-                    let keyManager = try KeyManager.sharedInstance()
                     let keyID = try keyManager.getPGPPublicKeyID()                    
                     let _ = keyManager.updatePGPUserIDPreferences(for: gitSignRequest.userId)
 

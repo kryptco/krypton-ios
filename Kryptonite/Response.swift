@@ -240,6 +240,7 @@ struct MeResponse:Jsonable {
     }
     
     var me:Me
+    var team:Team
     
     init(me:Me) {
         self.me = me
