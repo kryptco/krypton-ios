@@ -41,7 +41,12 @@ class CommitLogDetailController:UIViewController {
         // labels
         messageLabel.text = log.commit.messageString
         treeLabel.text = log.commit.tree
-        parentLabel.text = log.commit.parent ?? "first commit"
+        
+        var parentsText = log.commit.parent ?? "first commit"
+        for parent in log.commit.mergeParents {
+            parentsText += "\n\(parent)"
+        }
+        parentLabel.text = parentsText
         
         let (author, authorDate) = log.commit.author.userIdAndDateString
         authorLabel.text = author

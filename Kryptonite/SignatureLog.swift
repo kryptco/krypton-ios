@@ -119,8 +119,9 @@ struct CommitSignatureLog:LogStatement {
         }
         
         let parent = object.value(forKey: "parent") as? String
+        let mergeParents = object.value(forKey: "merge_parents") as? [String]
         
-        try self.init(session: session, signature: signature, commitHash: commitHash, date: date, commit: CommitInfo(tree: tree, parent: parent, author: author, committer: committer, message: message.fromBase64()))
+        try self.init(session: session, signature: signature, commitHash: commitHash, date: date, commit: CommitInfo(tree: tree, parent: parent, mergeParents: mergeParents, author: author, committer: committer, message: message.fromBase64()))
     }
 
     init(session:String, signature:String, commitHash:String, date:Date = Date(), commit:CommitInfo) {

@@ -572,7 +572,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NK0-tk-vKi">
-                                                            <rect key="frame" x="38.5" y="10.5" width="153" height="21.5"/>
+                                                            <rect key="frame" x="38.5" y="10" width="153" height="21.5"/>
                                                             <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -659,7 +659,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr upgrade" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUc-cV-hXh">
-                                                            <rect key="frame" x="38" y="9.5" width="102.5" height="21.5"/>
+                                                            <rect key="frame" x="38" y="10" width="102.5" height="21.5"/>
                                                             <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -671,7 +671,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr codesign" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERK-9y-zmP">
-                                                            <rect key="frame" x="38" y="40" width="194" height="21.5"/>
+                                                            <rect key="frame" x="38" y="39.5" width="194" height="21.5"/>
                                                             <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -745,7 +745,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-es-AG2" userLabel="objHashView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                            <rect key="frame" x="260" y="13" width="68" height="26"/>
+                                            <rect key="frame" x="260" y="13.5" width="68" height="26"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kbd-BB-wNL">
                                                     <rect key="frame" x="4" y="4" width="60" height="18"/>
@@ -783,7 +783,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" text="21m ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GP2-7Q-DAl">
-                                            <rect key="frame" x="332" y="19.5" width="33" height="11"/>
+                                            <rect key="frame" x="332" y="20.5" width="33" height="11"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="8"/>
                                             <color key="textColor" red="0.35694760019999999" green="0.35694760019999999" blue="0.35694760019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1067,7 +1067,7 @@
         <scene sceneID="Atm-Dh-fQZ">
             <objects>
                 <navigationController id="QdC-wE-jq3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FCa-7m-VBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FCa-7m-VBY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1713,7 +1713,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ee6-SJ-Vcb">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="233"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zEy-0d-aYo" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
                                         <rect key="frame" x="44" y="62.5" width="311" height="76.5"/>
@@ -1756,7 +1756,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l4P-2N-JT2" userLabel="line">
-                                        <rect key="frame" x="19" y="37" width="6" height="176"/>
+                                        <rect key="frame" x="19" y="37" width="6" height="176.5"/>
                                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="6" id="UkY-DT-Oh2"/>
@@ -1797,8 +1797,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="8450850db4271d59165f80e3f801a89695e0b009" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="I6i-Ts-oi1">
-                                        <rect key="frame" x="113" y="145" width="242" height="15.5"/>
-                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="12"/>
+                                        <rect key="frame" x="113" y="147.5" width="242" height="13"/>
+                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1844,43 +1844,43 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" text="AUTHOR" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="JdG-Mf-laF">
-                                        <rect key="frame" x="44" y="175" width="61" height="14"/>
+                                        <rect key="frame" x="44" y="175.5" width="61" height="14"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" text="COMMITTER" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="MQW-IO-5lg">
-                                        <rect key="frame" x="44" y="189" width="61" height="14"/>
+                                        <rect key="frame" x="44" y="189.5" width="61" height="14"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" text="COMMITTED" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4x-Fu-ibx">
-                                        <rect key="frame" x="44" y="203" width="61" height="14"/>
+                                        <rect key="frame" x="44" y="203.5" width="61" height="14"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="8450850db4271d59165f80e3f801a89695e0b009" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="UmF-iY-vyy">
-                                        <rect key="frame" x="113" y="159" width="242" height="15.5"/>
-                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="12"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="8450850db4271d59165f80e3f801a89695e0b009" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UmF-iY-vyy">
+                                        <rect key="frame" x="113" y="161" width="242" height="13"/>
+                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Alex Grinman &lt;alex@krypt.co&gt;" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="mls-pK-LCR">
-                                        <rect key="frame" x="112.5" y="173" width="242" height="15.5"/>
-                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="12"/>
+                                        <rect key="frame" x="112.5" y="176" width="242" height="13"/>
+                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Alex Grinman &lt;alex@krypt.co&gt;" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nma-mJ-C76">
-                                        <rect key="frame" x="112.5" y="187" width="242" height="15.5"/>
-                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="12"/>
+                                        <rect key="frame" x="112.5" y="190" width="242" height="13"/>
+                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="32m ago" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Szs-Bu-UNg">
-                                        <rect key="frame" x="112.5" y="203" width="242" height="14"/>
+                                        <rect key="frame" x="112.5" y="203.5" width="242" height="14"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1914,9 +1914,10 @@
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hYZ-iQ-pQc" secondAttribute="trailing" constant="20" id="PAz-UV-SFG"/>
                                     <constraint firstItem="I6i-Ts-oi1" firstAttribute="leading" secondItem="94U-yz-Omh" secondAttribute="trailing" constant="8" id="PD1-J0-oCR"/>
                                     <constraint firstItem="JdG-Mf-laF" firstAttribute="leading" secondItem="NBJ-Cp-WiW" secondAttribute="leading" id="RGc-xn-yor"/>
-                                    <constraint firstItem="JdG-Mf-laF" firstAttribute="top" secondItem="NBJ-Cp-WiW" secondAttribute="bottom" id="TQu-c5-WNU"/>
+                                    <constraint firstItem="mls-pK-LCR" firstAttribute="top" secondItem="UmF-iY-vyy" secondAttribute="bottom" constant="2" id="Rgc-Ve-GYg"/>
                                     <constraint firstItem="JdG-Mf-laF" firstAttribute="trailing" secondItem="NBJ-Cp-WiW" secondAttribute="trailing" id="UVf-8R-fgj"/>
                                     <constraint firstItem="64e-cV-4ci" firstAttribute="width" secondItem="hYZ-iQ-pQc" secondAttribute="width" id="V8d-ZD-rAG"/>
+                                    <constraint firstItem="UmF-iY-vyy" firstAttribute="top" secondItem="NBJ-Cp-WiW" secondAttribute="top" id="Wyy-pe-4BQ"/>
                                     <constraint firstItem="nma-mJ-C76" firstAttribute="baseline" secondItem="MQW-IO-5lg" secondAttribute="baseline" id="XKK-H3-cgZ"/>
                                     <constraint firstItem="gD6-7G-5N8" firstAttribute="leading" secondItem="ee6-SJ-Vcb" secondAttribute="leading" constant="10" id="Xql-co-bqM"/>
                                     <constraint firstItem="l4P-2N-JT2" firstAttribute="top" secondItem="gD6-7G-5N8" secondAttribute="centerY" id="bX8-dq-IWv"/>
@@ -1924,7 +1925,6 @@
                                     <constraint firstItem="NBJ-Cp-WiW" firstAttribute="top" secondItem="94U-yz-Omh" secondAttribute="bottom" id="c2o-u7-wjs"/>
                                     <constraint firstItem="NBJ-Cp-WiW" firstAttribute="trailing" secondItem="94U-yz-Omh" secondAttribute="trailing" id="d3T-0Q-XuM"/>
                                     <constraint firstItem="E4x-Fu-ibx" firstAttribute="leading" secondItem="MQW-IO-5lg" secondAttribute="leading" id="e71-Zr-2ou"/>
-                                    <constraint firstItem="UmF-iY-vyy" firstAttribute="baseline" secondItem="NBJ-Cp-WiW" secondAttribute="baseline" id="esx-zs-7Gs"/>
                                     <constraint firstItem="Szs-Bu-UNg" firstAttribute="baseline" secondItem="E4x-Fu-ibx" secondAttribute="baseline" id="f4B-bd-0pB"/>
                                     <constraint firstItem="MQW-IO-5lg" firstAttribute="leading" secondItem="JdG-Mf-laF" secondAttribute="leading" id="gOV-xq-0IU"/>
                                     <constraint firstItem="64e-cV-4ci" firstAttribute="centerX" secondItem="hYZ-iQ-pQc" secondAttribute="centerX" id="gj6-8R-OCT"/>
@@ -1981,10 +1981,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvi-Zo-7F4">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="393.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="394"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="255" translatesAutoresizingMaskIntoConstraints="NO" id="Gnn-qX-D7Z" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="44" y="92.5" width="311" height="76.5"/>
+                                        <rect key="frame" x="44" y="93" width="311" height="76.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="some release info" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gsa-UW-u4G">
                                                 <rect key="frame" x="10" y="28" width="291" height="20.5"/>
@@ -2024,14 +2024,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wFv-3q-16B" userLabel="line">
-                                        <rect key="frame" x="19" y="67" width="6" height="148"/>
+                                        <rect key="frame" x="19" y="67.5" width="6" height="148"/>
                                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="6" id="6ef-zF-XWR"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zNM-UO-lfg" userLabel="dot_inner" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="11" y="56" width="22" height="22"/>
+                                        <rect key="frame" x="11" y="56.5" width="22" height="22"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="FxR-S6-HNe"/>
@@ -2047,7 +2047,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eB8-rj-QJ5" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="55" width="24" height="24"/>
+                                        <rect key="frame" x="10" y="55.5" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="45d-wm-85M"/>
                                             <constraint firstAttribute="height" constant="24" id="6Bq-85-vDo"/>
@@ -2065,19 +2065,19 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Commit" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9iC-wU-zIi">
-                                        <rect key="frame" x="92" y="175" width="263" height="15.5"/>
+                                        <rect key="frame" x="92" y="175.5" width="263" height="15.5"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="12"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="TYPE" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="JNy-md-wHg">
-                                        <rect key="frame" x="44" y="177" width="39.5" height="14"/>
+                                        <rect key="frame" x="44" y="177.5" width="39.5" height="14"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TW4-06-cLG" userLabel="objHashView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="44" y="50" width="75.5" height="34"/>
+                                        <rect key="frame" x="44" y="50.5" width="75.5" height="34"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="bMz-hX-pmc">
                                                 <rect key="frame" x="4" y="4" width="67.5" height="26"/>
@@ -2106,25 +2106,25 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fl-fB-Ktj" userLabel="showFullHash">
-                                        <rect key="frame" x="44" y="50.5" width="75.5" height="34"/>
+                                        <rect key="frame" x="44" y="51" width="75.5" height="34"/>
                                         <connections>
                                             <action selector="fullHashToggle" destination="5W4-i7-8u5" eventType="touchDown" id="eTV-Ek-dcZ"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="TAGGER" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="uUU-NM-Ce3">
-                                        <rect key="frame" x="44" y="191" width="39.5" height="14"/>
+                                        <rect key="frame" x="44" y="191.5" width="39.5" height="14"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Alex Grinman &lt;alex@krypt.co&gt;" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKM-OU-G6D">
-                                        <rect key="frame" x="92" y="189" width="263" height="15.5"/>
+                                        <rect key="frame" x="92" y="189.5" width="263" height="15.5"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="12"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D34-LY-eOe" userLabel="tagView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="44" y="13.5" width="56" height="28.5"/>
+                                        <rect key="frame" x="44" y="14" width="56" height="28.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="v1.01" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="9QS-Tu-gZB" userLabel="v1.01">
                                                 <rect key="frame" x="4" y="4" width="48" height="20.5"/>
@@ -2161,7 +2161,7 @@
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6J-XR-m1O">
-                                        <rect key="frame" x="0.0" y="215" width="375" height="178.5"/>
+                                        <rect key="frame" x="0.0" y="215.5" width="375" height="178.5"/>
                                         <subviews>
                                             <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvx-To-8RS" userLabel="hline">
                                                 <rect key="frame" x="122" y="0.0" width="155.5" height="1"/>
@@ -3470,7 +3470,7 @@ Cg
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="635.5"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6s-yD-bs0" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="135" y="511" width="104.5" height="40"/>
+                                                <rect key="frame" x="135.5" y="511" width="104.5" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Software"/>
                                                 <state key="highlighted">
@@ -3504,7 +3504,7 @@ Cg
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-U7-8S5" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="10" y="511" width="105" height="40"/>
+                                                <rect key="frame" x="10" y="511" width="105.5" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="fwP-fK-MT7"/>
                                                 </constraints>
@@ -3529,7 +3529,7 @@ Cg
                                                 </connections>
                                             </button>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n2-Yv-erL" customClass="KRButton" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="259.5" y="511" width="105.5" height="40"/>
+                                                <rect key="frame" x="260" y="511" width="105" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Privacy"/>
                                                 <state key="highlighted">
@@ -4033,7 +4033,7 @@ Cg
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AP3-RZ-yks">
-                                    <rect key="frame" x="38.5" y="10.5" width="153" height="21.5"/>
+                                    <rect key="frame" x="38.5" y="10" width="153" height="21.5"/>
                                     <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -4081,7 +4081,7 @@ Cg
         <scene sceneID="tFV-Od-SVC">
             <objects>
                 <navigationController id="QEh-xy-HRh" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="q7O-0g-nZJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="q7O-0g-nZJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

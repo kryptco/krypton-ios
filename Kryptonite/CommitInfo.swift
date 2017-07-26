@@ -14,6 +14,8 @@ struct InvalidCommitHash:Error {}
 struct CommitInfo: Jsonable {
     let tree: GitHash
     var parent: GitHash?
+    var mergeParents: [GitHash]
+
     let author: String
     let committer: String
     let message: Data
@@ -23,9 +25,10 @@ struct CommitInfo: Jsonable {
     let data:Data
     let shortDisplay:String
     
-    init(tree: String, parent: String?, author: String, committer: String, message: Data) throws {
+    init(tree: String, parent: String?, mergeParents: [GitHash]?, author: String, committer: String, message: Data) throws {
         self.tree = tree
         self.parent = parent
+        self.mergeParents = mergeParents ?? []
         self.author = author
         self.committer = committer
         self.message = message
@@ -45,6 +48,13 @@ struct CommitInfo: Jsonable {
         
         // parent
         if let parent = self.parent {
+            try data.append("parent ".utf8Data())
+            try data.append(parent.utf8Data())
+            data.append(newLine)
+        }
+        
+        // merge parents
+        for parent in self.mergeParents {
             try data.append("parent ".utf8Data())
             try data.append(parent.utf8Data())
             data.append(newLine)
@@ -89,6 +99,7 @@ struct CommitInfo: Jsonable {
         try self.init(
             tree: try json ~> "tree",
             parent: try? json ~> "parent",
+            mergeParents: try? json ~> "merge_parents",
             author: try json ~> "author",
             committer: json ~> "committer",
             message: try ((json ~> "message") as String).fromBase64()
@@ -98,6 +109,7 @@ struct CommitInfo: Jsonable {
     var object: Object {
         var map : Object = [
             "tree": tree,
+            "merge_parents": mergeParents,
             "author": author,
             "committer": committer,
             "message": message.toBase64()
@@ -124,6 +136,13 @@ struct CommitInfo: Jsonable {
         
         // parent
         if let parent = self.parent {
+            try commitData.append("parent ".utf8Data())
+            try commitData.append(parent.utf8Data())
+            commitData.append(newLine)
+        }
+        
+        // merge parents
+        for parent in self.mergeParents {
             try commitData.append("parent ".utf8Data())
             try commitData.append(parent.utf8Data())
             commitData.append(newLine)
