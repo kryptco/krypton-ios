@@ -180,6 +180,7 @@ class CodeSigningTests: XCTestCase {
             let sigMessage = try Message(base64: "iF4EABYKAAYFAlkkmD8ACgkQ4eT0x9ceFp1gNQD+LWiJFax8iQqgr0yJ1P7JFGvMwuZc8r05h6U+X+lyKYEBAK939lEX1rvBmcetftVbRlOMX5oQZwBLt/NJh+nQ3ssC")
             let commitInfo = try CommitInfo(tree: "2c4df4a89ac5b0b8b21fd2aad4d9b19cd91e7049",
                                         parent: "1cd97d0545a25c578e3f4da5283106606276eadf",
+                                        mergeParents: nil,
                                         author: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
                                         committer: "Alex Grinman <alex@krypt.co> 1495570495 -0400",
                                         message: "\ntest1234\n".utf8Data())
