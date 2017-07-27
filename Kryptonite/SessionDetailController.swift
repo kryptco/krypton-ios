@@ -212,6 +212,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             return
         }
         
+        Analytics.postEvent(category: "unknownhost-approval-setting", action: "toggle", value: sender.isOn ? 1 : 0)
+
         Policy.set(manualUnknownHostApprovals: sender.isOn, for: session)
     }
     
@@ -219,6 +221,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         guard let session = session else {
             return
         }
+        
+        Analytics.postEvent(category: "silence-notification-setting", action: "toggle", value: sender.isOn ? 1 : 0)
         
         Policy.set(shouldShowApprovedNotifications: sender.isOn, for: session)
     }
