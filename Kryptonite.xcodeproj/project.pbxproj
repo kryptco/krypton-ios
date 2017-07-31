@@ -288,6 +288,22 @@
 		FADA19BF1F2952C1004AE6B0 /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
 		FADA19C01F2952C9004AE6B0 /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
 		FADA19C11F2952C9004AE6B0 /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
+		FADA1A5C1F2D2F32004AE6B0 /* HashChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */; };
+		FADA1A5D1F2D2F32004AE6B0 /* HashChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */; };
+		FADA1A5E1F2D2F32004AE6B0 /* HashChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */; };
+		FADA1A5F1F2D2F32004AE6B0 /* HashChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */; };
+		FADA1A6D1F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
+		FADA1A6E1F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
+		FADA1A6F1F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
+		FADA1A701F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
+		FADA1A731F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
+		FADA1A741F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
+		FADA1A751F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
+		FADA1A761F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
+		FADA1A791F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
+		FADA1A7A1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
+		FADA1A7B1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
+		FADA1A7C1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
 		FADDE2831EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
@@ -713,6 +729,10 @@
 		FACE33541EC186DC003EC6C0 /* SSHUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHUtil.swift; sourceTree = "<group>"; };
 		FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigestAlgorithmParsingTests.swift; sourceTree = "<group>"; };
 		FAD361F61DF08F9E00D17BAB /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashChain.swift; sourceTree = "<group>"; };
+		FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashChainManager.swift; sourceTree = "<group>"; };
+		FADA1A781F2EE100004AE6B0 /* Teams.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Teams.xcdatamodel; sourceTree = "<group>"; };
 		FADD71491D772F8200DA5112 /* Date+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Date+KR.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Request+Notify.swift"; sourceTree = "<group>"; };
 		FAE45B981E64750E00A583AB /* RSAKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
@@ -883,6 +903,7 @@
 				FA61EF421D81D150009FD899 /* SessionManager.swift */,
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
 				FA16829E1EB2B2B200D9CE40 /* KnownHostManager.swift */,
+				FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -998,8 +1019,7 @@
 				FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */,
 				FA8523C91DBFDA5200D465D2 /* Version.swift */,
 				FA2949E21EDE379900A5C70B /* UserIDList.swift */,
-				FA6BCBED1F211807006F716F /* TeamIdentity.swift */,
-				FA6BCBF41F214ADB006F716F /* TeamInvite.swift */,
+				FADA1A711F2EACFE004AE6B0 /* Team */,
 				FAEE048A1D736972002A7AFD /* Krypto */,
 			);
 			name = Core;
@@ -1096,6 +1116,7 @@
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */,
 				FA1682891EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld */,
+				FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */,
 				FA81414B1D70B10F004FE58C /* UX */,
 			);
 			name = App;
@@ -1136,6 +1157,17 @@
 				FA49F7671D9AF32800372556 /* PairedUploadController.swift */,
 			);
 			name = Onboard;
+			sourceTree = "<group>";
+		};
+		FADA1A711F2EACFE004AE6B0 /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				FA6BCBED1F211807006F716F /* TeamIdentity.swift */,
+				FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */,
+				FA6BCBF41F214ADB006F716F /* TeamInvite.swift */,
+				FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */,
+			);
+			name = Team;
 			sourceTree = "<group>";
 		};
 		FADD71481D772F6E00DA5112 /* Extensions */ = {
@@ -2020,6 +2052,7 @@
 				FAE4958C1DBD89F100A97708 /* M13CheckboxBounceController.swift in Sources */,
 				FAE495931DBD89F100A97708 /* M13CheckboxStrokeController.swift in Sources */,
 				FAE495951DBD89F100A97708 /* M13CheckboxCheckPathGenerator.swift in Sources */,
+				FADA1A6D1F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				FAE495711DBD741800A97708 /* ApproveController.swift in Sources */,
 				FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */,
 				FAE495981DBD89F100A97708 /* M13CheckboxRadioPathGenerator.swift in Sources */,
@@ -2033,6 +2066,7 @@
 				FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */,
 				8DC2639E1ED2459300BF2E17 /* CommitInfo.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
+				FADA1A731F2EDF97004AE6B0 /* HashChainManager.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				FAE495941DBD89F100A97708 /* M13CheckboxAddRemovePathGenerator.swift in Sources */,
@@ -2064,6 +2098,7 @@
 				FAA536271D8F2EA800549710 /* AboutController.swift in Sources */,
 				FA4A84DD1E8D76800082274A /* SQS.swift in Sources */,
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
+				FADA1A5C1F2D2F32004AE6B0 /* HashChain.swift in Sources */,
 				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */,
@@ -2085,6 +2120,7 @@
 				FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
 				FAE495901DBD89F100A97708 /* M13CheckboxFillController.swift in Sources */,
+				FADA1A791F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */,
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
 				FAE495871DBD89F100A97708 /* M13Checkbox+IB.swift in Sources */,
@@ -2134,6 +2170,7 @@
 				FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */,
 				FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */,
 				8D05CB371ED3E4BD00CCCC38 /* GitInfo.swift in Sources */,
+				FADA1A5F1F2D2F32004AE6B0 /* HashChain.swift in Sources */,
 				FADA19C11F2952C9004AE6B0 /* TeamInvite.swift in Sources */,
 				FA6BCBF01F211807006F716F /* TeamIdentity.swift in Sources */,
 				8DCB60461E94469700E1B924 /* Policy.swift in Sources */,
@@ -2149,11 +2186,13 @@
 				FAF0B0981F04500400F65E04 /* UtilTests.swift in Sources */,
 				8DCB60421E94468100E1B924 /* SessionManager.swift in Sources */,
 				8DCB604F1E9446D300E1B924 /* CommunicationActivity.swift in Sources */,
+				FADA1A761F2EDF97004AE6B0 /* HashChainManager.swift in Sources */,
 				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,
 				8DCB60351E94433100E1B924 /* Session.swift in Sources */,
 				8DCB60391E9443B600E1B924 /* Properties.swift in Sources */,
 				8DC263A01ED246B800BF2E17 /* CommitInfo.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
+				FADA1A7C1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */,
 				FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */,
 				FAC873F91E6A4DC1003D112E /* Version.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
@@ -2171,6 +2210,7 @@
 				8DCB60381E94438C00E1B924 /* Mutex.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
 				8DCB604D1E9446D300E1B924 /* Bluetooth.swift in Sources */,
+				FADA1A701F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				8D45B0081E8D7CEA00E84A57 /* HostAuth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2196,6 +2236,8 @@
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
+				FADA1A7B1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */,
+				FADA1A751F2EDF97004AE6B0 /* HashChainManager.swift in Sources */,
 				8D05CB321ED3E08500CCCC38 /* TagInfo.swift in Sources */,
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
@@ -2204,6 +2246,7 @@
 				FA1682A01EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* Keypair+SSHFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
+				FADA1A5E1F2D2F32004AE6B0 /* HashChain.swift in Sources */,
 				FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */,
 				8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */,
 				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
@@ -2228,6 +2271,7 @@
 				8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
+				FADA1A6F1F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
 				FAB517961E54D52F0032DD47 /* Response.swift in Sources */,
 			);
@@ -2249,6 +2293,7 @@
 				FA8B540F1ED773EE00891161 /* GitInfo.swift in Sources */,
 				FA8B54341ED774F700891161 /* Date+KR.swift in Sources */,
 				FA8B54121ED773EE00891161 /* HostAuth.swift in Sources */,
+				FADA1A7A1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */,
 				FA8B54301ED774C100891161 /* Util.swift in Sources */,
 				FA8B542E1ED774C100891161 /* Hash.swift in Sources */,
 				FA8B54111ED773EE00891161 /* TagInfo.swift in Sources */,
@@ -2262,12 +2307,15 @@
 				FA8B54351ED774F700891161 /* String+User.swift in Sources */,
 				FADA19BE1F2952C1004AE6B0 /* TeamIdentity.swift in Sources */,
 				FA8B54281ED774C100891161 /* KeyPair.swift in Sources */,
+				FADA1A6E1F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				FA8B54151ED773EE00891161 /* Session.swift in Sources */,
 				FA8B54361ED7750B00891161 /* Properties.swift in Sources */,
 				FA8B542F1ED774C100891161 /* CryptoError.swift in Sources */,
 				FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */,
 				FA8B54171ED773EE00891161 /* Version.swift in Sources */,
 				FADDE2831EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
+				FADA1A741F2EDF97004AE6B0 /* HashChainManager.swift in Sources */,
+				FADA1A5D1F2D2F32004AE6B0 /* HashChain.swift in Sources */,
 				FA2949E41EDE379900A5C70B /* UserIDList.swift in Sources */,
 				FA8B54321ED774C100891161 /* Sodium.swift in Sources */,
 				FA8B542D1ED774C100891161 /* Wrap.swift in Sources */,
@@ -2817,6 +2865,16 @@
 			currentVersion = FAC874041E6F0E17003D112E /* krSSH.xcdatamodel */;
 			name = Kryptonite.xcdatamodeld;
 			path = ../Kryptonite/Kryptonite.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FADA1A781F2EE100004AE6B0 /* Teams.xcdatamodel */,
+			);
+			currentVersion = FADA1A781F2EE100004AE6B0 /* Teams.xcdatamodel */;
+			path = Teams.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

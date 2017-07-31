@@ -51,22 +51,3 @@ struct TeamIdentity:Jsonable {
                 "sk": keyPair.secretKey.toBase64()]
     }
 }
-
-struct Team:Jsonable {
-    let name:String
-    let publicKey:SodiumPublicKey
-    
-    init(name:String, publicKey:SodiumPublicKey) {
-        self.name = name
-        self.publicKey = publicKey
-    }
-    
-    init(json: Object) throws {
-        try self.init(name: json ~> "name", publicKey: SodiumPublicKey(((json ~> "public_key") as String).fromBase64()))
-    }
-    
-    var object: Object {
-        return ["name": name, "public_key": publicKey.toBase64()]
-    }
-}
-
