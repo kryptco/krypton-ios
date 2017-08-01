@@ -10,6 +10,5 @@ import Foundation
 
 struct TeamInvite {
     let team:Team
-    let email:String
-    let code:Data
+    let seed:Data
 }

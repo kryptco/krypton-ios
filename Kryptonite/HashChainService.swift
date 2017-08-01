@@ -18,17 +18,21 @@ class HashChainService {
     
     enum Errors:Error {
         case badResponse
+        case badInviteSeed
+        
         case payloadSignature
+        case needNewestBlock
+        
         case errorResponse(ServerError)
     }
     
-    enum ServerResponse:JsonReadable {
+    enum ServerResponse<T:JsonReadable>:JsonReadable {
         case error(ServerError)
-        case success(HashChain.Response)
+        case success(T)
         
         init(json: Object) throws {
             if let success:Object = try? json ~> "success" {
-                self = try .success(HashChain.Response(json: success))
+                self = try .success(T(json: success))
             } else if let message:String = try? json ~> "error" {
                 self = .error(ServerError(message: message))
             } else {
@@ -42,6 +46,9 @@ class HashChainService {
         case error(Error)
     }
     
+    struct EmptyResponse:JsonReadable {
+        init(json: Object) throws {}
+    }
     
     let teamIdentity:TeamIdentity
     
@@ -50,16 +57,80 @@ class HashChainService {
     }
     
     /**
+        Write an append block accepting a team invitation
+        Special case: the team invitation keypair is used to sign the payload
+     */
+    func accept(invite:TeamInvite, _ completionHandler:@escaping (HashChainServiceResult<Bool>) -> Void ) throws {
+        
+        let keyManager = try KeyManager.sharedInstance()
+        let newMember = try Team.MemberIdentity(publicKey: teamIdentity.keyPair.publicKey,
+                                                email: teamIdentity.email,
+                                                sshPublicKey: keyManager.keyPair.publicKey.wireFormat(),
+                                                pgpPublicKey: keyManager.loadPGPPublicKey(for: teamIdentity.email).packetData)
+        
+        // use the invite `seed` to create a nonce sodium keypair
+        guard let nonceKeypair = try KRSodium.shared().sign.keyPair(seed: invite.seed) else {
+            throw Errors.badInviteSeed
+        }
+        
+        // get current block hash
+        guard let blockHash = try teamIdentity.team.getLastBlockHash() else {
+            throw Errors.needNewestBlock
+        }
+        
+        // create the payload
+        let operation = HashChain.Operation.acceptInvite(newMember)
+        let appendBlock = HashChain.AppendBlock(lastBlockHash: blockHash, operation: operation)
+        let payload = HashChain.Payload.append(appendBlock)
+        let payloadData = try payload.jsonData()
+
+        // sign the payload json
+        // Note: in this special case the nonce key pair is used to sign the payload
+        
+        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
+        else {
+            throw Errors.payloadSignature
+        }
+        
+        let payloadDataString = try payloadData.utf8String()
+        let hashChainRequest = HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
+                                                     payload: payloadDataString,
+                                                     signature: signature)
+        
+        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+            switch serverResponse {
+                
+            case .error(let error):
+                completionHandler(HashChainServiceResult.error(error))
+                
+            case .success:
+                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                
+                // there's a new block, update the last known hash
+                do {
+                    try self.teamIdentity.team.set(lastBlockHash: addedBlock.hash())
+                } catch {
+                    log("could not compute block hash: \(error)")
+                }
+                
+                completionHandler(HashChainServiceResult.result(true))
+            }
+        }
+
+    }
+    
+    /**
         Send a ReadBlock request to the teams service, and update the team by verifying and
         digesting any new blocks
      */
-    func getVerifiedTeamUpdates(_ completionHandler:@escaping (HashChainServiceResult<Team>) -> Void ) throws {
+    func getVerifiedTeamUpdates(_ completionHandler:@escaping (HashChainServiceResult<Team>) -> Void) throws {
         
-        let payload = try HashChain.ReadBlock(teamPublicKey: teamIdentity.team.publicKey,
+        let readBlock = try HashChain.ReadBlock(teamPublicKey: teamIdentity.team.publicKey,
                                               nonce: Data.random(size: 32),
                                               unixSeconds: UInt64(Date().timeIntervalSince1970),
                                               lastBlockHash: teamIdentity.team.getLastBlockHash())
         
+        let payload = HashChain.Payload.read(readBlock)
         let payloadData = try payload.jsonData()
         
         guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)
@@ -72,7 +143,7 @@ class HashChainService {
                                                      payload: payloadData.utf8String(),
                                                      signature: signature)
         
-        try sendRequest(object: hashChainRequest.object) { serverResponse in
+        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -93,11 +164,11 @@ class HashChainService {
     /** 
         Send a JSON object to the teams service and parse the response as a ServerResponse
      */
-    func sendRequest(object:Object, _ onCompletion:@escaping (ServerResponse) -> Void) throws {
+    func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (ServerResponse<T>) -> Void) throws {
         let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object)
         req.start { response in
             do {
-                let serverResponse = try ServerResponse(jsonData: response.data)
+                let serverResponse = try ServerResponse<T>(jsonData: response.data)
                 onCompletion(serverResponse)
             } catch {
                 onCompletion(ServerResponse.error(ServerError(message: "Unexpected response. \(error)")))

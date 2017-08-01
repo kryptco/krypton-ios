@@ -124,7 +124,8 @@ class HashChain {
 
         func verifyAppendBlock(publicKey:SodiumPublicKey, lastBlockHash:Data) throws -> AppendBlock {
             // 1. verify the block signature
-            guard try KRSodium.shared().sign.verify(message: payload.utf8Data(), publicKey: publicKey, signature: signature)
+            let verified = try KRSodium.shared().sign.verify(message: payload.utf8Data(), publicKey: publicKey, signature: signature)
+            guard verified
             else {
                 throw Errors.badSignature
             }
