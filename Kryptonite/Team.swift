@@ -34,7 +34,7 @@ struct Team {
         let temporaryApprovalSeconds:UInt64
         
         static var defaultSettings:PolicySettings {
-            return PolicySettings(temporaryApprovalSeconds: UInt64(Policy.Interval.threeHours.rawValue))
+            return PolicySettings(temporaryApprovalSeconds: UInt64(Properties.Interval.threeHours.rawValue))
         }
         
         init(temporaryApprovalSeconds:UInt64) {
@@ -82,6 +82,10 @@ struct Team {
     var info:Info
     let publicKey:SodiumPublicKey
     var policy:PolicySettings
+    
+    var name:String {
+        return info.name
+    }
 
     init(name:String, publicKey:SodiumPublicKey) {
         self.init(info: Info(name: name), publicKey: publicKey)

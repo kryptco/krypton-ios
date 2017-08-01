@@ -4,7 +4,7 @@
         <attribute name="payload" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Member" representedClassName="Member" syncable="YES" codeGenerationType="class">
+    <entity name="Member" representedClassName="" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="pgp_public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>

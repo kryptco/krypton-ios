@@ -12,13 +12,6 @@ import AwesomeCache
 
 class Policy {
     
-    enum Interval:TimeInterval {
-        //case fifteenSeconds = 15
-        case oneHour = 3600
-        case threeHours = 10800
-    }
-
-    
     //MARK: Settings
     enum StorageKey:String {
         case userApproval = "policy_user_approval"
@@ -63,7 +56,7 @@ class Policy {
         UserDefaults.group?.synchronize()
     }
     
-    static func allow(session:Session, for time:Interval) {
+    static func allow(session:Session, for time:Properties.Interval) {
         UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
         UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
         UserDefaults.group?.synchronize()

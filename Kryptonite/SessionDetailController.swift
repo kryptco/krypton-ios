@@ -196,8 +196,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             Policy.set(needsUserApproval: true, for: session)
 
         case .timed:
-            Analytics.postEvent(category: "manual approval", action: "time", value: UInt(Policy.Interval.threeHours.rawValue))
-            Policy.allow(session: session, for: Policy.Interval.threeHours)
+            Analytics.postEvent(category: "manual approval", action: "time", value: UInt(Properties.Interval.threeHours.rawValue))
+            Policy.allow(session: session, for: Properties.Interval.threeHours)
 
         case .off:
             Analytics.postEvent(category: "manual approval", action: String(false))

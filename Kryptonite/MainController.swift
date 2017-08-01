@@ -175,7 +175,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         let controller = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamDetailController") as! TeamDetailController
         controller.identity = identity
-        let tabBarItem = UITabBarItem(title: identity.team.name, image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
+        let tabBarItem = UITabBarItem(title: identity.team.info.name, image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
         
         self.setViewControllers((self.viewControllers ?? []) + [controller], animated: true)
         controller.tabBarItem = tabBarItem

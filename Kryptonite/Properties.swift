@@ -37,6 +37,12 @@ struct Properties {
     
     static let awsQueueURLBase = "https://sqs.us-east-1.amazonaws.com/911777333295/"
     
+    //MARK: Constants
+    enum Interval:TimeInterval {
+        //case fifteenSeconds = 15
+        case oneHour = 3600
+        case threeHours = 10800
+    }
 
     //MARK: URLs
 

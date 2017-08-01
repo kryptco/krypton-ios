@@ -143,7 +143,7 @@ class ApproveController:UIViewController {
         isEnabled = false
         
         do {
-            Policy.allow(session: session, for: Policy.Interval.threeHours)
+            Policy.allow(session: session, for: Properties.Interval.threeHours)
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
             try TransportControl.shared.send(resp, for: session)
             
@@ -179,7 +179,7 @@ class ApproveController:UIViewController {
             }
         }
 
-        Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
+        Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Properties.Interval.threeHours.rawValue))
 
     }
     

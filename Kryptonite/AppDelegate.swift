@@ -274,8 +274,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "once")
             
         case Policy.ActionIdentifier.temporary:
-            Policy.allow(session: session, for: Policy.Interval.threeHours)
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
+            Policy.allow(session: session, for: Properties.Interval.threeHours)
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Properties.Interval.threeHours.rawValue))
             
         case Policy.ActionIdentifier.reject:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
