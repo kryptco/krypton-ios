@@ -52,6 +52,11 @@ struct Properties {
     
     static let appStoreURL = "https://get.krypt.co"
     static let appURL = "https://krypt.co"
+    
+    enum TeamsEndpoint:String {
+        case dev = "https://api.krypt.co/command"
+        case prod = "https://api-prod.krypt.co/command"
+    }
 
     //MARK: Analytics
     static var trackingID:String {

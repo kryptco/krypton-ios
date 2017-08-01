@@ -304,6 +304,9 @@
 		FADA1A7A1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
 		FADA1A7B1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
 		FADA1A7C1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
+		FADA1A841F30E0E2004AE6B0 /* HashChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A831F30E0E2004AE6B0 /* HashChainService.swift */; };
+		FADA1A851F30E0E2004AE6B0 /* HashChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A831F30E0E2004AE6B0 /* HashChainService.swift */; };
+		FADA1A861F30E0E2004AE6B0 /* HashChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A831F30E0E2004AE6B0 /* HashChainService.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
 		FADDE2831EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
@@ -733,6 +736,7 @@
 		FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashChainManager.swift; sourceTree = "<group>"; };
 		FADA1A781F2EE100004AE6B0 /* Teams.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Teams.xcdatamodel; sourceTree = "<group>"; };
+		FADA1A831F30E0E2004AE6B0 /* HashChainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashChainService.swift; sourceTree = "<group>"; };
 		FADD71491D772F8200DA5112 /* Date+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Date+KR.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Request+Notify.swift"; sourceTree = "<group>"; };
 		FAE45B981E64750E00A583AB /* RSAKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
@@ -1130,6 +1134,7 @@
 				FA4A84DC1E8D76800082274A /* SQS.swift */,
 				8DD436A31DF3719000201106 /* CommunicationActivity.swift */,
 				FA4A84DE1E8D77910082274A /* TransportControl.swift */,
+				FADA1A831F30E0E2004AE6B0 /* HashChainService.swift */,
 			);
 			name = Transport;
 			sourceTree = "<group>";
@@ -2128,6 +2133,7 @@
 				FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */,
 				FAE495911DBD89F100A97708 /* M13CheckboxFlatController.swift in Sources */,
 				FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */,
+				FADA1A841F30E0E2004AE6B0 /* HashChainService.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
 				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
@@ -2194,6 +2200,7 @@
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
 				FADA1A7C1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */,
 				FAFE54701D7BB19900391FDD /* Wrap.swift in Sources */,
+				FADA1A861F30E0E2004AE6B0 /* HashChainService.swift in Sources */,
 				FAC873F91E6A4DC1003D112E /* Version.swift in Sources */,
 				FAFE54711D7BB2CA00391FDD /* Date+KR.swift in Sources */,
 				FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */,
@@ -2268,6 +2275,7 @@
 				FAE45B9E1E64AA4400A583AB /* Ed25519.swift in Sources */,
 				FAAE81941E577063002A9AE6 /* Policy.swift in Sources */,
 				FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */,
+				FADA1A851F30E0E2004AE6B0 /* HashChainService.swift in Sources */,
 				8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
