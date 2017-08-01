@@ -32,9 +32,9 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         }
         
         teamNameLabel.text = invite.team.name
-        emailTextfield.text = invite.email
+        emailTextfield.text = try? KeyManager.getMe()
         
-        setJoin(valid: !invite.email.isEmpty)
+        setJoin(valid: !(emailTextfield.text ?? "").isEmpty)
     }
     
     
