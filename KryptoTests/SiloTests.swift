@@ -213,7 +213,7 @@ class SiloTests: XCTestCase {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch let e {
-                guard let _ = e as? KeyManagerError else {
+                guard let _ = e as? KeyManager.Errors else {
                     XCTFail("\(e)")
                     return
                 }
