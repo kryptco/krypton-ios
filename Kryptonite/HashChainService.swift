@@ -60,7 +60,7 @@ class HashChainService {
         Write an append block accepting a team invitation
         Special case: the team invitation keypair is used to sign the payload
      */
-    func accept(invite:TeamInvite, _ completionHandler:@escaping (HashChainServiceResult<Bool>) -> Void ) throws {
+    func accept(invite:TeamInvite, _ completionHandler:@escaping (HashChainServiceResult<HashChain.Block>) -> Void ) throws {
         
         let keyManager = try KeyManager.sharedInstance()
         let newMember = try Team.MemberIdentity(publicKey: teamIdentity.keyPair.publicKey,
@@ -94,8 +94,8 @@ class HashChainService {
         
         let payloadDataString = try payloadData.utf8String()
         let hashChainRequest = HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
-                                                     payload: payloadDataString,
-                                                     signature: signature)
+                                                 payload: payloadDataString,
+                                                 signature: signature)
         
         try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
@@ -104,16 +104,8 @@ class HashChainService {
                 completionHandler(HashChainServiceResult.error(error))
                 
             case .success:
-                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
-                
-                // there's a new block, update the last known hash
-                do {
-                    try self.teamIdentity.team.set(lastBlockHash: addedBlock.hash())
-                } catch {
-                    log("could not compute block hash: \(error)")
-                }
-                
-                completionHandler(HashChainServiceResult.result(true))
+                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)                
+                completionHandler(HashChainServiceResult.result(addedBlock))
             }
         }
 

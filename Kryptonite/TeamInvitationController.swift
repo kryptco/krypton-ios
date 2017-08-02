@@ -33,7 +33,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         
         teamNameLabel.text = invite.team.name
         emailTextfield.text = try? KeyManager.getMe()
-        
+        emailTextfield.isEnabled = true
         setJoin(valid: !(emailTextfield.text ?? "").isEmpty)
     }
     
@@ -54,7 +54,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         
         guard let email = emailTextfield.text
         else {
-            self.showWarning(title: "Error", body: "Invalid team invitation or email address. Please contact your team admin.", then: {
+            self.showWarning(title: "Error", body: "Invalid email address. Please enter a valid team email", then: {
                 self.dismiss(animated: true, completion: nil)
             })
             return

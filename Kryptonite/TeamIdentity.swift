@@ -13,7 +13,7 @@ import JSON
 struct TeamIdentity:Jsonable {
     let id:String
     let email:String
-    let team:Team
+    var team:Team
     let keyPair:SodiumKeyPair
     
     /**
