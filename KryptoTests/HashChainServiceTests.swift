@@ -24,7 +24,7 @@ class HashChainServiceTests: XCTestCase {
         
         // create the team
         let teamKeypair = try! KRSodium.shared().sign.keyPair()!
-        let team = Team(name: "iOSTests", publicKey: teamKeypair.publicKey)
+        let team = try! Team(name: "iOSTests", publicKey: teamKeypair.publicKey)
         try! team.setAdmin(keypair: teamKeypair)
         
         teamIdentity = try! TeamIdentity(email: "bob@iostests.com", team: team)
