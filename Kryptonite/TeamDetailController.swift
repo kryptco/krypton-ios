@@ -28,6 +28,12 @@ class TeamDetailController: KRBaseTableController {
         
         teamLabel.text = identity.team.name
         emailLabel.text = identity.email
+        
+        if let approvalSeconds = identity.team.policy.temporaryApprovalSeconds {
+            approvalWindowLabel.text = Date().shifted(by: Double(approvalSeconds)).timeAgo(suffix: "")
+        } else {
+            approvalWindowLabel.text = "unset"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

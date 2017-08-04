@@ -20,7 +20,7 @@ class HashChain {
         var object: Object {
             return ["public_key": publicKey.toBase64(),
                     "payload": payload,
-                    "signature": signature]
+                    "signature": signature.toBase64()]
         }
         
     }
@@ -42,6 +42,11 @@ class HashChain {
     struct Response:JsonReadable {
         let blocks:[Block]
         
+        struct UpdatedTeam {
+            let team:Team
+            let lastBlockHash:Data
+        }
+        
         init(blocks:[Block]) {
             self.blocks = blocks
         }
@@ -50,7 +55,9 @@ class HashChain {
             try self.init(blocks: [Block](json: json ~> "blocks"))
         }
         
-        func verifyAndDigestBlocks(for team:Team) throws -> Team {
+        func verifyAndDigestBlocks(for team:Team) throws -> UpdatedTeam {
+
+            let blockDataManager = HashChainBlockManager(team: team)
 
             var updatedTeam = team
             
@@ -81,7 +88,11 @@ class HashChain {
                 }
                 
                 updatedTeam.info = createChain.teamInfo
-                lastBlockHash = try createBlock.hash()
+                
+                // add the block to the data store
+                try blockDataManager.add(block: createBlock)
+                
+                lastBlockHash = createBlock.hash()
                 blockStart += 1
             }
             
@@ -90,17 +101,24 @@ class HashChain {
                 let verifiedAppendBlock = try nextBlock.verifyAppendBlock(publicKey: team.publicKey, lastBlockHash: lastBlockHash!)
                 
                 switch verifiedAppendBlock.operation {
-                case .inviteMember, .cancelInvite, .acceptInvite, .addMember, .removeMember, .setTeamInfo:
+                case .inviteMember, .cancelInvite, .acceptInvite, .addMember, .removeMember:
                     //TODO unhandled
                     break
+                
                 case .setPolicy(let policy):
                     updatedTeam.policy = policy
+                    
+                case .setTeamInfo(let info):
+                    updatedTeam.info = info
                 }
                 
-                lastBlockHash = try nextBlock.hash()
+                // add the block to the data store
+                try blockDataManager.add(block: nextBlock)
+                
+                lastBlockHash = nextBlock.hash()
             }
-        
-            return updatedTeam
+            
+            return UpdatedTeam(team: updatedTeam, lastBlockHash: lastBlockHash!)
         }
     }
 
@@ -115,11 +133,11 @@ class HashChain {
         }
         init(json: Object) throws {
             try self.init(payload: json ~> "payload",
-                          signature: ((json ~> "public_key") as String).fromBase64())
+                          signature: ((json ~> "signature") as String).fromBase64())
         }
         
-        func hash() throws -> Data {
-            return try payload.utf8Data().SHA256
+        func hash() -> Data {
+            return Data(bytes: [UInt8](payload.utf8)).SHA256
         }
 
         func verifyAppendBlock(publicKey:SodiumPublicKey, lastBlockHash:Data) throws -> AppendBlock {

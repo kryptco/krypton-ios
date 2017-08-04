@@ -12,7 +12,8 @@ import UIKit
 class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     
     var invite:TeamInvite!
-    
+    var teamIdentity:TeamIdentity!
+
     @IBOutlet weak var teamNameLabel:UILabel!
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var joinButton:UIButton!
@@ -26,12 +27,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         joinButton.layer.shadowRadius = 3
         joinButton.layer.masksToBounds = false
         
-        guard let invite = self.invite else {
-            self.dismiss(animated: true, completion: nil)
-            return
-        }
-        
-        teamNameLabel.text = invite.team.name
+        teamNameLabel.text = teamIdentity.team.name
         emailTextfield.text = try? KeyManager.getMe()
         emailTextfield.isEnabled = true
         setJoin(valid: !(emailTextfield.text ?? "").isEmpty)
@@ -60,16 +56,10 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
             return
         }
         
-        // create an identity and save it
-        var identity:TeamIdentity
-        do {
-            identity = try TeamIdentity(email: email, team: invite.team)
-        } catch {
-            self.showWarning(title: "Error", body: "Could not join team. Error creating team identity: \(error).")
-            return
-        }
+        // set the team identity's email
+        teamIdentity.email = email
         
-        self.performSegue(withIdentifier: "showTeamsComplete", sender: identity)
+        self.performSegue(withIdentifier: "showTeamsComplete", sender: nil)
     }
     
     @IBAction func unwindToTeamInvitation(segue: UIStoryboardSegue) {}
@@ -98,15 +88,9 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let identity = sender as? TeamIdentity else {
-            log("performing segue without identity", .error)
-            return
-        }
-        
         if let completeController = segue.destination as? TeamJoinCompleteController {
             completeController.invite = invite
-            completeController.identity = identity
+            completeController.teamIdentity = teamIdentity
         }
     }
 }

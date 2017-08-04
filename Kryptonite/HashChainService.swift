@@ -12,10 +12,6 @@ import SwiftHTTP
 
 class HashChainService {
     
-    struct ServerError:Error {
-        let message:String
-    }
-    
     enum Errors:Error {
         case badResponse
         case badInviteSeed
@@ -23,7 +19,19 @@ class HashChainService {
         case payloadSignature
         case needNewestBlock
         
+        case missingLastBlockHash
+        
+        case needAdminKeypair
         case errorResponse(ServerError)
+        
+        case blockDidNotPost
+    }
+    
+    struct ServerError:Error, CustomDebugStringConvertible {
+        let message:String
+        var debugDescription: String {
+            return "Server Error(\(message))"
+        }
     }
     
     enum ServerResponse<T:JsonReadable>:JsonReadable {
@@ -54,6 +62,98 @@ class HashChainService {
     
     init(teamIdentity:TeamIdentity) {
         self.teamIdentity = teamIdentity
+    }
+    
+    /**
+        Create a team, thereby starting a new chain.
+     */
+    func create(team:Team, _ completionHandler:@escaping (HashChainServiceResult<Bool>) -> Void) throws {
+        
+        // ensure we have an admin keypair
+        guard let teamKeypair = try team.getAdmin() else {
+            throw Errors.needAdminKeypair
+        }
+        
+        let createChain = HashChain.CreateChain(teamPublicKey: teamKeypair.publicKey, teamInfo: team.info)
+        let payload = HashChain.Payload.create(createChain)
+        let payloadData = try payload.jsonData()
+        
+        // sign the payload
+        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamKeypair.secretKey)
+        else {
+            throw Errors.payloadSignature
+        }
+        
+        // send the payload request
+        let payloadDataString = try payloadData.utf8String()
+        let hashChainRequest = HashChain.Request(publicKey: teamKeypair.publicKey,
+                                                 payload: payloadDataString,
+                                                 signature: signature)
+        
+        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+            switch serverResponse {
+                
+            case .error(let error):
+                completionHandler(HashChainServiceResult.error(error))
+                
+            case .success:
+                // set the block hash
+                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                try? team.set(lastBlockHash: addedBlock.hash())
+            
+                completionHandler(HashChainServiceResult.result(true))
+            }
+        }
+
+    }
+    
+    /** 
+        Add a team member directly (without invitation).
+        Requires admin keypair
+     */
+    func add(member:Team.MemberIdentity, _ completionHandler:@escaping (HashChainServiceResult<Bool>) -> Void) throws {
+        
+        // ensure we have an admin keypair
+        guard let teamKeypair = try teamIdentity.team.getAdmin() else {
+            throw Errors.needAdminKeypair
+        }
+        
+        // we need a last block hash
+        guard let lastBlockhash = try teamIdentity.team.getLastBlockHash() else {
+            throw Errors.missingLastBlockHash
+        }
+        
+        let operation = HashChain.Operation.addMember(member)
+        let addMember = HashChain.AppendBlock(lastBlockHash: lastBlockhash, operation: operation)
+        let payload = HashChain.Payload.append(addMember)
+        let payloadData = try payload.jsonData()
+        
+        // sign the payload
+        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamKeypair.secretKey)
+            else {
+                throw Errors.payloadSignature
+        }
+        
+        // send the payload request
+        let payloadDataString = try payloadData.utf8String()
+        let hashChainRequest = HashChain.Request(publicKey: teamKeypair.publicKey,
+                                                 payload: payloadDataString,
+                                                 signature: signature)
+
+        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+            switch serverResponse {
+                
+            case .error(let error):
+                completionHandler(HashChainServiceResult.error(error))
+                
+            case .success:
+                // set the block hash
+                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                try? self.teamIdentity.team.set(lastBlockHash: addedBlock.hash())
+                
+                completionHandler(HashChainServiceResult.result(true))
+            }
+        }
     }
     
     /**
@@ -93,7 +193,7 @@ class HashChainService {
         }
         
         let payloadDataString = try payloadData.utf8String()
-        let hashChainRequest = HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
+        let hashChainRequest = HashChain.Request(publicKey: nonceKeypair.publicKey,
                                                  payload: payloadDataString,
                                                  signature: signature)
         
@@ -112,10 +212,55 @@ class HashChainService {
     }
     
     /**
+        Send a ReadBlock request to the teams service as a non-member, using the invite nonce keypair
+     */
+    func getTeam(using invite:TeamInvite, _ completionHandler:@escaping (HashChainServiceResult<HashChain.Response.UpdatedTeam>) -> Void) throws {
+        
+        // use the invite `seed` to create a nonce sodium keypair
+        guard let nonceKeypair = try KRSodium.shared().sign.keyPair(seed: invite.seed) else {
+            throw Errors.badInviteSeed
+        }
+        
+        let readBlock = try HashChain.ReadBlock(teamPublicKey: invite.teamPublicKey,
+                                                nonce: Data.random(size: 32),
+                                                unixSeconds: UInt64(Date().timeIntervalSince1970),
+                                                lastBlockHash: nil)
+        
+        let payload = HashChain.Payload.read(readBlock)
+        let payloadData = try payload.jsonData()
+        
+        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
+            else {
+                throw Errors.payloadSignature
+        }
+        
+        let hashChainRequest = try HashChain.Request(publicKey: nonceKeypair.publicKey,
+                                                     payload: payloadData.utf8String(),
+                                                     signature: signature)
+        
+        
+        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
+            switch serverResponse {
+            case .error(let error):
+                completionHandler(HashChainServiceResult.error(error))
+                
+            case .success(let blocksResponse):
+                do {
+                    let updatedTeam = try blocksResponse.verifyAndDigestBlocks(for: self.teamIdentity.team)
+                    completionHandler(HashChainServiceResult.result(updatedTeam))
+                } catch {
+                    completionHandler(HashChainServiceResult.error(error))
+                }
+            }
+        }
+        
+    }
+    
+    /**
         Send a ReadBlock request to the teams service, and update the team by verifying and
         digesting any new blocks
      */
-    func getVerifiedTeamUpdates(_ completionHandler:@escaping (HashChainServiceResult<Team>) -> Void) throws {
+    func getVerifiedTeamUpdates(_ completionHandler:@escaping (HashChainServiceResult<HashChain.Response.UpdatedTeam>) -> Void) throws {
         
         let readBlock = try HashChain.ReadBlock(teamPublicKey: teamIdentity.team.publicKey,
                                               nonce: Data.random(size: 32),
@@ -153,19 +298,37 @@ class HashChainService {
         
     }
     
+    /**
+        Check that the `block` succesfully posted to the chain
+     */
+    func check(posted block:HashChain.Block, _ completionHandler:@escaping (HashChainServiceResult<Bool>) -> Void) throws {
+        try getVerifiedTeamUpdates({ (response) in
+            switch response {
+            case .error(let e):
+                completionHandler(HashChainServiceResult.error(e))
+            case .result:
+                let hasBlock = (try? HashChainBlockManager(team: self.teamIdentity.team).fetchBlock(hash: block.hash().toBase64())) != nil
+                
+                completionHandler(HashChainServiceResult.result(hasBlock))
+            }
+        })
+    }
+    
     /** 
         Send a JSON object to the teams service and parse the response as a ServerResponse
      */
     func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (ServerResponse<T>) -> Void) throws {
-        let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object)
+        let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
         req.start { response in
             do {
-                let serverResponse = try ServerResponse<T>(jsonData: response.data)
+                let json:Object = try JSON.parse(data: response.data)
+                dump(json)
+                let serverResponse = try ServerResponse<T>(json: json)
                 onCompletion(serverResponse)
             } catch {
+                
                 onCompletion(ServerResponse.error(ServerError(message: "Unexpected response. \(error)")))
             }
         }
-
     }
 }

@@ -23,7 +23,7 @@ class TeamJoinCompleteController:KRBaseController {
 
 
     var invite:TeamInvite!
-    var identity:TeamIdentity!
+    var teamIdentity:TeamIdentity!
     
     struct JoinWorkflowError:Error, CustomDebugStringConvertible  {
         let error:Error
@@ -40,7 +40,7 @@ class TeamJoinCompleteController:KRBaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        teamNameLabel.text = invite.team.name
+        teamNameLabel.text = teamIdentity.team.name
         
         resultViewUp.priority = 750
         resultViewDown.priority = 999
@@ -51,23 +51,13 @@ class TeamJoinCompleteController:KRBaseController {
         super.viewDidAppear(animated)
         arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
         
-        dispatchAfter(delay: 2.0) { 
-            self.finishJoinTeam()
-        }
+        self.finishJoinTeam()
     }
     
     func finishJoinTeam() {
         
-        // 1. save the identity
-        do {
-            try KeyManager.setTeam(identity: identity)
-        } catch {
-            showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
-            return
-        }
-        
-        // 2. send team invite response
-        let hashChainService = HashChainService(teamIdentity: identity)
+        // send team invite response
+        let hashChainService = HashChainService(teamIdentity: teamIdentity)
         
         do {
             try hashChainService.accept(invite: invite) { result in
@@ -75,9 +65,16 @@ class TeamJoinCompleteController:KRBaseController {
                 case .error(let error):
                     self.showFailure(by: JoinWorkflowError(error, action: "Team server error response on accept invite."))
                     
-                case .result:
-                    // TODO verify block posted succesfully
+                case .result(let block):
+                    // save the identity
+                    do {
+                        try KeyManager.setTeam(identity: self.teamIdentity)
+                    } catch {
+                        self.showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
+                        return
+                    }
                     
+                    try? self.teamIdentity.team.set(lastBlockHash: block.hash())
                     self.showSuccess()
                 }
             }
@@ -87,20 +84,21 @@ class TeamJoinCompleteController:KRBaseController {
             // we have a newer block
             // fetch new blocks and try again
             do {
-                try hashChainService.getVerifiedTeamUpdates({ (result) in
+                try hashChainService.getTeam(using: invite) { (result) in
                     switch result {
                     case .error(let error):
                         self.showFailure(by: JoinWorkflowError(error, action: "Server error getting newest block on retry."))
                         
                     // new team object, update and save it
                     case .result(let updatedTeam):
-                        self.identity.team = updatedTeam
-                        try? KeyManager.setTeam(identity: self.identity)
+                        self.teamIdentity.team = updatedTeam.team
+                        try? self.teamIdentity.team.set(lastBlockHash: updatedTeam.lastBlockHash)
+                        try? KeyManager.setTeam(identity: self.teamIdentity)
                         
                         // try join team again
                         self.finishJoinTeam()
                     }
-                })
+                }
             } catch {
                 self.showFailure(by: JoinWorkflowError(error, action: "Failed getting newest block on retry."))
             }
@@ -112,25 +110,36 @@ class TeamJoinCompleteController:KRBaseController {
     }
     
     func showFailure(by error:Error) {
-        self.showWarning(title: "Error", body: "Could not accept team invitation. \(error).", then: {
-            self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)
-        })
+        dispatchMain  {
+            self.checkBox.secondaryCheckmarkTintColor = UIColor.reject
+            self.checkBox.tintColor = UIColor.reject
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.arcView.alpha = 0
+                self.view.layoutIfNeeded()
+                
+            }) { (_) in
+                self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
+                self.showWarning(title: "Error", body: "Could not accept team invitation. \(error).", then: {
+                    self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)
+                })
+            }
+        }
     }
     
     func showSuccess() {
-        // 3. show success
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.joiningLabel.text = "JOINED"
-            self.arcView.alpha = 0
-            self.resultViewUp.priority = 999
-            self.resultViewDown.priority = 750
-            self.view.layoutIfNeeded()
-            
-        }) { (_) in
-            self.checkBox.toggleCheckState(true)
+        dispatchMain {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.joiningLabel.text = "JOINED"
+                self.arcView.alpha = 0
+                self.resultViewUp.priority = 999
+                self.resultViewDown.priority = 750
+                self.view.layoutIfNeeded()
+                
+            }) { (_) in
+                self.checkBox.toggleCheckState(true)
+            }
         }
-
     }
     
     @IBAction func doneTapped() {

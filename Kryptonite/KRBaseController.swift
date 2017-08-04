@@ -201,8 +201,7 @@ extension UIViewController {
         switch link.command {
         case .joinTeam:
             
-            guard   link.path.count == 2,
-                    let teamName = link.properties["team"]
+            guard   link.path.count == 2
             else {
                 self.showWarning(title: "Error", body: "Invalid team invitation.")
                 return
@@ -212,23 +211,23 @@ extension UIViewController {
             do {
                 let teamPublicKey = try SodiumPublicKey(link.path[0].fromBase64())
                 let seed = try link.path[1].fromBase64()
-                teamInvite = TeamInvite(team: Team(name: teamName, publicKey: teamPublicKey), seed: seed)
+                teamInvite = TeamInvite(teamPublicKey: teamPublicKey, seed: seed)
             } catch {
                 self.showWarning(title: "Error", body: "Invalid team invitation encoding.")
                 return
             }
             
 
-            guard let teamInviteController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamInvitationController") as? TeamInvitationController
+            guard let teamLoadController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamLoadController") as? TeamLoadController
             else {
                 log("unknown team invitiation controller")
                 return
             }
             
-            teamInviteController.invite = teamInvite
+            teamLoadController.invite = teamInvite
             
             dispatchMain {
-                self.present(teamInviteController, animated: true, completion: nil)
+                self.present(teamLoadController, animated: true, completion: nil)
             }
             
         }

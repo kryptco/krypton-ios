@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import JSON
 
-class HashChainManager {
+class HashChainBlockManager {
     
     private var mutex = Mutex()
     private let teamIdentity:String
@@ -72,10 +72,31 @@ class HashChainManager {
     }()
     
     /**
+        Check if a block exists, and if it does retrieve it
+     */
+    func fetchBlock(hash:String) throws -> HashChain.Block? {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Block")
+        fetchRequest.predicate = blockHashEqualsPredicate(for: hash)
+        fetchRequest.fetchLimit = 1
+        
+        return try fetchObjects(for: fetchRequest).first
+    }
+    
+    private func blockHashEqualsPredicate(for blockHash:String) -> NSPredicate {
+        return NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: "block_hash"),
+            rightExpression: NSExpression(forConstantValue: blockHash),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+    }
+    
+    /**
         Add a new block
      */
     func add(block:HashChain.Block) throws {
-        
+        self.save(block: block)
     }
     
     
@@ -130,8 +151,10 @@ class HashChainManager {
             
             // set attirbutes
             hostEntry.setValue(block.payload, forKey: "payload")
-            hostEntry.setValue(block.signature, forKey: "signature")
-            
+            hostEntry.setValue(block.signature.toBase64(), forKey: "signature")
+            hostEntry.setValue(block.hash().toBase64(), forKey: "block_hash")
+            hostEntry.setValue(Date(), forKey: "date_added")
+
             do {
                 try self.managedObjectContext.save()
                 

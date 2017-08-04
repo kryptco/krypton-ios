@@ -9,6 +9,6 @@
 import Foundation
 
 struct TeamInvite {
-    let team:Team
+    let teamPublicKey:Data
     let seed:Data
 }

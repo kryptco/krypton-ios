@@ -31,22 +31,26 @@ struct Team {
     
     /// the team's policy settings
     struct PolicySettings:Jsonable {
-        let temporaryApprovalSeconds:UInt64
+        let temporaryApprovalSeconds:UInt64?
         
         static var defaultSettings:PolicySettings {
             return PolicySettings(temporaryApprovalSeconds: UInt64(Properties.Interval.threeHours.rawValue))
         }
         
-        init(temporaryApprovalSeconds:UInt64) {
+        init(temporaryApprovalSeconds:UInt64?) {
             self.temporaryApprovalSeconds = temporaryApprovalSeconds
         }
         
         init(json: Object) throws {
-            try self.init(temporaryApprovalSeconds: json ~> "temporary_approval_seconds")
+            self.init(temporaryApprovalSeconds: try? json ~> "temporary_approval_seconds")
         }
         
         var object: Object {
-            return ["temporary_approval_seconds": temporaryApprovalSeconds]
+            if let seconds = temporaryApprovalSeconds {
+                return ["temporary_approval_seconds": seconds]
+            }
+            
+            return [:]
         }
     }
     
@@ -79,6 +83,7 @@ struct Team {
         }
     }
     
+    let id:String
     var info:Info
     let publicKey:SodiumPublicKey
     var policy:PolicySettings
@@ -87,11 +92,12 @@ struct Team {
         return info.name
     }
 
-    init(name:String, publicKey:SodiumPublicKey) {
-        self.init(info: Info(name: name), publicKey: publicKey)
+    init(name:String, publicKey:SodiumPublicKey) throws {
+        try self.init(info: Info(name: name), publicKey: publicKey)
     }
 
-    init(info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings.defaultSettings) {
+    init(info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings.defaultSettings) throws {
+        self.id = try Data.random(size: 32).toBase64()
         self.info = info
         self.publicKey = publicKey
         self.policy = policy
@@ -109,26 +115,51 @@ struct Team {
                 "policy": policy.object]
     }
     
-    // get/set last block hash
+    /// team keychain
     
     enum TeamKeychainStorageKeys:String {
         case lastBlockHash = "last_block_hash"
+        case adminPublicKey = "admin_public_key"
+        case adminSecretKey = "admin_secret_key"
     }
     
     var keychain:KeychainStorage {
-        return KeychainStorage(service: "team_keychain_\(self.publicKey.toBase64(true))")
+        return KeychainStorage(service: "team_\(id)_\(self.publicKey.toBase64())")
     }
+    
+    /// get/set last block hash
     
     func set(lastBlockHash:Data) throws {
         try self.keychain.setData(key: TeamKeychainStorageKeys.lastBlockHash.rawValue, data: lastBlockHash)
     }
     
     func getLastBlockHash() throws -> Data? {
-        return try self.keychain.getData(key: TeamKeychainStorageKeys.lastBlockHash.rawValue)
+        do {
+            return try self.keychain.getData(key: TeamKeychainStorageKeys.lastBlockHash.rawValue)
+        } catch KeychainStorageError.notFound {
+            return nil
+        }
+    }
+
+    /// get/set admin key pair
+    func setAdmin(keypair:SodiumKeyPair) throws {
+        try self.keychain.setData(key: TeamKeychainStorageKeys.adminPublicKey.rawValue, data: keypair.publicKey)
+        try self.keychain.setData(key: TeamKeychainStorageKeys.adminSecretKey.rawValue, data: keypair.secretKey)
+    }
+    
+    func getAdmin() throws -> SodiumKeyPair? {
+        do {
+            let publicKey = try self.keychain.getData(key: TeamKeychainStorageKeys.adminPublicKey.rawValue)
+            let secretKey = try self.keychain.getData(key: TeamKeychainStorageKeys.adminSecretKey.rawValue)
+            
+            return SodiumKeyPair(publicKey: publicKey, secretKey: secretKey)
+        } catch KeychainStorageError.notFound {
+            return nil
+        }
+    }
+    
+    var isAdmin:Bool {
+        return (try? getAdmin()) != nil
     }
 
 }
-
-
-
-    
