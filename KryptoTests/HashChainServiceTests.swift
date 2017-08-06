@@ -12,7 +12,6 @@ import UIKit
 class HashChainServiceTests: XCTestCase {
     
     var teamIdentity:TeamIdentity!
-    var service:HashChainService!
     
     override func setUp() {
         super.setUp()
@@ -28,7 +27,6 @@ class HashChainServiceTests: XCTestCase {
         try! team.setAdmin(keypair: teamKeypair)
         
         teamIdentity = try! TeamIdentity(email: "bob@iostests.com", team: team)
-        service = HashChainService(teamIdentity: teamIdentity)
     }
     
     override func tearDown() {
@@ -39,18 +37,18 @@ class HashChainServiceTests: XCTestCase {
     func testCreateTeamAndAddMemberAdmin() {
         let exp = expectation(description: "HashChainService ASYNC request")
 
+        var service = HashChainService(teamIdentity: teamIdentity)
+
         do {
-            try service.create(team: teamIdentity.team) { (response) in
+            try service.createTeam { (response) in
                 
                 switch response {
                 case .error(let e):
                     XCTFail("FAIL - Server error: \(e)")
                 
-                case .result(let success):
-                    guard success else {
-                        XCTFail("FAIL - unknown error")
-                        return
-                    }
+                case .result(let updatedTeam):
+                    
+                    self.teamIdentity.team = updatedTeam
                     
                     // add the admin
                     do {
@@ -60,17 +58,14 @@ class HashChainServiceTests: XCTestCase {
                                                                   sshPublicKey: keyManager.keyPair.publicKey.wireFormat(),
                                                                   pgpPublicKey: keyManager.loadPGPPublicKey(for: self.teamIdentity.email).packetData)
                         
-                        try self.service.add(member: adminMember) { (response) in
+                        try service.add(member: adminMember) { (response) in
                             
                             switch response {
                             case .error(let e):
                                 XCTFail("FAIL - Server error: \(e)")
                                 
-                            case .result    (let success):
-                                guard success else {
-                                    XCTFail("FAIL - unknown error")
-                                    return
-                                }
+                            case .result(let updatedTeam):
+                                self.teamIdentity.team = updatedTeam
                                 
                                 exp.fulfill()
                             }

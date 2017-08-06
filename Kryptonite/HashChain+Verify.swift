@@ -8,10 +8,7 @@
 
 import Foundation
 
-struct UpdatedTeam {
-    let team:Team
-    let lastBlockHash:Data
-}
+typealias UpdatedTeam = Team
 
 extension HashChain.Response {
     
@@ -22,7 +19,7 @@ extension HashChain.Response {
         var updatedTeam = team
         
         var blockStart = 0
-        var lastBlockHash = try team.getLastBlockHash()
+        var lastBlockHash = team.lastBlockHash
         
         if lastBlockHash == nil {
             guard blocks.count > 0 else {
@@ -120,7 +117,9 @@ extension HashChain.Response {
             lastBlockHash = nextBlock.hash()
         }
         
-        return UpdatedTeam(team: updatedTeam, lastBlockHash: lastBlockHash!)
+        updatedTeam.lastBlockHash = lastBlockHash
+        
+        return updatedTeam
     }
 
 }

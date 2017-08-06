@@ -53,8 +53,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
                     return
                     
                 case .result(let updatedTeam):
-                    teamIdentity.team = updatedTeam.team
-                    try? teamIdentity.team.set(lastBlockHash: updatedTeam.lastBlockHash)
+                    teamIdentity.team = updatedTeam
 
                     dispatchMain {
                         

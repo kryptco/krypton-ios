@@ -65,7 +65,9 @@ class TeamJoinCompleteController:KRBaseController {
                 case .error(let error):
                     self.showFailure(by: JoinWorkflowError(error, action: "Team server error response on accept invite."))
                     
-                case .result(let block):
+                case .result(let updatedTeam):
+                    self.teamIdentity.team = updatedTeam
+
                     // save the identity
                     do {
                         try KeyManager.setTeam(identity: self.teamIdentity)
@@ -74,8 +76,6 @@ class TeamJoinCompleteController:KRBaseController {
                         return
                     }
                     
-                    try? self.teamIdentity.team.set(lastBlockHash: block.hash())
-                    try? HashChainBlockManager(team: self.teamIdentity.team).add(block: block)
                     self.showSuccess()
                 }
             }
@@ -92,9 +92,7 @@ class TeamJoinCompleteController:KRBaseController {
                         
                     // new team object, update and save it
                     case .result(let updatedTeam):
-                        self.teamIdentity.team = updatedTeam.team
-                        try? self.teamIdentity.team.set(lastBlockHash: updatedTeam.lastBlockHash)
-                        try? KeyManager.setTeam(identity: self.teamIdentity)
+                        self.teamIdentity.team = updatedTeam
                         
                         // try join team again
                         self.finishJoinTeam()

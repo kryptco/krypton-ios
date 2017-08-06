@@ -67,14 +67,14 @@ class HashChainService {
     /**
         Create a team, thereby starting a new chain.
      */
-    func create(team:Team, _ completionHandler:@escaping (HashChainServiceResult<Bool>) -> Void) throws {
+    func createTeam(_ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
         
         // ensure we have an admin keypair
-        guard let teamKeypair = try team.getAdmin() else {
+        guard let teamKeypair = try teamIdentity.team.getAdmin() else {
             throw Errors.needAdminKeypair
         }
         
-        let createChain = HashChain.CreateChain(teamPublicKey: teamKeypair.publicKey, teamInfo: team.info)
+        let createChain = HashChain.CreateChain(teamPublicKey: teamKeypair.publicKey, teamInfo: teamIdentity.team.info)
         let payload = HashChain.Payload.create(createChain)
         let payloadData = try payload.jsonData()
         
@@ -99,9 +99,12 @@ class HashChainService {
             case .success:
                 // set the block hash
                 let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
-                try? team.set(lastBlockHash: addedBlock.hash())
+                var updatedTeam = self.teamIdentity.team
+                updatedTeam.lastBlockHash = addedBlock.hash()
+                
+                try? HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
             
-                completionHandler(HashChainServiceResult.result(true))
+                completionHandler(HashChainServiceResult.result(updatedTeam))
             }
         }
 
@@ -111,7 +114,7 @@ class HashChainService {
         Add a team member directly (without invitation).
         Requires admin keypair
      */
-    func add(member:Team.MemberIdentity, _ completionHandler:@escaping (HashChainServiceResult<Bool>) -> Void) throws {
+    func add(member:Team.MemberIdentity, _ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
         
         // ensure we have an admin keypair
         guard let teamKeypair = try teamIdentity.team.getAdmin() else {
@@ -119,7 +122,7 @@ class HashChainService {
         }
         
         // we need a last block hash
-        guard let lastBlockhash = try teamIdentity.team.getLastBlockHash() else {
+        guard let lastBlockhash = teamIdentity.team.lastBlockHash else {
             throw Errors.missingLastBlockHash
         }
         
@@ -149,9 +152,12 @@ class HashChainService {
             case .success:
                 // set the block hash
                 let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
-                try? self.teamIdentity.team.set(lastBlockHash: addedBlock.hash())
+                var updatedTeam = self.teamIdentity.team
+                updatedTeam.lastBlockHash = addedBlock.hash()
                 
-                completionHandler(HashChainServiceResult.result(true))
+                try? HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
+                
+                completionHandler(HashChainServiceResult.result(updatedTeam))
             }
         }
     }
@@ -160,7 +166,7 @@ class HashChainService {
         Write an append block accepting a team invitation
         Special case: the team invitation keypair is used to sign the payload
      */
-    func accept(invite:TeamInvite, _ completionHandler:@escaping (HashChainServiceResult<HashChain.Block>) -> Void ) throws {
+    func accept(invite:TeamInvite, _ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void ) throws {
         
         let keyManager = try KeyManager.sharedInstance()
         let newMember = try Team.MemberIdentity(publicKey: teamIdentity.keyPair.publicKey,
@@ -174,7 +180,7 @@ class HashChainService {
         }
         
         // get current block hash
-        guard let blockHash = try teamIdentity.team.getLastBlockHash() else {
+        guard let blockHash = teamIdentity.team.lastBlockHash else {
             throw Errors.needNewestBlock
         }
         
@@ -204,8 +210,14 @@ class HashChainService {
                 completionHandler(HashChainServiceResult.error(error))
                 
             case .success:
-                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)                
-                completionHandler(HashChainServiceResult.result(addedBlock))
+                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+
+                var updatedTeam = self.teamIdentity.team
+                updatedTeam.lastBlockHash = addedBlock.hash()
+                
+                try? HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
+
+                completionHandler(HashChainServiceResult.result(updatedTeam))
             }
         }
 
@@ -214,14 +226,14 @@ class HashChainService {
     /**
         Send a ReadBlock request to the teams service as a non-member, using the invite nonce keypair
      */
-    func getTeam(using invite:TeamInvite, from blockHash:Data? = nil, _ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
+    func getTeam(using invite:TeamInvite, _ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
         
         // use the invite `seed` to create a nonce sodium keypair
         guard let nonceKeypair = try KRSodium.shared().sign.keyPair(seed: invite.seed) else {
             throw Errors.badInviteSeed
         }
         
-        let lastBlockHash = try blockHash ?? teamIdentity.team.getLastBlockHash()
+        let lastBlockHash = teamIdentity.team.lastBlockHash
         
         let readBlock = try HashChain.ReadBlock(teamPublicKey: invite.teamPublicKey,
                                                 nonce: Data.random(size: 32),
@@ -249,14 +261,14 @@ class HashChainService {
             case .success(let blocksResponse):
                 do {
                     let updatedTeam = try blocksResponse.verifyAndDigestBlocks(for: self.teamIdentity.team)
-                    self.teamIdentity.team = updatedTeam.team
                     
                     guard blocksResponse.hasMore else {
                         completionHandler(HashChainServiceResult.result(updatedTeam))
                         return
                     }
                     
-                    try self.getTeam(using: invite, from: updatedTeam.lastBlockHash, completionHandler)            
+                    self.teamIdentity.team = updatedTeam
+                    try self.getTeam(using: invite, completionHandler)
                 } catch {
                     completionHandler(HashChainServiceResult.error(error))
                 }
@@ -269,14 +281,12 @@ class HashChainService {
         Send a ReadBlock request to the teams service, and update the team by verifying and
         digesting any new blocks
      */
-    func getVerifiedTeamUpdates(from blockHash:Data? = nil, _ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
+    func getVerifiedTeamUpdates(_ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
         
-        let lastBlockHash = try blockHash ?? teamIdentity.team.getLastBlockHash()
-
         let readBlock = try HashChain.ReadBlock(teamPublicKey: teamIdentity.team.publicKey,
                                               nonce: Data.random(size: 32),
                                               unixSeconds: UInt64(Date().timeIntervalSince1970),
-                                              lastBlockHash: lastBlockHash)
+                                              lastBlockHash: teamIdentity.team.lastBlockHash)
         
         let payload = HashChain.Payload.read(readBlock)
         let payloadData = try payload.jsonData()
@@ -301,14 +311,14 @@ class HashChainService {
                 do {
                     
                     let updatedTeam = try blocksResponse.verifyAndDigestBlocks(for: self.teamIdentity.team)
-                    self.teamIdentity.team = updatedTeam.team
                     
                     guard blocksResponse.hasMore else {
                         completionHandler(HashChainServiceResult.result(updatedTeam))
                         return
                     }
                     
-                    try self.getVerifiedTeamUpdates(from: updatedTeam.lastBlockHash, completionHandler)
+                    self.teamIdentity.team = updatedTeam
+                    try self.getVerifiedTeamUpdates(completionHandler)
                 } catch {
                     completionHandler(HashChainServiceResult.error(error))
                 }

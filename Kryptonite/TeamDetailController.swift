@@ -52,9 +52,8 @@ class TeamDetailController: KRBaseTableController {
                     self.showWarning(title: "Error", body: "Could not fetch new team updates. \(e).")
                     
                 case .result(let updatedTeam):
-                    self.identity.team = updatedTeam.team
+                    self.identity.team = updatedTeam
                     try? KeyManager.setTeam(identity: self.identity)
-                    try? self.identity.team.set(lastBlockHash: updatedTeam.lastBlockHash)
                     
                     self.loadNewLogs()
                 }
@@ -186,21 +185,21 @@ extension HashChain.Payload {
     var eventLogDetails:(title:String, detail:String) {
         switch self {
         case .read(let read):
-            return ("read_block", "get " + (read.lastBlockHash?.toBase64() ?? "first block"))
+            return ("read", "get " + (read.lastBlockHash?.toBase64() ?? "first block"))
             
         case .create(let create):
-            return ("create_chain", "started team \"\(create.teamInfo.name)\"")
+            return ("create chain", "started team \"\(create.teamInfo.name)\"")
             
         case .append(let append):
             switch append.operation {
             case .inviteMember(let invite):
-                return ("invite_member", "invitation \(invite.noncePublicKey.toBase64())")
+                return ("invite member", "invitation \(invite.noncePublicKey.toBase64())")
 
             case .acceptInvite(let member):
-                return ("accept_invite", "\(member.email) joined")
+                return ("accept invite", "\(member.email) joined")
             
             case .addMember(let member):
-                return ("add_member", "\(member.email) was added")
+                return ("add member", "\(member.email) was added")
             
             case .removeMember(let memberPublicKey):
                 return ("remove_member", "\(memberPublicKey.toBase64()) removed")
