@@ -73,6 +73,27 @@ extension Date {
         }
     }
     
+    func timeAgoLong(suffix:String = " ago") -> String {
+        
+        let time = abs(self.timeIntervalSinceNow)
+        
+        if time < TimeSeconds.minute.rawValue {
+            return "\(Int(time)) seconds\(suffix)"
+        } else if time < TimeSeconds.hour.rawValue {
+            return "\(Int(time/TimeSeconds.minute.rawValue)) minutes\(suffix)"
+        } else if time < 10*TimeSeconds.hour.rawValue {
+            let hour = Int(time/TimeSeconds.hour.rawValue)
+            let minutes = (Int(time) % Int(TimeSeconds.hour.rawValue))/Int(TimeSeconds.minute.rawValue)            
+            return "\(hour) hours \(minutes)m\(suffix)"
+        } else if time < TimeSeconds.day.rawValue {
+            return "\(Int(time/TimeSeconds.hour.rawValue)) hours\(suffix)"
+        } else if time < TimeSeconds.week.rawValue {
+            return "\(Int(time/TimeSeconds.day.rawValue)) days\(suffix)"
+        } else {
+            return "\(Int(time/TimeSeconds.week.rawValue)) weeks\(suffix)"
+        }
+    }
+    
     func trailingTimeAgo(suffix:String = " ago") -> String {
         
         let time = abs(self.timeIntervalSinceNow)

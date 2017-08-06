@@ -32,11 +32,7 @@ struct Team {
     /// the team's policy settings
     struct PolicySettings:Jsonable {
         let temporaryApprovalSeconds:UInt64?
-        
-        static var defaultSettings:PolicySettings {
-            return PolicySettings(temporaryApprovalSeconds: UInt64(Properties.Interval.threeHours.rawValue))
-        }
-        
+                
         init(temporaryApprovalSeconds:UInt64?) {
             self.temporaryApprovalSeconds = temporaryApprovalSeconds
         }
@@ -97,7 +93,7 @@ struct Team {
         try self.init(id: Data.random(size: 32).toBase64(true), info: Info(name: name), publicKey: publicKey)
     }
 
-    init(id:String, info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings.defaultSettings, lastBlockHash:Data? = nil) throws {
+    init(id:String, info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings(temporaryApprovalSeconds: nil), lastBlockHash:Data? = nil) throws {
         self.id = id
         self.info = info
         self.publicKey = publicKey

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -299,6 +299,7 @@
                         <outlet property="resultView" destination="2F5-8g-q5h" id="sRJ-bD-e1t"/>
                         <outlet property="resultViewHeight" destination="Gjk-VI-f78" id="AX3-JN-o7u"/>
                         <outlet property="swipeDownRejectGesture" destination="80S-6d-hAs" id="NSG-w2-IQw"/>
+                        <outlet property="temporaryApprovalButton" destination="0ud-my-Ov9" id="U62-yo-rUM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHI-NH-s8N" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -532,7 +533,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpM-im-LI7" userLabel="dot_bg" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="194" width="16" height="16"/>
+                                                <rect key="frame" x="16" y="194.5" width="16" height="16"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="B5G-Xb-UUl"/>
@@ -548,7 +549,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNR-sN-qxi" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="14" y="192" width="20" height="20"/>
+                                                <rect key="frame" x="14" y="192.5" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="mpk-3Y-Kqk"/>
                                                     <constraint firstAttribute="height" constant="20" id="oof-jB-5w8"/>
@@ -672,6 +673,7 @@
                         <outlet property="resultView" destination="Sbo-vl-YmW" id="0XK-9I-t4O"/>
                         <outlet property="resultViewHeight" destination="51w-sS-jsn" id="tzl-58-TrE"/>
                         <outlet property="swipeDownRejectGesture" destination="Q3k-JX-4b1" id="kKH-eM-wdc"/>
+                        <outlet property="temporaryApprovalButton" destination="yui-6E-jbR" id="hij-WQ-Nu3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5B-hC-AHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -943,7 +945,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IAp-LW-OfN" userLabel="objHashView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="38" y="152.5" width="58.5" height="23.5"/>
+                                                <rect key="frame" x="38" y="153" width="58.5" height="23.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ai1-7o-Xey">
                                                         <rect key="frame" x="4" y="4" width="50.5" height="15.5"/>
@@ -1075,6 +1077,7 @@
                         <outlet property="tagLabel" destination="nJy-cj-gMc" id="eWE-x2-4Iw"/>
                         <outlet property="taggerDate" destination="x6c-YN-i1a" id="FV9-bC-2jC"/>
                         <outlet property="taggerLabel" destination="0D5-ja-MEN" id="Jrf-sD-vTu"/>
+                        <outlet property="temporaryApprovalButton" destination="jxt-q8-AUQ" id="22i-en-KrA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h61-V5-MEx" userLabel="First Responder" sceneMemberID="firstResponder"/>

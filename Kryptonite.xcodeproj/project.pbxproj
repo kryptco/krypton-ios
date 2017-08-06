@@ -199,6 +199,9 @@
 		FA8F8AB41F3540EA00D0D4BE /* HashChain+Verify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */; };
 		FA8F8AB51F3540EA00D0D4BE /* HashChain+Verify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */; };
 		FA8F8AB61F3540EA00D0D4BE /* HashChain+Verify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */; };
+		FA8F8AB81F37BF0F00D0D4BE /* Policy+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */; };
+		FA8F8AB91F37BF0F00D0D4BE /* Policy+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */; };
+		FA8F8ABA1F37BF0F00D0D4BE /* Policy+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
@@ -693,6 +696,7 @@
 		FA8F8A9A1F33AA8A00D0D4BE /* HashChainServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashChainServiceTests.swift; sourceTree = "<group>"; };
 		FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamLoadController.swift; sourceTree = "<group>"; };
 		FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HashChain+Verify.swift"; sourceTree = "<group>"; };
+		FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+Team.swift"; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
@@ -1016,6 +1020,7 @@
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
 				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
 				FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */,
+				FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */,
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */,
@@ -2130,6 +2135,7 @@
 				FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */,
 				FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
+				FA8F8AB81F37BF0F00D0D4BE /* Policy+Team.swift in Sources */,
 				FAE45B9D1E64AA3E00A583AB /* Ed25519.swift in Sources */,
 				FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
@@ -2235,6 +2241,7 @@
 				8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */,
 				8DCB60241E9442F300E1B924 /* SiloTests.swift in Sources */,
 				FAE45B9B1E64751700A583AB /* RSAKeyPair.swift in Sources */,
+				FA8F8ABA1F37BF0F00D0D4BE /* Policy+Team.swift in Sources */,
 				FA1682A11EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FA12EAB41ECFA942001603BF /* CodeSigningTests.swift in Sources */,
 				8DCB60381E94438C00E1B924 /* Mutex.swift in Sources */,
@@ -2305,6 +2312,7 @@
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
 				FADA1A6F1F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
+				FA8F8AB91F37BF0F00D0D4BE /* Policy+Team.swift in Sources */,
 				FAB517961E54D52F0032DD47 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

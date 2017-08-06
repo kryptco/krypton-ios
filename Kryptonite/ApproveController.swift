@@ -17,7 +17,8 @@ class ApproveController:UIViewController {
     @IBOutlet weak var resultViewHeight:NSLayoutConstraint!
     @IBOutlet weak var resultLabel:UILabel!
 
-    
+    @IBOutlet weak var temporaryApprovalButton:UIButton!
+
     @IBOutlet weak var deviceLabel:UILabel!
     
     @IBOutlet weak var checkBox:M13Checkbox!
@@ -38,6 +39,9 @@ class ApproveController:UIViewController {
         return request?.body.analyticsCategory ?? "unknown-request"
     }
     
+    var temporaryApprovalTime:TemporaryApprovalTime!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +60,8 @@ class ApproveController:UIViewController {
             deviceLabel.text = session.pairing.displayName.uppercased()
         }
         
+        temporaryApprovalTime = Policy.temporaryApprovalInterval
+        temporaryApprovalButton.setTitle("Allow for \(temporaryApprovalTime.description)", for: UIControlState.normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -143,7 +149,7 @@ class ApproveController:UIViewController {
         isEnabled = false
         
         do {
-            Policy.allow(session: session, for: Properties.Interval.threeHours)
+            Policy.allow(session: session, for: temporaryApprovalTime.value)
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
             try TransportControl.shared.send(resp, for: session)
             
@@ -179,7 +185,7 @@ class ApproveController:UIViewController {
             }
         }
 
-        Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Properties.Interval.threeHours.rawValue))
+        Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(temporaryApprovalTime.value))
 
     }
     

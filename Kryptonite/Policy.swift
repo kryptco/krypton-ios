@@ -56,9 +56,9 @@ class Policy {
         UserDefaults.group?.synchronize()
     }
     
-    static func allow(session:Session, for time:Properties.Interval) {
+    static func allow(session:Session, for time:TimeInterval) {
         UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
-        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        UserDefaults.group?.set(time, forKey: StorageKey.userApprovalInterval.key(id: session.id))
         UserDefaults.group?.synchronize()
         
         Policy.sendAllowedPendingIfNeeded()
