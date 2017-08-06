@@ -84,7 +84,8 @@ struct Team {
     let publicKey:SodiumPublicKey
     var policy:PolicySettings
     var lastBlockHash:Data?
-    
+    var lastInvitePublicKey:SodiumPublicKey?
+
     var name:String {
         return info.name
     }
@@ -93,22 +94,26 @@ struct Team {
         try self.init(id: Data.random(size: 32).toBase64(true), info: Info(name: name), publicKey: publicKey)
     }
 
-    init(id:String, info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings(temporaryApprovalSeconds: nil), lastBlockHash:Data? = nil) throws {
+    init(id:String, info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings(temporaryApprovalSeconds: nil), lastBlockHash:Data? = nil,
+         lastInvitePublicKey:SodiumPublicKey? = nil) throws {
         self.id = id
         self.info = info
         self.publicKey = publicKey
         self.policy = policy
         self.lastBlockHash = lastBlockHash
+        self.lastInvitePublicKey = lastInvitePublicKey
     }
     
     init(json: Object) throws {
         let lastBlockHash:String? = try? json ~> "last_block_hash"
-        
+        let lastInvitePublicKey:String? = try? json ~> "last_invite_public_key"
+
         try self.init(id: json ~> "id",
                       info: Info(json: json ~> "info"),
                       publicKey: SodiumPublicKey(((json ~> "public_key") as String).fromBase64()),
                       policy: PolicySettings(json: json ~> "policy"),
-                      lastBlockHash: lastBlockHash?.fromBase64())
+                      lastBlockHash: lastBlockHash?.fromBase64(),
+                      lastInvitePublicKey: lastInvitePublicKey?.fromBase64())
     }
     
     var object: Object {
@@ -119,6 +124,10 @@ struct Team {
         
         if let blockHash = lastBlockHash {
             obj["last_block_hash"] = blockHash.toBase64()
+        }
+        
+        if let invitePublicKey = lastInvitePublicKey {
+            obj["last_invite_public_key"] = invitePublicKey.toBase64()
         }
         
         return obj

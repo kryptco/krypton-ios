@@ -54,8 +54,6 @@ extension HashChain.Response {
             blockStart += 1
         }
         
-        var inviteNoncePublicKey:SodiumPublicKey?
-        
         for i in blockStart ..< blocks.count {
             let nextBlock = blocks[i]
             
@@ -67,7 +65,7 @@ extension HashChain.Response {
             // handle special case for an accept invite signed by the invitation nonce keypair
             // otherwise, every other block must be signed by team public key
             var publicKey:SodiumPublicKey
-            if case .acceptInvite = appendBlock.operation, let noncePublicKey = inviteNoncePublicKey {
+            if case .acceptInvite = appendBlock.operation, let noncePublicKey = updatedTeam.lastInvitePublicKey {
                 publicKey = noncePublicKey
             } else {
                 publicKey = team.publicKey
@@ -92,10 +90,10 @@ extension HashChain.Response {
             // 4. digest the operation
             switch appendBlock.operation {
             case .inviteMember(let invite):
-                inviteNoncePublicKey = invite.noncePublicKey
+                updatedTeam.lastInvitePublicKey = invite.noncePublicKey
                 
             case .cancelInvite:
-                inviteNoncePublicKey = nil
+                updatedTeam.lastInvitePublicKey = nil
                 
             case .acceptInvite:
                 break

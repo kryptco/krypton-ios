@@ -127,7 +127,7 @@
                         <outlet property="arcView" destination="Syu-3W-S0g" id="t2L-zK-5Ar"/>
                         <outlet property="checkBox" destination="NAb-fj-Gvz" id="fMb-g5-nmJ"/>
                         <outlet property="detailLabel" destination="LSg-sl-hjv" id="SQx-ek-sxX"/>
-                        <segue destination="3uq-7G-9WI" kind="presentation" identifier="showTeamInvite" id="grk-NM-QUc"/>
+                        <segue destination="3uq-7G-9WI" kind="presentation" identifier="showTeamInvite" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="grk-NM-QUc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EWV-Dx-htQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -274,7 +274,7 @@
                         <outlet property="emailTextfield" destination="u1o-mH-ahP" id="tea-29-vHP"/>
                         <outlet property="joinButton" destination="QO3-iH-qun" id="Amk-eC-TwK"/>
                         <outlet property="teamNameLabel" destination="Kmz-vR-c43" id="ExE-Qh-bPf"/>
-                        <segue destination="3jS-9o-zuS" kind="presentation" identifier="showTeamsComplete" id="fa3-fn-3f1"/>
+                        <segue destination="3jS-9o-zuS" kind="presentation" identifier="showTeamsComplete" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="fa3-fn-3f1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fdm-lg-WDd" userLabel="First Responder" sceneMemberID="firstResponder"/>

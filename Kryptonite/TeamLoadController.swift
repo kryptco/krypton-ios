@@ -56,17 +56,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
                     teamIdentity.team = updatedTeam
 
                     dispatchMain {
-                        
-                        self.checkBox.toggleCheckState(true)
-
-                        UIView.animate(withDuration: 0.3, animations: {
-                            self.arcView.alpha = 0
-                            self.view.layoutIfNeeded()
-                            
-                        }) { (_) in
-                            self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
-                        }
-
+                        self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
                     }
                 }
             }

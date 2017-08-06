@@ -10,6 +10,7 @@ import Foundation
 
 struct TemporaryApprovalTime {
     let description:String
+    let short:String
     let value:TimeInterval
 }
 extension Policy {
@@ -27,7 +28,10 @@ extension Policy {
             approvalSeconds = Properties.Interval.threeHours.rawValue
         }
         
-        let description = Date().shifted(by: approvalSeconds).timeAgoLong(suffix: "")
-        return TemporaryApprovalTime(description: description, value: approvalSeconds)
+        let shifted = Date().shifted(by: approvalSeconds)
+        let description = shifted.timeAgoLong(suffix: "")
+        let short = shifted.timeAgo(suffix: "")
+        
+        return TemporaryApprovalTime(description: description, short: short, value: approvalSeconds)
     }
 }
