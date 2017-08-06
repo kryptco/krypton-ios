@@ -93,24 +93,26 @@ struct Team {
     }
 
     init(name:String, publicKey:SodiumPublicKey) throws {
-        try self.init(info: Info(name: name), publicKey: publicKey)
+        try self.init(id: Data.random(size: 32).toBase64(true), info: Info(name: name), publicKey: publicKey)
     }
 
-    init(info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings.defaultSettings) throws {
-        self.id = try Data.random(size: 32).toBase64()
+    init(id:String, info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings.defaultSettings) throws {
+        self.id = id
         self.info = info
         self.publicKey = publicKey
         self.policy = policy
     }
     
     init(json: Object) throws {
-        try self.init(info: Info(json: json ~> "info"),
+        try self.init(id: json ~> "id",
+                      info: Info(json: json ~> "info"),
                       publicKey: SodiumPublicKey(((json ~> "public_key") as String).fromBase64()),
                       policy: PolicySettings(json: json ~> "policy"))
     }
     
     var object: Object {
-        return ["info": info.object,
+        return ["id": id,
+                "info": info.object,
                 "public_key": publicKey.toBase64(),
                 "policy": policy.object]
     }
@@ -128,7 +130,10 @@ struct Team {
     }
     
     /// get/set last block hash
-    
+    func clearLastBlockHash() throws {
+        try self.keychain.delete(key: TeamKeychainStorageKeys.lastBlockHash.rawValue)
+    }
+
     func set(lastBlockHash:Data) throws {
         try self.keychain.setData(key: TeamKeychainStorageKeys.lastBlockHash.rawValue, data: lastBlockHash)
     }

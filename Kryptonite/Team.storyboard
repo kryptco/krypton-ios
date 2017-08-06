@@ -127,7 +127,7 @@
                         <outlet property="arcView" destination="Syu-3W-S0g" id="t2L-zK-5Ar"/>
                         <outlet property="checkBox" destination="NAb-fj-Gvz" id="fMb-g5-nmJ"/>
                         <outlet property="detailLabel" destination="LSg-sl-hjv" id="SQx-ek-sxX"/>
-                        <segue destination="3uq-7G-9WI" kind="showDetail" identifier="showTeamInvite" id="grk-NM-QUc"/>
+                        <segue destination="3uq-7G-9WI" kind="presentation" identifier="showTeamInvite" id="grk-NM-QUc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EWV-Dx-htQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -157,6 +157,7 @@
                                 </state>
                                 <connections>
                                     <action selector="cancelTapped" destination="3uq-7G-9WI" eventType="touchUpInside" id="hXO-Cf-Kxb"/>
+                                    <segue destination="afm-eY-zRt" kind="unwind" unwindAction="dismissJoinTeamWithSegue:" id="XsL-mA-wyy"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogoMedium" translatesAutoresizingMaskIntoConstraints="NO" id="Rfe-gw-Gx2">
@@ -189,7 +190,7 @@
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="dontJoinTapped" destination="3uq-7G-9WI" eventType="touchUpInside" id="dIQ-9e-DJ2"/>
+                                    <segue destination="afm-eY-zRt" kind="unwind" unwindAction="dismissJoinTeamWithSegue:" id="5TU-YN-8ZW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QO3-iH-qun" customClass="KRSimpleButton" customModule="Kryptonite" customModuleProvider="target">
@@ -273,10 +274,11 @@
                         <outlet property="emailTextfield" destination="u1o-mH-ahP" id="tea-29-vHP"/>
                         <outlet property="joinButton" destination="QO3-iH-qun" id="Amk-eC-TwK"/>
                         <outlet property="teamNameLabel" destination="Kmz-vR-c43" id="ExE-Qh-bPf"/>
-                        <segue destination="3jS-9o-zuS" kind="showDetail" identifier="showTeamsComplete" action="showViewController:sender:" id="fa3-fn-3f1"/>
+                        <segue destination="3jS-9o-zuS" kind="presentation" identifier="showTeamsComplete" id="fa3-fn-3f1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fdm-lg-WDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="afm-eY-zRt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="833" y="144"/>
         </scene>
@@ -516,7 +518,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="doneTapped" destination="3jS-9o-zuS" eventType="touchUpInside" id="fea-SK-AvO"/>
+                                            <segue destination="6sc-kA-jNR" kind="unwind" unwindAction="dismissJoinTeamWithSegue:" id="zpF-GJ-Z3i"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -572,18 +574,18 @@
         <scene sceneID="BTu-Up-UNg">
             <objects>
                 <tableViewController storyboardIdentifier="TeamDetailController" id="bPL-mP-hgz" customClass="TeamDetailController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="80" sectionHeaderHeight="1" sectionFooterHeight="18" id="s1o-JC-hUd">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="80" sectionHeaderHeight="1" sectionFooterHeight="18" id="s1o-JC-hUd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="wl7-7S-YwE">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="331"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="264"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="79A-yn-LrW" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                    <rect key="frame" x="10" y="10" width="355" height="301"/>
+                                    <rect key="frame" x="10" y="10" width="355" height="234"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approval Window" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="WlI-Jo-QNd">
                                             <rect key="frame" x="10" y="136" width="134.5" height="22"/>
@@ -690,6 +692,82 @@
                                 <constraint firstAttribute="bottom" secondItem="79A-yn-LrW" secondAttribute="bottom" constant="20" id="QED-LO-vni"/>
                             </constraints>
                         </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TeamEventLogCell" rowHeight="70" id="Ovy-JW-ogJ" customClass="TeamEventLogCell" customModule="Kryptonite" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="319.5" width="375" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ovy-JW-ogJ" id="b6q-XC-jsT">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eER-jF-kd5" userLabel="bottom">
+                                            <rect key="frame" x="15.5" y="26" width="3" height="44"/>
+                                            <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="3" id="4qf-fd-Iw8"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12W-uT-G9f" userLabel="top">
+                                            <rect key="frame" x="15.5" y="0.0" width="3" height="26"/>
+                                            <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="3" id="ahL-Hd-bHt"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvt-cG-IrP" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                            <rect key="frame" x="10" y="18.5" width="14" height="14"/>
+                                            <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="14" id="6nj-gt-h7L"/>
+                                                <constraint firstAttribute="width" constant="14" id="T0H-nF-sXw"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="7"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="create_chain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Hzu-Lb-t1s">
+                                            <rect key="frame" x="34" y="17" width="132.5" height="18"/>
+                                            <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="14"/>
+                                            <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Started team &quot;krypt.co&quot;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="nkE-pd-mOb">
+                                            <rect key="frame" x="34" y="39" width="333" height="16.5"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                            <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Hzu-Lb-t1s" firstAttribute="centerY" secondItem="xvt-cG-IrP" secondAttribute="centerY" id="1Hz-ll-XXl"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Hzu-Lb-t1s" secondAttribute="trailing" constant="200.5" id="49e-7M-TA1"/>
+                                        <constraint firstItem="xvt-cG-IrP" firstAttribute="leading" secondItem="b6q-XC-jsT" secondAttribute="leading" constant="10" id="5Cj-Uk-I3q"/>
+                                        <constraint firstItem="nkE-pd-mOb" firstAttribute="leading" secondItem="Hzu-Lb-t1s" secondAttribute="leading" id="6k9-LW-Zhu"/>
+                                        <constraint firstItem="eER-jF-kd5" firstAttribute="centerX" secondItem="xvt-cG-IrP" secondAttribute="centerX" id="D0h-WV-SsM"/>
+                                        <constraint firstItem="eER-jF-kd5" firstAttribute="top" secondItem="xvt-cG-IrP" secondAttribute="centerY" id="HAX-4B-yif"/>
+                                        <constraint firstAttribute="bottom" secondItem="eER-jF-kd5" secondAttribute="bottom" id="Nu2-He-RrW"/>
+                                        <constraint firstItem="Hzu-Lb-t1s" firstAttribute="bottom" secondItem="b6q-XC-jsT" secondAttribute="centerY" id="Nz6-ng-bdO"/>
+                                        <constraint firstItem="nkE-pd-mOb" firstAttribute="top" secondItem="Hzu-Lb-t1s" secondAttribute="bottom" constant="4" id="TcZ-NH-EiO"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="nkE-pd-mOb" secondAttribute="trailing" id="bg2-g8-huz"/>
+                                        <constraint firstItem="12W-uT-G9f" firstAttribute="bottom" secondItem="xvt-cG-IrP" secondAttribute="centerY" id="jZ9-Fj-vrw"/>
+                                        <constraint firstItem="Hzu-Lb-t1s" firstAttribute="leading" secondItem="xvt-cG-IrP" secondAttribute="trailing" constant="10" id="n21-od-SOh"/>
+                                        <constraint firstItem="12W-uT-G9f" firstAttribute="centerX" secondItem="xvt-cG-IrP" secondAttribute="centerX" id="zAx-7w-su2"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstItem="12W-uT-G9f" firstAttribute="top" secondItem="Ovy-JW-ogJ" secondAttribute="top" id="Cs1-iw-cb1"/>
+                                </constraints>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="bottomLine" destination="eER-jF-kd5" id="TSj-jL-hzH"/>
+                                    <outlet property="eventDetail" destination="nkE-pd-mOb" id="Bjx-4K-Hyh"/>
+                                    <outlet property="eventName" destination="Hzu-Lb-t1s" id="oar-UT-nHr"/>
+                                    <outlet property="topLine" destination="12W-uT-G9f" id="2gj-0z-iZp"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
                         <sections/>
                         <connections>
                             <outlet property="dataSource" destination="bPL-mP-hgz" id="lh0-9T-91h"/>
@@ -709,7 +787,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gWN-64-wyk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="BfM-3Y-riT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="156" y="935"/>
+            <point key="canvasLocation" x="156" y="934.18290854572717"/>
         </scene>
     </scenes>
     <resources>

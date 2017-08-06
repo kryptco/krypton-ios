@@ -44,6 +44,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
         setGitHubState()
 
         NotificationCenter.default.addObserver(self, selector: #selector(MeController.redrawMe), name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

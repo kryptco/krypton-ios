@@ -41,85 +41,18 @@ class HashChain {
     /// A response from the HashChain service
     struct Response:JsonReadable {
         let blocks:[Block]
-        
-        struct UpdatedTeam {
-            let team:Team
-            let lastBlockHash:Data
-        }
-        
-        init(blocks:[Block]) {
+        let hasMore:Bool
+                
+        init(blocks:[Block], hasMore:Bool) {
             self.blocks = blocks
+            self.hasMore = hasMore
         }
         
         init(json: Object) throws {
-            try self.init(blocks: [Block](json: json ~> "blocks"))
+            try self.init(blocks: [Block](json: json ~> "blocks"),
+                          hasMore: json ~> "more")
         }
         
-        func verifyAndDigestBlocks(for team:Team) throws -> UpdatedTeam {
-
-            let blockDataManager = HashChainBlockManager(team: team)
-
-            var updatedTeam = team
-            
-            var blockStart = 0
-            var lastBlockHash = try team.getLastBlockHash()
-            
-            if lastBlockHash == nil {
-                guard blocks.count > 0 else {
-                    throw Errors.missingCreateChain
-                }
-                
-                let createBlock = blocks[0]
-                
-                // 1. verify the block signature
-                guard try KRSodium.shared().sign.verify(message: createBlock.payload.utf8Data(), publicKey: team.publicKey, signature: createBlock.signature)
-                else {
-                    throw Errors.badSignature
-                }
-                
-                // 2. ensure the create block is a create chain payload
-                guard case .create(let createChain) = try Payload(jsonString: createBlock.payload) else {
-                    throw Errors.missingCreateChain
-                }
-                
-                // 3. check the team public key matches
-                guard createChain.teamPublicKey == team.publicKey else {
-                    throw Errors.teamPublicKeyMismatch
-                }
-                
-                updatedTeam.info = createChain.teamInfo
-                
-                // add the block to the data store
-                try blockDataManager.add(block: createBlock)
-                
-                lastBlockHash = createBlock.hash()
-                blockStart += 1
-            }
-            
-            for i in blockStart ..< blocks.count {
-                let nextBlock = blocks[i]
-                let verifiedAppendBlock = try nextBlock.verifyAppendBlock(publicKey: team.publicKey, lastBlockHash: lastBlockHash!)
-                
-                switch verifiedAppendBlock.operation {
-                case .inviteMember, .cancelInvite, .acceptInvite, .addMember, .removeMember:
-                    //TODO unhandled
-                    break
-                
-                case .setPolicy(let policy):
-                    updatedTeam.policy = policy
-                    
-                case .setTeamInfo(let info):
-                    updatedTeam.info = info
-                }
-                
-                // add the block to the data store
-                try blockDataManager.add(block: nextBlock)
-                
-                lastBlockHash = nextBlock.hash()
-            }
-            
-            return UpdatedTeam(team: updatedTeam, lastBlockHash: lastBlockHash!)
-        }
     }
 
     /// A payload and it's signature
@@ -138,27 +71,6 @@ class HashChain {
         
         func hash() -> Data {
             return Data(bytes: [UInt8](payload.utf8)).SHA256
-        }
-
-        func verifyAppendBlock(publicKey:SodiumPublicKey, lastBlockHash:Data) throws -> AppendBlock {
-            // 1. verify the block signature
-            let verified = try KRSodium.shared().sign.verify(message: payload.utf8Data(), publicKey: publicKey, signature: signature)
-            guard verified
-            else {
-                throw Errors.badSignature
-            }
-            
-            // 2. ensure this is an append block
-            guard case .append(let appendBlock) = try Payload(jsonString: payload) else {
-                throw Errors.unexpectedBlock
-            }
-            
-            // 3. check the last hash matches
-            guard appendBlock.lastBlockHash == lastBlockHash else {
-                throw Errors.badBlockHash
-            }
-            
-            return appendBlock
         }
     }
     

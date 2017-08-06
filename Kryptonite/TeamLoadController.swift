@@ -55,17 +55,17 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
                 case .result(let updatedTeam):
                     teamIdentity.team = updatedTeam.team
                     try? teamIdentity.team.set(lastBlockHash: updatedTeam.lastBlockHash)
-                    
+
                     dispatchMain {
+                        
+                        self.checkBox.toggleCheckState(true)
+
                         UIView.animate(withDuration: 0.3, animations: {
                             self.arcView.alpha = 0
                             self.view.layoutIfNeeded()
                             
                         }) { (_) in
-                            self.checkBox.toggleCheckState(true)
-                            dispatchAfter(delay: 0.3) {
-                                self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
-                            }
+                            self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
                         }
 
                     }
@@ -105,6 +105,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         }
     }
     
+
     @IBAction func cancelTapped() {
         self.dismiss(animated: true, completion: nil)
     }

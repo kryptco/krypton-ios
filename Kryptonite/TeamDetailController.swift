@@ -21,6 +21,8 @@ class TeamDetailController: KRBaseTableController {
 
     var identity:TeamIdentity!
     
+    var blocks:[HashChain.Payload] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,12 +30,8 @@ class TeamDetailController: KRBaseTableController {
         
         teamLabel.text = identity.team.name
         emailLabel.text = identity.email
+        approvalWindowLabel.text = identity.team.policy.description
         
-        if let approvalSeconds = identity.team.policy.temporaryApprovalSeconds {
-            approvalWindowLabel.text = Date().shifted(by: Double(approvalSeconds)).timeAgo(suffix: "")
-        } else {
-            approvalWindowLabel.text = "unset"
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +42,46 @@ class TeamDetailController: KRBaseTableController {
         headerView.layer.shadowOpacity = 0.175
         headerView.layer.shadowRadius = 3
         headerView.layer.masksToBounds = false
+        
+        loadNewLogs()
+        
+        do {
+            try HashChainService(teamIdentity: identity).getVerifiedTeamUpdates { (result) in
+                switch result {
+                case .error(let e):
+                    self.showWarning(title: "Error", body: "Could not fetch new team updates. \(e).")
+                    
+                case .result(let updatedTeam):
+                    self.identity.team = updatedTeam.team
+                    try? KeyManager.setTeam(identity: self.identity)
+                    try? self.identity.team.set(lastBlockHash: updatedTeam.lastBlockHash)
+                    
+                    self.loadNewLogs()
+                }
+            }
+        } catch {
+            self.showWarning(title: "Error", body: "Could attempting to fetch new team updates. \(error).")
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    func loadNewLogs() {
+        
+        do {
+            self.blocks = try HashChainBlockManager(team: identity.team).fetchAll().map {
+                try HashChain.Payload(jsonString: $0.payload)
+            }
+            
+            dispatchMain {
+                self.tableView.reloadData()
+            }
+            
+        } catch {
+            log("error loading team blocks: \(error)", .error)
+        }
     }
     
     @IBAction func leaveTeamTapped() {
@@ -111,12 +149,106 @@ class TeamDetailController: KRBaseTableController {
         // Dispose of any resources that can be recreated.
     }
 
+    //MARK: TableView
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return blocks.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70.0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TeamEventLogCell") as! TeamEventLogCell
+        cell.set(payload: blocks[indexPath.row], index: indexPath.row, count: blocks.count)
+
+        return cell
     }
 
 }
+
+extension Team.PolicySettings {
+    var description:String {
+        if let approvalSeconds = temporaryApprovalSeconds {
+            return Date().shifted(by: Double(approvalSeconds)).timeAgo(suffix: "")
+        } else {
+            return "unset"
+        }
+    }
+}
+
+extension HashChain.Payload {
+
+    var eventLogDetails:(title:String, detail:String) {
+        switch self {
+        case .read(let read):
+            return ("read_block", "get " + (read.lastBlockHash?.toBase64() ?? "first block"))
+            
+        case .create(let create):
+            return ("create_chain", "started team \"\(create.teamInfo.name)\"")
+            
+        case .append(let append):
+            switch append.operation {
+            case .inviteMember(let invite):
+                return ("invite_member", "invitation \(invite.noncePublicKey.toBase64())")
+
+            case .acceptInvite(let member):
+                return ("accept_invite", "\(member.email) joined")
+            
+            case .addMember(let member):
+                return ("add_member", "\(member.email) was added")
+            
+            case .removeMember(let memberPublicKey):
+                return ("remove_member", "\(memberPublicKey.toBase64()) removed")
+                
+            case .cancelInvite(let invite):
+                return ("cancel_invite", "\(invite.noncePublicKey.toBase64()) canceled")
+
+            case .setPolicy(let policy):
+                return ("set_policy", "temporary approval \(policy.description)")
+                
+            case .setTeamInfo(let teamInfo):
+                return ("set_team_info", "team name \"\(teamInfo.name)\"")
+            }
+        }
+        
+    }
+}
+
+
+class TeamEventLogCell:UITableViewCell {
+    @IBOutlet weak var eventName:UILabel!
+    @IBOutlet weak var eventDetail:UILabel!
+    
+    @IBOutlet weak var topLine:UIView!
+    @IBOutlet weak var bottomLine:UIView!
+
+    func set(payload:HashChain.Payload, index:Int, count:Int) {
+        let (title, detail) = payload.eventLogDetails
+        eventName.text = title
+        eventDetail.text = detail
+        
+        switch index {
+        case let x where x == 0 && x == count - 1:
+            bottomLine.isHidden = true
+            topLine.isHidden = true
+        case 0:
+            bottomLine.isHidden = false
+            topLine.isHidden = true
+        case count - 1:
+            bottomLine.isHidden = true
+            topLine.isHidden = false
+        default:
+            bottomLine.isHidden = false
+            topLine.isHidden = false
+        }
+    }
+}
+
+
+
+

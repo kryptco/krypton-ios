@@ -16,7 +16,7 @@ class HashChainBlockManager {
     private let teamIdentity:String
     
     init(team:Team) {
-        teamIdentity = team.publicKey.toBase64(true)
+        teamIdentity = "\(team.id)_\(team.publicKey.toBase64(true))"
     }
     
     //MARK: Core Data setup
@@ -91,6 +91,18 @@ class HashChainBlockManager {
             options: NSComparisonPredicate.Options(rawValue: 0)
         )
     }
+    
+    /**
+        fetch all blocks sorted by date
+     */
+    
+    func fetchAll() throws -> [HashChain.Block] {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Block")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: false)]
+        
+        return try fetchObjects(for: fetchRequest)
+    }
+
     
     /**
         Add a new block

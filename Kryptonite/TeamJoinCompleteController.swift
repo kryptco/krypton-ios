@@ -75,6 +75,7 @@ class TeamJoinCompleteController:KRBaseController {
                     }
                     
                     try? self.teamIdentity.team.set(lastBlockHash: block.hash())
+                    try? HashChainBlockManager(team: self.teamIdentity.team).add(block: block)
                     self.showSuccess()
                 }
             }
