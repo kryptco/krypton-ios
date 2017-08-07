@@ -49,7 +49,7 @@ class HashChainServiceTests: XCTestCase {
                 case .result(let updatedTeam):
                     
                     self.teamIdentity.team = updatedTeam
-                    
+                    service = HashChainService(teamIdentity: self.teamIdentity)
                     // add the admin
                     do {
                         let keyManager = try KeyManager.sharedInstance()
