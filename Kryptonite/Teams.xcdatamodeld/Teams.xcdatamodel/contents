@@ -7,14 +7,15 @@
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Member" representedClassName="" syncable="YES">
-        <attribute name="block_hash" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="block_hash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="pgp_public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="ssh_public_key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ssh_public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <elements>
         <element name="Block" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="Member" positionX="-315" positionY="147" width="128" height="118"/>
+        <element name="Member" positionX="-315" positionY="147" width="128" height="135"/>
     </elements>
 </model>

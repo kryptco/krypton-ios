@@ -189,6 +189,9 @@ extension UIViewController {
         }
     }
     
+    func checkForHashChainUpdates() {
+        //TODO: implement
+    }
     
     //MARK: React to links
     func onListen(link:Link) {
@@ -200,6 +203,17 @@ extension UIViewController {
         
         switch link.command {
         case .joinTeam:
+            
+            do {
+                if let teamIdentity = try KeyManager.getTeamIdentity() {
+                    self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Currently, Kryptonite only supports being on one team. Multi-team support is coming soon!")
+                    return
+                }
+
+            } catch {
+                self.showWarning(title: "Error", body: "Couldn't get team information.")
+                return
+            }
             
             guard   link.path.count == 2
             else {

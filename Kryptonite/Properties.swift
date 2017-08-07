@@ -19,8 +19,15 @@ struct Properties {
     
     static let appVersionURL = "https://s3.amazonaws.com/kr-versions/versions"
     
-    static let updateCheckIntervalForeground = TimeSeconds.hour.multiplied(by: 6)
-    static let updateCheckIntervalBackground = TimeSeconds.week.rawValue
+    struct AppUpdateCheckInterval {
+        static var foreground:TimeInterval {
+            return TimeSeconds.hour.multiplied(by: 6)
+        }
+        
+        static var background:TimeInterval {
+            return TimeSeconds.week.rawValue
+        }
+    }
 
     //MARK: AWS
     static let awsAccessKey = "AKIAJMZJ3X6MHMXRF7QQ"
@@ -53,9 +60,20 @@ struct Properties {
     static let appStoreURL = "https://get.krypt.co"
     static let appURL = "https://krypt.co"
     
+    //MARK: Teams
     enum TeamsEndpoint:String {
         case dev = "https://api.krypt.co/command"
         case prod = "https://api-prod.krypt.co/command"
+    }
+    
+    struct HashChainUpdateCheckInterval {
+        static var foreground:TimeInterval {
+            return TimeSeconds.minute.multiplied(by: 5)
+        }
+        
+        static var background:TimeInterval {
+            return TimeSeconds.week.rawValue
+        }
     }
 
     //MARK: Analytics

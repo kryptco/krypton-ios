@@ -219,6 +219,7 @@
 		FAA6E1FE1D7A028F007D1B3A /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
 		FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
 		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
+		FAAC14831F38D39D00DDFAA3 /* HashChain+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAC14821F38D39D00DDFAA3 /* HashChain+Update.swift */; };
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
@@ -711,6 +712,7 @@
 		FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pairing.swift; sourceTree = "<group>"; };
 		FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Request.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAAC14821F38D39D00DDFAA3 /* HashChain+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HashChain+Update.swift"; sourceTree = "<group>"; };
 		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		FAAE818E1E576DB8002A9AE6 /* Authorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorize.swift; sourceTree = "<group>"; };
 		FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+UI.swift"; sourceTree = "<group>"; };
@@ -1194,6 +1196,7 @@
 				FA6BCBF41F214ADB006F716F /* TeamInvite.swift */,
 				FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */,
 				FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */,
+				FAAC14821F38D39D00DDFAA3 /* HashChain+Update.swift */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -2106,6 +2109,7 @@
 				8D05CB351ED3E25E00CCCC38 /* GitInfo.swift in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
+				FAAC14831F38D39D00DDFAA3 /* HashChain+Update.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
 				FA16829F1EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAFE546F1D7B9C1400391FDD /* Wrap.swift in Sources */,

@@ -102,7 +102,7 @@ class HashChainService {
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
                 
-                try? HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
+                HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
             
                 completionHandler(HashChainServiceResult.result(updatedTeam))
             }
@@ -155,7 +155,7 @@ class HashChainService {
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
                 
-                try? HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
+                HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
                 
                 completionHandler(HashChainServiceResult.result(updatedTeam))
             }
@@ -215,7 +215,7 @@ class HashChainService {
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
                 
-                try? HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
+                HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
 
                 completionHandler(HashChainServiceResult.result(updatedTeam))
             }

@@ -339,6 +339,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
         LogManager.shared.saveContext()
+        KnownHostManager.shared.saveContext()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -379,6 +380,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         TransportControl.shared.willEnterBackground()
         LogManager.shared.saveContext()
+        KnownHostManager.shared.saveContext()
     }
 
 

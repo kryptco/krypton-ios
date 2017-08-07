@@ -48,7 +48,7 @@ extension HashChain.Response {
             updatedTeam.info = createChain.teamInfo
             
             // add the block to the data store
-            try blockDataManager.add(block: createBlock)
+            blockDataManager.add(block: createBlock)
             
             lastBlockHash = createBlock.hash()
             blockStart += 1
@@ -95,12 +95,14 @@ extension HashChain.Response {
             case .cancelInvite:
                 updatedTeam.lastInvitePublicKey = nil
                 
-            case .acceptInvite:
-                break
+            case .acceptInvite(let member):
+                blockDataManager.add(member: member, blockHash: nextBlock.hash())
                 
-            case .addMember, .removeMember:
-                //TODO unhandled
-                break
+            case .addMember(let member):
+                blockDataManager.add(member: member, blockHash: nextBlock.hash())
+
+            case .removeMember(let memberPublicKey):
+                blockDataManager.remove(member: memberPublicKey)
                 
             case .setPolicy(let policy):
                 updatedTeam.policy = policy
@@ -110,7 +112,7 @@ extension HashChain.Response {
             }
             
             // add the block to the data store
-            try blockDataManager.add(block: nextBlock)
+            blockDataManager.add(block: nextBlock)
             
             lastBlockHash = nextBlock.hash()
         }
