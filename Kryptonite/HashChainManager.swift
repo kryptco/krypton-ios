@@ -105,7 +105,7 @@ class HashChainBlockManager {
     
     func fetchAll() throws -> [Team.MemberIdentity] {
         let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Member")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: true)]
         
         return try fetchObjects(for: fetchRequest)
     }

@@ -17,21 +17,40 @@ class TeamDetailController: KRBaseTableController {
     @IBOutlet weak var headerView:UIView!
 
     @IBOutlet weak var approvalWindowLabel:UILabel!
-    @IBOutlet weak var unknownHostsLabel:UILabel!
+    
+    @IBOutlet weak var blocksButton:UIButton!
+    @IBOutlet weak var membersButton:UIButton!
+
 
     var identity:TeamIdentity!
     
     var blocks:[HashChain.Payload] = []
+    var members:[Team.MemberIdentity] = []
+
+    enum ViewType {
+        case blocks
+        case members
+    }
+    
+    var viewType = ViewType.blocks
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = identity.team.name
         
-        teamLabel.text = identity.team.name
-        emailLabel.text = identity.email
-        approvalWindowLabel.text = identity.team.policy.description
-        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 70
+
+        didUpdateTeamIdentity()
+    }
+    
+    func didUpdateTeamIdentity() {
+        dispatchMain {
+            self.teamLabel.text = self.identity.team.name
+            self.emailLabel.text = self.identity.email
+            self.approvalWindowLabel.text = self.identity.team.policy.description
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +73,8 @@ class TeamDetailController: KRBaseTableController {
                 case .result(let updatedTeam):
                     self.identity.team = updatedTeam
                     try? KeyManager.setTeam(identity: self.identity)
-                    
+                    self.didUpdateTeamIdentity()
+
                     self.loadNewLogs()
                 }
             }
@@ -73,6 +93,8 @@ class TeamDetailController: KRBaseTableController {
             self.blocks = try HashChainBlockManager(team: identity.team).fetchAll().map {
                 try HashChain.Payload(jsonString: $0.payload)
             }
+            
+            self.members = try HashChainBlockManager(team: identity.team).fetchAll()
             
             dispatchMain {
                 self.tableView.reloadData()
@@ -142,6 +164,37 @@ class TeamDetailController: KRBaseTableController {
         
     }
 
+    // MARK: Changing View Type
+    
+    @IBAction func blocksTapped() {
+        let type = ViewType.blocks
+        showCells(for: type)
+        viewType = type
+        loadNewLogs()
+    }
+    
+    @IBAction func membersTapped() {
+        let type = ViewType.members
+        showCells(for: type)
+        viewType = type
+        loadNewLogs()
+    }
+    
+    func showCells(for type:ViewType) {
+        dispatchMain {
+            self.tableView.reloadData()
+        }
+
+        switch type {
+        case .blocks:
+            membersButton.alpha = 0.5
+            blocksButton.alpha = 1.0
+        case .members:
+            blocksButton.alpha = 0.5
+            membersButton.alpha = 1.0
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -154,18 +207,30 @@ class TeamDetailController: KRBaseTableController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return blocks.count
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0
+        switch viewType {
+        case .blocks:
+            return blocks.count
+        case .members:
+            return members.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TeamEventLogCell") as! TeamEventLogCell
-        cell.set(payload: blocks[indexPath.row], index: indexPath.row, count: blocks.count)
+        
+        switch viewType {
+        case .blocks:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TeamEventLogCell") as! TeamEventLogCell
+            cell.set(payload: blocks[indexPath.row], index: indexPath.row, count: blocks.count)
+            
+            return cell
+            
+        case .members:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TeamMemberCell") as! TeamMemberCell
+            cell.set(member: members[indexPath.row])
+            
+            return cell
+        }
 
-        return cell
     }
 
 }
@@ -247,6 +312,17 @@ class TeamEventLogCell:UITableViewCell {
         }
     }
 }
+
+class TeamMemberCell:UITableViewCell {
+    @IBOutlet weak var email:UILabel!
+    @IBOutlet weak var detail:UILabel!
+
+    func set(member:Team.MemberIdentity) {
+        email.text = member.email
+        detail.text = member.publicKey.hexPretty
+    }
+}
+
 
 
 
