@@ -206,7 +206,7 @@ extension UIViewController {
             
             do {
                 if let teamIdentity = try KeyManager.getTeamIdentity() {
-                    self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Currently, Kryptonite only supports being on one team. Multi-team support is coming soon!")
+                    self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
                     return
                 }
 

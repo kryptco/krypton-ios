@@ -41,7 +41,14 @@ class TeamDetailController: KRBaseTableController {
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 70
-
+        
+        if #available(iOS 10.0, *) {
+            let refresh = UIRefreshControl()
+            refresh.tintColor = UIColor.app
+            refresh.addTarget(self, action: #selector(TeamDetailController.fetchTeamUpdates), for: UIControlEvents.valueChanged)
+            tableView.refreshControl = refresh
+        }
+        
         didUpdateTeamIdentity()
     }
     
@@ -63,9 +70,21 @@ class TeamDetailController: KRBaseTableController {
         headerView.layer.masksToBounds = false
         
         loadNewLogs()
-        
+        fetchTeamUpdates()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    dynamic func fetchTeamUpdates() {
         do {
             try HashChainService(teamIdentity: identity).getVerifiedTeamUpdates { (result) in
+                
+                if #available(iOS 10.0, *) {
+                    self.tableView.refreshControl?.endRefreshing()
+                }
+                
                 switch result {
                 case .error(let e):
                     self.showWarning(title: "Error", body: "Could not fetch new team updates. \(e).")
@@ -74,17 +93,13 @@ class TeamDetailController: KRBaseTableController {
                     self.identity.team = updatedTeam
                     try? KeyManager.setTeam(identity: self.identity)
                     self.didUpdateTeamIdentity()
-
+                    
                     self.loadNewLogs()
                 }
             }
         } catch {
             self.showWarning(title: "Error", body: "Could attempting to fetch new team updates. \(error).")
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     func loadNewLogs() {
@@ -202,6 +217,8 @@ class TeamDetailController: KRBaseTableController {
     }
 
     //MARK: TableView
+    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -267,16 +284,16 @@ extension HashChain.Payload {
                 return ("add member", "\(member.email) was added")
             
             case .removeMember(let memberPublicKey):
-                return ("remove_member", "\(memberPublicKey.toBase64()) removed")
+                return ("remove member", "\(memberPublicKey.toBase64()) removed")
                 
             case .cancelInvite(let invite):
-                return ("cancel_invite", "\(invite.noncePublicKey.toBase64()) canceled")
+                return ("cancel invite", "\(invite.noncePublicKey.toBase64()) canceled")
 
             case .setPolicy(let policy):
-                return ("set_policy", "temporary approval \(policy.description)")
+                return ("set policy", "temporary approval \(policy.description)")
                 
             case .setTeamInfo(let teamInfo):
-                return ("set_team_info", "team name \"\(teamInfo.name)\"")
+                return ("set team info", "team name \"\(teamInfo.name)\"")
             }
         }
         
