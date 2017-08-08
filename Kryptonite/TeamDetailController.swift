@@ -237,8 +237,8 @@ class TeamDetailController: KRBaseTableController {
 
 extension Team.PolicySettings {
     var description:String {
-        if let approvalSeconds = temporaryApprovalSeconds {
-            return Date().shifted(by: Double(approvalSeconds)).timeAgo(suffix: "")
+        if let approvalSeconds = temporaryApprovalSeconds {            
+            return TimeInterval(approvalSeconds).timeAgo(suffix: "")
         } else {
             return "unset"
         }

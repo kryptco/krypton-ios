@@ -28,9 +28,8 @@ extension Policy {
             approvalSeconds = Properties.Interval.threeHours.rawValue
         }
         
-        let shifted = Date().shifted(by: approvalSeconds)
-        let description = shifted.timeAgoLong(suffix: "")
-        let short = shifted.timeAgo(suffix: "")
+        let description = approvalSeconds.timeAgoLong(suffix: "")
+        let short = approvalSeconds.timeAgo(suffix: "")
         
         return TemporaryApprovalTime(description: description, short: short, value: approvalSeconds)
     }
