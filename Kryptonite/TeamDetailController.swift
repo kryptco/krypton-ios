@@ -336,7 +336,12 @@ class TeamMemberCell:UITableViewCell {
 
     func set(member:Team.MemberIdentity) {
         email.text = member.email
-        detail.text = member.publicKey.hexPretty
+        
+        if member.publicKey.count >= 16 {
+            detail.text = member.publicKey.subdata(in: 0 ..< 16).hexPretty
+        } else {
+            detail.text = member.publicKey.hexPretty
+        }
     }
 }
 
