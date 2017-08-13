@@ -52,6 +52,7 @@ enum RequestBody:Jsonable {
     case me(MeRequest)
     case ssh(SignRequest)
     case git(GitSignRequest)
+    case createTeam(CreateTeamRequest)
     case unpair(UnpairRequest)
     case noOp
     
@@ -60,7 +61,7 @@ enum RequestBody:Jsonable {
         switch self {
         case .ssh, .git:
             return true
-        case .me, .unpair, .noOp:
+        case .createTeam, .me, .unpair, .noOp:
             return false
         }
     }
@@ -87,6 +88,9 @@ enum RequestBody:Jsonable {
             requests.append(.unpair(try UnpairRequest(json: json)))
         }
         
+        if let json:Object = try? json ~> "create_team" {
+            requests.append(.createTeam(try CreateTeamRequest(json: json)))
+        }
         
         // if no requests, it's a noOp
         if requests.isEmpty {
@@ -113,6 +117,8 @@ enum RequestBody:Jsonable {
             json["sign_request"] = s.object
         case .git(let g):
             json["git_sign_request"] = g.object
+        case .createTeam(let c):
+            json["create_team"] = c.object
         case .unpair(let u):
             json["unpair_request"] = u.object
         case .noOp:
@@ -133,6 +139,8 @@ enum RequestBody:Jsonable {
             case .tag:
                 return "git-tag-signature"
             }
+        case .createTeam:
+            return "create-team"
         case .me:
             return "me"
         case .noOp:
@@ -290,7 +298,17 @@ struct UnpairRequest:Jsonable {
     var object: Object {return [:]}
 }
 
-
-
+// Team
+struct CreateTeamRequest:Jsonable {
+    let name:String
+    
+    init(json: Object) throws {
+        name = try json ~> "name"
+    }
+    
+    var object: Object {
+        return ["name": name]
+    }
+}
 
 

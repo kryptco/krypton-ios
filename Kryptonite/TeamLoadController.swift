@@ -8,9 +8,12 @@
 
 import Foundation
 
+
 class TeamLoadController:KRBaseController, UITextFieldDelegate {
     
-    var invite:TeamInvite!
+    
+    var joinType:TeamJoinType?
+
     
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var arcView:UIView!
@@ -36,8 +39,29 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         var teamIdentity:TeamIdentity
         var team:Team
         do {
-            team = try Team(name: "", publicKey: invite.teamPublicKey)
-            teamIdentity = try TeamIdentity(email: "", team: team)
+            switch joinType! {
+            case .invite(let invite):
+                team = try Team(name: "", publicKey: invite.teamPublicKey)
+                teamIdentity = try TeamIdentity(email: "", team: team)
+
+            case .create(let request, _):
+                guard case .createTeam(let create) = request.body else {
+                    self.showError(message: "Invalid request.")
+                    return
+                }
+                
+                let keypairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
+                
+                guard let keypair = try KRSodium.shared().sign.keyPair(seed: keypairSeed) else {
+                    throw CryptoError.generate(.Ed25519, nil)
+                }
+                
+                team = try Team(name: create.name, publicKey: keypair.publicKey)
+                team.adminKeyPairSeed = keypairSeed
+                
+                teamIdentity = try TeamIdentity(email: "", team: team)
+
+            }
         } catch {
             self.showError(message: "Could not generate team identity. Reason: \(error).")
             return
@@ -46,18 +70,26 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         let service = HashChainService(teamIdentity: teamIdentity)
         
         do {
-            try service.getTeam(using: invite) { (response) in
-                switch response {
-                case .error(let e):
-                    self.showError(message: "Error fetching team information. Reason: \(e)")
-                    return
-                    
-                case .result(let updatedTeam):
-                    teamIdentity.team = updatedTeam
-
-                    dispatchMain {
-                        self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
+            switch joinType! {
+            case .invite(let invite):
+                try service.getTeam(using: invite) { (response) in
+                    switch response {
+                    case .error(let e):
+                        self.showError(message: "Error fetching team information. Reason: \(e)")
+                        return
+                        
+                    case .result(let updatedTeam):
+                        teamIdentity.team = updatedTeam
+                        
+                        dispatchMain {
+                            self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
+                        }
                     }
+                }
+
+            case .create:
+                dispatchMain {
+                    self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
                 }
             }
 
@@ -89,7 +121,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         if  let teamInviteController = segue.destination as? TeamInvitationController,
             let teamIdentity = sender as? TeamIdentity
         {
-            teamInviteController.invite = invite
+            teamInviteController.joinType = joinType
             teamInviteController.teamIdentity = teamIdentity
         }
     }

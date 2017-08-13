@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum TeamJoinType {
+    case invite(TeamInvite)
+    case create(Request, Session)
+}
+
 struct TeamInvite {
     let teamPublicKey:Data
     let seed:Data

@@ -85,7 +85,16 @@ struct Team {
     var policy:PolicySettings
     var lastBlockHash:Data?
     var lastInvitePublicKey:SodiumPublicKey?
-
+    var adminKeyPairSeed:Data?
+    
+    func adminKeyPair() throws -> SodiumKeyPair? {
+        guard let seed = adminKeyPairSeed else {
+            return nil
+        }
+        
+        return try KRSodium.shared().sign.keyPair(seed: seed)
+    }
+    
     var name:String {
         return info.name
     }
@@ -95,25 +104,29 @@ struct Team {
     }
 
     init(id:String, info:Info, publicKey:SodiumPublicKey, policy:PolicySettings = PolicySettings(temporaryApprovalSeconds: nil), lastBlockHash:Data? = nil,
-         lastInvitePublicKey:SodiumPublicKey? = nil) throws {
+         lastInvitePublicKey:SodiumPublicKey? = nil,
+         adminKeyPairSeed:Data? = nil) throws {
         self.id = id
         self.info = info
         self.publicKey = publicKey
         self.policy = policy
         self.lastBlockHash = lastBlockHash
         self.lastInvitePublicKey = lastInvitePublicKey
+        self.adminKeyPairSeed = adminKeyPairSeed
     }
     
     init(json: Object) throws {
         let lastBlockHash:String? = try? json ~> "last_block_hash"
         let lastInvitePublicKey:String? = try? json ~> "last_invite_public_key"
+        let adminKeyPairSeed:String? = try? json ~> "admin_key_pair_seed"
 
         try self.init(id: json ~> "id",
                       info: Info(json: json ~> "info"),
                       publicKey: SodiumPublicKey(((json ~> "public_key") as String).fromBase64()),
                       policy: PolicySettings(json: json ~> "policy"),
                       lastBlockHash: lastBlockHash?.fromBase64(),
-                      lastInvitePublicKey: lastInvitePublicKey?.fromBase64())
+                      lastInvitePublicKey: lastInvitePublicKey?.fromBase64(),
+                      adminKeyPairSeed: adminKeyPairSeed?.fromBase64())
     }
     
     var object: Object {
@@ -130,40 +143,15 @@ struct Team {
             obj["last_invite_public_key"] = invitePublicKey.toBase64()
         }
         
+        if let seed = adminKeyPairSeed {
+            obj["admin_key_pair_seed"] = seed.toBase64()
+        }
+        
         return obj
     }
     
-    /// team keychain
-    
-    enum TeamKeychainStorageKeys:String {
-        case adminPublicKey = "admin_public_key"
-        case adminSecretKey = "admin_secret_key"
-    }
-    
-    var keychain:KeychainStorage {
-        return KeychainStorage(service: "team_\(id)_\(self.publicKey.toBase64())")
-    }
-    
-    
-    /// get/set admin key pair
-    func setAdmin(keypair:SodiumKeyPair) throws {
-        try self.keychain.setData(key: TeamKeychainStorageKeys.adminPublicKey.rawValue, data: keypair.publicKey)
-        try self.keychain.setData(key: TeamKeychainStorageKeys.adminSecretKey.rawValue, data: keypair.secretKey)
-    }
-    
-    func getAdmin() throws -> SodiumKeyPair? {
-        do {
-            let publicKey = try self.keychain.getData(key: TeamKeychainStorageKeys.adminPublicKey.rawValue)
-            let secretKey = try self.keychain.getData(key: TeamKeychainStorageKeys.adminSecretKey.rawValue)
-            
-            return SodiumKeyPair(publicKey: publicKey, secretKey: secretKey)
-        } catch KeychainStorageError.notFound {
-            return nil
-        }
-    }
-    
     var isAdmin:Bool {
-        return (try? getAdmin()) != nil
+        return (try? adminKeyPair()) != nil
     }
 
 }

@@ -70,6 +70,7 @@ enum ResponseBody {
     case me(MeResponse)
     case ssh(SignResponse)
     case git(GitSignResponse)
+    case createTeam(CreateTeamResponse)
     case ack(AckResponse)
     case unpair(UnpairResponse)
     
@@ -98,6 +99,11 @@ enum ResponseBody {
             responses.append(.ack(try AckResponse(json: json)))
         }
         
+        if let json:Object = try? json ~> "create_team_response" {
+            responses.append(.createTeam(try CreateTeamResponse(json: json)))
+        }
+
+        
         // if more than one request, it's an error
         if responses.count > 1 {
             throw MultipleResponsesError()
@@ -117,6 +123,8 @@ enum ResponseBody {
             json["sign_response"] = s.object
         case .git(let g):
             json["git_sign_response"] = g.object
+        case .createTeam(let c):
+            json["create_team_response"] = c.object
         case .ack(let a):
             json["ack_response"] = a.object
         case .unpair(let u):
@@ -133,6 +141,9 @@ enum ResponseBody {
             
         case .git(let gitSign):
             return gitSign.error
+            
+        case .createTeam(let createTeam):
+            return createTeam.error
             
         case .me, .unpair, .ack:
             return nil
@@ -282,4 +293,37 @@ struct AckResponse:Jsonable {
     init(json: Object) throws { }
     var object: Object {
         return [:]
-    }}
+    }
+}
+
+// Team
+struct CreateTeamResponse:Jsonable {
+    let seed:String?
+    let error:String?
+    
+    init(seed:String?, error:String?) {
+        self.seed = seed
+        self.error = error
+    }
+    
+    init(json: Object) throws {
+        let seed:String? = try? json ~> "seed"
+        let error:String? = try? json ~> "error"
+        
+        self.init(seed: seed, error: error)
+    }
+    
+    var object: Object {
+        var obj = Object()
+        
+        if let seed = seed {
+            obj["seed"] = seed
+        } else if let error = error {
+            obj["error"] = error
+        }
+        
+        return obj
+    }
+}
+
+

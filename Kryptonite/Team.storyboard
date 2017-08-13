@@ -276,6 +276,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dontJoinButton" destination="odb-9M-7f4" id="5b1-Bf-Ivv"/>
                         <outlet property="emailTextfield" destination="u1o-mH-ahP" id="tea-29-vHP"/>
                         <outlet property="joinButton" destination="QO3-iH-qun" id="Amk-eC-TwK"/>
                         <outlet property="teamNameLabel" destination="Kmz-vR-c43" id="ExE-Qh-bPf"/>
@@ -439,6 +440,7 @@
                         <outlet property="resultViewDown" destination="Dzy-vL-g1e" id="gqt-zV-OrL"/>
                         <outlet property="resultViewUp" destination="buX-mX-oZq" id="9xP-Ee-hb6"/>
                         <outlet property="teamNameLabel" destination="Sc6-oh-tAF" id="GLC-6i-af6"/>
+                        <outlet property="welcomeLabel" destination="Xqb-Pl-rJW" id="QPG-X5-jrU"/>
                         <segue destination="6sc-kA-jNR" kind="unwind" identifier="dismissJoinTeam" unwindAction="dismissJoinTeamWithSegue:" id="88D-hm-uLC"/>
                         <segue destination="6sc-kA-jNR" kind="unwind" identifier="dismissRedoInvitation" unwindAction="unwindToTeamInvitationWithSegue:" id="dt2-MJ-J8y"/>
                     </connections>
@@ -500,7 +502,7 @@
                                             <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEAM POLICIES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="DIQ-jl-R2I">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEAM POLICIES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIQ-jl-R2I">
                                             <rect key="frame" x="14" y="107.5" width="61.5" height="11"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="8"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>

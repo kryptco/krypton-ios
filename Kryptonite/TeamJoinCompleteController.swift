@@ -16,13 +16,14 @@ class TeamJoinCompleteController:KRBaseController {
 
     @IBOutlet weak var joiningLabel:UILabel!
     @IBOutlet weak var teamNameLabel:UILabel!
-    
+    @IBOutlet weak var welcomeLabel:UILabel!
+
     @IBOutlet weak var resultView:UIView!
     @IBOutlet weak var resultViewUp:NSLayoutConstraint!
     @IBOutlet weak var resultViewDown:NSLayoutConstraint!
 
 
-    var invite:TeamInvite!
+    var joinType:TeamJoinType!
     var teamIdentity:TeamIdentity!
     
     struct JoinWorkflowError:Error, CustomDebugStringConvertible  {
@@ -45,6 +46,15 @@ class TeamJoinCompleteController:KRBaseController {
         resultViewUp.priority = 750
         resultViewDown.priority = 999
         self.view.layoutIfNeeded()
+        
+        switch joinType! {
+        case .invite:
+            joiningLabel.text = "JOINING"
+            welcomeLabel.text = "Welcome to the team!"
+        case .create:
+            joiningLabel.text = "CREATING"
+            welcomeLabel.text = "Your team is ready, and you're the first member. Welcome to the team!"
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,9 +66,89 @@ class TeamJoinCompleteController:KRBaseController {
     
     func finishJoinTeam() {
         
-        // send team invite response
-        let hashChainService = HashChainService(teamIdentity: teamIdentity)
         
+        switch joinType! {
+        case .invite(let invite): // send team invite response
+            self.accept(invite: invite)
+
+        case .create(let request, let session): // make the admin join the team
+            self.createTeam(request: request, session: session)
+        }
+        
+    }
+    
+    // for .create
+    func createTeam(request:Request, session:Session) {
+        
+        do {
+            
+            var hashChainService = HashChainService(teamIdentity: teamIdentity)
+
+            // 1. create the team.
+            try hashChainService.createTeam { response in
+                switch response {
+                case .error(let error):
+                    self.showCreateFailure(message: "Could not create team", error: error, request: request, session: session)
+                    
+                case .result(let updatedTeam):
+                    self.teamIdentity.team = updatedTeam
+                    hashChainService = HashChainService(teamIdentity: self.teamIdentity)
+                    
+                    // 2. admin joins team
+                    do {
+                        let sshPublicKey = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+                        let pgpPublicKey = try KeyManager.sharedInstance().loadPGPPublicKey(for: self.teamIdentity.email).packetData
+                        
+                        let admin = Team.MemberIdentity(publicKey: self.teamIdentity.keyPair.publicKey,
+                                                        email: self.teamIdentity.email,
+                                                        sshPublicKey: sshPublicKey,
+                                                        pgpPublicKey: pgpPublicKey)
+                        
+                        try hashChainService.add(member: admin) { addResponse in
+                            switch addResponse {
+                            case .error(let error):
+                                self.showCreateFailure(message: "Could not add you to the team", error: error, request: request, session: session)
+
+                            case .result(let updatedTeam):
+                                self.teamIdentity.team = updatedTeam
+                                
+                                // 3. send the create team response
+                                let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: self.teamIdentity.team.adminKeyPairSeed?.toBase64(), error: nil))
+                                
+                                let response = Response(requestID: request.id,
+                                                        endpoint: (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? "",
+                                                        body: responseType,
+                                                        approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
+                                                        trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+                                
+                                do {
+                                    try TransportControl.shared.send(response, for: session)
+                                } catch {
+                                    log("error sending response: \(error)", .error)
+                                    self.showWarning(title: "Error", body: "Couldn't send response to \(session.pairing.displayName)")
+                                }
+                                
+                                self.showSuccess()
+                            }
+                        }
+
+                    } catch { // add admin error
+                        self.showCreateFailure(message: "Error trying to add you to the team", error: error, request: request, session: session)
+                    }
+                }
+            }
+            
+            
+        } catch { // create errror
+            self.showCreateFailure(message: "Error trying to create your team", error: error, request: request, session: session)
+        }
+    }
+
+    
+    // for .invite
+    func accept(invite:TeamInvite) {
+        let hashChainService = HashChainService(teamIdentity: teamIdentity)
+
         do {
             try hashChainService.accept(invite: invite) { result in
                 switch result {
@@ -67,7 +157,7 @@ class TeamJoinCompleteController:KRBaseController {
                     
                 case .result(let updatedTeam):
                     self.teamIdentity.team = updatedTeam
-
+                    
                     // save the identity
                     do {
                         try KeyManager.setTeam(identity: self.teamIdentity)
@@ -79,7 +169,7 @@ class TeamJoinCompleteController:KRBaseController {
                     self.showSuccess()
                 }
             }
-
+            
         } catch HashChainService.Errors.needNewestBlock {
             
             // we have a newer block
@@ -105,7 +195,6 @@ class TeamJoinCompleteController:KRBaseController {
         } catch {
             self.showFailure(by: JoinWorkflowError(error, action: "Unexpected error. "))
         }
-        
     }
     
     func showFailure(by error:Error) {
@@ -126,10 +215,51 @@ class TeamJoinCompleteController:KRBaseController {
         }
     }
     
+    func showCreateFailure(message:String, error:Error, request:Request, session:Session) {
+        dispatchMain  {
+            self.checkBox.secondaryCheckmarkTintColor = UIColor.reject
+            self.checkBox.tintColor = UIColor.reject
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.arcView.alpha = 0
+                self.view.layoutIfNeeded()
+                
+            }) { (_) in
+                self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
+                self.showWarning(title: "Error", body: "\(message). \(error).", then: {
+                    
+                    // send the failure response
+                    let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: nil, error: "\(message). \(error)."))
+                    
+                    let response = Response(requestID: request.id,
+                                            endpoint: (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? "",
+                                            body: responseType,
+                                            approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
+                                            trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+                    
+                    try? TransportControl.shared.send(response, for: session) {
+                        log("error sending failure response: \(error)", .error)
+                        self.showWarning(title: "Error", body: "Error sending failure response to \(session.pairing.displayName)") {
+                            self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    
     func showSuccess() {
         dispatchMain {
             UIView.animate(withDuration: 0.3, animations: {
-                self.joiningLabel.text = "JOINED"
+                
+                switch self.joinType! {
+                case .invite:
+                    self.joiningLabel.text = "JOINED"
+                case .create:
+                    self.joiningLabel.text = "CREATED"
+                }
+                
                 self.arcView.alpha = 0
                 self.resultViewUp.priority = 999
                 self.resultViewDown.priority = 750

@@ -70,7 +70,7 @@ class HashChainService {
     func createTeam(_ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
         
         // ensure we have an admin keypair
-        guard let teamKeypair = try teamIdentity.team.getAdmin() else {
+        guard let teamKeypair = try teamIdentity.team.adminKeyPair() else {
             throw Errors.needAdminKeypair
         }
         
@@ -117,7 +117,7 @@ class HashChainService {
     func add(member:Team.MemberIdentity, _ completionHandler:@escaping (HashChainServiceResult<UpdatedTeam>) -> Void) throws {
         
         // ensure we have an admin keypair
-        guard let teamKeypair = try teamIdentity.team.getAdmin() else {
+        guard let teamKeypair = try teamIdentity.team.adminKeyPair() else {
             throw Errors.needAdminKeypair
         }
         
