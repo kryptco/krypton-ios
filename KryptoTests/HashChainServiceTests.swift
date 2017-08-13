@@ -22,9 +22,10 @@ class HashChainServiceTests: XCTestCase {
         }
         
         // create the team
-        let teamKeypair = try! KRSodium.shared().sign.keyPair()!
-        let team = try! Team(name: "iOSTests", publicKey: teamKeypair.publicKey)
-        try! team.setAdmin(keypair: teamKeypair)
+        let seed = try! Data.random(size: KRSodium.shared().sign.SeedBytes)
+        let teamKeypair = try! KRSodium.shared().sign.keyPair(seed: seed)
+        var team = try! Team(name: "iOSTests", publicKey: teamKeypair!.publicKey)
+        team.adminKeyPairSeed = seed
         
         teamIdentity = try! TeamIdentity(email: "bob@iostests.com", team: team)
     }
