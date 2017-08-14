@@ -89,13 +89,13 @@ class NotificationService: UNNotificationServiceExtension {
                                     content.body = error
                                 } else {
                                     content.title = "Approved request from \(session.pairing.displayName)."
-                                    content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
+                                    content.categoryIdentifier = unsealedRequest.autoAuthorizeCategoryIdentifier
                                 }
                             }
                             // pending response
                             else {
                                 content.title = "Request from \(session.pairing.displayName)."
-                                content.categoryIdentifier = Policy.authorizeCategoryIdentifier
+                                content.categoryIdentifier = unsealedRequest.authorizeCategoryIdentifier
                             }
                             
                             content.userInfo = ["session_display": session.pairing.displayName,

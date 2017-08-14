@@ -31,11 +31,13 @@ class Policy {
     static let autoAuthorizedCategoryIdentifier = "auto_authorized_identifier"
     static let authorizeCategoryIdentifier = "authorize_identifier"
     
+    
     enum ActionIdentifier:String {
         case approve = "approve_identifier"
         case temporary = "approve_temp_identifier"
         case reject = "reject_identifier"
     }
+    
     
     
     //MARK: Setters
@@ -291,6 +293,27 @@ class Policy {
     
 }
 
+extension Request {
+    var authorizeCategoryIdentifier:String {
+        switch self.body {
+        case .createTeam, .me, .unpair, .noOp:
+            return ""
+            
+        case .ssh, .git:
+            return Policy.authorizeCategoryIdentifier
+        }
+    }
+    
+    var autoAuthorizeCategoryIdentifier:String {
+        switch self.body {
+        case .createTeam, .me, .unpair, .noOp:
+            return ""
+            
+        case .ssh, .git:
+            return Policy.autoAuthorizedCategoryIdentifier
+        }
+    }
+}
 
 
 func ==(l:Policy.PendingAuthorization, r:Policy.PendingAuthorization) -> Bool {

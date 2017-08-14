@@ -118,7 +118,7 @@ class Notify {
                     content.body = noteBody
                     content.sound = UNNotificationSound.default()
                     content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
-                    content.categoryIdentifier = Policy.authorizeCategoryIdentifier
+                    content.categoryIdentifier = request.authorizeCategoryIdentifier
                     content.threadIdentifier = request.id
                     
                     let noteId = request.id
@@ -140,7 +140,7 @@ class Notify {
             notification.alertTitle = "[\(noteSubtitle)] " + noteTitle
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
-            notification.category = Policy.authorizeCategory.identifier
+            notification.category = request.authorizeCategoryIdentifier
             notification.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
             
             UIApplication.shared.presentLocalNotificationNow(notification)
@@ -167,7 +167,7 @@ class Notify {
             content.title = noteTitle
             content.subtitle = noteSubtitle
             content.body = noteBody
-            content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
+            content.categoryIdentifier = request.autoAuthorizeCategoryIdentifier
             content.sound = UNNotificationSound.default()
             content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
 
@@ -217,7 +217,7 @@ class Notify {
             notification.alertTitle = "[\(noteSubtitle)] " + noteTitle
             notification.alertBody = noteBody
             notification.soundName = UILocalNotificationDefaultSoundName
-            notification.category = Policy.autoAuthorizedCategoryIdentifier
+            notification.category = request.autoAuthorizeCategoryIdentifier
             
             UIApplication.shared.presentLocalNotificationNow(notification)
         }
