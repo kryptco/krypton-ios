@@ -922,6 +922,7 @@
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
 				FA16829E1EB2B2B200D9CE40 /* KnownHostManager.swift */,
 				FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */,
+				FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1289,7 +1290,6 @@
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
-				FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */,
 				8D003DF11D90EDE30085ED21 /* Sodium.swift */,
 				FACE33541EC186DC003EC6C0 /* SSHUtil.swift */,
 			);

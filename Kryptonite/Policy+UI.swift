@@ -142,7 +142,9 @@ extension Policy {
             
             Current.viewController?.showFailedResponse(errorMessage: errorMessage, session: session)
         }
-        
-        
+    }
+    
+    class func refreshPushNotificationRegistration() {
+        (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
     }
 }

@@ -65,7 +65,7 @@ class Silo {
     }
     
     lazy var sharedDirectory:URL? = {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("cache")
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("cache")
     }()
 
 
@@ -167,7 +167,7 @@ class Silo {
         Policy.requestUserAuthorization(session: session, request: request)
         
         if request.sendACK {
-            let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
+            let arn = API.endpointARN ?? ""
             let ack = Response(requestID: request.id, endpoint: arn, body: .ack(AckResponse()), approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
             do {
                 try TransportControl.shared.send(ack, for: session)
@@ -311,7 +311,7 @@ class Silo {
             throw ResponseNotNeededError()
         }
         
-        let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
+        let arn = API.endpointARN ?? ""
         
         let response = Response(requestID: request.id, endpoint: arn, body: responseType, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         

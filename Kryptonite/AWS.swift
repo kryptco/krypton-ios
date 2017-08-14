@@ -42,6 +42,10 @@ class API {
     private var snsClient = AWSSNS(forKey: AWSConfKey.sns.rawValue)
     private var sqsClient = AWSSQS(forKey: AWSConfKey.sqs.rawValue)
     
+    static var endpointARN:String? {
+        return try? KeychainStorage().get(key: Constants.endpointARNStorageKey)
+    }
+    
     class func provision() -> Bool {
         
         let accessKey = Properties.awsAccessKey

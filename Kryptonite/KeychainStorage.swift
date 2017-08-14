@@ -8,8 +8,6 @@
 
 import Foundation
 
-private let KrKeychainServiceName = "kr_keychain_service"
-
 enum KeychainStorageError:Error {
     case notFound
     case saveError(OSStatus?)
@@ -22,7 +20,7 @@ class KeychainStorage {
     var service:String
     var mutex = Mutex()
     
-    init(service:String = KrKeychainServiceName) {
+    init(service:String = Constants.defaultKeyChainService) {
         self.service = service
     }
     

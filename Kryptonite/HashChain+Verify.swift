@@ -53,7 +53,7 @@ extension HashChain.Response {
             lastBlockHash = createBlock.hash()
             blockStart += 1
         }
-        
+                
         for i in blockStart ..< blocks.count {
             let nextBlock = blocks[i]
             

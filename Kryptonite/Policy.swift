@@ -198,7 +198,7 @@ class Policy {
         
     }
     
-    private static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("policy_cache")
+    private static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("policy_cache")
     
     static var lastPendingAuthorization:PendingAuthorization? {
         let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)

@@ -21,7 +21,7 @@ class HashChainBlockManager {
     
     //MARK: Core Data setup
     lazy var applicationDocumentsDirectory:URL? = {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("teams")
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("teams")
     }()
     
     lazy var managedObjectModel:NSManagedObjectModel? = {

@@ -8,9 +8,12 @@
 
 import Foundation
 
-//MARK: Keys
-let KR_ENDPOINT_ARN_KEY = "aws_endpoint_arn_key"
-let APP_GROUP_SECURITY_ID = "group.co.krypt.kryptonite"
+//MARK: Constants
+struct Constants {
+    static let appGroupSecurityID = "group.co.krypt.kryptonite"
+    static let defaultKeyChainService = "kr_keychain_service"
+    static let endpointARNStorageKey = "aws_endpoint_arn_key"
+}
 
 //MARK: Platform Detection
 struct Platform {
@@ -37,7 +40,7 @@ struct Platform {
 
 extension UserDefaults {
     static var  group:UserDefaults? {
-        return UserDefaults(suiteName:APP_GROUP_SECURITY_ID)
+        return UserDefaults(suiteName: Constants.appGroupSecurityID)
     }
 }
 

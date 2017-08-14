@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             
             do {
-                try KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
+                try KeychainStorage().set(key: Constants.endpointARNStorageKey, value: arn)
             } catch {
                 log("Could not save push ARN", .error)
             }
@@ -369,6 +369,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Policy.requestUserAuthorization(session: pending.session, request: pending.request)
         }
 
+        // if team policy set: refresh approval category on notifications
+        if  let teamIdentity = (try? KeyManager.getTeamIdentity()) as? TeamIdentity,
+            let _ = teamIdentity.team.policy.temporaryApprovalSeconds
+        {
+            self.registerPushNotifications()
+        }
+ 
         
         //  Send email again if not sent succesfully
         if let email = try? KeyManager.getMe() {

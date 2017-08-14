@@ -94,7 +94,32 @@ class TeamJoinCompleteController:KRBaseController {
                     self.teamIdentity.team = updatedTeam
                     hashChainService = HashChainService(teamIdentity: self.teamIdentity)
                     
-                    // 2. admin joins team
+                    do {
+                        // save the team identity
+                        try KeyManager.setTeam(identity: self.teamIdentity)
+                    } catch {
+                        self.showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
+                        return
+                    }
+                    
+                    
+                    // 2. send the create team response
+                    let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: self.teamIdentity.team.adminKeyPairSeed?.toBase64(), error: nil))
+                    
+                    let response = Response(requestID: request.id,
+                                            endpoint: API.endpointARN ?? "",
+                                            body: responseType,
+                                            approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
+                                            trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+                    
+                    do {
+                        try TransportControl.shared.send(response, for: session)
+                    } catch {
+                        log("error sending response: \(error)", .error)
+                        self.showWarning(title: "Error", body: "Couldn't respond with team info to \(session.pairing.displayName). \(error).")
+                    }
+                    
+                    // 3. admin joins team
                     do {
                         let sshPublicKey = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
                         let pgpPublicKey = try KeyManager.sharedInstance().loadPGPPublicKey(for: self.teamIdentity.email).packetData
@@ -112,22 +137,9 @@ class TeamJoinCompleteController:KRBaseController {
                             case .result(let updatedTeam):
                                 self.teamIdentity.team = updatedTeam
                                 
-                                // 3. send the create team response
-                                let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: self.teamIdentity.team.adminKeyPairSeed?.toBase64(), error: nil))
-                                
-                                let response = Response(requestID: request.id,
-                                                        endpoint: (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? "",
-                                                        body: responseType,
-                                                        approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
-                                                        trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
-                                
-                                do {
-                                    try TransportControl.shared.send(response, for: session)
-                                } catch {
-                                    log("error sending response: \(error)", .error)
-                                    self.showWarning(title: "Error", body: "Couldn't send response to \(session.pairing.displayName)")
-                                }
-                                
+                                // save the team identity again
+                                try? KeyManager.setTeam(identity: self.teamIdentity)
+              
                                 self.showSuccess()
                             }
                         }
@@ -143,7 +155,7 @@ class TeamJoinCompleteController:KRBaseController {
             self.showCreateFailure(message: "Error trying to create your team", error: error, request: request, session: session)
         }
     }
-
+    
     
     // for .invite
     func accept(invite:TeamInvite) {
@@ -232,7 +244,7 @@ class TeamJoinCompleteController:KRBaseController {
                     let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: nil, error: "\(message). \(error)."))
                     
                     let response = Response(requestID: request.id,
-                                            endpoint: (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? "",
+                                            endpoint: API.endpointARN ?? "",
                                             body: responseType,
                                             approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
                                             trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))

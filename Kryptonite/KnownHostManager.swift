@@ -57,7 +57,7 @@ class KnownHostManager {
     
     //MARK: Core Data setup
     lazy var applicationDocumentsDirectory:URL? = {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("known_hosts")
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("known_hosts")
     }()
     
     lazy var managedObjectModel:NSManagedObjectModel? = {

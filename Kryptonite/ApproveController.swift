@@ -168,7 +168,7 @@ class ApproveController:UIViewController {
         
         swipeDownRejectGesture.isEnabled = false
 
-        self.resultLabel.text = "Allow for 3 hours".uppercased()
+        self.resultLabel.text = "Allowed for \(temporaryApprovalTime.description)".uppercased()
         
         UIView.animate(withDuration: 0.3, animations: {
             
