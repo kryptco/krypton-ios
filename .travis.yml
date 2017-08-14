@@ -1,0 +1,22 @@
+language: swift
+xcode_project: Kryptonite.xcodeproj
+xcode_scheme: Debug
+osx_image: xcode8.3
+git:
+    submodules: false
+before_install:
+  - sed -i '' -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
+before_script:
+  - curl https://sh.rustup.rs -sSf | sh -s -- -y
+  - export PATH=$PATH:$HOME/.cargo/bin/
+  - rustup target add aarch64-apple-ios
+  - rustup target add armv7-apple-ios
+  - rustup target add armv7s-apple-ios
+  - rustup target add x86_64-apple-ios
+  - rustup target add i386-apple-ios
+  - rustup update
+  - cargo install cargo-lipo
+  - sudo gem install xcpretty
+script:
+  - make check
