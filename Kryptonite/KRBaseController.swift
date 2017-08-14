@@ -238,6 +238,9 @@ extension UIViewController {
                 return
             }
             
+            teamLoadController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            teamLoadController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+
             teamLoadController.joinType = .invite(teamInvite)
             
             dispatchMain {

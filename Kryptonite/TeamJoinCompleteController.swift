@@ -239,22 +239,7 @@ class TeamJoinCompleteController:KRBaseController {
             }) { (_) in
                 self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
                 self.showWarning(title: "Error", body: "\(message). \(error).", then: {
-                    
-                    // send the failure response
-                    let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: nil, error: "\(message). \(error)."))
-                    
-                    let response = Response(requestID: request.id,
-                                            endpoint: API.endpointARN ?? "",
-                                            body: responseType,
-                                            approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
-                                            trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
-                    
-                    try? TransportControl.shared.send(response, for: session) {
-                        log("error sending failure response: \(error)", .error)
-                        self.showWarning(title: "Error", body: "Error sending failure response to \(session.pairing.displayName)") {
-                            self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)
-                        }
-                    }
+                    self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)
                 })
             }
         }
@@ -284,8 +269,7 @@ class TeamJoinCompleteController:KRBaseController {
     }
     
     @IBAction func doneTapped() {
-        self.performSegue(withIdentifier: "dismissJoinTeam", sender: nil)
-
+        self.performSegue(withIdentifier: "doneJoinTeam", sender: self)
     }
     
 }

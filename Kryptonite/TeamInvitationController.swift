@@ -79,7 +79,32 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     }
 
     @IBAction func dontJoinTapped() {
-        self.dismiss(animated: true, completion: nil)
+        switch joinType! {
+        case .invite:
+            self.dismiss(animated: true, completion: nil)
+
+        case .create(let request, let session):
+            
+            // send the failure response
+            let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: nil, error: "canceled"))
+            
+            let response = Response(requestID: request.id,
+                                    endpoint: API.endpointARN ?? "",
+                                    body: responseType,
+                                    approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
+                                    trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            
+            do {
+                try TransportControl.shared.send(response, for: session) {
+                    self.dismiss(animated: true, completion: nil)
+                }
+
+            } catch {
+                self.showWarning(title: "Error", body: "Couldn't send failure response to \(session.pairing.displayName).") {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

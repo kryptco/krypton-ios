@@ -51,7 +51,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         }
         
         // set the right 4th tab if needed
-        createTeamTabIfNeeded()
+        updateTeamTabIfNeeded()
         
     }
 
@@ -107,15 +107,14 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     var shouldSwitchToTeams:Bool = false
     @IBAction func dismissJoinTeam(segue: UIStoryboardSegue) {
+        updateTeamTabIfNeeded()
         if self.tabBar.items?.count == TabsCount.hasTeam.rawValue {
             self.selectedIndex = 3
-        } else {
-            shouldSwitchToTeams = true
         }
     }
     
     @IBAction func didDeleteTeam(segue: UIStoryboardSegue) {
-        createTeamTabIfNeeded()
+        updateTeamTabIfNeeded()
         if self.tabBar.items?.count == TabsCount.hasTeam.rawValue {
             self.selectedIndex = 3
         }
@@ -134,7 +133,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK: Teams tab
     
-    func createTeamTabIfNeeded() {
+    func updateTeamTabIfNeeded() {
         
         // load the identients
         var teamIdentity:TeamIdentity?
