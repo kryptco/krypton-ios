@@ -23,21 +23,21 @@ extension Request {
         case .git(let gitSign):
             switch gitSign.git {
             case .commit:
-                let commitApprove = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
+                let commitApprove = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
                 commitApprove?.session = session
                 commitApprove?.request = self
                 
                 return commitApprove
 
             case .tag:
-                let tagApprove = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TagApproveController") as? TagApproveController
+                let tagApprove = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TagApproveController") as? TagApproveController
                 tagApprove?.session = session
                 tagApprove?.request = self
                 
                 return tagApprove
             }
         case .createTeam:
-            let teamLoad =  Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TeamLoadController") as? TeamLoadController
+            let teamLoad =  Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamLoadController") as? TeamLoadController
             teamLoad?.joinType = TeamJoinType.create(self, session)
             
             return teamLoad

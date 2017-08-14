@@ -88,7 +88,7 @@ enum RequestBody:Jsonable {
             requests.append(.unpair(try UnpairRequest(json: json)))
         }
         
-        if let json:Object = try? json ~> "create_team" {
+        if let json:Object = try? json ~> "create_team_request" {
             requests.append(.createTeam(try CreateTeamRequest(json: json)))
         }
         
@@ -118,7 +118,7 @@ enum RequestBody:Jsonable {
         case .git(let g):
             json["git_sign_request"] = g.object
         case .createTeam(let c):
-            json["create_team"] = c.object
+            json["create_team_request"] = c.object
         case .unpair(let u):
             json["unpair_request"] = u.object
         case .noOp:
