@@ -217,7 +217,9 @@ class HashChainService {
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
                 
-                HashChainBlockManager(team: updatedTeam).add(block: addedBlock)
+                let blockManager = HashChainBlockManager(team: updatedTeam)
+                blockManager.add(block: addedBlock)
+                blockManager.add(member: newMember, blockHash: addedBlock.hash())
 
                 completionHandler(HashChainServiceResult.result(updatedTeam))
             }
