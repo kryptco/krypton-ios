@@ -582,11 +582,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NK0-tk-vKi">
-<<<<<<< HEAD
                                                             <rect key="frame" x="38.666666666666657" y="10.333333333333329" width="153" height="21.666666666666671"/>
-=======
-                                                            <rect key="frame" x="38.5" y="10" width="153" height="21.5"/>
->>>>>>> fix ux crash, store last invite nonce public key on team correctly
                                                             <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -4056,11 +4052,7 @@ Cg
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="ssh me.krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AP3-RZ-yks">
-<<<<<<< HEAD
                                     <rect key="frame" x="38.333333333333329" y="10" width="153" height="21.666666666666671"/>
-=======
-                                    <rect key="frame" x="38.5" y="10" width="153" height="21.5"/>
->>>>>>> fix ux crash, store last invite nonce public key on team correctly
                                     <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -4968,11 +4960,8 @@ Let's upgrade and pair.</string>
         <segue reference="0R2-zj-seh"/>
         <segue reference="nqH-Dq-7fH"/>
         <segue reference="Y5o-pc-uUx"/>
-<<<<<<< HEAD
         <segue reference="0pJ-4c-RGj"/>
         <segue reference="kMu-oa-2FM"/>
-=======
->>>>>>> fix ux crash, store last invite nonce public key on team correctly
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

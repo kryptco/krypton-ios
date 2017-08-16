@@ -306,7 +306,6 @@
 		FADA1A6F1F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
 		FADA1A701F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
 		FADA1A731F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
-		FADA1A741F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
 		FADA1A751F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
 		FADA1A761F2EDF97004AE6B0 /* HashChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* HashChainManager.swift */; };
 		FADA1A791F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */; };
@@ -2358,7 +2357,6 @@
 				FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */,
 				FA8B54171ED773EE00891161 /* Version.swift in Sources */,
 				FADDE2831EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
-				FADA1A741F2EDF97004AE6B0 /* HashChainManager.swift in Sources */,
 				FADA1A5D1F2D2F32004AE6B0 /* HashChain.swift in Sources */,
 				FA2949E41EDE379900A5C70B /* UserIDList.swift in Sources */,
 				FA8B54321ED774C100891161 /* Sodium.swift in Sources */,

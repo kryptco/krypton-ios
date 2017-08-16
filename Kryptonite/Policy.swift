@@ -121,16 +121,34 @@ class Policy {
         
         switch requestBody {
         case .ssh(let sshSign):
-            // check if verifedHostAuth's 'hostName' does NOT have a KnownHost attached to it
-            if  let hostName = sshSign.verifiedHostAuth?.hostName,
-                KnownHostManager.shared.entryExists(for: hostName) == false
-            {
-                return true
-            }
             
-            // check if unknown host and check policy for unknown hosts
-            if  Policy.needsUnknownHostApproval(for: session) && sshSign.isUnknownHost
-            {
+            do {
+                // check if verifedHostAuth's 'hostName' does NOT have a KnownHost attached to it
+                if  let hostName = sshSign.verifiedHostAuth?.hostName,
+                    try KnownHostManager.shared.entryExists(for: hostName) == false
+                {
+                    // if we have a team and
+                    // check if verifedHostAuth's 'hostName' is pinned to that team
+                    guard  let teamIdentity = (try? KeyManager.getTeamIdentity()) as? TeamIdentity,
+                        let hostName = sshSign.verifiedHostAuth?.hostName,
+                        try HashChainBlockManager(team: teamIdentity.team).sshHostKeyExists(for: hostName) == false
+                        else {
+                            break
+                    }
+                    
+                    // this is a first time host
+                    return true
+                }
+                
+                
+                // check if unknown host and check policy for unknown hosts
+                if  Policy.needsUnknownHostApproval(for: session) && sshSign.isUnknownHost
+                {
+                    return true
+                }
+
+            } catch {
+                log("error fetching known hosts data: \(error)", .error)
                 return true
             }
             

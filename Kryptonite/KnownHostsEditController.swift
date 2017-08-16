@@ -117,7 +117,7 @@ class KnownHostCell:UITableViewCell {
         dateLabel.text = knownHost.dateAdded.toShortTimeString()
         
         do {
-            fingerprintLabel.text = try knownHost.publicKey.fromBase64().SHA256.toBase64()
+            fingerprintLabel.text = try knownHost.publicKey.fromBase64().toAuthorized()
         } catch {
             fingerprintLabel.text = "<error decoding>"
         }

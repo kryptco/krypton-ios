@@ -193,6 +193,7 @@ class HashChain {
         }
     }
     
+    
     /// Types of HashChain operations
     enum Operation:Jsonable {
         case inviteMember(MemberInvitation)
@@ -208,6 +209,9 @@ class HashChain {
         
         case setPolicy(Team.PolicySettings)
         case setTeamInfo(Team.Info)
+        
+        case pinHostKey(SSHHostKey)
+        case unpinHostKey(SSHHostKey)
         
         init(json: Object) throws {
             if let invite:Object = try? json ~> "invite_member" {
@@ -231,6 +235,12 @@ class HashChain {
             else if let info:Object = try? json ~> "set_team_info" {
                 self = try .setTeamInfo(Team.Info(json: info))
             }
+            else if let host:Object = try? json ~> "pin_host_key" {
+                self = try .pinHostKey(SSHHostKey(json: host))
+            }
+            else if let host:Object = try? json ~> "unpin_host_key" {
+                self = try .unpinHostKey(SSHHostKey(json: host))
+            }
             else {
                 throw Errors.badOperation
             }
@@ -252,6 +262,10 @@ class HashChain {
                 return ["set_policy": policy.object]
             case .setTeamInfo(let info):
                 return ["set_team_info": info.object]
+            case .pinHostKey(let host):
+                return ["pin_host_key": host.object]
+            case .unpinHostKey(let host):
+                return ["unpin_host_key": host.object]
             }
         }
     }

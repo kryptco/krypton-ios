@@ -20,16 +20,19 @@ class TeamDetailController: KRBaseTableController {
     
     @IBOutlet weak var blocksButton:UIButton!
     @IBOutlet weak var membersButton:UIButton!
+    @IBOutlet weak var hostsButton:UIButton!
 
 
     var identity:TeamIdentity!
     
     var blocks:[HashChain.Payload] = []
     var members:[Team.MemberIdentity] = []
+    var hosts:[SSHHostKey] = []
 
     enum ViewType {
         case blocks
         case members
+        case hosts
     }
     
     var viewType = ViewType.blocks
@@ -105,11 +108,15 @@ class TeamDetailController: KRBaseTableController {
     func loadNewLogs() {
         
         do {
-            self.blocks = try HashChainBlockManager(team: identity.team).fetchAll().map {
+            let blockManager = HashChainBlockManager(team: identity.team)
+            
+            self.blocks = try blockManager.fetchAll().map {
                 try HashChain.Payload(jsonString: $0.payload)
             }
             
-            self.members = try HashChainBlockManager(team: identity.team).fetchAll()
+            self.members = try blockManager.fetchAll()
+            
+            self.hosts = try blockManager.fetchAll()
             
             dispatchMain {
                 self.tableView.reloadData()
@@ -195,6 +202,14 @@ class TeamDetailController: KRBaseTableController {
         loadNewLogs()
     }
     
+    @IBAction func hostsTapped() {
+        let type = ViewType.hosts
+        showCells(for: type)
+        viewType = type
+        loadNewLogs()
+    }
+
+    
     func showCells(for type:ViewType) {
         dispatchMain {
             self.tableView.reloadData()
@@ -203,10 +218,18 @@ class TeamDetailController: KRBaseTableController {
         switch type {
         case .blocks:
             membersButton.alpha = 0.5
+            hostsButton.alpha = 0.5
             blocksButton.alpha = 1.0
         case .members:
             blocksButton.alpha = 0.5
+            hostsButton.alpha = 0.5
             membersButton.alpha = 1.0
+            
+        case .hosts:
+            membersButton.alpha = 0.5
+            blocksButton.alpha = 0.5
+            hostsButton.alpha = 1.0
+
         }
     }
 
@@ -229,6 +252,8 @@ class TeamDetailController: KRBaseTableController {
             return blocks.count
         case .members:
             return members.count
+        case .hosts:
+            return hosts.count
         }
     }
     
@@ -246,6 +271,13 @@ class TeamDetailController: KRBaseTableController {
             cell.set(member: members[indexPath.row])
             
             return cell
+            
+        case .hosts:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SSHHostKeyCell") as! SSHHostKeyCell
+            cell.set(host: hosts[indexPath.row])
+            
+            return cell
+
         }
 
     }
@@ -294,6 +326,13 @@ extension HashChain.Payload {
                 
             case .setTeamInfo(let teamInfo):
                 return ("set team info", "team name \"\(teamInfo.name)\"")
+                
+            case .pinHostKey(let host):
+                return ("pin ssh host key", "host \"\(host.host)\"\n\(host.displayPublicKey)")
+                
+            case .unpinHostKey(let host):
+                return ("unpin ssh host key", "host \"\(host.host)\"\n\(host.displayPublicKey)")
+
             }
         }
         
@@ -345,7 +384,12 @@ class TeamMemberCell:UITableViewCell {
     }
 }
 
-
-
-
-
+class SSHHostKeyCell:UITableViewCell {
+    @IBOutlet weak var hostLabel:UILabel!
+    @IBOutlet weak var keyLabel:UILabel!
+    
+    func set(host:SSHHostKey) {
+        hostLabel.text = host.host
+        keyLabel.text = (try? host.publicKey.toAuthorized()) ?? host.publicKey.toBase64()
+    }
+}

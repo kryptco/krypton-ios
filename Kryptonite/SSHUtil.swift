@@ -68,3 +68,15 @@ extension SSHMessage {
         return out
     }
 }
+
+public extension UInt32 {
+    init(bigEndianBytes: [UInt8]) {
+        let count = UInt32(bigEndianBytes.count)
+        
+        var val : UInt32 = 0
+        for i in UInt32(0) ..< count {
+            val += UInt32(bigEndianBytes[Int(i)]) << ((count - 1 - i) * 8)
+        }
+        self.init(val)
+    }
+}

@@ -17,6 +17,7 @@ protocol SSHPublicKey {
 }
 
 struct UnknownSSHKeyWireFormat:Error {}
+struct BadSSHKeyWireFormat:Error {}
 
 extension PublicKey {
     func wireFormat() throws -> Data {
@@ -77,6 +78,25 @@ extension SSHAuthorizedFormat {
 
 
 extension SSHWireFormat {
+    func toAuthorized() throws -> SSHAuthorizedFormat {
+        let dataBytes = self.bytes
+
+        guard dataBytes.count >= 4 else {
+            throw BadSSHKeyWireFormat()
+        }
+        
+        
+        let headerLength = Int(UInt32(bigEndianBytes: [UInt8](dataBytes[0 ..< 4])))
+        
+        guard dataBytes.count >= 4 + headerLength else {
+            throw BadSSHKeyWireFormat()
+        }
+        
+        let header = try Data(bytes: [UInt8](dataBytes[4 ..< 4 + headerLength])).utf8String()
+        
+        return "\(header) \(self.toBase64())"
+    }
+    
     func fingerprint() -> Data {
         return self.SHA256
     }

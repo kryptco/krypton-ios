@@ -14,8 +14,15 @@
         <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="ssh_public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
+    <entity name="SSHHostKey" representedClassName="" syncable="YES">
+        <attribute name="block_hash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="host" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Block" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Member" positionX="-315" positionY="147" width="128" height="135"/>
+        <element name="SSHHostKey" positionX="-189" positionY="108" width="128" height="105"/>
     </elements>
 </model>

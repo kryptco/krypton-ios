@@ -113,13 +113,9 @@ class KnownHostManager {
      - if known host and does match: return true
      - if not known host or public key does not match: return false
      */
-    func entryExists(for hostName:String) -> Bool {
-        do {
-            if let _ = try self.fetch(for: hostName) {
-                return true
-            }
-        } catch {
-            log("error fetching known host for: \(hostName)")
+    func entryExists(for hostName:String) throws -> Bool {
+        if let _ = try self.fetch(for: hostName) {
+            return true
         }
         
         return false

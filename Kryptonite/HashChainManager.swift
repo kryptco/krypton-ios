@@ -110,7 +110,13 @@ class HashChainBlockManager {
         return try fetchObjects(for: fetchRequest)
     }
 
-
+    func fetchAll() throws -> [SSHHostKey] {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: true)]
+        
+        return try fetchObjects(for: fetchRequest)
+    }
+    
     
     /**
         Add a new block
@@ -119,12 +125,78 @@ class HashChainBlockManager {
         self.save(block: block)
     }
     
+    /**
+        Add/remove member
+     */
     func add(member:Team.MemberIdentity, blockHash:Data) {
         self.save(member: member, blockHash: blockHash)
     }
     
     func remove(member:SodiumPublicKey) {
         self.delete(memberPublicKey: member)
+    }
+    
+    /**
+        Pin/Unpin/check Known Hosts
+     */
+    func pin(sshHostKey:SSHHostKey, blockHash:Data) {
+        self.save(sshHostKey: sshHostKey, blockHash: blockHash)
+    }
+    
+    /** Match verifiedHostAuth (hostName, publicKey) to a pin (host, publickey)
+        - returns true if host name is pinned and public key matches
+        - returns false if host name is not pinned
+        - throws HostMistmatchError if host name is pinned but public key is mismatched
+    */
+    func check(verifiedHost:VerifiedHostAuth) throws -> Bool {
+        
+        guard let hostName = verifiedHost.hostName
+        else {
+            throw HostAuthHasNoHostnames()
+        }
+        
+        let hostPublicKey = try verifiedHost.hostKey.fromBase64()
+        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
+        fetchRequest.predicate = self.sshHostNameOnlyEqualsPredicate(for: hostName)
+        
+        let sshHostKeys:[SSHHostKey] = try fetchObjects(for: fetchRequest)
+        
+        guard !sshHostKeys.isEmpty else {
+            return true
+        }
+        
+        let matchingHosts = sshHostKeys.filter { $0.publicKey == hostPublicKey}
+        
+        
+        guard false == matchingHosts.isEmpty
+        else {
+            let pinnedPublicKeysJoined = sshHostKeys.map({ $0.publicKey.toBase64() }).joined(separator: ",")
+            throw HostMistmatchError(hostName: hostName, expectedPublicKey: pinnedPublicKeysJoined)
+        }
+        
+        return true
+    }
+    
+    /**
+     Check if we have a public key verifiedHostAuth's hostName
+     - if known host and does match: return true
+     - if not known host or public key does not match: return false
+     */
+    func sshHostKeyExists(for hostName:String) throws -> Bool {
+        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
+        fetchRequest.predicate = self.sshHostNameOnlyEqualsPredicate(for: hostName)
+        
+        let sshHostKeys:[SSHHostKey] = try fetchObjects(for: fetchRequest)
+        
+        return sshHostKeys.isEmpty == false
+    }
+
+
+
+    func unpin(sshHostKey:SSHHostKey) {
+        self.delete(sshHostKey: sshHostKey)
     }
     
     private func fetchObjects(for request:NSFetchRequest<NSFetchRequestResult>) throws -> [HashChain.Block] {
@@ -201,6 +273,41 @@ class HashChainBlockManager {
         
         return members
     }
+    
+    private func fetchObjects(for request:NSFetchRequest<NSFetchRequestResult>) throws -> [SSHHostKey] {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        var hostKeys:[SSHHostKey] = []
+        
+        var caughtError:Error?
+        self.managedObjectContext.performAndWait {
+            do {
+                let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
+                
+                for object in (objects ?? []) {
+                    guard
+                        let host = object.value(forKey: "host") as? String,
+                        let publicKey = object.value(forKey: "public_key") as? String
+                        else {
+                            continue
+                    }
+                    
+                    try hostKeys.append(SSHHostKey(host: host, publicKey: publicKey.fromBase64()))
+                }
+                
+            } catch {
+                caughtError = error
+            }
+        }
+        
+        if let error = caughtError {
+            throw error
+        }
+        
+        return hostKeys
+    }
+
 
     
     
@@ -276,6 +383,41 @@ class HashChainBlockManager {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_block"), object: nil)
     }
     
+    private func save(sshHostKey:SSHHostKey, blockHash:Data) {
+        mutex.lock()
+        
+        self.managedObjectContext.performAndWait {
+            guard
+                let entity =  NSEntityDescription.entity(forEntityName: "Block", in: self.managedObjectContext)
+                else {
+                    return
+            }
+            
+            let hostEntry = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
+            
+            // set attirbutes
+            hostEntry.setValue(sshHostKey.host, forKey: "host")
+            hostEntry.setValue(sshHostKey.publicKey.toBase64(), forKey: "public_key")
+            hostEntry.setValue(blockHash.toBase64(), forKey: "block_hash")
+            hostEntry.setValue(Date(), forKey: "date_added")
+            
+            do {
+                try self.managedObjectContext.save()
+                
+            } catch let error  {
+                // if save failed, delete cached object
+                self.managedObjectContext.delete(hostEntry)
+                log("Could not save block: \(error)", .error)
+            }
+        }
+        
+        mutex.unlock()
+        
+        // notify we have a new log
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_block"), object: nil)
+    }
+
+    
     //MARK: Deleting
     
     private func delete(memberPublicKey:SodiumPublicKey) {
@@ -312,6 +454,60 @@ class HashChainBlockManager {
             options: NSComparisonPredicate.Options(rawValue: 0)
         )
     }
+    
+    
+    private func delete(sshHostKey:SSHHostKey) {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        self.managedObjectContext.performAndWait {
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
+            fetchRequest.predicate = self.sshHostNameAndKeyEqualsPredicate(for: sshHostKey)
+            
+            guard  let objects = (try? self.managedObjectContext.fetch(fetchRequest)) as? [NSManagedObject]
+                else {
+                    return
+            }
+            
+            objects.forEach {
+                self.managedObjectContext.delete($0)
+            }
+            
+            do {
+                try self.managedObjectContext.save()
+            } catch let error  {
+                log("could not save delete ssh host key: \(error)", .error)
+            }
+        }
+    }
+    
+    private func sshHostNameOnlyEqualsPredicate(for host:String) -> NSPredicate {
+        let hostPredicate =  NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: "host"),
+            rightExpression: NSExpression(forConstantValue: host),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+
+        return hostPredicate
+    }
+    
+    private func sshHostNameAndKeyEqualsPredicate(for sshHostKey:SSHHostKey) -> NSPredicate {
+        
+        let hostPredicate = sshHostNameOnlyEqualsPredicate(for: sshHostKey.host)
+        
+        let pubKeyPredicate =  NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: "public_key"),
+            rightExpression: NSExpression(forConstantValue: sshHostKey.publicKey.toBase64()),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [hostPredicate, pubKeyPredicate])
+    }
+
 
     
     //MARK: - Core Data Saving support

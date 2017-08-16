@@ -109,6 +109,12 @@ extension HashChain.Response {
                 
             case .setTeamInfo(let info):
                 updatedTeam.info = info
+            
+            case .pinHostKey(let host):
+                blockDataManager.pin(sshHostKey: host, blockHash: nextBlock.hash())
+                
+            case .unpinHostKey(let host):
+                blockDataManager.unpin(sshHostKey: host)
             }
             
             // add the block to the data store

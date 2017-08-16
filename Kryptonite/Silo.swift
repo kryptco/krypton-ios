@@ -94,7 +94,9 @@ class Silo {
             try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
             return
         }
-
+        
+        // TODO: check if team needs to be updated, then update policies
+        
 
         // decide if request body can be responded to immediately
         // or doesn't need response,
@@ -220,6 +222,16 @@ class Silo {
                 
                 if signatureAllowed {
                     
+                    // team known hosts
+                    // if team exists then check for pinned known hosts
+                    if  let verifiedHostAuth = signRequest.verifiedHostAuth,
+                        let teamIdentity = try KeyManager.getTeamIdentity()
+                    {
+                        let blockDataManager = HashChainBlockManager(team: teamIdentity.team)
+                        try blockDataManager.check(verifiedHost: verifiedHostAuth)
+                    }
+                    
+                    // local known hosts
                     // if host auth provided, check known hosts
                     // fails in invalid signature -or- hostname not provided
                     if let verifiedHostAuth = signRequest.verifiedHostAuth {
