@@ -32,5 +32,5 @@ extension Policy {
         let short = approvalSeconds.timeAgo(suffix: "")
         
         return TemporaryApprovalTime(description: description, short: short, value: approvalSeconds)
-    }
+    }    
 }

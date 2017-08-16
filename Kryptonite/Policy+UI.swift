@@ -33,8 +33,8 @@ extension Policy {
     }()
     
     
-    static var approveTemporaryAction:UIMutableUserNotificationAction = {
-        var approve = UIMutableUserNotificationAction()
+    static var approveTemporaryAction:UIMutableUserNotificationAction {
+        let approve = UIMutableUserNotificationAction()
         
         approve.identifier = ActionIdentifier.temporary.rawValue
         approve.title = "Allow for " + Policy.temporaryApprovalInterval.description
@@ -43,7 +43,7 @@ extension Policy {
         approve.isAuthenticationRequired = true
         
         return approve
-    }()
+    }
     
     static var rejectAction:UIMutableUserNotificationAction = {
         var reject = UIMutableUserNotificationAction()
@@ -56,7 +56,11 @@ extension Policy {
         
         return reject
     }()
-
+    
+    class func teamDidUpdate() {
+        // update push notifications
+        (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+    }
     
     class func requestUserAuthorization(session:Session, request:Request) {
         
@@ -144,7 +148,4 @@ extension Policy {
         }
     }
     
-    class func refreshPushNotificationRegistration() {
-        (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
-    }
 }

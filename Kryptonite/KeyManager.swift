@@ -149,6 +149,7 @@ class KeyManager {
     
     class func setTeam(identity:TeamIdentity) throws {
         try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
+        Policy.teamDidUpdate()
     }
     
     class func removeTeamIdentity() throws {
