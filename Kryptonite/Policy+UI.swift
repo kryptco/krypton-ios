@@ -11,13 +11,12 @@ import Foundation
 extension Policy {
     
     //MARK: Notification Actions
-    static var authorizeCategory:UIUserNotificationCategory = {
+    static var authorizeCategory:UIUserNotificationCategory {
         let cat = UIMutableUserNotificationCategory()
         cat.identifier = authorizeCategoryIdentifier
         cat.setActions([Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction], for: UIUserNotificationActionContext.default)
         return cat
-        
-    }()
+    }
     
     
     static var approveAction:UIMutableUserNotificationAction = {

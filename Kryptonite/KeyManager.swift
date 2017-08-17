@@ -154,6 +154,7 @@ class KeyManager {
     
     class func removeTeamIdentity() throws {
         try KeychainStorage().delete(key: Storage.teamIdentity.key)
+        Policy.teamDidUpdate()
     }
 }
 
