@@ -30,11 +30,11 @@ class HashChainService {
     struct ServerError:Error, CustomDebugStringConvertible {
         let message:String
         var debugDescription: String {
-            return "Server Error(\(message))"
+            return "Server responded with: \(message)."
         }
     }
     
-    enum ServerResponse<T:JsonReadable>:JsonReadable {
+    enum ServerResponse<T:JsonReadable>:JsonReadable, CustomDebugStringConvertible {
         case error(ServerError)
         case success(T)
         
@@ -45,6 +45,15 @@ class HashChainService {
                 self = .error(ServerError(message: message))
             } else {
                 throw Errors.badResponse
+            }
+        }
+        
+        var debugDescription: String {
+            switch self {
+            case .success(let obj):
+                return "SUCCESS \n\t-\(obj)"
+            case .error(let error):
+                return "FAILURE \n\t-\(error)"
             }
         }
     }
@@ -353,18 +362,17 @@ class HashChainService {
     func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (ServerResponse<T>) -> Void) throws {
         let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
         
-        log("HashChain - IN:\n\(object)", .warning)
+        log("[IN] HashChainSVC\n\t\(object)")
 
         req.start { response in
             do {
-                let json:Object = try JSON.parse(data: response.data)
-                log("HashChain - OUT:\n\(json)", .warning)
-                
-                let serverResponse = try ServerResponse<T>(json: json)
+                let serverResponse = try ServerResponse<T>(jsonData: response.data)
+                log("[OUT] HashChainSVC\n\t\(serverResponse)")
+
                 onCompletion(serverResponse)
             } catch {
-                
-                onCompletion(ServerResponse.error(ServerError(message: "Unexpected response. \(error)")))
+                let responseString = (try? response.data.utf8String()) ?? "\(response.data.count) bytes"
+                onCompletion(ServerResponse.error(ServerError(message: "unexpected response, \(responseString)")))
             }
         }
     }

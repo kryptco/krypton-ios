@@ -148,7 +148,7 @@ class HashChainBlockManager {
         - returns false if host name is not pinned
         - throws HostMistmatchError if host name is pinned but public key is mismatched
     */
-    func check(verifiedHost:VerifiedHostAuth) throws -> Bool {
+    func check(verifiedHost:VerifiedHostAuth) throws {
         
         guard let hostName = verifiedHost.hostName
         else {
@@ -163,19 +163,16 @@ class HashChainBlockManager {
         let sshHostKeys:[SSHHostKey] = try fetchObjects(for: fetchRequest)
         
         guard !sshHostKeys.isEmpty else {
-            return true
+            return
         }
         
         let matchingHosts = sshHostKeys.filter { $0.publicKey == hostPublicKey}
-        
         
         guard false == matchingHosts.isEmpty
         else {
             let pinnedPublicKeysJoined = sshHostKeys.map({ $0.publicKey.toBase64() }).joined(separator: ",")
             throw HostMistmatchError(hostName: hostName, expectedPublicKey: pinnedPublicKeysJoined)
         }
-        
-        return true
     }
     
     /**

@@ -677,7 +677,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="DE AD BE EF 01 02 03 04 05" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="MoD-vX-wGl">
-                                            <rect key="frame" x="16" y="40" width="351" height="15"/>
+                                            <rect key="frame" x="16" y="40" width="351" height="25"/>
                                             <fontDescription key="fontDescription" name="SourceCodePro-Regular" family="Source Code Pro" pointSize="12"/>
                                             <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -685,7 +685,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="enC-ID-xp4" firstAttribute="leading" secondItem="h7o-D0-KeW" secondAttribute="leading" constant="16" id="0kg-Cc-Lfj"/>
-                                        <constraint firstAttribute="bottom" secondItem="MoD-vX-wGl" secondAttribute="bottom" constant="10" id="Ba8-Sk-3eN"/>
+                                        <constraint firstAttribute="bottom" secondItem="MoD-vX-wGl" secondAttribute="bottom" id="Ba8-Sk-3eN"/>
                                         <constraint firstItem="scy-pB-o98" firstAttribute="leading" secondItem="enC-ID-xp4" secondAttribute="leading" id="Kt8-A0-1Kd"/>
                                         <constraint firstItem="scy-pB-o98" firstAttribute="top" secondItem="enC-ID-xp4" secondAttribute="baseline" constant="10" id="NXb-0H-IhW"/>
                                         <constraint firstItem="scy-pB-o98" firstAttribute="centerY" secondItem="h7o-D0-KeW" secondAttribute="centerY" id="OJq-2M-fSW"/>

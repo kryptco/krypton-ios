@@ -85,7 +85,7 @@ class TeamDetailController: KRBaseTableController {
             try HashChainService(teamIdentity: identity).getVerifiedTeamUpdates { (result) in
                 
                 if #available(iOS 10.0, *) {
-                    self.tableView.refreshControl?.endRefreshing()
+                    dispatchMain { self.tableView.refreshControl?.endRefreshing() }
                 }
                 
                 switch result {
@@ -113,9 +113,7 @@ class TeamDetailController: KRBaseTableController {
             self.blocks = try blockManager.fetchAll().map {
                 try HashChain.Payload(jsonString: $0.payload)
             }
-            
             self.members = try blockManager.fetchAll()
-            
             self.hosts = try blockManager.fetchAll()
             
             dispatchMain {
@@ -229,7 +227,6 @@ class TeamDetailController: KRBaseTableController {
             membersButton.alpha = 0.5
             blocksButton.alpha = 0.5
             hostsButton.alpha = 1.0
-
         }
     }
 
@@ -277,7 +274,6 @@ class TeamDetailController: KRBaseTableController {
             cell.set(host: hosts[indexPath.row])
             
             return cell
-
         }
 
     }
