@@ -87,6 +87,9 @@ struct Team {
     var lastInvitePublicKey:SodiumPublicKey?
     var adminKeyPairSeed:Data?
     
+    // team updates to be saved
+    var queuedOperations:[HashChain.Operation] = []
+    
     func adminKeyPair() throws -> SodiumKeyPair? {
         guard let seed = adminKeyPairSeed else {
             return nil

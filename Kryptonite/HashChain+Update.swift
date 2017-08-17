@@ -12,15 +12,19 @@ class HashChainUpdater {
     
     static let mutex = Mutex()
     
+    static var checkInterval = TimeSeconds.minute.multiplied(by: 5)
+    
+    static private let storageKey = "hashchain_update_last_checked"
+    
     class var lastChecked:Date? {
         get {
-            return UserDefaults.group?.object(forKey: "hashchain_update_last_checked") as? Date
+            return UserDefaults.group?.object(forKey: storageKey) as? Date
         } set (d) {
             mutex.lock {
                 if let date = d {
-                    UserDefaults.group?.set(date, forKey: "hashchain_update_last_checked")
+                    UserDefaults.group?.set(date, forKey: storageKey)
                 } else {
-                    UserDefaults.group?.removeObject(forKey: "hashchain_update_last_checked")
+                    UserDefaults.group?.removeObject(forKey: storageKey)
                 }
                 UserDefaults.group?.synchronize()
             }
@@ -32,22 +36,16 @@ class HashChainUpdater {
             return true
         }
         
-        switch UIApplication.shared.applicationState {
-        case .active:
-            return abs(last.timeIntervalSinceNow) > Properties.HashChainUpdateCheckInterval.foreground
-        default:
-            return abs(last.timeIntervalSinceNow) > Properties.HashChainUpdateCheckInterval.background
-        }
+        return abs(last.timeIntervalSinceNow) > HashChainUpdater.checkInterval
     }
     
-    class func checkForUpdateIfNeeded(completionHandler:@escaping ((UpdatedTeam?)->Void)) {
-        guard HashChainUpdater.shouldCheck else {
-            completionHandler(nil)
-            return
-        }
+    class func checkForUpdate(completionHandler:@escaping ((_ didUpdate:Bool) ->Void)) {
+        mutex.lock()
         
         guard let teamIdentity = (try? KeyManager.getTeamIdentity()) as? TeamIdentity else {
-            completionHandler(nil)
+            log("no team...skipping team update")
+            mutex.unlock()
+            completionHandler(false)
             return
         }
         
@@ -55,18 +53,30 @@ class HashChainUpdater {
         
         do {
             try HashChainService(teamIdentity: teamIdentity).getVerifiedTeamUpdates { (response) in
+                
+                HashChainUpdater.lastChecked = Date()
+                
+                mutex.unlock()
+
                 switch response {
                 case .error(let e):
                     log("error updating team: \(e)", .error)
-                    completionHandler(nil)
+                    completionHandler(false)
+                    
                 case .result(let updatedTeam):
-                    completionHandler(updatedTeam)
+                    var updatedIdentity = teamIdentity
+                    updatedIdentity.team = updatedTeam
+                    
+                    try? KeyManager.setTeam(identity: updatedIdentity)
+                    
+                    completionHandler(true)
                 }
             }
         } catch {
             log("error trying to update team: \(error)", .error)
+            mutex.unlock()
+            completionHandler(false)
         }
-        
     }
     
 }

@@ -68,11 +68,11 @@ struct Properties {
     
     struct HashChainUpdateCheckInterval {
         static var foreground:TimeInterval {
-            return TimeSeconds.minute.multiplied(by: 5)
+            return TimeSeconds.hour.rawValue
         }
         
         static var background:TimeInterval {
-            return TimeSeconds.week.rawValue
+            return TimeSeconds.hour.rawValue
         }
     }
 

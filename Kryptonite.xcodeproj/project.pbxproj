@@ -130,6 +130,8 @@
 		FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DC1E8D76800082274A /* SQS.swift */; };
+		FA571B1E1F460B76007FD7F3 /* HashChain+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAC14821F38D39D00DDFAA3 /* HashChain+Update.swift */; };
+		FA571B1F1F460B77007FD7F3 /* HashChain+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAC14821F38D39D00DDFAA3 /* HashChain+Update.swift */; };
 		FA5A73691F22A2F80087D3CF /* TeamInvitationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */; };
 		FA5A73811F22C41A0087D3CF /* TeamJoinCompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */; };
 		FA5A73881F23F8610087D3CF /* TeamDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73871F23F8610087D3CF /* TeamDetailController.swift */; };
@@ -2227,6 +2229,7 @@
 				FADA1A761F2EDF97004AE6B0 /* HashChainManager.swift in Sources */,
 				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,
 				8DCB60351E94433100E1B924 /* Session.swift in Sources */,
+				FA571B1F1F460B77007FD7F3 /* HashChain+Update.swift in Sources */,
 				8DCB60391E9443B600E1B924 /* Properties.swift in Sources */,
 				8DC263A01ED246B800BF2E17 /* CommitInfo.swift in Sources */,
 				FAEE049D1D74BCC3002A7AFD /* KryptoTests.swift in Sources */,
@@ -2301,6 +2304,7 @@
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
 				FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */,
 				FADA19C01F2952C9004AE6B0 /* TeamInvite.swift in Sources */,
+				FA571B1E1F460B76007FD7F3 /* HashChain+Update.swift in Sources */,
 				FA2949E51EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,

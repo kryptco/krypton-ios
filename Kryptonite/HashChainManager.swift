@@ -385,7 +385,7 @@ class HashChainBlockManager {
         
         self.managedObjectContext.performAndWait {
             guard
-                let entity =  NSEntityDescription.entity(forEntityName: "Block", in: self.managedObjectContext)
+                let entity =  NSEntityDescription.entity(forEntityName: "SSHHostKey", in: self.managedObjectContext)
                 else {
                     return
             }

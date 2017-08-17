@@ -165,6 +165,7 @@ extension UIViewController {
 
     //MARK: Updates
     func checkForUpdatesIfNeeded() {
+        // app updates
         Updater.checkForUpdateIfNeeded { (version) in
             guard let newVersion = version else {
                 return
@@ -187,10 +188,13 @@ extension UIViewController {
             
             self.present(alertController, animated: true, completion: nil)
         }
-    }
-    
-    func checkForHashChainUpdates() {
-        //TODO: implement
+        
+        // team updates
+        if KeyManager.hasTeam() && HashChainUpdater.shouldCheck {
+            HashChainUpdater.checkForUpdate { result in
+                log("did update team: \(result)")
+            }
+        }
     }
     
     //MARK: React to links

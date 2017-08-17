@@ -95,9 +95,12 @@ class Silo {
             return
         }
         
-        // TODO: check if team needs to be updated, then update policies
+        // check if the request has already been received, but is still pending
+        pendingRequests?.removeExpiredObjects()
+        if pendingRequests?.object(forKey: CacheKey(session, request)) != nil {
+            throw RequestPendingError()
+        }
         
-
         // decide if request body can be responded to immediately
         // or doesn't need response,
         // or needs user's approval first
@@ -117,6 +120,9 @@ class Silo {
              .ssh where Policy.needsUserApproval(for: session, and: request.body),
              .git where Policy.needsUserApproval(for: session, and: request.body):
             
+            // record this request as pending
+            pendingRequests?.setObject("", forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
+
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
             
@@ -159,11 +165,6 @@ class Silo {
     }
 
     func handleRequestRequiresApproval(request: Request, session: Session, communicationMedium: CommunicationMedium, completionHandler: (() -> ())?) throws {
-        pendingRequests?.removeExpiredObjects()
-        if pendingRequests?.object(forKey: CacheKey(session, request)) != nil {
-            throw RequestPendingError()
-        }
-        pendingRequests?.setObject("", forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
         
         Policy.addPendingAuthorization(session: session, request: request)
         Policy.requestUserAuthorization(session: session, request: request)
@@ -189,6 +190,19 @@ class Silo {
         
         pendingRequests?.removeObject(forKey: CacheKey(session, request))
     }
+    
+    func isPending(request:Request, for session:Session) -> Bool {
+        mutex.lock()
+        defer { mutex.unlock() }
+        
+        pendingRequests?.removeExpiredObjects()
+        if pendingRequests?.object(forKey: CacheKey(session, request)) != nil {
+            return true
+        }
+        
+        return false
+    }
+
     
     // MARK: Response
     
