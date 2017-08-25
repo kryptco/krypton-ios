@@ -62,7 +62,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     
     @objc func redrawMe() {
         do {
-            tagTextField.text = try KeyManager.getMe()
+            tagTextField.text = try IdentityManager.getMe()
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
             showWarning(title: "Error", body: "Could not get user data. \(e)")
@@ -127,7 +127,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     
     //MARK: Sharing
     @IBAction func shareOtherTapped() {
-        guard   let email = try? KeyManager.getMe(),
+        guard   let email = try? IdentityManager.getMe(),
                 let publicKeyAuthorized = try? KeyManager.sharedInstance().keyPair.publicKey.authorizedFormat()
         else {
             return
@@ -175,9 +175,9 @@ class MeController:KRBaseController, UITextFieldDelegate {
         }
         
         if email.isEmpty {
-            tagTextField.text = (try? KeyManager.getMe()) ?? ""
+            tagTextField.text = (try? IdentityManager.getMe()) ?? ""
         } else {
-           KeyManager.setMe(email: email)
+           IdentityManager.setMe(email: email)
         }
         
         textField.resignFirstResponder()

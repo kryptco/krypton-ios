@@ -1,5 +1,5 @@
 //
-//  HashChainServiceTests.swift
+//  TeamServiceTests.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 8/3/17.
@@ -9,7 +9,7 @@
 import XCTest
 import UIKit
 
-class HashChainServiceTests: XCTestCase {
+class TeamServiceTests: XCTestCase {
     
     var teamIdentity:TeamIdentity!
     
@@ -36,9 +36,9 @@ class HashChainServiceTests: XCTestCase {
     }
     
     func testCreateTeamAndAddMemberAdmin() {
-        let exp = expectation(description: "HashChainService ASYNC request")
+        let exp = expectation(description: "TeamService ASYNC request")
 
-        var service = HashChainService(teamIdentity: teamIdentity)
+        var service = TeamService(teamIdentity: teamIdentity)
 
         do {
             try service.createTeam { (response) in
@@ -50,7 +50,7 @@ class HashChainServiceTests: XCTestCase {
                 case .result(let updatedTeam):
                     
                     self.teamIdentity.team = updatedTeam
-                    service = HashChainService(teamIdentity: self.teamIdentity)
+                    service = TeamService(teamIdentity: self.teamIdentity)
                     // add the admin
                     do {
                         let keyManager = try KeyManager.sharedInstance()

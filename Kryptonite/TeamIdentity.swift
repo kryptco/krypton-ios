@@ -15,6 +15,7 @@ struct TeamIdentity:Jsonable {
     var email:String
     var team:Team
     let keyPair:SodiumKeyPair
+    let dataManager:TeamDataManager
     
     /**
         Create a new identity with an email for use with `team`
@@ -33,6 +34,7 @@ struct TeamIdentity:Jsonable {
         self.email = email
         self.team = team
         self.keyPair = keyPair
+        self.dataManager = TeamDataManager(team: team)
     }
     
     init(json: Object) throws {

@@ -14,10 +14,7 @@ class KeyManager {
     var keyPair:KeyPair
     
     enum Storage:String {
-        case tag = "me"
-        case defaultIdentity = "kr_me_email"
-        case teamIdentity = "team_identity"
-        
+        case tag = "me"        
         var key:String { return self.rawValue }
     }
     
@@ -25,7 +22,6 @@ class KeyManager {
         self.keyPair = keyPair
     }
     
-    private static let meKey = "kr_me_email"
     private static let mutex = Mutex()
 
     enum Errors:Error {
@@ -108,81 +104,7 @@ class KeyManager {
         } catch {}
 
         return false
-    }
-    
-    /** 
-        Me - create and get the default identity
-     */
-    class func getMe() throws -> String {
-        mutex.lock()
-        defer { mutex.unlock() }
-        
-        return try KeychainStorage().get(key: Storage.defaultIdentity.key)
-    }
-    
-    class func setMe(email:String) {
-        mutex.lock {
-            do {
-                try KeychainStorage().set(key: Storage.defaultIdentity.key, value: email)
-            } catch {
-                log("failed to store `me` email: \(error)", .error)
-            }
-            
-            dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
-        }
-    }
-    
-    class func clearMe() {
-        mutex.lock()
-        defer { mutex.unlock() }
-
-        do {
-            try KeychainStorage().delete(key: Storage.defaultIdentity.key)
-        } catch {
-            log("failed to delete `me` email: \(error)", .error)
-        }
-    }
-    
-    /**
-        Team - create and get the team identity
-     */
-    class func getTeamIdentity() throws -> TeamIdentity? {
-        mutex.lock()
-        defer { mutex.unlock() }
-
-        do {
-            let teamIdData = try KeychainStorage().getData(key: Storage.teamIdentity.key)
-            return try TeamIdentity(jsonData: teamIdData)
-        } catch KeychainStorageError.notFound {
-            return nil
-        }
-
-    }
-    
-    class func hasTeam() -> Bool {
-        do {
-            let teamIdentity = try KeyManager.getTeamIdentity()
-            return teamIdentity != nil
-        } catch  {
-            return false
-        }
-    }
-
-    class func setTeam(identity:TeamIdentity) throws {
-        mutex.lock()
-        defer { mutex.unlock() }
-        
-        try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
-        Policy.teamDidUpdate()
-    }
-    
-    class func removeTeamIdentity() throws {
-        mutex.lock()
-        defer { mutex.unlock() }
-
-        try KeychainStorage().delete(key: Storage.teamIdentity.key)
-        Policy.teamDidUpdate()
-    }
+    }    
 }
 
 /**

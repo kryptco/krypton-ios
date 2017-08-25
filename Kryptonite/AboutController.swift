@@ -88,7 +88,7 @@ class AboutController: KRBaseController {
             Analytics.postEvent(category: "keypair", action: "destroy")
             
             let _ = KeyManager.destroyKeyPair()
-            KeyManager.clearMe()
+            IdentityManager.clearMe()
             SessionManager.shared.destroy()
             
             dispatchMain {

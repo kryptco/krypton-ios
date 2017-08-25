@@ -1,5 +1,5 @@
 //
-//  HashChainManager.swift
+//  TeamDataManager.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 7/30/17.
@@ -10,13 +10,13 @@ import Foundation
 import CoreData
 import JSON
 
-class HashChainBlockManager {
+class TeamDataManager {
     
     private var mutex = Mutex()
     private let teamIdentity:String
     
     init(team:Team) {
-        teamIdentity = "\(team.id)_\(team.publicKey.toBase64(true))"
+        teamIdentity = "\(team.id)"
     }
     
     //MARK: Core Data setup
@@ -328,15 +328,6 @@ class HashChainBlockManager {
             hostEntry.setValue(member.pgpPublicKey.toBase64(), forKey: "pgp_public_key")
             hostEntry.setValue(blockHash.toBase64(), forKey: "block_hash")
             hostEntry.setValue(Date(), forKey: "date_added")
-            
-            do {
-                try self.managedObjectContext.save()
-                
-            } catch let error  {
-                // if save failed, delete cached object
-                self.managedObjectContext.delete(hostEntry)
-                log("Could not save block: \(error)", .error)
-            }
         }
         
         mutex.unlock()
@@ -363,15 +354,6 @@ class HashChainBlockManager {
             hostEntry.setValue(block.signature.toBase64(), forKey: "signature")
             hostEntry.setValue(block.hash().toBase64(), forKey: "block_hash")
             hostEntry.setValue(Date(), forKey: "date_added")
-
-            do {
-                try self.managedObjectContext.save()
-                
-            } catch let error  {
-                // if save failed, delete cached object
-                self.managedObjectContext.delete(hostEntry)
-                log("Could not save block: \(error)", .error)
-            }
         }
         
         mutex.unlock()
@@ -397,15 +379,6 @@ class HashChainBlockManager {
             hostEntry.setValue(sshHostKey.publicKey.toBase64(), forKey: "public_key")
             hostEntry.setValue(blockHash.toBase64(), forKey: "block_hash")
             hostEntry.setValue(Date(), forKey: "date_added")
-            
-            do {
-                try self.managedObjectContext.save()
-                
-            } catch let error  {
-                // if save failed, delete cached object
-                self.managedObjectContext.delete(hostEntry)
-                log("Could not save block: \(error)", .error)
-            }
         }
         
         mutex.unlock()
@@ -432,12 +405,6 @@ class HashChainBlockManager {
             
             objects.forEach {
                 self.managedObjectContext.delete($0)
-            }
-            
-            do {
-                try self.managedObjectContext.save()
-            } catch let error  {
-                log("could not save delete member: \(error)", .error)
             }
         }
     }
@@ -468,12 +435,6 @@ class HashChainBlockManager {
             
             objects.forEach {
                 self.managedObjectContext.delete($0)
-            }
-            
-            do {
-                try self.managedObjectContext.save()
-            } catch let error  {
-                log("could not save delete ssh host key: \(error)", .error)
             }
         }
     }
@@ -507,7 +468,7 @@ class HashChainBlockManager {
 
 
     
-    //MARK: - Core Data Saving support
+    //MARK: - Core Data Saving/Roll back support
     func saveContext () {
         defer { mutex.unlock() }
         mutex.lock()
@@ -520,6 +481,17 @@ class HashChainBlockManager {
                     log("Persistance manager save error: \(error)", .error)
                     
                 }
+            }
+        }
+    }
+    
+    func rollbackContext () {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        self.managedObjectContext.performAndWait {
+            if self.managedObjectContext.hasChanges {
+                self.managedObjectContext.rollback()
             }
         }
     }

@@ -63,7 +63,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             return
         }
         
-        guard  let _ = try? KeyManager.getMe()
+        guard  let _ = try? IdentityManager.getMe()
         else {
             self.performSegue(withIdentifier: "showOnboardEmail", sender: nil)
             return
@@ -138,7 +138,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         // load the identients
         var teamIdentity:TeamIdentity?
         do {
-            teamIdentity = try KeyManager.getTeamIdentity()
+            teamIdentity = try IdentityManager.getTeamIdentity()
         } catch {
             log("error loading team: \(error)", .error)
             return

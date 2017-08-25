@@ -129,9 +129,9 @@ class Policy {
                 {
                     // if we have a team and
                     // check if verifedHostAuth's 'hostName' is pinned to that team
-                    guard  let teamIdentity = (try? KeyManager.getTeamIdentity()) as? TeamIdentity,
+                    guard  let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity,
                         let hostName = sshSign.verifiedHostAuth?.hostName,
-                        try HashChainBlockManager(team: teamIdentity.team).sshHostKeyExists(for: hostName) == false
+                        try TeamDataManager(team: teamIdentity.team).sshHostKeyExists(for: hostName) == false
                         else {
                             break
                     }

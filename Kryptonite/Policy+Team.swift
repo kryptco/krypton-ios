@@ -20,7 +20,7 @@ extension Policy {
         var approvalSeconds:TimeInterval
         
         // check if we have a team
-        if  let teamIdentity = (try? KeyManager.getTeamIdentity()) as? TeamIdentity,
+        if  let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity,
             let teamApprovalSeconds = teamIdentity.team.policy.temporaryApprovalSeconds
         {
             approvalSeconds = Double(teamApprovalSeconds)

@@ -12,9 +12,7 @@ typealias UpdatedTeam = Team
 
 extension HashChain.Response {
     
-    func verifyAndDigestBlocks(for team:Team) throws -> UpdatedTeam {
-        
-        let blockDataManager = HashChainBlockManager(team: team)
+    func verifyAndProcessBlocks(team:Team, dataManager:TeamDataManager) throws -> UpdatedTeam {
         
         var updatedTeam = team
         
@@ -48,7 +46,7 @@ extension HashChain.Response {
             updatedTeam.info = createChain.teamInfo
             
             // add the block to the data store
-            blockDataManager.add(block: createBlock)
+            dataManager.add(block: createBlock)
             
             lastBlockHash = createBlock.hash()
             blockStart += 1
@@ -96,13 +94,13 @@ extension HashChain.Response {
                 updatedTeam.lastInvitePublicKey = nil
                 
             case .acceptInvite(let member):
-                blockDataManager.add(member: member, blockHash: nextBlock.hash())
+                dataManager.add(member: member, blockHash: nextBlock.hash())
                 
             case .addMember(let member):
-                blockDataManager.add(member: member, blockHash: nextBlock.hash())
+                dataManager.add(member: member, blockHash: nextBlock.hash())
 
             case .removeMember(let memberPublicKey):
-                blockDataManager.remove(member: memberPublicKey)
+                dataManager.remove(member: memberPublicKey)
                 
             case .setPolicy(let policy):
                 updatedTeam.policy = policy
@@ -111,14 +109,14 @@ extension HashChain.Response {
                 updatedTeam.info = info
             
             case .pinHostKey(let host):
-                blockDataManager.pin(sshHostKey: host, blockHash: nextBlock.hash())
+                dataManager.pin(sshHostKey: host, blockHash: nextBlock.hash())
                 
             case .unpinHostKey(let host):
-                blockDataManager.unpin(sshHostKey: host)
+                dataManager.unpin(sshHostKey: host)
             }
             
             // add the block to the data store
-            blockDataManager.add(block: nextBlock)
+            dataManager.add(block: nextBlock)
             
             lastBlockHash = nextBlock.hash()
         }

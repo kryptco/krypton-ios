@@ -367,7 +367,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 
         // if team policy set: refresh approval category on notifications
-        if  let teamIdentity = (try? KeyManager.getTeamIdentity()) as? TeamIdentity,
+        if  let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity,
             let _ = teamIdentity.team.policy.temporaryApprovalSeconds
         {
             self.registerPushNotifications()
@@ -375,7 +375,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
  
         
         //  Send email again if not sent succesfully
-        if let email = try? KeyManager.getMe() {
+        if let email = try? IdentityManager.getMe() {
             dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
         }
     }

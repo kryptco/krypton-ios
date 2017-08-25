@@ -239,9 +239,9 @@ class Silo {
                     // team known hosts
                     // if team exists then check for pinned known hosts
                     if  let verifiedHostAuth = signRequest.verifiedHostAuth,
-                        let teamIdentity = try KeyManager.getTeamIdentity()
+                        let teamIdentity = try IdentityManager.getTeamIdentity()
                     {
-                        let blockDataManager = HashChainBlockManager(team: teamIdentity.team)
+                        let blockDataManager = TeamDataManager(team: teamIdentity.team)
                         try blockDataManager.check(verifiedHost: verifiedHostAuth)
                     }
                     
@@ -331,7 +331,7 @@ class Silo {
                 pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
             }
             
-            responseType = .me(MeResponse(me: MeResponse.Me(email: try KeyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
+            responseType = .me(MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
             
         case .createTeam, .noOp, .unpair:
             throw ResponseNotNeededError()

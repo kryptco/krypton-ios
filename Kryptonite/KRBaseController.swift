@@ -190,8 +190,8 @@ extension UIViewController {
         }
         
         // team updates
-        if KeyManager.hasTeam() && HashChainUpdater.shouldCheck {
-            HashChainUpdater.checkForUpdate { result in
+        if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
+            TeamUpdater.checkForUpdate { result in
                 log("did update team: \(result)")
             }
         }
@@ -209,7 +209,7 @@ extension UIViewController {
         case .joinTeam:
             
             do {
-                if let teamIdentity = try KeyManager.getTeamIdentity() {
+                if let teamIdentity = try IdentityManager.getTeamIdentity() {
                     self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
                     return
                 }

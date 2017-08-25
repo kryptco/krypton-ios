@@ -25,7 +25,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
             let pk = try km.keyPair.publicKey.wireFormat()
             let fp = pk.fingerprint().hexPretty
             
-            if let email = try? KeyManager.getMe() {
+            if let email = try? IdentityManager.getMe() {
                 nameTextfield.text = email
                 showNext()
             } else {
@@ -77,7 +77,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
             Analytics.postEvent(category: "email", action: "skipped")
         }
         
-        KeyManager.setMe(email: email)
+        IdentityManager.setMe(email: email)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

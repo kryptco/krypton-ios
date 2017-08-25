@@ -82,21 +82,19 @@ class TeamJoinCompleteController:KRBaseController {
         
         do {
             
-            var hashChainService = HashChainService(teamIdentity: teamIdentity)
-
+            let temporaryService = TeamService.temporary(for: teamIdentity)
             // 1. create the team.
-            try hashChainService.createTeam { response in
+            try temporaryService.createTeam { response in
                 switch response {
                 case .error(let error):
                     self.showCreateFailure(message: "Could not create team", error: error, request: request, session: session)
                     
-                case .result(let updatedTeam):
-                    self.teamIdentity.team = updatedTeam
-                    hashChainService = HashChainService(teamIdentity: self.teamIdentity)
+                case .result(let service):
+                    self.teamIdentity.team = service.teamIdentity.team
                     
                     do {
                         // save the team identity
-                        try KeyManager.setTeam(identity: self.teamIdentity)
+                        try IdentityManager.saveTeamIdentity(identity: self.teamIdentity)
                     } catch {
                         self.showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
                         return
@@ -129,16 +127,18 @@ class TeamJoinCompleteController:KRBaseController {
                                                         sshPublicKey: sshPublicKey,
                                                         pgpPublicKey: pgpPublicKey)
                         
-                        try hashChainService.add(member: admin) { addResponse in
+                        let service = try TeamService.shared()
+                        
+                        try service.add(member: admin) { addResponse in
                             switch addResponse {
                             case .error(let error):
                                 self.showCreateFailure(message: "Could not add you to the team", error: error, request: request, session: session)
 
-                            case .result(let updatedTeam):
-                                self.teamIdentity.team = updatedTeam
+                            case .result(let service):
+                                self.teamIdentity.team = service.teamIdentity.team
                                 
                                 // save the team identity again
-                                try? KeyManager.setTeam(identity: self.teamIdentity)
+                                try? IdentityManager.saveTeamIdentity(identity: self.teamIdentity)
               
                                 self.showSuccess()
                             }
@@ -159,20 +159,18 @@ class TeamJoinCompleteController:KRBaseController {
     
     // for .invite
     func accept(invite:TeamInvite) {
-        let hashChainService = HashChainService(teamIdentity: teamIdentity)
-
         do {
-            try hashChainService.accept(invite: invite) { result in
+            try TeamService.temporary(for: teamIdentity).accept(invite: invite) { result in
                 switch result {
                 case .error(let error):
                     self.showFailure(by: JoinWorkflowError(error, action: "Team server error response on accept invite."))
                     
-                case .result(let updatedTeam):
-                    self.teamIdentity.team = updatedTeam
+                case .result(let service):
+                    self.teamIdentity.team = service.teamIdentity.team
                     
                     // save the identity
                     do {
-                        try KeyManager.setTeam(identity: self.teamIdentity)
+                        try IdentityManager.saveTeamIdentity(identity: self.teamIdentity)
                     } catch {
                         self.showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
                         return
@@ -182,19 +180,19 @@ class TeamJoinCompleteController:KRBaseController {
                 }
             }
             
-        } catch HashChainService.Errors.needNewestBlock {
+        } catch TeamService.Errors.needNewestBlock {
             
             // we have a newer block
             // fetch new blocks and try again
             do {
-                try hashChainService.getTeam(using: invite) { (result) in
+                try TeamService.temporary(for: teamIdentity).getTeam(using: invite) { (result) in
                     switch result {
                     case .error(let error):
                         self.showFailure(by: JoinWorkflowError(error, action: "Server error getting newest block on retry."))
                         
                     // new team object, update and save it
-                    case .result(let updatedTeam):
-                        self.teamIdentity.team = updatedTeam
+                    case .result(let service):
+                        self.teamIdentity.team = service.teamIdentity.team
                         
                         // try join team again
                         self.finishJoinTeam()

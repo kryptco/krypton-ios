@@ -82,7 +82,7 @@ class TeamDetailController: KRBaseTableController {
     
     dynamic func fetchTeamUpdates() {
         do {
-            try HashChainService(teamIdentity: identity).getVerifiedTeamUpdates { (result) in
+            try TeamService.shared().getVerifiedTeamUpdates { (result) in
                 
                 if #available(iOS 10.0, *) {
                     dispatchMain { self.tableView.refreshControl?.endRefreshing() }
@@ -92,9 +92,10 @@ class TeamDetailController: KRBaseTableController {
                 case .error(let e):
                     self.showWarning(title: "Error", body: "Could not fetch new team updates. \(e).")
                     
-                case .result(let updatedTeam):
-                    self.identity.team = updatedTeam
-                    try? KeyManager.setTeam(identity: self.identity)
+                case .result(let service):
+                    self.identity.team = service.teamIdentity.team
+                    
+                    try? IdentityManager.saveTeamIdentity(identity: self.identity)
                     self.didUpdateTeamIdentity()
                     
                     self.loadNewLogs()
@@ -108,7 +109,7 @@ class TeamDetailController: KRBaseTableController {
     func loadNewLogs() {
         
         do {
-            let blockManager = HashChainBlockManager(team: identity.team)
+            let blockManager = TeamDataManager(team: identity.team)
             
             self.blocks = try blockManager.fetchAll().map {
                 try HashChain.Payload(jsonString: $0.payload)
@@ -149,7 +150,7 @@ class TeamDetailController: KRBaseTableController {
             }
             
             do {
-                try KeyManager.removeTeamIdentity()
+                try IdentityManager.removeTeamIdentity()
             } catch {
                 self.showWarning(title: "Error", body: "Cannot leave team: \(error)")
                 return

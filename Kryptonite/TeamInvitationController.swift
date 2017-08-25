@@ -29,7 +29,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         joinButton.layer.masksToBounds = false
         
         teamNameLabel.text = teamIdentity.team.name
-        emailTextfield.text = try? KeyManager.getMe()
+        emailTextfield.text = try? IdentityManager.getMe()
         emailTextfield.isEnabled = true
         setJoin(valid: !(emailTextfield.text ?? "").isEmpty)
         
