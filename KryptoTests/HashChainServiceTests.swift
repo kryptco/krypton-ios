@@ -38,19 +38,17 @@ class TeamServiceTests: XCTestCase {
     func testCreateTeamAndAddMemberAdmin() {
         let exp = expectation(description: "TeamService ASYNC request")
 
-        var service = TeamService(teamIdentity: teamIdentity)
-
         do {
-            try service.createTeam { (response) in
+            try TeamService.temporary(for: teamIdentity).createTeam { (response) in
                 
                 switch response {
                 case .error(let e):
                     XCTFail("FAIL - Server error: \(e)")
                 
-                case .result(let updatedTeam):
+                case .result(let service):
                     
-                    self.teamIdentity.team = updatedTeam
-                    service = TeamService(teamIdentity: self.teamIdentity)
+                    self.teamIdentity.team = service.teamIdentity.team
+                    
                     // add the admin
                     do {
                         let keyManager = try KeyManager.sharedInstance()
@@ -65,8 +63,8 @@ class TeamServiceTests: XCTestCase {
                             case .error(let e):
                                 XCTFail("FAIL - Server error: \(e)")
                                 
-                            case .result(let updatedTeam):
-                                self.teamIdentity.team = updatedTeam
+                            case .result(let service):
+                                self.teamIdentity.team = service.teamIdentity.team
                                 
                                 exp.fulfill()
                             }
