@@ -368,16 +368,15 @@ class TeamEventLogCell:UITableViewCell {
 
 class TeamMemberCell:UITableViewCell {
     @IBOutlet weak var email:UILabel!
-    @IBOutlet weak var detail:UILabel!
 
     func set(member:Team.MemberIdentity) {
         email.text = member.email
         
-        if member.publicKey.count >= 16 {
-            detail.text = member.publicKey.subdata(in: 0 ..< 16).hexPretty
-        } else {
-            detail.text = member.publicKey.hexPretty
-        }
+//        if member.publicKey.count >= 16 {
+//            detail.text = member.publicKey.subdata(in: 0 ..< 16).hexPretty
+//        } else {
+//            detail.text = member.publicKey.hexPretty
+//        }
     }
 }
 

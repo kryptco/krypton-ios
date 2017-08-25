@@ -14,7 +14,7 @@
         <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="ssh_public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
-    <entity name="SSHHostKey" representedClassName="" syncable="YES">
+    <entity name="SSHHostKey" syncable="YES">
         <attribute name="block_hash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="host" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
