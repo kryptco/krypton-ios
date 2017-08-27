@@ -100,7 +100,7 @@ class Silo {
         if pendingRequests?.object(forKey: CacheKey(session, request)) != nil {
             throw RequestPendingError()
         }
-        
+                
         // decide if request body can be responded to immediately
         // or doesn't need response,
         // or needs user's approval first

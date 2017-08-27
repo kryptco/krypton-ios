@@ -44,6 +44,17 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
         
+        // update the team if needed first
+        if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
+            self.handle(request, unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
+            return
+        }
+        
+        // otherwise handle the incoming request
+        self.handle(request, unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
+    }
+    
+    func handle(_ request: UNNotificationRequest, unsealedRequest:Request, session:Session, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         
         do {
             
@@ -76,14 +87,14 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             content.subtitle = noteSubtitle
                             content.body = noteBody
-
+                            
                             // special case: me request
                             if case .me = unsealedRequest.body {
                                 content.title = "\(session.pairing.displayName)."
                             }
-                            // cached
+                                // cached
                             else if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
-
+                                
                                 if let error = resp.body.error {
                                     content.title = "Failed approval for \(session.pairing.displayName)."
                                     content.body = error
@@ -92,7 +103,7 @@ class NotificationService: UNNotificationServiceExtension {
                                     content.categoryIdentifier = unsealedRequest.autoAuthorizeCategoryIdentifier
                                 }
                             }
-                            // pending response
+                                // pending response
                             else {
                                 content.title = "Request from \(session.pairing.displayName)."
                                 content.categoryIdentifier = unsealedRequest.authorizeCategoryIdentifier
@@ -101,7 +112,7 @@ class NotificationService: UNNotificationServiceExtension {
                             content.userInfo = ["session_display": session.pairing.displayName,
                                                 "session_id": session.id,
                                                 "request": unsealedRequest.object]
-
+                            
                             
                             if noSound {
                                 content.sound = nil
@@ -184,7 +195,6 @@ class NotificationService: UNNotificationServiceExtension {
                 
             })
         }
-        
     }
     
     func failUnknown(with error:Error?) {

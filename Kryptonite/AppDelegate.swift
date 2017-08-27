@@ -123,7 +123,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return
         }
         
+        // check for app updates
         checkForAppUpdateIfNeededBackground()
+        
+        // update the team if needed
+        if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
+            self.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
+            return
+        }
         
         guard   let queue = (userInfo["aps"] as? [String: Any])?["queue"] as? QueueName,
                 let networkMessageString = (userInfo["aps"] as? [String: Any])?["c"] as? String
@@ -168,6 +175,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let request = try? Request(json: requestObject)
             
         {
+            // update the team if needed first
+            if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
+                self.handleNotification(userInfo: userInfo)
+                return
+            }
+
             // if approval notification
             do {
                 try TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)

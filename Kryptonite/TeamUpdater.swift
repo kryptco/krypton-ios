@@ -39,6 +39,12 @@ class TeamUpdater {
         return abs(last.timeIntervalSinceNow) > TeamUpdater.checkInterval
     }
     
+    class func checkForUpdateIfNeeded(completionHandler:@escaping ((_ didUpdate:Bool) ->Void)) {
+        if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
+            checkForUpdate(completionHandler: completionHandler)
+        }
+    }
+    
     class func checkForUpdate(completionHandler:@escaping ((_ didUpdate:Bool) ->Void)) {
         mutex.lock()
         
