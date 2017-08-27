@@ -92,6 +92,7 @@ class IdentityManager {
         do {
             // save the team + identity to keychain
             try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
+            try identity.commitTeamChanges()
             teamIdentity = identity
             
         } catch {
@@ -100,12 +101,8 @@ class IdentityManager {
             throw error
         }
         
-        // commit the db transaction for new team data updates
-        identity.dataManager.saveContext()
-        
         // notify policy that rules may have changed
         Policy.teamDidUpdate()
-        
     }
     
     class func removeTeamIdentity() throws {

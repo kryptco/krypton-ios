@@ -93,11 +93,16 @@ class TeamDetailController: KRBaseTableController {
                     self.showWarning(title: "Error", body: "Could not fetch new team updates. \(e).")
                     
                 case .result(let service):
-                    self.identity.team = service.teamIdentity.team
+                    self.identity = service.teamIdentity
                     
-                    try? IdentityManager.saveTeamIdentity(identity: self.identity)
+                    do {
+                        try self.identity.commitTeamChanges()
+                    } catch {
+                        self.showWarning(title: "Error", body: "Could not save team updates. \(error).")
+                        return
+                    }
+                    
                     self.didUpdateTeamIdentity()
-                    
                     self.loadNewLogs()
                 }
             }
@@ -109,13 +114,11 @@ class TeamDetailController: KRBaseTableController {
     func loadNewLogs() {
         
         do {
-            let blockManager = TeamDataManager(team: identity.team)
-            
-            self.blocks = try blockManager.fetchAll().map {
+            self.blocks = try identity.dataManager.fetchAll().map {
                 try HashChain.Payload(jsonString: $0.payload)
             }
-            self.members = try blockManager.fetchAll()
-            self.hosts = try blockManager.fetchAll()
+            self.members = try identity.dataManager.fetchAll()
+            self.hosts = try identity.dataManager.fetchAll()
             
             dispatchMain {
                 self.tableView.reloadData()

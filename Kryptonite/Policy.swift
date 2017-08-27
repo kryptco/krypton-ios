@@ -131,7 +131,7 @@ class Policy {
                     // check if verifedHostAuth's 'hostName' is pinned to that team
                     guard  let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity,
                         let hostName = sshSign.verifiedHostAuth?.hostName,
-                        try TeamDataManager(team: teamIdentity.team).sshHostKeyExists(for: hostName) == false
+                        try teamIdentity.dataManager.sshHostKeyExists(for: hostName) == false
                         else {
                             break
                     }

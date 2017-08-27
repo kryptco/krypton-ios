@@ -22,12 +22,7 @@ class TeamServiceTests: XCTestCase {
         }
         
         // create the team
-        let seed = try! Data.random(size: KRSodium.shared().sign.SeedBytes)
-        let teamKeypair = try! KRSodium.shared().sign.keyPair(seed: seed)
-        var team = try! Team(name: "iOSTests", publicKey: teamKeypair!.publicKey)
-        team.adminKeyPairSeed = seed
-        
-        teamIdentity = try! TeamIdentity(email: "bob@iostests.com", team: team)
+        teamIdentity = try! TeamIdentity.newAdmin(email: "bob@iostests.com", teamName: "iOSTests")
     }
     
     override func tearDown() {
@@ -47,7 +42,7 @@ class TeamServiceTests: XCTestCase {
                 
                 case .result(let service):
                     
-                    self.teamIdentity.team = service.teamIdentity.team
+                    self.teamIdentity = service.teamIdentity
                     
                     // add the admin
                     do {
@@ -64,7 +59,7 @@ class TeamServiceTests: XCTestCase {
                                 XCTFail("FAIL - Server error: \(e)")
                                 
                             case .result(let service):
-                                self.teamIdentity.team = service.teamIdentity.team
+                                self.teamIdentity = service.teamIdentity
                                 
                                 exp.fulfill()
                             }

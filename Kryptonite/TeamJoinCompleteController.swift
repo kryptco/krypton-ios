@@ -90,7 +90,7 @@ class TeamJoinCompleteController:KRBaseController {
                     self.showCreateFailure(message: "Could not create team", error: error, request: request, session: session)
                     
                 case .result(let service):
-                    self.teamIdentity.team = service.teamIdentity.team
+                    self.teamIdentity = service.teamIdentity
                     
                     do {
                         // save the team identity
@@ -102,7 +102,7 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     
                     // 2. send the create team response
-                    let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: self.teamIdentity.team.adminKeyPairSeed?.toBase64(), error: nil))
+                    let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: self.teamIdentity.teamAdminSeed?.toBase64(), error: nil))
                     
                     let response = Response(requestID: request.id,
                                             endpoint: API.endpointARN ?? "",
@@ -135,7 +135,7 @@ class TeamJoinCompleteController:KRBaseController {
                                 self.showCreateFailure(message: "Could not add you to the team", error: error, request: request, session: session)
 
                             case .result(let service):
-                                self.teamIdentity.team = service.teamIdentity.team
+                                self.teamIdentity = service.teamIdentity
                                 
                                 // save the team identity again
                                 try? IdentityManager.saveTeamIdentity(identity: self.teamIdentity)
@@ -166,7 +166,7 @@ class TeamJoinCompleteController:KRBaseController {
                     self.showFailure(by: JoinWorkflowError(error, action: "Team server error response on accept invite."))
                     
                 case .result(let service):
-                    self.teamIdentity.team = service.teamIdentity.team
+                    self.teamIdentity = service.teamIdentity
                     
                     // save the identity
                     do {
@@ -192,7 +192,7 @@ class TeamJoinCompleteController:KRBaseController {
                         
                     // new team object, update and save it
                     case .result(let service):
-                        self.teamIdentity.team = service.teamIdentity.team
+                        self.teamIdentity = service.teamIdentity
                         
                         // try join team again
                         self.finishJoinTeam()

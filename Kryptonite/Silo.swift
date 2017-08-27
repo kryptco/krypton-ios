@@ -241,8 +241,7 @@ class Silo {
                     if  let verifiedHostAuth = signRequest.verifiedHostAuth,
                         let teamIdentity = try IdentityManager.getTeamIdentity()
                     {
-                        let blockDataManager = TeamDataManager(team: teamIdentity.team)
-                        try blockDataManager.check(verifiedHost: verifiedHostAuth)
+                        try teamIdentity.dataManager.check(verifiedHost: verifiedHostAuth)
                     }
                     
                     // local known hosts

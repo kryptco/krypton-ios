@@ -63,15 +63,13 @@ class TeamUpdater {
                     completionHandler(false)
                     
                 case .result(let service):
-                    teamIdentity.team = service.teamIdentity.team
+                    teamIdentity = service.teamIdentity
                     
                     do {
-                        try IdentityManager.saveTeamIdentity(identity: teamIdentity)
+                        try teamIdentity.commitTeamChanges()
                         completionHandler(true)
-
                     } catch {
                         log("error saving team: \(error)", .error)
-
                         completionHandler(false)
                     }
                     

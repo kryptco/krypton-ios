@@ -56,12 +56,10 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
     func loadTeam() {
         
         var teamIdentity:TeamIdentity
-        var team:Team
         do {
             switch joinType! {
             case .invite(let invite):
-                team = try Team(name: "", publicKey: invite.teamPublicKey)
-                teamIdentity = try TeamIdentity(email: "", team: team)
+                teamIdentity = try TeamIdentity.new(email: "", teamPublicKey: invite.teamPublicKey)
 
             case .create(let request, _):
                 guard case .createTeam(let create) = request.body else {
@@ -69,17 +67,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
                     return
                 }
                 
-                let keypairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
-                
-                guard let keypair = try KRSodium.shared().sign.keyPair(seed: keypairSeed) else {
-                    throw CryptoError.generate(.Ed25519, nil)
-                }
-                
-                team = try Team(name: create.name, publicKey: keypair.publicKey)
-                team.adminKeyPairSeed = keypairSeed
-                
-                teamIdentity = try TeamIdentity(email: "", team: team)
-
+                teamIdentity = try TeamIdentity.newAdmin(email: "", teamName: create.name)
             }
         } catch {
             self.showError(message: "Could not generate team identity. Reason: \(error).")
@@ -98,7 +86,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
                         return
                         
                     case .result(let service):
-                        teamIdentity.team = service.teamIdentity.team
+                        teamIdentity = service.teamIdentity
                         
                         dispatchMain {
                             self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)

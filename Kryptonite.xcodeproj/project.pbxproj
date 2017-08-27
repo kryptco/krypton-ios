@@ -1146,7 +1146,6 @@
 				FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */,
 				FAB664EE1DBFF18C0094896F /* Updater.swift */,
 				FAD361F61DF08F9E00D17BAB /* Connectivity.swift */,
-				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */,
 				FA1682891EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld */,
 				FADA1A771F2EE100004AE6B0 /* Teams.xcdatamodeld */,
@@ -1296,6 +1295,7 @@
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
 				8D003DF11D90EDE30085ED21 /* Sodium.swift */,
+				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FACE33541EC186DC003EC6C0 /* SSHUtil.swift */,
 			);
 			name = Krypto;

@@ -8,17 +8,16 @@
 
 import Foundation
 
-typealias UpdatedTeam = Team
-
-extension HashChain.Response {
+extension TeamIdentity {
     
-    func verifyAndProcessBlocks(team:Team, dataManager:TeamDataManager) throws -> UpdatedTeam {
+    mutating func verifyAndProcessBlocks(response:HashChain.Response) throws {
         
-        var updatedTeam = team
+        let blocks = response.blocks
+        
+        var updatedTeam = self.team
+        var lastBlockHash = updatedTeam.lastBlockHash
         
         var blockStart = 0
-        var lastBlockHash = team.lastBlockHash
-        
         if lastBlockHash == nil {
             guard blocks.count > 0 else {
                 throw HashChain.Errors.missingCreateChain
@@ -27,7 +26,7 @@ extension HashChain.Response {
             let createBlock = blocks[0]
             
             // 1. verify the block signature
-            guard try KRSodium.shared().sign.verify(message: createBlock.payload.utf8Data(), publicKey: team.publicKey, signature: createBlock.signature)
+            guard try KRSodium.shared().sign.verify(message: createBlock.payload.utf8Data(), publicKey: teamPublicKey, signature: createBlock.signature)
                 else {
                     throw HashChain.Errors.badSignature
             }
@@ -39,7 +38,7 @@ extension HashChain.Response {
             }
             
             // 3. check the team public key matches
-            guard createChain.teamPublicKey == team.publicKey else {
+            guard createChain.teamPublicKey == teamPublicKey else {
                 throw HashChain.Errors.teamPublicKeyMismatch
             }
             
@@ -66,7 +65,7 @@ extension HashChain.Response {
             if case .acceptInvite = appendBlock.operation, let noncePublicKey = updatedTeam.lastInvitePublicKey {
                 publicKey = noncePublicKey
             } else {
-                publicKey = team.publicKey
+                publicKey = teamPublicKey
             }
             
             // 2. Ensure last hash matches
@@ -123,7 +122,7 @@ extension HashChain.Response {
         
         updatedTeam.lastBlockHash = lastBlockHash
         
-        return updatedTeam
+        try set(team: updatedTeam)
     }
 
 }

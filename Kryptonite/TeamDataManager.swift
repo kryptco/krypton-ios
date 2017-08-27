@@ -15,8 +15,13 @@ class TeamDataManager {
     private var mutex = Mutex()
     private let teamIdentity:String
     
-    init(team:Team) {
-        teamIdentity = "\(team.id)"
+    init(teamID:String) {
+        teamIdentity = teamID
+    }
+    
+    enum Errors:Error {
+        case noTeam
+        case noTeamName
     }
     
     //MARK: Core Data setup
@@ -90,6 +95,80 @@ class TeamDataManager {
             type: .equalTo,
             options: NSComparisonPredicate.Options(rawValue: 0)
         )
+    }
+    
+    /**
+        `Team` Data Managment
+ 
+     */
+    func fetchTeam() throws -> Team {
+        defer { mutex.unlock() }
+        mutex.lock()
+
+        let request:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Team")
+        request.fetchLimit = 1
+        request.predicate = self.teamEqualsPredicate(for: self.teamIdentity)
+        
+        var team:Team!
+        
+        var caughtError:Error?
+        self.managedObjectContext.performAndWait {
+            do {
+                guard let object = try (self.managedObjectContext.fetch(request) as? [NSManagedObject])?.first
+                else {
+                    throw Errors.noTeam
+                }
+                
+                guard  let teamObject = object.value(forKey: "json") as? Data
+                else {
+                    throw Errors.noTeamName
+                }
+                
+                team = try Team(jsonData: teamObject)
+            } catch {
+                caughtError = error
+            }
+        }
+        
+        if let error = caughtError {
+            throw error
+        }
+        
+        return team
+    }
+    
+    func set(team:Team) throws {
+        mutex.lock()
+        
+        let request:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Team")
+        request.fetchLimit = 1
+        request.predicate = self.teamEqualsPredicate(for: self.teamIdentity)
+        
+        var caughtError:Error?
+        self.managedObjectContext.performAndWait {
+            do {
+                var teamEntry:NSManagedObject
+                if let object = try (self.managedObjectContext.fetch(request) as? [NSManagedObject])?.first {
+                    teamEntry = object
+                } else {
+                    teamEntry = NSEntityDescription.insertNewObject(forEntityName: "Team", into: self.managedObjectContext)
+                }
+                
+                // set attirbutes
+                teamEntry.setValue(self.teamIdentity, forKey: "id")
+                try teamEntry.setValue(team.jsonData(), forKey: "json")
+                
+            } catch {
+                caughtError = error
+            }
+        }
+        
+        mutex.unlock()
+
+        if let error = caughtError {
+            throw error
+        }
+        
     }
     
     /**
@@ -408,17 +487,6 @@ class TeamDataManager {
             }
         }
     }
-
-    private func memberEqualsPredicate(for memberPublicKey:SodiumPublicKey) -> NSPredicate {
-        return NSComparisonPredicate(
-            leftExpression: NSExpression(forKeyPath: "public_key"),
-            rightExpression: NSExpression(forConstantValue: memberPublicKey.toBase64()),
-            modifier: .direct,
-            type: .equalTo,
-            options: NSComparisonPredicate.Options(rawValue: 0)
-        )
-    }
-    
     
     private func delete(sshHostKey:SSHHostKey) {
         defer { mutex.unlock() }
@@ -438,6 +506,30 @@ class TeamDataManager {
             }
         }
     }
+
+    
+    // MARK: Predicates
+    private func teamEqualsPredicate(for id:String) -> NSPredicate {
+        return NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: "id"),
+            rightExpression: NSExpression(forConstantValue: id),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+    }
+
+    private func memberEqualsPredicate(for memberPublicKey:SodiumPublicKey) -> NSPredicate {
+        return NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: "public_key"),
+            rightExpression: NSExpression(forConstantValue: memberPublicKey.toBase64()),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+    }
+    
+    
     
     private func sshHostNameOnlyEqualsPredicate(for host:String) -> NSPredicate {
         let hostPredicate =  NSComparisonPredicate(
@@ -469,19 +561,23 @@ class TeamDataManager {
 
     
     //MARK: - Core Data Saving/Roll back support
-    func saveContext () {
+    func saveContext() throws {
         defer { mutex.unlock() }
         mutex.lock()
         
+        var caughtError:Error?
         self.managedObjectContext.performAndWait {
             if self.managedObjectContext.hasChanges {
                 do {
                     try self.managedObjectContext.save()
                 } catch {
-                    log("Persistance manager save error: \(error)", .error)
-                    
+                    caughtError = error
                 }
             }
+        }
+        
+        if let error = caughtError {
+            throw error
         }
     }
     

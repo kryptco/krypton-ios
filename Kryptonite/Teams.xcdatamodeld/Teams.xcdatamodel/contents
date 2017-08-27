@@ -20,9 +20,14 @@
         <attribute name="host" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
+    <entity name="Team" representedClassName="" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="json" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Block" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Member" positionX="-315" positionY="147" width="128" height="135"/>
         <element name="SSHHostKey" positionX="-189" positionY="108" width="128" height="105"/>
+        <element name="Team" positionX="-189" positionY="108" width="128" height="75"/>
     </elements>
 </model>
