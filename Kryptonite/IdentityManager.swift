@@ -90,11 +90,29 @@ class IdentityManager {
         defer { mutex.unlock() }
         
         do {
-            // save the team + identity to keychain
+            // save the identity to keychain
             try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
-            try identity.commitTeamChanges()
+            try identity.dataManager.saveContext()
             teamIdentity = identity
             
+        } catch {
+            identity.dataManager.rollbackContext()
+            
+            throw error
+        }
+        
+        // notify policy that rules may have changed
+        Policy.teamDidUpdate()
+    }
+    
+    class func commitTeamChanges(identity:TeamIdentity) throws {
+        mutex.lock()
+        defer { mutex.unlock() }
+        
+        do {
+            try identity.dataManager.saveContext()
+            teamIdentity?.team = identity.team
+            teamIdentity?.dataManager = identity.dataManager
         } catch {
             identity.dataManager.rollbackContext()
             

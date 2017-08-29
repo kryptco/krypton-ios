@@ -48,19 +48,17 @@ class TeamUpdater {
     class func checkForUpdate(completionHandler:@escaping ((_ didUpdate:Bool) ->Void)) {
         mutex.lock()
         
-        guard var teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity else {
+        guard IdentityManager.hasTeam() else {
             log("no team...skipping team update")
             mutex.unlock()
             completionHandler(false)
             return
         }
         
-        log("checking for hash chain updates on \(teamIdentity.team.info.name)...")
+        log("checking for hash chain updates...")
         
         do {
             try TeamService.shared().getVerifiedTeamUpdates { (response) in
-                TeamUpdater.lastChecked = Date()
-                
                 mutex.unlock()
 
                 switch response {
@@ -69,10 +67,9 @@ class TeamUpdater {
                     completionHandler(false)
                     
                 case .result(let service):
-                    teamIdentity = service.teamIdentity
-                    
                     do {
-                        try teamIdentity.commitTeamChanges()
+                        try IdentityManager.commitTeamChanges(identity: service.teamIdentity)
+                        TeamUpdater.lastChecked = Date()
                         completionHandler(true)
                     } catch {
                         log("error saving team: \(error)", .error)

@@ -94,7 +94,7 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     do {
                         // save the team identity
-                        try IdentityManager.saveTeamIdentity(identity: self.teamIdentity)
+                        try IdentityManager.saveTeamIdentity(identity: service.teamIdentity)
                     } catch {
                         self.showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
                         return
@@ -116,6 +116,8 @@ class TeamJoinCompleteController:KRBaseController {
                         log("error sending response: \(error)", .error)
                         self.showWarning(title: "Error", body: "Couldn't respond with team info to \(session.pairing.displayName). \(error).")
                     }
+                    
+                    self.showSuccess()
                 }
             }
             

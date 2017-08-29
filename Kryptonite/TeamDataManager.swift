@@ -15,8 +15,8 @@ class TeamDataManager {
     private var mutex = Mutex()
     private let teamIdentity:String
     
-    init(teamID:String) {
-        teamIdentity = teamID
+    init(teamID:Data) {
+        teamIdentity = teamID.toBase64(true)
     }
     
     enum Errors:Error {

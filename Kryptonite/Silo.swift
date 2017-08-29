@@ -239,7 +239,7 @@ class Silo {
                     // team known hosts
                     // if team exists then check for pinned known hosts
                     if  let verifiedHostAuth = signRequest.verifiedHostAuth,
-                        let teamIdentity = try IdentityManager.getTeamIdentity()
+                        let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity
                     {
                         try teamIdentity.dataManager.check(verifiedHost: verifiedHostAuth)
                     }

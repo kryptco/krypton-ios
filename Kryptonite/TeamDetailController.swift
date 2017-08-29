@@ -96,7 +96,7 @@ class TeamDetailController: KRBaseTableController {
                     self.identity = service.teamIdentity
                     
                     do {
-                        try self.identity.commitTeamChanges()
+                        try IdentityManager.commitTeamChanges(identity: service.teamIdentity)
                     } catch {
                         self.showWarning(title: "Error", body: "Could not save team updates. \(error).")
                         return

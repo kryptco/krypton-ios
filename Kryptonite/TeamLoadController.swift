@@ -30,24 +30,16 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
         
         // ensure we don't have a team yet
-        do {
-            if let teamIdentity = try IdentityManager.getTeamIdentity() {
-                self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
-                {
-                    self.dismiss(animated: true, completion: nil)
-                }
-                return
-            }
-            
-        } catch {
-            self.showWarning(title: "Error", body: "Couldn't get team information.") {
+        if let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity {
+            self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
+            {
                 self.dismiss(animated: true, completion: nil)
             }
-            
             return
         }
         
-        
+        arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
+
         dispatchAfter(delay: 0.3) {
             self.loadTeam()
         }

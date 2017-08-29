@@ -42,6 +42,10 @@ class HashChain {
     struct Response:JsonReadable {
         let blocks:[Block]
         let hasMore:Bool
+        
+        var hasBlocks:Bool {
+            return blocks.isEmpty == false
+        }
                 
         init(blocks:[Block], hasMore:Bool) {
             self.blocks = blocks

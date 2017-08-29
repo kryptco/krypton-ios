@@ -11,34 +11,23 @@ import Sodium
 import JSON
 
 struct TeamIdentity:Jsonable {
-    let id:String
+    let id:Data
     var email:String
     let keyPair:SodiumKeyPair
-    let dataManager:TeamDataManager
     
-    private let teamID:String
+    private let teamID:Data
     let teamPublicKey:SodiumPublicKey
     let teamAdminSeed:Data?
     
     /**
         Team Persistance
      */
-    private var _team:Team
-    var team:Team {
-        get { return _team }
-    }
+    var dataManager:TeamDataManager
+    var team:Team
     
     mutating func set(team:Team) throws {
         try dataManager.set(team: team)
-        _team = team
-    }
-
-    func commitTeamChanges() throws {
-        try dataManager.saveContext()
-    }
-    
-    func rollbackTeamChanges() throws {
-        dataManager.rollbackContext()
+        self.team = team
     }
     
     /**
@@ -55,8 +44,8 @@ struct TeamIdentity:Jsonable {
     }
 
     static func new(email:String, teamPublicKey:SodiumPublicKey, adminSeed:Data? = nil, teamName:String = "") throws -> TeamIdentity {
-        let id = try Data.random(size: 32).toBase64()
-        let teamID = try Data.random(size: 32).toBase64()
+        let id = try Data.random(size: 32)
+        let teamID = try Data.random(size: 32)
 
         guard let keyPair = try KRSodium.shared().sign.keyPair() else {
             throw CryptoError.generate(KeyType.Ed25519, nil)
@@ -67,7 +56,7 @@ struct TeamIdentity:Jsonable {
         return try TeamIdentity(id: id, email: email, keyPair: keyPair, teamID: teamID, teamPublicKey: teamPublicKey, adminSeed: adminSeed, team: team)
     }
     
-    private init(id:String, email:String, keyPair:SodiumKeyPair, teamID:String, teamPublicKey:SodiumPublicKey, adminSeed:Data? = nil, team:Team) throws {
+    private init(id:Data, email:String, keyPair:SodiumKeyPair, teamID:Data, teamPublicKey:SodiumPublicKey, adminSeed:Data? = nil, team:Team) throws {
         self.id = id
         self.email = email
         self.keyPair = keyPair
@@ -75,15 +64,15 @@ struct TeamIdentity:Jsonable {
         self.teamPublicKey = teamPublicKey
         self.teamAdminSeed = adminSeed
         self.dataManager = TeamDataManager(teamID: teamID)
-        self._team = team
+        self.team = team
     }
     
     init(json: Object) throws {
         let adminSeed:Data? = try? ((json ~> "team_seed") as String).fromBase64()
         
-        let teamID:String = try json ~> "team_id"
+        let teamID:Data = try ((json ~> "team_id") as String).fromBase64()
         
-        try self.init(id: json ~> "id",
+        try self.init(id: ((json ~> "id") as String).fromBase64(),
                       email: json ~> "email",
                       keyPair: SodiumKeyPair(publicKey: ((json ~> "pk") as String).fromBase64(),
                                              secretKey: ((json ~> "sk") as String).fromBase64()),
@@ -94,11 +83,11 @@ struct TeamIdentity:Jsonable {
     }
     
     var object: Object {
-        var obj = ["id": id,
+        var obj = ["id": id.toBase64(),
                    "email": email,
                    "pk": keyPair.publicKey.toBase64(),
                    "sk": keyPair.secretKey.toBase64(),
-                   "team_id": teamID,
+                   "team_id": teamID.toBase64(),
                    "team_pk": teamPublicKey.toBase64()]
         
         if let adminSeed = teamAdminSeed {

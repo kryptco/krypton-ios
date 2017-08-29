@@ -46,7 +46,11 @@ class NotificationService: UNNotificationServiceExtension {
         
         // update the team if needed first
         if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
-            self.handle(request, unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
+            TeamUpdater.checkForUpdate { result in
+                dispatchMain {
+                    self.handle(request, unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
+                }
+            }
             return
         }
         

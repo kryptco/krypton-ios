@@ -196,7 +196,7 @@
 		FA8B543F1ED7887800891161 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA8B54401ED7BD0900891161 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
 		FA8B54411ED7BD1200891161 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
-		FA8F8A9B1F33AA8A00D0D4BE /* HashChainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8A9A1F33AA8A00D0D4BE /* HashChainServiceTests.swift */; };
+		FA8F8A9B1F33AA8A00D0D4BE /* TeamServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8A9A1F33AA8A00D0D4BE /* TeamServiceTests.swift */; };
 		FA8F8AB11F34EFA600D0D4BE /* TeamLoadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */; };
 		FA8F8AB41F3540EA00D0D4BE /* HashChain+Verify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */; };
 		FA8F8AB51F3540EA00D0D4BE /* HashChain+Verify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */; };
@@ -700,7 +700,7 @@
 		FA8523C91DBFDA5200D465D2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		FA8B543B1ED775FF00891161 /* NotifyUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotifyUI-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA8B543D1ED7780500891161 /* NotifyUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifyUI.entitlements; sourceTree = "<group>"; };
-		FA8F8A9A1F33AA8A00D0D4BE /* HashChainServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashChainServiceTests.swift; sourceTree = "<group>"; };
+		FA8F8A9A1F33AA8A00D0D4BE /* TeamServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamServiceTests.swift; sourceTree = "<group>"; };
 		FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamLoadController.swift; sourceTree = "<group>"; };
 		FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HashChain+Verify.swift"; sourceTree = "<group>"; };
 		FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+Team.swift"; sourceTree = "<group>"; };
@@ -1334,7 +1334,7 @@
 				8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */,
 				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
 				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
-				FA8F8A9A1F33AA8A00D0D4BE /* HashChainServiceTests.swift */,
+				FA8F8A9A1F33AA8A00D0D4BE /* TeamServiceTests.swift */,
 				FAC724D81F546C1900386436 /* TeamServiceHTTP.swift */,
 				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
 				FAF0B0971F04500400F65E04 /* UtilTests.swift */,
@@ -2210,7 +2210,7 @@
 				FACE33691EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift in Sources */,
 				8DCB604C1E9446D300E1B924 /* AWS.swift in Sources */,
 				8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */,
-				FA8F8A9B1F33AA8A00D0D4BE /* HashChainServiceTests.swift in Sources */,
+				FA8F8A9B1F33AA8A00D0D4BE /* TeamServiceTests.swift in Sources */,
 				8DCB603C1E9445F200E1B924 /* Silo.swift in Sources */,
 				8DCB60451E94468B00E1B924 /* SignatureLog.swift in Sources */,
 				FAC724D41F4F813800386436 /* IdentityManager.swift in Sources */,

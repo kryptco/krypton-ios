@@ -80,9 +80,9 @@ class TeamService {
         var debugDescription: String {
             switch self {
             case .success(let obj):
-                return "SUCCESS \n\t-\(obj)"
+                return "SUCCESS:\n\t\t- \(obj)"
             case .error(let error):
-                return "FAILURE \n\t-\(error)"
+                return "FAILURE:\n\t\t- \(error)"
             }
         }
     }
@@ -149,10 +149,10 @@ class TeamService {
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = lastBlockHash
                 
-                self.teamIdentity.dataManager.add(block: addedBlock)
-                
                 do {
                     try self.teamIdentity.set(team: updatedTeam)
+                    self.teamIdentity.dataManager.add(block: addedBlock)
+
                 } catch {
                     completionHandler(TeamServiceResult.error(error))
                     self.mutex.unlock()
@@ -198,17 +198,16 @@ class TeamService {
                             
                         case .success:
                             // set the block hash
-                            let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                            let addedBlock = HashChain.Block(payload: addPayloadDataString, signature: appendSignature)
                             let blockHash = addedBlock.hash()
                             
                             var updatedTeam = self.teamIdentity.team
                             updatedTeam.lastBlockHash = addedBlock.hash()
                             
-                            self.teamIdentity.dataManager.add(block: addedBlock)
-                            self.teamIdentity.dataManager.add(member: admin, blockHash: blockHash)
-                            
                             do {
                                 try self.teamIdentity.set(team: updatedTeam)
+                                self.teamIdentity.dataManager.add(block: addedBlock)
+                                self.teamIdentity.dataManager.add(member: admin, blockHash: blockHash)
                             } catch {
                                 completionHandler(TeamServiceResult.error(error))
                                 self.mutex.unlock()
@@ -430,11 +429,17 @@ class TeamService {
             case .error(let error):
                 completionHandler(TeamServiceResult.error(error))
                 
-            case .success(let blocks):
+            case .success(let response):
                 do {
-                    try self.teamIdentity.verifyAndProcessBlocks(response: blocks)
+                    guard response.hasBlocks else {
+                        completionHandler(TeamServiceResult.result(self))
+                        return
+                    }
+                    
+                    // verify and append incoming blocks
+                    try self.teamIdentity.verifyAndProcessBlocks(response: response)
 
-                    guard blocks.hasMore else {
+                    guard response.hasMore else {
                         completionHandler(TeamServiceResult.result(self))
                         return
                     }
@@ -493,16 +498,22 @@ class TeamService {
             case .error(let error):
                 completionHandler(TeamServiceResult.error(error))
                 
-            case .success(let blocks):
+            case .success(let response):
                 do {
-                    try self.teamIdentity.verifyAndProcessBlocks(response: blocks)
-
-                    guard blocks.hasMore else {
+                    guard response.hasBlocks else {
                         completionHandler(TeamServiceResult.result(self))
                         return
                     }
                     
-                    try self.getVerifiedTeamUpdates(completionHandler)
+                    // verify and append incoming blocks
+                    try self.teamIdentity.verifyAndProcessBlocks(response: response)
+
+                    guard response.hasMore else {
+                        completionHandler(TeamServiceResult.result(self))
+                        return
+                    }
+                    
+                    try self.getVerifiedTeamUpdatesUnlocked(completionHandler)
                 } catch {
                     completionHandler(TeamServiceResult.error(error))
                 }

@@ -128,23 +128,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // update the team if needed
         if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
-            self.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
+            TeamUpdater.checkForUpdate {_ in 
+                dispatchMain {
+                    self.processDidReceiveRemoteNotification(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
+                }
+            }
             return
         }
         
+        self.processDidReceiveRemoteNotification(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
+    }
+    
+    func processDidReceiveRemoteNotification(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
+    {
         guard   let queue = (userInfo["aps"] as? [String: Any])?["queue"] as? QueueName,
-                let networkMessageString = (userInfo["aps"] as? [String: Any])?["c"] as? String
-        else {
-            log("invalid push notification: \(userInfo)", .error)
-            completionHandler(.failed)
-            return
+            let networkMessageString = (userInfo["aps"] as? [String: Any])?["c"] as? String
+            else {
+                log("invalid push notification: \(userInfo)", .error)
+                completionHandler(.failed)
+                return
         }
         
         guard let session = SessionManager.shared.all.filter({ $0.pairing.queue == queue }).first else {
             log("no session for queue name: \(queue)", .error)
             completionHandler(.failed)
             return
-
+            
         }
         
         do {
@@ -154,7 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             try TransportControl.shared.handle(medium: .remoteNotification, with: req, for: session, completionHandler: {
                 completionHandler(.newData)
             })
-
+            
         } catch let e {
             log("error creating or sending response: \(e)")
             completionHandler(.failed)
@@ -177,18 +186,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         {
             // update the team if needed first
             if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
-                self.handleNotification(userInfo: userInfo)
+                TeamUpdater.checkForUpdate {_ in
+                    dispatchMain {
+                        self.handleRemoteNotification(request: request, session: session)
+                    }
+                }
                 return
             }
-
-            // if approval notification
-            do {
-                try TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
-            } catch {
-                log("handle failed \(error)", .error)
-            }
+            
+            self.handleRemoteNotification(request: request, session: session)
         }
 
+    }
+    
+    func handleRemoteNotification(request:Request, session:Session) {
+        do {
+            try TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
+        } catch {
+            log("handle failed \(error)", .error)
+        }
     }
     
     //MARK: Allow/Reject
