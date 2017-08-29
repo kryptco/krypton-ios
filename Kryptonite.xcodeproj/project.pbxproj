@@ -276,6 +276,9 @@
 		FAC724D21F4F813800386436 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
 		FAC724D31F4F813800386436 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
 		FAC724D41F4F813800386436 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
+		FAC724D61F546BC500386436 /* TeamServiceHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */; };
+		FAC724D71F546BC500386436 /* TeamServiceHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */; };
+		FAC724D91F546C1A00386436 /* TeamServiceHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D81F546C1900386436 /* TeamServiceHTTP.swift */; };
 		FAC873F61E6A4D32003D112E /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
 		FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
 		FAC873F91E6A4DC1003D112E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
@@ -735,6 +738,8 @@
 		FAC07FCB1E42F5D100FEF117 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AwesomeCache.xcodeproj; path = AwesomeCache/AwesomeCache.xcodeproj; sourceTree = "<group>"; };
 		FAC724D11F4F813800386436 /* IdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityManager.swift; sourceTree = "<group>"; };
+		FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamServiceHTTP.swift; sourceTree = "<group>"; };
+		FAC724D81F546C1900386436 /* TeamServiceHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamServiceHTTP.swift; sourceTree = "<group>"; };
 		FAC873F51E6A4D32003D112E /* PairingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTests.swift; sourceTree = "<group>"; };
 		FAC874041E6F0E17003D112E /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -1201,6 +1206,7 @@
 				FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */,
 				FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */,
 				FADA1A831F30E0E2004AE6B0 /* TeamService.swift */,
+				FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */,
 				FAAC14821F38D39D00DDFAA3 /* TeamUpdater.swift */,
 			);
 			name = Team;
@@ -1329,6 +1335,7 @@
 				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
 				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
 				FA8F8A9A1F33AA8A00D0D4BE /* HashChainServiceTests.swift */,
+				FAC724D81F546C1900386436 /* TeamServiceHTTP.swift */,
 				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
 				FAF0B0971F04500400F65E04 /* UtilTests.swift */,
 				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
@@ -2173,6 +2180,7 @@
 				FADA1A841F30E0E2004AE6B0 /* TeamService.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
+				FAC724D61F546BC500386436 /* TeamServiceHTTP.swift in Sources */,
 				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
 				FA6BCBF51F214ADB006F716F /* TeamInvite.swift in Sources */,
@@ -2234,6 +2242,7 @@
 				8DCB604F1E9446D300E1B924 /* CommunicationActivity.swift in Sources */,
 				FADA1A761F2EDF97004AE6B0 /* TeamDataManager.swift in Sources */,
 				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,
+				FAC724D91F546C1A00386436 /* TeamServiceHTTP.swift in Sources */,
 				8DCB60351E94433100E1B924 /* Session.swift in Sources */,
 				FA571B1F1F460B77007FD7F3 /* TeamUpdater.swift in Sources */,
 				8DCB60391E9443B600E1B924 /* Properties.swift in Sources */,
@@ -2282,6 +2291,7 @@
 				FADDE2841EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
 				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
+				FAC724D71F546BC500386436 /* TeamServiceHTTP.swift in Sources */,
 				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,

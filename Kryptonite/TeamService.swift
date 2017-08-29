@@ -134,7 +134,7 @@ class TeamService {
                                                  payload: payloadDataString,
                                                  signature: signature)
         
-        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -144,9 +144,10 @@ class TeamService {
             case .success:
                 // set the block hash
                 let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                let lastBlockHash = addedBlock.hash()
                 
                 var updatedTeam = self.teamIdentity.team
-                updatedTeam.lastBlockHash = addedBlock.hash()
+                updatedTeam.lastBlockHash = lastBlockHash
                 
                 self.teamIdentity.dataManager.add(block: addedBlock)
                 
@@ -158,8 +159,74 @@ class TeamService {
                     return
                 }
                 
-                completionHandler(TeamServiceResult.result(self))
-                self.mutex.unlock()
+                // now proceed to addMember(admin)
+                do {
+                    // create the team admin member
+                    let sshPublicKey = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+                    let pgpPublicKey = try KeyManager.sharedInstance().loadPGPPublicKey(for: self.teamIdentity.email).packetData
+                    
+                    let admin = Team.MemberIdentity(publicKey: self.teamIdentity.keyPair.publicKey,
+                                                    email: self.teamIdentity.email,
+                                                    sshPublicKey: sshPublicKey,
+                                                    pgpPublicKey: pgpPublicKey)
+                    
+                    
+                    // create the append block
+                    let addOperation = HashChain.Operation.addMember(admin)
+                    let addMember = HashChain.AppendBlock(lastBlockHash: lastBlockHash, operation: addOperation)
+                    let addPayload = HashChain.Payload.append(addMember)
+                    let addPayloadData = try addPayload.jsonData()
+                    
+                    // sign the payload
+                    guard let appendSignature = try KRSodium.shared().sign.signature(message: addPayloadData, secretKey: teamKeypair.secretKey)
+                    else {
+                        throw Errors.payloadSignature
+                    }
+                    
+                    // send the append block payload request
+                    let addPayloadDataString = try addPayloadData.utf8String()
+                    let hashChainRequest = HashChain.Request(publicKey: teamKeypair.publicKey,
+                                                             payload: addPayloadDataString,
+                                                             signature: appendSignature)
+                    
+                    try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+                        switch serverResponse {
+                            
+                        case .error(let error):
+                            completionHandler(TeamServiceResult.error(error))
+                            self.mutex.unlock()
+                            
+                        case .success:
+                            // set the block hash
+                            let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                            let blockHash = addedBlock.hash()
+                            
+                            var updatedTeam = self.teamIdentity.team
+                            updatedTeam.lastBlockHash = addedBlock.hash()
+                            
+                            self.teamIdentity.dataManager.add(block: addedBlock)
+                            self.teamIdentity.dataManager.add(member: admin, blockHash: blockHash)
+                            
+                            do {
+                                try self.teamIdentity.set(team: updatedTeam)
+                            } catch {
+                                completionHandler(TeamServiceResult.error(error))
+                                self.mutex.unlock()
+                                return
+                            }
+                            
+                            completionHandler(TeamServiceResult.result(self))
+                            self.mutex.unlock()
+                        }
+                    }
+
+                    
+                    
+                } catch {
+                    completionHandler(TeamServiceResult.error(error))
+                    self.mutex.unlock()
+                    return
+                }
             }
         }
 
@@ -202,7 +269,7 @@ class TeamService {
                                                  payload: payloadDataString,
                                                  signature: signature)
 
-        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -280,7 +347,7 @@ class TeamService {
                                                  payload: payloadDataString,
                                                  signature: signature)
         
-        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -358,7 +425,7 @@ class TeamService {
                                                      signature: signature)
         
         
-        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
+        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
             switch serverResponse {
             case .error(let error):
                 completionHandler(TeamServiceResult.error(error))
@@ -420,7 +487,7 @@ class TeamService {
                                                      payload: payloadData.utf8String(),
                                                      signature: signature)
         
-        try sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
+        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -442,27 +509,5 @@ class TeamService {
             }
         }
         
-    }
-    
-    
-    /** 
-        Send a JSON object to the teams service and parse the response as a ServerResponse
-     */
-    func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (ServerResponse<T>) -> Void) throws {
-        let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
-        
-        log("[IN] HashChainSVC\n\t\(object)")
-
-        req.start { response in
-            do {
-                let serverResponse = try ServerResponse<T>(jsonData: response.data)
-                log("[OUT] HashChainSVC\n\t\(serverResponse)")
-
-                onCompletion(serverResponse)
-            } catch {
-                let responseString = (try? response.data.utf8String()) ?? "\(response.data.count) bytes"
-                onCompletion(ServerResponse.error(ServerError(message: "unexpected response, \(responseString)")))
-            }
-        }
     }
 }

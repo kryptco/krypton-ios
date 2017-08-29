@@ -30,7 +30,7 @@ class TeamServiceTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCreateTeamAndAddMemberAdmin() {
+    func testCreateTeam() {
         let exp = expectation(description: "TeamService ASYNC request")
 
         do {
@@ -39,43 +39,20 @@ class TeamServiceTests: XCTestCase {
                 switch response {
                 case .error(let e):
                     XCTFail("FAIL - Server error: \(e)")
-                
+                    exp.fulfill()
+                    
                 case .result(let service):
-                    
                     self.teamIdentity = service.teamIdentity
-                    
-                    // add the admin
-                    do {
-                        let keyManager = try KeyManager.sharedInstance()
-                        let adminMember = try Team.MemberIdentity(publicKey: self.teamIdentity.keyPair.publicKey,
-                                                                  email: self.teamIdentity.email,
-                                                                  sshPublicKey: keyManager.keyPair.publicKey.wireFormat(),
-                                                                  pgpPublicKey: keyManager.loadPGPPublicKey(for: self.teamIdentity.email).packetData)
-                        
-                        try service.add(member: adminMember) { (response) in
-                            
-                            switch response {
-                            case .error(let e):
-                                XCTFail("FAIL - Server error: \(e)")
-                                
-                            case .result(let service):
-                                self.teamIdentity = service.teamIdentity
-                                
-                                exp.fulfill()
-                            }
-                        }
-                        
-                    } catch {
-                        XCTFail("FAIL: \(error)")
-                    }
+                    exp.fulfill()
                 }
             }
             
         } catch {
             XCTFail("FAIL: \(error)")
+            exp.fulfill()
         }
         
-        waitForExpectations(timeout: 10.0) { (error) in
+        waitForExpectations(timeout: 30.0) { (error) in
             if let e = error {
                 XCTFail("FAIL - callback timeout: \(e)")
             }

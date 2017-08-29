@@ -20,7 +20,7 @@
         <attribute name="host" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
-    <entity name="Team" representedClassName="" syncable="YES">
+    <entity name="Team" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="json" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>

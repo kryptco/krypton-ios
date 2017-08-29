@@ -101,7 +101,7 @@ class TeamJoinCompleteController:KRBaseController {
                     }
                     
                     
-                    // 2. send the create team response
+            // 2. send the create team response
                     let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: self.teamIdentity.teamAdminSeed?.toBase64(), error: nil))
                     
                     let response = Response(requestID: request.id,
@@ -115,37 +115,6 @@ class TeamJoinCompleteController:KRBaseController {
                     } catch {
                         log("error sending response: \(error)", .error)
                         self.showWarning(title: "Error", body: "Couldn't respond with team info to \(session.pairing.displayName). \(error).")
-                    }
-                    
-                    // 3. admin joins team
-                    do {
-                        let sshPublicKey = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
-                        let pgpPublicKey = try KeyManager.sharedInstance().loadPGPPublicKey(for: self.teamIdentity.email).packetData
-                        
-                        let admin = Team.MemberIdentity(publicKey: self.teamIdentity.keyPair.publicKey,
-                                                        email: self.teamIdentity.email,
-                                                        sshPublicKey: sshPublicKey,
-                                                        pgpPublicKey: pgpPublicKey)
-                        
-                        let service = try TeamService.shared()
-                        
-                        try service.add(member: admin) { addResponse in
-                            switch addResponse {
-                            case .error(let error):
-                                self.showCreateFailure(message: "Could not add you to the team", error: error, request: request, session: session)
-
-                            case .result(let service):
-                                self.teamIdentity = service.teamIdentity
-                                
-                                // save the team identity again
-                                try? IdentityManager.saveTeamIdentity(identity: self.teamIdentity)
-              
-                                self.showSuccess()
-                            }
-                        }
-
-                    } catch { // add admin error
-                        self.showCreateFailure(message: "Error trying to add you to the team", error: error, request: request, session: session)
                     }
                 }
             }
