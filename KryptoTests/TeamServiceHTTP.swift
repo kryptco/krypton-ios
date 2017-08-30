@@ -7,6 +7,8 @@
 //
 
 import Foundation
+@testable import Kryptonite
+
 import SwiftHTTP
 import JSON
 

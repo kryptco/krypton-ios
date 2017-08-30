@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import Kryptonite
 import Sodium
 
 class KryptoTests: XCTestCase {

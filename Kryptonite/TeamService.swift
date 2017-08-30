@@ -150,8 +150,8 @@ class TeamService {
                 updatedTeam.lastBlockHash = lastBlockHash
                 
                 do {
-                    try self.teamIdentity.set(team: updatedTeam)
-                    self.teamIdentity.dataManager.add(block: addedBlock)
+                    try self.teamIdentity.dataManager.create(team: updatedTeam, block: addedBlock)
+                    self.teamIdentity.team  = updatedTeam
 
                 } catch {
                     completionHandler(TeamServiceResult.error(error))
@@ -199,15 +199,13 @@ class TeamService {
                         case .success:
                             // set the block hash
                             let addedBlock = HashChain.Block(payload: addPayloadDataString, signature: appendSignature)
-                            let blockHash = addedBlock.hash()
                             
                             var updatedTeam = self.teamIdentity.team
                             updatedTeam.lastBlockHash = addedBlock.hash()
                             
                             do {
+                                try self.teamIdentity.dataManager.add(member: admin, block: addedBlock)
                                 try self.teamIdentity.set(team: updatedTeam)
-                                self.teamIdentity.dataManager.add(block: addedBlock)
-                                self.teamIdentity.dataManager.add(member: admin, blockHash: blockHash)
                             } catch {
                                 completionHandler(TeamServiceResult.error(error))
                                 self.mutex.unlock()
@@ -278,15 +276,12 @@ class TeamService {
             case .success:
                 // set the block hash
                 let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
-                let blockHash = addedBlock.hash()
 
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
                 
-                self.teamIdentity.dataManager.add(block: addedBlock)
-                self.teamIdentity.dataManager.add(member: member, blockHash: blockHash)
-                
                 do {
+                    try self.teamIdentity.dataManager.add(member: member, block: addedBlock)
                     try self.teamIdentity.set(team: updatedTeam)
                 } catch {
                     completionHandler(TeamServiceResult.error(error))
@@ -355,15 +350,13 @@ class TeamService {
                 
             case .success:
                 let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
-                let blockHash = addedBlock.hash()
                 
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
                 
-                self.teamIdentity.dataManager.add(block: addedBlock)
-                self.teamIdentity.dataManager.add(member: newMember, blockHash: blockHash)
                 
                 do {
+                    try self.teamIdentity.dataManager.add(member: newMember, block: addedBlock)
                     try self.teamIdentity.set(team: updatedTeam)
                 } catch {
                     completionHandler(TeamServiceResult.error(error))

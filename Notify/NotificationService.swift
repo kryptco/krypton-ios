@@ -38,113 +38,136 @@ class NotificationService: UNNotificationServiceExtension {
             
         } catch {
             log("could not processess remote notification content: \(error)")
-            
             failUnknown(with: error)
+            return
+        }
+        
+
+        TransportControl.shared(bluetoothEnabled: false).handle(medium: .remoteNotification, with: unsealedRequest, for: session, completionHandler: ({
             
-            return
-        }
-        
-        // update the team if needed first
-        if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
-            TeamUpdater.checkForUpdate { result in
-                dispatchMain {
-                    self.handle(request, unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
-                }
+            dispatchMain {
+                self.requestHandled(unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
             }
-            return
-        }
-        
-        // otherwise handle the incoming request
-        self.handle(request, unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
+            
+        }), errorHandler: { error in
+            
+            dispatchMain {
+                self.requestHandlingErrored(with: error, unsealedRequest: unsealedRequest, session: session, withContentHandler: contentHandler)
+            }
+            
+        })
     }
     
-    func handle(_ request: UNNotificationRequest, unsealedRequest:Request, session:Session, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+    func requestHandled(unsealedRequest:Request, session:Session, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         
-        do {
+        UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
             
-            try TransportControl.shared(bluetoothEnabled: false).handle(medium: .remoteNotification, with: unsealedRequest, for: session, completionHandler: {
-                
-                dispatchMain {
-                    UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
-                        
-                        var noSound = false
-                        
-                        for note in notes {
-                            guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
-                                let deliveredRequest = try? Request(json: requestObject)
-                                else {
-                                    continue
-                            }
-                            
-                            if deliveredRequest.id == unsealedRequest.id {
-                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-                                
-                                noSound = true
-                                break
-                            }
-                        }
-                        
-                        self.bestAttemptMutex.lock {
-                            
-                            let content = UNMutableNotificationContent()
-                            let (noteSubtitle, noteBody) = unsealedRequest.notificationDetails()
-                            
-                            content.subtitle = noteSubtitle
-                            content.body = noteBody
-                            
-                            // special case: me request
-                            if case .me = unsealedRequest.body {
-                                content.title = "\(session.pairing.displayName)."
-                            }
-                                // cached
-                            else if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
-                                
-                                if let error = resp.body.error {
-                                    content.title = "Failed approval for \(session.pairing.displayName)."
-                                    content.body = error
-                                } else {
-                                    content.title = "Approved request from \(session.pairing.displayName)."
-                                    content.categoryIdentifier = unsealedRequest.autoAuthorizeCategoryIdentifier
-                                }
-                            }
-                                // pending response
-                            else {
-                                content.title = "Request from \(session.pairing.displayName)."
-                                content.categoryIdentifier = unsealedRequest.authorizeCategoryIdentifier
-                            }
-                            
-                            content.userInfo = ["session_display": session.pairing.displayName,
-                                                "session_id": session.id,
-                                                "request": unsealedRequest.object]
-                            
-                            
-                            if noSound {
-                                content.sound = nil
-                            } else {
-                                content.sound = UNNotificationSound.default()
-                            }
-                            
-                            contentHandler(content)
-                            
-                        }
-                        
-                    })
-                    
+            var noSound = false
+            
+            for note in notes {
+                guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
+                    let deliveredRequest = try? Request(json: requestObject)
+                    else {
+                        continue
                 }
-            })
+                
+                if deliveredRequest.id == unsealedRequest.id {
+                    UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                    
+                    noSound = true
+                    break
+                }
+            }
             
-        } catch {
+            self.bestAttemptMutex.lock {
+                
+                let content = UNMutableNotificationContent()
+                let (noteSubtitle, noteBody) = unsealedRequest.notificationDetails()
+                
+                content.subtitle = noteSubtitle
+                content.body = noteBody
+                
+                // special case: me request
+                if case .me = unsealedRequest.body {
+                    content.title = "\(session.pairing.displayName)."
+                }
+                    // cached
+                else if let resp = Silo.shared.cachedResponse(for: session, with: unsealedRequest) {
+                    
+                    if let error = resp.body.error {
+                        content.title = "Failed approval for \(session.pairing.displayName)."
+                        content.body = error
+                    } else {
+                        content.title = "Approved request from \(session.pairing.displayName)."
+                        content.categoryIdentifier = unsealedRequest.autoAuthorizeCategoryIdentifier
+                    }
+                }
+                    // pending response
+                else {
+                    content.title = "Request from \(session.pairing.displayName)."
+                    content.categoryIdentifier = unsealedRequest.authorizeCategoryIdentifier
+                }
+                
+                content.userInfo = ["session_display": session.pairing.displayName,
+                                    "session_id": session.id,
+                                    "request": unsealedRequest.object]
+                
+                
+                if noSound {
+                    content.sound = nil
+                } else {
+                    content.sound = UNNotificationSound.default()
+                }
+                
+                contentHandler(content)
+                
+            }
             
-            // look for pending notifications with same request (via bluetooth or silent notifications)
-            UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notes) in
-                for request in notes {
-                    if request.identifier == unsealedRequest.id {
+        })
+    }
+    
+    func requestHandlingErrored(with error:Error, unsealedRequest:Request, session:Session, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        
+        // look for pending notifications with same request (via bluetooth or silent notifications)
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notes) in
+            for request in notes {
+                if request.identifier == unsealedRequest.id {
+                    
+                    let noteContent = request.content
+                    
+                    self.bestAttemptMutex.lock {
+                        let currentContent = UNMutableNotificationContent()
+                        currentContent.title = noteContent.title + "." // period for testing
+                        currentContent.subtitle = noteContent.subtitle
+                        currentContent.categoryIdentifier = noteContent.categoryIdentifier
+                        currentContent.body = noteContent.body
+                        currentContent.userInfo = noteContent.userInfo
+                        currentContent.sound = UNNotificationSound.default()
                         
-                        let noteContent = request.content
+                        // remove old note
+                        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
+                        
+                        // replace with remote with same content
+                        contentHandler(currentContent)
+                    }
+                    
+                    return
+                }
+            }
+            
+            
+            // look for delivered notifications with same request (via bluetooth or silent notifications)
+            UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+                for note in notes {
+                    
+                    if note.request.identifier == unsealedRequest.id {
+                        
+                        let noteContent = note.request.content
                         
                         self.bestAttemptMutex.lock {
                             let currentContent = UNMutableNotificationContent()
-                            currentContent.title = noteContent.title + "." // period for testing
+                            currentContent.title = noteContent.title  + "." // period for testing
                             currentContent.subtitle = noteContent.subtitle
                             currentContent.categoryIdentifier = noteContent.categoryIdentifier
                             currentContent.body = noteContent.body
@@ -152,53 +175,24 @@ class NotificationService: UNNotificationServiceExtension {
                             currentContent.sound = UNNotificationSound.default()
                             
                             // remove old note
-                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
+                            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
                             
                             // replace with remote with same content
                             contentHandler(currentContent)
                         }
+                        
                         
                         return
                     }
                 }
                 
                 
-                // look for delivered notifications with same request (via bluetooth or silent notifications)
-                UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
-                    for note in notes {
-                        
-                        if note.request.identifier == unsealedRequest.id {
-                            
-                            let noteContent = note.request.content
-                            
-                            self.bestAttemptMutex.lock {
-                                let currentContent = UNMutableNotificationContent()
-                                currentContent.title = noteContent.title  + "." // period for testing
-                                currentContent.subtitle = noteContent.subtitle
-                                currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                                currentContent.body = noteContent.body
-                                currentContent.userInfo = noteContent.userInfo
-                                currentContent.sound = UNNotificationSound.default()
-                                
-                                // remove old note
-                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-                                
-                                // replace with remote with same content
-                                contentHandler(currentContent)
-                            }
-                            
-                            
-                            return
-                        }
-                    }
-                    
-                    
-                    // if not pending or delivered, fail with unknown error.
-                    self.failUnknown(with: error)
-                })
-                
+                // if not pending or delivered, fail with unknown error.
+                self.failUnknown(with: error)
             })
-        }
+            
+        })
+
     }
     
     func failUnknown(with error:Error?) {

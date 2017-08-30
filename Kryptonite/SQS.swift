@@ -164,10 +164,10 @@ class SQSManager:TransportMedium {
                 for msg in msgs {
                     
                     do {
-                        let req = try Request(from: session.pairing, sealed: msg.data)
-                        try self.handler(self.medium, req, session, nil)
+                        let request = try Request(from: session.pairing, sealed: msg.data)
+                        self.handler(self.medium, request, session, nil, nil)
                     } catch (let e) {
-                        log("error responding: \(e)", LogType.error)
+                        log("error making request: \(e)", .error)
                     }
                 }
                 

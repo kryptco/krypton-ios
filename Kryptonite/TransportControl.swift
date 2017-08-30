@@ -11,7 +11,7 @@ import CoreBluetooth
 
 struct SessionRemovedError:Error{}
 
-typealias TransportControlRequestHandler = (CommunicationMedium, Request, Session, (()->Void)? ) throws -> Void
+typealias TransportControlRequestHandler = (CommunicationMedium, Request, Session, (()->Void)?, ((Error)->Void)?) -> Void
 
 protocol TransportMedium {
     var medium:CommunicationMedium { get }
@@ -76,9 +76,30 @@ class TransportControl {
     }
     
     //MARK: Handle Incoming Requests
-    func handle(medium:CommunicationMedium, with request:Request, for session:Session, completionHandler: (()->Void)? = nil) throws {
-        try Silo.shared.handle(request: request, session: session, communicationMedium: medium, completionHandler: completionHandler)
-
+    func handle(medium:CommunicationMedium, with request:Request, for session:Session, completionHandler: (()->Void)? = nil, errorHandler: ((Error)->Void)? = nil) {
+        
+        // update teams if we need to
+        if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
+            TeamUpdater.checkForUpdate {_ in
+                self.handleNoChecks(medium: medium, with: request, for: session, completionHandler: completionHandler, errorHandler: errorHandler)
+            }
+            return
+        }
+        
+        self.handleNoChecks(medium: medium, with: request, for: session, completionHandler: completionHandler, errorHandler: errorHandler)
+    }
+    
+    private func handleNoChecks(medium:CommunicationMedium, with request:Request, for session:Session, completionHandler: (()-> Void)? = nil, errorHandler: ((Error)->Void)? = nil) {
+        
+        do {
+            // ask silo to handle the request
+            try Silo.shared.handle(request: request, session: session, communicationMedium: medium, completionHandler: completionHandler)
+        }
+        catch {
+            log("error: \(error)\nfor handling request: \(request), session id: \(session.id) -- on medium \(medium)", .error)
+            errorHandler?(error)
+        }
+        
         mutex.lock()
         
         log("Handle Called: \(sessionActivity.count)")
@@ -94,6 +115,7 @@ class TransportControl {
         }
         
         mutex.unlock()
+
     }
     
     //MARK: Send Outgoing Requests

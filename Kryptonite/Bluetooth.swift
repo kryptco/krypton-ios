@@ -81,7 +81,7 @@ class BluetoothManager:TransportMedium {
             return
         }
         
-        try self.handler(self.medium, req, session, nil)
+        self.handler(self.medium, req, session, nil, nil)
     }
 
 }

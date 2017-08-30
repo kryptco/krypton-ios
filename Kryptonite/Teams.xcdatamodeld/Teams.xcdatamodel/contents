@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Block" syncable="YES">
-        <attribute name="block_hash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="payload" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="DataBlock" representedClassName="DataBlock" syncable="YES" codeGenerationType="class">
+        <attribute name="payload" attributeType="String" syncable="YES"/>
+        <attribute name="signature" attributeType="Binary" syncable="YES"/>
+        <relationship name="next" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="previous" inverseEntity="DataBlock" syncable="YES"/>
+        <relationship name="previous" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="next" inverseEntity="DataBlock" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="head" inverseEntity="DataTeam" syncable="YES"/>
     </entity>
-    <entity name="Member" syncable="YES">
-        <attribute name="block_hash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="pgp_public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="ssh_public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    <entity name="DataMember" representedClassName="DataMember" syncable="YES" codeGenerationType="class">
+        <attribute name="email" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="pgpPublicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="publicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="sshPublicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="members" inverseEntity="DataTeam" syncable="YES"/>
     </entity>
-    <entity name="SSHHostKey" syncable="YES">
-        <attribute name="block_hash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="host" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    <entity name="DataSSHHostKey" representedClassName="DataSSHHostKey" syncable="YES" codeGenerationType="class">
+        <attribute name="host" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="publicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="pinnedHosts" inverseEntity="DataTeam" syncable="YES"/>
     </entity>
-    <entity name="Team" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="json" optional="YES" attributeType="Binary" syncable="YES"/>
+    <entity name="DataTeam" representedClassName="DataTeam" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="json" attributeType="Binary" syncable="YES"/>
+        <relationship name="head" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="team" inverseEntity="DataBlock" syncable="YES"/>
+        <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataMember" inverseName="team" inverseEntity="DataMember" syncable="YES"/>
+        <relationship name="pinnedHosts" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataSSHHostKey" inverseName="team" inverseEntity="DataSSHHostKey" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Block" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="Member" positionX="-315" positionY="147" width="128" height="135"/>
-        <element name="SSHHostKey" positionX="-189" positionY="108" width="128" height="105"/>
-        <element name="Team" positionX="-189" positionY="108" width="128" height="75"/>
+        <element name="DataBlock" positionX="-882" positionY="-36" width="128" height="118"/>
+        <element name="DataMember" positionX="-434" positionY="9" width="128" height="118"/>
+        <element name="DataSSHHostKey" positionX="-137" positionY="110" width="128" height="88"/>
+        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="118"/>
     </elements>
 </model>

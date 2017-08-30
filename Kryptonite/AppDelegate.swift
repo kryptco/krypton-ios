@@ -126,21 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // check for app updates
         checkForAppUpdateIfNeededBackground()
         
-        // update the team if needed
-        if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
-            TeamUpdater.checkForUpdate {_ in 
-                dispatchMain {
-                    self.processDidReceiveRemoteNotification(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
-                }
-            }
-            return
-        }
-        
-        self.processDidReceiveRemoteNotification(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
-    }
-    
-    func processDidReceiveRemoteNotification(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
-    {
         guard   let queue = (userInfo["aps"] as? [String: Any])?["queue"] as? QueueName,
             let networkMessageString = (userInfo["aps"] as? [String: Any])?["c"] as? String
             else {
@@ -153,14 +138,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             log("no session for queue name: \(queue)", .error)
             completionHandler(.failed)
             return
-            
         }
         
         do {
             let networkMessage = try NetworkMessage(networkData: networkMessageString.fromBase64())
             let req = try Request(from: session.pairing, sealed: networkMessage.data)
             
-            try TransportControl.shared.handle(medium: .remoteNotification, with: req, for: session, completionHandler: {
+            TransportControl.shared.handle(medium: .remoteNotification, with: req, for: session, completionHandler: {
                 completionHandler(.newData)
             })
             
@@ -169,6 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             completionHandler(.failed)
         }
     }
+    
 
     //MARK: Tap local notification
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
@@ -177,35 +162,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func handleNotification(userInfo:[AnyHashable : Any]?) {
-        if
+        guard
             let sessionID = userInfo?["session_id"] as? String,
             let session = SessionManager.shared.get(id: sessionID),
             let requestObject = userInfo?["request"] as? [String:Any],
             let request = try? Request(json: requestObject)
             
-        {
-            // update the team if needed first
-            if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
-                TeamUpdater.checkForUpdate {_ in
-                    dispatchMain {
-                        self.handleRemoteNotification(request: request, session: session)
-                    }
-                }
-                return
-            }
-            
-            self.handleRemoteNotification(request: request, session: session)
+        else {
+            log("invalid notification userInfo", .error)
+            return
         }
-
+        
+        TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
     }
     
-    func handleRemoteNotification(request:Request, session:Session) {
-        do {
-            try TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
-        } catch {
-            log("handle failed \(error)", .error)
-        }
-    }
     
     //MARK: Allow/Reject
     
@@ -290,7 +260,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         else {
             log("nil identifier", .error)
             Silo.shared.removePending(request: request, for: session)
-            try? TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
+            TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
             completionHandler()
             return
         }

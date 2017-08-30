@@ -32,11 +32,12 @@ class TeamUpdater {
     }
     
     class var shouldCheck:Bool {
-        guard let last = TeamUpdater.lastChecked else {
-            return true
-        }
-        
-        return abs(last.timeIntervalSinceNow) > TeamUpdater.checkInterval
+        return true
+//        guard let last = TeamUpdater.lastChecked else {
+//            return true
+//        }
+//        
+//        return abs(last.timeIntervalSinceNow) > TeamUpdater.checkInterval
     }
     
     class func checkForUpdateIfNeeded(completionHandler:@escaping ((_ didUpdate:Bool) ->Void)) {

@@ -45,7 +45,7 @@ extension TeamIdentity {
             updatedTeam.info = createChain.teamInfo
             
             // add the block to the data store
-            dataManager.add(block: createBlock)
+            try dataManager.create(team: updatedTeam, block: createBlock)
             
             lastBlockHash = createBlock.hash()
             blockStart += 1
@@ -88,34 +88,37 @@ extension TeamIdentity {
             switch appendBlock.operation {
             case .inviteMember(let invite):
                 updatedTeam.lastInvitePublicKey = invite.noncePublicKey
+                try dataManager.append(block: nextBlock)
                 
             case .cancelInvite:
                 updatedTeam.lastInvitePublicKey = nil
+                try dataManager.append(block: nextBlock)
                 
             case .acceptInvite(let member):
-                dataManager.add(member: member, blockHash: nextBlock.hash())
+                try dataManager.add(member: member, block: nextBlock)
                 
             case .addMember(let member):
-                dataManager.add(member: member, blockHash: nextBlock.hash())
+                try dataManager.add(member: member, block: nextBlock)
 
             case .removeMember(let memberPublicKey):
-                dataManager.remove(member: memberPublicKey)
+                try dataManager.remove(member: memberPublicKey)
+                try dataManager.append(block: nextBlock)
                 
             case .setPolicy(let policy):
                 updatedTeam.policy = policy
+                try dataManager.append(block: nextBlock)
                 
             case .setTeamInfo(let info):
                 updatedTeam.info = info
-            
+                try dataManager.append(block: nextBlock)
+                
             case .pinHostKey(let host):
-                dataManager.pin(sshHostKey: host, blockHash: nextBlock.hash())
+                try dataManager.pin(sshHostKey: host, block: nextBlock)
                 
             case .unpinHostKey(let host):
-                dataManager.unpin(sshHostKey: host)
+                try dataManager.unpin(sshHostKey: host)
+                try dataManager.append(block: nextBlock)
             }
-            
-            // add the block to the data store
-            dataManager.add(block: nextBlock)
             
             lastBlockHash = nextBlock.hash()
         }

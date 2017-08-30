@@ -10,6 +10,99 @@ import Foundation
 import CoreData
 import JSON
 
+//MARK: Core Data Types
+extension DataBlock {
+    func block() throws -> HashChain.Block {
+        guard
+            let payload = payload,
+            let signature = signature as Data?
+        else {
+            throw TeamDataManager.Errors.missingObjectField
+        }
+        
+        return HashChain.Block(payload: payload, signature: signature)
+    }
+    
+    convenience init(helper context: NSManagedObjectContext) {
+        if #available(iOS 10.0, *) {
+            self.init(context: context)
+        } else {
+            self.init(entity: NSEntityDescription.entity(forEntityName: "DataBlock", in: context)!, insertInto: context)
+        }
+    }
+
+}
+
+extension DataSSHHostKey {
+    func sshHostKey() throws -> SSHHostKey {
+        guard
+            let host = host,
+            let publicKey = publicKey as Data?
+            
+            else {
+                throw TeamDataManager.Errors.missingObjectField
+        }
+        
+        return SSHHostKey(host: host, publicKey: publicKey)
+    }
+    
+    convenience init(helper context: NSManagedObjectContext) {
+        if #available(iOS 10.0, *) {
+            self.init(context: context)
+        } else {
+            self.init(entity: NSEntityDescription.entity(forEntityName: "DataSSHHostKey", in: context)!, insertInto: context)
+        }
+    }
+
+}
+
+extension DataMember {
+    func member() throws -> Team.MemberIdentity {
+        guard
+            let publicKey = publicKey as Data?,
+            let email = email,
+            let sshPublicKey = sshPublicKey as Data?,
+            let pgpPublicKey = pgpPublicKey as Data?
+        else {
+            throw TeamDataManager.Errors.missingObjectField
+        }
+        
+        return Team.MemberIdentity(publicKey: publicKey,
+                                   email: email,
+                                   sshPublicKey: sshPublicKey,
+                                   pgpPublicKey: pgpPublicKey)
+    }
+    
+    convenience init(helper context: NSManagedObjectContext) {
+        if #available(iOS 10.0, *) {
+            self.init(context: context)
+        } else {
+            self.init(entity: NSEntityDescription.entity(forEntityName: "DataMember", in: context)!, insertInto: context)
+        }
+    }
+
+}
+
+extension DataTeam {
+    func team() throws -> Team {
+        guard let json = self.json as Data? else {
+            throw TeamDataManager.Errors.missingObjectField
+        }
+        
+        return try Team(jsonData: json)
+    }
+    
+    convenience init(helper context: NSManagedObjectContext) {
+        if #available(iOS 10.0, *) {
+            self.init(context: context)
+        } else {
+            self.init(entity: NSEntityDescription.entity(forEntityName: "DataTeam", in: context)!, insertInto: context)
+        }
+    }
+
+}
+
+
 class TeamDataManager {
     
     private var mutex = Mutex()
@@ -22,6 +115,9 @@ class TeamDataManager {
     enum Errors:Error {
         case noTeam
         case noTeamName
+        case invalidEntity
+        case missingObjectField
+        case noSuchMember
     }
     
     //MARK: Core Data setup
@@ -72,154 +168,260 @@ class TeamDataManager {
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
-        
+        //managedObjectContext.mergePolicy = NSMergePolicy.error
         return managedObjectContext
     }()
     
-    /**
-        Check if a block exists, and if it does retrieve it
-     */
-    func fetchBlock(hash:String) throws -> HashChain.Block? {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Block")
-        fetchRequest.predicate = blockHashEqualsPredicate(for: hash)
-        fetchRequest.fetchLimit = 1
-        
-        return try fetchObjects(for: fetchRequest).first
-    }
-    
-    private func blockHashEqualsPredicate(for blockHash:String) -> NSPredicate {
-        return NSComparisonPredicate(
-            leftExpression: NSExpression(forKeyPath: "block_hash"),
-            rightExpression: NSExpression(forConstantValue: blockHash),
-            modifier: .direct,
-            type: .equalTo,
-            options: NSComparisonPredicate.Options(rawValue: 0)
-        )
-    }
     
     /**
         `Team` Data Managment
  
      */
-    func fetchTeam() throws -> Team {
-        defer { mutex.unlock() }
-        mutex.lock()
-
-        let request:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Team")
+    private func fetchCoreDataTeam() throws -> DataTeam {
+        let request:NSFetchRequest<DataTeam> = DataTeam.fetchRequest()
         request.fetchLimit = 1
         request.predicate = self.teamEqualsPredicate(for: self.teamIdentity)
         
-        var team:Team!
+        var team:DataTeam!
         
-        var caughtError:Error?
-        self.managedObjectContext.performAndWait {
-            do {
-                guard let object = try (self.managedObjectContext.fetch(request) as? [NSManagedObject])?.first
-                else {
-                    throw Errors.noTeam
-                }
-                
-                guard  let teamObject = object.value(forKey: "json") as? Data
-                else {
-                    throw Errors.noTeamName
-                }
-                
-                team = try Team(jsonData: teamObject)
-            } catch {
-                caughtError = error
+        try performAndWait {
+            guard let object = try self.managedObjectContext.fetch(request).first
+            else {
+                throw Errors.noTeam
             }
-        }
-        
-        if let error = caughtError {
-            throw error
+            
+            team = object
         }
         
         return team
     }
     
-    func set(team:Team) throws {
+    func fetchTeam() throws -> Team {
+        defer { mutex.unlock() }
         mutex.lock()
         
-        let request:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Team")
-        request.fetchLimit = 1
-        request.predicate = self.teamEqualsPredicate(for: self.teamIdentity)
+        var team:Team!
         
-        var caughtError:Error?
-        self.managedObjectContext.performAndWait {
-            do {
-                var teamEntry:NSManagedObject
-                if let object = try (self.managedObjectContext.fetch(request) as? [NSManagedObject])?.first {
-                    teamEntry = object
-                } else {
-                    teamEntry = NSEntityDescription.insertNewObject(forEntityName: "Team", into: self.managedObjectContext)
-                }
-                
-                // set attirbutes
-                teamEntry.setValue(self.teamIdentity, forKey: "id")
-                try teamEntry.setValue(team.jsonData(), forKey: "json")
-                
-            } catch {
-                caughtError = error
-            }
+        try performAndWait {
+            let dataTeam = try self.fetchCoreDataTeam()
+            team = try dataTeam.team()
         }
         
-        mutex.unlock()
-
-        if let error = caughtError {
-            throw error
-        }
+        return team
+    }
+    
+    func create(team:Team, block:HashChain.Block) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
         
+        try performAndWait {
+            let dataTeam = DataTeam(helper: self.managedObjectContext)
+            
+            dataTeam.id = self.teamIdentity
+            dataTeam.json = try team.jsonData() as NSData
+            
+            let head = DataBlock(helper: self.managedObjectContext)
+            head.payload = block.payload
+            head.signature = block.signature as NSData
+            
+            dataTeam.head = head
+        }
+    }
+    
+    func set(team:Team) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        try performAndWait {
+            let dataTeam = try self.fetchCoreDataTeam()
+            dataTeam.json = try team.jsonData() as NSData
+        }
     }
     
     /**
-        fetch all blocks sorted by date
+        Fetch helpers
      */
     
     func fetchAll() throws -> [HashChain.Block] {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Block")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: false)]
+        defer { mutex.unlock() }
+        mutex.lock()
         
-        return try fetchObjects(for: fetchRequest)
+        var blocks:[HashChain.Block] = []
+        
+        try performAndWait {
+            let team = try self.fetchCoreDataTeam()
+            
+            var head:DataBlock? = team.head
+            
+            while head != nil {
+                try blocks.append(head!.block())
+                head = head?.previous
+            }
+        }
+        
+        return blocks
     }
     
     func fetchAll() throws -> [Team.MemberIdentity] {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Member")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: true)]
+        defer { mutex.unlock() }
+        mutex.lock()
         
-        return try fetchObjects(for: fetchRequest)
+        let request:NSFetchRequest<DataMember> = DataMember.fetchRequest()
+        request.predicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+
+        
+        var members:[Team.MemberIdentity] = []
+        
+        try performAndWait {
+            try self.managedObjectContext.fetch(request).forEach {
+                try members.append($0.member())
+            }
+        }
+        
+        return members
     }
 
     func fetchAll() throws -> [SSHHostKey] {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_added", ascending: true)]
+        defer { mutex.unlock() }
+        mutex.lock()
         
-        return try fetchObjects(for: fetchRequest)
+        let request:NSFetchRequest<DataSSHHostKey> = DataSSHHostKey.fetchRequest()
+        request.predicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+
+        var pinnedHosts = [SSHHostKey]()
+        
+        try performAndWait {
+            try self.managedObjectContext.fetch(request).forEach {
+                try pinnedHosts.append($0.sshHostKey())
+            }
+        }
+        
+        return pinnedHosts
     }
-    
     
     /**
         Add a new block
      */
-    func add(block:HashChain.Block) {
-        self.save(block: block)
+    func append(block:HashChain.Block) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        try performAndWait {
+            let newHead = DataBlock(helper: self.managedObjectContext)
+            newHead.payload = block.payload
+            newHead.signature = block.signature as NSData
+
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            self.append(newHead: newHead, to: dataTeam)
+        }
+        
     }
+    
+    private func append(newHead:DataBlock, to team:DataTeam) {
+        let previousBlock = team.head
+        previousBlock?.next = newHead
+
+        newHead.previous = previousBlock
+        
+        team.head = newHead
+    }
+
     
     /**
         Add/remove member
      */
-    func add(member:Team.MemberIdentity, blockHash:Data) {
-        self.save(member: member, blockHash: blockHash)
+    func add(member:Team.MemberIdentity, block:HashChain.Block) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        try performAndWait {
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            let newMember = DataMember(helper: self.managedObjectContext)
+            newMember.email = member.email
+            newMember.publicKey = member.publicKey as NSData
+            newMember.sshPublicKey = member.sshPublicKey as NSData
+            newMember.pgpPublicKey = member.publicKey as NSData
+            
+            let newHead = DataBlock(helper: self.managedObjectContext)
+            newHead.payload = block.payload
+            newHead.signature = block.signature as NSData
+            
+            self.append(newHead: newHead, to: dataTeam)
+            
+            dataTeam.addToMembers(newMember)
+        }
     }
     
-    func remove(member:SodiumPublicKey) {
-        self.delete(memberPublicKey: member)
+    func remove(member:SodiumPublicKey) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        let request:NSFetchRequest<DataMember> = DataMember.fetchRequest()
+        
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let memberPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.publicKey)),
+            rightExpression: NSExpression(forConstantValue: member as NSData),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, memberPredicate])
+        
+        try performAndWait {
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            for member in try self.managedObjectContext.fetch(request) {
+                dataTeam.removeFromMembers(member)
+            }
+        }
+
     }
     
     /**
         Pin/Unpin/check Known Hosts
      */
-    func pin(sshHostKey:SSHHostKey, blockHash:Data) {
-        self.save(sshHostKey: sshHostKey, blockHash: blockHash)
+    func pin(sshHostKey:SSHHostKey, block:HashChain.Block) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        try performAndWait {
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            let newHost = DataSSHHostKey(helper: self.managedObjectContext)
+            newHost.host = sshHostKey.host
+            newHost.publicKey = sshHostKey.publicKey as NSData
+            
+            let newHead = DataBlock(helper: self.managedObjectContext)
+            newHead.payload = block.payload
+            newHead.signature = block.signature as NSData
+                        
+            self.append(newHead: newHead, to: dataTeam)
+            
+            dataTeam.addToPinnedHosts(newHost)
+        }
     }
     
     /** Match verifiedHostAuth (hostName, publicKey) to a pin (host, publickey)
@@ -228,7 +430,6 @@ class TeamDataManager {
         - throws HostMistmatchError if host name is pinned but public key is mismatched
     */
     func check(verifiedHost:VerifiedHostAuth) throws {
-        
         guard let hostName = verifiedHost.hostName
         else {
             throw HostAuthHasNoHostnames()
@@ -236,10 +437,16 @@ class TeamDataManager {
         
         let hostPublicKey = try verifiedHost.hostKey.fromBase64()
         
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
-        fetchRequest.predicate = self.sshHostNameOnlyEqualsPredicate(for: hostName)
+        let request:NSFetchRequest<DataSSHHostKey> = DataSSHHostKey.fetchRequest()
+        request.predicate = self.sshHostKeyEqualsPredicate(host: hostName, publicKey: hostPublicKey)
         
-        let sshHostKeys:[SSHHostKey] = try fetchObjects(for: fetchRequest)
+        var sshHostKeys:[SSHHostKey] = []
+        
+        try performAndWait {
+            for result in try self.managedObjectContext.fetch(request) {
+                try sshHostKeys.append(result.sshHostKey())
+            }
+        }
         
         guard !sshHostKeys.isEmpty else {
             return
@@ -260,255 +467,87 @@ class TeamDataManager {
      - if not known host or public key does not match: return false
      */
     func sshHostKeyExists(for hostName:String) throws -> Bool {
-        
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
-        fetchRequest.predicate = self.sshHostNameOnlyEqualsPredicate(for: hostName)
-        
-        let sshHostKeys:[SSHHostKey] = try fetchObjects(for: fetchRequest)
-        
-        return sshHostKeys.isEmpty == false
-    }
-
-
-
-    func unpin(sshHostKey:SSHHostKey) {
-        self.delete(sshHostKey: sshHostKey)
-    }
-    
-    private func fetchObjects(for request:NSFetchRequest<NSFetchRequestResult>) throws -> [HashChain.Block] {
         defer { mutex.unlock() }
         mutex.lock()
+
+        let request:NSFetchRequest<DataSSHHostKey> = DataSSHHostKey.fetchRequest()
+
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
         
-        var blocks:[HashChain.Block] = []
+        let hostPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.host)),
+            rightExpression: NSExpression(forConstantValue: hostName),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
         
-        var caughtError:Error?
-        self.managedObjectContext.performAndWait {
-            do {
-                let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
-                
-                for object in (objects ?? []) {
-                    guard
-                        let payload = object.value(forKey: "payload") as? String,
-                        let signature = object.value(forKey: "signature") as? String,
-                        let signatureData = try? signature.fromBase64()
-                    else {
-                            continue
-                    }
-                    
-                    blocks.append(HashChain.Block(payload: payload, signature: signatureData))
-                }
-                
-            } catch {
-                caughtError = error
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, hostPredicate])
+
+        var sshHostKeys:[SSHHostKey] = []
+        
+        try performAndWait {
+            for result in try self.managedObjectContext.fetch(request) {
+                try sshHostKeys.append(result.sshHostKey())
             }
         }
-        
-        if let error = caughtError {
-            throw error
-        }
-        
-        return blocks
+
+        return !sshHostKeys.isEmpty
     }
-    
-    private func fetchObjects(for request:NSFetchRequest<NSFetchRequestResult>) throws -> [Team.MemberIdentity] {
+
+    func unpin(sshHostKey:SSHHostKey) throws {
         defer { mutex.unlock() }
         mutex.lock()
-        
-        var members:[Team.MemberIdentity] = []
-        
-        var caughtError:Error?
-        self.managedObjectContext.performAndWait {
-            do {
-                let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
-                
-                for object in (objects ?? []) {
-                    guard
-                        let email = object.value(forKey: "email") as? String,
-                        let publicKey = object.value(forKey: "public_key") as? String,
-                        let sshPublicKey = object.value(forKey: "ssh_public_key") as? String,
-                        let pgpPublicKey = object.value(forKey: "pgp_public_key") as? String
-                    else {
-                        continue
-                    }
-                    
-                    let member = try Team.MemberIdentity(publicKey: publicKey.fromBase64(),
-                                                         email: email,
-                                                         sshPublicKey: sshPublicKey.fromBase64(),
-                                                         pgpPublicKey: pgpPublicKey.fromBase64())
-                    members.append(member)
-                }
-                
-            } catch {
-                caughtError = error
-            }
-        }
-        
-        if let error = caughtError {
-            throw error
-        }
-        
-        return members
-    }
-    
-    private func fetchObjects(for request:NSFetchRequest<NSFetchRequestResult>) throws -> [SSHHostKey] {
-        defer { mutex.unlock() }
-        mutex.lock()
-        
-        var hostKeys:[SSHHostKey] = []
-        
-        var caughtError:Error?
-        self.managedObjectContext.performAndWait {
-            do {
-                let objects = try self.managedObjectContext.fetch(request) as? [NSManagedObject]
-                
-                for object in (objects ?? []) {
-                    guard
-                        let host = object.value(forKey: "host") as? String,
-                        let publicKey = object.value(forKey: "public_key") as? String
-                        else {
-                            continue
-                    }
-                    
-                    try hostKeys.append(SSHHostKey(host: host, publicKey: publicKey.fromBase64()))
-                }
-                
-            } catch {
-                caughtError = error
-            }
-        }
-        
-        if let error = caughtError {
-            throw error
-        }
-        
-        return hostKeys
-    }
 
+        let request:NSFetchRequest<DataSSHHostKey> = DataSSHHostKey.fetchRequest()
+        request.predicate = self.sshHostKeyEqualsPredicate(host: sshHostKey.host, publicKey: sshHostKey.publicKey)
+        
+        try performAndWait {
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            for result in try self.managedObjectContext.fetch(request) {
+                dataTeam.removeFromPinnedHosts(result)
+            }
+        }
 
-    
-    
-    //MARK: Saving
-    private func save(member:Team.MemberIdentity, blockHash:Data) {
-        mutex.lock()
-        
-        self.managedObjectContext.performAndWait {
-            guard
-                let entity =  NSEntityDescription.entity(forEntityName: "Member", in: self.managedObjectContext)
-                else {
-                    return
-            }
-            
-            let hostEntry = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
-            
-            // set attirbutes
-            hostEntry.setValue(member.email, forKey: "email")
-            hostEntry.setValue(member.publicKey.toBase64(), forKey: "public_key")
-            hostEntry.setValue(member.sshPublicKey.toBase64(), forKey: "ssh_public_key")
-            hostEntry.setValue(member.pgpPublicKey.toBase64(), forKey: "pgp_public_key")
-            hostEntry.setValue(blockHash.toBase64(), forKey: "block_hash")
-            hostEntry.setValue(Date(), forKey: "date_added")
-        }
-        
-        mutex.unlock()
-        
-        // notify we have a new log
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_block"), object: nil)
     }
-
-    
-    private func save(block:HashChain.Block) {
-        mutex.lock()
-        
-        self.managedObjectContext.performAndWait {
-            guard
-                let entity =  NSEntityDescription.entity(forEntityName: "Block", in: self.managedObjectContext)
-                else {
-                    return
-            }
-            
-            let hostEntry = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
-            
-            // set attirbutes
-            hostEntry.setValue(block.payload, forKey: "payload")
-            hostEntry.setValue(block.signature.toBase64(), forKey: "signature")
-            hostEntry.setValue(block.hash().toBase64(), forKey: "block_hash")
-            hostEntry.setValue(Date(), forKey: "date_added")
-        }
-        
-        mutex.unlock()
-        
-        // notify we have a new log
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_block"), object: nil)
-    }
-    
-    private func save(sshHostKey:SSHHostKey, blockHash:Data) {
-        mutex.lock()
-        
-        self.managedObjectContext.performAndWait {
-            guard
-                let entity =  NSEntityDescription.entity(forEntityName: "SSHHostKey", in: self.managedObjectContext)
-                else {
-                    return
-            }
-            
-            let hostEntry = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
-            
-            // set attirbutes
-            hostEntry.setValue(sshHostKey.host, forKey: "host")
-            hostEntry.setValue(sshHostKey.publicKey.toBase64(), forKey: "public_key")
-            hostEntry.setValue(blockHash.toBase64(), forKey: "block_hash")
-            hostEntry.setValue(Date(), forKey: "date_added")
-        }
-        
-        mutex.unlock()
-        
-        // notify we have a new log
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_block"), object: nil)
-    }
-
-    
-    //MARK: Deleting
-    
-    private func delete(memberPublicKey:SodiumPublicKey) {
-        defer { mutex.unlock() }
-        mutex.lock()
-        
-        self.managedObjectContext.performAndWait {
-            let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "Member")
-            fetchRequest.predicate = self.memberEqualsPredicate(for: memberPublicKey)
-            
-            guard  let objects = (try? self.managedObjectContext.fetch(fetchRequest)) as? [NSManagedObject]
-            else {
-                return
-            }
-            
-            objects.forEach {
-                self.managedObjectContext.delete($0)
-            }
-        }
-    }
-    
-    private func delete(sshHostKey:SSHHostKey) {
-        defer { mutex.unlock() }
-        mutex.lock()
-        
-        self.managedObjectContext.performAndWait {
-            let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: "SSHHostKey")
-            fetchRequest.predicate = self.sshHostNameAndKeyEqualsPredicate(for: sshHostKey)
-            
-            guard  let objects = (try? self.managedObjectContext.fetch(fetchRequest)) as? [NSManagedObject]
-                else {
-                    return
-            }
-            
-            objects.forEach {
-                self.managedObjectContext.delete($0)
-            }
-        }
-    }
-
     
     // MARK: Predicates
+    private func sshHostKeyEqualsPredicate(host:String, publicKey:SodiumPublicKey) -> NSPredicate {
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let hostPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.host)),
+            rightExpression: NSExpression(forConstantValue: host),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let publicKeyPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.publicKey)),
+            rightExpression: NSExpression(forConstantValue: publicKey as NSData),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, hostPredicate, publicKeyPredicate])
+
+    }
     private func teamEqualsPredicate(for id:String) -> NSPredicate {
         return NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: "id"),
@@ -518,47 +557,23 @@ class TeamDataManager {
             options: NSComparisonPredicate.Options(rawValue: 0)
         )
     }
-
-    private func memberEqualsPredicate(for memberPublicKey:SodiumPublicKey) -> NSPredicate {
-        return NSComparisonPredicate(
-            leftExpression: NSExpression(forKeyPath: "public_key"),
-            rightExpression: NSExpression(forConstantValue: memberPublicKey.toBase64()),
-            modifier: .direct,
-            type: .equalTo,
-            options: NSComparisonPredicate.Options(rawValue: 0)
-        )
-    }
     
-    
-    
-    private func sshHostNameOnlyEqualsPredicate(for host:String) -> NSPredicate {
-        let hostPredicate =  NSComparisonPredicate(
-            leftExpression: NSExpression(forKeyPath: "host"),
-            rightExpression: NSExpression(forConstantValue: host),
-            modifier: .direct,
-            type: .equalTo,
-            options: NSComparisonPredicate.Options(rawValue: 0)
-        )
-
-        return hostPredicate
-    }
-    
-    private func sshHostNameAndKeyEqualsPredicate(for sshHostKey:SSHHostKey) -> NSPredicate {
+    //MARK: Internals
+    private func performAndWait(fn:@escaping (() throws -> Void)) throws {
         
-        let hostPredicate = sshHostNameOnlyEqualsPredicate(for: sshHostKey.host)
+        var caughtError:Error?
+        self.managedObjectContext.performAndWait {
+            do {
+                try fn()
+            } catch {
+                caughtError = error
+            }
+        }
         
-        let pubKeyPredicate =  NSComparisonPredicate(
-            leftExpression: NSExpression(forKeyPath: "public_key"),
-            rightExpression: NSExpression(forConstantValue: sshHostKey.publicKey.toBase64()),
-            modifier: .direct,
-            type: .equalTo,
-            options: NSComparisonPredicate.Options(rawValue: 0)
-        )
-
-        return NSCompoundPredicate(andPredicateWithSubpredicates: [hostPredicate, pubKeyPredicate])
+        if let error = caughtError {
+            throw error
+        }
     }
-
-
     
     //MARK: - Core Data Saving/Roll back support
     func saveContext() throws {

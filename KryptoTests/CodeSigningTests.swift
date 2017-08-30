@@ -9,6 +9,8 @@
 import Foundation
 
 import XCTest
+@testable import Kryptonite
+
 import PGPFormat
 import Sodium
 
