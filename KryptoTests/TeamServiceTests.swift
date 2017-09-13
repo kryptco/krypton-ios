@@ -14,6 +14,7 @@ import UIKit
 class TeamServiceTests: XCTestCase {
     
     var teamIdentity:TeamIdentity!
+    var createBlock:HashChain.Block!
     
     override func setUp() {
         super.setUp()
@@ -24,7 +25,9 @@ class TeamServiceTests: XCTestCase {
         }
         
         // create the team
-        teamIdentity = try! TeamIdentity.newAdmin(email: "bob@iostests.com", teamName: "iOSTests")
+        let (id, create) = try! TeamIdentity.newAdmin(email: "bob@iostests.com", teamName: "iOSTests")
+        teamIdentity = id
+        createBlock = create
     }
     
     override func tearDown() {
@@ -36,7 +39,7 @@ class TeamServiceTests: XCTestCase {
         let exp = expectation(description: "TeamService ASYNC request")
 
         do {
-            try TeamService.temporary(for: teamIdentity).createTeam { (response) in
+            try TeamService.temporary(for: teamIdentity).createTeam(createBlock: createBlock) { (response) in
                 
                 switch response {
                 case .error(let e):
