@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DataBlock" representedClassName="DataBlock" syncable="YES" codeGenerationType="class">
+        <attribute name="blockHash" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
         <attribute name="payload" attributeType="String" syncable="YES"/>
+        <attribute name="publicKey" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
         <attribute name="signature" attributeType="Binary" syncable="YES"/>
         <relationship name="next" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="previous" inverseEntity="DataBlock" syncable="YES"/>
         <relationship name="previous" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="next" inverseEntity="DataBlock" syncable="YES"/>
@@ -9,6 +11,7 @@
     </entity>
     <entity name="DataMember" representedClassName="DataMember" syncable="YES" codeGenerationType="class">
         <attribute name="email" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="isAdmin" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" indexed="YES" syncable="YES"/>
         <attribute name="pgpPublicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
         <attribute name="publicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
         <attribute name="sshPublicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
@@ -27,9 +30,9 @@
         <relationship name="pinnedHosts" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataSSHHostKey" inverseName="team" inverseEntity="DataSSHHostKey" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DataBlock" positionX="-882" positionY="-36" width="128" height="118"/>
-        <element name="DataMember" positionX="-434" positionY="9" width="128" height="118"/>
-        <element name="DataSSHHostKey" positionX="-137" positionY="110" width="128" height="88"/>
-        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="118"/>
+        <element name="DataBlock" positionX="-882" positionY="-36" width="128" height="150"/>
+        <element name="DataMember" positionX="-434" positionY="9" width="128" height="135"/>
+        <element name="DataSSHHostKey" positionX="-137" positionY="110" width="128" height="90"/>
+        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="120"/>
     </elements>
 </model>

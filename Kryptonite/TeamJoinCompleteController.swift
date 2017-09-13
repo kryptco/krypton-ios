@@ -25,6 +25,7 @@ class TeamJoinCompleteController:KRBaseController {
 
     var joinType:TeamJoinType!
     var teamIdentity:TeamIdentity!
+    var createBlock:HashChain.Block!
     
     struct JoinWorkflowError:Error, CustomDebugStringConvertible  {
         let error:Error
@@ -84,7 +85,7 @@ class TeamJoinCompleteController:KRBaseController {
             
             let temporaryService = TeamService.temporary(for: teamIdentity)
             // 1. create the team.
-            try temporaryService.createTeam { response in
+            try temporaryService.createTeam(createBlock: createBlock) { response in
                 switch response {
                 case .error(let error):
                     self.showCreateFailure(message: "Could not create team", error: error, request: request, session: session)
@@ -94,7 +95,7 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     do {
                         // save the team identity
-                        try IdentityManager.saveTeamIdentity(identity: service.teamIdentity)
+                        try IdentityManager.setTeamIdentity(identity: service.teamIdentity)
                     } catch {
                         self.showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
                         return
@@ -102,7 +103,7 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     
             // 2. send the create team response
-                    let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: self.teamIdentity.teamAdminSeed?.toBase64(), error: nil))
+                    let responseType = ResponseBody.createTeam(self.teamIdentity.createTeamResponse)
                     
                     let response = Response(requestID: request.id,
                                             endpoint: API.endpointARN ?? "",
@@ -141,7 +142,7 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     // save the identity
                     do {
-                        try IdentityManager.saveTeamIdentity(identity: self.teamIdentity)
+                        try IdentityManager.setTeamIdentity(identity: self.teamIdentity)
                     } catch {
                         self.showFailure(by: JoinWorkflowError(error, action: "Could not save team identity."))
                         return

@@ -85,14 +85,18 @@ class IdentityManager {
         }
     }
     
-    class func saveTeamIdentity(identity:TeamIdentity) throws {
+    class func setTeamIdentity(identity:TeamIdentity) throws {
         mutex.lock()
         defer { mutex.unlock() }
         
         do {
+            // save the team data
+            try identity.dataManager.saveContext()
+
             // save the identity to keychain
             try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
-            try identity.dataManager.saveContext()
+            
+            // set the shared teamIdentity
             teamIdentity = identity
             
         } catch {
@@ -109,12 +113,28 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
+        let previousTeamIdentity = teamIdentity
+        
         do {
+            // update team data
             try identity.dataManager.saveContext()
             teamIdentity?.team = identity.team
             teamIdentity?.dataManager = identity.dataManager
+
+            // update the checkpoint
+            if let blockHash = identity.team.lastBlockHash {
+                teamIdentity?.checkpoint = blockHash
+            }
+            
+            // save the identity to keychain
+            if let identity = teamIdentity {
+                try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
+            }
+
+            
         } catch {
             identity.dataManager.rollbackContext()
+            teamIdentity = previousTeamIdentity
             
             throw error
         }

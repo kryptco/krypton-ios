@@ -31,10 +31,13 @@ class HashChain {
         case badPayload
         case badOperation
         case badBlockHash
+        case badLoggingEndpoint
+        case badTeamPointer
         
         case missingCreateChain
         case unexpectedBlock
-
+        
+        case signerNotAdmin
         case teamPublicKeyMismatch
     }
 
@@ -61,15 +64,18 @@ class HashChain {
 
     /// A payload and it's signature
     struct Block:JsonReadable {
+        let publicKey:SodiumPublicKey
         let payload:String
         let signature:Data
         
-        init(payload:String, signature:Data) {
+        init(publicKey:SodiumPublicKey, payload:String, signature:Data) {
+            self.publicKey = publicKey
             self.payload = payload
             self.signature = signature
         }
         init(json: Object) throws {
-            try self.init(payload: json ~> "payload",
+            try self.init(publicKey: ((json ~> "public_key") as String).fromBase64(),
+                          payload: json ~> "payload",
                           signature: ((json ~> "signature") as String).fromBase64())
         }
         
@@ -78,11 +84,6 @@ class HashChain {
         }
     }
     
-    struct VerifiedBlock {
-        let payload:Payload
-        let signature:Data
-    }
-
     /// The types of request payloads
     enum Payload:Jsonable {
         case create(CreateChain)
@@ -139,41 +140,52 @@ class HashChain {
     }
     
     struct ReadBlock:Jsonable {
-        let teamPublicKey:Data
+        let teamPointer:TeamPointer
         let nonce:Data
         let unixSeconds:UInt64
-        let lastBlockHash:Data?
         
-        init(teamPublicKey:Data, nonce:Data, unixSeconds:UInt64, lastBlockHash:Data? = nil) {
-            self.teamPublicKey = teamPublicKey
+        init(teamPointer:TeamPointer, nonce:Data, unixSeconds:UInt64) {
+            self.teamPointer = teamPointer
             self.nonce = nonce
             self.unixSeconds = unixSeconds
-            self.lastBlockHash = lastBlockHash
         }
         
         init(json: Object) throws {
-            
-            var lastBlockHashData:Data?
-            if let lastBlockHash:String = try? json ~> "last_block_hash" {
-                lastBlockHashData = try lastBlockHash.fromBase64()
-            }
-            
-            try self.init(teamPublicKey: ((json ~> "team_public_key") as String).fromBase64(),
+            try self.init(teamPointer: TeamPointer(json: json ~> "team_pointer"),
                           nonce: ((json ~> "nonce") as String).fromBase64(),
-                          unixSeconds: json ~> "unix_seconds",
-                          lastBlockHash: lastBlockHashData)
+                          unixSeconds: json ~> "unix_seconds")
         }
         
         var object: Object {
-            var map:Object = ["team_public_key": teamPublicKey.toBase64(),
-                              "nonce": nonce.toBase64(),
-                              "unix_seconds": unixSeconds]
-            
-            if let lastBlockHash = lastBlockHash {
-                map["last_block_hash"] = lastBlockHash.toBase64()
+            return ["team_pointer": teamPointer.object,
+                    "nonce": nonce.toBase64(),
+                    "unix_seconds": unixSeconds]
+        }
+    }
+    
+    enum TeamPointer:Jsonable {
+        case publicKey(SodiumPublicKey)
+        case blockHash(Data)
+        
+        init(json:Object) throws {
+            if let publicKey:String = try? json ~> "public_key" {
+                self = try .publicKey(publicKey.fromBase64())
             }
-            
-            return map
+            else if let blockHash:String = try? json ~> "block_hash" {
+                self = try .blockHash(blockHash.fromBase64())
+            }
+            else {
+                throw Errors.badTeamPointer
+            }
+        }
+        
+        var object: Object {
+            switch self {
+            case .publicKey(let pub):
+                return ["public_key": pub.toBase64()]
+            case .blockHash(let hash):
+                return ["block_hash": hash.toBase64()]
+            }
         }
     }
     
@@ -217,6 +229,12 @@ class HashChain {
         case pinHostKey(SSHHostKey)
         case unpinHostKey(SSHHostKey)
         
+        case addLoggingEndpoint(Team.LoggingEndpoint)
+        case removeLoggingEndpoint(Team.LoggingEndpoint)
+        
+        case addAdmin(SodiumPublicKey)
+        case removeAdmin(SodiumPublicKey)
+        
         init(json: Object) throws {
             if let invite:Object = try? json ~> "invite_member" {
                 self = try .inviteMember(MemberInvitation(json: invite))
@@ -245,6 +263,19 @@ class HashChain {
             else if let host:Object = try? json ~> "unpin_host_key" {
                 self = try .unpinHostKey(SSHHostKey(json: host))
             }
+            else if let endpoint:Object = try? json ~> "add_logging_endpoint" {
+                self = try .addLoggingEndpoint(Team.LoggingEndpoint(json: endpoint))
+            }
+            else if let endpoint:Object = try? json ~> "remove_logging_endpoint" {
+                self = try .removeLoggingEndpoint(Team.LoggingEndpoint(json: endpoint))
+            }
+            else if let publicKeyString:String = try? json ~> "add_admin" {
+                self = try .addAdmin(publicKeyString.fromBase64())
+            }
+            else if let publicKeyString:String = try? json ~> "remove_admin" {
+                self = try .removeAdmin(publicKeyString.fromBase64())
+            }
+
             else {
                 throw Errors.badOperation
             }
@@ -270,10 +301,19 @@ class HashChain {
                 return ["pin_host_key": host.object]
             case .unpinHostKey(let host):
                 return ["unpin_host_key": host.object]
+            case .addLoggingEndpoint(let endpoint):
+                return ["add_logging_endpoint": endpoint.object]
+            case .removeLoggingEndpoint(let endpoint):
+                return ["remove_logging_endpoint": endpoint.object]
+            case .addAdmin(let admin):
+                return ["add_admin": admin.toBase64()]
+            case .removeAdmin(let admin):
+                return ["remove_admin": admin.toBase64()]
             }
         }
     }
     
+
     /// Data Structures
     struct MemberInvitation:Jsonable {
         let noncePublicKey:Data

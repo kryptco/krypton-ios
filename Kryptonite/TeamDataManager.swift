@@ -14,13 +14,22 @@ import JSON
 extension DataBlock {
     func block() throws -> HashChain.Block {
         guard
+            let publicKey = publicKey as Data?,
             let payload = payload,
             let signature = signature as Data?
         else {
             throw TeamDataManager.Errors.missingObjectField
         }
         
-        return HashChain.Block(payload: payload, signature: signature)
+        return HashChain.Block(publicKey: publicKey, payload: payload, signature: signature)
+    }
+    
+    convenience init(block:HashChain.Block, helper context:NSManagedObjectContext) {
+        self.init(helper: context)
+        self.publicKey = block.publicKey as NSData
+        self.payload = block.payload
+        self.signature = block.signature as NSData
+        self.blockHash = block.hash() as NSData
     }
     
     convenience init(helper context: NSManagedObjectContext) {
@@ -57,6 +66,14 @@ extension DataSSHHostKey {
 }
 
 extension DataMember {
+    convenience init(helper context: NSManagedObjectContext, member:Team.MemberIdentity) {
+        self.init(helper: context)
+        self.email = member.email
+        self.publicKey = member.publicKey as NSData
+        self.sshPublicKey = member.sshPublicKey as NSData
+        self.pgpPublicKey = member.publicKey as NSData
+    }
+    
     func member() throws -> Team.MemberIdentity {
         guard
             let publicKey = publicKey as Data?,
@@ -118,6 +135,7 @@ class TeamDataManager {
         case invalidEntity
         case missingObjectField
         case noSuchMember
+        case prospectiveAdminIsNotMember
     }
     
     //MARK: Core Data setup
@@ -219,12 +237,7 @@ class TeamDataManager {
             
             dataTeam.id = self.teamIdentity
             dataTeam.json = try team.jsonData() as NSData
-            
-            let head = DataBlock(helper: self.managedObjectContext)
-            head.payload = block.payload
-            head.signature = block.signature as NSData
-            
-            dataTeam.head = head
+            dataTeam.head = DataBlock(block: block, helper: self.managedObjectContext)
         }
     }
     
@@ -241,6 +254,8 @@ class TeamDataManager {
     /**
         Fetch helpers
      */
+    
+    ///MARK: Blocks
     
     func fetchAll() throws -> [HashChain.Block] {
         defer { mutex.unlock() }
@@ -261,6 +276,46 @@ class TeamDataManager {
         
         return blocks
     }
+    
+    func hasBlock(for hash:Data) throws -> Bool {
+        return try self.fetchBlock(for: hash) != nil
+    }
+    
+    private func fetchBlock(for hash:Data) throws -> DataBlock? {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        let request:NSFetchRequest<DataBlock> = DataBlock.fetchRequest()
+        
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataBlock.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let blockHashPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataBlock.blockHash)),
+            rightExpression: NSExpression(forConstantValue: hash),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, blockHashPredicate])
+        
+        var block:DataBlock?
+        
+        try performAndWait {
+            block = try self.managedObjectContext.fetch(request).first
+        }
+        
+        return block
+    }
+    
+    
+    ///MARK: Members
     
     func fetchAll() throws -> [Team.MemberIdentity] {
         defer { mutex.unlock() }
@@ -286,7 +341,78 @@ class TeamDataManager {
         
         return members
     }
+    
+    func fetchAdmins() throws -> [Team.MemberIdentity] {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        let request:NSFetchRequest<DataMember> = DataMember.fetchRequest()
+        
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        
+        let isAdminPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.isAdmin)),
+            rightExpression: NSExpression(forConstantValue: true),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, isAdminPredicate])
+        
+        var admins:[Team.MemberIdentity] = []
+        
+        try performAndWait {
+            try self.managedObjectContext.fetch(request).forEach {
+                try admins.append($0.member())
+            }
+        }
+        
+        return admins
+    }
 
+    
+    private func fetchMember(for publicKey:SodiumPublicKey) throws -> DataMember? {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        let request:NSFetchRequest<DataMember> = DataMember.fetchRequest()
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let memberPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.publicKey)),
+            rightExpression: NSExpression(forConstantValue: publicKey),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, memberPredicate])
+        
+        var member:DataMember?
+        
+        try performAndWait {
+            member = try self.managedObjectContext.fetch(request).first
+        }
+        
+        return member
+    }
+
+
+    /// MARK: Host Keys
     func fetchAll() throws -> [SSHHostKey] {
         defer { mutex.unlock() }
         mutex.lock()
@@ -319,10 +445,7 @@ class TeamDataManager {
         mutex.lock()
         
         try performAndWait {
-            let newHead = DataBlock(helper: self.managedObjectContext)
-            newHead.payload = block.payload
-            newHead.signature = block.signature as NSData
-
+            let newHead = DataBlock(block: block, helper: self.managedObjectContext)
             let dataTeam = try self.fetchCoreDataTeam()
             
             self.append(newHead: newHead, to: dataTeam)
@@ -343,30 +466,25 @@ class TeamDataManager {
     /**
         Add/remove member
      */
-    func add(member:Team.MemberIdentity, block:HashChain.Block) throws {
+    func add(member:Team.MemberIdentity, isAdmin:Bool = false, block:HashChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
         try performAndWait {
             let dataTeam = try self.fetchCoreDataTeam()
             
-            let newMember = DataMember(helper: self.managedObjectContext)
-            newMember.email = member.email
-            newMember.publicKey = member.publicKey as NSData
-            newMember.sshPublicKey = member.sshPublicKey as NSData
-            newMember.pgpPublicKey = member.publicKey as NSData
+            let newMember = DataMember(helper: self.managedObjectContext, member: member)
+            newMember.isAdmin = isAdmin
             
-            let newHead = DataBlock(helper: self.managedObjectContext)
-            newHead.payload = block.payload
-            newHead.signature = block.signature as NSData
-            
+            let newHead = DataBlock(block: block, helper: self.managedObjectContext)
+
             self.append(newHead: newHead, to: dataTeam)
             
             dataTeam.addToMembers(newMember)
         }
     }
     
-    func remove(member:SodiumPublicKey) throws {
+    func remove(member:SodiumPublicKey, block:HashChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -396,8 +514,80 @@ class TeamDataManager {
             for member in try self.managedObjectContext.fetch(request) {
                 dataTeam.removeFromMembers(member)
             }
+            
+            let newHead = DataBlock(block: block, helper: self.managedObjectContext)
+            
+            self.append(newHead: newHead, to: dataTeam)
         }
 
+    }
+    
+    /**
+        Add/remove admins
+        Get admin public keys
+     */
+    func add(admin publicKey:SodiumPublicKey, block:HashChain.Block) throws {
+        
+        // first fetch the team member
+        guard let adminMember = try self.fetchMember(for: publicKey) else {
+            throw Errors.prospectiveAdminIsNotMember
+        }
+        
+        // continue adding the admin
+        defer { mutex.unlock() }
+        mutex.lock()
+    
+        try performAndWait {
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            // make the member an admin
+            adminMember.isAdmin = true
+            
+            let newHead = DataBlock(block: block, helper: self.managedObjectContext)
+            self.append(newHead: newHead, to: dataTeam)
+        }
+    }
+    
+    func isAdmin(for publicKey:SodiumPublicKey) throws -> Bool {
+        let admins = try self.fetchAdmins()
+        return admins.filter { $0.publicKey == publicKey }.isEmpty == false
+    }
+    
+    func remove(admin publicKey:SodiumPublicKey, block:HashChain.Block) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        let request:NSFetchRequest<DataMember> = DataMember.fetchRequest()
+        
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let memberPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.publicKey)),
+            rightExpression: NSExpression(forConstantValue: publicKey as NSData),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, memberPredicate])
+        
+        try performAndWait {
+            for adminToRemove in try self.managedObjectContext.fetch(request) {
+                adminToRemove.isAdmin = false
+            }
+            
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            let newHead = DataBlock(block: block, helper: self.managedObjectContext)
+            self.append(newHead: newHead, to: dataTeam)
+        }
+        
     }
     
     /**
@@ -414,10 +604,8 @@ class TeamDataManager {
             newHost.host = sshHostKey.host
             newHost.publicKey = sshHostKey.publicKey as NSData
             
-            let newHead = DataBlock(helper: self.managedObjectContext)
-            newHead.payload = block.payload
-            newHead.signature = block.signature as NSData
-                        
+            let newHead = DataBlock(block: block, helper: self.managedObjectContext)
+            
             self.append(newHead: newHead, to: dataTeam)
             
             dataTeam.addToPinnedHosts(newHost)
@@ -502,7 +690,7 @@ class TeamDataManager {
         return !sshHostKeys.isEmpty
     }
 
-    func unpin(sshHostKey:SSHHostKey) throws {
+    func unpin(sshHostKey:SSHHostKey, block:HashChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
 
@@ -515,6 +703,9 @@ class TeamDataManager {
             for result in try self.managedObjectContext.fetch(request) {
                 dataTeam.removeFromPinnedHosts(result)
             }
+            
+            let newHead = DataBlock(block: block, helper: self.managedObjectContext)
+            self.append(newHead: newHead, to: dataTeam)
         }
 
     }

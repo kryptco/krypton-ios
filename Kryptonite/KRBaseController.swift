@@ -219,7 +219,7 @@ extension UIViewController {
                 return
             }
             
-            guard   link.path.count == 2
+            guard   link.path.count == 3
             else {
                 self.showWarning(title: "Error", body: "Invalid team invitation.")
                 return
@@ -227,9 +227,10 @@ extension UIViewController {
             
             var teamInvite:TeamInvite
             do {
-                let teamPublicKey = try SodiumPublicKey(link.path[0].fromBase64())
+                let initialTeamPublicKey = try SodiumPublicKey(link.path[0].fromBase64())
+                let blockHash = try SodiumPublicKey(link.path[1].fromBase64())
                 let seed = try link.path[1].fromBase64()
-                teamInvite = TeamInvite(teamPublicKey: teamPublicKey, seed: seed)
+                teamInvite = TeamInvite(initialTeamPublicKey: initialTeamPublicKey, blockHash: blockHash, seed: seed)
             } catch {
                 self.showWarning(title: "Error", body: "Invalid team invitation encoding.")
                 return

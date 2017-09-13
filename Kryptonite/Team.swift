@@ -79,11 +79,38 @@ struct Team:Jsonable {
         }
     }
     
+    enum LoggingEndpoint:Jsonable,Equatable {
+        case commandEncrypted
+        
+        struct UnknownEndpoint:Error {}
+        
+        init(json: Object) throws {
+            if let _:Object = try? json ~> "command_encrypted" {
+                self = .commandEncrypted
+            } else {
+                throw UnknownEndpoint()
+            }
+        }
+        
+        var object: Object {
+            return ["command_encrypted": {}]
+        }
+        
+        static func ==(l:LoggingEndpoint, r:LoggingEndpoint) -> Bool {
+            switch (l, r) {
+            case (.commandEncrypted, .commandEncrypted):
+                return true
+            }
+        }
+    }
+    
+    
     var info:Info
     var policy:PolicySettings
     var lastBlockHash:Data?
     var lastInvitePublicKey:SodiumPublicKey?
-        
+    var loggingEndpoints:[LoggingEndpoint] = []
+    
     var name:String {
         return info.name
     }

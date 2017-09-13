@@ -294,12 +294,22 @@ extension Team.PolicySettings {
     }
 }
 
+extension HashChain.TeamPointer:CustomStringConvertible {
+    var description:String {
+        switch self {
+        case .publicKey(let pub):
+            return "public key \(pub.toBase64())"
+        case .blockHash(let hash):
+            return "block hash \(hash.toBase64())"
+        }
+    }
+}
 extension HashChain.Payload {
 
     var eventLogDetails:(title:String, detail:String) {
         switch self {
         case .read(let read):
-            return ("read", "get " + (read.lastBlockHash?.toBase64() ?? "first block"))
+            return ("read", "get \(read.teamPointer)")
             
         case .create(let create):
             return ("create chain", "started team \"\(create.teamInfo.name)\"")
@@ -332,7 +342,18 @@ extension HashChain.Payload {
                 
             case .unpinHostKey(let host):
                 return ("unpin ssh host key", "host \"\(host.host)\"\n\(host.displayPublicKey)")
-
+            
+            case .addLoggingEndpoint(let endpoint):
+                return ("enable logging", "endpoint \(endpoint)")
+            
+            case .removeLoggingEndpoint(let endpoint):
+                return ("disable logging", "endpoint \(endpoint)")
+            
+            case .addAdmin(let admin):
+                return ("make admin", "id \(admin.toBase64())")
+                
+            case .removeAdmin(let admin):
+                return ("remove admin", "id \(admin.toBase64())")
             }
         }
         

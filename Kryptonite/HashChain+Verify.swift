@@ -8,6 +8,12 @@
 
 import Foundation
 
+/// verify incoming blocks for a new team, with an invite
+extension TeamInvite {
+    
+}
+
+/// verify incoming blocks with an existing team identity
 extension TeamIdentity {
     
     mutating func verifyAndProcessBlocks(response:HashChain.Response) throws {
@@ -25,20 +31,21 @@ extension TeamIdentity {
             
             let createBlock = blocks[0]
             
-            // 1. verify the block signature
-            guard try KRSodium.shared().sign.verify(message: createBlock.payload.utf8Data(), publicKey: teamPublicKey, signature: createBlock.signature)
+            // 1. ensure the create block is a create chain payload
+            guard case .create(let createChain) = try HashChain.Payload(jsonString: createBlock.payload)
+                else {
+                    throw HashChain.Errors.missingCreateChain
+            }
+
+            // 2. verify the block signature
+            guard try KRSodium.shared().sign.verify(message: createBlock.payload.utf8Data(), publicKey: initialTeamPublicKey, signature: createBlock.signature)
                 else {
                     throw HashChain.Errors.badSignature
             }
             
-            // 2. ensure the create block is a create chain payload
-            guard case .create(let createChain) = try HashChain.Payload(jsonString: createBlock.payload)
-            else {
-                throw HashChain.Errors.missingCreateChain
-            }
             
-            // 3. check the team public key matches
-            guard createChain.teamPublicKey == teamPublicKey else {
+            // 3. add the original admin as a public key
+            guard createChain.teamPublicKey == initialTeamPublicKey else {
                 throw HashChain.Errors.teamPublicKeyMismatch
             }
             
@@ -59,22 +66,28 @@ extension TeamIdentity {
                 throw HashChain.Errors.unexpectedBlock
             }
             
-            // handle special case for an accept invite signed by the invitation nonce keypair
-            // otherwise, every other block must be signed by team public key
+            // 2. Ensure the signer has permission
+            // - either the signer is an admin OR
+            // - handle special case for an accept invite signed by the invitation nonce keypair
+            
             var publicKey:SodiumPublicKey
             if case .acceptInvite = appendBlock.operation, let noncePublicKey = updatedTeam.lastInvitePublicKey {
                 publicKey = noncePublicKey
             } else {
-                publicKey = teamPublicKey
+                guard try dataManager.isAdmin(for: nextBlock.publicKey) else {
+                    throw HashChain.Errors.signerNotAdmin
+                }
+                
+                publicKey = nextBlock.publicKey
             }
             
-            // 2. Ensure last hash matches
+            // 3. Ensure last hash matches
             guard appendBlock.lastBlockHash == lastBlockHash else {
                 throw HashChain.Errors.badBlockHash
             }
             
             
-            // 3. Ensure signature verifies
+            // 4. Ensure signature verifies
             let verified = try KRSodium.shared().sign.verify(message: nextBlock.payload.utf8Data(),
                                                              publicKey: publicKey,
                                                              signature: nextBlock.signature)
@@ -101,8 +114,7 @@ extension TeamIdentity {
                 try dataManager.add(member: member, block: nextBlock)
 
             case .removeMember(let memberPublicKey):
-                try dataManager.remove(member: memberPublicKey)
-                try dataManager.append(block: nextBlock)
+                try dataManager.remove(member: memberPublicKey, block: nextBlock)
                 
             case .setPolicy(let policy):
                 updatedTeam.policy = policy
@@ -116,8 +128,23 @@ extension TeamIdentity {
                 try dataManager.pin(sshHostKey: host, block: nextBlock)
                 
             case .unpinHostKey(let host):
-                try dataManager.unpin(sshHostKey: host)
+                try dataManager.unpin(sshHostKey: host, block: nextBlock)
+
+            case .addLoggingEndpoint(let endpoint):
+                updatedTeam.loggingEndpoints.append(endpoint)
                 try dataManager.append(block: nextBlock)
+
+            case .removeLoggingEndpoint(let endpoint):
+                if let idx = updatedTeam.loggingEndpoints.index(of: endpoint) {
+                    updatedTeam.loggingEndpoints.remove(at: idx)
+                }
+                try dataManager.append(block: nextBlock)
+                
+            case .addAdmin(let admin):
+                try dataManager.add(admin: admin, block: nextBlock)
+                
+            case .removeAdmin(let admin):
+                try dataManager.remove(admin: admin, block: nextBlock)
             }
             
             lastBlockHash = nextBlock.hash()

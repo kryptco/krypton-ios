@@ -46,49 +46,41 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
     }
     
     func loadTeam() {
+        switch joinType! {
+        case .invite(let invite):
+            self.load(with: invite)
+            
+        case .create(let request, _):
+            self.load(with: request)
+        }
+    }
+    
+    func load(with invite:TeamInvite) {
         
         var teamIdentity:TeamIdentity
         do {
-            switch joinType! {
-            case .invite(let invite):
-                teamIdentity = try TeamIdentity.new(email: "", teamPublicKey: invite.teamPublicKey)
-
-            case .create(let request, _):
-                guard case .createTeam(let create) = request.body else {
-                    self.showError(message: "Invalid request.")
-                    return
-                }
-                
-                teamIdentity = try TeamIdentity.newAdmin(email: "", teamName: create.name)
-            }
+            teamIdentity = try TeamIdentity.newMember(email: "", checkpoint: invite.blockHash, initialTeamPublicKey: invite.initialTeamPublicKey)
+            
         } catch {
             self.showError(message: "Could not generate team identity. Reason: \(error).")
             return
         }
         
         let service = TeamService.temporary(for: teamIdentity)
-        
-        do {
-            switch joinType! {
-            case .invite(let invite):
-                try service.getTeam(using: invite) { (response) in
-                    switch response {
-                    case .error(let e):
-                        self.showError(message: "Error fetching team information. Reason: \(e)")
-                        return
-                        
-                    case .result(let service):
-                        teamIdentity = service.teamIdentity
-                        
-                        dispatchMain {
-                            self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
-                        }
-                    }
-                }
 
-            case .create:
-                dispatchMain {
-                    self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
+        do {
+            try service.getTeam(using: invite) { (response) in
+                switch response {
+                case .error(let e):
+                    self.showError(message: "Error fetching team information. Reason: \(e)")
+                    return
+                    
+                case .result(let service):
+                    teamIdentity = service.teamIdentity
+                    
+                    dispatchMain {
+                        self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
+                    }
                 }
             }
 
@@ -97,6 +89,22 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
             return
         }
 
+    }
+    
+    func load(with request:Request) {
+        guard case .createTeam(let create) = request.body else {
+            self.showError(message: "Invalid request.")
+            return
+        }
+        
+        do {
+            let (teamIdentity, createBlock) = try TeamIdentity.newAdmin(email: "", teamName: create.name)
+            self.performSegue(withIdentifier: "showTeamInvite", sender: (teamIdentity, createBlock))
+
+        } catch {
+            self.showError(message: "Could not generate team identity. Reason: \(error).")
+            return
+        }
     }
     
     func showError(message:String) {
@@ -117,11 +125,18 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if  let teamInviteController = segue.destination as? TeamInvitationController,
-            let teamIdentity = sender as? TeamIdentity
+        if  let teamInviteController = segue.destination as? TeamInvitationController
         {
             teamInviteController.joinType = joinType
-            teamInviteController.teamIdentity = teamIdentity
+            
+            if let teamIdentity = sender as? TeamIdentity {
+                teamInviteController.teamIdentity = teamIdentity
+            }
+            
+            if let (teamIdentity, createBlock) = sender as? (TeamIdentity, HashChain.Block) {
+                teamInviteController.teamIdentity = teamIdentity
+                teamInviteController.createBlock = createBlock
+            }
         }
     }
     

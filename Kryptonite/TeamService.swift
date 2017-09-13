@@ -10,6 +10,7 @@ import Foundation
 import JSON
 import SwiftHTTP
 
+
 class TeamService {
     
     // static instance
@@ -47,6 +48,7 @@ class TeamService {
         
         case payloadSignature
         case needNewestBlock
+        case checkpointNotReached
         
         case missingLastBlockHash
         
@@ -108,31 +110,13 @@ class TeamService {
         Create a team and add the admin, thereby starting a new chain 
         with the admin as the first team member
      */
-    func createTeam(_ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
+    func createTeam(createBlock:HashChain.Block, _ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         mutex.lock()
         
-        // ensure we have an admin keypair
-        guard let teamKeypair = try teamIdentity.adminKeyPair() else {
-            mutex.unlock()
-            throw Errors.needAdminKeypair
-        }
-        
-        let createChain = HashChain.CreateChain(teamPublicKey: teamKeypair.publicKey, teamInfo: teamIdentity.team.info)
-        let payload = HashChain.Payload.create(createChain)
-        let payloadData = try payload.jsonData()
-        
-        // sign the payload
-        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamKeypair.secretKey)
-        else {
-            mutex.unlock()
-            throw Errors.payloadSignature
-        }
-        
         // send the payload request
-        let payloadDataString = try payloadData.utf8String()
-        let hashChainRequest = HashChain.Request(publicKey: teamKeypair.publicKey,
-                                                 payload: payloadDataString,
-                                                 signature: signature)
+        let hashChainRequest = HashChain.Request(publicKey: createBlock.publicKey,
+                                                 payload: createBlock.payload,
+                                                 signature: createBlock.signature)
         
         try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
@@ -141,18 +125,9 @@ class TeamService {
                 completionHandler(TeamServiceResult.error(error))
                 self.mutex.unlock()
                 
-            case .success:
-                // set the block hash
-                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
-                let lastBlockHash = addedBlock.hash()
-                
-                var updatedTeam = self.teamIdentity.team
-                updatedTeam.lastBlockHash = lastBlockHash
-                
+            case .success:                
                 do {
-                    try self.teamIdentity.dataManager.create(team: updatedTeam, block: addedBlock)
-                    self.teamIdentity.team  = updatedTeam
-
+                    try self.teamIdentity.dataManager.create(team: self.teamIdentity.team, block: createBlock)
                 } catch {
                     completionHandler(TeamServiceResult.error(error))
                     self.mutex.unlock()
@@ -173,19 +148,19 @@ class TeamService {
                     
                     // create the append block
                     let addOperation = HashChain.Operation.addMember(admin)
-                    let addMember = HashChain.AppendBlock(lastBlockHash: lastBlockHash, operation: addOperation)
+                    let addMember = HashChain.AppendBlock(lastBlockHash: createBlock.hash(), operation: addOperation)
                     let addPayload = HashChain.Payload.append(addMember)
                     let addPayloadData = try addPayload.jsonData()
                     
                     // sign the payload
-                    guard let appendSignature = try KRSodium.shared().sign.signature(message: addPayloadData, secretKey: teamKeypair.secretKey)
+                    guard let appendSignature = try KRSodium.shared().sign.signature(message: addPayloadData, secretKey: self.teamIdentity.keyPair.secretKey)
                     else {
                         throw Errors.payloadSignature
                     }
                     
                     // send the append block payload request
                     let addPayloadDataString = try addPayloadData.utf8String()
-                    let hashChainRequest = HashChain.Request(publicKey: teamKeypair.publicKey,
+                    let hashChainRequest = HashChain.Request(publicKey: self.teamIdentity.keyPair.publicKey,
                                                              payload: addPayloadDataString,
                                                              signature: appendSignature)
                     
@@ -198,13 +173,13 @@ class TeamService {
                             
                         case .success:
                             // set the block hash
-                            let addedBlock = HashChain.Block(payload: addPayloadDataString, signature: appendSignature)
+                            let addedBlock = HashChain.Block(publicKey: self.teamIdentity.keyPair.publicKey, payload: addPayloadDataString, signature: appendSignature)
                             
                             var updatedTeam = self.teamIdentity.team
                             updatedTeam.lastBlockHash = addedBlock.hash()
                             
                             do {
-                                try self.teamIdentity.dataManager.add(member: admin, block: addedBlock)
+                                try self.teamIdentity.dataManager.add(member: admin, isAdmin: true, block: addedBlock)
                                 try self.teamIdentity.set(team: updatedTeam)
                             } catch {
                                 completionHandler(TeamServiceResult.error(error))
@@ -236,12 +211,6 @@ class TeamService {
     func add(member:Team.MemberIdentity, _ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         mutex.lock()
         
-        // ensure we have an admin keypair
-        guard let teamKeypair = try teamIdentity.adminKeyPair() else {
-            mutex.unlock()
-            throw Errors.needAdminKeypair
-        }
-        
         // we need a last block hash
         guard let lastBlockhash = teamIdentity.team.lastBlockHash else {
             mutex.unlock()
@@ -254,7 +223,7 @@ class TeamService {
         let payloadData = try payload.jsonData()
         
         // sign the payload
-        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamKeypair.secretKey)
+        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)
             else {
                 mutex.unlock()
                 throw Errors.payloadSignature
@@ -262,7 +231,7 @@ class TeamService {
         
         // send the payload request
         let payloadDataString = try payloadData.utf8String()
-        let hashChainRequest = HashChain.Request(publicKey: teamKeypair.publicKey,
+        let hashChainRequest = HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
                                                  payload: payloadDataString,
                                                  signature: signature)
 
@@ -275,7 +244,7 @@ class TeamService {
                 
             case .success:
                 // set the block hash
-                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                let addedBlock = HashChain.Block(publicKey: self.teamIdentity.keyPair.publicKey, payload: payloadDataString, signature: signature)
 
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
@@ -349,7 +318,7 @@ class TeamService {
                 self.mutex.unlock()
                 
             case .success:
-                let addedBlock = HashChain.Block(payload: payloadDataString, signature: signature)
+                let addedBlock = HashChain.Block(publicKey: nonceKeypair.publicKey, payload: payloadDataString, signature: signature)
                 
                 var updatedTeam = self.teamIdentity.team
                 updatedTeam.lastBlockHash = addedBlock.hash()
@@ -376,13 +345,13 @@ class TeamService {
         Send a ReadBlock request to the teams service as a non-member, using the invite nonce keypair
      */
     func getTeam(using invite:TeamInvite, _ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
-        
         mutex.lock()
-        
+
         do {
             try getTeamUnlocked(using: invite) { result in
                 completionHandler(result)
                 self.mutex.unlock()
+
             }
         } catch {
             mutex.unlock()
@@ -397,12 +366,9 @@ class TeamService {
             throw Errors.badInviteSeed
         }
         
-        let lastBlockHash = teamIdentity.team.lastBlockHash
-        
-        let readBlock = try HashChain.ReadBlock(teamPublicKey: invite.teamPublicKey,
+        let readBlock = try HashChain.ReadBlock(teamPointer: invite.teamPointer,
                                                 nonce: Data.random(size: 32),
-                                                unixSeconds: UInt64(Date().timeIntervalSince1970),
-                                                lastBlockHash: lastBlockHash)
+                                                unixSeconds: UInt64(Date().timeIntervalSince1970))
         
         let payload = HashChain.Payload.read(readBlock)
         let payloadData = try payload.jsonData()
@@ -425,13 +391,19 @@ class TeamService {
             case .success(let response):
                 do {
                     guard response.hasBlocks else {
+                        
+                        guard try self.teamIdentity.isCheckPointReached() else {
+                            completionHandler(TeamServiceResult.error(Errors.checkpointNotReached))
+                            return
+                        }
+                        
                         completionHandler(TeamServiceResult.result(self))
                         return
                     }
                     
                     // verify and append incoming blocks
                     try self.teamIdentity.verifyAndProcessBlocks(response: response)
-
+                    
                     guard response.hasMore else {
                         completionHandler(TeamServiceResult.result(self))
                         return
@@ -445,7 +417,6 @@ class TeamService {
         }
         
     }
-
     
     /**
         Send a ReadBlock request to the teams service, and update the team by verifying and
@@ -467,10 +438,9 @@ class TeamService {
     
     private func getVerifiedTeamUpdatesUnlocked(_ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         
-        let readBlock = try HashChain.ReadBlock(teamPublicKey: teamIdentity.teamPublicKey,
+        let readBlock = try HashChain.ReadBlock(teamPointer: teamIdentity.teamPointer,
                                               nonce: Data.random(size: 32),
-                                              unixSeconds: UInt64(Date().timeIntervalSince1970),
-                                              lastBlockHash: teamIdentity.team.lastBlockHash)
+                                              unixSeconds: UInt64(Date().timeIntervalSince1970))
         
         let payload = HashChain.Payload.read(readBlock)
         let payloadData = try payload.jsonData()
@@ -494,6 +464,12 @@ class TeamService {
             case .success(let response):
                 do {
                     guard response.hasBlocks else {
+                        
+                        guard try self.teamIdentity.isCheckPointReached() else {
+                            completionHandler(TeamServiceResult.error(Errors.checkpointNotReached))
+                            return
+                        }
+
                         completionHandler(TeamServiceResult.result(self))
                         return
                     }
@@ -515,3 +491,25 @@ class TeamService {
         
     }
 }
+
+/// TeamIdentity + TeamPointer
+extension TeamIdentity {
+    var teamPointer:HashChain.TeamPointer {
+        if let blockHash = self.team.lastBlockHash {
+            return HashChain.TeamPointer.blockHash(blockHash)
+        }
+        
+        return HashChain.TeamPointer.publicKey(self.initialTeamPublicKey)
+    }
+}
+
+
+/// TeamInvite + TeamPointer
+extension TeamInvite {
+    var teamPointer:HashChain.TeamPointer {
+        return HashChain.TeamPointer.publicKey(self.initialTeamPublicKey)
+    }
+}
+
+
+

@@ -14,6 +14,7 @@ enum TeamJoinType {
 }
 
 struct TeamInvite {
-    let teamPublicKey:Data
+    let initialTeamPublicKey:SodiumPublicKey
+    let blockHash:Data
     let seed:Data
 }
