@@ -299,7 +299,7 @@ extension HashChain.TeamPointer:CustomStringConvertible {
         switch self {
         case .publicKey(let pub):
             return "public key \(pub.toBase64())"
-        case .blockHash(let hash):
+        case .lastBlockHash(let hash):
             return "block hash \(hash.toBase64())"
         }
     }

@@ -107,7 +107,6 @@ struct Team:Jsonable {
     
     var info:Info
     var policy:PolicySettings
-    var lastBlockHash:Data?
     var lastInvitePublicKey:SodiumPublicKey?
     var loggingEndpoints:[LoggingEndpoint] = []
     
@@ -116,32 +115,25 @@ struct Team:Jsonable {
     }
     
 
-    init(info:Info, policy:PolicySettings = PolicySettings(temporaryApprovalSeconds: nil), lastBlockHash:Data? = nil,
+    init(info:Info, policy:PolicySettings = PolicySettings(temporaryApprovalSeconds: nil),
          lastInvitePublicKey:SodiumPublicKey? = nil)
     {
         self.info = info
         self.policy = policy
-        self.lastBlockHash = lastBlockHash
         self.lastInvitePublicKey = lastInvitePublicKey
     }
     
     init(json: Object) throws {
-        let lastBlockHash:String? = try? json ~> "last_block_hash"
         let lastInvitePublicKey:String? = try? json ~> "last_invite_public_key"
 
         try self.init(info: Info(json: json ~> "info"),
                       policy: PolicySettings(json: json ~> "policy"),
-                      lastBlockHash: lastBlockHash?.fromBase64(),
                       lastInvitePublicKey: lastInvitePublicKey?.fromBase64())
     }
     
     var object: Object {
         var obj:Object = ["info": info.object,                        
                           "policy": policy.object]
-        
-        if let blockHash = lastBlockHash {
-            obj["last_block_hash"] = blockHash.toBase64()
-        }
         
         if let invitePublicKey = lastInvitePublicKey {
             obj["last_invite_public_key"] = invitePublicKey.toBase64()

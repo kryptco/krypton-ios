@@ -165,14 +165,14 @@ class HashChain {
     
     enum TeamPointer:Jsonable {
         case publicKey(SodiumPublicKey)
-        case blockHash(Data)
+        case lastBlockHash(Data)
         
         init(json:Object) throws {
             if let publicKey:String = try? json ~> "public_key" {
                 self = try .publicKey(publicKey.fromBase64())
             }
-            else if let blockHash:String = try? json ~> "block_hash" {
-                self = try .blockHash(blockHash.fromBase64())
+            else if let blockHash:String = try? json ~> "last_block_hash" {
+                self = try .lastBlockHash(blockHash.fromBase64())
             }
             else {
                 throw Errors.badTeamPointer
@@ -183,7 +183,7 @@ class HashChain {
             switch self {
             case .publicKey(let pub):
                 return ["public_key": pub.toBase64()]
-            case .blockHash(let hash):
+            case .lastBlockHash(let hash):
                 return ["block_hash": hash.toBase64()]
             }
         }

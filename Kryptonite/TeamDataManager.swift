@@ -33,11 +33,8 @@ extension DataBlock {
     }
     
     convenience init(helper context: NSManagedObjectContext) {
-        if #available(iOS 10.0, *) {
-            self.init(context: context)
-        } else {
-            self.init(entity: NSEntityDescription.entity(forEntityName: "DataBlock", in: context)!, insertInto: context)
-        }
+        //workaround: https://stackoverflow.com/questions/6946798/core-data-store-cannot-hold-instances-of-entity-cocoa-error-134020
+        self.init(entity: NSEntityDescription.entity(forEntityName: "DataBlock", in: context)!, insertInto: context)
     }
 
 }
@@ -56,11 +53,8 @@ extension DataSSHHostKey {
     }
     
     convenience init(helper context: NSManagedObjectContext) {
-        if #available(iOS 10.0, *) {
-            self.init(context: context)
-        } else {
-            self.init(entity: NSEntityDescription.entity(forEntityName: "DataSSHHostKey", in: context)!, insertInto: context)
-        }
+        //workaround: https://stackoverflow.com/questions/6946798/core-data-store-cannot-hold-instances-of-entity-cocoa-error-134020
+        self.init(entity: NSEntityDescription.entity(forEntityName: "DataSSHHostKey", in: context)!, insertInto: context)
     }
 
 }
@@ -91,11 +85,8 @@ extension DataMember {
     }
     
     convenience init(helper context: NSManagedObjectContext) {
-        if #available(iOS 10.0, *) {
-            self.init(context: context)
-        } else {
-            self.init(entity: NSEntityDescription.entity(forEntityName: "DataMember", in: context)!, insertInto: context)
-        }
+        //workaround: https://stackoverflow.com/questions/6946798/core-data-store-cannot-hold-instances-of-entity-cocoa-error-134020
+        self.init(entity: NSEntityDescription.entity(forEntityName: "DataMember", in: context)!, insertInto: context)
     }
 
 }
@@ -110,11 +101,8 @@ extension DataTeam {
     }
     
     convenience init(helper context: NSManagedObjectContext) {
-        if #available(iOS 10.0, *) {
-            self.init(context: context)
-        } else {
-            self.init(entity: NSEntityDescription.entity(forEntityName: "DataTeam", in: context)!, insertInto: context)
-        }
+        //workaround: https://stackoverflow.com/questions/6946798/core-data-store-cannot-hold-instances-of-entity-cocoa-error-134020
+        self.init(entity: NSEntityDescription.entity(forEntityName: "DataTeam", in: context)!, insertInto: context)
     }
 
 }
@@ -125,8 +113,50 @@ class TeamDataManager {
     private var mutex = Mutex()
     private let teamIdentity:String
     
+    private var managedObjectModel:NSManagedObjectModel?
+    private var persistentStoreCoordinator:NSPersistentStoreCoordinator?
+    private var managedObjectContext:NSManagedObjectContext
+
     init(teamID:Data) {
         teamIdentity = teamID.toBase64(true)
+        
+        // managed object model
+        if let modelURL = Bundle.main.url(forResource:"Teams", withExtension: "momd") {
+            managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
+        }
+        
+        // persistant store coordinator
+        if
+            let directoryURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("teams"),
+            let managedObjectModel = self.managedObjectModel
+        {
+            // db file
+            let url = directoryURL.appendingPathComponent("db_\(self.teamIdentity).sqlite")
+            let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+            
+            do {
+                // create file if it doesn't exist
+                if !FileManager.default.fileExists(atPath: directoryURL.absoluteString) {
+                    try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+                }
+                
+                let options = [NSMigratePersistentStoresAutomaticallyOption: true,
+                               NSInferMappingModelAutomaticallyOption: true]
+                
+                let store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
+                store.didAdd(to: coordinator)
+            } catch let e {
+                log("Persistance store error: \(e)", .error)
+            }
+            
+            persistentStoreCoordinator = coordinator
+        }
+        
+        // managed object context
+        managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        
+        return
     }
     
     enum Errors:Error {
@@ -138,58 +168,6 @@ class TeamDataManager {
         case prospectiveAdminIsNotMember
     }
     
-    //MARK: Core Data setup
-    lazy var applicationDocumentsDirectory:URL? = {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("teams")
-    }()
-    
-    lazy var managedObjectModel:NSManagedObjectModel? = {
-        guard let modelURL = Bundle.main.url(forResource:"Teams", withExtension: "momd")
-            else {
-                return nil
-        }
-        
-        return NSManagedObjectModel(contentsOf: modelURL)
-    }()
-    
-    lazy var persistentStoreCoordinator:NSPersistentStoreCoordinator? = {
-        guard
-            let directoryURL = self.applicationDocumentsDirectory,
-            let managedObjectModel = self.managedObjectModel
-            else {
-                return nil
-        }
-        
-        // db file
-        let url = directoryURL.appendingPathComponent("db_\(self.teamIdentity).sqlite")
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        
-        do {
-            // create file if it doesn't exist
-            if !FileManager.default.fileExists(atPath: directoryURL.absoluteString) {
-                try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-            }
-            
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true,
-                           NSInferMappingModelAutomaticallyOption: true]
-            
-            let store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
-            store.didAdd(to: coordinator)
-        } catch let e {
-            log("Persistance store error: \(e)", .error)
-        }
-        
-        return coordinator
-    }()
-    
-    lazy var managedObjectContext:NSManagedObjectContext = {
-        let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = coordinator
-        //managedObjectContext.mergePolicy = NSMergePolicy.error
-        return managedObjectContext
-    }()
-    
     
     /**
         `Team` Data Managment
@@ -200,15 +178,9 @@ class TeamDataManager {
         request.fetchLimit = 1
         request.predicate = self.teamEqualsPredicate(for: self.teamIdentity)
         
-        var team:DataTeam!
-        
-        try performAndWait {
-            guard let object = try self.managedObjectContext.fetch(request).first
+        guard let team = try self.managedObjectContext.fetch(request).first
             else {
                 throw Errors.noTeam
-            }
-            
-            team = object
         }
         
         return team
@@ -221,8 +193,7 @@ class TeamDataManager {
         var team:Team!
         
         try performAndWait {
-            let dataTeam = try self.fetchCoreDataTeam()
-            team = try dataTeam.team()
+            team = try self.fetchCoreDataTeam().team()
         }
         
         return team
@@ -238,6 +209,7 @@ class TeamDataManager {
             dataTeam.id = self.teamIdentity
             dataTeam.json = try team.jsonData() as NSData
             dataTeam.head = DataBlock(block: block, helper: self.managedObjectContext)
+            dataTeam.lastBlockHash = block.hash() as NSData
         }
     }
     
@@ -258,19 +230,13 @@ class TeamDataManager {
     ///MARK: Blocks
     
     func fetchAll() throws -> [HashChain.Block] {
-        defer { mutex.unlock() }
-        mutex.lock()
-        
         var blocks:[HashChain.Block] = []
         
         try performAndWait {
-            let team = try self.fetchCoreDataTeam()
-            
-            var head:DataBlock? = team.head
-            
-            while head != nil {
-                try blocks.append(head!.block())
-                head = head?.previous
+            var pointer = try self.fetchCoreDataTeam().head
+            while pointer != nil {
+                try blocks.append(pointer!.block())
+                pointer = pointer?.previous
             }
         }
         
@@ -312,6 +278,22 @@ class TeamDataManager {
         }
         
         return block
+    }
+    
+    func lastBlockHash() throws -> Data? {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        var blockHash:Data?
+        try performAndWait {
+            let team = try self.fetchCoreDataTeam()
+            
+            if let hash = team.lastBlockHash as Data? {
+                blockHash = Data(hash)
+            }
+        }
+        
+        return blockHash
     }
     
     
@@ -454,14 +436,11 @@ class TeamDataManager {
     }
     
     private func append(newHead:DataBlock, to team:DataTeam) {
-        let previousBlock = team.head
-        previousBlock?.next = newHead
-
-        newHead.previous = previousBlock
-        
+        let currentHead = team.head
+        currentHead?.next = newHead
         team.head = newHead
+        team.lastBlockHash = newHead.blockHash
     }
-
     
     /**
         Add/remove member

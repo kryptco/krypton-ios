@@ -122,7 +122,7 @@ class IdentityManager {
             teamIdentity?.dataManager = identity.dataManager
 
             // update the checkpoint
-            if let blockHash = identity.team.lastBlockHash {
+            if let blockHash = try identity.lastBlockHash() {
                 teamIdentity?.checkpoint = blockHash
             }
             

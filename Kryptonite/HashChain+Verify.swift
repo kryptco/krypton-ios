@@ -21,7 +21,7 @@ extension TeamIdentity {
         let blocks = response.blocks
         
         var updatedTeam = self.team
-        var lastBlockHash = updatedTeam.lastBlockHash
+        var lastBlockHash = try self.lastBlockHash()
         
         var blockStart = 0
         if lastBlockHash == nil {
@@ -149,8 +149,6 @@ extension TeamIdentity {
             
             lastBlockHash = nextBlock.hash()
         }
-        
-        updatedTeam.lastBlockHash = lastBlockHash
         
         try set(team: updatedTeam)
     }

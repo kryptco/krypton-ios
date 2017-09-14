@@ -175,12 +175,8 @@ class TeamService {
                             // set the block hash
                             let addedBlock = HashChain.Block(publicKey: self.teamIdentity.keyPair.publicKey, payload: addPayloadDataString, signature: appendSignature)
                             
-                            var updatedTeam = self.teamIdentity.team
-                            updatedTeam.lastBlockHash = addedBlock.hash()
-                            
                             do {
                                 try self.teamIdentity.dataManager.add(member: admin, isAdmin: true, block: addedBlock)
-                                try self.teamIdentity.set(team: updatedTeam)
                             } catch {
                                 completionHandler(TeamServiceResult.error(error))
                                 self.mutex.unlock()
@@ -212,7 +208,7 @@ class TeamService {
         mutex.lock()
         
         // we need a last block hash
-        guard let lastBlockhash = teamIdentity.team.lastBlockHash else {
+        guard let lastBlockhash = try teamIdentity.lastBlockHash() else {
             mutex.unlock()
             throw Errors.missingLastBlockHash
         }
@@ -245,13 +241,9 @@ class TeamService {
             case .success:
                 // set the block hash
                 let addedBlock = HashChain.Block(publicKey: self.teamIdentity.keyPair.publicKey, payload: payloadDataString, signature: signature)
-
-                var updatedTeam = self.teamIdentity.team
-                updatedTeam.lastBlockHash = addedBlock.hash()
                 
                 do {
                     try self.teamIdentity.dataManager.add(member: member, block: addedBlock)
-                    try self.teamIdentity.set(team: updatedTeam)
                 } catch {
                     completionHandler(TeamServiceResult.error(error))
                     self.mutex.unlock()
@@ -285,7 +277,7 @@ class TeamService {
         }
         
         // get current block hash
-        guard let blockHash = teamIdentity.team.lastBlockHash else {
+        guard let blockHash = try teamIdentity.lastBlockHash() else {
             mutex.unlock()
             throw Errors.needNewestBlock
         }
@@ -321,12 +313,9 @@ class TeamService {
                 let addedBlock = HashChain.Block(publicKey: nonceKeypair.publicKey, payload: payloadDataString, signature: signature)
                 
                 var updatedTeam = self.teamIdentity.team
-                updatedTeam.lastBlockHash = addedBlock.hash()
-                
                 
                 do {
                     try self.teamIdentity.dataManager.add(member: newMember, block: addedBlock)
-                    try self.teamIdentity.set(team: updatedTeam)
                 } catch {
                     completionHandler(TeamServiceResult.error(error))
                     self.mutex.unlock()
@@ -438,7 +427,7 @@ class TeamService {
     
     private func getVerifiedTeamUpdatesUnlocked(_ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         
-        let readBlock = try HashChain.ReadBlock(teamPointer: teamIdentity.teamPointer,
+        let readBlock = try HashChain.ReadBlock(teamPointer: teamIdentity.teamPointer(),
                                               nonce: Data.random(size: 32),
                                               unixSeconds: UInt64(Date().timeIntervalSince1970))
         
@@ -494,9 +483,9 @@ class TeamService {
 
 /// TeamIdentity + TeamPointer
 extension TeamIdentity {
-    var teamPointer:HashChain.TeamPointer {
-        if let blockHash = self.team.lastBlockHash {
-            return HashChain.TeamPointer.blockHash(blockHash)
+    func teamPointer() throws -> HashChain.TeamPointer {
+        if let blockHash = try self.lastBlockHash() {
+            return HashChain.TeamPointer.lastBlockHash(blockHash)
         }
         
         return HashChain.TeamPointer.publicKey(self.initialTeamPublicKey)

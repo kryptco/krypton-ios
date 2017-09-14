@@ -25,14 +25,15 @@
     <entity name="DataTeam" representedClassName="DataTeam" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="json" attributeType="Binary" syncable="YES"/>
-        <relationship name="head" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="team" inverseEntity="DataBlock" syncable="YES"/>
-        <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataMember" inverseName="team" inverseEntity="DataMember" syncable="YES"/>
-        <relationship name="pinnedHosts" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataSSHHostKey" inverseName="team" inverseEntity="DataSSHHostKey" syncable="YES"/>
+        <attribute name="lastBlockHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="head" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="team" inverseEntity="DataBlock" syncable="YES"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataMember" inverseName="team" inverseEntity="DataMember" syncable="YES"/>
+        <relationship name="pinnedHosts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataSSHHostKey" inverseName="team" inverseEntity="DataSSHHostKey" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DataBlock" positionX="-882" positionY="-36" width="128" height="150"/>
-        <element name="DataMember" positionX="-434" positionY="9" width="128" height="135"/>
-        <element name="DataSSHHostKey" positionX="-137" positionY="110" width="128" height="90"/>
-        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="120"/>
+        <element name="DataBlock" positionX="-828" positionY="-369" width="128" height="148"/>
+        <element name="DataMember" positionX="-927" positionY="-36" width="128" height="135"/>
+        <element name="DataSSHHostKey" positionX="-785" positionY="279" width="128" height="90"/>
+        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="133"/>
     </elements>
 </model>

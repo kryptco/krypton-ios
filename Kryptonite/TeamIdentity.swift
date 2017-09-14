@@ -40,6 +40,10 @@ struct TeamIdentity:Jsonable {
         return CreateTeamResponse(seed: keyPairSeed.toBase64(), error: nil)
     }
     
+    func lastBlockHash() throws -> Data? {
+        return try dataManager.lastBlockHash()
+    }
+    
     /**
         Create a new identity with an email for use with `team`
      */
@@ -67,7 +71,7 @@ struct TeamIdentity:Jsonable {
         let createBlock = try HashChain.Block(publicKey: keyPair.publicKey, payload: payloadData.utf8String(), signature: signature)
         let checkpoint = createBlock.hash()
 
-        let team = Team(info: Team.Info(name: teamName), lastBlockHash: checkpoint)
+        let team = Team(info: Team.Info(name: teamName))
         let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: keyPair.publicKey, team: team)
 
         return (teamIdentity, createBlock)
