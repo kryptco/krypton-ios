@@ -184,7 +184,7 @@ class HashChain {
             case .publicKey(let pub):
                 return ["public_key": pub.toBase64()]
             case .lastBlockHash(let hash):
-                return ["block_hash": hash.toBase64()]
+                return ["last_block_hash": hash.toBase64()]
             }
         }
     }
