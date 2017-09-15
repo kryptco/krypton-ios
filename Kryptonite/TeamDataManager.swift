@@ -205,11 +205,13 @@ class TeamDataManager {
         
         try performAndWait {
             let dataTeam = DataTeam(helper: self.managedObjectContext)
+            let head = DataBlock(block: block, helper: self.managedObjectContext)
             
             dataTeam.id = self.teamIdentity
             dataTeam.json = try team.jsonData() as NSData
-            dataTeam.head = DataBlock(block: block, helper: self.managedObjectContext)
+            dataTeam.head = head
             dataTeam.lastBlockHash = block.hash() as NSData
+            dataTeam.addToBlocks(head)
         }
     }
     
@@ -230,6 +232,9 @@ class TeamDataManager {
     ///MARK: Blocks
     
     func fetchAll() throws -> [HashChain.Block] {
+        defer { mutex.unlock() }
+        mutex.lock()
+
         var blocks:[HashChain.Block] = []
         
         try performAndWait {
@@ -274,7 +279,8 @@ class TeamDataManager {
         var block:DataBlock?
         
         try performAndWait {
-            block = try self.managedObjectContext.fetch(request).first
+            let blocks = try self.managedObjectContext.fetch(request)
+            block = blocks.first
         }
         
         return block
@@ -436,6 +442,8 @@ class TeamDataManager {
     }
     
     private func append(newHead:DataBlock, to team:DataTeam) {
+        team.addToBlocks(newHead)
+
         let currentHead = team.head
         currentHead?.next = newHead
         team.head = newHead

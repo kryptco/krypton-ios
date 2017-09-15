@@ -7,7 +7,8 @@
         <attribute name="signature" attributeType="Binary" syncable="YES"/>
         <relationship name="next" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="previous" inverseEntity="DataBlock" syncable="YES"/>
         <relationship name="previous" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="next" inverseEntity="DataBlock" syncable="YES"/>
-        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="head" inverseEntity="DataTeam" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="blocks" inverseEntity="DataTeam" syncable="YES"/>
+        <relationship name="teamHead" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="head" inverseEntity="DataTeam" syncable="YES"/>
     </entity>
     <entity name="DataMember" representedClassName="DataMember" syncable="YES" codeGenerationType="class">
         <attribute name="email" attributeType="String" indexed="YES" syncable="YES"/>
@@ -26,14 +27,15 @@
         <attribute name="id" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="json" attributeType="Binary" syncable="YES"/>
         <attribute name="lastBlockHash" optional="YES" attributeType="Binary" syncable="YES"/>
-        <relationship name="head" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="team" inverseEntity="DataBlock" syncable="YES"/>
+        <relationship name="blocks" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataBlock" inverseName="team" inverseEntity="DataBlock" syncable="YES"/>
+        <relationship name="head" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="teamHead" inverseEntity="DataBlock" syncable="YES"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataMember" inverseName="team" inverseEntity="DataMember" syncable="YES"/>
         <relationship name="pinnedHosts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataSSHHostKey" inverseName="team" inverseEntity="DataSSHHostKey" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DataBlock" positionX="-828" positionY="-369" width="128" height="148"/>
+        <element name="DataBlock" positionX="-828" positionY="-369" width="128" height="165"/>
         <element name="DataMember" positionX="-927" positionY="-36" width="128" height="135"/>
         <element name="DataSSHHostKey" positionX="-785" positionY="279" width="128" height="90"/>
-        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="133"/>
+        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="150"/>
     </elements>
 </model>

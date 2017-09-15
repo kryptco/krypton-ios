@@ -111,7 +111,7 @@ class SQSManager:TransportMedium {
                 return
             }
             
-            log("polling sqs for \(session.pairing.displayName)")
+            //log("polling sqs for \(session.pairing.displayName)")
 
             // otherwise listen
             self.listen(to: session, completion: { (success, err) in

@@ -119,7 +119,7 @@ struct TeamIdentity:Jsonable {
     var object: Object {
         return    ["id": id.toBase64(),
                    "email": email,
-                   "keypair_seed": keyPair.secretKey.toBase64(),
+                   "keypair_seed": keyPairSeed.toBase64(),
                    "team_id": teamID.toBase64(),
                    "checkpoint": checkpoint.toBase64(),
                    "inital_team_public_key": initialTeamPublicKey.toBase64()]

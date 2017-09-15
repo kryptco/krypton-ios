@@ -311,9 +311,7 @@ class TeamService {
                 
             case .success:
                 let addedBlock = HashChain.Block(publicKey: nonceKeypair.publicKey, payload: payloadDataString, signature: signature)
-                
-                var updatedTeam = self.teamIdentity.team
-                
+                                
                 do {
                     try self.teamIdentity.dataManager.add(member: newMember, block: addedBlock)
                 } catch {
@@ -453,6 +451,7 @@ class TeamService {
             case .success(let response):
                 do {
                     guard response.hasBlocks else {
+                        
                         
                         guard try self.teamIdentity.isCheckPointReached() else {
                             completionHandler(TeamServiceResult.error(Errors.checkpointNotReached))

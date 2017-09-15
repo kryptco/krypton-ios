@@ -12,6 +12,32 @@ import Foundation
 import SwiftHTTP
 import JSON
 
+class MemoryTeamServer {
+    
+    private static var sharedServer:MemoryTeamServer? = nil
+    
+    static var shared:MemoryTeamServer {
+        guard let ss = sharedServer else {
+            sharedServer = MemoryTeamServer()
+            return sharedServer!
+        }
+        
+        return ss
+    }
+    
+    let members:[Team.MemberIdentity] = []
+    let blocks:[HashChain.Block] = []
+    let mutex = Mutex()
+    
+    init() {
+        
+    }
+    
+//    func sendRequest(object:Object) -> TeamService.ServerResponse {
+//        
+//    }
+}
+
 class TeamServiceHTTP {
     /**
      Send a JSON object to the teams service and parse the response as a ServerResponse

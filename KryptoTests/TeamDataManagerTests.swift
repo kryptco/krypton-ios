@@ -21,9 +21,8 @@ class TeamDataManagerTests: XCTestCase {
     var members:[Team.MemberIdentity]!
     var team:Team!
     
-    var randomPayload:String!
-    
     var randomBlock:HashChain.Block {
+        let randomPayload = try! Data.random(size: 256).toBase64()
         return try! HashChain.Block(publicKey:teamPublicKey, payload: randomPayload, signature: Data.random(size: 256))
     }
     
@@ -37,7 +36,6 @@ class TeamDataManagerTests: XCTestCase {
         }
         
         team = Team(info: Team.Info(name: "test team"))
-        randomPayload = try! Data.random(size: 4096).toBase64()
     }
     
     override func tearDown() {
@@ -193,6 +191,33 @@ class TeamDataManagerTests: XCTestCase {
             XCTFail("\(error)")
         }
     }
+    
+    func testCheckpointTest() {
+        let dm = TeamDataManager(teamID: id)
+        
+        do {
+            let createBlock = randomBlock
+            try dm.create(team: team, block: createBlock)
+            
+            let block1 = randomBlock
+            try dm.append(block: block1)
+            
+            let block2 = randomBlock
+            try dm.append(block: block2)
+
+            try dm.saveContext()
+            
+            try XCTAssert(dm.hasBlock(for: block2.hash()))
+
+            try XCTAssert(dm.hasBlock(for: createBlock.hash()))
+            try XCTAssert(dm.hasBlock(for: block1.hash()))
+
+            
+        } catch {
+            XCTFail("\(error)")
+        }
+    }
+
 
 
     func testMembers() {
