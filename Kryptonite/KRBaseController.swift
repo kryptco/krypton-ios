@@ -227,15 +227,11 @@ extension UIViewController {
             
             var teamInvite:TeamInvite
             do {
-                let initialTeamPublicKey = try SodiumPublicKey(link.path[0].fromBase64())
-                let blockHash = try SodiumPublicKey(link.path[1].fromBase64())
-                let seed = try link.path[1].fromBase64()
-                teamInvite = TeamInvite(initialTeamPublicKey: initialTeamPublicKey, blockHash: blockHash, seed: seed)
+                teamInvite = try TeamInvite(path: link.path)
             } catch {
                 self.showWarning(title: "Error", body: "Invalid team invitation encoding.")
                 return
             }
-            
 
             guard let teamLoadController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamLoadController") as? TeamLoadController
             else {
@@ -251,7 +247,6 @@ extension UIViewController {
             dispatchMain {
                 self.present(teamLoadController, animated: true, completion: nil)
             }
-            
         }
     }
 

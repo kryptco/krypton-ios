@@ -126,78 +126,9 @@ class TeamService {
                 self.mutex.unlock()
                 
             case .success:                
-                do {
-                    try self.teamIdentity.dataManager.create(team: self.teamIdentity.team, block: createBlock)
-                } catch {
-                    completionHandler(TeamServiceResult.error(error))
-                    self.mutex.unlock()
-                    return
-                }
-                
-                // now proceed to addMember(admin)
-                do {
-                    // create the team admin member
-                    let sshPublicKey = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
-                    let pgpPublicKey = try KeyManager.sharedInstance().loadPGPPublicKey(for: self.teamIdentity.email).packetData
-                    
-                    let admin = Team.MemberIdentity(publicKey: self.teamIdentity.keyPair.publicKey,
-                                                    email: self.teamIdentity.email,
-                                                    sshPublicKey: sshPublicKey,
-                                                    pgpPublicKey: pgpPublicKey)
-                    
-                    
-                    // create the append block
-                    let addOperation = HashChain.Operation.addMember(admin)
-                    let addMember = HashChain.AppendBlock(lastBlockHash: createBlock.hash(), operation: addOperation)
-                    let addPayload = HashChain.Payload.append(addMember)
-                    let addPayloadData = try addPayload.jsonData()
-                    
-                    // sign the payload
-                    guard let appendSignature = try KRSodium.shared().sign.signature(message: addPayloadData, secretKey: self.teamIdentity.keyPair.secretKey)
-                    else {
-                        throw Errors.payloadSignature
-                    }
-                    
-                    // send the append block payload request
-                    let addPayloadDataString = try addPayloadData.utf8String()
-                    let hashChainRequest = HashChain.Request(publicKey: self.teamIdentity.keyPair.publicKey,
-                                                             payload: addPayloadDataString,
-                                                             signature: appendSignature)
-                    
-                    try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
-                        switch serverResponse {
-                            
-                        case .error(let error):
-                            completionHandler(TeamServiceResult.error(error))
-                            self.mutex.unlock()
-                            
-                        case .success:
-                            // set the block hash
-                            let addedBlock = HashChain.Block(publicKey: self.teamIdentity.keyPair.publicKey, payload: addPayloadDataString, signature: appendSignature)
-                            
-                            do {
-                                try self.teamIdentity.dataManager.add(member: admin, isAdmin: true, block: addedBlock)
-                            } catch {
-                                completionHandler(TeamServiceResult.error(error))
-                                self.mutex.unlock()
-                                return
-                            }
-                            
-                            completionHandler(TeamServiceResult.result(self))
-                            self.mutex.unlock()
-                        }
-                    }
-
-                    
-                    
-                } catch {
-                    completionHandler(TeamServiceResult.error(error))
-                    self.mutex.unlock()
-                    return
-                }
+                completionHandler(TeamServiceResult.result(self))
             }
         }
-
     }
     
     /** 

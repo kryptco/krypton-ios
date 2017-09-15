@@ -56,8 +56,17 @@ struct TeamIdentity:Jsonable {
             throw Errors.keyPairFromSeed
         }
         
+        // create the creator's identity
+        let sshPublicKey = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
+        let pgpPublicKey = try KeyManager.sharedInstance().loadPGPPublicKey(for: email).packetData
+        let creator = Team.MemberIdentity(publicKey: keyPair.publicKey,
+                                        email: email,
+                                        sshPublicKey: sshPublicKey,
+                                        pgpPublicKey: pgpPublicKey)
+
+        
         // create the first block
-        let createChain = HashChain.CreateChain(teamPublicKey: keyPair.publicKey, teamInfo: Team.Info(name: teamName))
+        let createChain = HashChain.CreateChain(creator: creator, teamInfo: Team.Info(name: teamName))
         let payload = HashChain.Payload.create(createChain)
         let payloadData = try payload.jsonData()
         
@@ -71,9 +80,12 @@ struct TeamIdentity:Jsonable {
         let createBlock = try HashChain.Block(publicKey: keyPair.publicKey, payload: payloadData.utf8String(), signature: signature)
         let checkpoint = createBlock.hash()
 
+        // make the team identity + team
         let team = Team(info: Team.Info(name: teamName))
         let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: keyPair.publicKey, team: team)
-
+        
+        try teamIdentity.dataManager.create(team: team, creator: creator, block: createBlock)
+        
         return (teamIdentity, createBlock)
     }
 

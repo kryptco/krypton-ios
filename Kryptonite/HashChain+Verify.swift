@@ -45,15 +45,14 @@ extension TeamIdentity {
             
             
             // 3. add the original admin as a public key
-            guard createChain.teamPublicKey == initialTeamPublicKey else {
+            guard createChain.creator.publicKey == initialTeamPublicKey else {
                 throw HashChain.Errors.teamPublicKeyMismatch
             }
             
             updatedTeam.info = createChain.teamInfo
             
             // add the block to the data store
-            try dataManager.create(team: updatedTeam, block: createBlock)
-            
+            try dataManager.create(team: updatedTeam, creator: createChain.creator, block: createBlock)
             lastBlockHash = createBlock.hash()
             blockStart += 1
         }

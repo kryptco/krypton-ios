@@ -120,22 +120,24 @@ class HashChain {
     
     
     struct CreateChain:Jsonable {
-        let teamPublicKey:Data
+        let creator:Team.MemberIdentity
         let teamInfo:Team.Info
         
-        init(teamPublicKey:Data, teamInfo:Team.Info) {
-            self.teamPublicKey = teamPublicKey
+        init(creator:Team.MemberIdentity, teamInfo:Team.Info) {
+            self.creator = creator
             self.teamInfo = teamInfo
         }
         
         init(json: Object) throws {
-            try self.init(teamPublicKey: ((json ~> "team_public_key") as String).fromBase64(),
+            try self.init(creator: Team.MemberIdentity(json: json ~> "creator_identity"),
                           teamInfo: Team.Info(json: json ~> "team_info"))
+            
         }
         
         var object: Object {
-            return ["team_public_key": teamPublicKey.toBase64(),
+            return ["creator_identity": creator.object,
                     "team_info": teamInfo.object]
+            
         }
     }
     

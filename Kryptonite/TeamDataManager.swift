@@ -199,16 +199,20 @@ class TeamDataManager {
         return team
     }
     
-    func create(team:Team, block:HashChain.Block) throws {
+    func create(team:Team, creator:Team.MemberIdentity, block:HashChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
         try performAndWait {
             let dataTeam = DataTeam(helper: self.managedObjectContext)
-            let head = DataBlock(block: block, helper: self.managedObjectContext)
-            
             dataTeam.id = self.teamIdentity
             dataTeam.json = try team.jsonData() as NSData
+
+            let admin = DataMember(helper: self.managedObjectContext, member: creator)
+            admin.isAdmin = true
+            dataTeam.addToMembers(admin)
+
+            let head = DataBlock(block: block, helper: self.managedObjectContext)
             dataTeam.head = head
             dataTeam.lastBlockHash = block.hash() as NSData
             dataTeam.addToBlocks(head)
@@ -292,9 +296,18 @@ class TeamDataManager {
         
         var blockHash:Data?
         try performAndWait {
-            let team = try self.fetchCoreDataTeam()
             
-            if let hash = team.lastBlockHash as Data? {
+            var team:DataTeam?
+            do {
+                team = try self.fetchCoreDataTeam()
+            } catch Errors.noTeam {
+                blockHash = nil
+                return
+            } catch {
+                throw error
+            }
+            
+            if let hash = team?.lastBlockHash as Data? {
                 blockHash = Data(hash)
             }
         }
