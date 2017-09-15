@@ -10,11 +10,13 @@ import XCTest
 @testable import Kryptonite
 
 import UIKit
+import JSON
 
 class TeamServiceTests: XCTestCase {
-    
+
     var teamIdentity:TeamIdentity!
     var createBlock:HashChain.Block!
+    var server = MemoryTeamServerHTTP()
     
     override func setUp() {
         super.setUp()
@@ -28,6 +30,8 @@ class TeamServiceTests: XCTestCase {
         let (id, create) = try! TeamIdentity.newAdmin(email: "bob@iostests.com", teamName: "iOSTests")
         teamIdentity = id
         createBlock = create
+        
+        
     }
     
     override func tearDown() {
@@ -35,11 +39,12 @@ class TeamServiceTests: XCTestCase {
         super.tearDown()
     }
     
+    
     func testCreateTeam() {
         let exp = expectation(description: "TeamService ASYNC request")
 
         do {
-            try TeamService.temporary(for: teamIdentity).createTeam(createBlock: createBlock) { (response) in
+            try TeamService.temporary(for: teamIdentity, server: server).createTeam(createBlock: createBlock) { (response) in
                 
                 switch response {
                 case .error(let e):

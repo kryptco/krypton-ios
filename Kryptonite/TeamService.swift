@@ -10,9 +10,12 @@ import Foundation
 import JSON
 import SwiftHTTP
 
+protocol TeamServiceAPI {
+    func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws
+}
 
 class TeamService {
-    
+
     // static instance
     static var instance:TeamService? = nil
     static let mutex = Mutex()
@@ -35,8 +38,8 @@ class TeamService {
         return i
     }
     
-    class func temporary(for teamIdentity:TeamIdentity) -> TeamService {
-        return TeamService(teamIdentity: teamIdentity, mutex: Mutex())
+    class func temporary(for teamIdentity:TeamIdentity, server:TeamServiceAPI = TeamServerHTTP()) -> TeamService {
+        return TeamService(teamIdentity: teamIdentity, mutex: Mutex(), server: server)
     }
 
     
@@ -95,15 +98,18 @@ class TeamService {
     }
     
     struct EmptyResponse:JsonReadable {
+        init() {}
         init(json: Object) throws {}
     }
     
     var teamIdentity:TeamIdentity
     var mutex:Mutex
+    var server:TeamServiceAPI
     
-    private init(teamIdentity:TeamIdentity, mutex:Mutex) {
+    private init(teamIdentity:TeamIdentity, mutex:Mutex, server:TeamServiceAPI = TeamServerHTTP()) {
         self.teamIdentity = teamIdentity
         self.mutex = mutex
+        self.server = server
     }
     
     /**
@@ -118,7 +124,7 @@ class TeamService {
                                                  payload: createBlock.payload,
                                                  signature: createBlock.signature)
         
-        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             defer { self.mutex.unlock() }
             
             switch serverResponse {
@@ -162,7 +168,7 @@ class TeamService {
                                                  payload: payloadDataString,
                                                  signature: signature)
 
-        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -233,7 +239,7 @@ class TeamService {
                                                  payload: payloadDataString,
                                                  signature: signature)
         
-        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -301,7 +307,7 @@ class TeamService {
                                                      signature: signature)
         
         
-        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
+        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
             switch serverResponse {
             case .error(let error):
                 completionHandler(TeamServiceResult.error(error))
@@ -373,7 +379,7 @@ class TeamService {
                                                      payload: payloadData.utf8String(),
                                                      signature: signature)
         
-        try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
+        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
             switch serverResponse {
                 
             case .error(let error):

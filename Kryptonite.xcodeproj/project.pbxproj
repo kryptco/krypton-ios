@@ -201,6 +201,7 @@
 		FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
 		FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */; };
 		FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
+		FAB426AF1F6C69E300D76062 /* MemoryTeamServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB426AE1F6C69E300D76062 /* MemoryTeamServer.swift */; };
 		FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FAB517931E54D46A0032DD47 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FAB517941E54D4750032DD47 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
@@ -236,8 +237,8 @@
 		FAC5613F1E6F678500150FB2 /* AwesomeCache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAC724D21F4F813800386436 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
 		FAC724D31F4F813800386436 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
-		FAC724D61F546BC500386436 /* TeamServiceHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */; };
-		FAC724D71F546BC500386436 /* TeamServiceHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */; };
+		FAC724D61F546BC500386436 /* TeamServerHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServerHTTP.swift */; };
+		FAC724D71F546BC500386436 /* TeamServerHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServerHTTP.swift */; };
 		FAC724F51F57100400386436 /* TeamDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724F41F57100400386436 /* TeamDataManagerTests.swift */; };
 		FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC874031E6F0E17003D112E /* Kryptonite.xcdatamodeld */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
@@ -273,7 +274,6 @@
 		FADBF4B41F57149F00272E26 /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
 		FADBF4B51F5714A900272E26 /* SiloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB60231E9442F300E1B924 /* SiloTests.swift */; };
 		FADBF4B61F5714B300272E26 /* AnalyticsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */; };
-		FADBF4B71F5714BE00272E26 /* TeamServiceHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D81F546C1900386436 /* TeamServiceHTTP.swift */; };
 		FADBF4B81F5714BE00272E26 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0B0971F04500400F65E04 /* UtilTests.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
@@ -668,6 +668,7 @@
 		FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		FAAE819E1E577264002A9AE6 /* Notify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Notify-Bridging-Header.h"; sourceTree = "<group>"; };
 		FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+UI.swift"; sourceTree = "<group>"; };
+		FAB426AE1F6C69E300D76062 /* MemoryTeamServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryTeamServer.swift; sourceTree = "<group>"; };
 		FAB43B931DFF1F9200496114 /* Kryptonite-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Kryptonite-Bridging-Header.h"; path = "Kryptonite/Kryptonite-Bridging-Header.h"; sourceTree = "<group>"; };
 		FAB43B941DFF1F9200496114 /* Kryptonite.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Kryptonite.entitlements; path = Kryptonite/Kryptonite.entitlements; sourceTree = "<group>"; };
 		FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
@@ -680,8 +681,7 @@
 		FAC07FCB1E42F5D100FEF117 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AwesomeCache.xcodeproj; path = AwesomeCache/AwesomeCache.xcodeproj; sourceTree = "<group>"; };
 		FAC724D11F4F813800386436 /* IdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityManager.swift; sourceTree = "<group>"; };
-		FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamServiceHTTP.swift; sourceTree = "<group>"; };
-		FAC724D81F546C1900386436 /* TeamServiceHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamServiceHTTP.swift; sourceTree = "<group>"; };
+		FAC724D51F546BC500386436 /* TeamServerHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamServerHTTP.swift; sourceTree = "<group>"; };
 		FAC724F41F57100400386436 /* TeamDataManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDataManagerTests.swift; sourceTree = "<group>"; };
 		FAC873F51E6A4D32003D112E /* PairingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTests.swift; sourceTree = "<group>"; };
 		FAC874041E6F0E17003D112E /* krSSH.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = krSSH.xcdatamodel; sourceTree = "<group>"; };
@@ -1138,7 +1138,7 @@
 				FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */,
 				FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */,
 				FADA1A831F30E0E2004AE6B0 /* TeamService.swift */,
-				FAC724D51F546BC500386436 /* TeamServiceHTTP.swift */,
+				FAC724D51F546BC500386436 /* TeamServerHTTP.swift */,
 				FAAC14821F38D39D00DDFAA3 /* TeamUpdater.swift */,
 			);
 			name = Team;
@@ -1267,8 +1267,8 @@
 				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
 				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
 				FA8F8A9A1F33AA8A00D0D4BE /* TeamServiceTests.swift */,
+				FAB426AE1F6C69E300D76062 /* MemoryTeamServer.swift */,
 				FAC724F41F57100400386436 /* TeamDataManagerTests.swift */,
-				FAC724D81F546C1900386436 /* TeamServiceHTTP.swift */,
 				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
 				FAF0B0971F04500400F65E04 /* UtilTests.swift */,
 				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
@@ -2082,7 +2082,7 @@
 				FADA1A841F30E0E2004AE6B0 /* TeamService.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
-				FAC724D61F546BC500386436 /* TeamServiceHTTP.swift in Sources */,
+				FAC724D61F546BC500386436 /* TeamServerHTTP.swift in Sources */,
 				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
 				FA6BCBF51F214ADB006F716F /* TeamInvite.swift in Sources */,
@@ -2111,8 +2111,8 @@
 				FADBF4B41F57149F00272E26 /* PairingTests.swift in Sources */,
 				FADBF4B31F57149700272E26 /* KryptoTests.swift in Sources */,
 				FACE33691EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift in Sources */,
-				FADBF4B71F5714BE00272E26 /* TeamServiceHTTP.swift in Sources */,
 				8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */,
+				FAB426AF1F6C69E300D76062 /* MemoryTeamServer.swift in Sources */,
 				FADBF4B81F5714BE00272E26 /* UtilTests.swift in Sources */,
 				FA8F8A9B1F33AA8A00D0D4BE /* TeamServiceTests.swift in Sources */,
 				FAC724F51F57100400386436 /* TeamDataManagerTests.swift in Sources */,
@@ -2139,7 +2139,7 @@
 				FADDE2841EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
 				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
-				FAC724D71F546BC500386436 /* TeamServiceHTTP.swift in Sources */,
+				FAC724D71F546BC500386436 /* TeamServerHTTP.swift in Sources */,
 				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,

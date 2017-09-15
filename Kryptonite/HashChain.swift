@@ -12,10 +12,22 @@ import JSON
 class HashChain {
     
     /// A request to the HashChain service
-    struct Request:JsonWritable {
+    struct Request:Jsonable {
         let publicKey:Data
         let payload:String
         let signature:Data
+        
+        init(publicKey:Data, payload:String, signature:Data) {
+            self.publicKey = publicKey
+            self.payload = payload
+            self.signature = signature
+        }
+        
+        init(json: Object) throws {
+            try self.init(publicKey: ((json ~> "public_key") as String).fromBase64(),
+                          payload: json ~> "payload",
+                          signature: ((json ~> "signature") as String).fromBase64())
+        }
         
         var object: Object {
             return ["public_key": publicKey.toBase64(),

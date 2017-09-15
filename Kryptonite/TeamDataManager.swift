@@ -256,6 +256,25 @@ class TeamDataManager {
         return try self.fetchBlock(for: hash) != nil
     }
     
+    func fetchBlocks(after hash:Data) throws -> [HashChain.Block] {
+        let block = try self.fetchBlock(for: hash)
+        
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        var blocks:[HashChain.Block] = []
+        
+        try performAndWait {
+            var pointer = block?.next
+            while pointer != nil {
+                try blocks.append(pointer!.block())
+                pointer = pointer?.previous
+            }
+        }
+        
+        return blocks
+    }
+    
     private func fetchBlock(for hash:Data) throws -> DataBlock? {
         defer { mutex.unlock() }
         mutex.lock()

@@ -1,5 +1,5 @@
 //
-//  TeamsServiceHTTP.swift
+//  TeamServerHTTP.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 8/28/17.
@@ -10,11 +10,11 @@ import Foundation
 import SwiftHTTP
 import JSON
 
-class TeamServiceHTTP {
+class TeamServerHTTP:TeamServiceAPI {
     /**
         Send a JSON object to the teams service and parse the response as a ServerResponse
      */
-    class func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
+    func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
         let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
         
         log("[IN] HashChainSVC\n\t\(object)")
