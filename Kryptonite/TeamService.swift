@@ -119,13 +119,13 @@ class TeamService {
                                                  signature: createBlock.signature)
         
         try TeamServiceHTTP.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+            defer { self.mutex.unlock() }
+            
             switch serverResponse {
-                
             case .error(let error):
                 completionHandler(TeamServiceResult.error(error))
-                self.mutex.unlock()
-                
-            case .success:                
+
+            case .success:
                 completionHandler(TeamServiceResult.result(self))
             }
         }

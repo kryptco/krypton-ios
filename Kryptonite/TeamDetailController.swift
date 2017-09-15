@@ -312,7 +312,7 @@ extension HashChain.Payload {
             return ("read", "get \(read.teamPointer)")
             
         case .create(let create):
-            return ("create chain", "started team \"\(create.teamInfo.name)\"")
+            return ("create chain", "start team \"\(create.teamInfo.name)\"\nby creator \(create.creator.email)")
             
         case .append(let append):
             switch append.operation {

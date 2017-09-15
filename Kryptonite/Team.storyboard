@@ -699,21 +699,21 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eER-jF-kd5" userLabel="bottom">
-                                            <rect key="frame" x="15" y="13" width="2" height="58"/>
+                                            <rect key="frame" x="15" y="13.5" width="2" height="57.5"/>
                                             <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="2" id="4qf-fd-Iw8"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12W-uT-G9f" userLabel="top">
-                                            <rect key="frame" x="15" y="0.0" width="2" height="13"/>
+                                            <rect key="frame" x="15" y="0.0" width="2" height="13.5"/>
                                             <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="2" id="ahL-Hd-bHt"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvt-cG-IrP" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                            <rect key="frame" x="10" y="7" width="12" height="12"/>
+                                            <rect key="frame" x="10" y="7.5" width="12" height="12"/>
                                             <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="6nj-gt-h7L"/>

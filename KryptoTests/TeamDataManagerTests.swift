@@ -47,7 +47,7 @@ class TeamDataManagerTests: XCTestCase {
         let dm = TeamDataManager(teamID: id)
         
         do {
-            try dm.create(team: team, block: randomBlock)
+            try dm.create(team: team, creator: members[0], block: randomBlock)
             let _ = try dm.fetchTeam()
             
         } catch {
@@ -59,7 +59,7 @@ class TeamDataManagerTests: XCTestCase {
         let dm = TeamDataManager(teamID: id)
         
         do {
-            try dm.create(team: team, block: randomBlock)
+            try dm.create(team: team, creator: members[0], block: randomBlock)
             try dm.saveContext()
             
         } catch {
@@ -102,7 +102,7 @@ class TeamDataManagerTests: XCTestCase {
         do {
 
             let dm = TeamDataManager(teamID: id)
-            try dm.create(team: team, block: randomBlock)
+            try dm.create(team: team, creator: members[0], block: randomBlock)
             
             // b1
             let block1 = randomBlock
@@ -133,7 +133,7 @@ class TeamDataManagerTests: XCTestCase {
         let updateName = "Test Team 2"
 
         do {
-            try dm.create(team: team, block: randomBlock)
+            try dm.create(team: team, creator: members[0], block: randomBlock)
             let _ = try dm.fetchTeam()
             
             // policy
@@ -184,7 +184,7 @@ class TeamDataManagerTests: XCTestCase {
         let dm = TeamDataManager(teamID: id)
         
         do {
-            try dm.create(team: team, block: randomBlock)
+            try dm.create(team: team, creator: members[0], block: randomBlock)
             let _ = try dm.fetchTeam()
             
         } catch {
@@ -197,7 +197,7 @@ class TeamDataManagerTests: XCTestCase {
         
         do {
             let createBlock = randomBlock
-            try dm.create(team: team, block: createBlock)
+            try dm.create(team: team, creator: members[0], block: randomBlock)
             
             let block1 = randomBlock
             try dm.append(block: block1)
@@ -218,6 +218,22 @@ class TeamDataManagerTests: XCTestCase {
         }
     }
 
+    
+    func testCreateMember() {
+        let dm = TeamDataManager(teamID: id)
+        
+        do {
+            try dm.create(team: team, creator: members[0], block: randomBlock)
+            
+            let member = (try dm.fetchAll() as [Team.MemberIdentity])[0]
+            
+            XCTAssert(member.publicKey == members[0].publicKey)
+            
+        } catch {
+            XCTFail("\(error)")
+        }
+    }
+
 
 
     func testMembers() {
@@ -227,32 +243,18 @@ class TeamDataManagerTests: XCTestCase {
     
     func testPinnedHosts() {
         let team = Team(info: Team.Info(name: "test team"))
-        let createPayload = try! HashChain.CreateChain(teamPublicKey: teamPublicKey, teamInfo: team.info).jsonString()
+        let createPayload = try! HashChain.CreateChain(creator: members[0], teamInfo: team.info).jsonString()
         let createSignature = try! Data.random(size: 64)
-        let createBlock = HashChain.Block(publicKey: teamPublicKey, payload: createPayload, signature: createSignature)
+        let createBlock = HashChain.Block(publicKey: members[0].publicKey, payload: createPayload, signature: createSignature)
         
         let dm = TeamDataManager(teamID: id)
         
         do {
-            try dm.create(team: team, block: createBlock)
+            try dm.create(team: team, creator: members[0], block: createBlock)
             let _ = try dm.fetchTeam()
             
         } catch {
             XCTFail("\(error)")
-        }
-    }
-
-    func testSodiumEncrypt() {
-        
-        let bob = try! KRSodium.shared().box.keyPair()!
-        let alice = try! KRSodium.shared().box.keyPair()!
-        
-        let data = try! Data.random(size: 256)
-        
-        self.measure {
-            for _ in 0 ..< 100 {
-                let x:Data = try! KRSodium.shared().box.seal(message: data, recipientPublicKey: alice.publicKey, senderSecretKey: bob.secretKey)!
-            }
         }
     }
     

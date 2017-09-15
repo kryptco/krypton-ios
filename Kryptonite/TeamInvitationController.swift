@@ -12,9 +12,7 @@ import UIKit
 class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     
     var joinType:TeamJoinType!
-    var teamIdentity:TeamIdentity!
-    var createBlock:HashChain.Block?
-
+    var teamIdentity:TeamIdentity?
     
     @IBOutlet weak var teamNameLabel:UILabel!
     @IBOutlet weak var emailTextfield: UITextField!
@@ -30,7 +28,6 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         joinButton.layer.shadowRadius = 3
         joinButton.layer.masksToBounds = false
         
-        teamNameLabel.text = teamIdentity.team.name
         emailTextfield.text = try? IdentityManager.getMe()
         emailTextfield.isEnabled = true
         setJoin(valid: !(emailTextfield.text ?? "").isEmpty)
@@ -39,9 +36,27 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         case .invite:
             joinButton.setTitle("JOIN", for: UIControlState.normal)
             dontJoinButton.setTitle("Don't Join", for: UIControlState.normal)
-        case .create:
+            
+            guard let teamIdentity = self.teamIdentity else {
+                self.showWarning(title: "Error", body: "Fatal error missing team identity information.") {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                return
+            }
+            
+            teamNameLabel.text = teamIdentity.team.name
+            
+        case .create(let request, _):
+            guard case .createTeam(let create) = request.body else {
+                self.showWarning(title: "Error", body: "Invalid create team request.") {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                return
+            }
+            
             joinButton.setTitle("CREATE", for: UIControlState.normal)
             dontJoinButton.setTitle("Don't Create", for: UIControlState.normal)
+            teamNameLabel.text = create.name
         }
     }
     
@@ -69,9 +84,35 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         }
         
         // set the team identity's email
-        teamIdentity.email = email
+        switch joinType! {
+        case .invite:
+            guard var teamIdentity = self.teamIdentity else {
+                self.showWarning(title: "Error", body: "Fatal error missing team identity information.") {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                return
+            }
+            teamIdentity.email = email
+            self.performSegue(withIdentifier: "showTeamsComplete", sender: teamIdentity)
+
+            
+        case .create(let request, _):
+            guard case .createTeam(let create) = request.body else {
+                self.showWarning(title: "Error", body: "Invalid create team request.") {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                return
+            }
+            
+            do {
+                let (identity, createBlock) = try TeamIdentity.newAdmin(email: email, teamName: create.name)
+                self.performSegue(withIdentifier: "showTeamsComplete", sender: (identity, createBlock))
+            } catch {
+                self.showWarning(title: "Error", body: "Could not create team identity. \(error). Please try again.")
+                return
+            }
+        }
         
-        self.performSegue(withIdentifier: "showTeamsComplete", sender: nil)
     }
     
     @IBAction func unwindToTeamInvitation(segue: UIStoryboardSegue) {}
@@ -127,9 +168,11 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let completeController = segue.destination as? TeamJoinCompleteController {
             completeController.joinType = joinType
-            completeController.teamIdentity = teamIdentity
             
-            if let createBlock = createBlock {
+            if let identity = sender as? TeamIdentity {
+                completeController.teamIdentity = identity
+            } else if let (identity, createBlock) = sender as? (TeamIdentity, HashChain.Block) {
+                completeController.teamIdentity = identity
                 completeController.createBlock = createBlock
             }
         }
