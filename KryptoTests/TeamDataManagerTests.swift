@@ -197,7 +197,7 @@ class TeamDataManagerTests: XCTestCase {
         
         do {
             let createBlock = randomBlock
-            try dm.create(team: team, creator: members[0], block: randomBlock)
+            try dm.create(team: team, creator: members[0], block: createBlock)
             
             let block1 = randomBlock
             try dm.append(block: block1)
