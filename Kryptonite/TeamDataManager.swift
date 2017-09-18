@@ -64,6 +64,7 @@ extension DataMember {
         self.init(helper: context)
         self.email = member.email
         self.publicKey = member.publicKey as NSData
+        self.encryptionPublicKey = member.encryptionPublicKey as NSData
         self.sshPublicKey = member.sshPublicKey as NSData
         self.pgpPublicKey = member.publicKey as NSData
     }
@@ -71,6 +72,7 @@ extension DataMember {
     func member() throws -> Team.MemberIdentity {
         guard
             let publicKey = publicKey as Data?,
+            let encryptionPublicKey = encryptionPublicKey as Data?,
             let email = email,
             let sshPublicKey = sshPublicKey as Data?,
             let pgpPublicKey = pgpPublicKey as Data?
@@ -79,6 +81,7 @@ extension DataMember {
         }
         
         return Team.MemberIdentity(publicKey: publicKey,
+                                   encryptionPublicKey: encryptionPublicKey,
                                    email: email,
                                    sshPublicKey: sshPublicKey,
                                    pgpPublicKey: pgpPublicKey)

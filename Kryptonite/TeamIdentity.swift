@@ -14,8 +14,11 @@ struct TeamIdentity:Jsonable {
     let id:Data
     var email:String
     let keyPair:SodiumKeyPair
+    let encryptionKeyPair:SodiumBoxKeyPair
+
     private let keyPairSeed:Data
-    
+    private let boxKeyPairSeed:Data
+
     private let teamID:Data
     var checkpoint:Data
     let initialTeamPublicKey:SodiumPublicKey
@@ -51,8 +54,13 @@ struct TeamIdentity:Jsonable {
         let id = try Data.random(size: 32)
         let teamID = try Data.random(size: 32)
         let keyPairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
-        
+        let boxKeyPairSeed = try Data.random(size: KRSodium.shared().box.SeedBytes)
+
         guard let keyPair = try KRSodium.shared().sign.keyPair(seed: keyPairSeed) else {
+            throw Errors.keyPairFromSeed
+        }
+        
+        guard let boxKeyPair = try KRSodium.shared().box.keyPair(seed: boxKeyPairSeed) else {
             throw Errors.keyPairFromSeed
         }
         
@@ -60,9 +68,10 @@ struct TeamIdentity:Jsonable {
         let sshPublicKey = try KeyManager.sharedInstance().keyPair.publicKey.wireFormat()
         let pgpPublicKey = try KeyManager.sharedInstance().loadPGPPublicKey(for: email).packetData
         let creator = Team.MemberIdentity(publicKey: keyPair.publicKey,
-                                        email: email,
-                                        sshPublicKey: sshPublicKey,
-                                        pgpPublicKey: pgpPublicKey)
+                                          encryptionPublicKey: boxKeyPair.publicKey,
+                                          email: email,
+                                          sshPublicKey: sshPublicKey,
+                                          pgpPublicKey: pgpPublicKey)
 
         
         // create the first block
@@ -82,7 +91,7 @@ struct TeamIdentity:Jsonable {
 
         // make the team identity + team
         let team = Team(info: Team.Info(name: teamName))
-        let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: keyPair.publicKey, team: team)
+        let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: keyPair.publicKey, team: team)
         
         try teamIdentity.dataManager.create(team: team, creator: creator, block: createBlock)
         
@@ -93,19 +102,27 @@ struct TeamIdentity:Jsonable {
         let id = try Data.random(size: 32)
         let teamID = try Data.random(size: 32)
         let keyPairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
-        
+        let boxKeyPairSeed = try Data.random(size: KRSodium.shared().box.SeedBytes)
+
         let team = Team(info: Team.Info(name: teamName))
-        return try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: initialTeamPublicKey, team: team)
+        return try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: initialTeamPublicKey, team: team)
     }
     
-    private init(id:Data, email:String, keyPairSeed:Data, teamID:Data, checkpoint:Data, initialTeamPublicKey:SodiumPublicKey, team:Team) throws {
+    private init(id:Data, email:String, keyPairSeed:Data, boxKeyPairSeed:Data, teamID:Data, checkpoint:Data, initialTeamPublicKey:SodiumPublicKey, team:Team) throws {
         self.id = id
         self.email = email
         self.keyPairSeed = keyPairSeed
+        self.boxKeyPairSeed = boxKeyPairSeed
+        
         guard let keyPair = try KRSodium.shared().sign.keyPair(seed: keyPairSeed) else {
             throw Errors.keyPairFromSeed
         }
         self.keyPair = keyPair
+        
+        guard let boxKeyPair = try KRSodium.shared().box.keyPair(seed: boxKeyPairSeed) else {
+            throw Errors.keyPairFromSeed
+        }
+        self.encryptionKeyPair = boxKeyPair
         
         self.teamID = teamID
         self.checkpoint = checkpoint
@@ -117,11 +134,13 @@ struct TeamIdentity:Jsonable {
     init(json: Object) throws {
         let teamID:Data = try ((json ~> "team_id") as String).fromBase64()
         let keyPairSeed:Data = try ((json ~> "keypair_seed") as String).fromBase64()
-        
+        let boxKeyPairSeed:Data = try ((json ~> "box_keypair_seed") as String).fromBase64()
+
 
         try self.init(id: ((json ~> "id") as String).fromBase64(),
                       email: json ~> "email",
                       keyPairSeed: keyPairSeed,
+                      boxKeyPairSeed: boxKeyPairSeed,
                       teamID: teamID,
                       checkpoint: ((json ~> "checkpoint") as String).fromBase64(),
                       initialTeamPublicKey: ((json ~> "inital_team_public_key") as String).fromBase64(),
@@ -132,6 +151,7 @@ struct TeamIdentity:Jsonable {
         return    ["id": id.toBase64(),
                    "email": email,
                    "keypair_seed": keyPairSeed.toBase64(),
+                   "box_keypair_seed": boxKeyPairSeed.toBase64(),
                    "team_id": teamID.toBase64(),
                    "checkpoint": checkpoint.toBase64(),
                    "inital_team_public_key": initialTeamPublicKey.toBase64()]

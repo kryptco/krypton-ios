@@ -12,6 +12,7 @@
     </entity>
     <entity name="DataMember" representedClassName="DataMember" syncable="YES" codeGenerationType="class">
         <attribute name="email" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="encryptionPublicKey" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
         <attribute name="isAdmin" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" indexed="YES" syncable="YES"/>
         <attribute name="pgpPublicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
         <attribute name="publicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
@@ -34,7 +35,7 @@
     </entity>
     <elements>
         <element name="DataBlock" positionX="-828" positionY="-369" width="128" height="165"/>
-        <element name="DataMember" positionX="-927" positionY="-36" width="128" height="135"/>
+        <element name="DataMember" positionX="-927" positionY="-36" width="128" height="150"/>
         <element name="DataSSHHostKey" positionX="-785" positionY="279" width="128" height="90"/>
         <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="150"/>
     </elements>

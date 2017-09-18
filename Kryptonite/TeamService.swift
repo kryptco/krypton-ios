@@ -203,6 +203,7 @@ class TeamService {
         
         let keyManager = try KeyManager.sharedInstance()
         let newMember = try Team.MemberIdentity(publicKey: teamIdentity.keyPair.publicKey,
+                                                encryptionPublicKey: teamIdentity.encryptionKeyPair.publicKey,
                                                 email: teamIdentity.email,
                                                 sshPublicKey: keyManager.keyPair.publicKey.wireFormat(),
                                                 pgpPublicKey: keyManager.loadPGPPublicKey(for: teamIdentity.email).packetData)

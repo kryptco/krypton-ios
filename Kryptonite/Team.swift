@@ -52,12 +52,14 @@ struct Team:Jsonable {
     
     struct MemberIdentity:Jsonable {
         let publicKey:SodiumPublicKey
+        let encryptionPublicKey:SodiumPublicKey
         let email:String
         let sshPublicKey:Data
         let pgpPublicKey:Data
         
-        init(publicKey:SodiumPublicKey, email:String, sshPublicKey:Data, pgpPublicKey:Data) {
+        init(publicKey:SodiumPublicKey, encryptionPublicKey:SodiumPublicKey, email:String, sshPublicKey:Data, pgpPublicKey:Data) {
             self.publicKey = publicKey
+            self.encryptionPublicKey = encryptionPublicKey
             self.email = email
             self.sshPublicKey = sshPublicKey
             self.pgpPublicKey = pgpPublicKey
@@ -65,6 +67,7 @@ struct Team:Jsonable {
         
         init(json: Object) throws {
             try self.init(publicKey: SodiumPublicKey(((json ~> "public_key") as String).fromBase64()),
+                          encryptionPublicKey: SodiumPublicKey(((json ~> "encryption_public_key") as String).fromBase64()),
                           email: json ~> "email",
                           sshPublicKey: ((json ~> "ssh_public_key") as String).fromBase64(),
                           pgpPublicKey: ((json ~> "pgp_public_key") as String).fromBase64())
@@ -73,6 +76,7 @@ struct Team:Jsonable {
         
         var object: Object {
             return ["public_key": publicKey.toBase64(),
+                    "encryption_public_key": encryptionPublicKey.toBase64(),
                     "email": email,
                     "ssh_public_key": sshPublicKey.toBase64(),
                     "pgp_public_key": pgpPublicKey.toBase64()]
