@@ -115,8 +115,6 @@
 		FA6BCBF21F213C9B006F716F /* Team.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6BCBF11F213C9B006F716F /* Team.storyboard */; };
 		FA6BCBF51F214ADB006F716F /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBF41F214ADB006F716F /* TeamInvite.swift */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
-		FA6F68AF1F6EF272000482C5 /* HashChain+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F68AE1F6EF272000482C5 /* HashChain+Logs.swift */; };
-		FA6F68B01F6EF272000482C5 /* HashChain+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F68AE1F6EF272000482C5 /* HashChain+Logs.swift */; };
 		FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8141391D70B0F4004FE58C /* AppDelegate.swift */; };
 		FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81413B1D70B0F4004FE58C /* MainController.swift */; };
 		FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA81413D1D70B0F4004FE58C /* Main.storyboard */; };
@@ -634,7 +632,6 @@
 		FA6BCBF11F213C9B006F716F /* Team.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Team.storyboard; sourceTree = "<group>"; };
 		FA6BCBF41F214ADB006F716F /* TeamInvite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInvite.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FA6F68AE1F6EF272000482C5 /* HashChain+Logs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HashChain+Logs.swift"; sourceTree = "<group>"; };
 		FA8141361D70B0F4004FE58C /* Kryptonite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kryptonite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA81413B1D70B0F4004FE58C /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1138,7 +1135,6 @@
 				FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */,
 				FA6BCBF41F214ADB006F716F /* TeamInvite.swift */,
 				FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */,
-				FA6F68AE1F6EF272000482C5 /* HashChain+Logs.swift */,
 				FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */,
 				FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */,
 				FADA1A831F30E0E2004AE6B0 /* TeamService.swift */,
@@ -2035,7 +2031,6 @@
 				FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */,
 				FA5A73811F22C41A0087D3CF /* TeamJoinCompleteController.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
-				FA6F68AF1F6EF272000482C5 /* HashChain+Logs.swift in Sources */,
 				FAE4958F1DBD89F100A97708 /* M13CheckboxFadeController.swift in Sources */,
 				FAAE81911E576FC2002A9AE6 /* Policy+UI.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
@@ -2148,7 +2143,6 @@
 				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
-				FA6F68B01F6EF272000482C5 /* HashChain+Logs.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
 				FADA1A7B1F2EE100004AE6B0 /* Teams.xcdatamodeld in Sources */,
 				FADA1A751F2EDF97004AE6B0 /* TeamDataManager.swift in Sources */,

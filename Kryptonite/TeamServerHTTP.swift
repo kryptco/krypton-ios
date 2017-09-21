@@ -14,7 +14,7 @@ class TeamServerHTTP:TeamServiceAPI {
     /**
         Send a JSON object to the teams service and parse the response as a ServerResponse
      */
-    func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
+    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
         let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
         
         log("[IN] HashChainSVC\n\t\(object)")

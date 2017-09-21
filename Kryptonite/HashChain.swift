@@ -102,6 +102,11 @@ class HashChain {
         case read(ReadBlock)
         case append(AppendBlock)
         
+        // logs
+//        case readLogs(ReadLogs)
+//        case createLogChain(CreateLogChain)
+//        case appendLog(LogOperation)
+        
         init(json: Object) throws {
             
             if let create:Object = try? json ~> "create_chain" {
@@ -113,6 +118,17 @@ class HashChain {
             else if let append:Object = try? json ~> "append_block" {
                 self = try .append(AppendBlock(json: append))
             }
+//            else if let createLog:Object = try? json ~> "create_log_chain" {
+//                self = try .createLogChain(read)
+//            }
+//            else if let readLogs:Object = try? json ~> "read_logs" {
+//                self = try .readLogs(ReadLogs(json: append))
+//            }
+//            else if let readLogs:Object = try? json ~> "read_logs" {
+//                self = try .readLogs(ReadLogs(json: append))
+//            }
+
+
             else {
                 throw Errors.badPayload
             }
@@ -340,4 +356,129 @@ class HashChain {
             return ["nonce_public_key": noncePublicKey.toBase64()]
         }
     }
+    
+    /// MARK: Log Chains
+    
+    struct ReadLogs:Jsonable {
+        let teamPointer:TeamPointer
+        let memberPublicKey:SodiumBoxPublicKey?
+        
+        init(teamPointer:TeamPointer, memberPublicKey:SodiumBoxPublicKey?) {
+            self.teamPointer = teamPointer
+            self.memberPublicKey = memberPublicKey
+        }
+        
+        init(json: Object) throws {
+            let memberPublicKey:SodiumBoxPublicKey? = try? ((json ~> "member_public_key") as String).fromBase64()
+            try self.init(teamPointer: TeamPointer(json: json ~> "team_pointer"),
+                          memberPublicKey: memberPublicKey)
+        }
+        
+        var object: Object {
+            var obj:Object = ["team_pointer": teamPointer.object]
+            
+            if let member = memberPublicKey {
+                obj["member_public_key"] = member.toBase64()
+            }
+            
+            return obj
+        }
+    }
+    
+    struct CreateLogChain:Jsonable {
+        let teamPointer:TeamPointer
+        let wrappedKeys:[WrappedKey]
+        
+        init(teamPointer:TeamPointer, wrappedKeys:[WrappedKey]) {
+            self.teamPointer = teamPointer
+            self.wrappedKeys = wrappedKeys
+        }
+        
+        init(json: Object) throws {
+            try self.init(teamPointer: TeamPointer(json: json ~> "team_pointer"),
+                          wrappedKeys: [WrappedKey](json: json ~> "wrapped_keys"))
+        }
+        
+        var object: Object {
+            return ["team_pointer": teamPointer.object,
+                    "wrapped_keys": wrappedKeys.objects]
+        }
+    }
+    
+    struct EncryptedLog:Jsonable {
+        let lastLogHash:Data
+        let ciphertext:Data
+        
+        init(lastLogHash:Data, ciphertext:Data) {
+            self.lastLogHash = lastLogHash
+            self.ciphertext = ciphertext
+        }
+        
+        init(json: Object) throws {
+            try self.init(lastLogHash: ((json ~> "last_log_hash") as String).fromBase64(),
+                          ciphertext: ((json ~> "ciphertext") as String).fromBase64())
+        }
+        
+        var object: Object {
+            return ["last_log_hash": lastLogHash.toBase64(),
+                    "ciphertext": ciphertext.toBase64()]
+        }
+    }
+    
+    
+    // Mark: Types
+    
+    struct WrappedKey:Jsonable {
+        let publicKey:SodiumBoxPublicKey
+        let ciphertext:Data
+        
+        init(publicKey:SodiumBoxPublicKey, ciphertext:Data) {
+            self.publicKey = publicKey
+            self.ciphertext = ciphertext
+        }
+        
+        init(json: Object) throws {
+            try self.init(publicKey: ((json ~> "public_key") as String).fromBase64(),
+                          ciphertext: ((json ~> "ciphertext") as String).fromBase64())
+        }
+        
+        var object: Object {
+            return ["public_key": publicKey.toBase64(),
+                    "ciphertext": ciphertext.toBase64()]
+        }
+    }
+    
+    // MARK: LogOperation
+    enum LogOperation {
+        case addWrappedKeys([WrappedKey])
+        case rotateKey([WrappedKey])
+        case encryptLog(EncryptedLog)
+        
+        init(json: Object) throws {
+            if let add:[Object] = try? json ~> "add_wrapped_keys" {
+                self = try .addWrappedKeys([WrappedKey](json: add))
+            }
+            else if let rotate:[Object] = try? json ~> "rotate_key" {
+                self = try .rotateKey([WrappedKey](json: rotate))
+            }
+            else if let log:Object = try? json ~> "encrypt_log" {
+                self = try .encryptLog(EncryptedLog(json: log))
+            }
+            else {
+                throw Errors.badPayload
+            }
+        }
+        
+        var object: Object {
+            switch self {
+            case .addWrappedKeys(let wrappedKeys):
+                return ["add_wrapped_keys": wrappedKeys.objects]
+            case .rotateKey(let wrappedKeys):
+                return ["rotate_key": wrappedKeys.objects]
+            case .encryptLog(let log):
+                return ["encrypt_log": log.object]
+            }
+        }
+    }
+
 }
