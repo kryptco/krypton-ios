@@ -71,6 +71,7 @@ enum ResponseBody {
     case ssh(SignResponse)
     case git(GitSignResponse)
     case createTeam(CreateTeamResponse)
+    case adminKey(AdminKeyResponse)
     case ack(AckResponse)
     case unpair(UnpairResponse)
     
@@ -103,7 +104,10 @@ enum ResponseBody {
             responses.append(.createTeam(try CreateTeamResponse(json: json)))
         }
 
-        
+        if let json:Object = try? json ~> "admin_key_response" {
+            responses.append(.adminKey(try AdminKeyResponse(json: json)))
+        }
+
         // if more than one request, it's an error
         if responses.count > 1 {
             throw MultipleResponsesError()
@@ -125,6 +129,8 @@ enum ResponseBody {
             json["git_sign_response"] = g.object
         case .createTeam(let c):
             json["create_team_response"] = c.object
+        case .adminKey(let a):
+            json["admin_key_response"] = a.object
         case .ack(let a):
             json["ack_response"] = a.object
         case .unpair(let u):
@@ -144,6 +150,9 @@ enum ResponseBody {
             
         case .createTeam(let createTeam):
             return createTeam.error
+        
+        case .adminKey(let adminKey):
+            return adminKey.error
             
         case .me, .unpair, .ack:
             return nil
@@ -326,4 +335,32 @@ struct CreateTeamResponse:Jsonable {
     }
 }
 
+struct AdminKeyResponse:Jsonable {
+    let seed:String?
+    let error:String?
+    
+    init(seed:String?, error:String?) {
+        self.seed = seed
+        self.error = error
+    }
+    
+    init(json: Object) throws {
+        let seed:String? = try? json ~> "seed"
+        let error:String? = try? json ~> "error"
+        
+        self.init(seed: seed, error: error)
+    }
+    
+    var object: Object {
+        var obj = Object()
+        
+        if let seed = seed {
+            obj["seed"] = seed
+        } else if let error = error {
+            obj["error"] = error
+        }
+        
+        return obj
+    }
+}
 

@@ -151,6 +151,9 @@ class Policy {
                 log("error fetching known hosts data: \(error)", .error)
                 return true
             }
+        
+        case .adminKey, .createTeam:
+            return true
             
         case .createTeam, .git, .me, .noOp, .unpair:
             break
@@ -314,7 +317,7 @@ class Policy {
 extension Request {
     var authorizeCategoryIdentifier:String {
         switch self.body {
-        case .createTeam, .me, .unpair, .noOp:
+        case .adminKey, .createTeam, .me, .unpair, .noOp:
             return ""
             
         case .ssh, .git:
@@ -324,7 +327,7 @@ extension Request {
     
     var autoAuthorizeCategoryIdentifier:String {
         switch self.body {
-        case .createTeam, .me, .unpair, .noOp:
+        case .adminKey, .createTeam, .me, .unpair, .noOp:
             return ""
             
         case .ssh, .git:

@@ -21,7 +21,9 @@ extension Request {
             let git = gitSign.git
             return (git.subtitle + " Signature", git.shortDisplay)
         case .createTeam(let create):
-            return ("Create team \(create.name)?", "")
+            return ("Teams", "Do you want to create team \(create.name)?")
+        case .adminKey:
+            return ("Teams", "Trust this computer to administer your team?")
         case .me:
             return ("Identity Request", "Public key exported")
         case .unpair:
