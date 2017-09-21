@@ -11,7 +11,7 @@ import JSON
 import SwiftHTTP
 
 protocol TeamServiceAPI {
-    func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws
+    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws
 }
 
 class TeamService {

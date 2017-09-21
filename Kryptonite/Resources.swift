@@ -129,14 +129,14 @@ extension UINavigationItem {
 
 class KRButton:UIButton {
     
-    @IBInspectable var cornerRadius: CGFloat = 0 {
+    var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
         }
     }
 
-    @IBInspectable var defaultColor:UIColor = UIColor.app {
+    var defaultColor:UIColor = UIColor.app {
         didSet {
             setTitleColor(defaultColor, for: UIControlState.normal)
             layer.borderColor = defaultColor.cgColor
@@ -144,7 +144,7 @@ class KRButton:UIButton {
         }
     }
     
-    @IBInspectable var altForegroundColor:UIColor = UIColor.white {
+    var altForegroundColor:UIColor = UIColor.white {
         didSet {
             setTitleColor(altForegroundColor, for: UIControlState.highlighted)
             backgroundColor = UIColor.clear
@@ -152,7 +152,7 @@ class KRButton:UIButton {
     }
     
     
-    @IBInspectable var borderWidth: CGFloat = 1.0 {
+    var borderWidth: CGFloat = 1.0 {
         didSet {
             layer.borderWidth = borderWidth
         }
@@ -182,22 +182,22 @@ class KRButton:UIButton {
 
 class KRSimpleButton:UIButton {
     
-    @IBInspectable var cornerRadius: CGFloat = 0 {
+    var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
         }
     }
     
-    @IBInspectable var highlightedColor:UIColor = UIColor.white
+    var highlightedColor:UIColor = UIColor.white
     
-    @IBInspectable var borderWidth: CGFloat = 1.0 {
+    var borderWidth: CGFloat = 1.0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
     
-    @IBInspectable var borderColor: UIColor = UIColor.clear {
+    var borderColor: UIColor = UIColor.clear {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
@@ -235,7 +235,7 @@ class KRSimpleButton:UIButton {
 
 class KRImageView:UIImageView {
     
-    @IBInspectable var cornerRadius: CGFloat = 0 {
+    var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
@@ -254,7 +254,7 @@ class KRImageView:UIImageView {
 
 class KRView:UIView {
     
-    @IBInspectable var cornerRadius: CGFloat = 0 {
+    var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
@@ -262,13 +262,13 @@ class KRView:UIView {
     }
     
     
-    @IBInspectable var borderWidth: CGFloat = 0.0 {
+    var borderWidth: CGFloat = 0.0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
     
-    @IBInspectable var borderColor:UIColor = UIColor.clear {
+    var borderColor:UIColor = UIColor.clear {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
@@ -365,12 +365,12 @@ extension UIView {
 
 class RoundedView:UIView {
     
-    @IBInspectable var cornerRadius:CGFloat = 0
+    var cornerRadius:CGFloat = 0
 
-    @IBInspectable var topLeft:Bool = false
-    @IBInspectable var topRight:Bool = false
-    @IBInspectable var bottomLeft:Bool = false
-    @IBInspectable var bottomRight:Bool = false
+    var topLeft:Bool = false
+    var topRight:Bool = false
+    var bottomLeft:Bool = false
+    var bottomRight:Bool = false
 
     
     override init(frame: CGRect) {

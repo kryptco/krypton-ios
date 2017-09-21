@@ -348,7 +348,7 @@ public class M13Checkbox: UIControl {
     //----------------------------
     
     /// The duration of the animation that occurs when the checkbox switches states. The default is 0.3 seconds.
-    @IBInspectable public var animationDuration: TimeInterval {
+    public var animationDuration: TimeInterval {
         get {
             return controller.animationGenerator.animationDuration
         }
@@ -395,7 +395,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// Whether or not to enable morphing between states.
-    @IBInspectable public var enableMorphing: Bool {
+    public var enableMorphing: Bool {
         get {
             return controller.enableMorphing
         }
@@ -425,7 +425,7 @@ public class M13Checkbox: UIControl {
     //----------------------------
     
     /// The color of the checkbox's tint color when not in the unselected state. The tint color is is the main color used when not in the unselected state.
-    @IBInspectable public var secondaryTintColor: UIColor? {
+    public var secondaryTintColor: UIColor? {
         get {
             return controller.secondaryTintColor
         }
@@ -435,7 +435,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The color of the checkmark when it is displayed against a filled background.
-    @IBInspectable public var secondaryCheckmarkTintColor: UIColor? {
+    public var secondaryCheckmarkTintColor: UIColor? {
         get {
             return controller.secondaryCheckmarkTintColor
         }
@@ -445,7 +445,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The stroke width of the checkmark.
-    @IBInspectable public var checkmarkLineWidth: CGFloat {
+    public var checkmarkLineWidth: CGFloat {
         get {
             return controller.pathGenerator.checkmarkLineWidth
         }
@@ -472,7 +472,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The stroke width of the box.
-    @IBInspectable public var boxLineWidth: CGFloat {
+    public var boxLineWidth: CGFloat {
         get {
             return controller.pathGenerator.boxLineWidth
         }
@@ -483,7 +483,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The corner radius of the box if the box type is square.
-    @IBInspectable public var cornerRadius: CGFloat {
+    public var cornerRadius: CGFloat {
         get {
             return controller.pathGenerator.cornerRadius
         }
@@ -505,7 +505,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// Wether or not to hide the checkbox.
-    @IBInspectable public var hideBox: Bool {
+    public var hideBox: Bool {
         get {
             return controller.hideBox
         }

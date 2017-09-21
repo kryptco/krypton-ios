@@ -27,7 +27,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var awsButton:UIButton!
     @IBOutlet var awsLine:UIView!
 
-    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
+    var inactiveUploadMethodColor:UIColor = UIColor.lightGray
     
     
     override func viewDidLoad() {
