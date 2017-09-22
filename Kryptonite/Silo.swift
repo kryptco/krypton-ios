@@ -332,7 +332,7 @@ class Silo {
             }
             
             responseType = .me(MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
-            
+
         case .adminKey, .createTeam, .noOp, .unpair:
             throw ResponseNotNeededError()
         }

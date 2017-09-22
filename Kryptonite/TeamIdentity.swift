@@ -43,6 +43,11 @@ struct TeamIdentity:Jsonable {
         return CreateTeamResponse(seed: keyPairSeed.toBase64(), error: nil)
     }
     
+    var adminKeyResponse:AdminKeyResponse {
+        return AdminKeyResponse(seed: keyPairSeed.toBase64(), error: nil)
+    }
+
+    
     func lastBlockHash() throws -> Data? {
         return try dataManager.lastBlockHash()
     }

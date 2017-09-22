@@ -41,8 +41,37 @@ extension Request {
             teamLoad?.joinType = TeamJoinType.create(self, session)
             
             return teamLoad
+            
+        case .adminKey:
+            
+            var response:Response
+            
+            do {
+                guard let identity = try IdentityManager.getTeamIdentity(), try identity.isAdmin() else {
+                    let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(seed: nil, error: "could not fetch team")))
+                    try? TransportControl.shared.send(response, for: session)
+                    return nil
+                }
+                
+                response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(identity.adminKeyResponse))
 
-        default:
+            } catch {
+                let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(seed: nil, error: "\(error)")))
+                try? TransportControl.shared.send(response, for: session)
+                return nil
+            }
+            
+
+            let controller = UIAlertController(title: "Administer your team from \(session.pairing.displayName)?", message: "Ensure you are on a trusted computer as you will be able to manage your team from this machine.", preferredStyle: UIAlertControllerStyle.actionSheet)
+            
+            controller.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            controller.addAction(UIAlertAction(title: "Allow", style: UIAlertActionStyle.default, handler: { (_) in
+                try? TransportControl.shared.send(response, for: session)
+            }))
+            
+            return controller
+
+        case .me, .unpair, .noOp:
             return nil
         }
     }
