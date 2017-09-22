@@ -40,11 +40,13 @@ struct TeamIdentity:Jsonable {
     }
     
     var createTeamResponse:CreateTeamResponse {
-        return CreateTeamResponse(seed: keyPairSeed.toBase64(), error: nil)
+        let keyAndTeamCheckpoint = KeyAndTeamCheckpoint(seed: keyPairSeed, teamPublicKey: initialTeamPublicKey, lastBlockHash: checkpoint)
+        return CreateTeamResponse(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: nil)
     }
     
     var adminKeyResponse:AdminKeyResponse {
-        return AdminKeyResponse(keyAndTeamPointer: AdminKeyResponse.KeyAndTeamPointer(seed: keyPairSeed, teamPointer: HashChain.TeamPointer.lastBlockHash(checkpoint)), error: nil)
+        let keyAndTeamCheckpoint = KeyAndTeamCheckpoint(seed: keyPairSeed, teamPublicKey: initialTeamPublicKey, lastBlockHash: checkpoint)
+        return AdminKeyResponse(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: nil)
     }
 
     

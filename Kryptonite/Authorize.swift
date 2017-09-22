@@ -48,14 +48,14 @@ extension Request {
             
             do {
                 guard let identity = try IdentityManager.getTeamIdentity(), try identity.isAdmin() else {
-                    let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(keyAndTeamPointer: nil, error: "could not fetch team")))
+                    let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(keyAndTeamCheckpoint: nil, error: "could not fetch team")))
                     try? TransportControl.shared.send(response, for: session)
                     return nil
                 }
                 
                 teamIdentity = identity
             } catch {
-                let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(keyAndTeamPointer: nil, error: "\(error)")))
+                let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(keyAndTeamCheckpoint: nil, error: "\(error)")))
                 try? TransportControl.shared.send(response, for: session)
                 return nil
             }

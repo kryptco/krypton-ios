@@ -305,75 +305,82 @@ struct AckResponse:Jsonable {
 }
 
 // Team
+struct KeyAndTeamCheckpoint:Jsonable {
+    let seed:Data
+    let teamPublicKey:SodiumPublicKey
+    let lastBlockHash:Data
+    
+    init(seed:Data, teamPublicKey:SodiumPublicKey, lastBlockHash:Data) {
+        self.seed = seed
+        self.teamPublicKey = teamPublicKey
+        self.lastBlockHash = lastBlockHash
+    }
+    
+    init(json: Object) throws {
+        try self.init(seed: ((json ~> "seed") as String).fromBase64(),
+                      teamPublicKey: ((json ~> "team_public_key") as String).fromBase64(),
+                      lastBlockHash: ((json ~> "last_block_hash") as String).fromBase64())
+    }
+    
+    var object: Object {
+        return ["seed": seed.toBase64(),
+                "team_public_key": teamPublicKey.toBase64(),
+                "last_block_hash": lastBlockHash.toBase64()]
+    }
+}
+
+
 struct CreateTeamResponse:Jsonable {
-    let seed:String?
+    let keyAndTeamCheckpoint:KeyAndTeamCheckpoint?
     let error:String?
     
-    init(seed:String?, error:String?) {
-        self.seed = seed
+    init(keyAndTeamCheckpoint:KeyAndTeamCheckpoint?, error:String?) {
+        self.keyAndTeamCheckpoint = keyAndTeamCheckpoint
         self.error = error
     }
     
     init(json: Object) throws {
-        let seed:String? = try? json ~> "seed"
+        let keyAndTeamCheckpoint:KeyAndTeamCheckpoint? = try? KeyAndTeamCheckpoint(json: json ~> "key_and_team_checkpoint")
         let error:String? = try? json ~> "error"
         
-        self.init(seed: seed, error: error)
+        self.init(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: error)
     }
     
     var object: Object {
         var obj = Object()
         
-        if let seed = seed {
-            obj["seed"] = seed
+        if let keyAndTeamCheckpoint = keyAndTeamCheckpoint {
+            obj["key_and_team_checkpoint"] = keyAndTeamCheckpoint.object
         } else if let error = error {
             obj["error"] = error
         }
         
         return obj
     }
+
 }
 
 struct AdminKeyResponse:Jsonable {
-    let keyAndTeamPointer:KeyAndTeamPointer?
+    let keyAndTeamCheckpoint:KeyAndTeamCheckpoint?
     let error:String?
     
-    struct KeyAndTeamPointer:Jsonable {
-        let seed:Data
-        let teamPointer:HashChain.TeamPointer
-        
-        init(seed:Data, teamPointer:HashChain.TeamPointer) {
-            self.seed = seed
-            self.teamPointer = teamPointer
-        }
-        
-        init(json: Object) throws {
-            try self.init(seed: ((json ~> "seed") as String).fromBase64(),
-                          teamPointer: HashChain.TeamPointer(json: json ~> "team_pointer"))
-        }
-        
-        var object: Object {
-            return ["seed": seed.toBase64(), "team_pointer": teamPointer.object]
-        }
-    }
-    
-    init(keyAndTeamPointer:KeyAndTeamPointer?, error:String?) {
-        self.keyAndTeamPointer = keyAndTeamPointer
+    init(keyAndTeamCheckpoint:KeyAndTeamCheckpoint?, error:String?) {
+        self.keyAndTeamCheckpoint = keyAndTeamCheckpoint
         self.error = error
     }
     
     init(json: Object) throws {
-        let keyAndTeamPointer:KeyAndTeamPointer? = try? KeyAndTeamPointer(json: json ~> "key_and_team_pointer")
+        let keyAndTeamCheckpoint:KeyAndTeamCheckpoint? = try? KeyAndTeamCheckpoint(json: json ~> "key_and_team_checkpoint")
         let error:String? = try? json ~> "error"
         
-        self.init(keyAndTeamPointer: keyAndTeamPointer, error: error)
+        self.init(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: error)
     }
     
     var object: Object {
         var obj = Object()
         
-        if let keyAndTeamPointer = keyAndTeamPointer {
-            obj["key_and_team_pointer"] = keyAndTeamPointer.object
+        if let keyAndTeamCheckpoint = keyAndTeamCheckpoint {
+            obj["key_and_team_checkpoint"] = keyAndTeamCheckpoint.object
         } else if let error = error {
             obj["error"] = error
         }

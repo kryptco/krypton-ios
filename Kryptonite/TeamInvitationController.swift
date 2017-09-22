@@ -129,7 +129,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         case .create(let request, let session):
             
             // send the failure response
-            let responseType = ResponseBody.createTeam(CreateTeamResponse(seed: nil, error: "canceled"))
+            let responseType = ResponseBody.createTeam(CreateTeamResponse(keyAndTeamCheckpoint: nil, error: "canceled"))
             
             let response = Response(requestID: request.id,
                                     endpoint: API.endpointARN ?? "",
