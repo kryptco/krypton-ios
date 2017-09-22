@@ -161,7 +161,6 @@ enum ResponseBody {
 }
 
 //MARK: Responses
-
 struct SignResponse:Jsonable {
     var signature:String?
     var error:String?
@@ -336,26 +335,45 @@ struct CreateTeamResponse:Jsonable {
 }
 
 struct AdminKeyResponse:Jsonable {
-    let seed:String?
+    let keyAndTeamPointer:KeyAndTeamPointer?
     let error:String?
     
-    init(seed:String?, error:String?) {
-        self.seed = seed
+    struct KeyAndTeamPointer:Jsonable {
+        let seed:Data
+        let teamPointer:HashChain.TeamPointer
+        
+        init(seed:Data, teamPointer:HashChain.TeamPointer) {
+            self.seed = seed
+            self.teamPointer = teamPointer
+        }
+        
+        init(json: Object) throws {
+            try self.init(seed: ((json ~> "seed") as String).fromBase64(),
+                          teamPointer: HashChain.TeamPointer(json: json ~> "team_pointer"))
+        }
+        
+        var object: Object {
+            return ["seed": seed.toBase64(), "team_pointer": teamPointer.object]
+        }
+    }
+    
+    init(keyAndTeamPointer:KeyAndTeamPointer?, error:String?) {
+        self.keyAndTeamPointer = keyAndTeamPointer
         self.error = error
     }
     
     init(json: Object) throws {
-        let seed:String? = try? json ~> "seed"
+        let keyAndTeamPointer:KeyAndTeamPointer? = try? KeyAndTeamPointer(json: json ~> "key_and_team_pointer")
         let error:String? = try? json ~> "error"
         
-        self.init(seed: seed, error: error)
+        self.init(keyAndTeamPointer: keyAndTeamPointer, error: error)
     }
     
     var object: Object {
         var obj = Object()
         
-        if let seed = seed {
-            obj["seed"] = seed
+        if let keyAndTeamPointer = keyAndTeamPointer {
+            obj["key_and_team_pointer"] = keyAndTeamPointer.object
         } else if let error = error {
             obj["error"] = error
         }
@@ -363,4 +381,3 @@ struct AdminKeyResponse:Jsonable {
         return obj
     }
 }
-

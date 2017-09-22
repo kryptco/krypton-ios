@@ -44,7 +44,7 @@ struct TeamIdentity:Jsonable {
     }
     
     var adminKeyResponse:AdminKeyResponse {
-        return AdminKeyResponse(seed: keyPairSeed.toBase64(), error: nil)
+        return AdminKeyResponse(keyAndTeamPointer: AdminKeyResponse.KeyAndTeamPointer(seed: keyPairSeed, teamPointer: HashChain.TeamPointer.lastBlockHash(checkpoint)), error: nil)
     }
 
     

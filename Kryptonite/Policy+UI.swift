@@ -62,35 +62,36 @@ extension Policy {
     }
     
     class func requestUserAuthorization(session:Session, request:Request) {
-        
-        switch UIApplication.shared.applicationState {
-            
-        case .background: // Background: then present local notification
-            Notify.shared.present(request: request, for: session)
-            
-        case .inactive: // Inactive: wait and try again
-            dispatchAfter(delay: 1.0, task: {
-                Policy.requestUserAuthorization(session: session, request: request)
-            })
-
-        case .active:
-            // if we are already presenting, don't try to present until finished
-            guard Current.viewController?.presentedViewController is ApproveController == false
-            else {
-                return
-            }
-            
-            // current view controller hasn't loaded, but application active
-            if Current.viewController == nil {
+        dispatchMain {
+            switch UIApplication.shared.applicationState {
+                
+            case .background: // Background: then present local notification
+                Notify.shared.present(request: request, for: session)
+                
+            case .inactive: // Inactive: wait and try again
                 dispatchAfter(delay: 1.0, task: {
                     Policy.requestUserAuthorization(session: session, request: request)
                 })
-                return
+                
+            case .active:
+                // if we are already presenting, don't try to present until finished
+                guard Current.viewController?.presentedViewController is ApproveController == false
+                    else {
+                        return
+                }
+                
+                // current view controller hasn't loaded, but application active
+                if Current.viewController == nil {
+                    dispatchAfter(delay: 1.0, task: {
+                        Policy.requestUserAuthorization(session: session, request: request)
+                    })
+                    return
+                }
+                
+                // request foreground approval
+                Current.viewController?.requestUserAuthorization(session: session, request: request)
+                
             }
-            
-            // request foreground approval
-            Current.viewController?.requestUserAuthorization(session: session, request: request)
-
         }
     }
     

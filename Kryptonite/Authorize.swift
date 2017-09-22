@@ -48,19 +48,18 @@ extension Request {
             
             do {
                 guard let identity = try IdentityManager.getTeamIdentity(), try identity.isAdmin() else {
-                    let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(seed: nil, error: "could not fetch team")))
+                    let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(keyAndTeamPointer: nil, error: "could not fetch team")))
                     try? TransportControl.shared.send(response, for: session)
                     return nil
                 }
                 
                 teamIdentity = identity
             } catch {
-                let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(seed: nil, error: "\(error)")))
+                let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(keyAndTeamPointer: nil, error: "\(error)")))
                 try? TransportControl.shared.send(response, for: session)
                 return nil
             }
             
-
             let controller = UIAlertController(title: "Administer your team from \(session.pairing.displayName)?", message: "Ensure you are on a trusted computer as you will be able to manage your team from this machine.", preferredStyle: UIAlertControllerStyle.actionSheet)
             
             controller.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))

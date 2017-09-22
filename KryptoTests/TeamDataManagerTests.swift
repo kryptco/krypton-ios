@@ -32,7 +32,7 @@ class TeamDataManagerTests: XCTestCase {
         teamPublicKey = try! Data.random(size: 32)
         let users = ["eve@acme.co", "don@acme.co", "carlos@acme.co", "bob@acme.co", "alice@acme.co"]
         members = users.map {
-            return try! Team.MemberIdentity(publicKey: Data.random(size: 32), email: $0, sshPublicKey: Data.random(size: 32), pgpPublicKey: Data.random(size: 32))
+            return try! Team.MemberIdentity(publicKey: Data.random(size: 32), encryptionPublicKey: Data.random(size: 32), email: $0, sshPublicKey: Data.random(size: 32), pgpPublicKey: Data.random(size: 32))
         }
         
         team = Team(info: Team.Info(name: "test team"))
