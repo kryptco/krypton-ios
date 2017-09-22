@@ -43,8 +43,8 @@ extension Request {
             return teamLoad
             
         case .adminKey:
-            
-            var response:Response
+            let id = self.id
+            var teamIdentity:TeamIdentity
             
             do {
                 guard let identity = try IdentityManager.getTeamIdentity(), try identity.isAdmin() else {
@@ -53,8 +53,7 @@ extension Request {
                     return nil
                 }
                 
-                response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(identity.adminKeyResponse))
-
+                teamIdentity = identity
             } catch {
                 let response = Response(requestID: self.id, endpoint: API.endpointARN ?? "", body: .adminKey(AdminKeyResponse(seed: nil, error: "\(error)")))
                 try? TransportControl.shared.send(response, for: session)
@@ -66,6 +65,7 @@ extension Request {
             
             controller.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
             controller.addAction(UIAlertAction(title: "Allow", style: UIAlertActionStyle.default, handler: { (_) in
+                let response = Response(requestID: id, endpoint: API.endpointARN ?? "", body: .adminKey(teamIdentity.adminKeyResponse))
                 try? TransportControl.shared.send(response, for: session)
             }))
             
