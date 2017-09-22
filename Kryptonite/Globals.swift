@@ -12,6 +12,7 @@ import Foundation
 struct Constants {
     static let appGroupSecurityID = "group.co.krypt.kryptonite"
     static let defaultKeyChainService = "kr_keychain_service"
+    static let teamKeyChainService = "kr_team_keychain_service"
     static let endpointARNStorageKey = "aws_endpoint_arn_key"
 }
 

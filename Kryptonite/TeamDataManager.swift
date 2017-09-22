@@ -648,7 +648,25 @@ class TeamDataManager {
         let hostPublicKey = try verifiedHost.hostKey.fromBase64()
         
         let request:NSFetchRequest<DataSSHHostKey> = DataSSHHostKey.fetchRequest()
-        request.predicate = self.sshHostKeyEqualsPredicate(host: hostName, publicKey: hostPublicKey)
+        
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let hostPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.host)),
+            rightExpression: NSExpression(forConstantValue: hostName),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+
+        // look for matching hosts the with hostname `hostName`
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, hostPredicate])
         
         var sshHostKeys:[SSHHostKey] = []
         
@@ -658,6 +676,7 @@ class TeamDataManager {
             }
         }
         
+        // if unknown, then it's not pinned
         guard !sshHostKeys.isEmpty else {
             return
         }

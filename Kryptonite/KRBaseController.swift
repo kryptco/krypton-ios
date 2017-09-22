@@ -215,7 +215,7 @@ extension UIViewController {
                 }
 
             } catch {
-                self.showWarning(title: "Error", body: "Couldn't get team information.")
+                self.showWarning(title: "Error", body: "Couldn't get team information. Error: \(error).")
                 return
             }
             

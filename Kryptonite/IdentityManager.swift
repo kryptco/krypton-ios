@@ -67,7 +67,7 @@ class IdentityManager {
         }
         
         do {
-            let teamIdData = try KeychainStorage().getData(key: Storage.teamIdentity.key)
+            let teamIdData = try KeychainStorage(service: Constants.teamKeyChainService).getData(key: Storage.teamIdentity.key)
             teamIdentity = try TeamIdentity(jsonData: teamIdData)
             return teamIdentity
         } catch KeychainStorageError.notFound {
@@ -94,7 +94,7 @@ class IdentityManager {
             try identity.dataManager.saveContext()
 
             // save the identity to keychain
-            try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
+            try KeychainStorage(service: Constants.teamKeyChainService).setData(key: Storage.teamIdentity.key, data: identity.jsonData())
             
             // set the shared teamIdentity
             teamIdentity = identity
@@ -128,7 +128,7 @@ class IdentityManager {
             
             // save the identity to keychain
             if let identity = teamIdentity {
-                try KeychainStorage().setData(key: Storage.teamIdentity.key, data: identity.jsonData())
+                try KeychainStorage(service: Constants.teamKeyChainService).setData(key: Storage.teamIdentity.key, data: identity.jsonData())
             }
 
             
@@ -147,7 +147,7 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        try KeychainStorage().delete(key: Storage.teamIdentity.key)
+        try KeychainStorage(service: Constants.teamKeyChainService).delete(key: Storage.teamIdentity.key)
         teamIdentity = nil
         
         Policy.teamDidUpdate()
