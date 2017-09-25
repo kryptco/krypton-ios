@@ -307,10 +307,10 @@ struct AckResponse:Jsonable {
 // Team
 struct KeyAndTeamCheckpoint:Jsonable {
     let seed:Data
-    let teamPublicKey:SodiumPublicKey
+    let teamPublicKey:SodiumSignPublicKey
     let lastBlockHash:Data
     
-    init(seed:Data, teamPublicKey:SodiumPublicKey, lastBlockHash:Data) {
+    init(seed:Data, teamPublicKey:SodiumSignPublicKey, lastBlockHash:Data) {
         self.seed = seed
         self.teamPublicKey = teamPublicKey
         self.lastBlockHash = lastBlockHash

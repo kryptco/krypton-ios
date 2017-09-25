@@ -152,7 +152,7 @@ class TeamService {
         
         let operation = HashChain.Operation.addMember(member)
         let addMember = HashChain.AppendBlock(lastBlockHash: lastBlockhash, operation: operation)
-        let payload = HashChain.Payload.append(addMember)
+        let payload = HashChain.Payload.appendBlock(addMember)
         let payloadData = try payload.jsonData()
         
         // sign the payload
@@ -223,7 +223,7 @@ class TeamService {
         // create the payload
         let operation = HashChain.Operation.acceptInvite(newMember)
         let appendBlock = HashChain.AppendBlock(lastBlockHash: blockHash, operation: operation)
-        let payload = HashChain.Payload.append(appendBlock)
+        let payload = HashChain.Payload.appendBlock(appendBlock)
         let payloadData = try payload.jsonData()
 
         // sign the payload json
@@ -291,11 +291,11 @@ class TeamService {
             throw Errors.badInviteSeed
         }
         
-        let readBlock = try HashChain.ReadBlock(teamPointer: invite.teamPointer,
+        let readBlock = try HashChain.ReadBlocks(teamPointer: invite.teamPointer,
                                                 nonce: Data.random(size: 32),
                                                 unixSeconds: UInt64(Date().timeIntervalSince1970))
         
-        let payload = HashChain.Payload.read(readBlock)
+        let payload = HashChain.Payload.readBlocks(readBlock)
         let payloadData = try payload.jsonData()
         
         guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
@@ -363,11 +363,11 @@ class TeamService {
     
     private func getVerifiedTeamUpdatesUnlocked(_ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         
-        let readBlock = try HashChain.ReadBlock(teamPointer: teamIdentity.teamPointer(),
+        let readBlock = try HashChain.ReadBlocks(teamPointer: teamIdentity.teamPointer(),
                                               nonce: Data.random(size: 32),
                                               unixSeconds: UInt64(Date().timeIntervalSince1970))
         
-        let payload = HashChain.Payload.read(readBlock)
+        let payload = HashChain.Payload.readBlocks(readBlock)
         let payloadData = try payload.jsonData()
         
         guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)

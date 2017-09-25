@@ -1,42 +1,92 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DataBlock" representedClassName="DataBlock" syncable="YES" codeGenerationType="class">
-        <attribute name="blockHash" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="blockHash" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="payload" attributeType="String" syncable="YES"/>
-        <attribute name="publicKey" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="publicKey" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="signature" attributeType="Binary" syncable="YES"/>
         <relationship name="next" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="previous" inverseEntity="DataBlock" syncable="YES"/>
         <relationship name="previous" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="next" inverseEntity="DataBlock" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="blocks" inverseEntity="DataTeam" syncable="YES"/>
         <relationship name="teamHead" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="head" inverseEntity="DataTeam" syncable="YES"/>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byBlockHashIndex">
+            <fetchIndexElement property="blockHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataLogBlock" representedClassName="DataLogBlock" syncable="YES" codeGenerationType="class">
+        <attribute name="blockHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="isSent" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="logData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="payload" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="signature" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="next" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataLogBlock" inverseName="previous" inverseEntity="DataLogBlock" syncable="YES"/>
+        <relationship name="previous" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataLogBlock" inverseName="next" inverseEntity="DataLogBlock" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="logs" inverseEntity="DataTeam" syncable="YES"/>
+        <relationship name="teamHead" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="headLog" inverseEntity="DataTeam" syncable="YES"/>
+        <fetchIndex name="byBlockHashIndex">
+            <fetchIndexElement property="blockHash" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="DataMember" representedClassName="DataMember" syncable="YES" codeGenerationType="class">
-        <attribute name="email" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="encryptionPublicKey" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
-        <attribute name="isAdmin" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" indexed="YES" syncable="YES"/>
-        <attribute name="pgpPublicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
-        <attribute name="publicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
-        <attribute name="sshPublicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="email" attributeType="String" syncable="YES"/>
+        <attribute name="encryptionPublicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="isAdmin" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pgpPublicKey" attributeType="Binary" syncable="YES"/>
+        <attribute name="publicKey" attributeType="Binary" syncable="YES"/>
+        <attribute name="sshPublicKey" attributeType="Binary" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="members" inverseEntity="DataTeam" syncable="YES"/>
+        <fetchIndex name="byEmailIndex">
+            <fetchIndexElement property="email" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byEncryptionPublicKeyIndex">
+            <fetchIndexElement property="encryptionPublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byIsAdminIndex">
+            <fetchIndexElement property="isAdmin" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPgpPublicKeyIndex">
+            <fetchIndexElement property="pgpPublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="bySshPublicKeyIndex">
+            <fetchIndexElement property="sshPublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="DataSSHHostKey" representedClassName="DataSSHHostKey" syncable="YES" codeGenerationType="class">
-        <attribute name="host" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="publicKey" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="host" attributeType="String" syncable="YES"/>
+        <attribute name="publicKey" attributeType="Binary" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="pinnedHosts" inverseEntity="DataTeam" syncable="YES"/>
+        <fetchIndex name="byHostIndex">
+            <fetchIndexElement property="host" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="DataTeam" representedClassName="DataTeam" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="json" attributeType="Binary" syncable="YES"/>
         <attribute name="lastBlockHash" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="blocks" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataBlock" inverseName="team" inverseEntity="DataBlock" syncable="YES"/>
         <relationship name="head" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataBlock" inverseName="teamHead" inverseEntity="DataBlock" syncable="YES"/>
+        <relationship name="headLog" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataLogBlock" inverseName="teamHead" inverseEntity="DataLogBlock" syncable="YES"/>
+        <relationship name="logs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataLogBlock" inverseName="team" inverseEntity="DataLogBlock" syncable="YES"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataMember" inverseName="team" inverseEntity="DataMember" syncable="YES"/>
         <relationship name="pinnedHosts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DataSSHHostKey" inverseName="team" inverseEntity="DataSSHHostKey" syncable="YES"/>
+        <fetchIndex name="byIdIndex">
+            <fetchIndexElement property="id" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <elements>
         <element name="DataBlock" positionX="-828" positionY="-369" width="128" height="165"/>
         <element name="DataMember" positionX="-927" positionY="-36" width="128" height="150"/>
         <element name="DataSSHHostKey" positionX="-785" positionY="279" width="128" height="90"/>
-        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="150"/>
+        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="180"/>
+        <element name="DataLogBlock" positionX="-720" positionY="-216" width="128" height="180"/>
     </elements>
 </model>

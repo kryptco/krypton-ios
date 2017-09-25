@@ -51,13 +51,13 @@ struct Team:Jsonable {
     }
     
     struct MemberIdentity:Jsonable {
-        let publicKey:SodiumPublicKey
-        let encryptionPublicKey:SodiumPublicKey
+        let publicKey:SodiumSignPublicKey
+        let encryptionPublicKey:SodiumSignPublicKey
         let email:String
         let sshPublicKey:Data
         let pgpPublicKey:Data
         
-        init(publicKey:SodiumPublicKey, encryptionPublicKey:SodiumPublicKey, email:String, sshPublicKey:Data, pgpPublicKey:Data) {
+        init(publicKey:SodiumSignPublicKey, encryptionPublicKey:SodiumSignPublicKey, email:String, sshPublicKey:Data, pgpPublicKey:Data) {
             self.publicKey = publicKey
             self.encryptionPublicKey = encryptionPublicKey
             self.email = email
@@ -66,8 +66,8 @@ struct Team:Jsonable {
         }
         
         init(json: Object) throws {
-            try self.init(publicKey: SodiumPublicKey(((json ~> "public_key") as String).fromBase64()),
-                          encryptionPublicKey: SodiumPublicKey(((json ~> "encryption_public_key") as String).fromBase64()),
+            try self.init(publicKey: SodiumSignPublicKey(((json ~> "public_key") as String).fromBase64()),
+                          encryptionPublicKey: SodiumSignPublicKey(((json ~> "encryption_public_key") as String).fromBase64()),
                           email: json ~> "email",
                           sshPublicKey: ((json ~> "ssh_public_key") as String).fromBase64(),
                           pgpPublicKey: ((json ~> "pgp_public_key") as String).fromBase64())
@@ -111,20 +111,24 @@ struct Team:Jsonable {
     
     var info:Info
     var policy:PolicySettings
-    var lastInvitePublicKey:SodiumPublicKey?
+    var lastInvitePublicKey:SodiumSignPublicKey?
     var loggingEndpoints:[LoggingEndpoint] = []
     
     var name:String {
         return info.name
     }
     
+    var commandEncryptedLoggingEnabled:Bool {
+        return loggingEndpoints.index(of: LoggingEndpoint.commandEncrypted) != nil
+    }
 
     init(info:Info, policy:PolicySettings = PolicySettings(temporaryApprovalSeconds: nil),
-         lastInvitePublicKey:SodiumPublicKey? = nil)
+         lastInvitePublicKey:SodiumSignPublicKey? = nil, loggingEndpoints:[LoggingEndpoint] = [])
     {
         self.info = info
         self.policy = policy
         self.lastInvitePublicKey = lastInvitePublicKey
+        self.loggingEndpoints = loggingEndpoints
     }
     
     init(json: Object) throws {
@@ -132,12 +136,14 @@ struct Team:Jsonable {
 
         try self.init(info: Info(json: json ~> "info"),
                       policy: PolicySettings(json: json ~> "policy"),
-                      lastInvitePublicKey: lastInvitePublicKey?.fromBase64())
+                      lastInvitePublicKey: lastInvitePublicKey?.fromBase64(),
+                      loggingEndpoints: [LoggingEndpoint](json: json ~> "logging_endpoints"))
     }
     
     var object: Object {
         var obj:Object = ["info": info.object,                        
-                          "policy": policy.object]
+                          "policy": policy.object,
+                          "logging_endpoints": loggingEndpoints.objects]
         
         if let invitePublicKey = lastInvitePublicKey {
             obj["last_invite_public_key"] = invitePublicKey.toBase64()

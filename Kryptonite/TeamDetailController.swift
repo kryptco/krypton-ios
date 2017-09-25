@@ -327,13 +327,13 @@ extension HashChain.Payload {
 
     var eventLogDetails:(title:String, detail:String) {
         switch self {
-        case .read(let read):
+        case .readBlocks(let read):
             return ("read", "get \(read.teamPointer)")
             
-        case .create(let create):
+        case .createChain(let create):
             return ("create chain", "start team \"\(create.teamInfo.name)\"\nby creator \(create.creator.email)")
             
-        case .append(let append):
+        case .appendBlock(let append):
             switch append.operation {
             case .inviteMember(let invite):
                 return ("invite member", "invitation \(invite.noncePublicKey.toBase64())")
@@ -374,6 +374,22 @@ extension HashChain.Payload {
             case .removeAdmin(let admin):
                 return ("remove admin", "id \(admin.toBase64())")
             }
+        case .createLogChain(let logChain):
+            return ("create log chain", "started encrypted log chain (\(logChain.wrappedKeys.count) admins)")
+            
+        case .readLogBlocks(let readLogs):
+            return ("read logs", "get \(readLogs.teamPointer)")
+        
+        case .appendLogBlock(let appendLog):
+            switch appendLog.operation {
+            case .addWrappedKeys(let wrappedKeys):
+                return ("give new admin(s) log access", "\(wrappedKeys.count) admins")
+            case .rotateKey(let wrappedKeys):
+                return ("rotate log access keys", "rotated for \(wrappedKeys.count) admins")
+            case .encryptLog(let encryptedLog):
+                return ("write new encrypted log", "previous: \(encryptedLog.lastLogHash.toBase64())")
+            }
+
         }
         
     }

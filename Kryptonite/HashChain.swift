@@ -45,12 +45,23 @@ class HashChain {
         case badBlockHash
         case badLoggingEndpoint
         case badTeamPointer
+        case badLogPointer
+        case badLogsFilter
         
         case missingCreateChain
         case unexpectedBlock
         
+        case memberDoesNotExist
+        
+        case payloadSignatureFailed
+        
         case signerNotAdmin
         case teamPublicKeyMismatch
+        
+        case rotateKeyGeneration
+        
+        case missingLastLogBlockHash
+        case logEncryptionFailed
     }
 
     /// A response from the HashChain service
@@ -76,11 +87,11 @@ class HashChain {
 
     /// A payload and it's signature
     struct Block:JsonReadable {
-        let publicKey:SodiumPublicKey
+        let publicKey:SodiumSignPublicKey
         let payload:String
         let signature:Data
         
-        init(publicKey:SodiumPublicKey, payload:String, signature:Data) {
+        init(publicKey:SodiumSignPublicKey, payload:String, signature:Data) {
             self.publicKey = publicKey
             self.payload = payload
             self.signature = signature
@@ -98,37 +109,35 @@ class HashChain {
     
     /// The types of request payloads
     enum Payload:Jsonable {
-        case create(CreateChain)
-        case read(ReadBlock)
-        case append(AppendBlock)
+        case createChain(CreateChain)
+        case readBlocks(ReadBlocks)
+        case appendBlock(AppendBlock)
         
         // logs
-//        case readLogs(ReadLogs)
-//        case createLogChain(CreateLogChain)
-//        case appendLog(LogOperation)
+        case createLogChain(CreateLogChain)
+        case readLogBlocks(ReadLogBlocks)
+        case appendLogBlock(AppendLogBlock)
         
         init(json: Object) throws {
             
             if let create:Object = try? json ~> "create_chain" {
-                self = try .create(CreateChain(json: create))
+                self = try .createChain(CreateChain(json: create))
             }
-            else if let read:Object = try? json ~> "read_block" {
-                self = try .read(ReadBlock(json: read))
+            else if let read:Object = try? json ~> "read_blocks" {
+                self = try .readBlocks(ReadBlocks(json: read))
             }
             else if let append:Object = try? json ~> "append_block" {
-                self = try .append(AppendBlock(json: append))
+                self = try .appendBlock(AppendBlock(json: append))
             }
-//            else if let createLog:Object = try? json ~> "create_log_chain" {
-//                self = try .createLogChain(read)
-//            }
-//            else if let readLogs:Object = try? json ~> "read_logs" {
-//                self = try .readLogs(ReadLogs(json: append))
-//            }
-//            else if let readLogs:Object = try? json ~> "read_logs" {
-//                self = try .readLogs(ReadLogs(json: append))
-//            }
-
-
+            else if let createLog:Object = try? json ~> "create_log_chain" {
+                self = try .createLogChain(CreateLogChain(json: createLog))
+            }
+            else if let readLogs:Object = try? json ~> "read_log_blocks" {
+                self = try .readLogBlocks(ReadLogBlocks(json: readLogs))
+            }
+            else if let appendLog:Object = try? json ~> "append_log_block" {
+                self = try .appendLogBlock(AppendLogBlock(json: appendLog))
+            }
             else {
                 throw Errors.badPayload
             }
@@ -136,12 +145,18 @@ class HashChain {
         
         var object: Object {
             switch self {
-            case .create(let create):
+            case .createChain(let create):
                 return ["create_chain": create.object]
-            case .read(let read):
-                return ["read_block": read.object]
-            case .append(let append):
+            case .readBlocks(let read):
+                return ["read_blocks": read.object]
+            case .appendBlock(let append):
                 return ["append_block": append.object]
+            case .createLogChain(let createLogChain):
+                return ["create_log_chain": createLogChain.object]
+            case .readLogBlocks(let readLogs):
+                return ["read_log_blocks": readLogs.object]
+            case .appendLogBlock(let logOperation):
+                return ["append_log_block": logOperation.object]
             }
         }
     }
@@ -169,7 +184,7 @@ class HashChain {
         }
     }
     
-    struct ReadBlock:Jsonable {
+    struct ReadBlocks:Jsonable {
         let teamPointer:TeamPointer
         let nonce:Data
         let unixSeconds:UInt64
@@ -194,7 +209,7 @@ class HashChain {
     }
     
     enum TeamPointer:Jsonable {
-        case publicKey(SodiumPublicKey)
+        case publicKey(SodiumSignPublicKey)
         case lastBlockHash(Data)
         
         init(json:Object) throws {
@@ -251,7 +266,7 @@ class HashChain {
         case acceptInvite(Team.MemberIdentity)
         
         case addMember(Team.MemberIdentity)
-        case removeMember(SodiumPublicKey)
+        case removeMember(SodiumSignPublicKey)
         
         case setPolicy(Team.PolicySettings)
         case setTeamInfo(Team.Info)
@@ -262,8 +277,8 @@ class HashChain {
         case addLoggingEndpoint(Team.LoggingEndpoint)
         case removeLoggingEndpoint(Team.LoggingEndpoint)
         
-        case addAdmin(SodiumPublicKey)
-        case removeAdmin(SodiumPublicKey)
+        case addAdmin(SodiumSignPublicKey)
+        case removeAdmin(SodiumSignPublicKey)
         
         init(json: Object) throws {
             if let invite:Object = try? json ~> "invite_member" {
@@ -359,29 +374,68 @@ class HashChain {
     
     /// MARK: Log Chains
     
-    struct ReadLogs:Jsonable {
+    struct LogBlock {
+        let payload:String
+        let signature:Data
+        let log:Data
+        
+        func hash() -> Data {
+            return Data(bytes: [UInt8](payload.utf8)).SHA256
+        }
+    }
+    
+    struct ReadLogBlocks:Jsonable {
         let teamPointer:TeamPointer
         let memberPublicKey:SodiumBoxPublicKey?
-        
-        init(teamPointer:TeamPointer, memberPublicKey:SodiumBoxPublicKey?) {
+        let nonce:Data
+        let unixSeconds:UInt64
+
+        init(teamPointer:TeamPointer, memberPublicKey:SodiumBoxPublicKey?, nonce:Data, unixSeconds:UInt64) {
             self.teamPointer = teamPointer
             self.memberPublicKey = memberPublicKey
+            self.nonce = nonce
+            self.unixSeconds = unixSeconds
         }
         
         init(json: Object) throws {
             let memberPublicKey:SodiumBoxPublicKey? = try? ((json ~> "member_public_key") as String).fromBase64()
+            
             try self.init(teamPointer: TeamPointer(json: json ~> "team_pointer"),
-                          memberPublicKey: memberPublicKey)
+                          memberPublicKey: memberPublicKey,
+                          nonce: ((json ~> "nonce") as String).fromBase64(),
+                          unixSeconds: json ~> "unix_seconds")
         }
         
         var object: Object {
-            var obj:Object = ["team_pointer": teamPointer.object]
+            var obj:Object = ["team_pointer": teamPointer.object,
+                              "nonce": nonce.toBase64(),
+                              "unix_seconds": unixSeconds]
             
             if let member = memberPublicKey {
                 obj["member_public_key"] = member.toBase64()
             }
             
             return obj
+        }
+    }
+    
+    struct AppendLogBlock:Jsonable {
+        let lastBlockHash:Data
+        let operation:LogOperation
+        
+        init(lastBlockHash:Data, operation:LogOperation) {
+            self.lastBlockHash = lastBlockHash
+            self.operation = operation
+        }
+        
+        init(json: Object) throws {
+            try self.init(lastBlockHash: ((json ~> "last_block_hash") as String).fromBase64(),
+                          operation: LogOperation(json: json ~> "operation"))
+        }
+        
+        var object: Object {
+            return ["last_block_hash": lastBlockHash.toBase64(),
+                    "operation": operation.object]
         }
     }
     
@@ -405,29 +459,60 @@ class HashChain {
         }
     }
     
-    struct EncryptedLog:Jsonable {
-        let lastLogHash:Data
-        let ciphertext:Data
+    // Mark: Log Specific Types
+    
+    enum LogsFilter:Jsonable {
+        case member(LogPointer)
+        case team(UInt64)  //  server logical timestamp per-team
         
-        init(lastLogHash:Data, ciphertext:Data) {
-            self.lastLogHash = lastLogHash
-            self.ciphertext = ciphertext
-        }
-        
-        init(json: Object) throws {
-            try self.init(lastLogHash: ((json ~> "last_log_hash") as String).fromBase64(),
-                          ciphertext: ((json ~> "ciphertext") as String).fromBase64())
+        init(json:Object) throws {
+            if let member:Object = try? json ~> "member_logs" {
+                self = try .member(LogPointer(json: member))
+            }
+            else if let timestamp:UInt64 = try? json ~> "team_logs" {
+                self = .team(timestamp)
+            }
+            else {
+                throw Errors.badLogsFilter
+            }
         }
         
         var object: Object {
-            return ["last_log_hash": lastLogHash.toBase64(),
-                    "ciphertext": ciphertext.toBase64()]
+            switch self {
+            case .member(let pointer):
+                return ["member": pointer.object]
+            case .team(let timestamp):
+                return ["team": timestamp]
+            }
         }
+        
     }
     
-    
-    // Mark: Types
-    
+    enum LogPointer {
+        case publicKey(SodiumSignPublicKey)
+        case lastBlockHash(Data)
+        
+        init(json:Object) throws {
+            if let publicKey:String = try? json ~> "public_key" {
+                self = try .publicKey(publicKey.fromBase64())
+            }
+            else if let blockHash:String = try? json ~> "last_block_hash" {
+                self = try .lastBlockHash(blockHash.fromBase64())
+            }
+            else {
+                throw Errors.badTeamPointer
+            }
+        }
+        
+        var object: Object {
+            switch self {
+            case .publicKey(let pub):
+                return ["public_key": pub.toBase64()]
+            case .lastBlockHash(let hash):
+                return ["last_block_hash": hash.toBase64()]
+            }
+        }
+    }
     struct WrappedKey:Jsonable {
         let publicKey:SodiumBoxPublicKey
         let ciphertext:Data
@@ -445,6 +530,22 @@ class HashChain {
         var object: Object {
             return ["public_key": publicKey.toBase64(),
                     "ciphertext": ciphertext.toBase64()]
+        }
+    }
+    
+    struct EncryptedLog:Jsonable {
+        let ciphertext:Data
+        
+        init(ciphertext:Data) {
+            self.ciphertext = ciphertext
+        }
+        
+        init(json: Object) throws {
+            try self.init(ciphertext: ((json ~> "ciphertext") as String).fromBase64())
+        }
+        
+        var object: Object {
+            return ["ciphertext": ciphertext.toBase64()]
         }
     }
     

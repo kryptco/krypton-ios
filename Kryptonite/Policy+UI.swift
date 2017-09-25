@@ -98,55 +98,55 @@ extension Policy {
     }
     
     class func notifyUser(session:Session, request:Request) {
-        
-        
-        switch UIApplication.shared.applicationState {
-            
-        case .background: // Background: then present local notification
-            guard Policy.shouldShowApprovedNotifications(for: session) else {
-                log("skip sending push notification on approved request due to policy setting")
-                return
+        dispatchMain {
+            switch UIApplication.shared.applicationState {
+                
+            case .background: // Background: then present local notification
+                guard Policy.shouldShowApprovedNotifications(for: session) else {
+                    log("skip sending push notification on approved request due to policy setting")
+                    return
+                }
+                
+                Notify.shared.presentApproved(request: request, for: session)
+                
+            case .inactive: // Inactive: wait and try again
+                dispatchAfter(delay: 1.0, task: {
+                    Policy.notifyUser(session: session, request: request)
+                })
+                
+            case .active:
+                guard Current.viewController?.presentedViewController is AutoApproveController == false
+                    else {
+                        return
+                }
+                
+                Current.viewController?.showApprovedRequest(session: session, request: request)
             }
-          
-            Notify.shared.presentApproved(request: request, for: session)
-            
-        case .inactive: // Inactive: wait and try again
-            dispatchAfter(delay: 1.0, task: {
-                Policy.notifyUser(session: session, request: request)
-            })
-            
-        case .active:
-            guard Current.viewController?.presentedViewController is AutoApproveController == false
-            else {
-                return
-            }
-            
-            Current.viewController?.showApprovedRequest(session: session, request: request)
         }
-        
-        
     }
     
     
     class func notifyUser(errorMessage:String, session:Session) {
         
-        switch UIApplication.shared.applicationState {
-            
-        case .background: // Background: then present local notification
-            Notify.shared.presentError(message: errorMessage, session: session)
-            
-        case .inactive: // Inactive: wait and try again
-            dispatchAfter(delay: 1.0, task: {
-                Policy.notifyUser(errorMessage: errorMessage, session: session)
-            })
-            
-        case .active:
-            guard Current.viewController?.presentedViewController is AutoApproveController == false
-                else {
-                    return
+        dispatchMain {
+            switch UIApplication.shared.applicationState {
+                
+            case .background: // Background: then present local notification
+                Notify.shared.presentError(message: errorMessage, session: session)
+                
+            case .inactive: // Inactive: wait and try again
+                dispatchAfter(delay: 1.0, task: {
+                    Policy.notifyUser(errorMessage: errorMessage, session: session)
+                })
+                
+            case .active:
+                guard Current.viewController?.presentedViewController is AutoApproveController == false
+                    else {
+                        return
+                }
+                
+                Current.viewController?.showFailedResponse(errorMessage: errorMessage, session: session)
             }
-            
-            Current.viewController?.showFailedResponse(errorMessage: errorMessage, session: session)
         }
     }
     

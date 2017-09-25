@@ -86,6 +86,8 @@
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F22A11DC3C3CA0094076E /* Onboarding.swift */; };
 		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
+		FA38F9221F79A26F00668F73 /* HashChain+WriteLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38F9211F79A26F00668F73 /* HashChain+WriteLog.swift */; };
+		FA38F9231F79A26F00668F73 /* HashChain+WriteLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38F9211F79A26F00668F73 /* HashChain+WriteLog.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA49F7871D9B6B3300372556 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA49F7861D9B6B3300372556 /* NotificationCenter.framework */; };
@@ -607,6 +609,7 @@
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA2F22A11DC3C3CA0094076E /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
+		FA38F9211F79A26F00668F73 /* HashChain+WriteLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HashChain+WriteLog.swift"; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA49F7851D9B6B3200372556 /* LastCommand.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastCommand.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -980,7 +983,7 @@
 				FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */,
 				FA8523C91DBFDA5200D465D2 /* Version.swift */,
 				FA2949E21EDE379900A5C70B /* UserIDList.swift */,
-				FAEE048A1D736972002A7AFD /* Krypto */,
+				FAEE048A1D736972002A7AFD /* Crypto */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1136,6 +1139,7 @@
 				FA6BCBF41F214ADB006F716F /* TeamInvite.swift */,
 				FADA1A5B1F2D2F32004AE6B0 /* HashChain.swift */,
 				FA8F8AB31F3540EA00D0D4BE /* HashChain+Verify.swift */,
+				FA38F9211F79A26F00668F73 /* HashChain+WriteLog.swift */,
 				FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */,
 				FADA1A831F30E0E2004AE6B0 /* TeamService.swift */,
 				FAC724D51F546BC500386436 /* TeamServerHTTP.swift */,
@@ -1220,7 +1224,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FAEE048A1D736972002A7AFD /* Krypto */ = {
+		FAEE048A1D736972002A7AFD /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
 				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
@@ -1236,7 +1240,7 @@
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FACE33541EC186DC003EC6C0 /* SSHUtil.swift */,
 			);
-			name = Krypto;
+			name = Crypto;
 			sourceTree = "<group>";
 		};
 		FAEE048F1D736AE3002A7AFD /* Other */ = {
@@ -2054,6 +2058,7 @@
 				FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
 				FA8F8AB81F37BF0F00D0D4BE /* Policy+Team.swift in Sources */,
+				FA38F9221F79A26F00668F73 /* HashChain+WriteLog.swift in Sources */,
 				FAE45B9D1E64AA3E00A583AB /* Ed25519.swift in Sources */,
 				FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
@@ -2127,6 +2132,7 @@
 			files = (
 				FAB517981E54D52F0032DD47 /* Session.swift in Sources */,
 				FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */,
+				FA38F9231F79A26F00668F73 /* HashChain+WriteLog.swift in Sources */,
 				FA12EAC01ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
 				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,

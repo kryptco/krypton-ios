@@ -39,6 +39,35 @@ extension DataBlock {
 
 }
 
+extension DataLogBlock {
+    func block() throws -> HashChain.LogBlock {
+        guard
+            let payload = payload,
+            let signature = signature as Data?,
+            let log = logData as Data?
+        else {
+            throw TeamDataManager.Errors.missingObjectField
+        }
+        
+        return HashChain.LogBlock(payload: payload, signature: signature, log: log)
+    }
+    
+    convenience init(block:HashChain.LogBlock, helper context:NSManagedObjectContext) {
+        self.init(helper: context)
+        self.payload = block.payload
+        self.signature = block.signature as NSData
+        self.logData = block.log as NSData
+        self.isSent = false
+        self.blockHash = block.hash() as NSData
+    }
+    
+    convenience init(helper context: NSManagedObjectContext) {
+        //workaround: https://stackoverflow.com/questions/6946798/core-data-store-cannot-hold-instances-of-entity-cocoa-error-134020
+        self.init(entity: NSEntityDescription.entity(forEntityName: "DataLogBlock", in: context)!, insertInto: context)
+    }
+    
+}
+
 extension DataSSHHostKey {
     func sshHostKey() throws -> SSHHostKey {
         guard
@@ -401,8 +430,12 @@ class TeamDataManager {
         return admins
     }
 
+    func fetchMemberIdentity(for publicKey:SodiumSignPublicKey) throws -> Team.MemberIdentity? {
+        let member = try self.fetchMember(for: publicKey)
+        return try member?.member()
+    }
     
-    private func fetchMember(for publicKey:SodiumPublicKey) throws -> DataMember? {
+    private func fetchMember(for publicKey:SodiumSignPublicKey) throws -> DataMember? {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -506,7 +539,7 @@ class TeamDataManager {
         }
     }
     
-    func remove(member:SodiumPublicKey, block:HashChain.Block) throws {
+    func remove(member:SodiumSignPublicKey, block:HashChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -548,7 +581,7 @@ class TeamDataManager {
         Add/remove admins
         Get admin public keys
      */
-    func add(admin publicKey:SodiumPublicKey, block:HashChain.Block) throws {
+    func add(admin publicKey:SodiumSignPublicKey, block:HashChain.Block) throws {
         
         // first fetch the team member
         guard let adminMember = try self.fetchMember(for: publicKey) else {
@@ -570,12 +603,12 @@ class TeamDataManager {
         }
     }
     
-    func isAdmin(for publicKey:SodiumPublicKey) throws -> Bool {
+    func isAdmin(for publicKey:SodiumSignPublicKey) throws -> Bool {
         let admins = try self.fetchAdmins()
         return admins.filter { $0.publicKey == publicKey }.isEmpty == false
     }
     
-    func remove(admin publicKey:SodiumPublicKey, block:HashChain.Block) throws {
+    func remove(admin publicKey:SodiumSignPublicKey, block:HashChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -751,8 +784,179 @@ class TeamDataManager {
 
     }
     
+    // MARK: Logs
+    func appendLog(block:HashChain.LogBlock) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        try performAndWait {
+            let newHead = DataLogBlock(block: block, helper: self.managedObjectContext)
+            let dataTeam = try self.fetchCoreDataTeam()
+            
+            self.appendLog(newHead: newHead, to: dataTeam)
+        }
+    }
+    
+    private func appendLog(newHead:DataLogBlock, to team:DataTeam) {
+        team.addToLogs(newHead)
+        
+        let currentHead = team.headLog
+        currentHead?.next = newHead
+        team.headLog = newHead
+    }
+    
+    func fetchLogs() throws -> [HashChain.LogBlock] {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        var blocks:[HashChain.LogBlock] = []
+        
+        try performAndWait {
+            var pointer = try self.fetchCoreDataTeam().headLog
+            while pointer != nil {
+                try blocks.append(pointer!.block())
+                pointer = pointer?.previous
+            }
+        }
+        
+        return blocks
+    }
+    
+    func fetchUnsentLogBlocks() throws -> [HashChain.LogBlock] {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        let request:NSFetchRequest<DataLogBlock> = DataLogBlock.fetchRequest()
+        
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataLogBlock.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let pendingPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataLogBlock.isSent)),
+            rightExpression: NSExpression(forConstantValue: false),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, pendingPredicate])
+        
+        var blocks:[HashChain.LogBlock] = []
+        
+        try performAndWait {
+            try self.managedObjectContext.fetch(request).forEach {
+                try blocks.append($0.block())
+            }
+        }
+        
+        return blocks
+    }
+    
+    func markLogBlocksSent(logBlocks:[HashChain.LogBlock]) throws {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        for block in logBlocks {
+            let dataLogBlock = try self.fetchLogBlockUnlocked(for: block.hash())
+            dataLogBlock?.isSent = true
+        }
+    }
+    
+    func hasLogBlock(for hash:Data) throws -> Bool {
+        return try self.fetchLogBlock(for: hash) != nil
+    }
+    
+    func fetchLogBlocks(after hash:Data) throws -> [HashChain.LogBlock] {
+        let block = try self.fetchLogBlock(for: hash)
+        
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        var blocks:[HashChain.LogBlock] = []
+        
+        try performAndWait {
+            var pointer = block?.next
+            while pointer != nil {
+                try blocks.append(pointer!.block())
+                pointer = pointer?.previous
+            }
+        }
+        
+        return blocks
+    }
+    
+    private func fetchLogBlock(for hash:Data) throws -> DataLogBlock? {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        return try self.fetchLogBlockUnlocked(for: hash)
+    }
+    
+    private func fetchLogBlockUnlocked(for hash:Data) throws -> DataLogBlock? {
+        
+        let request:NSFetchRequest<DataLogBlock> = DataLogBlock.fetchRequest()
+        
+        let teamPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataLogBlock.team.id)),
+            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        let blockHashPredicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: #keyPath(DataLogBlock.blockHash)),
+            rightExpression: NSExpression(forConstantValue: hash),
+            modifier: .direct,
+            type: .equalTo,
+            options: NSComparisonPredicate.Options(rawValue: 0)
+        )
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, blockHashPredicate])
+        
+        var block:DataLogBlock?
+        
+        try performAndWait {
+            let blocks = try self.managedObjectContext.fetch(request)
+            block = blocks.first
+        }
+        
+        return block
+    }
+    
+    func lastLogBlockHash() throws -> Data? {
+        defer { mutex.unlock() }
+        mutex.lock()
+        
+        var blockHash:Data?
+        try performAndWait {
+            
+            var team:DataTeam?
+            do {
+                team = try self.fetchCoreDataTeam()
+            } catch Errors.noTeam {
+                blockHash = nil
+                return
+            } catch {
+                throw error
+            }
+            
+            if let hash = team?.headLog?.blockHash as Data? {
+                blockHash = Data(hash)
+            }
+        }
+        
+        return blockHash
+    }
+
+    
     // MARK: Predicates
-    private func sshHostKeyEqualsPredicate(host:String, publicKey:SodiumPublicKey) -> NSPredicate {
+    private func sshHostKeyEqualsPredicate(host:String, publicKey:SodiumSignPublicKey) -> NSPredicate {
         let teamPredicate = NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.team.id)),
             rightExpression: NSExpression(forConstantValue: self.teamIdentity),

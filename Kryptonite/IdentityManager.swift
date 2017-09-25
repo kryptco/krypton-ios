@@ -125,6 +125,12 @@ class IdentityManager {
                 teamIdentity?.checkpoint = blockHash
             }
             
+            // update the log encryption key if needed
+            teamIdentity?.logEncryptionKey = identity.logEncryptionKey
+            
+            // update the log checkpoint if needed
+            teamIdentity?.logCheckpoint = identity.logCheckpoint
+
             // save the identity to keychain
             if let identity = teamIdentity {
                 try KeychainStorage(service: Constants.teamKeyChainService).setData(key: Storage.teamIdentity.key, data: identity.jsonData())

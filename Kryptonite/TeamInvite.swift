@@ -14,7 +14,7 @@ enum TeamJoinType {
 }
 
 struct TeamInvite {
-    let initialTeamPublicKey:SodiumPublicKey
+    let initialTeamPublicKey:SodiumSignPublicKey
     let blockHash:Data
     let seed:Data
     
@@ -22,7 +22,7 @@ struct TeamInvite {
         case missingArgs
     }
     
-    init(initialTeamPublicKey:SodiumPublicKey, blockHash:Data, seed:Data) {
+    init(initialTeamPublicKey:SodiumSignPublicKey, blockHash:Data, seed:Data) {
         self.initialTeamPublicKey = initialTeamPublicKey
         self.blockHash = blockHash
         self.seed = seed
@@ -33,8 +33,8 @@ struct TeamInvite {
             throw Errors.missingArgs
         }
         
-        let initialTeamPublicKey = try SodiumPublicKey(path[0].fromBase64())
-        let blockHash = try SodiumPublicKey(path[1].fromBase64())
+        let initialTeamPublicKey = try SodiumSignPublicKey(path[0].fromBase64())
+        let blockHash = try SodiumSignPublicKey(path[1].fromBase64())
         let seed = try path[2].fromBase64()
         
         self.init(initialTeamPublicKey: initialTeamPublicKey, blockHash: blockHash, seed: seed)
