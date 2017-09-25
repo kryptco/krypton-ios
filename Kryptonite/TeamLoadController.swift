@@ -13,7 +13,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
     
     
     var joinType:TeamJoinType?
-
+    var teamName:String?
     
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var arcView:UIView!
@@ -30,8 +30,8 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
         
         // ensure we don't have a team yet
-        if let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity {
-            self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
+        if let team = (try? IdentityManager.getTeamIdentity()?.team()) as? Team {
+            self.showWarning(title: "Already on team \(team.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
             {
                 self.dismiss(animated: true, completion: nil)
             }
@@ -50,7 +50,13 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         case .invite(let invite):
             self.loadJoin(with: invite)
             
-        case .create:
+        case .create(let request, _):
+            guard case .createTeam(let create) = request.body else {
+                self.showError(message: "Invalid create team request")
+                return
+            }
+            
+            self.teamName = create.name
             self.loadCreate()
         }
     }
@@ -77,6 +83,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
                     
                 case .result(let service):
                     teamIdentity = service.teamIdentity
+                    self.teamName = try? service.teamIdentity.team().name
                     
                     dispatchMain {
                         self.performSegue(withIdentifier: "showTeamInvite", sender: teamIdentity)
@@ -117,6 +124,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
         {
             teamInviteController.joinType = joinType
             teamInviteController.teamIdentity = sender as? TeamIdentity
+            teamInviteController.teamName = self.teamName
         }
     }
     

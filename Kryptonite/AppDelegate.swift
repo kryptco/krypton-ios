@@ -366,8 +366,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 
         // if team policy set: refresh approval category on notifications
-        if  let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity,
-            let _ = teamIdentity.team.policy.temporaryApprovalSeconds
+        if  let team = (try? IdentityManager.getTeamIdentity()?.team()) as? Team,
+            let _ = team.policy.temporaryApprovalSeconds
         {
             self.registerPushNotifications()
         }

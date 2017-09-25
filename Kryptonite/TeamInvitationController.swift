@@ -13,7 +13,8 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     
     var joinType:TeamJoinType!
     var teamIdentity:TeamIdentity?
-    
+    var teamName:String?
+
     @IBOutlet weak var teamNameLabel:UILabel!
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var joinButton:UIButton!
@@ -32,6 +33,8 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
         emailTextfield.isEnabled = true
         setJoin(valid: !(emailTextfield.text ?? "").isEmpty)
         
+        teamNameLabel.text = teamName
+
         switch joinType! {
         case .invite:
             joinButton.setTitle("JOIN", for: UIControlState.normal)
@@ -44,7 +47,6 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
                 return
             }
             
-            teamNameLabel.text = teamIdentity.team.name
             
         case .create(let request, _):
             guard case .createTeam(let create) = request.body else {
@@ -56,7 +58,6 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
             
             joinButton.setTitle("CREATE", for: UIControlState.normal)
             dontJoinButton.setTitle("Don't Create", for: UIControlState.normal)
-            teamNameLabel.text = create.name
         }
     }
     
@@ -168,6 +169,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let completeController = segue.destination as? TeamJoinCompleteController {
             completeController.joinType = joinType
+            completeController.teamName = teamName
             
             if let identity = sender as? TeamIdentity {
                 completeController.teamIdentity = identity

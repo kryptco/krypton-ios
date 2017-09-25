@@ -209,8 +209,8 @@ extension UIViewController {
         case .joinTeam:
             
             do {
-                if let teamIdentity = try IdentityManager.getTeamIdentity() {
-                    self.showWarning(title: "Already on team \(teamIdentity.team.info.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
+                if let team = try IdentityManager.getTeamIdentity()?.team() {
+                    self.showWarning(title: "Already on team \(team.info.name)", body: "Kryptonite only supports being on one team. Multi-team support is coming soon!")
                     return
                 }
 

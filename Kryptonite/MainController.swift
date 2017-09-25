@@ -137,8 +137,11 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         // load the identients
         var teamIdentity:TeamIdentity?
+        var team:Team?
+        
         do {
             teamIdentity = try IdentityManager.getTeamIdentity()
+            team = try teamIdentity?.team()
         } catch {
             log("error loading team: \(error)", .error)
             return
@@ -168,13 +171,13 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         }
         
         // if there's a team
-        guard let identity = teamIdentity else {
+        guard let identity = teamIdentity, let myTeam = team else {
             return
         }
         
         let controller = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamDetailController") as! TeamDetailController
         controller.identity = identity
-        let tabBarItem = UITabBarItem(title: identity.team.info.name, image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
+        let tabBarItem = UITabBarItem(title: myTeam.name, image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
         
         self.setViewControllers((self.viewControllers ?? []) + [controller], animated: true)
         controller.tabBarItem = tabBarItem

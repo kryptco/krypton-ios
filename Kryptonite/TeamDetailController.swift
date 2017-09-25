@@ -28,6 +28,8 @@ class TeamDetailController: KRBaseTableController {
     var blocks:[HashChain.Payload] = []
     var members:[Team.MemberIdentity] = []
     var hosts:[SSHHostKey] = []
+    
+    var team:Team?
 
     enum ViewType {
         case blocks
@@ -40,7 +42,7 @@ class TeamDetailController: KRBaseTableController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = identity.team.name
+        self.title = try? identity.team().name
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 70
@@ -57,9 +59,17 @@ class TeamDetailController: KRBaseTableController {
     
     func didUpdateTeamIdentity() {
         dispatchMain {
-            self.teamLabel.text = self.identity.team.name
             self.emailLabel.text = self.identity.email
-            self.approvalWindowLabel.text = self.identity.team.policy.description
+
+            do {
+                let team = try self.identity.team()
+                self.teamLabel.text = team.name
+                self.approvalWindowLabel.text = team.policy.description
+                self.team = team
+                
+            } catch {
+                self.showWarning(title: "Error fetching team", body: "\(error)")
+            }
         }
     }
     
@@ -131,9 +141,18 @@ class TeamDetailController: KRBaseTableController {
     
     @IBAction func leaveTeamTapped() {
         
+        var team:Team
+        
+        do {
+            team = try self.identity.team()
+        } catch {
+            self.showWarning(title: "Error fetching team", body: "\(error)")
+            return
+        }
+        
         let message = "You will no longer have access to the team's data and your team admin will be notified that you are leaving the team. Are you sure you want to continue?"
         
-        let sheet = UIAlertController(title: "Do you want to leave the \(identity.team.name) team?", message: message, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "Do you want to leave the \(team.name) team?", message: message, preferredStyle: .actionSheet)
         
         sheet.addAction(UIAlertAction(title: "Leave Team", style: UIAlertActionStyle.destructive, handler: { (action) in
             self.leaveTeamRequestAuth()
@@ -168,7 +187,7 @@ class TeamDetailController: KRBaseTableController {
     func authenticate(completion:@escaping (Bool)->Void) {
         let context = LAContext()
         let policy = LAPolicy.deviceOwnerAuthentication
-        let reason = "Leave the \(identity.team.name) team?"
+        let reason = "Leave the \(self.team?.name ?? "") team?"
         
         var err:NSError?
         guard context.canEvaluatePolicy(policy, error: &err) else {

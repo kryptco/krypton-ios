@@ -27,11 +27,13 @@ struct TeamIdentity:Jsonable {
         Team Persistance
      */
     var dataManager:TeamDataManager
-    var team:Team
     
-    mutating func set(team:Team) throws {
+    func set(team:Team) throws {
         try dataManager.set(team: team)
-        self.team = team        
+    }
+    
+    func team() throws -> Team {
+        return try dataManager.fetchTeam()
     }
     
     enum Errors:Error {
@@ -97,10 +99,8 @@ struct TeamIdentity:Jsonable {
         let checkpoint = createBlock.hash()
 
         // make the team identity + team
-        let team = Team(info: Team.Info(name: teamName))
-        let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: keyPair.publicKey, team: team)
-        
-        try teamIdentity.dataManager.create(team: team, creator: creator, block: createBlock)
+        let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: keyPair.publicKey)
+        try teamIdentity.dataManager.create(team: Team(info: Team.Info(name: teamName)), creator: creator, block: createBlock)
         
         return (teamIdentity, createBlock)
     }
@@ -111,11 +111,10 @@ struct TeamIdentity:Jsonable {
         let keyPairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
         let boxKeyPairSeed = try Data.random(size: KRSodium.shared().box.SeedBytes)
 
-        let team = Team(info: Team.Info(name: teamName))
-        return try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: initialTeamPublicKey, team: team)
+        return try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: initialTeamPublicKey)
     }
     
-    private init(id:Data, email:String, keyPairSeed:Data, boxKeyPairSeed:Data, teamID:Data, checkpoint:Data, initialTeamPublicKey:SodiumPublicKey, team:Team) throws {
+    private init(id:Data, email:String, keyPairSeed:Data, boxKeyPairSeed:Data, teamID:Data, checkpoint:Data, initialTeamPublicKey:SodiumPublicKey) throws {
         self.id = id
         self.email = email
         self.keyPairSeed = keyPairSeed
@@ -135,8 +134,7 @@ struct TeamIdentity:Jsonable {
         self.checkpoint = checkpoint
         self.initialTeamPublicKey = initialTeamPublicKey
         self.dataManager = TeamDataManager(teamID: teamID)
-        self.team = team
-    }
+}
     
     init(json: Object) throws {
         let teamID:Data = try ((json ~> "team_id") as String).fromBase64()
@@ -150,8 +148,7 @@ struct TeamIdentity:Jsonable {
                       boxKeyPairSeed: boxKeyPairSeed,
                       teamID: teamID,
                       checkpoint: ((json ~> "checkpoint") as String).fromBase64(),
-                      initialTeamPublicKey: ((json ~> "inital_team_public_key") as String).fromBase64(),
-                      team: TeamDataManager(teamID: teamID).fetchTeam())
+                      initialTeamPublicKey: ((json ~> "inital_team_public_key") as String).fromBase64())
     }
     
     var object: Object {

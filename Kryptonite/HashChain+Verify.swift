@@ -20,7 +20,7 @@ extension TeamIdentity {
         
         let blocks = response.blocks
         
-        var updatedTeam = self.team
+        var updatedTeam = try self.team()
         var lastBlockHash = try self.lastBlockHash()
         
         var blockStart = 0

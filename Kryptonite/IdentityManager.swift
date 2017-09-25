@@ -118,7 +118,6 @@ class IdentityManager {
         do {
             // update team data
             try identity.dataManager.saveContext()
-            teamIdentity?.team = identity.team
             teamIdentity?.dataManager = identity.dataManager
 
             // update the checkpoint

@@ -21,7 +21,8 @@ extension Policy {
         
         // check if we have a team
         if  let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity,
-            let teamApprovalSeconds = teamIdentity.team.policy.temporaryApprovalSeconds
+            let team = try? teamIdentity.team(),
+            let teamApprovalSeconds = team.policy.temporaryApprovalSeconds
         {
             approvalSeconds = Double(teamApprovalSeconds)
         } else {

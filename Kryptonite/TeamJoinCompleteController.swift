@@ -26,6 +26,7 @@ class TeamJoinCompleteController:KRBaseController {
     var joinType:TeamJoinType!
     var teamIdentity:TeamIdentity!
     var createBlock:HashChain.Block!
+    var teamName:String?
     
     struct JoinWorkflowError:Error, CustomDebugStringConvertible  {
         let error:Error
@@ -42,7 +43,8 @@ class TeamJoinCompleteController:KRBaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        teamNameLabel.text = teamIdentity.team.name
+        
+        teamNameLabel.text = teamName
         
         resultViewUp.priority = 750
         resultViewDown.priority = 999

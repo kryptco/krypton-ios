@@ -58,7 +58,9 @@ extension Policy {
     
     class func teamDidUpdate() {
         // update push notifications
-        (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+        dispatchMain {
+            (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+        }
     }
     
     class func requestUserAuthorization(session:Session, request:Request) {
