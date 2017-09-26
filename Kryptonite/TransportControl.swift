@@ -81,7 +81,7 @@ class TransportControl {
         // update teams if we need to
         if IdentityManager.hasTeam() && TeamUpdater.shouldCheck {
             TeamUpdater.checkForUpdate {_ in
-                self.handleNoChecks(medium: medium, with: request, for: session, completionHandler: completionHandler, errorHandler: errorHandler)
+                dispatchAsync { self.handleNoChecks(medium: medium, with: request, for: session, completionHandler: completionHandler, errorHandler: errorHandler) }
             }
             return
         }
