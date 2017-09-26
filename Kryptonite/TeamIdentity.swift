@@ -148,7 +148,7 @@ struct TeamIdentity:Jsonable {
         self.teamID = teamID
         self.checkpoint = checkpoint
         self.initialTeamPublicKey = initialTeamPublicKey
-        self.dataManager = TeamDataManager(teamID: teamID)
+        self.dataManager = try TeamDataManager(teamID: teamID)
     }
     
     init(json: Object) throws {

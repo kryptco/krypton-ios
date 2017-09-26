@@ -149,46 +149,42 @@ class TeamDataManager {
     private var persistentStoreCoordinator:NSPersistentStoreCoordinator?
     private var managedObjectContext:NSManagedObjectContext
 
-    init(teamID:Data) {
+    init(teamID:Data) throws {
         teamIdentity = teamID.toBase64(true)
         
-        // managed object model
-        if let modelURL = Bundle.main.url(forResource:"Teams", withExtension: "momd") {
-            managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
-        }
-        
         // persistant store coordinator
-        if
-            let directoryURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("teams"),
-            let managedObjectModel = self.managedObjectModel
-        {
-            // db file
-            let url = directoryURL.appendingPathComponent("db_\(self.teamIdentity).sqlite")
-            let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-            
-            do {
-                // create file if it doesn't exist
-                if !FileManager.default.fileExists(atPath: directoryURL.absoluteString) {
-                    try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-                }
-                
-                let options = [NSMigratePersistentStoresAutomaticallyOption: true,
-                               NSInferMappingModelAutomaticallyOption: true]
-                
-                let store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
-                store.didAdd(to: coordinator)
-            } catch let e {
-                log("Persistance store error: \(e)", .error)
-            }
-            
-            persistentStoreCoordinator = coordinator
+        guard var directoryURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("teams"),
+            let modelURL = Bundle.main.url(forResource:"Teams", withExtension: "momd"),
+            let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
+        else {
+            throw Errors.createDatabase
         }
         
+        // create file if it doesn't exist
+        if !FileManager.default.fileExists(atPath: directoryURL.absoluteString) {
+            try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+            
+            // set this db directory to not be backed up
+            var dbResourceValues = URLResourceValues()
+            dbResourceValues.isExcludedFromBackup = true
+            try directoryURL.setResourceValues(dbResourceValues)
+        }
+        
+        let options = [NSMigratePersistentStoresAutomaticallyOption: true,
+                       NSInferMappingModelAutomaticallyOption: true]
+        
+        // db file
+        let dbURL = directoryURL.appendingPathComponent("db_\(self.teamIdentity).sqlite")
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+
+        let store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: dbURL, options: options)
+        store.didAdd(to: coordinator)
+        
+        persistentStoreCoordinator = coordinator
+
         // managed object context
         managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
-        
-        return
+        managedObjectContext.persistentStoreCoordinator = coordinator
     }
     
     enum Errors:Error {
@@ -198,6 +194,8 @@ class TeamDataManager {
         case missingObjectField
         case noSuchMember
         case prospectiveAdminIsNotMember
+        
+        case createDatabase
     }
     
     
