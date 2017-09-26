@@ -15,9 +15,10 @@ extension TeamIdentity {
         
         let blocks = response.blocks
         
-        var updatedTeam = try self.team()
         var lastBlockHash = try self.lastBlockHash()
         
+        var updatedTeam:Team
+
         var blockStart = 0
         if lastBlockHash == nil {
             guard blocks.count > 0 else {
@@ -44,13 +45,16 @@ extension TeamIdentity {
                 throw HashChain.Errors.teamPublicKeyMismatch
             }
             
-            updatedTeam.info = createChain.teamInfo
+            updatedTeam = Team(info: createChain.teamInfo)
             
             // add the block to the data store
             try dataManager.create(team: updatedTeam, creator: createChain.creator, block: createBlock)
             lastBlockHash = createBlock.hash()
             blockStart += 1
+        } else {
+            updatedTeam = try self.team()
         }
+        
                 
         for i in blockStart ..< blocks.count {
             let nextBlock = blocks[i]

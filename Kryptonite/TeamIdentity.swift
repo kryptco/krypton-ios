@@ -156,7 +156,7 @@ struct TeamIdentity:Jsonable {
         let keyPairSeed:Data = try ((json ~> "keypair_seed") as String).fromBase64()
         let boxKeyPairSeed:Data = try ((json ~> "box_keypair_seed") as String).fromBase64()
 
-        let logCheckpoint:Data? = try? ((json ~> "box_keypair_seed") as String).fromBase64()
+        let logCheckpoint:Data? = try? ((json ~> "log_checkpoint") as String).fromBase64()
 
 
         try self.init(id: ((json ~> "id") as String).fromBase64(),
