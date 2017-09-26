@@ -424,9 +424,9 @@ class TeamService {
         mutex.lock()
         
         do {
-            let logBlocks = try self.teamIdentity.dataManager.fetchUnsentLogBlocks()
+            let logBlocks = try self.teamIdentity.dataManager.fetchUnsentLogBlocks().reversed()
             
-            try sendUnsentLogBlocksUnlocked(logBlocks: logBlocks) { result in
+            try sendUnsentLogBlocksUnlocked(logBlocks: [HashChain.LogBlock](logBlocks)) { result in
                 completionHandler(result)
                 self.mutex.unlock()
             }

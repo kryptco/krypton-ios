@@ -134,6 +134,12 @@ extension TeamIdentity {
                     wrappedKeys.append(wrappedKey)
                 }
                 
+                // wrap the log encryption key for self
+                let ciphertext = try self.logEncryptionKey.wrap(to: self.encryptionKeyPair.publicKey)
+                let selfWrappedKey = HashChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
+                wrappedKeys.append(selfWrappedKey)
+
+                // create the log chain
                 let createLogChain = HashChain.CreateLogChain(teamPointer: HashChain.TeamPointer.lastBlockHash(nextBlock.hash()), wrappedKeys: wrappedKeys)
                 let payload = HashChain.Payload.createLogChain(createLogChain)
                 let payloadData = try payload.jsonData()
@@ -220,6 +226,12 @@ extension TeamIdentity {
                         wrappedKeys.append(wrappedKey)
                     }
                     
+                    // wrap the log encryption key for self
+                    let ciphertext = try self.logEncryptionKey.wrap(to: self.encryptionKeyPair.publicKey)
+                    let selfWrappedKey = HashChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
+                    wrappedKeys.append(selfWrappedKey)
+
+                    
                     // prepare the addWrappedKeys payload
                     let rotateKey = HashChain.LogOperation.rotateKey(wrappedKeys)
                     let payload = HashChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
@@ -265,6 +277,11 @@ extension TeamIdentity {
                         let wrappedKey = HashChain.WrappedKey(publicKey: existingAdmin.encryptionPublicKey, ciphertext: ciphertext)
                         wrappedKeys.append(wrappedKey)
                     }
+                    
+                    // wrap the log encryption key for self
+                    let ciphertext = try self.logEncryptionKey.wrap(to: self.encryptionKeyPair.publicKey)
+                    let selfWrappedKey = HashChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
+                    wrappedKeys.append(selfWrappedKey)
                     
                     // prepare the addWrappedKeys payload
                     let rotateKey = HashChain.LogOperation.rotateKey(wrappedKeys)

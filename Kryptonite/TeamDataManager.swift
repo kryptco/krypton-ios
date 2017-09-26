@@ -826,31 +826,13 @@ class TeamDataManager {
         defer { mutex.unlock() }
         mutex.lock()
         
-        let request:NSFetchRequest<DataLogBlock> = DataLogBlock.fetchRequest()
-        
-        let teamPredicate = NSComparisonPredicate(
-            leftExpression: NSExpression(forKeyPath: #keyPath(DataLogBlock.team.id)),
-            rightExpression: NSExpression(forConstantValue: self.teamIdentity),
-            modifier: .direct,
-            type: .equalTo,
-            options: NSComparisonPredicate.Options(rawValue: 0)
-        )
-        
-        let pendingPredicate = NSComparisonPredicate(
-            leftExpression: NSExpression(forKeyPath: #keyPath(DataLogBlock.isSent)),
-            rightExpression: NSExpression(forConstantValue: false),
-            modifier: .direct,
-            type: .equalTo,
-            options: NSComparisonPredicate.Options(rawValue: 0)
-        )
-        
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [teamPredicate, pendingPredicate])
-        
         var blocks:[HashChain.LogBlock] = []
         
         try performAndWait {
-            try self.managedObjectContext.fetch(request).forEach {
-                try blocks.append($0.block())
+            var pointer = try self.fetchCoreDataTeam().headLog
+            while let thePointer = pointer, thePointer.isSent == false {
+                try blocks.insert(thePointer.block(), at: 0)
+                pointer = thePointer.previous
             }
         }
         

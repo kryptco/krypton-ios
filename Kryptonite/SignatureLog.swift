@@ -20,12 +20,8 @@ protocol LogStatement:JsonWritable {
     
     init(object:NSManagedObject) throws
     var managedObject:[String:Any] { get }
-}
-
-extension LogStatement {
-    var object:Object {
-        return self.managedObject
-    }
+    
+    var object:Object { get }
 }
 
 struct LogStatementParsingError:Error {}
@@ -78,6 +74,14 @@ struct SSHSignatureLog:LogStatement {
         return ["session": session,
                 "signature": signature,
                 "date": date,
+                "host_auth": hostAuth,
+                "displayName": displayName]
+    }
+    
+    var object: Object {
+        return ["session": session,
+                "signature": signature,
+                "date": date.timeIntervalSince1970,
                 "host_auth": hostAuth,
                 "displayName": displayName]
     }
@@ -146,6 +150,16 @@ struct CommitSignatureLog:LogStatement {
         object["commit_hash"] = commitHash
         return object
     }
+    
+    var object: Object {
+        var object:[String:Any] =  commit.object
+        object["session"] = session
+        object["date"] = date.timeIntervalSince1970
+        object["signature"] = signature
+        object["commit_hash"] = commitHash
+        return object
+    }
+
 }
 
 /** Git Tag */
@@ -198,6 +212,14 @@ struct TagSignatureLog:LogStatement {
         var object:[String:Any] =  tag.object
         object["session"] = session
         object["date"] = date
+        object["signature"] = signature
+        return object
+    }
+    
+    var object: Object {
+        var object:[String:Any] =  tag.object
+        object["session"] = session
+        object["date"] = date.timeIntervalSince1970
         object["signature"] = signature
         return object
     }

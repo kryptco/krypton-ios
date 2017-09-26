@@ -10,6 +10,7 @@ import Foundation
 
 extension TeamIdentity {
     mutating func writeLog(data:Data) throws {
+        //TODO: check indeed that this last block hash reflects what's in the database
         guard let lastLogBlockHash = self.logCheckpoint else {
             throw HashChain.Errors.missingLastLogBlockHash
         }
@@ -19,7 +20,8 @@ extension TeamIdentity {
         }
         
         let encryptedLog = HashChain.LogOperation.encryptLog(HashChain.EncryptedLog(ciphertext: logCiphertext))
-        let payload = HashChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: encryptedLog)
+        let appendLogBLock = HashChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: encryptedLog)
+        let payload = HashChain.Payload.appendLogBlock(appendLogBLock)
         let payloadData = try payload.jsonData()
         
         // sign the payload

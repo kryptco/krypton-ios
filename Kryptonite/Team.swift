@@ -97,7 +97,7 @@ struct Team:Jsonable {
         }
         
         var object: Object {
-            return ["command_encrypted": {}]
+            return ["command_encrypted": Object()]
         }
         
         static func ==(l:LoggingEndpoint, r:LoggingEndpoint) -> Bool {

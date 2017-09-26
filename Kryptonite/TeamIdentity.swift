@@ -127,7 +127,7 @@ struct TeamIdentity:Jsonable {
         return try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: initialTeamPublicKey, logEncryptionKey: logEncryptionKey)
     }
     
-    private init(id:Data, email:String, keyPairSeed:Data, boxKeyPairSeed:Data, teamID:Data, checkpoint:Data, initialTeamPublicKey:SodiumSignPublicKey, logEncryptionKey:SodiumSecretBoxKey) throws {
+    private init(id:Data, email:String, keyPairSeed:Data, boxKeyPairSeed:Data, teamID:Data, checkpoint:Data, initialTeamPublicKey:SodiumSignPublicKey, logEncryptionKey:SodiumSecretBoxKey, logCheckpoint:Data? = nil) throws {
         self.id = id
         self.email = email
         self.keyPairSeed = keyPairSeed
@@ -143,6 +143,7 @@ struct TeamIdentity:Jsonable {
         }
         self.encryptionKeyPair = boxKeyPair
         self.logEncryptionKey = logEncryptionKey
+        self.logCheckpoint = logCheckpoint
         
         self.teamID = teamID
         self.checkpoint = checkpoint
@@ -155,6 +156,8 @@ struct TeamIdentity:Jsonable {
         let keyPairSeed:Data = try ((json ~> "keypair_seed") as String).fromBase64()
         let boxKeyPairSeed:Data = try ((json ~> "box_keypair_seed") as String).fromBase64()
 
+        let logCheckpoint:Data? = try? ((json ~> "box_keypair_seed") as String).fromBase64()
+
 
         try self.init(id: ((json ~> "id") as String).fromBase64(),
                       email: json ~> "email",
@@ -163,18 +166,25 @@ struct TeamIdentity:Jsonable {
                       teamID: teamID,
                       checkpoint: ((json ~> "checkpoint") as String).fromBase64(),
                       initialTeamPublicKey: ((json ~> "inital_team_public_key") as String).fromBase64(),
-                      logEncryptionKey: ((json ~> "log_encryption_key") as String).fromBase64())
+                      logEncryptionKey: ((json ~> "log_encryption_key") as String).fromBase64(),
+                      logCheckpoint: logCheckpoint)
     }
     
     var object: Object {
-        return    ["id": id.toBase64(),
-                   "email": email,
-                   "keypair_seed": keyPairSeed.toBase64(),
-                   "box_keypair_seed": boxKeyPairSeed.toBase64(),
-                   "team_id": teamID.toBase64(),
-                   "checkpoint": checkpoint.toBase64(),
-                   "inital_team_public_key": initialTeamPublicKey.toBase64()]
+        var object:Object = ["id": id.toBase64(),
+                             "email": email,
+                             "keypair_seed": keyPairSeed.toBase64(),
+                             "box_keypair_seed": boxKeyPairSeed.toBase64(),
+                             "team_id": teamID.toBase64(),
+                             "checkpoint": checkpoint.toBase64(),
+                             "inital_team_public_key": initialTeamPublicKey.toBase64(),
+                             "log_encryption_key": logEncryptionKey.toBase64()]
         
+        if let logCheckpoint = logCheckpoint {
+            object["log_checkpoint"] = logCheckpoint.toBase64()
+        }
+        
+        return object
     }
     
     
