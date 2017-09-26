@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="KnownHost" syncable="YES">
-        <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="host_name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    <entity name="KnownHost" syncable="NO">
+        <attribute name="date_added" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="NO"/>
+        <attribute name="host_name" optional="YES" attributeType="String" indexed="YES" syncable="NO"/>
+        <attribute name="public_key" optional="YES" attributeType="String" indexed="YES" syncable="NO"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="host_name"/>

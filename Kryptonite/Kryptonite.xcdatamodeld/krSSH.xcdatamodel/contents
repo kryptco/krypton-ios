@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CommitSignatureLog" syncable="YES">
-        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="commit_hash" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="committer" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="merge_parents" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="parent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tree" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="CommitSignatureLog" syncable="NO">
+        <attribute name="author" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="commit_hash" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="committer" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="NO"/>
+        <attribute name="merge_parents" optional="YES" attributeType="Transformable" syncable="NO"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="parent" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="NO"/>
+        <attribute name="signature" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="tree" optional="YES" attributeType="String" syncable="NO"/>
     </entity>
-    <entity name="SignatureLog" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="host_auth" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="SignatureLog" syncable="NO">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="NO"/>
+        <attribute name="displayName" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="host_auth" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="NO"/>
+        <attribute name="signature" optional="YES" attributeType="String" syncable="NO"/>
     </entity>
-    <entity name="TagSignatureLog" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
-        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="object" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tagger" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="TagSignatureLog" syncable="NO">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="NO"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="object" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="NO"/>
+        <attribute name="signature" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="tagger" optional="YES" attributeType="String" syncable="NO"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="NO"/>
     </entity>
     <elements>
         <element name="CommitSignatureLog" positionX="180" positionY="18" width="128" height="195"/>
