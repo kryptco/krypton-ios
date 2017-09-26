@@ -40,22 +40,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
             joinButton.setTitle("JOIN", for: UIControlState.normal)
             dontJoinButton.setTitle("Don't Join", for: UIControlState.normal)
             
-            guard let teamIdentity = self.teamIdentity else {
-                self.showWarning(title: "Error", body: "Fatal error missing team identity information.") {
-                    self.dismiss(animated: true, completion: nil)
-                }
-                return
-            }
-            
-            
-        case .create(let request, _):
-            guard case .createTeam(let create) = request.body else {
-                self.showWarning(title: "Error", body: "Invalid create team request.") {
-                    self.dismiss(animated: true, completion: nil)
-                }
-                return
-            }
-            
+        case .create:
             joinButton.setTitle("CREATE", for: UIControlState.normal)
             dontJoinButton.setTitle("Don't Create", for: UIControlState.normal)
         }

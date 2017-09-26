@@ -416,6 +416,63 @@ class TeamService {
         }
         
     }
+    
+    /**
+         Send Encrypted Audit Logs
+     */
+    func sendUnsentLogBlocks(_ completionHandler:@escaping (TeamServiceResult<Bool>) -> Void) throws {
+        mutex.lock()
+        
+        do {
+            let logBlocks = try self.teamIdentity.dataManager.fetchUnsentLogBlocks()
+            
+            try sendUnsentLogBlocksUnlocked(logBlocks: logBlocks) { result in
+                completionHandler(result)
+                self.mutex.unlock()
+            }
+        } catch {
+            mutex.unlock()
+            throw error
+        }
+    }
+    
+    private func sendUnsentLogBlocksUnlocked(logBlocks:[HashChain.LogBlock], _ completionHandler:@escaping (TeamServiceResult<Bool>) -> Void) throws {
+        
+        var remainingLogBlocks = logBlocks
+        
+        guard let logBlock = remainingLogBlocks.popLast() else {
+            completionHandler(TeamServiceResult.result(true))
+            return
+        }
+        
+        let hashChainRequest = HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
+                                                     payload: logBlock.payload,
+                                                     signature: logBlock.signature)
+        
+        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+            switch serverResponse {
+                
+            case .error(let error):
+                completionHandler(TeamServiceResult.error(error))
+                
+            case .success:
+                do {
+                    try self.teamIdentity.dataManager.markLogBlocksSent(logBlocks: [logBlock])
+                    
+                    guard remainingLogBlocks.isEmpty else {
+                        try self.sendUnsentLogBlocksUnlocked(logBlocks: remainingLogBlocks, completionHandler)
+                        return
+                    }
+                    
+                    completionHandler(TeamServiceResult.result(true))
+                    
+                } catch {
+                    completionHandler(TeamServiceResult.error(error))
+                }
+                
+            }
+        }
+    }
 }
 
 /// TeamIdentity + TeamPointer

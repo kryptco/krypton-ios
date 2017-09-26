@@ -23,7 +23,7 @@ class MemoryTeamServerHTTP:TeamServiceAPI {
     /**
         A local Memory team server interface to talk to the MemoryTeamServer
      */
-    func sendRequest<T:JsonReadable>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
+    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
         let response:TeamService.ServerResponse<T> = try server.sendRequest(object: object)
         onCompletion(response)
     }
@@ -71,13 +71,13 @@ class MemoryTeamServer {
             mutex.lock()
             
             // ensure it's a read block
-            guard case .read(let read) = try HashChain.Payload(jsonString: block.payload) else {
+            guard case .readBlocks(let read) = try HashChain.Payload(jsonString: block.payload) else {
                 throw Errors.wrongBlockTypeInternal
             }
             
             // ensure the public key is a member's public key or an invitation public key
-            var publicKey:SodiumPublicKey
-            if let invitationNoncePublicKey = self.teamIdentity.team.lastInvitePublicKey, invitationNoncePublicKey == block.publicKey {
+            var publicKey:SodiumSignPublicKey
+            if let invitationNoncePublicKey = try self.teamIdentity.team().lastInvitePublicKey, invitationNoncePublicKey == block.publicKey {
                 publicKey = invitationNoncePublicKey
             } else {
                 guard try teamIdentity.dataManager.isAdmin(for: block.publicKey) else {
@@ -121,7 +121,7 @@ class MemoryTeamServer {
         // get the payload
         let payload = try HashChain.Payload(jsonString: request.payload)
         switch payload {
-        case .read(let read):
+        case .readBlocks(let read):
             guard let teamChain = chain(for: read.teamPointer.pointer) else {
                 throw Errors.teamChainDoesNotExist
             }
@@ -138,7 +138,7 @@ class MemoryTeamServer {
             return  TeamService.ServerResponse.success(responseType)
             
             
-        case .append(let append):
+        case .appendBlock(let append):
             guard let teamChain = chain(for: append.lastBlockHash) else {
                 throw Errors.teamChainDoesNotExist
             }
@@ -156,7 +156,7 @@ class MemoryTeamServer {
             
             return  TeamService.ServerResponse.success(responseType)
             
-        case .create(let create):
+        case .createChain(let create):
             guard chain(for: create.creator.publicKey) == nil else {
                 throw Errors.chainAlreadyExists
             }
@@ -185,6 +185,36 @@ class MemoryTeamServer {
             }
             
             return  TeamService.ServerResponse.success(responseType)
+        
+        case .createLogChain(let createLogChain):
+            let response = TeamService.EmptyResponse()
+            
+            guard let responseType = response as? T else {
+                throw Errors.unexpectedServerResponseType
+            }
+            
+            return  TeamService.ServerResponse.success(responseType)
+
+            
+        case .readLogBlocks(let readLogs):
+            let response = TeamService.EmptyResponse()
+            
+            guard let responseType = response as? T else {
+                throw Errors.unexpectedServerResponseType
+            }
+            
+            return  TeamService.ServerResponse.success(responseType)
+
+            
+        case .appendLogBlock(let appendLog):
+            let response = TeamService.EmptyResponse()
+            
+            guard let responseType = response as? T else {
+                throw Errors.unexpectedServerResponseType
+            }
+            
+            return  TeamService.ServerResponse.success(responseType)
+
         }
     }
 }

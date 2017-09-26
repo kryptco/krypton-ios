@@ -197,11 +197,44 @@ class LogManager {
             }
         }
 
-        
+        // unlock and notify we have a new log
         mutex.unlock()
-        
-        // notify we have a new log
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "new_log"), object: nil)
+
+        // if there's a team, and logging is enabled, record the log and send all unsent
+        // log blocks
+
+        do {
+            guard var identity = try IdentityManager.getTeamIdentity() else {
+                return
+            }
+            
+            // ensure logging is enabled
+            guard   try identity.team().commandEncryptedLoggingEnabled
+            else {
+                log("team audit logging not enabled -- skipping")
+                return
+            }
+            
+            let logData = try theLog.jsonData()
+            try identity.writeLog(data: logData)
+            
+            // send pending logs
+            try TeamService.shared().sendUnsentLogBlocks { result in
+                switch result {
+                case .error(let e):
+                    log("could not send log block: \(e)")
+
+                case .result:
+                    log("all log blocks sent succesfully")
+                }
+            }
+
+        } catch {
+            log("error creating team log block: \(error)")
+        }
+        
+
     }
     
 

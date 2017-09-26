@@ -386,8 +386,8 @@ extension HashChain.Payload {
                 return ("give new admin(s) log access", "\(wrappedKeys.count) admins")
             case .rotateKey(let wrappedKeys):
                 return ("rotate log access keys", "rotated for \(wrappedKeys.count) admins")
-            case .encryptLog(let encryptedLog):
-                return ("write new encrypted log", "previous: \(encryptedLog.lastLogHash.toBase64())")
+            case .encryptLog:
+                return ("write new encrypted log", "")
             }
 
         }

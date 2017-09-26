@@ -10,7 +10,7 @@ import Foundation
 import JSON
 
 /** Log Statement for various types of signature logs **/
-protocol LogStatement {
+protocol LogStatement:JsonWritable {
     static var entityName:String { get }
     
     var session:String { get }
@@ -20,6 +20,12 @@ protocol LogStatement {
     
     init(object:NSManagedObject) throws
     var managedObject:[String:Any] { get }
+}
+
+extension LogStatement {
+    var object:Object {
+        return self.managedObject
+    }
 }
 
 struct LogStatementParsingError:Error {}
