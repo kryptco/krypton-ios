@@ -34,13 +34,21 @@ class KeychainStorage {
                       String(kSecValueData): data,
                       String(kSecAttrAccessible): KeychainAccessiblity]
         
-        let _ = SecItemDelete(params as CFDictionary)
+        let toUpdate:[String:Any] = [String(kSecValueData): data]
         
-        let status = SecItemAdd(params as CFDictionary, nil)
-        guard status.isSuccess() else {
-            throw KeychainStorageError.saveError(status)
+        let updateStatus = SecItemUpdate(params as CFDictionary,
+                                   toUpdate as CFDictionary)
+        
+        if updateStatus.isSuccess() {
+            return
         }
         
+        // update failed, try to add
+        let addStatus = SecItemAdd(params as CFDictionary, nil)
+        guard  addStatus.isSuccess()
+        else {
+            throw KeychainStorageError.saveError(addStatus)
+        }
     }
 
     
