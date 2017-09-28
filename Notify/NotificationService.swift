@@ -19,7 +19,7 @@ class NotificationService: UNNotificationServiceExtension {
     var bestAttemptMutex = Mutex()
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        
+        IdentityManager.reset()
         self.contentHandler = contentHandler
         
         // provision AWS API

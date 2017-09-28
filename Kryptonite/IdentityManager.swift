@@ -108,7 +108,9 @@ class IdentityManager {
         // notify policy that rules may have changed
         Policy.teamDidUpdate()
     }
-    
+    class func reset() {
+        teamIdentity = nil
+    }
     class func commitTeamChanges(identity:TeamIdentity) throws {
         mutex.lock()
         defer { mutex.unlock() }

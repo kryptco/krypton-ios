@@ -14,6 +14,7 @@ struct Constants {
     static let defaultKeyChainService = "kr_keychain_service"
     static let teamKeyChainService = "kr_team_keychain_service"
     static let endpointARNStorageKey = "aws_endpoint_arn_key"
+    static let keychainAccessGroup = "group.co.krypt.kryptonite"
 }
 
 //MARK: Platform Detection

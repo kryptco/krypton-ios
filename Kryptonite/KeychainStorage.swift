@@ -5,100 +5,152 @@
 //  Created by Alex Grinman on 9/1/16.
 //  Copyright © 2016 KryptCo, Inc. All rights reserved.
 //
-
 import Foundation
-
 enum KeychainStorageError:Error {
     case notFound
     case saveError(OSStatus?)
+    case update(OSStatus?)
     case delete(OSStatus?)
     case unknown(OSStatus?)
 }
-
 class KeychainStorage {
-    
+
     var service:String
+    var accessGroup:Bool
+
     var mutex = Mutex()
-    
-    init(service:String = Constants.defaultKeyChainService) {
+
+    init(service:String = Constants.defaultKeyChainService, accessGroup:Bool = true) {
         self.service = service
+        self.accessGroup = accessGroup
     }
-    
+
     func setData(key:String, data:Data) throws {
         mutex.lock()
         defer { self.mutex.unlock() }
-        
-        let params: [String : Any] = [String(kSecClass): kSecClassGenericPassword,
-                      String(kSecAttrService): service,
-                      String(kSecAttrAccount): key,
-                      String(kSecValueData): data,
-                      String(kSecAttrAccessible): KeychainAccessiblity]
-        
-        let toUpdate:[String:Any] = [String(kSecValueData): data]
-        
-        let updateStatus = SecItemUpdate(params as CFDictionary,
-                                   toUpdate as CFDictionary)
-        
-        if updateStatus.isSuccess() {
-            return
+
+        do {
+            let existingData = try getDataUnlocked(key: key)
+
+            var params:[String:Any] = [String(kSecClass): kSecClassGenericPassword,
+                                       String(kSecAttrService): service,
+                                       String(kSecAttrAccount): key,
+                                       String(kSecAttrAccessible): KeychainAccessiblity]
+
+            if accessGroup {
+                params[String(kSecAttrAccessGroup)] = Constants.keychainAccessGroup
+            }
+
+            let toUpdate:[String:Any] = [String(kSecValueData): data]
+
+            let updateStatus = SecItemUpdate(params as CFDictionary,
+                                             toUpdate as CFDictionary)
+
+            guard updateStatus.isSuccess() else {
+                throw KeychainStorageError.update(updateStatus)
+            }
+        } catch KeychainStorageError.notFound {
+
+            var params:[String:Any] = [String(kSecClass): kSecClassGenericPassword,
+                                       String(kSecAttrService): service,
+                                       String(kSecAttrAccount): key,
+                                       String(kSecValueData): data,
+                                       String(kSecAttrAccessible): KeychainAccessiblity]
+
+            if accessGroup {
+                params[String(kSecAttrAccessGroup)] = Constants.keychainAccessGroup
+            }
+            let addStatus = SecItemAdd(params as CFDictionary, nil)
+            guard  addStatus.isSuccess()
+                else {
+                    throw KeychainStorageError.saveError(addStatus)
+            }
         }
-        
+
+
         // update failed, try to add
-        let addStatus = SecItemAdd(params as CFDictionary, nil)
-        guard  addStatus.isSuccess()
-        else {
-            throw KeychainStorageError.saveError(addStatus)
-        }
     }
 
-    
     func set(key:String, value:String) throws {
         try setData(key: key, data: value.utf8Data())
     }
-    
+
+    func getDataUnlocked(key:String) throws -> Data {
+
+        // if it exists then retrieve the item
+        var params:[String:Any] = [String(kSecClass): kSecClassGenericPassword,
+                                   String(kSecAttrService): service,
+                                   String(kSecAttrAccount): key,
+                                   String(kSecReturnData): kCFBooleanTrue,
+                                   String(kSecAttrAccessible): KeychainAccessiblity]
+
+        if accessGroup {
+            params[String(kSecAttrAccessGroup)] = Constants.keychainAccessGroup
+        }
+        var object:AnyObject?
+        let status = SecItemCopyMatching(params as CFDictionary, &object)
+
+        if status == errSecItemNotFound {
+            throw KeychainStorageError.notFound
+        }
+
+        guard let data = object as? Data, status.isSuccess() else {
+            throw KeychainStorageError.unknown(status)
+        }
+
+        return data
+    }
+
+    func getDataAllUnlocked(key:String) throws -> [Data] {
+        var params:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
+                                     String(kSecAttrAccount): key,
+                                     String(kSecReturnData): kCFBooleanTrue,
+                                     String(kSecMatchLimit): 1000]
+        var object:AnyObject?
+        let status = SecItemCopyMatching(params as CFDictionary, &object)
+
+        if status == errSecItemNotFound {
+            throw KeychainStorageError.notFound
+        }
+
+        guard let datas = object as? [Data], status.isSuccess() else {
+            throw KeychainStorageError.unknown(status)
+        }
+
+        return datas
+    }
+
     func getData(key:String) throws -> Data {
         mutex.lock()
         defer { self.mutex.unlock() }
 
-        let params:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
-                      String(kSecAttrService): service,
-                      String(kSecAttrAccount): key,
-                      String(kSecReturnData): kCFBooleanTrue,
-                      String(kSecMatchLimit): kSecMatchLimitOne,
-                      String(kSecAttrAccessible): KeychainAccessiblity]
-        
-        var object:AnyObject?
-        let status = SecItemCopyMatching(params as CFDictionary, &object)
-        
-        if status == errSecItemNotFound {
-            throw KeychainStorageError.notFound
-        }
-        
-        guard let data = object as? Data, status.isSuccess() else {
-            throw KeychainStorageError.unknown(status)
-        }
-        
-        return data
+        return try self.getDataUnlocked(key: key)
     }
-    
+
     func get(key:String) throws -> String {
         return try self.getData(key: key).utf8String()
     }
 
-    
     func delete(key:String) throws {
         mutex.lock()
         defer { self.mutex.unlock() }
 
-        let params: [String : Any] = [String(kSecClass): kSecClassGenericPassword,
-                      String(kSecAttrService): service,
-                      String(kSecAttrAccount): key]
-        
+        var params:[String:Any] = [String(kSecClass): kSecClassGenericPassword,
+                                   String(kSecAttrService): service,
+                                   String(kSecAttrAccount): key,
+                                   String(kSecAttrAccessible): KeychainAccessiblity]
+        if accessGroup {
+            params[String(kSecAttrAccessGroup)] = Constants.keychainAccessGroup
+        }
+
         let status = SecItemDelete(params as CFDictionary)
-        
+
+        if status == errSecItemNotFound {
+            throw KeychainStorageError.notFound
+        }
         guard status.isSuccess() else {
             throw KeychainStorageError.delete(status)
         }
     }
-    
+
 }
