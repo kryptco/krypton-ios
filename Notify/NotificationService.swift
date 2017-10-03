@@ -19,14 +19,16 @@ class NotificationService: UNNotificationServiceExtension {
     var bestAttemptMutex = Mutex()
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        IdentityManager.reset()
-        self.contentHandler = contentHandler
         
+        self.bestAttemptMutex.lock {
+            self.contentHandler = contentHandler
+        }
+
         // provision AWS API
         guard API.provision() else {
             log("API provision failed.", LogType.error)
             
-            failUnknown(with: nil)
+            failUnknown(with: nil, contentHandler: contentHandler)
             
             return
         }
@@ -38,7 +40,7 @@ class NotificationService: UNNotificationServiceExtension {
             
         } catch {
             log("could not processess remote notification content: \(error)")
-            failUnknown(with: error)
+            failUnknown(with: error, contentHandler: contentHandler)
             return
         }
         
@@ -188,14 +190,14 @@ class NotificationService: UNNotificationServiceExtension {
                 
                 
                 // if not pending or delivered, fail with unknown error.
-                self.failUnknown(with: error)
+                self.failUnknown(with: error, contentHandler: contentHandler)
             })
             
         })
 
     }
     
-    func failUnknown(with error:Error?) {
+    func failUnknown(with error:Error?, contentHandler: ((UNNotificationContent) -> Void)) {
         
         let content = UNMutableNotificationContent()
         
@@ -207,9 +209,7 @@ class NotificationService: UNNotificationServiceExtension {
         }
         content.userInfo = [:]
         
-        self.bestAttemptMutex.lock {
-            contentHandler?(content)
-        }
+        contentHandler(content)
     }
     
     override func serviceExtensionTimeWillExpire() {

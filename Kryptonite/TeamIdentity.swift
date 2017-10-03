@@ -12,20 +12,75 @@ import JSON
 
 struct TeamIdentity:Jsonable {
     let id:Data
-    var email:String
     let keyPair:SodiumSignKeyPair
     let encryptionKeyPair:SodiumBoxKeyPair
+    let initialTeamPublicKey:SodiumSignPublicKey
+    var email:String
 
     private let keyPairSeed:Data
     private let boxKeyPairSeed:Data
-
     private let teamID:Data
-    var checkpoint:Data
     
-    let initialTeamPublicKey:SodiumSignPublicKey
+    // Mutable Team Identity Data
+    var mutableData:MutableData
+    
+    var checkpoint:Data {
+        get {
+            return mutableData.checkpoint
+        }
+        set(c) {
+            mutableData.checkpoint = c
+        }
+    }
+    
+    var logCheckpoint:Data? {
+        get {
+            return mutableData.logCheckpoint
+        }
+        set(lc) {
+            mutableData.logCheckpoint = lc
+        }
+    }
+    
+    var logEncryptionKey:SodiumSecretBoxKey {
+        get {
+            return mutableData.logEncryptionKey
+        }
+        set(le) {
+            mutableData.logEncryptionKey = le
+        }
+    }
+    
+    struct MutableData:Jsonable {
+        var checkpoint:Data
+        var logCheckpoint:Data?
+        var logEncryptionKey:SodiumSecretBoxKey
+        
+        init(checkpoint:Data, logCheckpoint:Data?, logEncryptionKey:SodiumSecretBoxKey) {
+            self.checkpoint = checkpoint
+            self.logCheckpoint = logCheckpoint
+            self.logEncryptionKey = logEncryptionKey
+        }
+        init(json: Object) throws {
+            let logCheckpoint:Data? = try? ((json ~> "log_checkpoint") as String).fromBase64()
+            try self.init( checkpoint: ((json ~> "checkpoint") as String).fromBase64(),
+                           logCheckpoint: logCheckpoint,
+                           logEncryptionKey: ((json ~> "log_encryption_key") as String).fromBase64())
 
-    var logCheckpoint:Data?
-    var logEncryptionKey:SodiumSecretBoxKey
+        }
+        
+        var object: Object {
+            var object:Object = ["checkpoint": checkpoint.toBase64(),
+                                 "log_encryption_key": logEncryptionKey.toBase64()]
+            
+            if let logCheckpoint = logCheckpoint {
+                object["log_checkpoint"] = logCheckpoint.toBase64()
+            }
+            
+            return object
+
+        }
+    }
 
     /**
         Team Persistance
@@ -106,9 +161,11 @@ struct TeamIdentity:Jsonable {
         // create the block
         let createBlock = try HashChain.Block(publicKey: keyPair.publicKey, payload: payloadData.utf8String(), signature: signature)
         let checkpoint = createBlock.hash()
-
+        
+        let mutableData = MutableData(checkpoint: checkpoint, logCheckpoint: nil, logEncryptionKey: logEncryptionKey)
+        
         // make the team identity + team
-        let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: keyPair.publicKey, logEncryptionKey: logEncryptionKey)
+        let teamIdentity = try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, initialTeamPublicKey: keyPair.publicKey, mutableData: mutableData)
         try teamIdentity.dataManager.create(team: Team(info: Team.Info(name: teamName)), creator: creator, block: createBlock)
         
         return (teamIdentity, createBlock)
@@ -123,11 +180,13 @@ struct TeamIdentity:Jsonable {
         guard let logEncryptionKey = try KRSodium.shared().secretBox.key() else {
             throw Errors.secretBoxKey
         }
+        
+        let mutableData = MutableData(checkpoint: checkpoint, logCheckpoint: nil, logEncryptionKey: logEncryptionKey)
 
-        return try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, checkpoint: checkpoint, initialTeamPublicKey: initialTeamPublicKey, logEncryptionKey: logEncryptionKey)
+        return try TeamIdentity(id: id, email: email, keyPairSeed: keyPairSeed, boxKeyPairSeed: boxKeyPairSeed, teamID: teamID, initialTeamPublicKey: initialTeamPublicKey, mutableData: mutableData)
     }
     
-    private init(id:Data, email:String, keyPairSeed:Data, boxKeyPairSeed:Data, teamID:Data, checkpoint:Data, initialTeamPublicKey:SodiumSignPublicKey, logEncryptionKey:SodiumSecretBoxKey, logCheckpoint:Data? = nil) throws {
+    private init(id:Data, email:String, keyPairSeed:Data, boxKeyPairSeed:Data, teamID:Data, initialTeamPublicKey:SodiumSignPublicKey, mutableData:MutableData) throws {
         self.id = id
         self.email = email
         self.keyPairSeed = keyPairSeed
@@ -141,12 +200,12 @@ struct TeamIdentity:Jsonable {
         guard let boxKeyPair = try KRSodium.shared().box.keyPair(seed: boxKeyPairSeed) else {
             throw Errors.keyPairFromSeed
         }
-        self.encryptionKeyPair = boxKeyPair
-        self.logEncryptionKey = logEncryptionKey
-        self.logCheckpoint = logCheckpoint
         
+        self.encryptionKeyPair = boxKeyPair
+        
+        self.mutableData = mutableData
+
         self.teamID = teamID
-        self.checkpoint = checkpoint
         self.initialTeamPublicKey = initialTeamPublicKey
         self.dataManager = try TeamDataManager(teamID: teamID)
     }
@@ -156,33 +215,22 @@ struct TeamIdentity:Jsonable {
         let keyPairSeed:Data = try ((json ~> "keypair_seed") as String).fromBase64()
         let boxKeyPairSeed:Data = try ((json ~> "box_keypair_seed") as String).fromBase64()
 
-        let logCheckpoint:Data? = try? ((json ~> "log_checkpoint") as String).fromBase64()
-
-
         try self.init(id: ((json ~> "id") as String).fromBase64(),
                       email: json ~> "email",
                       keyPairSeed: keyPairSeed,
                       boxKeyPairSeed: boxKeyPairSeed,
                       teamID: teamID,
-                      checkpoint: ((json ~> "checkpoint") as String).fromBase64(),
                       initialTeamPublicKey: ((json ~> "inital_team_public_key") as String).fromBase64(),
-                      logEncryptionKey: ((json ~> "log_encryption_key") as String).fromBase64(),
-                      logCheckpoint: logCheckpoint)
+                      mutableData: MutableData(json: json ~> "mutable_data"))
     }
     
     var object: Object {
-        var object:Object = ["id": id.toBase64(),
+        let object:Object = ["id": id.toBase64(),
                              "email": email,
                              "keypair_seed": keyPairSeed.toBase64(),
                              "box_keypair_seed": boxKeyPairSeed.toBase64(),
                              "team_id": teamID.toBase64(),
-                             "checkpoint": checkpoint.toBase64(),
-                             "inital_team_public_key": initialTeamPublicKey.toBase64(),
-                             "log_encryption_key": logEncryptionKey.toBase64()]
-        
-        if let logCheckpoint = logCheckpoint {
-            object["log_checkpoint"] = logCheckpoint.toBase64()
-        }
+                             "inital_team_public_key": initialTeamPublicKey.toBase64()]
         
         return object
     }

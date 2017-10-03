@@ -20,7 +20,7 @@ class KeychainStorage {
 
     var mutex = Mutex()
 
-    init(service:String = Constants.defaultKeyChainService, accessGroup:Bool = true) {
+    init(service:String = Constants.defaultKeyChainService, accessGroup:Bool = false) {
         self.service = service
         self.accessGroup = accessGroup
     }
@@ -30,8 +30,6 @@ class KeychainStorage {
         defer { self.mutex.unlock() }
 
         do {
-            let existingData = try getDataUnlocked(key: key)
-
             var params:[String:Any] = [String(kSecClass): kSecClassGenericPassword,
                                        String(kSecAttrService): service,
                                        String(kSecAttrAccount): key,
@@ -45,10 +43,16 @@ class KeychainStorage {
 
             let updateStatus = SecItemUpdate(params as CFDictionary,
                                              toUpdate as CFDictionary)
-
+            
+            // if key not found, need to add the entry
+            if updateStatus == errSecItemNotFound {
+                throw KeychainStorageError.notFound
+            }
+            
             guard updateStatus.isSuccess() else {
                 throw KeychainStorageError.update(updateStatus)
             }
+            
         } catch KeychainStorageError.notFound {
 
             var params:[String:Any] = [String(kSecClass): kSecClassGenericPassword,
@@ -66,16 +70,13 @@ class KeychainStorage {
                     throw KeychainStorageError.saveError(addStatus)
             }
         }
-
-
-        // update failed, try to add
     }
 
     func set(key:String, value:String) throws {
         try setData(key: key, data: value.utf8Data())
     }
 
-    func getDataUnlocked(key:String) throws -> Data {
+    private func getDataUnlocked(key:String) throws -> Data {
 
         // if it exists then retrieve the item
         var params:[String:Any] = [String(kSecClass): kSecClassGenericPassword,
@@ -99,25 +100,6 @@ class KeychainStorage {
         }
 
         return data
-    }
-
-    func getDataAllUnlocked(key:String) throws -> [Data] {
-        var params:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
-                                     String(kSecAttrAccount): key,
-                                     String(kSecReturnData): kCFBooleanTrue,
-                                     String(kSecMatchLimit): 1000]
-        var object:AnyObject?
-        let status = SecItemCopyMatching(params as CFDictionary, &object)
-
-        if status == errSecItemNotFound {
-            throw KeychainStorageError.notFound
-        }
-
-        guard let datas = object as? [Data], status.isSuccess() else {
-            throw KeychainStorageError.unknown(status)
-        }
-
-        return datas
     }
 
     func getData(key:String) throws -> Data {

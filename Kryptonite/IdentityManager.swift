@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import JSON
 
 class IdentityManager {
     
@@ -14,7 +15,8 @@ class IdentityManager {
 
     enum Storage:String {
         case defaultIdentity = "kr_me_email"
-        case teamIdentity = "team_identity"
+        case immutableTeamIdentity = "kr_team_identity"
+        case mutableTeamIdentity = "kr_mut_team_identity"
         
         var key:String { return self.rawValue }
     }
@@ -56,20 +58,22 @@ class IdentityManager {
     /**
         Team - create and get the team identity
      */
-    private static var teamIdentity:TeamIdentity?
     
     class func getTeamIdentity() throws -> TeamIdentity? {
         mutex.lock()
         defer { mutex.unlock() }
         
-        if let identity = teamIdentity {
-            return identity
-        }
-        
         do {
-            let teamIdData = try KeychainStorage(service: Constants.teamKeyChainService).getData(key: Storage.teamIdentity.key)
-            teamIdentity = try TeamIdentity(jsonData: teamIdData)
-            return teamIdentity
+            // parse the immutable team data
+            var teamObject:Object = try JSON.parse(data: KeychainStorage(service: Constants.teamKeyChainService, accessGroup: true).getData(key: Storage.immutableTeamIdentity.key))
+            
+            // parse the mutable
+            let mutableTeamObject:Object = try JSON.parse(data: KeychainStorage(service: Constants.teamKeyChainService, accessGroup: true).getData(key: Storage.mutableTeamIdentity.key))
+
+            teamObject["mutable_data"] = mutableTeamObject
+            
+            // init the TeamIdentity with all the data
+            return try TeamIdentity(json: teamObject)
         } catch KeychainStorageError.notFound {
             return nil
         }
@@ -92,57 +96,46 @@ class IdentityManager {
         do {
             // save the team data
             try identity.dataManager.saveContext()
-
-            // save the identity to keychain
-            try KeychainStorage(service: Constants.teamKeyChainService).setData(key: Storage.teamIdentity.key, data: identity.jsonData())
             
-            // set the shared teamIdentity
-            teamIdentity = identity
+            // get the immutable + mutable parts of the team identity
+            let identityData = try identity.jsonData()
+            let mutableTeamData = try identity.mutableData.jsonData()
+            
+            // save the both parts to keychain
+            try KeychainStorage(service: Constants.teamKeyChainService, accessGroup: true).setData(key: Storage.immutableTeamIdentity.key, data: identityData)
+            
+            try KeychainStorage(service: Constants.teamKeyChainService, accessGroup: true).setData(key: Storage.mutableTeamIdentity.key, data: mutableTeamData)
             
         } catch {
             identity.dataManager.rollbackContext()
-            
             throw error
         }
         
         // notify policy that rules may have changed
         Policy.teamDidUpdate()
     }
-    class func reset() {
-        teamIdentity = nil
-    }
+    
     class func commitTeamChanges(identity:TeamIdentity) throws {
         mutex.lock()
         defer { mutex.unlock() }
         
-        let previousTeamIdentity = teamIdentity
-        
         do {
             // update team data
             try identity.dataManager.saveContext()
-            teamIdentity?.dataManager = identity.dataManager
 
-            // update the checkpoint
+            // update the mutable identity data
+            var mutableData = identity.mutableData
+            
             if let blockHash = try identity.lastBlockHash() {
-                teamIdentity?.checkpoint = blockHash
+                mutableData.checkpoint = blockHash
             }
             
-            // update the log encryption key if needed
-            teamIdentity?.logEncryptionKey = identity.logEncryptionKey
-            
-            // update the log checkpoint if needed
-            teamIdentity?.logCheckpoint = identity.logCheckpoint
-
             // save the identity to keychain
-            if let identity = teamIdentity {
-                try KeychainStorage(service: Constants.teamKeyChainService).setData(key: Storage.teamIdentity.key, data: identity.jsonData())
-            }
+            try KeychainStorage(service: Constants.teamKeyChainService, accessGroup: true).setData(key: Storage.mutableTeamIdentity.key, data: mutableData.jsonData())
 
             
         } catch {
             identity.dataManager.rollbackContext()
-            teamIdentity = previousTeamIdentity
-            
             throw error
         }
         
@@ -154,9 +147,10 @@ class IdentityManager {
         mutex.lock()
         defer { mutex.unlock() }
         
-        try KeychainStorage(service: Constants.teamKeyChainService).delete(key: Storage.teamIdentity.key)
-        teamIdentity = nil
+        try KeychainStorage(service: Constants.teamKeyChainService, accessGroup: true).delete(key: Storage.immutableTeamIdentity.key)
         
+        try KeychainStorage(service: Constants.teamKeyChainService, accessGroup: true).delete(key: Storage.mutableTeamIdentity.key)
+
         Policy.teamDidUpdate()
     }
 
