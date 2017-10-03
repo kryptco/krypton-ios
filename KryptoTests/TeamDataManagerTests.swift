@@ -44,9 +44,9 @@ class TeamDataManagerTests: XCTestCase {
     }
     
     func testCreateTeam() {
-        let dm = TeamDataManager(teamID: id)
-        
         do {
+            let dm = try TeamDataManager(teamID: id)
+
             try dm.create(team: team, creator: members[0], block: randomBlock)
             let _ = try dm.fetchTeam()
             
@@ -56,9 +56,9 @@ class TeamDataManagerTests: XCTestCase {
     }
     
     func testConflicts() {
-        let dm = TeamDataManager(teamID: id)
-        
         do {
+            let dm = try TeamDataManager(teamID: id)
+
             try dm.create(team: team, creator: members[0], block: randomBlock)
             try dm.saveContext()
             
@@ -70,10 +70,10 @@ class TeamDataManagerTests: XCTestCase {
         let b2 = HashChain.Block(publicKey: teamPublicKey, payload: "some 2", signature: try! Data.random(size: 64))
 
         do {
-            let dm1 = TeamDataManager(teamID: id)
+            let dm1 = try TeamDataManager(teamID: id)
             try dm1.append(block: b1)
             
-            let dm2 = TeamDataManager(teamID: id)
+            let dm2 = try TeamDataManager(teamID: id)
             try dm2.append(block: b2)
             
             try dm1.saveContext()
@@ -84,11 +84,11 @@ class TeamDataManagerTests: XCTestCase {
         }
         
         do {
-            let dm1 = TeamDataManager(teamID: id)
+            let dm1 = try TeamDataManager(teamID: id)
             try dm1.append(block: b1)
             try dm1.saveContext()
             
-            let dm2 = TeamDataManager(teamID: id)
+            let dm2 = try TeamDataManager(teamID: id)
             try dm2.append(block: b2)
             try dm2.saveContext()
         } catch {
@@ -101,7 +101,7 @@ class TeamDataManagerTests: XCTestCase {
         
         do {
 
-            let dm = TeamDataManager(teamID: id)
+            let dm = try TeamDataManager(teamID: id)
             try dm.create(team: team, creator: members[0], block: randomBlock)
             
             // b1
@@ -109,10 +109,10 @@ class TeamDataManagerTests: XCTestCase {
             try dm.append(block: block1)
             try dm.saveContext()
             
-            let dmx = TeamDataManager(teamID: id)
+            let dmx = try TeamDataManager(teamID: id)
             let fetched = try dmx.fetchTeam()
             
-            let dmz = TeamDataManager(teamID: id)
+            let dmz = try TeamDataManager(teamID: id)
             try XCTAssert(dmz.lastBlockHash() == block1.hash())
             
             // b2
@@ -127,7 +127,7 @@ class TeamDataManagerTests: XCTestCase {
     
     
     func testTeamChanges() {
-        let dm = TeamDataManager(teamID: id)
+        let dm = try! TeamDataManager(teamID: id)
         
         let updateApproval:UInt64 = 600
         let updateName = "Test Team 2"
@@ -145,12 +145,10 @@ class TeamDataManagerTests: XCTestCase {
             try dm.append(block: block1)
             try dm.saveContext()
             
-            ///// WHY?: TeamDataManager(teamID: id).lastBlockHash() crashes....?
-            let dmx = TeamDataManager(teamID: id)
+            let dmx = try TeamDataManager(teamID: id)
             var fetched = try dmx.fetchTeam()
-//            XCTAssert(fetched.policy.temporaryApprovalSeconds == updateApproval)
             
-            let dmz = TeamDataManager(teamID: id)
+            let dmz = try TeamDataManager(teamID: id)
             try XCTAssert(dmz.lastBlockHash() == block1.hash())
 
             // name
@@ -160,19 +158,6 @@ class TeamDataManagerTests: XCTestCase {
             try dm.set(team: updated)
             try dm.append(block: block2)
             try dm.saveContext()
-            
-//            let dmy = TeamDataManager(teamID: id)
-//            fetched = try dmy.fetchTeam()
-//            XCTAssert(fetched.policy.temporaryApprovalSeconds == updateApproval)
-//            try XCTAssert(dmy.lastBlockHash() == block2.hash())
-//            
-//            try XCTAssert(TeamDataManager(teamID: id).fetchTeam().info.name == updateName)
-            
-            // invite
-            // store all team properties as well
-            
-            
-            
         } catch {
             XCTFail("\(error)")
         }
@@ -181,9 +166,8 @@ class TeamDataManagerTests: XCTestCase {
 
     
     func testBlocks() {
-        let dm = TeamDataManager(teamID: id)
-        
         do {
+            let dm = try TeamDataManager(teamID: id)
             try dm.create(team: team, creator: members[0], block: randomBlock)
             let _ = try dm.fetchTeam()
             
@@ -193,9 +177,10 @@ class TeamDataManagerTests: XCTestCase {
     }
     
     func testCheckpointTest() {
-        let dm = TeamDataManager(teamID: id)
         
         do {
+            let dm = try TeamDataManager(teamID: id)
+
             let createBlock = randomBlock
             try dm.create(team: team, creator: members[0], block: createBlock)
             
@@ -220,9 +205,9 @@ class TeamDataManagerTests: XCTestCase {
 
     
     func testCreateMember() {
-        let dm = TeamDataManager(teamID: id)
-        
         do {
+            let dm = try TeamDataManager(teamID: id)
+
             try dm.create(team: team, creator: members[0], block: randomBlock)
             
             let member = (try dm.fetchAll() as [Team.MemberIdentity])[0]
@@ -247,9 +232,9 @@ class TeamDataManagerTests: XCTestCase {
         let createSignature = try! Data.random(size: 64)
         let createBlock = HashChain.Block(publicKey: members[0].publicKey, payload: createPayload, signature: createSignature)
         
-        let dm = TeamDataManager(teamID: id)
-        
         do {
+            let dm = try TeamDataManager(teamID: id)
+            
             try dm.create(team: team, creator: members[0], block: createBlock)
             let _ = try dm.fetchTeam()
             
