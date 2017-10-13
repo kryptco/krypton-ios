@@ -101,16 +101,9 @@ struct TeamIdentity:Jsonable {
         case secretBoxKey
     }
     
-    var createTeamResponse:CreateTeamResponse {
-        let keyAndTeamCheckpoint = KeyAndTeamCheckpoint(seed: keyPairSeed, teamPublicKey: initialTeamPublicKey, lastBlockHash: checkpoint)
-        return CreateTeamResponse(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: nil)
+    var keyAndTeamCheckpoint:KeyAndTeamCheckpoint {
+        return KeyAndTeamCheckpoint(seed: keyPairSeed, teamPublicKey: initialTeamPublicKey, lastBlockHash: checkpoint)
     }
-    
-    var adminKeyResponse:AdminKeyResponse {
-        let keyAndTeamCheckpoint = KeyAndTeamCheckpoint(seed: keyPairSeed, teamPublicKey: initialTeamPublicKey, lastBlockHash: checkpoint)
-        return AdminKeyResponse(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: nil)
-    }
-
     
     func lastBlockHash() throws -> Data? {
         return try dataManager.lastBlockHash()

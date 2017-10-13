@@ -172,7 +172,7 @@ class Silo {
         
         if request.sendACK {
             let arn = API.endpointARN ?? ""
-            let ack = Response(requestID: request.id, endpoint: arn, body: .ack(AckResponse()), approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            let ack = Response(requestID: request.id, endpoint: arn, body: .ack(.ok(AckResponse())), approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
             do {
                 try TransportControl.shared.send(ack, for: session)
             } catch (let e) {
@@ -231,8 +231,7 @@ class Silo {
                 throw KeyManager.Errors.keyDoesNotExist
             }
             
-            var sig:String?
-            var err:String?
+            var result:ResponseResult<SSHSignResponse>
             do {
                 
                 if signatureAllowed {
@@ -253,9 +252,10 @@ class Silo {
                     }
                     
                     // only place where signature should occur
-                    sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
+                    let signature = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
+                    result = .ok(SSHSignResponse(signature: signature))
                     
-                    LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
+                    LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: signature, displayName: signRequest.display), deviceName: session.pairing.name)
                 } else {
                     throw UserRejectedError()
                 }
@@ -263,22 +263,22 @@ class Silo {
             }
             catch let error as UserRejectedError {
                 LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
-                err = "\(error)"
+                result = .error("\(error)")
             }
             catch let error as HostMistmatchError {
                 LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
-                err = "\(error)"
+                result = .error("\(error)")
             }
             catch {
-                err = "\(error)"
+                result = .error("\(error)")
             }
             
-            responseType = .ssh(SignResponse(sig: sig, err: err))
+            responseType = .ssh(result)
 
             
         case .git(let gitSignRequest):
-            var sig:String?
-            var err:String?
+            var result:ResponseResult<GitSignResponse>
+            
             do {
                 if signatureAllowed {
                     // only place where git signature should occur
@@ -292,16 +292,16 @@ class Silo {
                         
                         let asciiArmoredSig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID)
                         let signature = asciiArmoredSig.packetData.toBase64()
-                        sig = signature
-                        
+                        result = .ok(GitSignResponse(signature: signature))
+
                         let commitHash = try commit.commitHash(asciiArmoredSignature: asciiArmoredSig.toString()).hex
                         LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: signature, commitHash: commitHash, commit: commit), deviceName: session.pairing.name)
                         
                     case .tag(let tag):
                         
                         let signature = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
-                        sig = signature
-                        
+                        result = .ok(GitSignResponse(signature: signature))
+
                         LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: signature, tag: tag), deviceName: session.pairing.name)
                     }
                     
@@ -318,10 +318,10 @@ class Silo {
                 }
                 
             }  catch {
-                err = "\(error)"
+                result = .error("\(error)")
             }
             
-            responseType = .git(GitSignResponse(sig: sig, err: err))
+            responseType = .git(result)
             
         case .me(let meRequest):
             let keyManager = try KeyManager.sharedInstance()
@@ -331,7 +331,10 @@ class Silo {
                 pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
             }
             
-            responseType = .me(MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
+            let me = MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(),
+                                                  publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(),
+                                                  pgpPublicKey: pgpPublicKey))
+            responseType = .me(.ok(me))
 
         case .adminKey, .createTeam, .noOp, .unpair:
             throw ResponseNotNeededError()
@@ -339,7 +342,11 @@ class Silo {
         
         let arn = API.endpointARN ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, body: responseType, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id,
+                                endpoint: arn,
+                                body: responseType,
+                                approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
+                                trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

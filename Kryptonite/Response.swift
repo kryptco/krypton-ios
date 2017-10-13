@@ -67,13 +67,13 @@ final class Response:Jsonable {
 struct MultipleResponsesError:Error {}
 
 enum ResponseBody {
-    case me(MeResponse)
-    case ssh(SignResponse)
-    case git(GitSignResponse)
-    case createTeam(CreateTeamResponse)
-    case adminKey(AdminKeyResponse)
-    case ack(AckResponse)
-    case unpair(UnpairResponse)
+    case me(ResponseResult<MeResponse>)
+    case ssh(ResponseResult<SSHSignResponse>)
+    case git(ResponseResult<GitSignResponse>)
+    case createTeam(ResponseResult<KeyAndTeamCheckpoint>)
+    case adminKey(ResponseResult<KeyAndTeamCheckpoint>)
+    case ack(ResponseResult<AckResponse>)
+    case unpair(ResponseResult<UnpairResponse>)
     
     init(json:Object) throws {
         
@@ -81,31 +81,31 @@ enum ResponseBody {
         
         // parse the requests
         if let json:Object = try? json ~> "me_response" {
-            responses.append(.me(try MeResponse(json: json)))
+            responses.append(.me(try ResponseResult<MeResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "sign_response" {
-            responses.append(.ssh(try SignResponse(json: json)))
+            responses.append(.ssh(try ResponseResult<SSHSignResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "git_sign_response" {
-            responses.append(.git(try GitSignResponse(json: json)))
+            responses.append(.git(try ResponseResult<GitSignResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "unpair_response" {
-            responses.append(.unpair(try UnpairResponse(json: json)))
+            responses.append(.unpair(try ResponseResult<UnpairResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "ack_response" {
-            responses.append(.ack(try AckResponse(json: json)))
+            responses.append(.ack(try ResponseResult<AckResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "create_team_response" {
-            responses.append(.createTeam(try CreateTeamResponse(json: json)))
+            responses.append(.createTeam(try ResponseResult<KeyAndTeamCheckpoint>(json: json)))
         }
 
         if let json:Object = try? json ~> "admin_key_response" {
-            responses.append(.adminKey(try AdminKeyResponse(json: json)))
+            responses.append(.adminKey(try ResponseResult<KeyAndTeamCheckpoint>(json: json)))
         }
 
         // if more than one request, it's an error
@@ -160,74 +160,66 @@ enum ResponseBody {
     }
 }
 
-//MARK: Responses
-struct SignResponse:Jsonable {
-    var signature:String?
-    var error:String?
-    
-    init(sig:String?, err:String? = nil) {
-        self.signature = sig
-        self.error = err
-    }
+//MARK: Response Results
+enum ResponseResult<T:Jsonable>:Jsonable {
+    case ok(T)
+    case error(String)
     
     init(json: Object) throws {
-        
-        if let sig:String = try? json ~> "signature" {
-            self.signature = sig
-        }
-        
         if let err:String = try? json ~> "error" {
-            self.error = err
+            self = .error(err)
+            return
         }
+        
+        self = try .ok(T(json: json))
     }
     
     var object: Object {
-        var map = [String:Any]()
-
-        if let sig = signature {
-            map["signature"] = sig
-        }
-        if let err = error {
-            map["error"] = err
-        }
-        return map
-    }
-}
-
-struct GitSignResponse:Jsonable {
-    var signature:String?
-    var error:String?
-    
-    init(sig:String?, err:String? = nil) {
-        self.signature = sig
-        self.error = err
-    }
-    
-    init(json: Object) throws {
-        
-        if let sig:String = try? json ~> "signature" {
-            self.signature = sig
-        }
-        
-        if let err:String = try? json ~> "error" {
-            self.error = err
+        switch self {
+        case .ok(let r):
+            return r.object
+        case .error(let err):
+            return ["error": err]
         }
     }
     
-    var object: Object {
-        var map = [String:Any]()
-        
-        if let sig = signature {
-            map["signature"] = sig
+    var error:String? {
+        switch self {
+        case .ok:
+            return nil
+        case .error(let e):
+            return e
         }
-        if let err = error {
-            map["error"] = err
-        }
-        return map
     }
 }
 
 
+struct SignatureResponse:Jsonable {
+    let signature:String
+
+    init(signature:String) {
+        self.signature = signature
+    }
+    
+    init(json: Object) throws {
+        try self.init(signature: json ~> "signature")
+    }
+    
+    var object: Object {
+        return ["signature": signature]
+    }
+}
+
+struct EmptyResponse:Jsonable {
+    init(){}
+    init(json: Object) throws { }
+    var object: Object {
+        return [:]
+    }
+}
+
+typealias SSHSignResponse = SignatureResponse
+typealias GitSignResponse = SignatureResponse
 
 // Me
 struct MeResponse:Jsonable {
@@ -284,25 +276,9 @@ struct MeResponse:Jsonable {
     }
 }
 
-// Unpair
-struct UnpairResponse:Jsonable {
-    init(){}
-    init(json: Object) throws {
+typealias UnpairResponse = EmptyResponse
+typealias AckResponse = EmptyResponse
 
-    }
-    var object: Object {
-        return [:]
-    }
-}
-
-// Ack
-struct AckResponse:Jsonable {
-    init(){}
-    init(json: Object) throws { }
-    var object: Object {
-        return [:]
-    }
-}
 
 // Team
 struct KeyAndTeamCheckpoint:Jsonable {
@@ -323,68 +299,11 @@ struct KeyAndTeamCheckpoint:Jsonable {
     }
     
     var object: Object {
-        return ["seed": seed.toBase64(),
-                "team_public_key": teamPublicKey.toBase64(),
-                "last_block_hash": lastBlockHash.toBase64()]
+        return ["key_and_team_checkpoint": [
+                    "seed": seed.toBase64(),
+                    "team_public_key": teamPublicKey.toBase64(),
+                    "last_block_hash": lastBlockHash.toBase64()]
+               ]
     }
 }
 
-
-struct CreateTeamResponse:Jsonable {
-    let keyAndTeamCheckpoint:KeyAndTeamCheckpoint?
-    let error:String?
-    
-    init(keyAndTeamCheckpoint:KeyAndTeamCheckpoint?, error:String?) {
-        self.keyAndTeamCheckpoint = keyAndTeamCheckpoint
-        self.error = error
-    }
-    
-    init(json: Object) throws {
-        let keyAndTeamCheckpoint:KeyAndTeamCheckpoint? = try? KeyAndTeamCheckpoint(json: json ~> "key_and_team_checkpoint")
-        let error:String? = try? json ~> "error"
-        
-        self.init(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: error)
-    }
-    
-    var object: Object {
-        var obj = Object()
-        
-        if let keyAndTeamCheckpoint = keyAndTeamCheckpoint {
-            obj["key_and_team_checkpoint"] = keyAndTeamCheckpoint.object
-        } else if let error = error {
-            obj["error"] = error
-        }
-        
-        return obj
-    }
-
-}
-
-struct AdminKeyResponse:Jsonable {
-    let keyAndTeamCheckpoint:KeyAndTeamCheckpoint?
-    let error:String?
-    
-    init(keyAndTeamCheckpoint:KeyAndTeamCheckpoint?, error:String?) {
-        self.keyAndTeamCheckpoint = keyAndTeamCheckpoint
-        self.error = error
-    }
-    
-    init(json: Object) throws {
-        let keyAndTeamCheckpoint:KeyAndTeamCheckpoint? = try? KeyAndTeamCheckpoint(json: json ~> "key_and_team_checkpoint")
-        let error:String? = try? json ~> "error"
-        
-        self.init(keyAndTeamCheckpoint: keyAndTeamCheckpoint, error: error)
-    }
-    
-    var object: Object {
-        var obj = Object()
-        
-        if let keyAndTeamCheckpoint = keyAndTeamCheckpoint {
-            obj["key_and_team_checkpoint"] = keyAndTeamCheckpoint.object
-        } else if let error = error {
-            obj["error"] = error
-        }
-        
-        return obj
-    }
-}

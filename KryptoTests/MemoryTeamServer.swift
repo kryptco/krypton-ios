@@ -49,23 +49,41 @@ class MemoryTeamServer {
     
     let mutex = Mutex()
     var teamChainLookup:[Data:TeamChain] = [:]
-    
+
+    /** Set & Lookup for Team Chains */
     func point(teamChain:TeamChain, to pointer:Data) {
         teamChainLookup[pointer] = teamChain
     }
+    
     
     func chain(for pointer:Data) -> TeamChain? {
         return teamChainLookup[pointer]
     }
     
+    
+    /** Team Data Chain **/
     class TeamChain {
         var teamIdentity:TeamIdentity
         let mutex = Mutex()
         
+        var logChains:[LogChain] = []
+        var logChainLookup:[Data:LogChain] = [:]
+
         init(teamIdentity:TeamIdentity) {
             self.teamIdentity = teamIdentity
         }
         
+        /** Set & Lookup Log Chains */
+        func point(teamChain:LogChain, to pointer:Data) {
+            logChainLookup[pointer] = teamChain
+        }
+
+        func chain(for pointer:Data) -> LogChain? {
+            return logChainLookup[pointer]
+        }
+        
+        
+        // read blocks
         func read(block: HashChain.Block) throws -> [HashChain.Block] {
             defer { mutex.unlock() }
             mutex.lock()
@@ -103,11 +121,16 @@ class MemoryTeamServer {
             return blocks
         }
         
+        // apend a block
         func append(block:HashChain.Block) throws {
             defer { mutex.unlock() }
             mutex.lock()
             
             try self.teamIdentity.verifyAndProcessBlocks(response: HashChain.Response(blocks: [block], hasMore: false))
+        }
+        
+        class LogChain {
+            
         }
     }
     
@@ -122,7 +145,7 @@ class MemoryTeamServer {
         let payload = try HashChain.Payload(jsonString: request.payload)
         switch payload {
         case .readBlocks(let read):
-            guard let teamChain = chain(for: read.teamPointer.pointer) else {
+            guard let teamChain:TeamChain = chain(for: read.teamPointer.pointer) else {
                 throw Errors.teamChainDoesNotExist
             }
             
@@ -139,7 +162,7 @@ class MemoryTeamServer {
             
             
         case .appendBlock(let append):
-            guard let teamChain = chain(for: append.lastBlockHash) else {
+            guard let teamChain:TeamChain = chain(for: append.lastBlockHash) else {
                 throw Errors.teamChainDoesNotExist
             }
             
@@ -217,6 +240,8 @@ class MemoryTeamServer {
 
         }
     }
+    
+
 }
 
 extension HashChain.TeamPointer {

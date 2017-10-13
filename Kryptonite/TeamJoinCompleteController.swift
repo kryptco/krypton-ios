@@ -105,7 +105,7 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     
             // 2. send the create team response
-                    let responseType = ResponseBody.createTeam(self.teamIdentity.createTeamResponse)
+                    let responseType = ResponseBody.createTeam(.ok(self.teamIdentity.keyAndTeamCheckpoint))
                     
                     let response = Response(requestID: request.id,
                                             endpoint: API.endpointARN ?? "",
