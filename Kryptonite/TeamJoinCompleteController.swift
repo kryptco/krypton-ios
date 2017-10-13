@@ -25,7 +25,7 @@ class TeamJoinCompleteController:KRBaseController {
 
     var joinType:TeamJoinType!
     var teamIdentity:TeamIdentity!
-    var createBlock:HashChain.Block!
+    var createBlock:SigChain.Block!
     var teamName:String?
     
     struct JoinWorkflowError:Error, CustomDebugStringConvertible  {
@@ -105,7 +105,8 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     
             // 2. send the create team response
-                    let responseType = ResponseBody.createTeam(.ok(self.teamIdentity.keyAndTeamCheckpoint))
+                    let createResponse = CreateTeamResponse(publicKey: service.teamIdentity.keyPair.publicKey, lastBlockHash: service.teamIdentity.checkpoint)
+                    let responseType = ResponseBody.createTeam(.ok(createResponse))
                     
                     let response = Response(requestID: request.id,
                                             endpoint: API.endpointARN ?? "",

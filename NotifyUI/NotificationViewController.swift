@@ -62,7 +62,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
                 case .tag(let tag):
                     showView(type: ContainerType.tag(tag), deviceName: sessionName)
                 }
-            case .adminKey, .createTeam, .me, .noOp, .unpair:
+            case .decryptLog, .teamOperation, .readTeam, .createTeam, .me, .noOp, .unpair:
                 throw InvalidNotificationError.unexpectedRequestBody(sessionName)
             }
             

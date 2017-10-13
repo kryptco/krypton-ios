@@ -1,5 +1,5 @@
 //
-//  HashChain+WriteLog.swift
+//  SigChain+WriteLog.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 9/25/17.
@@ -12,29 +12,29 @@ extension TeamIdentity {
     mutating func writeLog(data:Data) throws {
         //TODO: check indeed that this last block hash reflects what's in the database
         guard let lastLogBlockHash = self.logCheckpoint else {
-            throw HashChain.Errors.missingLastLogBlockHash
+            throw SigChain.Errors.missingLastLogBlockHash
         }
         
         guard let logCiphertext:Data = try KRSodium.shared().secretBox.seal(message: data, secretKey: self.logEncryptionKey) else {
-            throw HashChain.Errors.logEncryptionFailed
+            throw SigChain.Errors.logEncryptionFailed
         }
         
-        let encryptedLog = HashChain.LogOperation.encryptLog(HashChain.EncryptedLog(ciphertext: logCiphertext))
-        let appendLogBLock = HashChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: encryptedLog)
-        let payload = HashChain.Payload.appendLogBlock(appendLogBLock)
+        let encryptedLog = SigChain.LogOperation.encryptLog(SigChain.EncryptedLog(ciphertext: logCiphertext))
+        let appendLogBLock = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: encryptedLog)
+        let payload = SigChain.Payload.appendLogBlock(appendLogBLock)
         let payloadData = try payload.jsonData()
         
         // sign the payload
         guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
             else {
-                throw HashChain.Errors.payloadSignatureFailed
+                throw SigChain.Errors.payloadSignatureFailed
         }
         
         // send the payload request
         let payloadDataString = try payloadData.utf8String()
         
         // add the log block
-        let logBlock = HashChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
+        let logBlock = SigChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
         try dataManager.appendLog(block: logBlock)
         self.logCheckpoint = logBlock.hash()
     }

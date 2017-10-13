@@ -66,7 +66,7 @@ struct Properties {
         case prod = "https://api-prod.krypt.co/command"
     }
     
-    struct HashChainUpdateCheckInterval {
+    struct SigChainUpdateCheckInterval {
         static var foreground:TimeInterval {
             return TimeSeconds.hour.rawValue
         }

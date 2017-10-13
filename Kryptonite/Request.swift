@@ -52,15 +52,19 @@ enum RequestBody:Jsonable {
     case me(MeRequest)
     case ssh(SignRequest)
     case git(GitSignRequest)
-    case createTeam(CreateTeamRequest)
-    case adminKey(AdminKeyRequest)
     case unpair(UnpairRequest)
     case noOp
     
+    // team
+    case createTeam(CreateTeamRequest)
+    case readTeam(ReadTeamRequest)
+    case teamOperation(TeamOperationRequest)
+    case decryptLog(LogDecryptionRequest)
+
     
     var isApprovable:Bool {
         switch self {
-        case .ssh, .git, .createTeam, .adminKey:
+        case .ssh, .git, .createTeam, .readTeam, .teamOperation, .decryptLog:
             return true
         case .createTeam, .me, .unpair, .noOp:
             return false
@@ -93,8 +97,16 @@ enum RequestBody:Jsonable {
             requests.append(.createTeam(try CreateTeamRequest(json: json)))
         }
         
-        if let json:Object = try? json ~> "admin_key_request" {
-            requests.append(.adminKey(try AdminKeyRequest(json: json)))
+        if let json:Object = try? json ~> "read_team_request" {
+            requests.append(.readTeam(try ReadTeamRequest(json: json)))
+        }
+
+        if let json:Object = try? json ~> "team_operation_request" {
+            requests.append(.teamOperation(try TeamOperationRequest(json: json)))
+        }
+
+        if let json:Object = try? json ~> "log_decryption_request" {
+            requests.append(.decryptLog(try LogDecryptionRequest(json: json)))
         }
 
         
@@ -125,8 +137,12 @@ enum RequestBody:Jsonable {
             json["git_sign_request"] = g.object
         case .createTeam(let c):
             json["create_team_request"] = c.object
-        case .adminKey(let a):
-            json["admin_key_request"] = a.object
+        case .readTeam(let r):
+            json["read_team_request"] = r.object
+        case .teamOperation(let to):
+            json["team_operation_request"] = to.object
+        case .decryptLog(let dl):
+            json["log_decryption_request"] = dl.object
         case .unpair(let u):
             json["unpair_request"] = u.object
         case .noOp:
@@ -149,8 +165,12 @@ enum RequestBody:Jsonable {
             }
         case .createTeam:
             return "create-team"
-        case .adminKey:
-            return "admin-key"
+        case .readTeam:
+            return "read-team"
+        case .teamOperation:
+            return "team-operation"
+        case .decryptLog:
+            return "decrypt-log"
         case .me:
             return "me"
         case .noOp:
@@ -308,24 +328,5 @@ struct UnpairRequest:Jsonable {
     var object: Object {return [:]}
 }
 
-// Team
-struct CreateTeamRequest:Jsonable {
-    let name:String
-    
-    init(json: Object) throws {
-        name = try json ~> "name"
-    }
-    
-    var object: Object {
-        return ["name": name]
-    }
-}
-
-struct AdminKeyRequest:Jsonable {
-    init(json: Object) throws {}
-    var object: Object {
-        return [:]
-    }
-}
 
 

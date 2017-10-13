@@ -17,12 +17,12 @@ class TeamServerHTTP:TeamServiceAPI {
     func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
         let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
         
-        log("[IN] HashChainSVC\n\t\(object)")
+        log("[IN] SigChainSVC\n\t\(object)")
         
         req.start { response in
             do {
                 let serverResponse = try TeamService.ServerResponse<T>(jsonData: response.data)
-                log("[OUT] HashChainSVC\n\t\(serverResponse)")
+                log("[OUT] SigChainSVC\n\t\(serverResponse)")
                 
                 onCompletion(serverResponse)
             } catch {

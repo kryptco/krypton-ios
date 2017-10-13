@@ -116,7 +116,9 @@ class Silo {
         case .noOp:
             return
             
-        case .adminKey,
+        case .decryptLog,
+             .teamOperation,
+             .readTeam,
              .createTeam,
              .ssh where Policy.needsUserApproval(for: session, and: request.body),
              .git where Policy.needsUserApproval(for: session, and: request.body):
@@ -158,7 +160,7 @@ class Silo {
                 Policy.notifyUser(session: session, request: request)
             }
 
-        case .adminKey, .createTeam, .me, .ack, .unpair:
+        case .decryptLog, .teamOperation, .readTeam, .createTeam, .me, .ack, .unpair:
             break
         }
         
@@ -336,7 +338,7 @@ class Silo {
                                                   pgpPublicKey: pgpPublicKey))
             responseType = .me(.ok(me))
 
-        case .adminKey, .createTeam, .noOp, .unpair:
+        case .decryptLog, .readTeam, .teamOperation, .createTeam, .noOp, .unpair:
             throw ResponseNotNeededError()
         }
         

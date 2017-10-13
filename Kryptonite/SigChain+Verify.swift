@@ -1,5 +1,5 @@
 //
-//  HashChain+Verify.swift
+//  SigChain+Verify.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 8/4/17.
@@ -11,7 +11,7 @@ import Foundation
 /// verify incoming blocks with an existing team identity
 extension TeamIdentity {
     
-    mutating func verifyAndProcessBlocks(response:HashChain.Response) throws {
+    mutating func verifyAndProcessBlocks(response:SigChain.Response) throws {
         
         let blocks = response.blocks
         
@@ -22,27 +22,27 @@ extension TeamIdentity {
         var blockStart = 0
         if lastBlockHash == nil {
             guard blocks.count > 0 else {
-                throw HashChain.Errors.missingCreateChain
+                throw SigChain.Errors.missingCreateChain
             }
             
             let createBlock = blocks[0]
             
             // 1. ensure the create block is a create chain payload
-            guard case .createChain(let createChain) = try HashChain.Payload(jsonString: createBlock.payload)
+            guard case .createChain(let createChain) = try SigChain.Payload(jsonString: createBlock.payload)
                 else {
-                    throw HashChain.Errors.missingCreateChain
+                    throw SigChain.Errors.missingCreateChain
             }
 
             // 2. verify the block signature
             guard try KRSodium.shared().sign.verify(message: createBlock.payload.utf8Data(), publicKey: initialTeamPublicKey, signature: createBlock.signature)
                 else {
-                    throw HashChain.Errors.badSignature
+                    throw SigChain.Errors.badSignature
             }
             
             
             // 3. add the original admin as a public key
             guard createChain.creator.publicKey == initialTeamPublicKey else {
-                throw HashChain.Errors.teamPublicKeyMismatch
+                throw SigChain.Errors.teamPublicKeyMismatch
             }
             
             updatedTeam = Team(info: createChain.teamInfo)
@@ -60,8 +60,8 @@ extension TeamIdentity {
             let nextBlock = blocks[i]
             
             // 1. Ensure it's an append block
-            guard case .appendBlock(let appendBlock) = try HashChain.Payload(jsonString: nextBlock.payload) else {
-                throw HashChain.Errors.unexpectedBlock
+            guard case .appendBlock(let appendBlock) = try SigChain.Payload(jsonString: nextBlock.payload) else {
+                throw SigChain.Errors.unexpectedBlock
             }
             
             // 2. Ensure the signer has permission
@@ -73,7 +73,7 @@ extension TeamIdentity {
                 publicKey = noncePublicKey
             } else {
                 guard try dataManager.isAdmin(for: nextBlock.publicKey) else {
-                    throw HashChain.Errors.signerNotAdmin
+                    throw SigChain.Errors.signerNotAdmin
                 }
                 
                 publicKey = nextBlock.publicKey
@@ -81,7 +81,7 @@ extension TeamIdentity {
             
             // 3. Ensure last hash matches
             guard appendBlock.lastBlockHash == lastBlockHash else {
-                throw HashChain.Errors.badBlockHash
+                throw SigChain.Errors.badBlockHash
             }
             
             
@@ -91,7 +91,7 @@ extension TeamIdentity {
                                                              signature: nextBlock.signature)
             guard verified
                 else {
-                    throw HashChain.Errors.badSignature
+                    throw SigChain.Errors.badSignature
             }
             
             
@@ -130,35 +130,35 @@ extension TeamIdentity {
                 try dataManager.append(block: nextBlock)
                 
                 // wrap the log encryption key for each admin
-                var wrappedKeys:[HashChain.WrappedKey] = []
+                var wrappedKeys:[SigChain.WrappedKey] = []
                 
                 for admin in try dataManager.fetchAdmins() {
                     let ciphertext = try self.logEncryptionKey.wrap(to: admin.encryptionPublicKey)
-                    let wrappedKey = HashChain.WrappedKey(publicKey: admin.encryptionPublicKey, ciphertext: ciphertext)
+                    let wrappedKey = SigChain.WrappedKey(publicKey: admin.encryptionPublicKey, ciphertext: ciphertext)
                     wrappedKeys.append(wrappedKey)
                 }
                 
                 // wrap the log encryption key for self
                 let ciphertext = try self.logEncryptionKey.wrap(to: self.encryptionKeyPair.publicKey)
-                let selfWrappedKey = HashChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
+                let selfWrappedKey = SigChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
                 wrappedKeys.append(selfWrappedKey)
 
                 // create the log chain
-                let createLogChain = HashChain.CreateLogChain(teamPointer: HashChain.TeamPointer.lastBlockHash(nextBlock.hash()), wrappedKeys: wrappedKeys)
-                let payload = HashChain.Payload.createLogChain(createLogChain)
+                let createLogChain = SigChain.CreateLogChain(teamPointer: SigChain.TeamPointer.lastBlockHash(nextBlock.hash()), wrappedKeys: wrappedKeys)
+                let payload = SigChain.Payload.createLogChain(createLogChain)
                 let payloadData = try payload.jsonData()
                 
                 // sign the payload
                 guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                 else {
-                    throw HashChain.Errors.payloadSignatureFailed
+                    throw SigChain.Errors.payloadSignatureFailed
                 }
                 
                 // send the payload request
                 let payloadDataString = try payloadData.utf8String()
 
                 // add log block
-                let logBlock = HashChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
+                let logBlock = SigChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
                 try dataManager.appendLog(block: logBlock)
                 self.logCheckpoint = logBlock.hash()
 
@@ -177,29 +177,29 @@ extension TeamIdentity {
                     
                     // fetch the admin's member identity
                     guard let adminIdentity = try dataManager.fetchMemberIdentity(for: admin) else {
-                        throw HashChain.Errors.memberDoesNotExist
+                        throw SigChain.Errors.memberDoesNotExist
                     }
 
                     // wrap the log encryption key to this new member
                     let ciphertext = try self.logEncryptionKey.wrap(to: adminIdentity.encryptionPublicKey)
-                    let wrappedKey = HashChain.WrappedKey(publicKey: adminIdentity.encryptionPublicKey, ciphertext: ciphertext)
+                    let wrappedKey = SigChain.WrappedKey(publicKey: adminIdentity.encryptionPublicKey, ciphertext: ciphertext)
                     
                     // prepare the addWrappedKeys payload
-                    let addWrappedKeys = HashChain.LogOperation.addWrappedKeys([wrappedKey])
-                    let payload = HashChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: addWrappedKeys)
+                    let addWrappedKeys = SigChain.LogOperation.addWrappedKeys([wrappedKey])
+                    let payload = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: addWrappedKeys)
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
                     guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                         else {
-                            throw HashChain.Errors.payloadSignatureFailed
+                            throw SigChain.Errors.payloadSignatureFailed
                     }
                     
                     // send the payload request
                     let payloadDataString = try payloadData.utf8String()
                     
                     // add the log block
-                    let logBlock = HashChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
+                    let logBlock = SigChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
                     try dataManager.appendLog(block: logBlock)
                     self.logCheckpoint = logBlock.hash()
                 }
@@ -214,7 +214,7 @@ extension TeamIdentity {
                     
                     // rotate the log encryption key
                     guard let newLogEncryptionKey = try KRSodium.shared().secretBox.key() else {
-                        throw HashChain.Errors.rotateKeyGeneration
+                        throw SigChain.Errors.rotateKeyGeneration
                     }
                     
                     // set the new log encryption key
@@ -223,35 +223,35 @@ extension TeamIdentity {
                     // re-wrap the new log encryption key remaining admins
                     let existingAdmins = try dataManager.fetchAdmins().filter({ $0.publicKey != memberPublicKey })
                     
-                    var wrappedKeys:[HashChain.WrappedKey] = []
+                    var wrappedKeys:[SigChain.WrappedKey] = []
                     for existingAdmin in existingAdmins {
                         let ciphertext = try newLogEncryptionKey.wrap(to: existingAdmin.encryptionPublicKey)
-                        let wrappedKey = HashChain.WrappedKey(publicKey: existingAdmin.encryptionPublicKey, ciphertext: ciphertext)
+                        let wrappedKey = SigChain.WrappedKey(publicKey: existingAdmin.encryptionPublicKey, ciphertext: ciphertext)
                         wrappedKeys.append(wrappedKey)
                     }
                     
                     // wrap the log encryption key for self
                     let ciphertext = try self.logEncryptionKey.wrap(to: self.encryptionKeyPair.publicKey)
-                    let selfWrappedKey = HashChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
+                    let selfWrappedKey = SigChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
                     wrappedKeys.append(selfWrappedKey)
 
                     
                     // prepare the addWrappedKeys payload
-                    let rotateKey = HashChain.LogOperation.rotateKey(wrappedKeys)
-                    let payload = HashChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
+                    let rotateKey = SigChain.LogOperation.rotateKey(wrappedKeys)
+                    let payload = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
                     guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                         else {
-                            throw HashChain.Errors.payloadSignatureFailed
+                            throw SigChain.Errors.payloadSignatureFailed
                     }
                     
                     // send the payload request
                     let payloadDataString = try payloadData.utf8String()
                     
                     // add the log block
-                    let logBlock = HashChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
+                    let logBlock = SigChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
                     try dataManager.appendLog(block: logBlock)
                     self.logCheckpoint = logBlock.hash()
                 }
@@ -266,7 +266,7 @@ extension TeamIdentity {
                     
                     // rotate the log encryption key
                     guard let newLogEncryptionKey = try KRSodium.shared().secretBox.key() else {
-                        throw HashChain.Errors.rotateKeyGeneration
+                        throw SigChain.Errors.rotateKeyGeneration
                     }
                     
                     // set the new log encryption key
@@ -275,34 +275,34 @@ extension TeamIdentity {
                     // re-wrap the new log encryption key remaining admins
                     let existingAdmins = try dataManager.fetchAdmins().filter({ $0.publicKey != admin })
                     
-                    var wrappedKeys:[HashChain.WrappedKey] = []
+                    var wrappedKeys:[SigChain.WrappedKey] = []
                     for existingAdmin in existingAdmins {
                         let ciphertext = try newLogEncryptionKey.wrap(to: existingAdmin.encryptionPublicKey)
-                        let wrappedKey = HashChain.WrappedKey(publicKey: existingAdmin.encryptionPublicKey, ciphertext: ciphertext)
+                        let wrappedKey = SigChain.WrappedKey(publicKey: existingAdmin.encryptionPublicKey, ciphertext: ciphertext)
                         wrappedKeys.append(wrappedKey)
                     }
                     
                     // wrap the log encryption key for self
                     let ciphertext = try self.logEncryptionKey.wrap(to: self.encryptionKeyPair.publicKey)
-                    let selfWrappedKey = HashChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
+                    let selfWrappedKey = SigChain.WrappedKey(publicKey: self.encryptionKeyPair.publicKey, ciphertext: ciphertext)
                     wrappedKeys.append(selfWrappedKey)
                     
                     // prepare the addWrappedKeys payload
-                    let rotateKey = HashChain.LogOperation.rotateKey(wrappedKeys)
-                    let payload = HashChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
+                    let rotateKey = SigChain.LogOperation.rotateKey(wrappedKeys)
+                    let payload = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
                     guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                         else {
-                            throw HashChain.Errors.payloadSignatureFailed
+                            throw SigChain.Errors.payloadSignatureFailed
                     }
                     
                     // send the payload request
                     let payloadDataString = try payloadData.utf8String()
                     
                     // add the log block
-                    let logBlock = HashChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
+                    let logBlock = SigChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
                     try dataManager.appendLog(block: logBlock)
                     self.logCheckpoint = logBlock.hash()
                 }

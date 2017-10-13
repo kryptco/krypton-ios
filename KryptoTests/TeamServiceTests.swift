@@ -15,7 +15,7 @@ import JSON
 class TeamServiceTests: XCTestCase {
 
     var teamIdentity:TeamIdentity!
-    var createBlock:HashChain.Block!
+    var createBlock:SigChain.Block!
     var server = MemoryTeamServerHTTP()
     
     override func setUp() {

@@ -91,7 +91,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
             }
             
             do {
-                let (identity, createBlock) = try TeamIdentity.newAdmin(email: email, teamName: create.name)
+                let (identity, createBlock) = try TeamIdentity.newAdmin(email: email, teamName: create.teamInfo.name)
                 self.performSegue(withIdentifier: "showTeamsComplete", sender: (identity, createBlock))
             } catch {
                 self.showWarning(title: "Error", body: "Could not create team identity. \(error). Please try again.")
@@ -158,7 +158,7 @@ class TeamInvitationController:KRBaseController, UITextFieldDelegate {
             
             if let identity = sender as? TeamIdentity {
                 completeController.teamIdentity = identity
-            } else if let (identity, createBlock) = sender as? (TeamIdentity, HashChain.Block) {
+            } else if let (identity, createBlock) = sender as? (TeamIdentity, SigChain.Block) {
                 completeController.teamIdentity = identity
                 completeController.createBlock = createBlock
             }

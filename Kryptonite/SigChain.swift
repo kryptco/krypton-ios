@@ -1,5 +1,5 @@
 //
-//  HashChain.swift
+//  SigChain.swift
 //  Kryptonite
 //
 //  Created by Alex Grinman on 7/29/17.
@@ -9,9 +9,9 @@
 import Foundation
 import JSON
 
-class HashChain {
+class SigChain {
     
-    /// A request to the HashChain service
+    /// A request to the SigChain service
     struct Request:Jsonable {
         let publicKey:Data
         let payload:String
@@ -64,7 +64,7 @@ class HashChain {
         case logEncryptionFailed
     }
 
-    /// A response from the HashChain service
+    /// A response from the SigChain service
     struct Response:JsonReadable {
         let blocks:[Block]
         let hasMore:Bool
@@ -255,7 +255,7 @@ class HashChain {
     }
     
     
-    /// Types of HashChain operations
+    /// Types of SigChain operations
     enum Operation:Jsonable {
         case inviteMember(MemberInvitation)
         case cancelInvite(MemberInvitation)

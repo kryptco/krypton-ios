@@ -100,11 +100,7 @@ struct TeamIdentity:Jsonable {
         case signingError
         case secretBoxKey
     }
-    
-    var keyAndTeamCheckpoint:KeyAndTeamCheckpoint {
-        return KeyAndTeamCheckpoint(seed: keyPairSeed, teamPublicKey: initialTeamPublicKey, lastBlockHash: checkpoint)
-    }
-    
+        
     func lastBlockHash() throws -> Data? {
         return try dataManager.lastBlockHash()
     }
@@ -112,7 +108,7 @@ struct TeamIdentity:Jsonable {
     /**
         Create a new identity with an email for use with `team`
      */
-    static func newAdmin(email:String, teamName:String) throws -> (TeamIdentity, HashChain.Block) {
+    static func newAdmin(email:String, teamName:String) throws -> (TeamIdentity, SigChain.Block) {
         let id = try Data.random(size: 32)
         let teamID = try Data.random(size: 32)
         let keyPairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
@@ -141,8 +137,8 @@ struct TeamIdentity:Jsonable {
 
         
         // create the first block
-        let createChain = HashChain.CreateChain(creator: creator, teamInfo: Team.Info(name: teamName))
-        let payload = HashChain.Payload.createChain(createChain)
+        let createChain = SigChain.CreateChain(creator: creator, teamInfo: Team.Info(name: teamName))
+        let payload = SigChain.Payload.createChain(createChain)
         let payloadData = try payload.jsonData()
         
         // sign the payload
@@ -152,7 +148,7 @@ struct TeamIdentity:Jsonable {
         }
         
         // create the block
-        let createBlock = try HashChain.Block(publicKey: keyPair.publicKey, payload: payloadData.utf8String(), signature: signature)
+        let createBlock = try SigChain.Block(publicKey: keyPair.publicKey, payload: payloadData.utf8String(), signature: signature)
         let checkpoint = createBlock.hash()
         
         let mutableData = MutableData(checkpoint: checkpoint, logCheckpoint: nil, logEncryptionKey: logEncryptionKey)

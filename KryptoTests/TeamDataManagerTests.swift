@@ -21,9 +21,9 @@ class TeamDataManagerTests: XCTestCase {
     var members:[Team.MemberIdentity]!
     var team:Team!
     
-    var randomBlock:HashChain.Block {
+    var randomBlock:SigChain.Block {
         let randomPayload = try! Data.random(size: 256).toBase64()
-        return try! HashChain.Block(publicKey:teamPublicKey, payload: randomPayload, signature: Data.random(size: 256))
+        return try! SigChain.Block(publicKey:teamPublicKey, payload: randomPayload, signature: Data.random(size: 256))
     }
     
     override func setUp() {
@@ -66,8 +66,8 @@ class TeamDataManagerTests: XCTestCase {
             XCTFail("\(error)")
         }
         
-        let b1 = HashChain.Block(publicKey: teamPublicKey, payload: "some 1", signature: try! Data.random(size: 64))
-        let b2 = HashChain.Block(publicKey: teamPublicKey, payload: "some 2", signature: try! Data.random(size: 64))
+        let b1 = SigChain.Block(publicKey: teamPublicKey, payload: "some 1", signature: try! Data.random(size: 64))
+        let b2 = SigChain.Block(publicKey: teamPublicKey, payload: "some 2", signature: try! Data.random(size: 64))
 
         do {
             let dm1 = try TeamDataManager(teamID: id)
@@ -228,9 +228,9 @@ class TeamDataManagerTests: XCTestCase {
     
     func testPinnedHosts() {
         let team = Team(info: Team.Info(name: "test team"))
-        let createPayload = try! HashChain.CreateChain(creator: members[0], teamInfo: team.info).jsonString()
+        let createPayload = try! SigChain.CreateChain(creator: members[0], teamInfo: team.info).jsonString()
         let createSignature = try! Data.random(size: 64)
-        let createBlock = HashChain.Block(publicKey: members[0].publicKey, payload: createPayload, signature: createSignature)
+        let createBlock = SigChain.Block(publicKey: members[0].publicKey, payload: createPayload, signature: createSignature)
         
         do {
             let dm = try TeamDataManager(teamID: id)

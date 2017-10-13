@@ -84,12 +84,12 @@ class MemoryTeamServer {
         
         
         // read blocks
-        func read(block: HashChain.Block) throws -> [HashChain.Block] {
+        func read(block: SigChain.Block) throws -> [SigChain.Block] {
             defer { mutex.unlock() }
             mutex.lock()
             
             // ensure it's a read block
-            guard case .readBlocks(let read) = try HashChain.Payload(jsonString: block.payload) else {
+            guard case .readBlocks(let read) = try SigChain.Payload(jsonString: block.payload) else {
                 throw Errors.wrongBlockTypeInternal
             }
             
@@ -110,7 +110,7 @@ class MemoryTeamServer {
                 throw Errors.badSignature
             }
             
-            var blocks:[HashChain.Block]
+            var blocks:[SigChain.Block]
             switch read.teamPointer {
             case .publicKey:
                 blocks = try teamIdentity.dataManager.fetchAll()
@@ -122,11 +122,11 @@ class MemoryTeamServer {
         }
         
         // apend a block
-        func append(block:HashChain.Block) throws {
+        func append(block:SigChain.Block) throws {
             defer { mutex.unlock() }
             mutex.lock()
             
-            try self.teamIdentity.verifyAndProcessBlocks(response: HashChain.Response(blocks: [block], hasMore: false))
+            try self.teamIdentity.verifyAndProcessBlocks(response: SigChain.Response(blocks: [block], hasMore: false))
         }
         
         class LogChain {
@@ -138,11 +138,11 @@ class MemoryTeamServer {
         defer { mutex.unlock() }
         mutex.lock()
         
-        let request = try HashChain.Request(json: object)
-        let block = HashChain.Block(publicKey: request.publicKey, payload: request.payload, signature: request.signature)
+        let request = try SigChain.Request(json: object)
+        let block = SigChain.Block(publicKey: request.publicKey, payload: request.payload, signature: request.signature)
         
         // get the payload
-        let payload = try HashChain.Payload(jsonString: request.payload)
+        let payload = try SigChain.Payload(jsonString: request.payload)
         switch payload {
         case .readBlocks(let read):
             guard let teamChain:TeamChain = chain(for: read.teamPointer.pointer) else {
@@ -152,7 +152,7 @@ class MemoryTeamServer {
             let blocks = try teamChain.read(block: block)
             
             // hash blocks response
-            let response = HashChain.Response(blocks: blocks, hasMore: false)
+            let response = SigChain.Response(blocks: blocks, hasMore: false)
             
             guard let responseType = response as? T else {
                 throw Errors.unexpectedServerResponseType
@@ -244,7 +244,7 @@ class MemoryTeamServer {
 
 }
 
-extension HashChain.TeamPointer {
+extension SigChain.TeamPointer {
     
     var pointer:Data {
         switch self {

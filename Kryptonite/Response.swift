@@ -70,11 +70,15 @@ enum ResponseBody {
     case me(ResponseResult<MeResponse>)
     case ssh(ResponseResult<SSHSignResponse>)
     case git(ResponseResult<GitSignResponse>)
-    case createTeam(ResponseResult<KeyAndTeamCheckpoint>)
-    case adminKey(ResponseResult<KeyAndTeamCheckpoint>)
     case ack(ResponseResult<AckResponse>)
     case unpair(ResponseResult<UnpairResponse>)
     
+    // team
+    case createTeam(ResponseResult<CreateTeamResponse>)
+    case readTeam(ResponseResult<ReadTeamResponse>)
+    case teamOperation(ResponseResult<TeamOperationResponse>)
+    case decryptLog(ResponseResult<LogDecryptionResponse>)
+
     init(json:Object) throws {
         
         var responses:[ResponseBody] = []
@@ -101,11 +105,19 @@ enum ResponseBody {
         }
         
         if let json:Object = try? json ~> "create_team_response" {
-            responses.append(.createTeam(try ResponseResult<KeyAndTeamCheckpoint>(json: json)))
+            responses.append(.createTeam(try ResponseResult<CreateTeamResponse>(json: json)))
         }
 
-        if let json:Object = try? json ~> "admin_key_response" {
-            responses.append(.adminKey(try ResponseResult<KeyAndTeamCheckpoint>(json: json)))
+        if let json:Object = try? json ~> "read_team_response" {
+            responses.append(.readTeam(try ResponseResult<ReadTeamResponse>(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "team_operation_response" {
+            responses.append(.teamOperation(try ResponseResult<TeamOperationResponse>(json: json)))
+        }
+
+        if let json:Object = try? json ~> "log_decryption_response" {
+            responses.append(.decryptLog(try ResponseResult<LogDecryptionResponse>(json: json)))
         }
 
         // if more than one request, it's an error
@@ -127,14 +139,19 @@ enum ResponseBody {
             json["sign_response"] = s.object
         case .git(let g):
             json["git_sign_response"] = g.object
-        case .createTeam(let c):
-            json["create_team_response"] = c.object
-        case .adminKey(let a):
-            json["admin_key_response"] = a.object
         case .ack(let a):
             json["ack_response"] = a.object
         case .unpair(let u):
             json["unpair_response"] = u.object
+            
+        case .createTeam(let c):
+            json["create_team_response"] = c.object
+        case .readTeam(let r):
+            json["read_team_response"] = r.object
+        case .teamOperation(let op):
+            json["team_operation_response"] = op.object
+        case .decryptLog(let dl):
+            json["log_decryption_response"] = dl.object
         }
         
         return json
@@ -151,9 +168,15 @@ enum ResponseBody {
         case .createTeam(let createTeam):
             return createTeam.error
         
-        case .adminKey(let adminKey):
-            return adminKey.error
+        case .readTeam(let read):
+            return read.error
             
+        case .teamOperation(let teamOp):
+            return teamOp.error
+        
+        case .decryptLog(let decryptLog):
+            return decryptLog.error
+        
         case .me, .unpair, .ack:
             return nil
         }
@@ -280,30 +303,4 @@ typealias UnpairResponse = EmptyResponse
 typealias AckResponse = EmptyResponse
 
 
-// Team
-struct KeyAndTeamCheckpoint:Jsonable {
-    let seed:Data
-    let teamPublicKey:SodiumSignPublicKey
-    let lastBlockHash:Data
-    
-    init(seed:Data, teamPublicKey:SodiumSignPublicKey, lastBlockHash:Data) {
-        self.seed = seed
-        self.teamPublicKey = teamPublicKey
-        self.lastBlockHash = lastBlockHash
-    }
-    
-    init(json: Object) throws {
-        try self.init(seed: ((json ~> "seed") as String).fromBase64(),
-                      teamPublicKey: ((json ~> "team_public_key") as String).fromBase64(),
-                      lastBlockHash: ((json ~> "last_block_hash") as String).fromBase64())
-    }
-    
-    var object: Object {
-        return ["key_and_team_checkpoint": [
-                    "seed": seed.toBase64(),
-                    "team_public_key": teamPublicKey.toBase64(),
-                    "last_block_hash": lastBlockHash.toBase64()]
-               ]
-    }
-}
 

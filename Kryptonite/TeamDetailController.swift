@@ -25,7 +25,7 @@ class TeamDetailController: KRBaseTableController {
 
     var identity:TeamIdentity!
     
-    var blocks:[HashChain.Payload] = []
+    var blocks:[SigChain.Payload] = []
     var members:[Team.MemberIdentity] = []
     var hosts:[SSHHostKey] = []
     
@@ -125,7 +125,7 @@ class TeamDetailController: KRBaseTableController {
         
         do {
             self.blocks = try identity.dataManager.fetchAll().map {
-                try HashChain.Payload(jsonString: $0.payload)
+                try SigChain.Payload(jsonString: $0.payload)
             }
             self.members = try identity.dataManager.fetchAll()
             self.hosts = try identity.dataManager.fetchAll()
@@ -313,7 +313,7 @@ extension Team.PolicySettings {
     }
 }
 
-extension HashChain.TeamPointer:CustomStringConvertible {
+extension SigChain.TeamPointer:CustomStringConvertible {
     var description:String {
         switch self {
         case .publicKey(let pub):
@@ -323,7 +323,7 @@ extension HashChain.TeamPointer:CustomStringConvertible {
         }
     }
 }
-extension HashChain.Payload {
+extension SigChain.Payload {
 
     var eventLogDetails:(title:String, detail:String) {
         switch self {
@@ -403,7 +403,7 @@ class TeamEventLogCell:UITableViewCell {
     @IBOutlet weak var topLine:UIView!
     @IBOutlet weak var bottomLine:UIView!
 
-    func set(payload:HashChain.Payload, index:Int, count:Int) {
+    func set(payload:SigChain.Payload, index:Int, count:Int) {
         let (title, detail) = payload.eventLogDetails
         eventName.text = title
         eventDetail.text = detail

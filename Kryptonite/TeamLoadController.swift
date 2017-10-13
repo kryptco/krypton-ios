@@ -56,7 +56,7 @@ class TeamLoadController:KRBaseController, UITextFieldDelegate {
                 return
             }
             
-            self.teamName = create.name
+            self.teamName = create.teamInfo.name
             self.loadCreate()
         }
     }

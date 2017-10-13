@@ -12,7 +12,7 @@ import JSON
 
 //MARK: Core Data Types
 extension DataBlock {
-    func block() throws -> HashChain.Block {
+    func block() throws -> SigChain.Block {
         guard
             let publicKey = publicKey as Data?,
             let payload = payload,
@@ -21,10 +21,10 @@ extension DataBlock {
             throw TeamDataManager.Errors.missingObjectField
         }
         
-        return HashChain.Block(publicKey: publicKey, payload: payload, signature: signature)
+        return SigChain.Block(publicKey: publicKey, payload: payload, signature: signature)
     }
     
-    convenience init(block:HashChain.Block, helper context:NSManagedObjectContext) {
+    convenience init(block:SigChain.Block, helper context:NSManagedObjectContext) {
         self.init(helper: context)
         self.publicKey = block.publicKey as NSData
         self.payload = block.payload
@@ -40,7 +40,7 @@ extension DataBlock {
 }
 
 extension DataLogBlock {
-    func block() throws -> HashChain.LogBlock {
+    func block() throws -> SigChain.LogBlock {
         guard
             let payload = payload,
             let signature = signature as Data?,
@@ -49,10 +49,10 @@ extension DataLogBlock {
             throw TeamDataManager.Errors.missingObjectField
         }
         
-        return HashChain.LogBlock(payload: payload, signature: signature, log: log)
+        return SigChain.LogBlock(payload: payload, signature: signature, log: log)
     }
     
-    convenience init(block:HashChain.LogBlock, helper context:NSManagedObjectContext) {
+    convenience init(block:SigChain.LogBlock, helper context:NSManagedObjectContext) {
         self.init(helper: context)
         self.payload = block.payload
         self.signature = block.signature as NSData
@@ -229,7 +229,7 @@ class TeamDataManager {
         return team
     }
     
-    func create(team:Team, creator:Team.MemberIdentity, block:HashChain.Block) throws {
+    func create(team:Team, creator:Team.MemberIdentity, block:SigChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -265,11 +265,11 @@ class TeamDataManager {
     
     ///MARK: Blocks
     
-    func fetchAll() throws -> [HashChain.Block] {
+    func fetchAll() throws -> [SigChain.Block] {
         defer { mutex.unlock() }
         mutex.lock()
 
-        var blocks:[HashChain.Block] = []
+        var blocks:[SigChain.Block] = []
         
         try performAndWait {
             var pointer = try self.fetchCoreDataTeam().head
@@ -286,13 +286,13 @@ class TeamDataManager {
         return try self.fetchBlock(for: hash) != nil
     }
     
-    func fetchBlocks(after hash:Data) throws -> [HashChain.Block] {
+    func fetchBlocks(after hash:Data) throws -> [SigChain.Block] {
         let block = try self.fetchBlock(for: hash)
         
         defer { mutex.unlock() }
         mutex.lock()
         
-        var blocks:[HashChain.Block] = []
+        var blocks:[SigChain.Block] = []
         
         try performAndWait {
             var pointer = block?.next
@@ -494,7 +494,7 @@ class TeamDataManager {
     /**
         Add a new block
      */
-    func append(block:HashChain.Block) throws {
+    func append(block:SigChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -519,7 +519,7 @@ class TeamDataManager {
     /**
         Add/remove member
      */
-    func add(member:Team.MemberIdentity, isAdmin:Bool = false, block:HashChain.Block) throws {
+    func add(member:Team.MemberIdentity, isAdmin:Bool = false, block:SigChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -537,7 +537,7 @@ class TeamDataManager {
         }
     }
     
-    func remove(member:SodiumSignPublicKey, block:HashChain.Block) throws {
+    func remove(member:SodiumSignPublicKey, block:SigChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -579,7 +579,7 @@ class TeamDataManager {
         Add/remove admins
         Get admin public keys
      */
-    func add(admin publicKey:SodiumSignPublicKey, block:HashChain.Block) throws {
+    func add(admin publicKey:SodiumSignPublicKey, block:SigChain.Block) throws {
         
         // first fetch the team member
         guard let adminMember = try self.fetchMember(for: publicKey) else {
@@ -606,7 +606,7 @@ class TeamDataManager {
         return admins.filter { $0.publicKey == publicKey }.isEmpty == false
     }
     
-    func remove(admin publicKey:SodiumSignPublicKey, block:HashChain.Block) throws {
+    func remove(admin publicKey:SodiumSignPublicKey, block:SigChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -646,7 +646,7 @@ class TeamDataManager {
     /**
         Pin/Unpin/check Known Hosts
      */
-    func pin(sshHostKey:SSHHostKey, block:HashChain.Block) throws {
+    func pin(sshHostKey:SSHHostKey, block:SigChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -762,7 +762,7 @@ class TeamDataManager {
         return !sshHostKeys.isEmpty
     }
 
-    func unpin(sshHostKey:SSHHostKey, block:HashChain.Block) throws {
+    func unpin(sshHostKey:SSHHostKey, block:SigChain.Block) throws {
         defer { mutex.unlock() }
         mutex.lock()
 
@@ -783,7 +783,7 @@ class TeamDataManager {
     }
     
     // MARK: Logs
-    func appendLog(block:HashChain.LogBlock) throws {
+    func appendLog(block:SigChain.LogBlock) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -803,11 +803,11 @@ class TeamDataManager {
         team.headLog = newHead
     }
     
-    func fetchLogs() throws -> [HashChain.LogBlock] {
+    func fetchLogs() throws -> [SigChain.LogBlock] {
         defer { mutex.unlock() }
         mutex.lock()
         
-        var blocks:[HashChain.LogBlock] = []
+        var blocks:[SigChain.LogBlock] = []
         
         try performAndWait {
             var pointer = try self.fetchCoreDataTeam().headLog
@@ -820,11 +820,11 @@ class TeamDataManager {
         return blocks
     }
     
-    func fetchUnsentLogBlocks() throws -> [HashChain.LogBlock] {
+    func fetchUnsentLogBlocks() throws -> [SigChain.LogBlock] {
         defer { mutex.unlock() }
         mutex.lock()
         
-        var blocks:[HashChain.LogBlock] = []
+        var blocks:[SigChain.LogBlock] = []
         
         try performAndWait {
             var pointer = try self.fetchCoreDataTeam().headLog
@@ -837,7 +837,7 @@ class TeamDataManager {
         return blocks
     }
     
-    func markLogBlocksSent(logBlocks:[HashChain.LogBlock]) throws {
+    func markLogBlocksSent(logBlocks:[SigChain.LogBlock]) throws {
         defer { mutex.unlock() }
         mutex.lock()
         
@@ -851,13 +851,13 @@ class TeamDataManager {
         return try self.fetchLogBlock(for: hash) != nil
     }
     
-    func fetchLogBlocks(after hash:Data) throws -> [HashChain.LogBlock] {
+    func fetchLogBlocks(after hash:Data) throws -> [SigChain.LogBlock] {
         let block = try self.fetchLogBlock(for: hash)
         
         defer { mutex.unlock() }
         mutex.lock()
         
-        var blocks:[HashChain.LogBlock] = []
+        var blocks:[SigChain.LogBlock] = []
         
         try performAndWait {
             var pointer = block?.next

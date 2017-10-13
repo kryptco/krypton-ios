@@ -116,15 +116,15 @@ class TeamService {
         Create a team and add the admin, thereby starting a new chain 
         with the admin as the first team member
      */
-    func createTeam(createBlock:HashChain.Block, _ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
+    func createTeam(createBlock:SigChain.Block, _ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         mutex.lock()
         
         // send the payload request
-        let hashChainRequest = HashChain.Request(publicKey: createBlock.publicKey,
+        let sigChainRequest = SigChain.Request(publicKey: createBlock.publicKey,
                                                  payload: createBlock.payload,
                                                  signature: createBlock.signature)
         
-        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             defer { self.mutex.unlock() }
             
             switch serverResponse {
@@ -150,9 +150,9 @@ class TeamService {
             throw Errors.missingLastBlockHash
         }
         
-        let operation = HashChain.Operation.addMember(member)
-        let addMember = HashChain.AppendBlock(lastBlockHash: lastBlockhash, operation: operation)
-        let payload = HashChain.Payload.appendBlock(addMember)
+        let operation = SigChain.Operation.addMember(member)
+        let addMember = SigChain.AppendBlock(lastBlockHash: lastBlockhash, operation: operation)
+        let payload = SigChain.Payload.appendBlock(addMember)
         let payloadData = try payload.jsonData()
         
         // sign the payload
@@ -164,11 +164,11 @@ class TeamService {
         
         // send the payload request
         let payloadDataString = try payloadData.utf8String()
-        let hashChainRequest = HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
+        let sigChainRequest = SigChain.Request(publicKey: teamIdentity.keyPair.publicKey,
                                                  payload: payloadDataString,
                                                  signature: signature)
 
-        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -177,7 +177,7 @@ class TeamService {
                 
             case .success:
                 // set the block hash
-                let addedBlock = HashChain.Block(publicKey: self.teamIdentity.keyPair.publicKey, payload: payloadDataString, signature: signature)
+                let addedBlock = SigChain.Block(publicKey: self.teamIdentity.keyPair.publicKey, payload: payloadDataString, signature: signature)
                 
                 do {
                     try self.teamIdentity.dataManager.add(member: member, block: addedBlock)
@@ -221,9 +221,9 @@ class TeamService {
         }
         
         // create the payload
-        let operation = HashChain.Operation.acceptInvite(newMember)
-        let appendBlock = HashChain.AppendBlock(lastBlockHash: blockHash, operation: operation)
-        let payload = HashChain.Payload.appendBlock(appendBlock)
+        let operation = SigChain.Operation.acceptInvite(newMember)
+        let appendBlock = SigChain.AppendBlock(lastBlockHash: blockHash, operation: operation)
+        let payload = SigChain.Payload.appendBlock(appendBlock)
         let payloadData = try payload.jsonData()
 
         // sign the payload json
@@ -236,11 +236,11 @@ class TeamService {
         }
         
         let payloadDataString = try payloadData.utf8String()
-        let hashChainRequest = HashChain.Request(publicKey: nonceKeypair.publicKey,
+        let sigChainRequest = SigChain.Request(publicKey: nonceKeypair.publicKey,
                                                  payload: payloadDataString,
                                                  signature: signature)
         
-        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -248,7 +248,7 @@ class TeamService {
                 self.mutex.unlock()
                 
             case .success:
-                let addedBlock = HashChain.Block(publicKey: nonceKeypair.publicKey, payload: payloadDataString, signature: signature)
+                let addedBlock = SigChain.Block(publicKey: nonceKeypair.publicKey, payload: payloadDataString, signature: signature)
                                 
                 do {
                     try self.teamIdentity.dataManager.add(member: newMember, block: addedBlock)
@@ -291,11 +291,11 @@ class TeamService {
             throw Errors.badInviteSeed
         }
         
-        let readBlock = try HashChain.ReadBlocks(teamPointer: invite.teamPointer,
+        let readBlock = try SigChain.ReadBlocks(teamPointer: invite.teamPointer,
                                                 nonce: Data.random(size: 32),
                                                 unixSeconds: UInt64(Date().timeIntervalSince1970))
         
-        let payload = HashChain.Payload.readBlocks(readBlock)
+        let payload = SigChain.Payload.readBlocks(readBlock)
         let payloadData = try payload.jsonData()
         
         guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
@@ -303,12 +303,12 @@ class TeamService {
                 throw Errors.payloadSignature
         }
         
-        let hashChainRequest = try HashChain.Request(publicKey: nonceKeypair.publicKey,
+        let sigChainRequest = try SigChain.Request(publicKey: nonceKeypair.publicKey,
                                                      payload: payloadData.utf8String(),
                                                      signature: signature)
         
         
-        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
+        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<SigChain.Response>) in
             switch serverResponse {
             case .error(let error):
                 completionHandler(TeamServiceResult.error(error))
@@ -363,11 +363,11 @@ class TeamService {
     
     private func getVerifiedTeamUpdatesUnlocked(_ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         
-        let readBlock = try HashChain.ReadBlocks(teamPointer: teamIdentity.teamPointer(),
+        let readBlock = try SigChain.ReadBlocks(teamPointer: teamIdentity.teamPointer(),
                                               nonce: Data.random(size: 32),
                                               unixSeconds: UInt64(Date().timeIntervalSince1970))
         
-        let payload = HashChain.Payload.readBlocks(readBlock)
+        let payload = SigChain.Payload.readBlocks(readBlock)
         let payloadData = try payload.jsonData()
         
         guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)
@@ -376,11 +376,11 @@ class TeamService {
         }
         
         
-        let hashChainRequest = try HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
+        let sigChainRequest = try SigChain.Request(publicKey: teamIdentity.keyPair.publicKey,
                                                      payload: payloadData.utf8String(),
                                                      signature: signature)
         
-        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<HashChain.Response>) in
+        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<SigChain.Response>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -424,7 +424,7 @@ class TeamService {
         mutex.lock()
         
         do {
-            let logBlocks:Array<HashChain.LogBlock> = try self.teamIdentity.dataManager.fetchUnsentLogBlocks().reversed()
+            let logBlocks:Array<SigChain.LogBlock> = try self.teamIdentity.dataManager.fetchUnsentLogBlocks().reversed()
             
             try sendUnsentLogBlocksUnlocked(logBlocks: logBlocks) { result in
                 completionHandler(result)
@@ -436,7 +436,7 @@ class TeamService {
         }
     }
     
-    private func sendUnsentLogBlocksUnlocked(logBlocks:[HashChain.LogBlock], _ completionHandler:@escaping (TeamServiceResult<Bool>) -> Void) throws {
+    private func sendUnsentLogBlocksUnlocked(logBlocks:[SigChain.LogBlock], _ completionHandler:@escaping (TeamServiceResult<Bool>) -> Void) throws {
         
         var remainingLogBlocks = logBlocks
         
@@ -445,11 +445,11 @@ class TeamService {
             return
         }
         
-        let hashChainRequest = HashChain.Request(publicKey: teamIdentity.keyPair.publicKey,
+        let sigChainRequest = SigChain.Request(publicKey: teamIdentity.keyPair.publicKey,
                                                      payload: logBlock.payload,
                                                      signature: logBlock.signature)
         
-        try server.sendRequest(object: hashChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -477,20 +477,20 @@ class TeamService {
 
 /// TeamIdentity + TeamPointer
 extension TeamIdentity {
-    func teamPointer() throws -> HashChain.TeamPointer {
+    func teamPointer() throws -> SigChain.TeamPointer {
         if let blockHash = try self.lastBlockHash() {
-            return HashChain.TeamPointer.lastBlockHash(blockHash)
+            return SigChain.TeamPointer.lastBlockHash(blockHash)
         }
         
-        return HashChain.TeamPointer.publicKey(self.initialTeamPublicKey)
+        return SigChain.TeamPointer.publicKey(self.initialTeamPublicKey)
     }
 }
 
 
 /// TeamInvite + TeamPointer
 extension TeamInvite {
-    var teamPointer:HashChain.TeamPointer {
-        return HashChain.TeamPointer.publicKey(self.initialTeamPublicKey)
+    var teamPointer:SigChain.TeamPointer {
+        return SigChain.TeamPointer.publicKey(self.initialTeamPublicKey)
     }
 }
 
