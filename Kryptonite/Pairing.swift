@@ -30,7 +30,7 @@ struct Pairing:JsonReadable {
 
     
     init(name: String, workstationPublicKey:Box.PublicKey, version:Version? = nil) throws {
-        guard let keyPair = try KRSodium.shared().box.keyPair() else {
+        guard let keyPair = KRSodium.shared().box.keyPair() else {
             throw CryptoError.generate(KeyType.Ed25519, nil)
         }
         

@@ -26,7 +26,7 @@ class PairingTests: XCTestCase {
     
     func testCreatePairing() {
         do {
-            let pk = try KRSodium.shared().box.keyPair()!.publicKey
+            let pk = KRSodium.shared().box.keyPair()!.publicKey
             let _ = try Pairing(name: "test", workstationPublicKey: pk)
         } catch {
             XCTFail("error: \(error)")
@@ -36,14 +36,14 @@ class PairingTests: XCTestCase {
     func testWrapPublicKey() {
         
         do {
-            let kp = try KRSodium.shared().box.keyPair()!
+            let kp = KRSodium.shared().box.keyPair()!
             let pairing = try Pairing(name: "test", workstationPublicKey: kp.publicKey)
             
             let wrappedPub = try pairing.keyPair.publicKey.wrap(to: kp.publicKey)
             
             // unwrapp pub
             
-            let unwrapped = try KRSodium.shared().box.open(anonymousCipherText: wrappedPub, recipientPublicKey: kp.publicKey, recipientSecretKey: kp.secretKey)!
+            let unwrapped = KRSodium.shared().box.open(anonymousCipherText: wrappedPub, recipientPublicKey: kp.publicKey, recipientSecretKey: kp.secretKey)!
             
             // ensure unwrapped == pairing.publicKey
             
@@ -60,14 +60,14 @@ class PairingTests: XCTestCase {
         
         do {
             
-            let kp = try KRSodium.shared().box.keyPair()!
+            let kp = KRSodium.shared().box.keyPair()!
             let pairing = try Pairing(name: "test", workstationPublicKey: kp.publicKey)
             
             let dataStruct = TestStruct(p1: "hello", p2: "world")
             
             let sealed = try dataStruct.seal(to: pairing)
     
-            let unsealed = try KRSodium.shared().box.open(nonceAndAuthenticatedCipherText: sealed, senderPublicKey: pairing.keyPair.publicKey, recipientSecretKey: kp.secretKey)!
+            let unsealed = KRSodium.shared().box.open(nonceAndAuthenticatedCipherText: sealed, senderPublicKey: pairing.keyPair.publicKey, recipientSecretKey: kp.secretKey)!
             
             let dataStructUnsealed = try TestStruct(jsonData: unsealed)
             // ensure sealed == unsealed
@@ -85,12 +85,12 @@ class PairingTests: XCTestCase {
         
         do {
             
-            let kp = try KRSodium.shared().box.keyPair()!
+            let kp = KRSodium.shared().box.keyPair()!
             let pairing = try Pairing(name: "test", workstationPublicKey: kp.publicKey)
             
             let dataStruct = TestStruct(p1: "hello", p2: "world")
             
-            let sealed:Data = try KRSodium.shared().box.seal(message: dataStruct.jsonData(), recipientPublicKey: pairing.keyPair.publicKey, senderSecretKey: kp.secretKey)!
+            let sealed:Data = KRSodium.shared().box.seal(message: try dataStruct.jsonData(), recipientPublicKey: pairing.keyPair.publicKey, senderSecretKey: kp.secretKey)!
             
             let unsealed = try TestStruct(from: pairing, sealed: sealed)
             

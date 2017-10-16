@@ -32,7 +32,7 @@ extension JsonReadable {
     }
 
     init(from pairing:Pairing, sealed:Sealed) throws {
-        let unsealedResult = try KRSodium.shared().box.open(nonceAndAuthenticatedCipherText: sealed, senderPublicKey: pairing.workstationPublicKey, recipientSecretKey: pairing.keyPair.secretKey)
+        let unsealedResult = KRSodium.shared().box.open(nonceAndAuthenticatedCipherText: sealed, senderPublicKey: pairing.workstationPublicKey, recipientSecretKey: pairing.keyPair.secretKey)
         
         guard let unsealed = unsealedResult else {
             throw CryptoError.decrypt

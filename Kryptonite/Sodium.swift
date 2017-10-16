@@ -9,17 +9,8 @@
 import Foundation
 import Sodium
 
-struct SodiumInitializationFailure:Error{}
-
-private var sharedSodium : Sodium?
 class KRSodium {
-    class func shared() throws -> Sodium {
-        if let sodium = sharedSodium {
-            return sodium
-        }
-        guard let sodium = Sodium() else {
-            throw SodiumInitializationFailure()
-        }
-        return sodium
+    class func shared() -> Sodium {
+        return Sodium()
     }
 }
