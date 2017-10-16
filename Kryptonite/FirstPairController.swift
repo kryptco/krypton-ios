@@ -58,7 +58,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+        if AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
             == AVAuthorizationStatus.authorized
         {
             addScanner()
@@ -153,7 +153,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
     //MARK: Camera
     
     @IBAction func allowTapped() {
-        AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { (success) in
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { (success) in
             if !success {
                 self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. We need the camera to scan your computer's QR code to pair with it. Pairing enables your computer to ask your phone for SSH logins.")
                 return

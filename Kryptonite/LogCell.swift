@@ -46,7 +46,7 @@ class GitCommitLogCell: UITableViewCell {
         let hash = log.commitHash
         
         if hash.characters.count >= 7 {
-            commitHashLabel.text = hash.substring(to: hash.index(hash.startIndex, offsetBy: 7))
+            commitHashLabel.text = String(hash.prefix(7))
         } else {
             commitHashLabel.text = hash
         }

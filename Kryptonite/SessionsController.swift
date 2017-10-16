@@ -54,7 +54,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
     }
     
     
-    dynamic func newLogLine() {
+    @objc dynamic func newLogLine() {
         dispatchAsync {
             self.sessions = SessionManager.shared.all.sorted(by: {$0.created > $1.created })
             dispatchMain{ self.tableView.reloadData() }

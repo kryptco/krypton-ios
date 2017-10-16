@@ -96,7 +96,7 @@ struct CommitSignatureLog:LogStatement {
             return commit.shortDisplay
         }
         
-        let commitHashShort = commitHash.substring(to: commitHash.index(commitHash.startIndex, offsetBy: 7))
+        let commitHashShort = String(commitHash.prefix(7))
         return "[\(commitHashShort)] \(commit.messageString)"
     }
     

@@ -58,7 +58,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         if let font = UIFont(name: "AvenirNext-Bold", size: 12) {
             approvalSegmentedControl.setTitleTextAttributes([
-                NSFontAttributeName: font,
+                NSAttributedStringKey.font: font,
             ], for: UIControlState.normal)
         }
 
@@ -175,7 +175,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         }
     }
     
-    dynamic func newLogLine() {
+    @objc dynamic func newLogLine() {
         log("new log")
         updateLogs()
     }

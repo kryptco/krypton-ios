@@ -88,7 +88,7 @@ struct CommitInfo: Jsonable {
             guard object.characters.count >= 7 else {
                 throw InvalidCommitInfo()
             }
-            let objectShortHash = object.substring(to: object.index(object.startIndex, offsetBy: 7))
+            let objectShortHash = String(object.prefix(7))
             shortDisplay = "[parent \(objectShortHash)] \(messageString)"
         } else {
             shortDisplay = "[first commit] \(messageString)"
@@ -187,7 +187,7 @@ struct CommitInfo: Jsonable {
         guard commitHash.characters.count >= 7 else {
             throw InvalidCommitHash()
         }
-        let commitHashShort = commitHash.substring(to: commitHash.index(commitHash.startIndex, offsetBy: 7))
+        let commitHashShort = String(commitHash.prefix(7))
         
         
         return commitHashShort

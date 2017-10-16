@@ -59,7 +59,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
         super.viewDidAppear(animated)
     }
     
-    func redrawMe() {
+    @objc func redrawMe() {
         do {
             let keyManager = try KeyManager.sharedInstance()
             let email = try keyManager.getMe()

@@ -11,7 +11,7 @@ import AVFoundation
 
 open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
-    public var device: AVCaptureDevice? = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+    public var device: AVCaptureDevice? = AVCaptureDevice.default(for: AVMediaType.video)
     public var output = AVCaptureMetadataOutput()
     public var session = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -90,7 +90,7 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         }
         do {
             try device?.lockForConfiguration()
-            self.device?.setFocusModeLockedWithLensPosition(self.lensPosition, completionHandler: nil)
+            self.device?.setFocusModeLocked(lensPosition: self.lensPosition, completionHandler: nil)
             device?.unlockForConfiguration()
         } catch _ {
         }
@@ -102,14 +102,14 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         }
     }
     
-    func onTick() {
+    @objc func onTick() {
         if let ticker = self.ticker {
             ticker.invalidate()
         }
         self.cornersLayer.cornersArray = []
     }
     
-    func onTap(_ gesture: UITapGestureRecognizer) {
+    @objc func onTap(_ gesture: UITapGestureRecognizer) {
         let tapPoint = gesture.location(in: self.view)
         let focusPoint = CGPoint(
             x: tapPoint.x / self.view.bounds.size.width,
@@ -160,11 +160,11 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         }
     }
     
-    func onApplicationWillEnterForeground() {
+    @objc func onApplicationWillEnterForeground() {
         self.session.startRunning()
     }
     
-    func onApplicationDidEnterBackground() {
+    @objc func onApplicationDidEnterBackground() {
         self.session.stopRunning()
     }
     
@@ -181,9 +181,10 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
                 
         if let videoPreviewLayer = self.videoPreviewLayer {
             let videoOrientation = RSCodeReaderViewController.interfaceOrientationToVideoOrientation(UIApplication.shared.statusBarOrientation)
-            if videoPreviewLayer.connection.isVideoOrientationSupported
-                && videoPreviewLayer.connection.videoOrientation != videoOrientation {
-                    videoPreviewLayer.connection.videoOrientation = videoOrientation
+            if let connection = videoPreviewLayer.connection, connection.isVideoOrientationSupported
+                                                              && connection.videoOrientation != videoOrientation
+            {
+                videoPreviewLayer.connection?.videoOrientation = videoOrientation
             }
             videoPreviewLayer.frame = self.view.bounds
         }
@@ -205,10 +206,17 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         
         self.view.backgroundColor = UIColor.clear
         
+        struct NoAVCaptureDeviceInputError:Error {}
+        
         var error : NSError?
         let input: AVCaptureDeviceInput!
         do {
-            input = try AVCaptureDeviceInput(device: self.device)
+            guard   let device = self.device
+            else {
+                throw NoAVCaptureDeviceInputError()
+            }
+            input = try AVCaptureDeviceInput(device: device)
+            
         } catch let error1 as NSError {
             error = error1
             input = nil
@@ -238,7 +246,7 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         
         self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
         if let videoPreviewLayer = self.videoPreviewLayer {
-            videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
             videoPreviewLayer.frame = self.view.bounds
             self.view.layer.addSublayer(videoPreviewLayer)
         }
@@ -284,8 +292,7 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
     }
     
     // MARK: AVCaptureMetadataOutputObjectsDelegate
-    public func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
-        
+    public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         var barcodeObjects : Array<AVMetadataMachineReadableCodeObject> = []
         var cornersArray : Array<[AnyObject]> = []
         for metadataObject : AnyObject in metadataObjects as [AnyObject]! {

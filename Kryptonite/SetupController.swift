@@ -32,7 +32,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
                 showSkip()
             }
             
-            keyLabel.text = fp.substring(to: fp.index(fp.startIndex, offsetBy: 32))
+            keyLabel.text = String(fp.prefix(32))
             
         } catch (let e) {
             self.showWarning(title: "Crypto Error", body: "\(e)")

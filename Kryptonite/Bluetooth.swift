@@ -587,7 +587,7 @@ struct BluetoothMessageTooLong : Error {
  */
 func splitMessageForBluetooth(message: Data, mtu: UInt) throws -> [Data] {
     let msgBlockSize = mtu - 1;
-    let (intN, overflow) = UInt.divideWithOverflow(UInt(message.count), msgBlockSize)
+    let (intN, overflow) = UInt(message.count).dividedReportingOverflow(by: msgBlockSize)
     if overflow || intN > 255 {
         throw BluetoothMessageTooLong(messageLength: message.count, mtu: Int(mtu))
     }

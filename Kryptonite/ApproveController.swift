@@ -267,9 +267,9 @@ class ApproveController:UIViewController {
             self.view.backgroundColor = UIColor.clear
         }
         
-        let presenting = self.presentingViewController
+        let presenting = self.presentingViewController 
         self.dismiss(animated: true, completion: {
-            presenting?.approveControllerDismissed(allowed: allowed)
+            (presenting as? KRBase)?.approveControllerDismissed(allowed: allowed)
         })
     }
 }

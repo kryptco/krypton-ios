@@ -25,8 +25,8 @@ struct Resources {
         
         if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
             UINavigationBar.appearance().titleTextAttributes = [
-                NSForegroundColorAttributeName: UIColor(hex: 0x555555),
-                NSFontAttributeName: font,
+                NSAttributedStringKey.foregroundColor: UIColor(hex: 0x555555),
+                NSAttributedStringKey.font: font,
             ]
         }
 

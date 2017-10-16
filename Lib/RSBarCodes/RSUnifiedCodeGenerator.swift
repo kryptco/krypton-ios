@@ -29,34 +29,9 @@ public class RSUnifiedCodeGenerator: RSCodeGenerator {
     
     public func generateCode(_ contents: String, inputCorrectionLevel: InputCorrectionLevel, machineReadableCodeObjectType: String) -> UIImage? {
         var codeGenerator: RSCodeGenerator?
+        
+        // RS types
         switch machineReadableCodeObjectType {
-        case AVMetadataObjectTypeQRCode, AVMetadataObjectTypePDF417Code, AVMetadataObjectTypeAztecCode:
-            return RSAbstractCodeGenerator.generateCode(contents, inputCorrectionLevel: inputCorrectionLevel, filterName: RSAbstractCodeGenerator.filterName(machineReadableCodeObjectType))
-        case AVMetadataObjectTypeCode39Code:
-            codeGenerator = RSCode39Generator()
-        case AVMetadataObjectTypeCode39Mod43Code:
-            codeGenerator = RSCode39Mod43Generator()
-        case AVMetadataObjectTypeEAN8Code:
-            codeGenerator = RSEAN8Generator()
-        case AVMetadataObjectTypeEAN13Code:
-            codeGenerator = RSEAN13Generator()
-        case AVMetadataObjectTypeInterleaved2of5Code:
-            codeGenerator = RSITFGenerator()
-        case AVMetadataObjectTypeITF14Code:
-            codeGenerator = RSITF14Generator()
-        case AVMetadataObjectTypeUPCECode:
-            codeGenerator = RSUPCEGenerator()
-        case AVMetadataObjectTypeCode93Code:
-            codeGenerator = RSCode93Generator()
-            // iOS 8 included, but my implementation's performance is better :)
-        case AVMetadataObjectTypeCode128Code:
-            if self.isBuiltInCode128GeneratorSelected {
-                return RSAbstractCodeGenerator.generateCode(contents, inputCorrectionLevel: inputCorrectionLevel, filterName: RSAbstractCodeGenerator.filterName(machineReadableCodeObjectType))
-            } else {
-                codeGenerator = RSCode128Generator()
-            }
-        case AVMetadataObjectTypeDataMatrixCode:
-            codeGenerator = RSCodeDataMatrixGenerator()
         case RSBarcodesTypeISBN13Code:
             codeGenerator = RSISBN13Generator()
         case RSBarcodesTypeISSN13Code:
@@ -64,7 +39,43 @@ public class RSUnifiedCodeGenerator: RSCodeGenerator {
         case RSBarcodesTypeExtendedCode39Code:
             codeGenerator = RSExtendedCode39Generator()
         default:
-            print("No code generator selected.")
+            break
+        }
+        
+        if codeGenerator == nil {
+            // otherwise parse system types
+            let objectType = AVMetadataObject.ObjectType(rawValue: machineReadableCodeObjectType)
+            
+            switch objectType {
+            case .qr, .pdf417, .aztec:
+                return RSAbstractCodeGenerator.generateCode(contents, inputCorrectionLevel: inputCorrectionLevel, filterName: RSAbstractCodeGenerator.filterName(machineReadableCodeObjectType))
+            case .code39:
+                codeGenerator = RSCode39Generator()
+            case .code39Mod43:
+                codeGenerator = RSCode39Mod43Generator()
+            case .ean8:
+                codeGenerator = RSEAN8Generator()
+            case .ean13:
+                codeGenerator = RSEAN13Generator()
+            case .interleaved2of5:
+                codeGenerator = RSITFGenerator()
+            case .itf14:
+                codeGenerator = RSITF14Generator()
+            case .upce:
+                codeGenerator = RSUPCEGenerator()
+            case .code93:
+                codeGenerator = RSCode93Generator()
+            case .code128:
+                if self.isBuiltInCode128GeneratorSelected {
+                    return RSAbstractCodeGenerator.generateCode(contents, inputCorrectionLevel: inputCorrectionLevel, filterName: RSAbstractCodeGenerator.filterName(machineReadableCodeObjectType))
+                } else {
+                    codeGenerator = RSCode128Generator()
+                }
+            case .dataMatrix:
+                codeGenerator = RSCodeDataMatrixGenerator()
+            default:
+                break
+            }
         }
         
         if codeGenerator != nil {
@@ -81,7 +92,11 @@ public class RSUnifiedCodeGenerator: RSCodeGenerator {
     }
     
     public func generateCode(_ machineReadableCodeObject: AVMetadataMachineReadableCodeObject, inputCorrectionLevel: InputCorrectionLevel) -> UIImage? {
-        return self.generateCode(machineReadableCodeObject.stringValue, inputCorrectionLevel: inputCorrectionLevel, machineReadableCodeObjectType: machineReadableCodeObject.type)
+        guard let machineObjectString = machineReadableCodeObject.stringValue else {
+            return nil
+        }
+        
+        return self.generateCode(machineObjectString, inputCorrectionLevel: inputCorrectionLevel, machineReadableCodeObjectType: machineReadableCodeObject.type.rawValue)
     }
     
     public func generateCode(_ machineReadableCodeObject: AVMetadataMachineReadableCodeObject) -> UIImage? {

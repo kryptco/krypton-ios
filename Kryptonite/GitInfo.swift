@@ -97,7 +97,7 @@ extension GitHash {
     var shortHash:String {
         let hash = self
         if hash.characters.count >= 7 {
-            return hash.substring(to: hash.index(hash.startIndex, offsetBy: 7))
+            return String(hash.prefix(7))
         } else {
             return hash
         }

@@ -44,7 +44,7 @@ class KnownHostsEditController:KRBaseTableController {
     }
 
     
-    dynamic func newKnownHost() {
+    @objc dynamic func newKnownHost() {
         dispatchMain {
             do {
                 self.knownHosts = try KnownHostManager.shared.fetchAll()

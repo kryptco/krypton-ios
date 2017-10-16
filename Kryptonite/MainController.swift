@@ -100,11 +100,11 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK: Nav Bar Buttons
     
-    dynamic func aboutTapped() {
+    @objc dynamic func aboutTapped() {
         self.performSegue(withIdentifier: "showAbout", sender: nil)
     }
     
-    dynamic func helpTapped() {
+    @objc dynamic func helpTapped() {
         self.performSegue(withIdentifier: "showInstall", sender: nil)
     }
     

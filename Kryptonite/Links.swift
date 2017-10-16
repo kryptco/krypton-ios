@@ -87,7 +87,7 @@ class LinkListener {
         NotificationCenter.default.removeObserver(self, name: Link.notificationName, object: nil)
     }
     
-    dynamic func didReceive(note:NSNotification) {
+    @objc dynamic func didReceive(note:NSNotification) {
         guard let link = note.object as? Link else {
             return
         }

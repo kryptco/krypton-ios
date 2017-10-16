@@ -75,7 +75,7 @@ struct TagInfo: Jsonable {
         guard object.characters.count >= 7 else {
             throw InvalidTagInfo()
         }
-        objectShortHash = object.substring(to: object.index(object.startIndex, offsetBy: 7))
+        objectShortHash = String(object.prefix(7))
         messageString = (try? message.utf8String().trimmingCharacters(in: CharacterSet.newlines)) ?? "message decoding error"
         
         shortDisplay = "[\(self.tag) \(objectShortHash)] \(messageString)"

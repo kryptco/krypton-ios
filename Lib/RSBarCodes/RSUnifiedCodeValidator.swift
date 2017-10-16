@@ -16,35 +16,49 @@ public class RSUnifiedCodeValidator {
     
     public func isValid(_ contents:String, machineReadableCodeObjectType: String) -> Bool {
         var codeGenerator: RSCodeGenerator?
+        
+        // RS types
         switch machineReadableCodeObjectType {
-        case AVMetadataObjectTypeQRCode, AVMetadataObjectTypePDF417Code, AVMetadataObjectTypeAztecCode:
-            return false
-        case AVMetadataObjectTypeCode39Code:
-            codeGenerator = RSCode39Generator()
-        case AVMetadataObjectTypeCode39Mod43Code:
-            codeGenerator = RSCode39Mod43Generator()
-        case AVMetadataObjectTypeEAN8Code:
-            codeGenerator = RSEAN8Generator()
-        case AVMetadataObjectTypeEAN13Code:
-            codeGenerator = RSEAN13Generator()
-        case AVMetadataObjectTypeInterleaved2of5Code:
-            codeGenerator = RSITFGenerator()
-        case AVMetadataObjectTypeITF14Code:
-            codeGenerator = RSITF14Generator()
-        case AVMetadataObjectTypeUPCECode:
-            codeGenerator = RSUPCEGenerator()
-        case AVMetadataObjectTypeCode93Code:
-            codeGenerator = RSCode93Generator()
-        case AVMetadataObjectTypeCode128Code:
-            codeGenerator = RSCode128Generator()
-        case AVMetadataObjectTypeDataMatrixCode:
-            codeGenerator = RSCodeDataMatrixGenerator()
         case RSBarcodesTypeISBN13Code:
             codeGenerator = RSISBN13Generator()
         case RSBarcodesTypeISSN13Code:
             codeGenerator = RSISSN13Generator()
         case RSBarcodesTypeExtendedCode39Code:
             codeGenerator = RSExtendedCode39Generator()
+        default:
+            break
+        }
+        
+        if codeGenerator != nil {
+            return codeGenerator!.isValid(contents)
+        }
+        
+        // otherwise parse system types
+        let objectType = AVMetadataObject.ObjectType(rawValue: machineReadableCodeObjectType)
+        
+        switch objectType {
+        case .qr, .pdf417, .aztec:
+            return false
+        case .code39:
+            codeGenerator = RSCode39Generator()
+        case .code39Mod43:
+            codeGenerator = RSCode39Mod43Generator()
+        case .ean8:
+            codeGenerator = RSEAN8Generator()
+        case .ean13:
+            codeGenerator = RSEAN13Generator()
+        case .interleaved2of5:
+            codeGenerator = RSITFGenerator()
+        case .itf14:
+            codeGenerator = RSITF14Generator()
+        case .upce:
+            codeGenerator = RSUPCEGenerator()
+        case .code93:
+            codeGenerator = RSCode93Generator()
+        case .code128:
+            codeGenerator = RSCode128Generator()
+        case .dataMatrix:
+            codeGenerator = RSCodeDataMatrixGenerator()
         default:
             print("No code generator selected.")
             return false

@@ -31,7 +31,12 @@ class Current {
     }
 }
 
-class KRBaseController: UIViewController {
+protocol KRBase {
+    func approveControllerDismissed(allowed:Bool)
+}
+
+
+class KRBaseController: UIViewController, KRBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,9 +70,30 @@ class KRBaseController: UIViewController {
     func shouldPostAnalytics() -> Bool {
         return true
     }
+    
+    func approveControllerDismissed(allowed:Bool) {
+        let result = allowed ? "allowed" : "rejected"
+        log("approve modal finished with result: \(result)")
+        
+        // if rejected, reject all pending
+        guard allowed else {
+            Policy.rejectAllPendingIfNeeded()
+            return
+        }
+        
+        // send and remove pending that are already allowed
+        Policy.sendAllowedPendingIfNeeded()
+        
+        // move on to next pending if necessary
+        if let pending = Policy.lastPendingAuthorization {
+            log("requesting pending authorization")
+            self.requestUserAuthorization(session: pending.session, request: pending.request)
+        }
+    }
 }
 
-class KRBaseTableController: UITableViewController {
+
+class KRBaseTableController: UITableViewController, KRBase {
     
     //MARK: Policy
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +125,25 @@ class KRBaseTableController: UITableViewController {
         return true
     }
 
+    func approveControllerDismissed(allowed:Bool) {
+        let result = allowed ? "allowed" : "rejected"
+        log("approve modal finished with result: \(result)")
+        
+        // if rejected, reject all pending
+        guard allowed else {
+            Policy.rejectAllPendingIfNeeded()
+            return
+        }
+        
+        // send and remove pending that are already allowed
+        Policy.sendAllowedPendingIfNeeded()
+        
+        // move on to next pending if necessary
+        if let pending = Policy.lastPendingAuthorization {
+            log("requesting pending authorization")
+            self.requestUserAuthorization(session: pending.session, request: pending.request)
+        }
+    }
 }
 
 extension UIViewController {
