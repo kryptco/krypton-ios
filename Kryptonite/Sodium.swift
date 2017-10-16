@@ -10,7 +10,7 @@ import Foundation
 import Sodium
 
 class KRSodium {
-    class func shared() -> Sodium {
+    class func instance() -> Sodium {
         return Sodium()
     }
 }

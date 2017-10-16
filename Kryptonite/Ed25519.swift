@@ -83,7 +83,7 @@ class Ed25519KeyPair:KeyPair {
     }
     
     static func generate(_ tag: String) throws -> KeyPair {
-        guard let newKeypair = KRSodium.shared().sign.keyPair() else {
+        guard let newKeypair = KRSodium.instance().sign.keyPair() else {
             throw CryptoError.generate(.Ed25519, nil)
         }
         
@@ -166,7 +166,7 @@ class Ed25519KeyPair:KeyPair {
         guard digestType == .ed25519 else {
             throw CryptoError.unsupportedSignatureDigestAlgorithmType
         }
-        guard let sig = KRSodium.shared().sign.signature(message: data, secretKey: self.edKeyPair.secretKey) else {
+        guard let sig = KRSodium.instance().sign.signature(message: data, secretKey: self.edKeyPair.secretKey) else {
             throw CryptoError.sign(.Ed25519, nil)
         }
         
@@ -183,7 +183,7 @@ extension Sign.PublicKey:PublicKey {
         guard digestType == .ed25519 else {
             throw CryptoError.unsupportedSignatureDigestAlgorithmType
         }
-        return KRSodium.shared().sign.verify(message: message, publicKey: self, signature: signature)
+        return KRSodium.instance().sign.verify(message: message, publicKey: self, signature: signature)
     }
     func export() throws -> Data {
         return self as Data
