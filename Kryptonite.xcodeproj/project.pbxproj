@@ -561,7 +561,6 @@
 		8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		8D7941671D98732600F6E32E /* NetworkProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		8D83990B1E56063A0051C6BA /* HostAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostAuth.swift; sourceTree = "<group>"; };
-		8D93CD641D9198C7008955B2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "swift-sodium/Sodium/libsodium-ios.a"; sourceTree = "<group>"; };
 		8DB2EE381DBC18170079E468 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftHTTP.xcodeproj; path = SwiftHTTP/SwiftHTTP.xcodeproj; sourceTree = "<group>"; };
 		8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitInfo.swift; sourceTree = "<group>"; };
@@ -1168,7 +1167,6 @@
 				FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */,
 				FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */,
 				8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */,
-				8D93CD641D9198C7008955B2 /* libsodium-ios.a */,
 				8DC38BC41E6899FD007445B4 /* sshwire */,
 				FACAA4B91D8887FA000B9A01 /* CoreData.framework */,
 				FACAA4AD1D87C44D000B9A01 /* MapKit.framework */,

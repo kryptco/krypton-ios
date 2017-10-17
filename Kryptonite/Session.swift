@@ -50,11 +50,11 @@ struct Session:Jsonable {
     }
     
     var object: Object {
-        var objectMap = ["id": id,
+        var objectMap:[String : Any] = ["id": id,
                          "name": pairing.name,
                          "queue": pairing.queue,
                          "created": created.timeIntervalSince1970,
-                         "workstation_public_key": pairing.workstationPublicKey.toBase64()] as [String : Any]
+                         "workstation_public_key": pairing.workstationPublicKey.toBase64()]
         
         if let ver = pairing.version {
             objectMap["version"] = ver.string

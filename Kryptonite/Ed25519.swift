@@ -42,12 +42,12 @@ class Ed25519KeyPair:KeyPair {
     static func load(_ tag: String) throws -> KeyPair? {
         
         // load the private key
-        let privParams = [String(kSecClass): kSecClassGenericPassword,
+        let privParams:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
                       String(kSecAttrService): Ed25519KeychainService,
                       String(kSecAttrAccount): KeyIdentifier.Private.tag(tag),
                       String(kSecReturnData): kCFBooleanTrue,
                       String(kSecMatchLimit): kSecMatchLimitOne,
-                      String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
+                      String(kSecAttrAccessible): KeychainAccessiblity]
         
         var privObject:AnyObject?
         let privStatus = SecItemCopyMatching(privParams as CFDictionary, &privObject)
@@ -61,12 +61,12 @@ class Ed25519KeyPair:KeyPair {
         }
         
         // load the public key
-        let pubParams = [String(kSecClass): kSecClassGenericPassword,
+        let pubParams:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Public.tag(tag),
                           String(kSecReturnData): kCFBooleanTrue,
                           String(kSecMatchLimit): kSecMatchLimitOne,
-                          String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
+                          String(kSecAttrAccessible): KeychainAccessiblity]
         
         var pubObject:AnyObject?
         let pubStatus = SecItemCopyMatching(pubParams as CFDictionary, &pubObject)
@@ -83,7 +83,7 @@ class Ed25519KeyPair:KeyPair {
     }
     
     static func generate(_ tag: String) throws -> KeyPair {
-        guard let newKeypair = try KRSodium.shared().sign.keyPair() else {
+        guard let newKeypair = KRSodium.instance().sign.keyPair() else {
             throw CryptoError.generate(.Ed25519, nil)
         }
         
@@ -91,11 +91,11 @@ class Ed25519KeyPair:KeyPair {
         let pub = newKeypair.publicKey
         
         // save the private key
-        let privParams = [String(kSecClass): kSecClassGenericPassword,
+        let privParams:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Private.tag(tag),
                           String(kSecValueData): priv,
-                          String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
+                          String(kSecAttrAccessible): KeychainAccessiblity]
         
         let privDeleteStatus = SecItemDelete(privParams as CFDictionary)
         guard privDeleteStatus == errSecItemNotFound || privDeleteStatus.isSuccess()
@@ -110,11 +110,11 @@ class Ed25519KeyPair:KeyPair {
         }
 
         // save the public key
-        let pubParams = [String(kSecClass): kSecClassGenericPassword,
+        let pubParams:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Public.tag(tag),
                           String(kSecValueData): pub,
-                          String(kSecAttrAccessible): KeychainAccessiblity] as [String : Any]
+                          String(kSecAttrAccessible): KeychainAccessiblity]
         
         let pubDeleteStatus = SecItemDelete(pubParams as CFDictionary)
         guard pubDeleteStatus == errSecItemNotFound || pubDeleteStatus.isSuccess()
@@ -136,10 +136,10 @@ class Ed25519KeyPair:KeyPair {
     static func destroy(_ tag: String) throws {
         
         // destroy the private key
-        let privParams = [String(kSecClass): kSecClassGenericPassword,
+        let privParams: [String : Any] = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Private.tag(tag),
-                          String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
+                          String(kSecAttrAccessible):KeychainAccessiblity]
         
         let privDeleteStatus = SecItemDelete(privParams as CFDictionary)
         
@@ -149,10 +149,10 @@ class Ed25519KeyPair:KeyPair {
         }
         
         // destroy the public key
-        let pubParams = [String(kSecClass): kSecClassGenericPassword,
+        let pubParams: [String : Any] = [String(kSecClass): kSecClassGenericPassword,
                           String(kSecAttrService): Ed25519KeychainService,
                           String(kSecAttrAccount): KeyIdentifier.Public.tag(tag),
-                          String(kSecAttrAccessible):KeychainAccessiblity] as [String : Any]
+                          String(kSecAttrAccessible):KeychainAccessiblity]
         
         let pubDeleteStatus = SecItemDelete(pubParams as CFDictionary)
         
@@ -166,7 +166,7 @@ class Ed25519KeyPair:KeyPair {
         guard digestType == .ed25519 else {
             throw CryptoError.unsupportedSignatureDigestAlgorithmType
         }
-        guard let sig = try KRSodium.shared().sign.signature(message: data, secretKey: self.edKeyPair.secretKey) else {
+        guard let sig = KRSodium.instance().sign.signature(message: data, secretKey: self.edKeyPair.secretKey) else {
             throw CryptoError.sign(.Ed25519, nil)
         }
         
@@ -183,7 +183,7 @@ extension Sign.PublicKey:PublicKey {
         guard digestType == .ed25519 else {
             throw CryptoError.unsupportedSignatureDigestAlgorithmType
         }
-        return try KRSodium.shared().sign.verify(message: message, publicKey: self, signature: signature)
+        return KRSodium.instance().sign.verify(message: message, publicKey: self, signature: signature)
     }
     func export() throws -> Data {
         return self as Data

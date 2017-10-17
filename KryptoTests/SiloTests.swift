@@ -25,7 +25,7 @@ class SiloTests: XCTestCase {
 
     func testNeverPaired() {
         do {
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
 
@@ -42,7 +42,7 @@ class SiloTests: XCTestCase {
 
     func testPaired() {
         do {
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -56,7 +56,7 @@ class SiloTests: XCTestCase {
 
     func testUnpaired() {
         do {
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -86,7 +86,7 @@ class SiloTests: XCTestCase {
             let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .ssh(sign))
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -112,7 +112,7 @@ class SiloTests: XCTestCase {
             let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970 - Properties.requestTimeTolerance * 3), sendACK: false, version: Properties.currentVersion, body: .ssh(sign))
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -138,7 +138,7 @@ class SiloTests: XCTestCase {
             let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970 + Properties.requestTimeTolerance * 3), sendACK: false, version: Properties.currentVersion, body: .ssh(sign))
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -164,7 +164,7 @@ class SiloTests: XCTestCase {
             let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .ssh(sign))
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -182,7 +182,7 @@ class SiloTests: XCTestCase {
             let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .ssh(sign))
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -202,7 +202,7 @@ class SiloTests: XCTestCase {
             let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: randomFp, hostAuth: nil)
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .ssh(sign))
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
@@ -229,7 +229,7 @@ class SiloTests: XCTestCase {
             let data = try "AAAAIFrZQlwF8k3UCrkwZ2E0U+qGx57wehv5ABkHJStoOCc3MgAAAANnaXQAAAAOc3NoLWNvbm5lY3Rpb24AAAAJcHVibGlja2V5AQAAAAdzc2gtcnNh".fromBase64()
             let sign = try SignRequest(data: data, fingerprint: fp, hostAuth: nil)
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .ssh(sign))
-            let pairing = try Pairing(name: "test", workstationPublicKey: try KRSodium.shared().box.keyPair()!.publicKey)
+            let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
             
             SessionManager.shared.add(session: session, temporary: true)

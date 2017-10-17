@@ -1,6 +1,6 @@
 [submodule "swift-sodium"]
 	path = swift-sodium
-	url  = https://github.com/kryptco/swift-sodium
+	url  = git@github.com:kryptco/swift-sodium.git
 [submodule "AwesomeCache"]
 	path = AwesomeCache
 	url = git@github.com:KryptCo/AwesomeCache.git

@@ -1,12 +1,15 @@
 language: swift
 xcode_project: Kryptonite.xcodeproj
 xcode_scheme: Debug
-osx_image: xcode8.3
+osx_image: xcode9
 git:
     submodules: false
+# travis work around
 before_install:
   - sed -i '' -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-  - git submodule update --init --recursive
+  - git submodule update --init
+  - sed -i '' -e 's/git@github.com:/https:\/\/github.com\//' swift-sodium/.gitmodules
+  - cd swift-sodium/ && git submodule update --init && cd ..
 before_script:
   - curl https://sh.rustup.rs -sSf | sh -s -- -y
   - export PATH=$PATH:$HOME/.cargo/bin/

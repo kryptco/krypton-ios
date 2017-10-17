@@ -456,7 +456,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The type of mark to display.
-    @IBInspectable public var markType: MarkType {
+    public var markType: MarkType {
         get {
             return controller.markType
         }
