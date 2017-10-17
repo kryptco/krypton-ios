@@ -35,6 +35,27 @@ protocol KRBase {
     func approveControllerDismissed(allowed:Bool)
 }
 
+extension KRBase {
+    func defaultApproveControllerDismissed(viewController:UIViewController, allowed:Bool) {
+        let result = allowed ? "allowed" : "rejected"
+        log("approve modal finished with result: \(result)")
+        
+        // if rejected, reject all pending
+        guard allowed else {
+            Policy.rejectAllPendingIfNeeded()
+            return
+        }
+        
+        // send and remove pending that are already allowed
+        Policy.sendAllowedPendingIfNeeded()
+        
+        // move on to next pending if necessary
+        if let pending = Policy.lastPendingAuthorization {
+            log("requesting pending authorization")
+            viewController.requestUserAuthorization(session: pending.session, request: pending.request)
+        }
+    }
+}
 
 class KRBaseController: UIViewController, KRBase {
     
@@ -72,25 +93,10 @@ class KRBaseController: UIViewController, KRBase {
     }
     
     func approveControllerDismissed(allowed:Bool) {
-        let result = allowed ? "allowed" : "rejected"
-        log("approve modal finished with result: \(result)")
-        
-        // if rejected, reject all pending
-        guard allowed else {
-            Policy.rejectAllPendingIfNeeded()
-            return
-        }
-        
-        // send and remove pending that are already allowed
-        Policy.sendAllowedPendingIfNeeded()
-        
-        // move on to next pending if necessary
-        if let pending = Policy.lastPendingAuthorization {
-            log("requesting pending authorization")
-            self.requestUserAuthorization(session: pending.session, request: pending.request)
-        }
+        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
     }
 }
+
 
 
 class KRBaseTableController: UITableViewController, KRBase {
@@ -126,23 +132,7 @@ class KRBaseTableController: UITableViewController, KRBase {
     }
 
     func approveControllerDismissed(allowed:Bool) {
-        let result = allowed ? "allowed" : "rejected"
-        log("approve modal finished with result: \(result)")
-        
-        // if rejected, reject all pending
-        guard allowed else {
-            Policy.rejectAllPendingIfNeeded()
-            return
-        }
-        
-        // send and remove pending that are already allowed
-        Policy.sendAllowedPendingIfNeeded()
-        
-        // move on to next pending if necessary
-        if let pending = Policy.lastPendingAuthorization {
-            log("requesting pending authorization")
-            self.requestUserAuthorization(session: pending.session, request: pending.request)
-        }
+        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
     }
 }
 

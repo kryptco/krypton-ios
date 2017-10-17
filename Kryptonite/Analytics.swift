@@ -108,10 +108,21 @@ class Analytics {
         }
         
         HTTP.PUT("https://teams.krypt.co", parameters: ["id": userID, "email": email]) { response in
-            guard let status = response.statusCode, (200..<300).contains(status)
-                else {
-                    log("put email failure: \(String(describing: response.error))", .error)
-                    return
+            
+            if let error = response.error {
+                log("put email error: \(error)", .error)
+                return
+            }
+            
+            guard let status = response.statusCode
+            else {
+                log("put email no status code", .error)
+                return
+            }
+            
+            guard (200..<300).contains(status) else {
+                log("bad status code: \(status)", .error)
+                return
             }
             
             log("email published success")

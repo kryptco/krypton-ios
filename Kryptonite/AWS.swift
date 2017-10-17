@@ -72,6 +72,11 @@ class API {
     func getNewestAppVersion(completionHandler:@escaping ((Version?, Error?)->Void)) {
         HTTP.GET(Properties.appVersionURL) { response in
             
+            if let error = response.error {
+                completionHandler(nil, error)
+                return
+            }
+            
             guard let jsonObject = (try? JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments)) as? [String:Any],
                 let semVer = jsonObject["iOS"] as? String,
                 let version = try? Version(string: semVer)
