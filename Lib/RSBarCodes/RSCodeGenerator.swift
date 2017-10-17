@@ -135,7 +135,11 @@ public class RSAbstractCodeGenerator : RSCodeGenerator {
     // RSCodeGenerator
     
     public func generateCode(_ machineReadableCodeObject:AVMetadataMachineReadableCodeObject, inputCorrectionLevel: InputCorrectionLevel) -> UIImage? {
-        return self.generateCode(machineReadableCodeObject.stringValue!, inputCorrectionLevel: inputCorrectionLevel, machineReadableCodeObjectType: machineReadableCodeObject.type.rawValue)
+        guard let machineObjectString = machineReadableCodeObject.stringValue else {
+            return nil
+        }
+
+        return self.generateCode(machineObjectString, inputCorrectionLevel: inputCorrectionLevel, machineReadableCodeObjectType: machineReadableCodeObject.type.rawValue)
     }
     
     public func generateCode(_ machineReadableCodeObject:AVMetadataMachineReadableCodeObject) -> UIImage? {
