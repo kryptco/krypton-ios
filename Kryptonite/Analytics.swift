@@ -106,20 +106,16 @@ class Analytics {
         guard Analytics.publishedEmail != email else {
             return
         }
-        do{
-            let req = try HTTP.PUT("https://teams.krypt.co", parameters: ["id": userID, "email": email])
-            req.start { response in
-                guard let status = response.statusCode, (200..<300).contains(status)
+        
+        HTTP.PUT("https://teams.krypt.co", parameters: ["id": userID, "email": email]) { response in
+            guard let status = response.statusCode, (200..<300).contains(status)
                 else {
                     log("put email failure: \(String(describing: response.error))", .error)
                     return
-                }
-
-                log("email published success")
-                Analytics.publishedEmail = email
             }
-        } catch (let e) {
-            log("error publishing email: \(e)", .error)
+            
+            log("email published success")
+            Analytics.publishedEmail = email
         }
     }
 
@@ -153,24 +149,21 @@ class Analytics {
             headers["User-Agent"] = userAgent
         }
 
-        do {
-            let req = try HTTP.POST("https://www.google-analytics.com/collect", parameters: analyticsParams, headers: headers)
-            req.start { response in
-                if let err = response.error {
-                    log("error: \(err.localizedDescription)")
+        HTTP.POST("https://www.google-analytics.com/collect", parameters: analyticsParams, headers: headers)
+        { response in
+            if let err = response.error {
+                log("error: \(err.localizedDescription)")
+                return
+            }
+            if let status = response.statusCode {
+                if (200..<300).contains(status) {
+                    log("analytics success")
                     return
                 }
-                if let status = response.statusCode {
-                    if (200..<300).contains(status) {
-                        log("analytics success")
-                        return
-                    }
-                    log("analytics failure \(status)")
-                }
+                log("analytics failure \(status)")
             }
-        } catch let e {
-            log("\(e)")
         }
+
     }
 
     class func postPageView(page: String) {

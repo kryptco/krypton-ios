@@ -22,4 +22,4 @@ before_script:
   - cargo install cargo-lipo
   - sudo gem install xcpretty
 script:
-  - make check
+  - travis_wait 60 make check

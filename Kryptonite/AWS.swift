@@ -67,25 +67,20 @@ class API {
     
     }
     
-    
+        
     //MARK: Version
     func getNewestAppVersion(completionHandler:@escaping ((Version?, Error?)->Void)) {
-        do {
-            try HTTP.GET(Properties.appVersionURL).start({ (response) in
-                
-                guard let jsonObject = (try? JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments)) as? [String:Any],
-                      let semVer = jsonObject["iOS"] as? String,
-                      let version = try? Version(string: semVer)
+        HTTP.GET(Properties.appVersionURL) { response in
+            
+            guard let jsonObject = (try? JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments)) as? [String:Any],
+                let semVer = jsonObject["iOS"] as? String,
+                let version = try? Version(string: semVer)
                 else {
                     completionHandler(nil, UnknownRemoteAppVersionError())
                     return
-                }
-                
-                completionHandler(version, nil)
-            })
+            }
             
-        } catch {
-            completionHandler(nil, error)
+            completionHandler(version, nil)
         }
     }
     
