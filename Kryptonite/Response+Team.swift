@@ -12,22 +12,26 @@ import Sodium
 
 // Create
 
-struct CreateTeamResponse:Jsonable {
+struct TeamCheckpoint:Jsonable {
     let publicKey:SodiumSignPublicKey
+    let teamPublicKey:SodiumSignPublicKey
     let lastBlockHash:Data
     
-    init(publicKey:SodiumSignPublicKey, lastBlockHash:Data) {
+    init(publicKey:SodiumSignPublicKey, teamPublicKey:SodiumSignPublicKey, lastBlockHash:Data) {
         self.publicKey = publicKey
+        self.teamPublicKey = teamPublicKey
         self.lastBlockHash = lastBlockHash
     }
     
     init(json:Object) throws {
         try self.init(publicKey: ((json ~> "public_key") as String).fromBase64(),
+                      teamPublicKey: ((json ~> "team_public_key") as String).fromBase64(),
                       lastBlockHash: ((json ~> "last_block_hash") as String).fromBase64())
     }
     
     var object:Object {
         return ["public_key": publicKey.toBase64(),
+                "team_public_key": teamPublicKey.toBase64(),
                 "last_block_hash": lastBlockHash.toBase64()]
     }
 }

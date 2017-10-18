@@ -74,7 +74,7 @@ enum ResponseBody {
     case unpair(ResponseResult<UnpairResponse>)
     
     // team
-    case createTeam(ResponseResult<CreateTeamResponse>)
+    case createTeam(ResponseResult<TeamCheckpoint>)
     case readTeam(ResponseResult<ReadTeamResponse>)
     case teamOperation(ResponseResult<TeamOperationResponse>)
     case decryptLog(ResponseResult<LogDecryptionResponse>)
@@ -105,7 +105,7 @@ enum ResponseBody {
         }
         
         if let json:Object = try? json ~> "create_team_response" {
-            responses.append(.createTeam(try ResponseResult<CreateTeamResponse>(json: json)))
+            responses.append(.createTeam(try ResponseResult<TeamCheckpoint>(json: json)))
         }
 
         if let json:Object = try? json ~> "read_team_response" {
@@ -251,23 +251,29 @@ struct MeResponse:Jsonable {
         var email:String
         var publicKeyWire:Data
         var pgpPublicKey:Data?
+        var teamCheckpoint:TeamCheckpoint?
         
-        init(email:String, publicKeyWire:Data, pgpPublicKey: Data? = nil) {
+        init(email:String, publicKeyWire:Data, pgpPublicKey: Data? = nil, teamCheckpoint: TeamCheckpoint? = nil) {
             self.email = email
             self.publicKeyWire = publicKeyWire
             self.pgpPublicKey = pgpPublicKey
+            self.teamCheckpoint = teamCheckpoint
         }
         
         init(json: Object) throws {
             self.email = try json ~> "email"
             self.publicKeyWire = try ((json ~> "public_key_wire") as String).fromBase64()
-            self.pgpPublicKey = try ((json ~> "pgp_pk") as String).fromBase64()
+            self.pgpPublicKey = try? ((json ~> "pgp_pk") as String).fromBase64()
+            self.teamCheckpoint = try? TeamCheckpoint(json: json ~> "team_checkpoint")
         }
         
         var object: Object {
-            var json = ["email": email, "public_key_wire": publicKeyWire.toBase64()]
+            var json : Object = ["email": email, "public_key_wire": publicKeyWire.toBase64()]
             if let pgpPublicKey = pgpPublicKey {
                 json["pgp_pk"] = pgpPublicKey.toBase64()
+            }
+            if let teamCheckpoint = teamCheckpoint {
+                json["team_checkpoint"] = teamCheckpoint.object
             }
             return json
         }

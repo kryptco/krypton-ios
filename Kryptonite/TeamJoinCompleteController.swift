@@ -105,7 +105,9 @@ class TeamJoinCompleteController:KRBaseController {
                     
                     
             // 2. send the create team response
-                    let createResponse = CreateTeamResponse(publicKey: service.teamIdentity.keyPair.publicKey, lastBlockHash: service.teamIdentity.checkpoint)
+                    let createResponse = TeamCheckpoint(publicKey: service.teamIdentity.keyPair.publicKey,
+                                                        teamPublicKey: service.teamIdentity.initialTeamPublicKey,
+                                                        lastBlockHash: service.teamIdentity.checkpoint)
                     let responseType = ResponseBody.createTeam(.ok(createResponse))
                     
                     let response = Response(requestID: request.id,

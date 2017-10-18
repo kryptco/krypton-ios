@@ -332,10 +332,13 @@ class Silo {
             if let pgpUserID = meRequest.pgpUserId {
                 pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
             }
-            
+
+            let teamCheckpoint = try TeamService.shared().getTeamCheckpoint()
+
             let me = MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(),
                                                   publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(),
-                                                  pgpPublicKey: pgpPublicKey))
+                                                  pgpPublicKey: pgpPublicKey,
+                                                  teamCheckpoint: teamCheckpoint))
             responseType = .me(.ok(me))
 
         case .decryptLog, .readTeam, .teamOperation, .createTeam, .noOp, .unpair:
