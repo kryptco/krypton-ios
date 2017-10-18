@@ -106,7 +106,7 @@ class MemoryTeamServer {
             }
             
             // verify the read block signature
-            guard KRSodium.instance().sign.verify(message: block.payload.utf8Data(), publicKey: publicKey, signature: block.signature) else {
+            guard try KRSodium.instance().sign.verify(message: block.payload.utf8Data(), publicKey: publicKey, signature: block.signature) else {
                 throw Errors.badSignature
             }
             
@@ -185,7 +185,7 @@ class MemoryTeamServer {
             }
             
             // verify signature
-            guard KRSodium.instance().sign.verify(message: request.payload.utf8Data(), publicKey: request.publicKey, signature: request.signature) else {
+            guard try KRSodium.instance().sign.verify(message: request.payload.utf8Data(), publicKey: request.publicKey, signature: request.signature) else {
                 throw Errors.badSignature
             }
             
