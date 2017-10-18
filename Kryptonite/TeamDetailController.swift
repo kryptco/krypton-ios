@@ -90,7 +90,7 @@ class TeamDetailController: KRBaseTableController {
         super.viewDidAppear(animated)
     }
     
-    dynamic func fetchTeamUpdates() {
+    @objc dynamic func fetchTeamUpdates() {
         do {
             try TeamService.shared().getVerifiedTeamUpdates { (result) in
                 

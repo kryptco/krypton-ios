@@ -26,10 +26,10 @@ extension DataBlock {
     
     convenience init(block:SigChain.Block, helper context:NSManagedObjectContext) {
         self.init(helper: context)
-        self.publicKey = block.publicKey as NSData
+        self.publicKey = block.publicKey
         self.payload = block.payload
-        self.signature = block.signature as NSData
-        self.blockHash = block.hash() as NSData
+        self.signature = block.signature
+        self.blockHash = block.hash()
     }
     
     convenience init(helper context: NSManagedObjectContext) {
@@ -55,10 +55,10 @@ extension DataLogBlock {
     convenience init(block:SigChain.LogBlock, helper context:NSManagedObjectContext) {
         self.init(helper: context)
         self.payload = block.payload
-        self.signature = block.signature as NSData
-        self.logData = block.log as NSData
+        self.signature = block.signature
+        self.logData = block.log
         self.isSent = false
-        self.blockHash = block.hash() as NSData
+        self.blockHash = block.hash()
     }
     
     convenience init(helper context: NSManagedObjectContext) {
@@ -92,10 +92,10 @@ extension DataMember {
     convenience init(helper context: NSManagedObjectContext, member:Team.MemberIdentity) {
         self.init(helper: context)
         self.email = member.email
-        self.publicKey = member.publicKey as NSData
-        self.encryptionPublicKey = member.encryptionPublicKey as NSData
-        self.sshPublicKey = member.sshPublicKey as NSData
-        self.pgpPublicKey = member.publicKey as NSData
+        self.publicKey = member.publicKey
+        self.encryptionPublicKey = member.encryptionPublicKey
+        self.sshPublicKey = member.sshPublicKey
+        self.pgpPublicKey = member.publicKey
     }
     
     func member() throws -> Team.MemberIdentity {
@@ -236,7 +236,7 @@ class TeamDataManager {
         try performAndWait {
             let dataTeam = DataTeam(helper: self.managedObjectContext)
             dataTeam.id = self.teamIdentity
-            dataTeam.json = try team.jsonData() as NSData
+            dataTeam.json = try team.jsonData()
 
             let admin = DataMember(helper: self.managedObjectContext, member: creator)
             admin.isAdmin = true
@@ -244,7 +244,7 @@ class TeamDataManager {
 
             let head = DataBlock(block: block, helper: self.managedObjectContext)
             dataTeam.head = head
-            dataTeam.lastBlockHash = block.hash() as NSData
+            dataTeam.lastBlockHash = block.hash()
             dataTeam.addToBlocks(head)
         }
     }
@@ -255,7 +255,7 @@ class TeamDataManager {
         
         try performAndWait {
             let dataTeam = try self.fetchCoreDataTeam()
-            dataTeam.json = try team.jsonData() as NSData
+            dataTeam.json = try team.jsonData()
         }
     }
     
@@ -655,7 +655,7 @@ class TeamDataManager {
             
             let newHost = DataSSHHostKey(helper: self.managedObjectContext)
             newHost.host = sshHostKey.host
-            newHost.publicKey = sshHostKey.publicKey as NSData
+            newHost.publicKey = sshHostKey.publicKey
             
             let newHead = DataBlock(block: block, helper: self.managedObjectContext)
             

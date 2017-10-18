@@ -14,13 +14,17 @@ class TeamServerHTTP:TeamServiceAPI {
     /**
         Send a JSON object to the teams service and parse the response as a ServerResponse
      */
-    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
-        let req = try HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
+    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) {
         
         log("[IN] SigChainSVC\n\t\(object)")
-        
-        req.start { response in
+
+        HTTP.PUT(Properties.TeamsEndpoint.dev.rawValue, parameters: object, requestSerializer: JSONParameterSerializer())
+        { response in
             do {
+                if let err = response.error {
+                    throw err
+                }
+                
                 let serverResponse = try TeamService.ServerResponse<T>(jsonData: response.data)
                 log("[OUT] SigChainSVC\n\t\(serverResponse)")
                 
@@ -29,7 +33,10 @@ class TeamServerHTTP:TeamServiceAPI {
                 let responseString = (try? response.data.utf8String()) ?? "\(response.data.count) bytes"
                 onCompletion(TeamService.ServerResponse.error(TeamService.ServerError(message: "unexpected response, \(responseString)")))
             }
+
         }
+        
+        
     }
 
 }

@@ -46,8 +46,8 @@ class TeamJoinCompleteController:KRBaseController {
         
         teamNameLabel.text = teamName
         
-        resultViewUp.priority = 750
-        resultViewDown.priority = 999
+        resultViewUp.priority = UILayoutPriority(rawValue: 750)
+        resultViewDown.priority = UILayoutPriority(rawValue: 999)
         self.view.layoutIfNeeded()
         
         switch joinType! {
@@ -231,8 +231,8 @@ class TeamJoinCompleteController:KRBaseController {
                 }
                 
                 self.arcView.alpha = 0
-                self.resultViewUp.priority = 999
-                self.resultViewDown.priority = 750
+                self.resultViewUp.priority = UILayoutPriority(rawValue: 999)
+                self.resultViewDown.priority = UILayoutPriority(rawValue: 750)
                 self.view.layoutIfNeeded()
                 
             }) { (_) in

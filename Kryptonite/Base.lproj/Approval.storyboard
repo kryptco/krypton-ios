@@ -1243,7 +1243,7 @@
         <!--View Controller-->
         <scene sceneID="k3H-pN-typ">
             <objects>
-                <viewController storyboardIdentifier="CommitApproveController" id="5ju-8A-21R" sceneMemberID="viewController">
+                <viewController id="5ju-8A-21R" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tOI-5B-blY"/>
                         <viewControllerLayoutGuide type="bottom" id="Q2N-mA-Pg9"/>
@@ -1551,6 +1551,10 @@
         <scene sceneID="hgr-L2-EbU">
             <objects>
                 <viewController id="rzB-mj-DUV" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XCr-fo-BaR"/>
+                        <viewControllerLayoutGuide type="bottom" id="ON0-yh-uHw"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5T8-ZM-CwC">
                         <rect key="frame" x="0.0" y="0.0" width="394" height="80"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

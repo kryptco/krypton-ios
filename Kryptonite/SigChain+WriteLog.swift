@@ -15,7 +15,7 @@ extension TeamIdentity {
             throw SigChain.Errors.missingLastLogBlockHash
         }
         
-        guard let logCiphertext:Data = try KRSodium.shared().secretBox.seal(message: data, secretKey: self.logEncryptionKey) else {
+        guard let logCiphertext:Data = KRSodium.instance().secretBox.seal(message: data, secretKey: self.logEncryptionKey) else {
             throw SigChain.Errors.logEncryptionFailed
         }
         
@@ -25,7 +25,7 @@ extension TeamIdentity {
         let payloadData = try payload.jsonData()
         
         // sign the payload
-        guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
+        guard let payloadSignature = KRSodium.instance().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
             else {
                 throw SigChain.Errors.payloadSignatureFailed
         }

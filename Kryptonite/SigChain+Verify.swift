@@ -34,7 +34,7 @@ extension TeamIdentity {
             }
 
             // 2. verify the block signature
-            guard try KRSodium.shared().sign.verify(message: createBlock.payload.utf8Data(), publicKey: initialTeamPublicKey, signature: createBlock.signature)
+            guard try KRSodium.instance().sign.verify(message: createBlock.payload.utf8Data(), publicKey: initialTeamPublicKey, signature: createBlock.signature)
                 else {
                     throw SigChain.Errors.badSignature
             }
@@ -86,7 +86,7 @@ extension TeamIdentity {
             
             
             // 4. Ensure signature verifies
-            let verified = try KRSodium.shared().sign.verify(message: nextBlock.payload.utf8Data(),
+            let verified = try KRSodium.instance().sign.verify(message: nextBlock.payload.utf8Data(),
                                                              publicKey: publicKey,
                                                              signature: nextBlock.signature)
             guard verified
@@ -149,7 +149,7 @@ extension TeamIdentity {
                 let payloadData = try payload.jsonData()
                 
                 // sign the payload
-                guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
+                guard let payloadSignature = KRSodium.instance().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                 else {
                     throw SigChain.Errors.payloadSignatureFailed
                 }
@@ -190,7 +190,7 @@ extension TeamIdentity {
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
-                    guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
+                    guard let payloadSignature = KRSodium.instance().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                         else {
                             throw SigChain.Errors.payloadSignatureFailed
                     }
@@ -213,7 +213,7 @@ extension TeamIdentity {
                 if let lastLogBlockHash = self.logCheckpoint, memberIsAdmin {
                     
                     // rotate the log encryption key
-                    guard let newLogEncryptionKey = try KRSodium.shared().secretBox.key() else {
+                    guard let newLogEncryptionKey = KRSodium.instance().secretBox.key() else {
                         throw SigChain.Errors.rotateKeyGeneration
                     }
                     
@@ -242,7 +242,7 @@ extension TeamIdentity {
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
-                    guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
+                    guard let payloadSignature = KRSodium.instance().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                         else {
                             throw SigChain.Errors.payloadSignatureFailed
                     }
@@ -265,7 +265,7 @@ extension TeamIdentity {
                 if let lastLogBlockHash = self.logCheckpoint {
                     
                     // rotate the log encryption key
-                    guard let newLogEncryptionKey = try KRSodium.shared().secretBox.key() else {
+                    guard let newLogEncryptionKey = KRSodium.instance().secretBox.key() else {
                         throw SigChain.Errors.rotateKeyGeneration
                     }
                     
@@ -293,7 +293,7 @@ extension TeamIdentity {
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
-                    guard let payloadSignature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
+                    guard let payloadSignature = KRSodium.instance().sign.signature(message: payloadData, secretKey: self.keyPair.secretKey)
                         else {
                             throw SigChain.Errors.payloadSignatureFailed
                     }

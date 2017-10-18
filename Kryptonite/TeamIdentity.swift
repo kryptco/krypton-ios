@@ -111,18 +111,18 @@ struct TeamIdentity:Jsonable {
     static func newAdmin(email:String, teamName:String) throws -> (TeamIdentity, SigChain.Block) {
         let id = try Data.random(size: 32)
         let teamID = try Data.random(size: 32)
-        let keyPairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
-        let boxKeyPairSeed = try Data.random(size: KRSodium.shared().box.SeedBytes)
+        let keyPairSeed = try Data.random(size: KRSodium.instance().sign.SeedBytes)
+        let boxKeyPairSeed = try Data.random(size: KRSodium.instance().box.SeedBytes)
 
-        guard let keyPair = try KRSodium.shared().sign.keyPair(seed: keyPairSeed) else {
+        guard let keyPair = KRSodium.instance().sign.keyPair(seed: keyPairSeed) else {
             throw Errors.keyPairFromSeed
         }
         
-        guard let boxKeyPair = try KRSodium.shared().box.keyPair(seed: boxKeyPairSeed) else {
+        guard let boxKeyPair = KRSodium.instance().box.keyPair(seed: boxKeyPairSeed) else {
             throw Errors.keyPairFromSeed
         }
         
-        guard let logEncryptionKey = try KRSodium.shared().secretBox.key() else {
+        guard let logEncryptionKey = KRSodium.instance().secretBox.key() else {
             throw Errors.secretBoxKey
         }
         
@@ -142,7 +142,7 @@ struct TeamIdentity:Jsonable {
         let payloadData = try payload.jsonData()
         
         // sign the payload
-        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: keyPair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: payloadData, secretKey: keyPair.secretKey)
         else {
             throw Errors.signingError
         }
@@ -163,10 +163,10 @@ struct TeamIdentity:Jsonable {
     static func newMember(email:String, teamName:String = "", checkpoint:Data, initialTeamPublicKey:SodiumSignPublicKey) throws -> TeamIdentity {
         let id = try Data.random(size: 32)
         let teamID = try Data.random(size: 32)
-        let keyPairSeed = try Data.random(size: KRSodium.shared().sign.SeedBytes)
-        let boxKeyPairSeed = try Data.random(size: KRSodium.shared().box.SeedBytes)
+        let keyPairSeed = try Data.random(size: KRSodium.instance().sign.SeedBytes)
+        let boxKeyPairSeed = try Data.random(size: KRSodium.instance().box.SeedBytes)
 
-        guard let logEncryptionKey = try KRSodium.shared().secretBox.key() else {
+        guard let logEncryptionKey = KRSodium.instance().secretBox.key() else {
             throw Errors.secretBoxKey
         }
         
@@ -181,12 +181,12 @@ struct TeamIdentity:Jsonable {
         self.keyPairSeed = keyPairSeed
         self.boxKeyPairSeed = boxKeyPairSeed
         
-        guard let keyPair = try KRSodium.shared().sign.keyPair(seed: keyPairSeed) else {
+        guard let keyPair = KRSodium.instance().sign.keyPair(seed: keyPairSeed) else {
             throw Errors.keyPairFromSeed
         }
         self.keyPair = keyPair
         
-        guard let boxKeyPair = try KRSodium.shared().box.keyPair(seed: boxKeyPairSeed) else {
+        guard let boxKeyPair = KRSodium.instance().box.keyPair(seed: boxKeyPairSeed) else {
             throw Errors.keyPairFromSeed
         }
         

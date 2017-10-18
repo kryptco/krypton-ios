@@ -66,7 +66,7 @@ enum RequestBody:Jsonable {
         switch self {
         case .ssh, .git, .createTeam, .readTeam, .teamOperation, .decryptLog:
             return true
-        case .createTeam, .me, .unpair, .noOp:
+        case .me, .unpair, .noOp:
             return false
         }
     }

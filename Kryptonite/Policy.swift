@@ -155,7 +155,7 @@ class Policy {
         case .decryptLog, .teamOperation, .readTeam, .createTeam:
             return true
             
-        case .createTeam, .git, .me, .noOp, .unpair:
+        case .git, .me, .noOp, .unpair:
             break
         }
         

@@ -16,6 +16,7 @@ struct Resources {
         static let Main = UIStoryboard(name: "Main", bundle: Bundle.main)
         static let Approval = UIStoryboard(name: "Approval", bundle: Bundle.main)
         static let Team = UIStoryboard(name: "Team", bundle: Bundle.main)
+
     }
     
     static func makeAppearences() {
@@ -30,13 +31,13 @@ struct Resources {
                 NSAttributedStringKey.font: font,
             ]
         }
-
-
-       // UIButton.appearance().tintColor = UIColor.app
+        
+        
+        // UIButton.appearance().tintColor = UIColor.app
         UISwitch.appearance().tintColor = UIColor.app
         UISegmentedControl.appearance().tintColor = UIColor.app
         
-
+        
         // Custom Classes
         StyleFilledButton.appearance().backgroundColor = UIColor.app
         StyleFilledView.appearance().backgroundColor = UIColor.app
@@ -102,7 +103,7 @@ extension UIColor {
         let b: Int = (hash & 0x0000FF)
         return RGB(CGFloat(r), CGFloat(g), CGFloat(b), 1.0)
     }
-
+    
 }
 
 //MARK: Navigation Bar
@@ -114,14 +115,14 @@ extension UINavigationItem {
         
         //logo.tintColor = UIColor.black.withAlphaComponent(0.2)
         logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 30, height: 34))
-
-    
+        
+        
         let title = UIView()
         title.addSubview(logo)
         self.titleView = title
         logo.center = title.center
     }
-
+    
 }
 
 
@@ -129,14 +130,14 @@ extension UINavigationItem {
 
 class KRButton:UIButton {
     
-    var cornerRadius: CGFloat = 0 {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
         }
     }
-
-    var defaultColor:UIColor = UIColor.app {
+    
+    @IBInspectable var defaultColor:UIColor = UIColor.app {
         didSet {
             setTitleColor(defaultColor, for: UIControlState.normal)
             layer.borderColor = defaultColor.cgColor
@@ -144,7 +145,7 @@ class KRButton:UIButton {
         }
     }
     
-    var altForegroundColor:UIColor = UIColor.white {
+    @IBInspectable var altForegroundColor:UIColor = UIColor.white {
         didSet {
             setTitleColor(altForegroundColor, for: UIControlState.highlighted)
             backgroundColor = UIColor.clear
@@ -152,14 +153,14 @@ class KRButton:UIButton {
     }
     
     
-    var borderWidth: CGFloat = 1.0 {
+    @IBInspectable var borderWidth: CGFloat = 1.0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
-
     
-
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -171,7 +172,7 @@ class KRButton:UIButton {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         backgroundColor = defaultColor
-
+        
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
@@ -182,22 +183,22 @@ class KRButton:UIButton {
 
 class KRSimpleButton:UIButton {
     
-    var cornerRadius: CGFloat = 0 {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
         }
     }
     
-    var highlightedColor:UIColor = UIColor.white
+    @IBInspectable var highlightedColor:UIColor = UIColor.white
     
-    var borderWidth: CGFloat = 1.0 {
+    @IBInspectable var borderWidth: CGFloat = 1.0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
     
-    var borderColor: UIColor = UIColor.clear {
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
@@ -228,14 +229,14 @@ class KRSimpleButton:UIButton {
             backgroundColor = highlightedColor
             highlightedColor = highlight
         }
-
+        
     }
 }
 
 
 class KRImageView:UIImageView {
     
-    var cornerRadius: CGFloat = 0 {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
@@ -254,7 +255,7 @@ class KRImageView:UIImageView {
 
 class KRView:UIView {
     
-    var cornerRadius: CGFloat = 0 {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             layer.masksToBounds = cornerRadius > 0
@@ -262,13 +263,13 @@ class KRView:UIView {
     }
     
     
-    var borderWidth: CGFloat = 0.0 {
+    @IBInspectable var borderWidth: CGFloat = 0.0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
     
-    var borderColor:UIColor = UIColor.clear {
+    @IBInspectable var borderColor:UIColor = UIColor.clear {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
@@ -294,7 +295,7 @@ extension UIView {
     func setBorder(color:UIColor = UIColor.app, cornerRadius:CGFloat = 0.0, borderWidth:CGFloat = 0.0) {
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = cornerRadius > 0
-
+        
         layer.borderWidth = borderWidth
         layer.borderColor = color.cgColor
     }
@@ -365,13 +366,13 @@ extension UIView {
 
 class RoundedView:UIView {
     
-    var cornerRadius:CGFloat = 0
-
-    var topLeft:Bool = false
-    var topRight:Bool = false
-    var bottomLeft:Bool = false
-    var bottomRight:Bool = false
-
+    @IBInspectable var cornerRadius:CGFloat = 0
+    
+    @IBInspectable var topLeft:Bool = false
+    @IBInspectable var topRight:Bool = false
+    @IBInspectable var bottomLeft:Bool = false
+    @IBInspectable var bottomRight:Bool = false
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -408,6 +409,6 @@ class RoundedView:UIView {
         mask.path = path.cgPath
         self.layer.mask = mask
     }
-
+    
     
 }

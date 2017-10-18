@@ -156,7 +156,7 @@ class TeamService {
         let payloadData = try payload.jsonData()
         
         // sign the payload
-        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)
             else {
                 mutex.unlock()
                 throw Errors.payloadSignature
@@ -209,7 +209,7 @@ class TeamService {
                                                 pgpPublicKey: keyManager.loadPGPPublicKey(for: teamIdentity.email).packetData)
         
         // use the invite `seed` to create a nonce sodium keypair
-        guard let nonceKeypair = try KRSodium.shared().sign.keyPair(seed: invite.seed) else {
+        guard let nonceKeypair = KRSodium.instance().sign.keyPair(seed: invite.seed) else {
             mutex.unlock()
             throw Errors.badInviteSeed
         }
@@ -229,7 +229,7 @@ class TeamService {
         // sign the payload json
         // Note: in this special case the nonce key pair is used to sign the payload
         
-        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
         else {
             mutex.unlock()
             throw Errors.payloadSignature
@@ -287,7 +287,7 @@ class TeamService {
     private func getTeamUnlocked(using invite:TeamInvite, _ completionHandler:@escaping (TeamServiceResult<TeamService>) -> Void) throws {
         
         // use the invite `seed` to create a nonce sodium keypair
-        guard let nonceKeypair = try KRSodium.shared().sign.keyPair(seed: invite.seed) else {
+        guard let nonceKeypair = KRSodium.instance().sign.keyPair(seed: invite.seed) else {
             throw Errors.badInviteSeed
         }
         
@@ -298,7 +298,7 @@ class TeamService {
         let payload = SigChain.Payload.readBlocks(readBlock)
         let payloadData = try payload.jsonData()
         
-        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: payloadData, secretKey: nonceKeypair.secretKey)
             else {
                 throw Errors.payloadSignature
         }
@@ -370,7 +370,7 @@ class TeamService {
         let payload = SigChain.Payload.readBlocks(readBlock)
         let payloadData = try payload.jsonData()
         
-        guard let signature = try KRSodium.shared().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: payloadData, secretKey: teamIdentity.keyPair.secretKey)
         else {
             throw Errors.payloadSignature
         }
