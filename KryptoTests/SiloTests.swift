@@ -97,12 +97,9 @@ class SiloTests: XCTestCase {
             do {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
-            } catch let e {
-                guard let _ = e as? RequestPendingError else {
-                    XCTFail("\(e)")
-                    return
-                }
-            }
+            } catch Silo.Errors.requestPending {
+                XCTFail("got request pending")
+            } catch {}
         } catch let e {
             XCTFail("\(e)")
         }
@@ -123,12 +120,9 @@ class SiloTests: XCTestCase {
             do {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
-            } catch let e {
-                guard let _ = e as? InvalidRequestTimeError else {
-                    XCTFail("\(e)")
-                    return
-                }
-            }
+            } catch Silo.Errors.invalidRequestTime {
+                XCTFail("got invalid request time")
+            } catch {}
         } catch let e {
             XCTFail("\(e)")
         }
@@ -149,12 +143,9 @@ class SiloTests: XCTestCase {
             do {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
-            } catch let e {
-                guard let _ = e as? InvalidRequestTimeError else {
-                    XCTFail("\(e)")
-                    return
-                }
-            }
+            }  catch Silo.Errors.invalidRequestTime {
+                XCTFail("got invalid request time")
+            } catch {}
         } catch let e {
             XCTFail("\(e)")
         }
@@ -242,12 +233,8 @@ class SiloTests: XCTestCase {
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
             XCTFail("expected RequestPendingError")
 
-        } catch {
-            guard error is RequestPendingError else {
-                XCTFail("\(error)")
-                return
-            }
-            
-        }
+        }  catch Silo.Errors.requestPending {
+            XCTFail("got request pending")
+        } catch {}
     }
 }

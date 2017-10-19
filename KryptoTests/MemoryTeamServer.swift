@@ -31,6 +31,15 @@ class MemoryTeamServerHTTP:TeamServiceAPI {
             onCompletion(TeamService.ServerResponse.error(TeamService.ServerError(message: "\(error)")))
         }
     }
+    
+    func sendRequestSynchronously<T>(object: Object) -> TeamService.ServerResponse<T> where T : JsonReadable {
+        do {
+            let response:TeamService.ServerResponse<T> = try server.sendRequest(object: object)
+            return response
+        } catch {
+            return TeamService.ServerResponse.error(TeamService.ServerError(message: "\(error)"))
+        }
+    }
 
 }
 
