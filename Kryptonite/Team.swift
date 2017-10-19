@@ -86,6 +86,12 @@ struct Team:Jsonable {
     enum LoggingEndpoint:Jsonable,Equatable {
         case commandEncrypted
         
+        var displayDescription:String {
+            switch self {
+            case .commandEncrypted:
+                return "Krypt.co Encrypted"
+            }
+        }
         struct UnknownEndpoint:Error {}
         
         init(json: Object) throws {

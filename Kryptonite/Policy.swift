@@ -30,7 +30,8 @@ class Policy {
     // Category Identifiers
     static let autoAuthorizedCategoryIdentifier = "auto_authorized_identifier"
     static let authorizeCategoryIdentifier = "authorize_identifier"
-    
+    static let authorizeNoTemporaryCategoryIdentifier = "authorize_non_temp_identifier"
+
     
     enum ActionIdentifier:String {
         case approve = "approve_identifier"
@@ -317,8 +318,11 @@ class Policy {
 extension Request {
     var authorizeCategoryIdentifier:String {
         switch self.body {
-        case .decryptLog, .teamOperation, .readTeam, .createTeam, .me, .unpair, .noOp:
+        case .createTeam, .me, .unpair, .noOp:
             return ""
+
+        case .decryptLog, .teamOperation, .readTeam:
+            return Policy.authorizeNoTemporaryCategoryIdentifier
             
         case .ssh, .git:
             return Policy.authorizeCategoryIdentifier

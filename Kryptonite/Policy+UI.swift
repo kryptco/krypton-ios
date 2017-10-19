@@ -18,6 +18,13 @@ extension Policy {
         return cat
     }
     
+    static var authorizeNoTemporaryCategory:UIUserNotificationCategory {
+        let cat = UIMutableUserNotificationCategory()
+        cat.identifier = authorizeNoTemporaryCategoryIdentifier
+        cat.setActions([Policy.approveAction, Policy.rejectAction], for: UIUserNotificationActionContext.default)
+        return cat
+    }
+    
     
     static var approveAction:UIMutableUserNotificationAction = {
         var approve = UIMutableUserNotificationAction()

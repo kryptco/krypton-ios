@@ -172,6 +172,7 @@
 		FA8F8AB91F37BF0F00D0D4BE /* Policy+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
+		FA9BA5D11F993226007B4C0D /* TeamApprovalContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BA5D01F993226007B4C0D /* TeamApprovalContentController.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
@@ -390,41 +391,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 6BFD902119C8D8B500DD99B6;
 			remoteInfo = SwiftHTTPTests;
-		};
-		8DB2EE491DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D958025919E6EEEB003C8218;
-			remoteInfo = SwiftHTTPOSX;
-		};
-		8DB2EE4B1DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D958026319E6EEEB003C8218;
-			remoteInfo = SwiftHTTPOSXTests;
-		};
-		8DB2EE4D1DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5C135EC11C4733CD00AA3A01;
-			remoteInfo = SwiftHTTPtvOS;
-		};
-		8DB2EE4F1DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5C135ECA1C4733CE00AA3A01;
-			remoteInfo = SwiftHTTPtvOSTests;
-		};
-		8DB2EE511DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5C135FA91C4737E200AA3A01;
-			remoteInfo = SwiftHTTPWatchOS;
 		};
 		FA12EAA31ECFA917001603BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -658,6 +624,7 @@
 		FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+Team.swift"; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
+		FA9BA5D01F993226007B4C0D /* TeamApprovalContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamApprovalContentController.swift; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
@@ -839,11 +806,6 @@
 			children = (
 				8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */,
 				8DB2EE481DBC54EF0079E468 /* SwiftHTTPTests.xctest */,
-				8DB2EE4A1DBC54EF0079E468 /* SwiftHTTP.framework */,
-				8DB2EE4C1DBC54EF0079E468 /* SwiftHTTPOSXTests.xctest */,
-				8DB2EE4E1DBC54EF0079E468 /* SwiftHTTP.framework */,
-				8DB2EE501DBC54EF0079E468 /* SwiftHTTPtvOSTests.xctest */,
-				8DB2EE521DBC54EF0079E468 /* SwiftHTTP.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -948,6 +910,7 @@
 				FAAE818E1E576DB8002A9AE6 /* Authorize.swift */,
 				FA6491111ED38314008C04A7 /* AutoApproveController.swift */,
 				FAE495701DBD741800A97708 /* ApproveController.swift */,
+				FA9BA5D01F993226007B4C0D /* TeamApprovalContentController.swift */,
 				FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
 				FA16827E1D77666800A7ED53 /* Me */,
@@ -1624,41 +1587,6 @@
 			remoteRef = 8DB2EE471DBC54EF0079E468 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8DB2EE4A1DBC54EF0079E468 /* SwiftHTTP.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftHTTP.framework;
-			remoteRef = 8DB2EE491DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE4C1DBC54EF0079E468 /* SwiftHTTPOSXTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftHTTPOSXTests.xctest;
-			remoteRef = 8DB2EE4B1DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE4E1DBC54EF0079E468 /* SwiftHTTP.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftHTTP.framework;
-			remoteRef = 8DB2EE4D1DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE501DBC54EF0079E468 /* SwiftHTTPtvOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftHTTPtvOSTests.xctest;
-			remoteRef = 8DB2EE4F1DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE521DBC54EF0079E468 /* SwiftHTTP.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftHTTP.framework;
-			remoteRef = 8DB2EE511DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		FA12EAA41ECFA917001603BF /* PGPFormat.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -2067,6 +1995,7 @@
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
 				FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
+				FA9BA5D11F993226007B4C0D /* TeamApprovalContentController.swift in Sources */,
 				FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,

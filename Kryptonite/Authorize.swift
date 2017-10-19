@@ -43,8 +43,12 @@ extension Request {
             return teamLoad
         
         case .decryptLog, .teamOperation, .readTeam:
-            return nil
+            let teamApprove = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TeamApproveController") as? TeamApproveController
+            teamApprove?.session = session
+            teamApprove?.request = self
             
+            return teamApprove
+
         case .me, .unpair, .noOp:
             return nil
         }

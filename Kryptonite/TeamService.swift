@@ -12,6 +12,7 @@ import SwiftHTTP
 
 protocol TeamServiceAPI {
     func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void)
+    func sendRequestSynchronously<T>(object:Object) -> TeamService.ServerResponse<T>
 }
 
 class TeamService {
@@ -472,6 +473,51 @@ class TeamService {
                 
             }
         }
+    }
+    
+    // Fufill Team Operation Requests
+    func responseFor(requestableOperation:RequestableTeamOperation) throws -> TeamServiceResult<ResponseResult<TeamOperationResponse>>
+    {
+        
+        //TODO: Handle not up to date
+        
+        
+        switch requestableOperation {
+        case .invite:
+            break
+            
+        case .cancelInvite:
+            break
+            
+        case .removeMember(let memberPublicKey):
+            break
+            
+        case .setPolicy(let policy):
+            break
+            
+        case .setTeamInfo(let info):
+            break
+            
+        case .pinHostKey(let hostKey):
+            break
+            
+        case .unpinHostKey(let hostKey):
+            break
+            
+        case .addLoggingEndpoint(let endpoint):
+            break
+            
+        case .removeLoggingEndpoint(let endpoint):
+            break
+            
+        case .addAdmin(let memberPublicKey):
+            break
+            
+        case .removeAdmin(let adminPublicKey):
+            break
+        }
+        
+        return .result(.error("unimplemented"))
     }
 }
 

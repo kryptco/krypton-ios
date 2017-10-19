@@ -11,11 +11,6 @@ import JSON
 import AwesomeCache
 
 
-struct InvalidRequestTimeError:Error{}
-struct RequestPendingError:Error{}
-struct ResponseNotNeededError:Error{}
-struct SiloCacheCreationError:Error{}
-
 struct UserRejectedError:Error, CustomDebugStringConvertible {
     static let rejectedConstant = "rejected"
     
@@ -67,8 +62,14 @@ class Silo {
     lazy var sharedDirectory:URL? = {
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("cache")
     }()
-
-
+    
+    enum Errors:Error {
+        case invalidRequestTime
+        case requestPending
+        case responseNotNeeded
+        case siloCacheCreation
+        case noTeamIdentity
+    }
     
     //MARK: Handle Logic
     func handle(request:Request, session:Session, communicationMedium: CommunicationMedium, completionHandler: (()->Void)? = nil) throws {
@@ -83,7 +84,7 @@ class Silo {
         // ensure request has not expired
         let now = Date().timeIntervalSince1970
         if abs(now - Double(request.unixSeconds)) > Properties.requestTimeTolerance {
-            throw InvalidRequestTimeError()
+            throw Silo.Errors.invalidRequestTime
         }
         
         // check if the request has already been received and cached
@@ -98,7 +99,7 @@ class Silo {
         // check if the request has already been received, but is still pending
         pendingRequests?.removeExpiredObjects()
         if pendingRequests?.object(forKey: CacheKey(session, request)) != nil {
-            throw RequestPendingError()
+            throw Silo.Errors.requestPending
         }
                 
         // decide if request body can be responded to immediately
@@ -346,9 +347,54 @@ class Silo {
                                                   pgpPublicKey: pgpPublicKey,
                                                   teamCheckpoint: teamCheckpoint))
             responseType = .me(.ok(me))
+            
+        case .readTeam(let readTeamRequest):
+            
+            guard let teamIdentity = try IdentityManager.getTeamIdentity() else {
+                throw Errors.noTeamIdentity
+            }
+            
+            guard signatureAllowed else {
+                responseType = .readTeam(.error("rejected"))
+                break
+            }
+            
+            do {
+                let timeReadToken = ReadToken.time(TimeToken(readerPublicKey: readTeamRequest.publicKey, expiration: UInt64(TimeSeconds.hour.multiplied(by: 1))))
+                let timeReadTokenData = try timeReadToken.jsonData()
+                
+                guard let signature = KRSodium.instance().sign.signature(message: timeReadTokenData, secretKey: teamIdentity.keyPair.secretKey)
+                    else {
+                        throw CryptoError.sign(.Ed25519, nil)
+                }
+                
 
-        case .decryptLog, .readTeam, .teamOperation, .createTeam, .noOp, .unpair:
-            throw ResponseNotNeededError()
+                let timeReadTokenString = try timeReadTokenData.utf8String()
+                
+                responseType = .readTeam(.ok(ReadTeamResponse(signerPublicKey: teamIdentity.keyPair.publicKey,
+                                                              token: timeReadTokenString,
+                                                              signature: signature)))
+
+            } catch {
+                responseType = .readTeam(.error("\(error)"))
+            }
+        case .teamOperation(let _):
+            guard IdentityManager.hasTeam() else {
+                throw Errors.noTeamIdentity
+            }
+            
+            guard signatureAllowed else {
+                responseType = .teamOperation(.error("rejected"))
+                break
+            }
+            
+            do {
+                responseType = .teamOperation(.error("unimplemented"))
+            } catch {
+                responseType = .readTeam(.error("\(error)"))
+            }
+        case .decryptLog, .createTeam, .noOp, .unpair:
+            throw Silo.Errors.responseNotNeeded
         }
         
         let arn = API.endpointARN ?? ""
@@ -359,9 +405,8 @@ class Silo {
                                 approvedUntil: Policy.approvedUntilUnixSeconds(for: session),
                                 trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
-        let responseData = try response.jsonData() as NSData
-        
-        requestCache?.setObject(responseData, forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
+        let responseData = try response.jsonData()
+        requestCache?.setObject(responseData as NSData, forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
         
         return response
 

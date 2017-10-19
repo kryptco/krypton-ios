@@ -39,21 +39,25 @@ struct TeamCheckpoint:Jsonable {
 // Read
 
 struct ReadTeamResponse:Jsonable {
+    let signerPublicKey:SodiumSignPublicKey
     let token:String // string of ReadToken
     let signature:Data
     
-    init(token:String, signature:Data) {
+    init(signerPublicKey:SodiumSignPublicKey, token:String, signature:Data) {
+        self.signerPublicKey = signerPublicKey
         self.token = token
         self.signature = signature
     }
     
     init(json:Object) throws {
-        try self.init(token: json ~> "token",
+        try self.init(signerPublicKey: ((json ~> "signer_public_key") as String).fromBase64(),
+                      token: json ~> "token",
                       signature: ((json ~> "signature") as String).fromBase64())
     }
     
     var object:Object {
-        return ["token": token,
+        return ["signer_public_key": signerPublicKey.toBase64(),
+                "token": token,
                 "signature": signature.toBase64()]
     }
 }
@@ -74,21 +78,21 @@ enum ReadToken:Jsonable {
 }
 
 struct TimeToken:Jsonable {
-    let publicKey:SodiumSignPublicKey
+    let readerPublicKey:SodiumSignPublicKey
     let expiration:UInt64
     
-    init(publicKey:SodiumSignPublicKey, expiration:UInt64) {
-        self.publicKey = publicKey
+    init(readerPublicKey:SodiumSignPublicKey, expiration:UInt64) {
+        self.readerPublicKey = readerPublicKey
         self.expiration = expiration
     }
     
     init(json:Object) throws {
-        try self.init(publicKey: ((json ~> "public_key") as String).fromBase64(),
+        try self.init(readerPublicKey: ((json ~> "reader_public_key") as String).fromBase64(),
                       expiration: json ~> "expiration")
     }
     
     var object:Object {
-        return ["public_key": publicKey.toBase64(),
+        return ["reader_public_key": readerPublicKey.toBase64(),
                 "expiration": expiration]
     }
 }
