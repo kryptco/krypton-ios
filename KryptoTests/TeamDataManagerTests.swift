@@ -110,7 +110,7 @@ class TeamDataManagerTests: XCTestCase {
             try dm.saveContext()
             
             let dmx = try TeamDataManager(teamID: id)
-            let fetched = try dmx.fetchTeam()
+            _ = try dmx.fetchTeam()
             
             let dmz = try TeamDataManager(teamID: id)
             try XCTAssert(dmz.lastBlockHash() == block1.hash())
@@ -146,7 +146,7 @@ class TeamDataManagerTests: XCTestCase {
             try dm.saveContext()
             
             let dmx = try TeamDataManager(teamID: id)
-            var fetched = try dmx.fetchTeam()
+            _ = try dmx.fetchTeam()
             
             let dmz = try TeamDataManager(teamID: id)
             try XCTAssert(dmz.lastBlockHash() == block1.hash())

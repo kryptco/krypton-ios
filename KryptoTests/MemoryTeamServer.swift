@@ -23,9 +23,13 @@ class MemoryTeamServerHTTP:TeamServiceAPI {
     /**
         A local Memory team server interface to talk to the MemoryTeamServer
      */
-    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws {
-        let response:TeamService.ServerResponse<T> = try server.sendRequest(object: object)
-        onCompletion(response)
+    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) {
+        do {
+            let response:TeamService.ServerResponse<T> = try server.sendRequest(object: object)
+            onCompletion(response)
+        } catch {
+            onCompletion(TeamService.ServerResponse.error(TeamService.ServerError(message: "\(error)")))
+        }
     }
 
 }
@@ -209,7 +213,7 @@ class MemoryTeamServer {
             
             return  TeamService.ServerResponse.success(responseType)
         
-        case .createLogChain(let createLogChain):
+        case .createLogChain( _):
             let response = TeamService.EmptyResponse()
             
             guard let responseType = response as? T else {
@@ -219,7 +223,7 @@ class MemoryTeamServer {
             return  TeamService.ServerResponse.success(responseType)
 
             
-        case .readLogBlocks(let readLogs):
+        case .readLogBlocks( _):
             let response = TeamService.EmptyResponse()
             
             guard let responseType = response as? T else {
@@ -229,7 +233,7 @@ class MemoryTeamServer {
             return  TeamService.ServerResponse.success(responseType)
 
             
-        case .appendLogBlock(let appendLog):
+        case .appendLogBlock(_):
             let response = TeamService.EmptyResponse()
             
             guard let responseType = response as? T else {

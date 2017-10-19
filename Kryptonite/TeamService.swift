@@ -11,7 +11,7 @@ import JSON
 import SwiftHTTP
 
 protocol TeamServiceAPI {
-    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void) throws
+    func sendRequest<T>(object:Object, _ onCompletion:@escaping (TeamService.ServerResponse<T>) -> Void)
 }
 
 class TeamService {
@@ -124,8 +124,7 @@ class TeamService {
                                                  payload: createBlock.payload,
                                                  signature: createBlock.signature)
 
-        //TODO: if this throws, when will mutex be unlocked?
-        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             defer { self.mutex.unlock() }
             
             switch serverResponse {
@@ -169,7 +168,7 @@ class TeamService {
                                                  payload: payloadDataString,
                                                  signature: signature)
 
-        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -241,7 +240,7 @@ class TeamService {
                                                  payload: payloadDataString,
                                                  signature: signature)
         
-        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -309,7 +308,7 @@ class TeamService {
                                                      signature: signature)
         
         
-        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<SigChain.Response>) in
+        server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<SigChain.Response>) in
             switch serverResponse {
             case .error(let error):
                 completionHandler(TeamServiceResult.error(error))
@@ -381,7 +380,7 @@ class TeamService {
                                                      payload: payloadData.utf8String(),
                                                      signature: signature)
         
-        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<SigChain.Response>) in
+        server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<SigChain.Response>) in
             switch serverResponse {
                 
             case .error(let error):
@@ -450,7 +449,7 @@ class TeamService {
                                                      payload: logBlock.payload,
                                                      signature: logBlock.signature)
         
-        try server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
+        server.sendRequest(object: sigChainRequest.object) { (serverResponse:ServerResponse<EmptyResponse>) in
             switch serverResponse {
                 
             case .error(let error):
