@@ -333,8 +333,14 @@ class Silo {
                 pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
             }
 
-            let teamCheckpoint = try TeamService.shared().getTeamCheckpoint()
+            var teamCheckpoint:TeamCheckpoint?
+            if let identity = try IdentityManager.getTeamIdentity() {
+                teamCheckpoint =  TeamCheckpoint(publicKey: identity.keyPair.publicKey,
+                                                 teamPublicKey: identity.initialTeamPublicKey,
+                                                 lastBlockHash: identity.checkpoint)
 
+            }
+            
             let me = MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(),
                                                   publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(),
                                                   pgpPublicKey: pgpPublicKey,

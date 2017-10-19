@@ -102,20 +102,7 @@ class TeamService {
         init(json: Object) throws {}
     }
 
-    //TODO: should this be private so that all accesses are guarded by mutex?
     var teamIdentity:TeamIdentity
-    func getTeamCheckpoint() throws -> TeamCheckpoint? {
-        mutex.lock()
-        defer { mutex.unlock() }
-
-        guard let lastBlockHash = try teamIdentity.lastBlockHash() else {
-            return nil
-        }
-
-        return TeamCheckpoint(publicKey: teamIdentity.keyPair.publicKey,
-                              teamPublicKey: teamIdentity.initialTeamPublicKey,
-                              lastBlockHash: lastBlockHash)
-    }
     var mutex:Mutex
     var server:TeamServiceAPI
     
