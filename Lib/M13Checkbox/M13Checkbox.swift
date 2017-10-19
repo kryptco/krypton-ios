@@ -22,12 +22,12 @@ public class M13Checkbox: UIControl {
     //----------------------------
     
     /**
-    The possible states the check can be in.
-    
-    - Unchecked: No check is shown.
-    - Checked: A checkmark is shown.
-    - Mixed: A dash is shown.
-    */
+     The possible states the check can be in.
+     
+     - Unchecked: No check is shown.
+     - Checked: A checkmark is shown.
+     - Mixed: A dash is shown.
+     */
     public enum CheckState: String, RawRepresentable {
         /// No check is shown.
         case unchecked = "Unchecked"
@@ -317,7 +317,7 @@ public class M13Checkbox: UIControl {
                 controller.animate(checkState, toState: nil, completion: { [weak self] in
                     self?.controller.resetLayersForState(newState)
                     self?.controller.animate(nil, toState: newState)
-                    })
+                })
             }
         } else {
             controller.resetLayersForState(newState)
@@ -348,7 +348,7 @@ public class M13Checkbox: UIControl {
     //----------------------------
     
     /// The duration of the animation that occurs when the checkbox switches states. The default is 0.3 seconds.
-    public var animationDuration: TimeInterval {
+    @IBInspectable public var animationDuration: TimeInterval {
         get {
             return controller.animationGenerator.animationDuration
         }
@@ -390,12 +390,12 @@ public class M13Checkbox: UIControl {
             // Layout and reset
             newManager.resetLayersForState(checkState)
             controller = newManager
-
+            
         }
     }
     
     /// Whether or not to enable morphing between states.
-    public var enableMorphing: Bool {
+    @IBInspectable public var enableMorphing: Bool {
         get {
             return controller.enableMorphing
         }
@@ -425,7 +425,7 @@ public class M13Checkbox: UIControl {
     //----------------------------
     
     /// The color of the checkbox's tint color when not in the unselected state. The tint color is is the main color used when not in the unselected state.
-    public var secondaryTintColor: UIColor? {
+    @IBInspectable public var secondaryTintColor: UIColor? {
         get {
             return controller.secondaryTintColor
         }
@@ -435,7 +435,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The color of the checkmark when it is displayed against a filled background.
-    public var secondaryCheckmarkTintColor: UIColor? {
+    @IBInspectable public var secondaryCheckmarkTintColor: UIColor? {
         get {
             return controller.secondaryCheckmarkTintColor
         }
@@ -445,7 +445,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The stroke width of the checkmark.
-    public var checkmarkLineWidth: CGFloat {
+    @IBInspectable public var checkmarkLineWidth: CGFloat {
         get {
             return controller.pathGenerator.checkmarkLineWidth
         }
@@ -472,7 +472,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The stroke width of the box.
-    public var boxLineWidth: CGFloat {
+    @IBInspectable public var boxLineWidth: CGFloat {
         get {
             return controller.pathGenerator.boxLineWidth
         }
@@ -483,7 +483,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// The corner radius of the box if the box type is square.
-    public var cornerRadius: CGFloat {
+    @IBInspectable public var cornerRadius: CGFloat {
         get {
             return controller.pathGenerator.cornerRadius
         }
@@ -505,7 +505,7 @@ public class M13Checkbox: UIControl {
     }
     
     /// Wether or not to hide the checkbox.
-    public var hideBox: Bool {
+    @IBInspectable public var hideBox: Bool {
         get {
             return controller.hideBox
         }
