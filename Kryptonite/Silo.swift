@@ -360,7 +360,9 @@ class Silo {
             }
             
             do {
-                let timeReadToken = ReadToken.time(TimeToken(readerPublicKey: readTeamRequest.publicKey, expiration: UInt64(TimeSeconds.hour.multiplied(by: 1))))
+                //TODO: decide exp time
+                let expiration = Date().timeIntervalSince1970 + TimeSeconds.hour.multiplied(by: 1)
+                let timeReadToken = ReadToken.time(TimeToken(readerPublicKey: readTeamRequest.publicKey, expiration: UInt64(expiration)))
                 let timeReadTokenData = try timeReadToken.jsonData()
                 
                 guard let signature = KRSodium.instance().sign.signature(message: timeReadTokenData, secretKey: teamIdentity.keyPair.secretKey)
