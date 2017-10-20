@@ -20,6 +20,7 @@ enum TeamChainBlockCreateError:Error {
 }
 
 
+// TODO: one impl with TeamInvite
 enum SigChainLink {
     case invite(teamPublicKey:SodiumSignPublicKey, blockHash:Data, noncePrivateKey:SodiumSignSecretKey)
     
@@ -33,7 +34,7 @@ enum SigChainLink {
         switch self {
         case .invite(let teamPublicKey, let blockHash, let noncePrivateKey):
             let path = Path.invite.rawValue
-            return "\(SigChainLink.scheme)\(path)/\(teamPublicKey.toBase64())/\(blockHash.toBase64())/\(noncePrivateKey.toBase64())"
+            return "\(SigChainLink.scheme)\(path)/\(teamPublicKey.toBase64(true))/\(blockHash.toBase64(true))/\(noncePrivateKey.toBase64(true))"
         }
     }
 }
