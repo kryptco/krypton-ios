@@ -22,7 +22,7 @@ enum TeamChainBlockCreateError:Error {
 
 // TODO: one impl with TeamInvite
 enum SigChainLink {
-    case invite(teamPublicKey:SodiumSignPublicKey, blockHash:Data, noncePrivateKey:SodiumSignSecretKey)
+    case invite(teamPublicKey:SodiumSignPublicKey, blockHash:Data, nonceKeyPairSeed:Data)
     
     static let scheme = "kr://"
     
@@ -32,9 +32,9 @@ enum SigChainLink {
     
     var string:String {
         switch self {
-        case .invite(let teamPublicKey, let blockHash, let noncePrivateKey):
+        case .invite(let teamPublicKey, let blockHash, let nonceKeyPairSeed):
             let path = Path.invite.rawValue
-            return "\(SigChainLink.scheme)\(path)/\(teamPublicKey.toBase64(true))/\(blockHash.toBase64(true))/\(noncePrivateKey.toBase64(true))"
+            return "\(SigChainLink.scheme)\(path)/\(teamPublicKey.toBase64(true))/\(blockHash.toBase64(true))/\(nonceKeyPairSeed.toBase64(true))"
         }
     }
 }
@@ -92,7 +92,7 @@ extension TeamIdentity {
         // create the url link
         let inviteLink = SigChainLink.invite(teamPublicKey: initialTeamPublicKey,
                                              blockHash: newBlockHash,
-                                             noncePrivateKey: nonceKeyPair.secretKey).string
+                                             nonceKeyPairSeed: nonceSeed).string
         
         return (inviteLink, request)
     }
