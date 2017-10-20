@@ -493,34 +493,44 @@ class TeamService {
             teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash(),
                                                           data: TeamOperationResponseData.inviteLink(inviteLink))
         case .cancelInvite:
-            throw UnimplementedError()
-            
+            request = try teamIdentity.cancelInvitationBlock()
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
+
         case .removeMember(let memberPublicKey):
-            throw UnimplementedError()
+            request = try teamIdentity.removeMemberBlock(for: memberPublicKey)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
 
         case .setPolicy(let policy):
-            throw UnimplementedError()
+            request = try teamIdentity.setPolicyBlock(for: policy)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
 
         case .setTeamInfo(let info):
-            throw UnimplementedError()
+            request = try teamIdentity.setTeamInfoBlock(for: info)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
 
         case .pinHostKey(let hostKey):
-            throw UnimplementedError()
-            
+            request = try teamIdentity.pinHostKeyBlock(for: hostKey)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
+
         case .unpinHostKey(let hostKey):
-            throw UnimplementedError()
-            
+            request = try teamIdentity.unpinHostKeyBlock(for: hostKey)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
+
         case .addLoggingEndpoint(let endpoint):
-            throw UnimplementedError()
-            
+            request = try teamIdentity.addLoggingEndpoingBlock(for: endpoint)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
+
         case .removeLoggingEndpoint(let endpoint):
-            throw UnimplementedError()
-            
+            request = try teamIdentity.removeLoggingEndpoingBlock(for: endpoint)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
+
         case .addAdmin(let memberPublicKey):
-            throw UnimplementedError()
-            
+            request = try teamIdentity.addAdminBlock(for: memberPublicKey)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
+
         case .removeAdmin(let adminPublicKey):
-            throw UnimplementedError()
+            request = try teamIdentity.removeAdminBlock(for: adminPublicKey)
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash())
         }
         
         let response:ServerResponse<EmptyResponse> = server.sendRequestSynchronously(object: request.object)
