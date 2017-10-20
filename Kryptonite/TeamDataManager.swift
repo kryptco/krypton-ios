@@ -43,13 +43,13 @@ extension DataLogBlock {
     func block() throws -> SigChain.LogBlock {
         guard
             let payload = payload,
-            let signature = signature as Data?,
-            let log = logData as Data?
+            let signature = signature as Data?
         else {
             throw TeamDataManager.Errors.missingObjectField
         }
         
-        return SigChain.LogBlock(payload: payload, signature: signature, log: log)
+        return SigChain.LogBlock(payload: payload, signature: signature, log: (logData as Data?) ?? Data())
+
     }
     
     convenience init(block:SigChain.LogBlock, helper context:NSManagedObjectContext) {

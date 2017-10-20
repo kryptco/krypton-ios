@@ -48,6 +48,14 @@ struct Team:Jsonable {
             
             return [:]
         }
+        
+        var description:String {
+            if let approvalSeconds = temporaryApprovalSeconds {
+                return TimeInterval(approvalSeconds).timeAgo(suffix: "")
+            } else {
+                return "unset"
+            }
+        }
     }
     
     struct MemberIdentity:Jsonable {

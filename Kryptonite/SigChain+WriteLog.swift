@@ -34,7 +34,7 @@ extension TeamIdentity {
         let payloadDataString = try payloadData.utf8String()
         
         // add the log block
-        let logBlock = SigChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: Data())
+        let logBlock = SigChain.LogBlock(payload: payloadDataString, signature: payloadSignature, log: logCiphertext)
         try dataManager.appendLog(block: logBlock)
         self.logCheckpoint = logBlock.hash()
     }

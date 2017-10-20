@@ -303,16 +303,6 @@ class TeamDetailController: KRBaseTableController {
 
 }
 
-extension Team.PolicySettings {
-    var description:String {
-        if let approvalSeconds = temporaryApprovalSeconds {            
-            return TimeInterval(approvalSeconds).timeAgo(suffix: "")
-        } else {
-            return "unset"
-        }
-    }
-}
-
 extension SigChain.TeamPointer:CustomStringConvertible {
     var description:String {
         switch self {

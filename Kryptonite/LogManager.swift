@@ -218,12 +218,13 @@ class LogManager {
             
             let logData = try theLog.jsonData()
             try identity.writeLog(data: logData)
+            try IdentityManager.commitTeamChanges(identity: identity)
             
             // send pending logs
             try TeamService.shared().sendUnsentLogBlocks { result in
                 switch result {
                 case .error(let e):
-                    log("could not send log block: \(e)")
+                    log("could not send log block: \(e)", .error)
 
                 case .result:
                     log("all log blocks sent succesfully")
@@ -231,7 +232,7 @@ class LogManager {
             }
 
         } catch {
-            log("error creating team log block: \(error)")
+            log("error creating team log block: \(error)", .error)
         }
         
 
