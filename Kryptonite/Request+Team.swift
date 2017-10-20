@@ -41,7 +41,7 @@ struct TeamOperationRequest:Jsonable {
     }
     
     var object: Object {
-        return ["requestable_team_operation": operation.object]
+        return ["operation": operation.object]
     }
 }
 
@@ -111,7 +111,7 @@ enum RequestableTeamOperation:Jsonable {
     var object: Object {
         switch self {
         case .invite:
-            return ["invite_member": [:]]
+            return ["invite": [:]]
         case .cancelInvite:
             return ["cancel_invite": [:]]
         case .removeMember(let remove):

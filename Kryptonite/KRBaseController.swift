@@ -57,6 +57,14 @@ extension KRBase {
     }
 }
 
+extension UINavigationController: KRBase {
+    func approveControllerDismissed(allowed: Bool) {
+        if let root = self.viewControllers.first {
+            self.defaultApproveControllerDismissed(viewController: root, allowed: allowed)
+        }
+    }
+}
+
 class KRBaseController: UIViewController, KRBase {
     
     override func viewDidLoad() {
