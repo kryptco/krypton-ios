@@ -98,8 +98,9 @@ class SiloTests: XCTestCase {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch Silo.Errors.requestPending {
+            } catch {
                 XCTFail("got request pending")
-            } catch {}
+            }
         } catch let e {
             XCTFail("\(e)")
         }
@@ -121,8 +122,9 @@ class SiloTests: XCTestCase {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch Silo.Errors.invalidRequestTime {
+            } catch {
                 XCTFail("got invalid request time")
-            } catch {}
+            }
         } catch let e {
             XCTFail("\(e)")
         }
@@ -144,8 +146,9 @@ class SiloTests: XCTestCase {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             }  catch Silo.Errors.invalidRequestTime {
+            } catch {
                 XCTFail("got invalid request time")
-            } catch {}
+            }
         } catch let e {
             XCTFail("\(e)")
         }
@@ -234,7 +237,8 @@ class SiloTests: XCTestCase {
             XCTFail("expected RequestPendingError")
 
         }  catch Silo.Errors.requestPending {
+        } catch {
             XCTFail("got request pending")
-        } catch {}
+        }
     }
 }
