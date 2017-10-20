@@ -402,7 +402,34 @@ class Silo {
             } catch {
                 responseType = .teamOperation(.error("\(error)"))
             }
-        case .decryptLog, .createTeam, .noOp, .unpair:
+            
+        case .decryptLog(let decryptLogRequest):
+            guard let teamIdentity:TeamIdentity = try IdentityManager.getTeamIdentity() else {
+                throw Errors.noTeamIdentity
+            }
+            
+            // ensure we're allowed to decrypt
+            guard signatureAllowed else {
+                responseType = .decryptLog(.error("rejected"))
+                break
+            }
+            
+            guard decryptLogRequest.wrappedKey.publicKey == teamIdentity.encryptionKeyPair.publicKey else {
+                responseType = .decryptLog(.error("public key mismatch"))
+                break
+            }
+            
+            guard let unwrappedKey = KRSodium.instance().box.open(anonymousCipherText: decryptLogRequest.wrappedKey.ciphertext,
+                                                                  recipientPublicKey: teamIdentity.encryptionKeyPair.publicKey,
+                                                                  recipientSecretKey: teamIdentity.encryptionKeyPair.secretKey)
+            else {
+                    responseType = .decryptLog(.error("invalid ciphertext"))
+                    break
+            }
+            
+            responseType = .decryptLog(.ok(LogDecryptionResponse(logDecryptionKey: unwrappedKey)))
+        
+        case .createTeam, .noOp, .unpair:
             throw Silo.Errors.responseNotNeeded
         }
         
@@ -418,7 +445,6 @@ class Silo {
         requestCache?.setObject(responseData as NSData, forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
         
         return response
-
     }
     
     func cachedResponse(for session:Session,with request:Request) -> Response? {

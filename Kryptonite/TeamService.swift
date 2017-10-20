@@ -478,6 +478,8 @@ class TeamService {
     // Fufill Team Operation Requests
     func responseFor(requestableOperation:RequestableTeamOperation) throws -> (TeamService, TeamOperationResponse)
     {
+        mutex.lock()
+        defer { mutex.unlock() }
         
         //TODO: Handle not up to date blocks
         struct UnimplementedError:Error {}
