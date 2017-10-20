@@ -476,48 +476,67 @@ class TeamService {
     }
     
     // Fufill Team Operation Requests
-    func responseFor(requestableOperation:RequestableTeamOperation) throws -> TeamServiceResult<ResponseResult<TeamOperationResponse>>
+    func responseFor(requestableOperation:RequestableTeamOperation) throws -> (TeamService, TeamOperationResponse)
     {
         
-        //TODO: Handle not up to date
+        //TODO: Handle not up to date blocks
+        struct UnimplementedError:Error {}
         
-        
+        var teamOperationResponse:TeamOperationResponse
+        var request:SigChain.Request
+
         switch requestableOperation {
         case .invite:
-            break
+            let (inviteLink, sigChainRequest) = try teamIdentity.invitationBlock()
             
+            request = sigChainRequest
+            teamOperationResponse = TeamOperationResponse(postedBlockHash: request.block.hash(),
+                                                          data: TeamOperationResponseData.inviteLink(inviteLink))
         case .cancelInvite:
-            break
+            throw UnimplementedError()
             
         case .removeMember(let memberPublicKey):
-            break
-            
+            throw UnimplementedError()
+
         case .setPolicy(let policy):
-            break
-            
+            throw UnimplementedError()
+
         case .setTeamInfo(let info):
-            break
-            
+            throw UnimplementedError()
+
         case .pinHostKey(let hostKey):
-            break
+            throw UnimplementedError()
             
         case .unpinHostKey(let hostKey):
-            break
+            throw UnimplementedError()
             
         case .addLoggingEndpoint(let endpoint):
-            break
+            throw UnimplementedError()
             
         case .removeLoggingEndpoint(let endpoint):
-            break
+            throw UnimplementedError()
             
         case .addAdmin(let memberPublicKey):
-            break
+            throw UnimplementedError()
             
         case .removeAdmin(let adminPublicKey):
+            throw UnimplementedError()
+        }
+        
+        let response:ServerResponse<EmptyResponse> = server.sendRequestSynchronously(object: request.object)
+        
+        switch response {
+        case .error(let error):
+            throw error
+        case .success:
             break
         }
         
-        return .result(.error("unimplemented"))
+        // process the new block we just created and posted
+        try self.teamIdentity.verifyAndProcessBlocks(response: SigChain.Response(blocks: [request.block], hasMore: false))
+        
+        // return an `ok` with the team operation response
+        return (self, teamOperationResponse)
     }
 }
 

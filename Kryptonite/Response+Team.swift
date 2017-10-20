@@ -101,17 +101,53 @@ struct TimeToken:Jsonable {
 
 struct TeamOperationResponse:Jsonable {
     let postedBlockHash:Data
-    
-    init(postedBlockHash:Data) {
+    let data:TeamOperationResponseData?
+
+    init(postedBlockHash:Data, data:TeamOperationResponseData? = nil) {
         self.postedBlockHash = postedBlockHash
+        self.data = data
     }
     
     init(json:Object) throws {
-        try self.init(postedBlockHash: ((json ~> "posted_block_hash") as String).fromBase64())
+        let data:TeamOperationResponseData? = try? TeamOperationResponseData(json: json ~> "data")
+        try self.init(postedBlockHash: ((json ~> "posted_block_hash") as String).fromBase64(),
+                      data: data)
     }
     
     var object:Object {
-        return ["posted_block_hash": postedBlockHash.toBase64()]
+        var obj:Object = ["posted_block_hash": postedBlockHash.toBase64()]
+        
+        if let data = data {
+            obj["data"] = data.object
+        }
+        
+        return obj
+    }
+}
+
+
+enum TeamOperationResponseData:Jsonable {
+    typealias InviteLink = String
+
+    enum Errors:Error {
+        case unknownTeamOperationResponseData
+    }
+    
+    case inviteLink(InviteLink)
+    
+    init(json: Object) throws {
+        guard let link:InviteLink = try json ~> "invite_link" else {
+            throw Errors.unknownTeamOperationResponseData
+        }
+        
+        self = .inviteLink(link)
+    }
+    
+    var object: Object {
+        switch self {
+        case .inviteLink(let link):
+            return ["invite_link": link]
+        }
     }
 }
 

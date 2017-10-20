@@ -173,6 +173,8 @@
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FA9BA5D11F993226007B4C0D /* TeamApprovalContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BA5D01F993226007B4C0D /* TeamApprovalContentController.swift */; };
+		FA9BA5D31F9A4897007B4C0D /* SigChain+Construct.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BA5D21F9A4897007B4C0D /* SigChain+Construct.swift */; };
+		FA9BA5D41F9A4898007B4C0D /* SigChain+Construct.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BA5D21F9A4897007B4C0D /* SigChain+Construct.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
@@ -625,6 +627,7 @@
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FA9BA5D01F993226007B4C0D /* TeamApprovalContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamApprovalContentController.swift; sourceTree = "<group>"; };
+		FA9BA5D21F9A4897007B4C0D /* SigChain+Construct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SigChain+Construct.swift"; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
@@ -1113,6 +1116,7 @@
 				FADA1A5B1F2D2F32004AE6B0 /* SigChain.swift */,
 				FA8F8AB31F3540EA00D0D4BE /* SigChain+Verify.swift */,
 				FA38F9211F79A26F00668F73 /* SigChain+WriteLog.swift */,
+				FA9BA5D21F9A4897007B4C0D /* SigChain+Construct.swift */,
 				FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */,
 				FADA1A831F30E0E2004AE6B0 /* TeamService.swift */,
 				FAC724D51F546BC500386436 /* TeamServerHTTP.swift */,
@@ -2049,6 +2053,7 @@
 				FA6BCBF51F214ADB006F716F /* TeamInvite.swift in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
+				FA9BA5D31F9A4897007B4C0D /* SigChain+Construct.swift in Sources */,
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
 				FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
@@ -2113,6 +2118,7 @@
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
+				FA9BA5D41F9A4898007B4C0D /* SigChain+Construct.swift in Sources */,
 				FA6BCBEF1F211807006F716F /* TeamIdentity.swift in Sources */,
 				FA1682A01EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* Keypair+SSHFormat.swift in Sources */,

@@ -10,6 +10,7 @@ import Foundation
 import Sodium
 
 typealias SodiumSignPublicKey = Sign.PublicKey
+typealias SodiumSignSecretKey = Sign.SecretKey
 typealias SodiumSignKeyPair = Sign.KeyPair
 
 typealias SodiumBoxPublicKey = Box.PublicKey

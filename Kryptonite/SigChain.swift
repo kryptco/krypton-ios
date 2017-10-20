@@ -35,6 +35,10 @@ class SigChain {
                     "signature": signature.toBase64()]
         }
         
+        var block:Block {
+            return Block(publicKey: publicKey, payload: payload, signature: signature)
+        }
+        
     }
     
     /// Hash chain errors
@@ -361,10 +365,14 @@ class SigChain {
 
     /// Data Structures
     struct MemberInvitation:Jsonable {
-        let noncePublicKey:Data
+        let noncePublicKey:SodiumSignPublicKey
+        
+        init(noncePublicKey:SodiumSignPublicKey) {
+            self.noncePublicKey = noncePublicKey
+        }
         
         init(json: Object) throws {
-            noncePublicKey = try ((json ~> "nonce_public_key") as String).fromBase64()
+            try self.init(noncePublicKey: ((json ~> "nonce_public_key") as String).fromBase64())
         }
         
         var object: Object {

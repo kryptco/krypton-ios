@@ -37,7 +37,7 @@ struct TeamOperationRequest:Jsonable {
     let operation: RequestableTeamOperation
     
     init(json: Object) throws {
-        operation = try RequestableTeamOperation(json: json ~> "requestable_team_operation")
+        operation = try RequestableTeamOperation(json: json ~> "operation")
     }
     
     var object: Object {
@@ -70,7 +70,7 @@ enum RequestableTeamOperation:Jsonable {
     }
     
     init(json: Object) throws {
-        if let _:Object = try? json ~> "invite_member" {
+        if let _:Object = try? json ~> "invite" {
             self = .invite
         }
         else if let _:Object = try? json ~> "cancel_invite" {

@@ -380,7 +380,7 @@ class Silo {
             } catch {
                 responseType = .readTeam(.error("\(error)"))
             }
-        case .teamOperation(let _):
+        case .teamOperation(let teamOperationRequest):
             guard IdentityManager.hasTeam() else {
                 throw Errors.noTeamIdentity
             }
@@ -391,9 +391,16 @@ class Silo {
             }
             
             do {
-                responseType = .teamOperation(.error("unimplemented"))
+                // create the new block
+                let (service, response) = try TeamService.shared().responseFor(requestableOperation: teamOperationRequest.operation)
+                
+                // commit team changes
+                try IdentityManager.commitTeamChanges(identity: service.teamIdentity)
+                
+                // return the `ok` response
+                responseType = .teamOperation(.ok(response))
             } catch {
-                responseType = .readTeam(.error("\(error)"))
+                responseType = .teamOperation(.error("\(error)"))
             }
         case .decryptLog, .createTeam, .noOp, .unpair:
             throw Silo.Errors.responseNotNeeded
