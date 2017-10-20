@@ -321,8 +321,24 @@ extension Request {
         case .createTeam, .me, .unpair, .noOp:
             return ""
 
-        case .decryptLog, .teamOperation, .readTeam:
+        case .decryptLog, .readTeam:
             return Policy.authorizeNoTemporaryCategoryIdentifier
+            
+        case .teamOperation(let teamOpRequest):
+            switch teamOpRequest.operation {
+            case .invite, .cancelInvite,
+                 .addLoggingEndpoint, .removeLoggingEndpoint,
+                 .pinHostKey, .unpinHostKey,
+                 .setPolicy,
+                 .setTeamInfo:
+                
+                return Policy.authorizeNoTemporaryCategoryIdentifier
+                
+            // needs to load the member and requires explicit in app permission
+            case .removeMember,
+                 .addAdmin, .removeAdmin:
+                return ""
+            }
             
         case .ssh, .git:
             return Policy.authorizeCategoryIdentifier

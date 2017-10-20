@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: Registering Notifications
     func registerPushNotifications() {
         DispatchQueue.main.async {
-            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: [Policy.authorizeCategory])
+            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: [Policy.authorizeCategory, Policy.authorizeNoTemporaryCategory])
             UIApplication.shared.registerUserNotificationSettings(settings)
         }
     }

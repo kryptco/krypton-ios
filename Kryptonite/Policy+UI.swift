@@ -14,7 +14,7 @@ extension Policy {
     static var authorizeCategory:UIUserNotificationCategory {
         let cat = UIMutableUserNotificationCategory()
         cat.identifier = authorizeCategoryIdentifier
-        cat.setActions([Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction], for: UIUserNotificationActionContext.default)
+        cat.setActions([Policy.approveOnceAction, Policy.approveTemporaryAction, Policy.rejectAction], for: UIUserNotificationActionContext.default)
         return cat
     }
     
@@ -27,6 +27,18 @@ extension Policy {
     
     
     static var approveAction:UIMutableUserNotificationAction = {
+        var approve = UIMutableUserNotificationAction()
+        
+        approve.identifier = ActionIdentifier.approve.rawValue
+        approve.title = "Allow"
+        approve.activationMode = UIUserNotificationActivationMode.background
+        approve.isDestructive = false
+        approve.isAuthenticationRequired = true
+        
+        return approve
+    }()
+    
+    static var approveOnceAction:UIMutableUserNotificationAction = {
         var approve = UIMutableUserNotificationAction()
         
         approve.identifier = ActionIdentifier.approve.rawValue
