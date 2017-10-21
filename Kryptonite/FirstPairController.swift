@@ -196,7 +196,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
                 SessionManager.shared.add(session: session, temporary: true)
                 TransportControl.shared.add(session: session, newPairing: true)
 
-                self.performSegue(withIdentifier: "showPairingAnimation", sender: session)
+                dispatchMain { self.performSegue(withIdentifier: "showPairingAnimation", sender: session) }
                 self.scanController?.canScan = true
                 
             } catch (let e) {
