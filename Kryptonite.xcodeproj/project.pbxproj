@@ -1052,7 +1052,10 @@
 		FAA1B9231D81AF7C00FF37CC /* App */ = {
 			isa = PBXGroup;
 			children = (
-				FA8141391D70B0F4004FE58C /* AppDelegate.swift */,
+				BB5FC3C91F9B366C007F191E /* AppDelegate.swift */,
+				BB5FC3C71F9B366B007F191E /* AppDelegate+BackgroundFetch.swift */,
+				BB5FC3C81F9B366B007F191E /* AppDelegate+Links.swift */,
+				BB5FC3C61F9B366B007F191E /* AppDelegate+Notification.swift */,
 				FA0322721D74D39100CD7622 /* Globals.swift */,
 				FAA5362E1D8F43D100549710 /* Links.swift */,
 				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
