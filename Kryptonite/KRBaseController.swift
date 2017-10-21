@@ -147,16 +147,15 @@ extension UIViewController {
         
         
         // check app is registered for push notifications
-        if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
-        }
-        else {
-            UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
-                if settings.alertSetting == .disabled || settings.authorizationStatus == .denied {
-                    self.showSettings(with: "Please Enable Push Notifications", message: "If you enable push notifications you will be able to receive SSH login requests when your phone is locked or the app is not open. Tap \"Settings\" to continue.")
-                }
-            })
-        }
+        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
+            if settings.authorizationStatus == .notDetermined {
+                return
+            }
+            
+            if settings.alertSetting == .disabled || settings.authorizationStatus == .denied {
+                self.showSettings(with: "Push Notifications", message: "Enable push notifications to receive SSH Login and Git Commit/Tag Signing requests when your phone is locked or the app is in the background. Tap \"Settings\" to continue.")
+            }
+        })
     }
 
     //MARK: Updates
