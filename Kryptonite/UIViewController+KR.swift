@@ -36,7 +36,7 @@ extension UIViewController {
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
             
             if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.openURL(appSettings)
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
             }
             
             then?()

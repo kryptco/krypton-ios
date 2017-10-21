@@ -138,10 +138,8 @@ class PairInvalidVersionController:UIViewController {
     
     @IBAction func dismissTapped() {
         
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         self.dismiss(animated: true, completion: {
             self.scanController?.canScan = true
         })

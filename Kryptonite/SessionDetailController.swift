@@ -186,10 +186,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             return
         }
         
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         switch approvalControlType {
         case .on:
             Analytics.postEvent(category: "manual approval", action: String(true))
@@ -235,10 +233,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             TransportControl.shared.remove(session: session)
         }
         
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         let _ = self.navigationController?.popViewController(animated: true)
     }
     

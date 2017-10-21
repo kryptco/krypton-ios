@@ -77,10 +77,9 @@ class ApproveController:UIViewController {
     
     //MARK: Response
     @IBAction func approveOnce() {
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
         
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         guard let request = request, let session = session, isEnabled else {
             log("no valid request or session", .error)
             return
@@ -131,9 +130,7 @@ class ApproveController:UIViewController {
     
     @IBAction func approveThreeHours() {
         
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         
         guard let request = request, let session = session, isEnabled else {
             log("no valid request or session", .error)
@@ -185,9 +182,7 @@ class ApproveController:UIViewController {
     
     @IBAction func dismissReject() {
         
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         
         guard isEnabled else {
             return
@@ -230,10 +225,8 @@ class ApproveController:UIViewController {
 
     func dismissResponseFailed(errorMessage:String) {
 
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         guard isEnabled else {
             return
         }

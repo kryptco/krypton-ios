@@ -126,7 +126,7 @@ class AboutController: KRBaseController {
         
         guard MFMailComposeViewController.canSendMail() else {
             if let mailURL = URL(string: "mailto://\(Properties.contactUsEmail)") {
-                UIApplication.shared.openURL(mailURL)
+                UIApplication.shared.open(mailURL, options: [:], completionHandler: nil)
             }
             
             return
@@ -155,13 +155,13 @@ class AboutController: KRBaseController {
     
     @IBAction func openSourceTapped() {
         if let url = URL(string: Properties.openSourceURL) {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
     @IBAction func privacyTapped() {
         if let url = URL(string: Properties.privacyPolicyURL) {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 

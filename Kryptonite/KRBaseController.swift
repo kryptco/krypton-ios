@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import UserNotifications
 
 class Current {
     private static var mutex = Mutex()
@@ -143,15 +144,18 @@ extension UIViewController {
         if Platform.isSimulator {
             return
         }
-
+        
+        
         // check app is registered for push notifications
         if !UIApplication.shared.isRegisteredForRemoteNotifications {
             (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
         }
-        else if  let settings = UIApplication.shared.currentUserNotificationSettings,
-            settings.types.contains(.alert) == false
-        {
-            self.showSettings(with: "Please Enable Push Notifications", message: "If you enable push notifications you will be able to receive SSH login requests when your phone is locked or the app is not open. Tap \"Settings\" to continue.")
+        else {
+            UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
+                if settings.alertSetting == .disabled || settings.authorizationStatus == .denied {
+                    self.showSettings(with: "Please Enable Push Notifications", message: "If you enable push notifications you will be able to receive SSH login requests when your phone is locked or the app is not open. Tap \"Settings\" to continue.")
+                }
+            })
         }
     }
 
@@ -169,7 +173,7 @@ extension UIViewController {
             let downloadAction = UIAlertAction(title: "Download", style: .default) { (alertAction) in
                 
                 if let appStoreURL = URL(string: Properties.appStoreURL) {
-                    UIApplication.shared.openURL(appStoreURL)
+                    UIApplication.shared.open(appStoreURL, options: [:], completionHandler: nil)
                 }
             }
             alertController.addAction(downloadAction)

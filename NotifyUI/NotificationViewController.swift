@@ -74,10 +74,6 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         }
     }
     
-    func didReceive(_ response: UNNotificationResponse, completionHandler completion: @escaping (UNNotificationContentExtensionResponseOption) -> Void) {
-        completion(UNNotificationContentExtensionResponseOption.dismissAndForwardAction)
-    }
-    
     func showView(type: ContainerType, deviceName:String) {
         
         switch type {

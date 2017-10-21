@@ -53,11 +53,8 @@ class AutoApproveController:UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         if let _ = errorMessage {
             checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
         } else {

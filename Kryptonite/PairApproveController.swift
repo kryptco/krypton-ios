@@ -70,10 +70,8 @@ class PairApproveController: UIViewController {
             return
         }
         
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         self.messageLabel.text = "Pairing".uppercased()
         
         UIView.animate(withDuration: 0.2, animations: {
@@ -94,10 +92,8 @@ class PairApproveController: UIViewController {
     }
     
     @IBAction func rejectTapped() {
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         Analytics.postEvent(category: "device", action: "pair", label: "reject")
         doRejectAnimation()
     }

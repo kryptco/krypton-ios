@@ -7,54 +7,44 @@
 //
 
 import Foundation
+import UserNotifications
 
 extension Policy {
     
     //MARK: Notification Actions
-    static var authorizeCategory:UIUserNotificationCategory = {
-        let cat = UIMutableUserNotificationCategory()
-        cat.identifier = authorizeCategoryIdentifier
-        cat.setActions([Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction], for: UIUserNotificationActionContext.default)
-        return cat
-        
+    static var authorizeCategory:UNNotificationCategory = {
+        if #available(iOS 11.0, *) {
+            return UNNotificationCategory(identifier: authorizeCategoryIdentifier,
+                                   actions: [Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction],
+                                   intentIdentifiers: [],
+                                   hiddenPreviewsBodyPlaceholder: "Kryptonite Request",
+                                   options: .customDismissAction)
+        } else {
+            return UNNotificationCategory(identifier: authorizeCategoryIdentifier,
+                                   actions: [Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction],
+                                   intentIdentifiers: [],
+                                   options: .customDismissAction)
+        }
     }()
     
     
-    static var approveAction:UIMutableUserNotificationAction = {
-        var approve = UIMutableUserNotificationAction()
-        
-        approve.identifier = ActionIdentifier.approve.rawValue
-        approve.title = "Allow once"
-        approve.activationMode = UIUserNotificationActivationMode.background
-        approve.isDestructive = false
-        approve.isAuthenticationRequired = true
-        
-        return approve
+    static var approveAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: ActionIdentifier.approve.rawValue,
+                                    title: "Allow once",
+                                    options: .authenticationRequired)
     }()
     
     
-    static var approveTemporaryAction:UIMutableUserNotificationAction = {
-        var approve = UIMutableUserNotificationAction()
-        
-        approve.identifier = ActionIdentifier.temporary.rawValue
-        approve.title = "Allow for 3 hours"
-        approve.activationMode = UIUserNotificationActivationMode.background
-        approve.isDestructive = false
-        approve.isAuthenticationRequired = true
-        
-        return approve
+    static var approveTemporaryAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: ActionIdentifier.temporary.rawValue,
+                                    title: "Allow for 3 hours",
+                                    options: .authenticationRequired)
     }()
     
-    static var rejectAction:UIMutableUserNotificationAction = {
-        var reject = UIMutableUserNotificationAction()
-        
-        reject.identifier = ActionIdentifier.reject.rawValue
-        reject.title = "Reject"
-        reject.activationMode = UIUserNotificationActivationMode.background
-        reject.isDestructive = true
-        reject.isAuthenticationRequired = false
-        
-        return reject
+    static var rejectAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: ActionIdentifier.reject.rawValue,
+                                    title: "Reject",
+                                    options: .destructive)
     }()
 
     

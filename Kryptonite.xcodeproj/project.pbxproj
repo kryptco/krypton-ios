@@ -130,6 +130,7 @@
 		FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DC1E8D76800082274A /* SQS.swift */; };
+		FA5A9E741F9BC75300954872 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A9E731F9BC75300954872 /* AppDelegate+Notifications.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
@@ -395,41 +396,6 @@
 			remoteGlobalIDString = 6BFD902119C8D8B500DD99B6;
 			remoteInfo = SwiftHTTPTests;
 		};
-		8DB2EE491DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D958025919E6EEEB003C8218;
-			remoteInfo = SwiftHTTPOSX;
-		};
-		8DB2EE4B1DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D958026319E6EEEB003C8218;
-			remoteInfo = SwiftHTTPOSXTests;
-		};
-		8DB2EE4D1DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5C135EC11C4733CD00AA3A01;
-			remoteInfo = SwiftHTTPtvOS;
-		};
-		8DB2EE4F1DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5C135ECA1C4733CE00AA3A01;
-			remoteInfo = SwiftHTTPtvOSTests;
-		};
-		8DB2EE511DBC54EF0079E468 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5C135FA91C4737E200AA3A01;
-			remoteInfo = SwiftHTTPWatchOS;
-		};
 		FA12EAA31ECFA917001603BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */;
@@ -629,6 +595,7 @@
 		FA49F7961D9B6B6600372556 /* LastCommand.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastCommand.entitlements; sourceTree = "<group>"; };
 		FA4A84DC1E8D76800082274A /* SQS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQS.swift; sourceTree = "<group>"; };
 		FA4A84DE1E8D77910082274A /* TransportControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportControl.swift; sourceTree = "<group>"; };
+		FA5A9E731F9BC75300954872 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
@@ -831,11 +798,6 @@
 			children = (
 				8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */,
 				8DB2EE481DBC54EF0079E468 /* SwiftHTTPTests.xctest */,
-				8DB2EE4A1DBC54EF0079E468 /* SwiftHTTP.framework */,
-				8DB2EE4C1DBC54EF0079E468 /* SwiftHTTPOSXTests.xctest */,
-				8DB2EE4E1DBC54EF0079E468 /* SwiftHTTP.framework */,
-				8DB2EE501DBC54EF0079E468 /* SwiftHTTPtvOSTests.xctest */,
-				8DB2EE521DBC54EF0079E468 /* SwiftHTTP.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1053,6 +1015,7 @@
 			isa = PBXGroup;
 			children = (
 				FA8141391D70B0F4004FE58C /* AppDelegate.swift */,
+				FA5A9E731F9BC75300954872 /* AppDelegate+Notifications.swift */,
 				FA0322721D74D39100CD7622 /* Globals.swift */,
 				FAA5362E1D8F43D100549710 /* Links.swift */,
 				FA6C5CF71D772B0D00CE2323 /* Log.swift */,
@@ -1557,41 +1520,6 @@
 			remoteRef = 8DB2EE471DBC54EF0079E468 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8DB2EE4A1DBC54EF0079E468 /* SwiftHTTP.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftHTTP.framework;
-			remoteRef = 8DB2EE491DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE4C1DBC54EF0079E468 /* SwiftHTTPOSXTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftHTTPOSXTests.xctest;
-			remoteRef = 8DB2EE4B1DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE4E1DBC54EF0079E468 /* SwiftHTTP.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftHTTP.framework;
-			remoteRef = 8DB2EE4D1DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE501DBC54EF0079E468 /* SwiftHTTPtvOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftHTTPtvOSTests.xctest;
-			remoteRef = 8DB2EE4F1DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8DB2EE521DBC54EF0079E468 /* SwiftHTTP.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftHTTP.framework;
-			remoteRef = 8DB2EE511DBC54EF0079E468 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		FA12EAA41ECFA917001603BF /* PGPFormat.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -2057,6 +1985,7 @@
 				FAE495911DBD89F100A97708 /* M13CheckboxFlatController.swift in Sources */,
 				FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
+				FA5A9E741F9BC75300954872 /* AppDelegate+Notifications.swift in Sources */,
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
 				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
@@ -2309,7 +2238,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				INFOPLIST_FILE = LastCommand/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.last;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2329,7 +2258,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				INFOPLIST_FILE = LastCommand/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.last;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2459,7 +2388,7 @@
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2496,7 +2425,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2635,7 +2564,7 @@
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NotifyUI/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2660,7 +2589,7 @@
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NotifyUI/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

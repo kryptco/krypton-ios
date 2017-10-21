@@ -51,10 +51,8 @@ class RePairWarningController:UIViewController {
     
     @IBAction func readyToPairTapped() {
         
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        }
-        
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
         let presenting = self.presentingViewController
         self.dismiss(animated: true, completion: {
             SessionManager.clearOldSessions()
