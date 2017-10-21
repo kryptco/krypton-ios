@@ -186,7 +186,8 @@ extension TeamIdentity {
                     
                     // prepare the addWrappedKeys payload
                     let addWrappedKeys = SigChain.LogOperation.addWrappedKeys([wrappedKey])
-                    let payload = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: addWrappedKeys)
+                    let appendLogBlock = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: addWrappedKeys)
+                    let payload = SigChain.Payload.appendLogBlock(appendLogBlock)
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
@@ -238,7 +239,8 @@ extension TeamIdentity {
                     
                     // prepare the addWrappedKeys payload
                     let rotateKey = SigChain.LogOperation.rotateKey(wrappedKeys)
-                    let payload = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
+                    let appendLogBlock = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
+                    let payload = SigChain.Payload.appendLogBlock(appendLogBlock)
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
@@ -289,7 +291,8 @@ extension TeamIdentity {
                     
                     // prepare the addWrappedKeys payload
                     let rotateKey = SigChain.LogOperation.rotateKey(wrappedKeys)
-                    let payload = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
+                    let appendLogBlock = SigChain.AppendLogBlock(lastBlockHash: lastLogBlockHash, operation: rotateKey)
+                    let payload = SigChain.Payload.appendLogBlock(appendLogBlock)
                     let payloadData = try payload.jsonData()
                     
                     // sign the payload
