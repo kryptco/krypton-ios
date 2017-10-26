@@ -34,7 +34,7 @@ class BluetoothManager:TransportMedium {
     //MARK: Transport
     
     func send(message:NetworkMessage, for session:Session, completionHandler: (()->Void)?) {
-        //todo: bluetooth completion
+        //TODO: bluetooth completion
         bluetoothDelegate.writeToServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid), message: message)
 
     }
@@ -123,6 +123,22 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         log("init bluetooth")
     }
 
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        mutex.lock()
+        defer { mutex.unlock() }
+        log("CBCentral state \(central.state.rawValue)")
+        if central.state == .poweredOn {
+            self.central = central
+            log("CBCentral poweredOn")
+            for peripheral in discoveredPeripherals {
+                restorePeripheralLocked(central, peripheral)
+            }
+        } else {
+            recentPeripheralConnections?.removeAllObjects()
+        }
+        scanLogic()
+    }
+
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         mutex.lock()
         defer{ mutex.unlock() }
@@ -130,22 +146,31 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         if let restoredPeripherals = dict[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] {
             for peripheral in restoredPeripherals {
                 peripheral.delegate = self
-                guard let services = peripheral.services else {
-                    continue
-                }
-                for service in services {
-                    guard let characteristics = service.characteristics else {
-                        continue
-                    }
-                    for characteristic in characteristics {
-                        if characteristic.uuid == BluetoothDelegate.krsshCharUUID {
-                            pairedPeripherals[service.uuid] = peripheral
-                            pairedServiceUUIDS.insert(service.uuid)
-                            allServiceUUIDS.insert(service.uuid)
-                            peripheralCharacteristics[peripheral] = characteristic
-                        }
-                    }
-                }
+                restorePeripheralLocked(central, peripheral)
+            }
+        }
+    }
+
+    //  re-initialize a peripheral being restored from background or from Bluetooth being toggled back on
+    func restorePeripheralLocked(_ central : CBCentralManager, _ peripheral: CBPeripheral) {
+        log("restoring peripheral \(peripheral)")
+        switch peripheral.state {
+        case .disconnected, .disconnecting:
+            removePeripheralLocked(central: central, peripheral: peripheral)
+            break
+        case .connecting:
+            //  peripherals in the connecting state will likely not finish connecting
+            //  and persist in this bad state across app launches, so cancel any that are still
+            //  connecting on poweredOn state transition
+            discoveredPeripherals.insert(peripheral)
+            if case .poweredOn = central.state {
+                log("cancelling connecting discoveredPeripheral on poweredOn: \(peripheral)")
+                central.cancelPeripheralConnection(peripheral)
+            }
+        case .connected:
+            discoveredPeripherals.insert(peripheral)
+            if case .poweredOn = central.state {
+                peripheral.discoverServices(Array(self.scanningServiceUUIDS))
             }
         }
     }
@@ -217,17 +242,6 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         central.scanForPeripherals(withServices: Array(scanningServiceUUIDS), options:nil)
     }
 
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        mutex.lock()
-        defer { mutex.unlock() }
-        log("CBCentral state \(central.state.rawValue)")
-        if central.state == .poweredOn {
-            self.central = central
-            log("CBCentral poweredOn")
-        }
-        scanLogic()
-    }
-
     func addServiceUUID(uuid: CBUUID) {
         mutex.lock()
         defer { mutex.unlock() }
@@ -284,6 +298,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         mutex.lock()
         defer { mutex.unlock() }
         log("Discovered \(String(describing: peripheral.name)) at RSSI \(RSSI)")
+        peripheral.delegate = self
         //  keep reference so not GCed
         discoveredPeripherals.insert(peripheral)
 
@@ -291,6 +306,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     }
 
     func connectPeripheral(_ central: CBCentralManager, _ peripheral: CBPeripheral) {
+        guard central.state == .poweredOn else {
+            return
+        }
         if let recentPeripheralConnections = recentPeripheralConnections {
             recentPeripheralConnections.removeExpiredObjects()
             if recentPeripheralConnections.object(forKey: peripheral.identifier.uuidString) != nil {
@@ -551,12 +569,6 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
         removePeripheralLocked(central: central, peripheral: peripheral)
 
-        let disconnectedServices = pairedPeripherals.filter({ $0.1 == peripheral }).map({$0.0})
-        let disconnectedPairedServices = disconnectedServices.filter({ allServiceUUIDS.contains($0) })
-        if disconnectedPairedServices.count > 0 {
-            log("reconnecting disconnected services \(disconnectedPairedServices)")
-            connectPeripheral(central, peripheral)
-        }
         scanLogic()
     }
 
@@ -566,6 +578,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             pairedPeripherals.removeValue(forKey: disconnectedUUID)
             pairedServiceUUIDS.remove(disconnectedUUID)
         }
+        discoveredPeripherals.remove(peripheral)
     }
 
 
