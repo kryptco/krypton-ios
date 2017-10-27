@@ -70,6 +70,9 @@ class Silo {
         mutex.lock()
         defer { mutex.unlock() }
 
+        // remove expired request as cleanup
+        requestCache.removeExpiredObjects()
+
         // ensure session is still active
         guard let _ = SessionManager.shared.get(id: session.id) else {
             throw SessionRemovedError()
@@ -82,14 +85,19 @@ class Silo {
         }
         
         // check if the request has already been received and cached
-        requestCache.removeExpiredObjects()
         if  let cachedResponseData = requestCache[CacheKey(session, request)] as Data? {
             let json:Object = try JSON.parse(data: cachedResponseData)
             let response = try Response(json: json)
             try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
             return
         }
-
+        
+        // ensure request has not expired
+        // workaround: if it takes a lot of time to fetch from request cache don't want process
+        let nowAgain = Date().timeIntervalSince1970
+        if abs(nowAgain - Double(request.unixSeconds)) > Properties.requestTimeTolerance {
+            throw InvalidRequestTimeError()
+        }
         
         // handle special cases
         switch request.body {
@@ -108,7 +116,6 @@ class Silo {
         case .git, .ssh, .hosts, .me:
             break
         }
-        
         
         // decide if request body can be responded to immediately
         let isAllowed = Policy.SessionSettings(for: session).isAllowed(for: request)
