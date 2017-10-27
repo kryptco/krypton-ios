@@ -26,7 +26,7 @@ class PairApproveController: UIViewController {
 
     static var isAuthenticated:Bool = false
     
-    var rejectColor = UIColor(hex: 0xFF6361)
+    var rejectColor = UIColor.reject
 
     var pairing:Pairing?
 
