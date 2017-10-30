@@ -22,6 +22,8 @@
 		8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
 		8D45B0081E8D7CEA00E84A57 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
 		8D45B00A1E8D7DBB00E84A57 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
+		8D65116A1FABAA3D00873320 /* BluetoothPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D65115A1FABAA3C00873320 /* BluetoothPeripheral.swift */; };
+		8D65116C1FABAA3F00873320 /* BluetoothPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D65115A1FABAA3C00873320 /* BluetoothPeripheral.swift */; };
 		8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
 		8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
@@ -241,7 +243,6 @@
 		FAAE81931E576FFB002A9AE6 /* Policy+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */; };
 		FAAE81941E577063002A9AE6 /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
 		FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
-		FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
 		FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		FAAE819A1E5770EF002A9AE6 /* AWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* AWS.swift */; };
 		FAAE81A41E57732C002A9AE6 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAE81961E5770CA002A9AE6 /* CoreBluetooth.framework */; };
@@ -553,6 +554,7 @@
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHHostVerificationTests.swift; sourceTree = "<group>"; };
 		8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		8D65115A1FABAA3C00873320 /* BluetoothPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothPeripheral.swift; sourceTree = "<group>"; };
 		8D7941671D98732600F6E32E /* NetworkProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		8D83990B1E56063A0051C6BA /* HostAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostAuth.swift; sourceTree = "<group>"; };
 		8DB2EE381DBC18170079E468 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
@@ -1099,6 +1101,7 @@
 			children = (
 				FAA6E1F01D79E3ED007D1B3A /* AWS.swift */,
 				8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */,
+				8D65115A1FABAA3C00873320 /* BluetoothPeripheral.swift */,
 				FA4A84DC1E8D76800082274A /* SQS.swift */,
 				8DD436A31DF3719000201106 /* CommunicationActivity.swift */,
 				FA4A84DE1E8D77910082274A /* TransportControl.swift */,
@@ -2034,6 +2037,7 @@
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
 				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
+				8D65116A1FABAA3D00873320 /* BluetoothPeripheral.swift in Sources */,
 				FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */,
 				FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
@@ -2118,6 +2122,7 @@
 				FA443DF41FBA36D900EB452A /* Policy+Pending.swift in Sources */,
 				FA1682A51EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
 				FAF0B0981F04500400F65E04 /* UtilTests.swift in Sources */,
+				8D65116C1FABAA3F00873320 /* BluetoothPeripheral.swift in Sources */,
 				8DCB60421E94468100E1B924 /* SessionManager.swift in Sources */,
 				FA443DF31FBA36D900EB452A /* Policy+UserNotifications.swift in Sources */,
 				8DCB604F1E9446D300E1B924 /* CommunicationActivity.swift in Sources */,
@@ -2155,7 +2160,6 @@
 				FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */,
 				FA12EAC01ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
-				FAAE81981E5770DD002A9AE6 /* Bluetooth.swift in Sources */,
 				FACE33661EC186E8003EC6C0 /* SSHUtil.swift in Sources */,
 				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
 				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
@@ -2487,6 +2491,10 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					KRYPTONITE_MAIN_APP_TARGET,
+					"DEBUG=1",
+				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -2497,7 +2505,7 @@
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
-				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				OTHER_SWIFT_FLAGS = "-DDEBUG -DKRYPTONITE_MAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2524,6 +2532,7 @@
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = KRYPTONITE_MAIN_APP_TARGET;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -2534,7 +2543,7 @@
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
-				OTHER_SWIFT_FLAGS = "";
+				OTHER_SWIFT_FLAGS = "-DKRYPTONITE_MAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

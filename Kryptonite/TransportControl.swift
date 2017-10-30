@@ -66,7 +66,9 @@ class TransportControl {
     
     init(bluetoothEnabled:Bool = true) {        
         if bluetoothEnabled {
+            #if KRYPTONITE_MAIN_APP_TARGET
             transports.append(BluetoothManager(handler: handle))
+            #endif
         }
         transports.append(SQSManager(handler: handle))
     }

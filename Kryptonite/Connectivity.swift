@@ -37,7 +37,7 @@ class Connectivity {
         log("internet offline")
         
         // at least we have bluetooth
-        if (TransportControl.shared.transport(for: .bluetooth) as? BluetoothManager)?.bluetoothDelegate.central?.state == .poweredOn {
+        if (TransportControl.shared.transport(for: .bluetooth) as? BluetoothManager)?.bluetoothDelegate.peripheralManager?.state == .poweredOn {
             return
         }
         
