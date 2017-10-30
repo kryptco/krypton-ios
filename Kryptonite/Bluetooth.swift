@@ -417,10 +417,10 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func scheduleAliveCheck(forService service:CBUUID, epoch: UInt) {
         let timeout = servicePingTimeouts[service] ?? 1.0
 
-        dispatchAfter(delay: timeout, task: {
-            self.aliveCheck(service.uuidString, epoch:epoch)
-        })
-        log("alive check scheduled in \(timeout) seconds")
+//        dispatchAfter(delay: timeout, task: {
+//            self.aliveCheck(service.uuidString, epoch:epoch)
+//        })
+//        log("alive check scheduled in \(timeout) seconds")
     }
 
     func aliveCheck(_ service:String, epoch:UInt) {
