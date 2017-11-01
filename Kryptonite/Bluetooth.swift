@@ -229,15 +229,6 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
 
         scanningServiceUUIDS = shouldBeScanning
 
-        for matchingPeripheral in central.retrieveConnectedPeripherals(withServices: Array(allServiceUUIDS)) {
-            if !pairedPeripherals.values.contains(matchingPeripheral) {
-                let services = String(describing: matchingPeripheral.services)
-                log("found unpaired connected peripheral with services \(services)")
-                discoveredPeripherals.insert(matchingPeripheral)
-                connectPeripheral(central, matchingPeripheral)
-            }
-        }
-
         log("Scanning for \(scanningServiceUUIDS)")
         central.scanForPeripherals(withServices: Array(scanningServiceUUIDS), options:nil)
     }
