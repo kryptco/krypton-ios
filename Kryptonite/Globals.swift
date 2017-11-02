@@ -52,7 +52,6 @@ func dispatchAsync(task:@escaping ()->Void) {
     DispatchQueue.global().async {
         task()
     }
-    
 }
 
 func dispatchAfter(delay:Double, task:@escaping ()->Void) {

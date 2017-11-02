@@ -19,14 +19,14 @@ class BluetoothManager:TransportMedium {
     var bluetoothDelegate:BluetoothDelegate
     var sessionServiceUUIDS: [String: Session] = [:]
     var mutex = Mutex()
-    
+
     var medium:CommunicationMedium {
         return .bluetooth
     }
     
     required init(handler: @escaping TransportControlRequestHandler) {
         self.handler = handler
-        self.bluetoothDelegate = BluetoothDelegate()
+        self.bluetoothDelegate = BluetoothDelegate(queue: DispatchQueue.global())
         self.centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
         self.bluetoothDelegate.onReceive = onBluetoothReceive
     }
@@ -110,15 +110,17 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var characteristicMessageBuffersAndLastSplitNumber: [CBCharacteristic: (Data, UInt8)] = [:]
     var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
 
-    var mutex : Mutex = Mutex()
+    let mutex : Mutex = Mutex()
+    let queue : DispatchQueue
     
     // Constants
     static let krsshCharUUID = CBUUID(string: "20F53E48-C08D-423A-B2C2-1C797889AF24")
     static let refreshByte = UInt8(0)
     static let pingByte = UInt8(1)
     static let pingMsg = Data(bytes: [pingByte])
-    
-    override init( ) {
+
+    init(queue: DispatchQueue) {
+        self.queue = queue
         super.init()
         log("init bluetooth")
     }
@@ -359,7 +361,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         for service in invalidatedServices {
             let uuid = service.uuid
             dispatchAfter(delay: 1.0, task: {
-                self.refreshServiceUUID(uuid: uuid)
+                self.queue.async{
+                    self.refreshServiceUUID(uuid: uuid)
+                }
             })
         }
     }
@@ -391,7 +395,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             }
             pingService(service.uuid)
             if let queuedMessage = serviceQueuedMessage.removeValue(forKey: service.uuid) {
-                dispatchAsync {
+                queue.async {
                     self.writeToServiceUUID(uuid: service.uuid, message: queuedMessage)
                 }
             }
@@ -433,7 +437,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                     timeout = 1.0
                 }
                 self.servicePingTimeouts[cbuuid] = timeout * 2
-                dispatchAsync { self.refreshServiceUUID(uuid: cbuuid) }
+                queue.async { self.refreshServiceUUID(uuid: cbuuid) }
                 return
         }
         log("alive check passed")
@@ -490,7 +494,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             case BluetoothDelegate.refreshByte:
                 let uuid = characteristic.service.uuid
                 log("received refresh control message")
-                dispatchAfter(delay: 5.0, task: { self.refreshServiceUUID(uuid: uuid) })
+                dispatchAfter(delay: 5.0, task: {
+                    self.queue.async { self.refreshServiceUUID(uuid: uuid) }
+                })
             case BluetoothDelegate.pingByte:
                 onServiceAck(service: characteristic.service.uuid)
             default:
