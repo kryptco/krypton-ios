@@ -152,8 +152,15 @@ extension UIViewController {
                 return
             }
             
+            // dont bother
+            if UserDefaults.standard.bool(forKey: "push_dnd") {
+                return
+            }
+            
             if settings.alertSetting == .disabled || settings.authorizationStatus == .denied {
-                self.showSettings(with: "Push Notifications", message: "Enable push notifications to receive SSH Login and Git Commit/Tag Signing requests when your phone is locked or the app is in the background. Tap \"Settings\" to continue.")
+                self.showSettings(with: "Push Notifications",
+                                  message: "Enable push notifications to receive SSH Login and Git Commit/Tag Signing requests when your phone is locked or the app is in the background. Tap \"Settings\" to continue.",
+                                  dnd: "push_dnd")
             }
         })
     }

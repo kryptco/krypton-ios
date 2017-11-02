@@ -27,7 +27,7 @@ extension UIViewController {
         }
     }
     
-    func showSettings(with title:String, message:String, then:(()->Void)? = nil) {
+    func showSettings(with title:String, message:String, dnd:String? = nil, then:(()->Void)? = nil) {
         
         let alertController = UIAlertController(title: title,
                                                 message: message,
@@ -48,9 +48,17 @@ extension UIViewController {
         }
         alertController.addAction(cancelAction)
         
+        if let dndKey = dnd {
+            alertController.addAction(UIAlertAction(title: "Don't ask again", style: UIAlertActionStyle.destructive) { (action) in
+                UserDefaults.standard.set(true, forKey: dndKey)
+            })
+            
+        }
+
         dispatchMain {
             self.present(alertController, animated: true, completion: nil)
         }
+        
 
     }
     

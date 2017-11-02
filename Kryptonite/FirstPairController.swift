@@ -72,10 +72,9 @@ class FirstPairController:UIViewController, KRScanDelegate {
                 if enable {
                     (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
                     Analytics.postEvent(category: "push", action: "enabled")
-
+                } else {
+                    Analytics.postEvent(category: "push", action: "not-enabled")
                 }
-                UserDefaults.group?.set(true, forKey: "did_ask_push")
-                UserDefaults.group?.synchronize()
             }
         }
     }
