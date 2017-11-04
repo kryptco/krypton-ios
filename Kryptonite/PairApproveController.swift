@@ -212,7 +212,7 @@ class PairApproveController: UIViewController {
     func authenticate(completion:@escaping (Bool)->Void) {
         let context = LAContext()
         let policy = LAPolicy.deviceOwnerAuthentication
-        let reason = "Authentication is needed to pair with a new machine."
+        let reason = "Kryptonite needs to authenticate you before pairing with a new computer."
         
         var err:NSError?
         guard context.canEvaluatePolicy(policy, error: &err) else {

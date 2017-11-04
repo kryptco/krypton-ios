@@ -100,7 +100,7 @@ class AboutController: KRBaseController {
     func authenticate(completion:@escaping (Bool)->Void) {
         let context = LAContext()
         let policy = LAPolicy.deviceOwnerAuthentication
-        let reason = "Authentication is needed to delete your key pair"
+        let reason = "Kryptonite needs to authenticate you before deleting your key pair."
         
         var err:NSError?
         guard context.canEvaluatePolicy(policy, error: &err) else {

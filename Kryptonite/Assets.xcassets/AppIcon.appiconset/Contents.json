@@ -101,6 +101,12 @@
       "idiom" : "ipad",
       "filename" : "kryptonite-iPadPro@2x.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "Artwork_1024.png",
+      "scale" : "1x"
     }
   ],
   "info" : {

@@ -27,9 +27,9 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Kryptonite uses bluetooth to communicate to paired devices.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Scan QR codes to pair and record peer's public keys.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Your contact list is used to choose people to send public keys to. We will never send your contacts anywhere.</string>
+	<string>Scan QR codes to pair Kryptonite with your computer.</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>Kryptonite uses FaceID to authenticate you before pairing with a new computer.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceCodePro-Regular</string>
