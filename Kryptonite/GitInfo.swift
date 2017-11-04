@@ -96,7 +96,7 @@ typealias GitHash = String
 extension GitHash {
     var shortHash:String {
         let hash = self
-        if hash.characters.count >= 7 {
+        if hash.count >= 7 {
             return String(hash.prefix(7))
         } else {
             return hash

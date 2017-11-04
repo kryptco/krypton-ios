@@ -69,7 +69,7 @@ class SetupController: UIViewController, UITextFieldDelegate {
         nameTextfield.resignFirstResponder()
         
         var email:String
-        if let emailText = nameTextfield.text, !emailText.characters.isEmpty {
+        if let emailText = nameTextfield.text, !emailText.isEmpty {
             email = emailText
             Analytics.postEvent(category: "email", action: "typed")
         } else {

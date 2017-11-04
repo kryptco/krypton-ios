@@ -17,7 +17,7 @@ extension Policy {
             return UNNotificationCategory(identifier: authorizeCategoryIdentifier,
                                    actions: [Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction],
                                    intentIdentifiers: [],
-                                   hiddenPreviewsBodyPlaceholder: "Kryptonite Request",
+                                   hiddenPreviewsBodyPlaceholder: "New Kryptonite request",
                                    options: .customDismissAction)
         } else {
             return UNNotificationCategory(identifier: authorizeCategoryIdentifier,

@@ -26,7 +26,7 @@ class AboutController: KRBaseController {
             let commitFilePath = Bundle.main.path(forResource: "COMMIT", ofType: nil),
             let commit = try? String(contentsOfFile: commitFilePath).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         {
-            let hashShort = String(commit.prefix(min(6, commit.characters.count)))
+            let hashShort = String(commit.prefix(min(6, commit.count)))
             self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
         } else {
             log("could not find version, build, and commit information", .error)

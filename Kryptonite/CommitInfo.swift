@@ -85,7 +85,7 @@ struct CommitInfo: Jsonable {
         messageString = (try? message.utf8String().trimmingCharacters(in: CharacterSet.newlines)) ?? "message decoding error"
 
         if let object = parent {
-            guard object.characters.count >= 7 else {
+            guard object.count >= 7 else {
                 throw InvalidCommitInfo()
             }
             let objectShortHash = String(object.prefix(7))
@@ -184,7 +184,7 @@ struct CommitInfo: Jsonable {
     func shortCommitHash(asciiArmoredSignature:String) throws -> String {
         let commitHash = try self.commitHash(asciiArmoredSignature: asciiArmoredSignature).hex
         
-        guard commitHash.characters.count >= 7 else {
+        guard commitHash.count >= 7 else {
             throw InvalidCommitHash()
         }
         let commitHashShort = String(commitHash.prefix(7))

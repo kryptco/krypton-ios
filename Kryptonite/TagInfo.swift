@@ -72,7 +72,7 @@ struct TagInfo: Jsonable {
         /**
             Create a human-readable display
          */
-        guard object.characters.count >= 7 else {
+        guard object.count >= 7 else {
             throw InvalidTagInfo()
         }
         objectShortHash = String(object.prefix(7))

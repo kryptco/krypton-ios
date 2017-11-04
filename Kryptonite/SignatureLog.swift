@@ -92,7 +92,7 @@ struct CommitSignatureLog:LogStatement {
             return "Rejected: \(commit.shortDisplay)"
         }
         
-        guard commitHash.characters.count >= 7 else {
+        guard commitHash.count >= 7 else {
             return commit.shortDisplay
         }
         
