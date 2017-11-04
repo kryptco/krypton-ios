@@ -19,14 +19,14 @@ class BluetoothManager:TransportMedium {
     var bluetoothDelegate:BluetoothDelegate
     var sessionServiceUUIDS: [String: Session] = [:]
     var mutex = Mutex()
-    
+
     var medium:CommunicationMedium {
         return .bluetooth
     }
     
     required init(handler: @escaping TransportControlRequestHandler) {
         self.handler = handler
-        self.bluetoothDelegate = BluetoothDelegate()
+        self.bluetoothDelegate = BluetoothDelegate(queue: DispatchQueue.global())
         self.centralManager = CBCentralManager(delegate: bluetoothDelegate, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "bluetoothCentralManager"])
         self.bluetoothDelegate.onReceive = onBluetoothReceive
     }
@@ -34,7 +34,7 @@ class BluetoothManager:TransportMedium {
     //MARK: Transport
     
     func send(message:NetworkMessage, for session:Session, completionHandler: (()->Void)?) {
-        //todo: bluetooth completion
+        //TODO: bluetooth completion
         bluetoothDelegate.writeToServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid), message: message)
 
     }
@@ -110,17 +110,35 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     var characteristicMessageBuffersAndLastSplitNumber: [CBCharacteristic: (Data, UInt8)] = [:]
     var serviceQueuedMessage: [CBUUID: NetworkMessage] = [:]
 
-    var mutex : Mutex = Mutex()
+    let mutex : Mutex = Mutex()
+    let queue : DispatchQueue
     
     // Constants
     static let krsshCharUUID = CBUUID(string: "20F53E48-C08D-423A-B2C2-1C797889AF24")
     static let refreshByte = UInt8(0)
     static let pingByte = UInt8(1)
     static let pingMsg = Data(bytes: [pingByte])
-    
-    override init( ) {
+
+    init(queue: DispatchQueue) {
+        self.queue = queue
         super.init()
         log("init bluetooth")
+    }
+
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        mutex.lock()
+        defer { mutex.unlock() }
+        log("CBCentral state \(central.state.rawValue)")
+        if central.state == .poweredOn {
+            self.central = central
+            log("CBCentral poweredOn")
+            for peripheral in discoveredPeripherals {
+                restorePeripheralLocked(central, peripheral)
+            }
+        } else {
+            recentPeripheralConnections?.removeAllObjects()
+        }
+        scanLogic()
     }
 
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
@@ -130,22 +148,31 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         if let restoredPeripherals = dict[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] {
             for peripheral in restoredPeripherals {
                 peripheral.delegate = self
-                guard let services = peripheral.services else {
-                    continue
-                }
-                for service in services {
-                    guard let characteristics = service.characteristics else {
-                        continue
-                    }
-                    for characteristic in characteristics {
-                        if characteristic.uuid == BluetoothDelegate.krsshCharUUID {
-                            pairedPeripherals[service.uuid] = peripheral
-                            pairedServiceUUIDS.insert(service.uuid)
-                            allServiceUUIDS.insert(service.uuid)
-                            peripheralCharacteristics[peripheral] = characteristic
-                        }
-                    }
-                }
+                restorePeripheralLocked(central, peripheral)
+            }
+        }
+    }
+
+    //  re-initialize a peripheral being restored from background or from Bluetooth being toggled back on
+    func restorePeripheralLocked(_ central : CBCentralManager, _ peripheral: CBPeripheral) {
+        log("restoring peripheral \(peripheral)")
+        switch peripheral.state {
+        case .disconnected, .disconnecting:
+            removePeripheralLocked(central: central, peripheral: peripheral)
+            break
+        case .connecting:
+            //  peripherals in the connecting state will likely not finish connecting
+            //  and persist in this bad state across app launches, so cancel any that are still
+            //  connecting on poweredOn state transition
+            discoveredPeripherals.insert(peripheral)
+            if case .poweredOn = central.state {
+                log("cancelling connecting discoveredPeripheral on poweredOn: \(peripheral)")
+                central.cancelPeripheralConnection(peripheral)
+            }
+        case .connected:
+            discoveredPeripherals.insert(peripheral)
+            if case .poweredOn = central.state {
+                peripheral.discoverServices(Array(self.scanningServiceUUIDS))
             }
         }
     }
@@ -204,28 +231,8 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
 
         scanningServiceUUIDS = shouldBeScanning
 
-        for matchingPeripheral in central.retrieveConnectedPeripherals(withServices: Array(allServiceUUIDS)) {
-            if !pairedPeripherals.values.contains(matchingPeripheral) {
-                let services = String(describing: matchingPeripheral.services)
-                log("found unpaired connected peripheral with services \(services)")
-                discoveredPeripherals.insert(matchingPeripheral)
-                connectPeripheral(central, matchingPeripheral)
-            }
-        }
-
         log("Scanning for \(scanningServiceUUIDS)")
         central.scanForPeripherals(withServices: Array(scanningServiceUUIDS), options:nil)
-    }
-
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        mutex.lock()
-        defer { mutex.unlock() }
-        log("CBCentral state \(central.state.rawValue)")
-        if central.state == .poweredOn {
-            self.central = central
-            log("CBCentral poweredOn")
-        }
-        scanLogic()
     }
 
     func addServiceUUID(uuid: CBUUID) {
@@ -284,6 +291,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         mutex.lock()
         defer { mutex.unlock() }
         log("Discovered \(String(describing: peripheral.name)) at RSSI \(RSSI)")
+        peripheral.delegate = self
         //  keep reference so not GCed
         discoveredPeripherals.insert(peripheral)
 
@@ -291,6 +299,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     }
 
     func connectPeripheral(_ central: CBCentralManager, _ peripheral: CBPeripheral) {
+        guard central.state == .poweredOn else {
+            return
+        }
         if let recentPeripheralConnections = recentPeripheralConnections {
             recentPeripheralConnections.removeExpiredObjects()
             if recentPeripheralConnections.object(forKey: peripheral.identifier.uuidString) != nil {
@@ -350,7 +361,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         for service in invalidatedServices {
             let uuid = service.uuid
             dispatchAfter(delay: 1.0, task: {
-                self.refreshServiceUUID(uuid: uuid)
+                self.queue.async{
+                    self.refreshServiceUUID(uuid: uuid)
+                }
             })
         }
     }
@@ -382,7 +395,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             }
             pingService(service.uuid)
             if let queuedMessage = serviceQueuedMessage.removeValue(forKey: service.uuid) {
-                dispatchAsync {
+                queue.async {
                     self.writeToServiceUUID(uuid: service.uuid, message: queuedMessage)
                 }
             }
@@ -399,10 +412,10 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     func scheduleAliveCheck(forService service:CBUUID, epoch: UInt) {
         let timeout = servicePingTimeouts[service] ?? 1.0
 
-        dispatchAfter(delay: timeout, task: {
-            self.aliveCheck(service.uuidString, epoch:epoch)
-        })
-        log("alive check scheduled in \(timeout) seconds")
+//        dispatchAfter(delay: timeout, task: {
+//            self.aliveCheck(service.uuidString, epoch:epoch)
+//        })
+//        log("alive check scheduled in \(timeout) seconds")
     }
 
     func aliveCheck(_ service:String, epoch:UInt) {
@@ -424,7 +437,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
                     timeout = 1.0
                 }
                 self.servicePingTimeouts[cbuuid] = timeout * 2
-                dispatchAsync { self.refreshServiceUUID(uuid: cbuuid) }
+                queue.async { self.refreshServiceUUID(uuid: cbuuid) }
                 return
         }
         log("alive check passed")
@@ -481,7 +494,9 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             case BluetoothDelegate.refreshByte:
                 let uuid = characteristic.service.uuid
                 log("received refresh control message")
-                dispatchAfter(delay: 5.0, task: { self.refreshServiceUUID(uuid: uuid) })
+                dispatchAfter(delay: 5.0, task: {
+                    self.queue.async { self.refreshServiceUUID(uuid: uuid) }
+                })
             case BluetoothDelegate.pingByte:
                 onServiceAck(service: characteristic.service.uuid)
             default:
@@ -551,12 +566,6 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
         recentPeripheralConnections?.removeObject(forKey: peripheral.identifier.uuidString)
         removePeripheralLocked(central: central, peripheral: peripheral)
 
-        let disconnectedServices = pairedPeripherals.filter({ $0.1 == peripheral }).map({$0.0})
-        let disconnectedPairedServices = disconnectedServices.filter({ allServiceUUIDS.contains($0) })
-        if disconnectedPairedServices.count > 0 {
-            log("reconnecting disconnected services \(disconnectedPairedServices)")
-            connectPeripheral(central, peripheral)
-        }
         scanLogic()
     }
 
@@ -566,6 +575,7 @@ class BluetoothDelegate : NSObject, CBCentralManagerDelegate, CBPeripheralDelega
             pairedPeripherals.removeValue(forKey: disconnectedUUID)
             pairedServiceUUIDS.remove(disconnectedUUID)
         }
+        discoveredPeripherals.remove(peripheral)
     }
 
 
