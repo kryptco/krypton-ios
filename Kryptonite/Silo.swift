@@ -93,7 +93,7 @@ class Silo {
         }
         
         // ensure request has not expired
-        // workaround: if it takes a lot of time to fetch from request cache don't want process
+        // workaround: check request time again in case cache is slow
         let nowAgain = Date().timeIntervalSince1970
         if abs(nowAgain - Double(request.unixSeconds)) > Properties.requestTimeTolerance {
             throw InvalidRequestTimeError()
