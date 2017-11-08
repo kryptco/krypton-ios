@@ -13,8 +13,8 @@ extension Request {
     var approveController:ApproveController? {
         
         switch self.body {
-        case .ssh:
-            return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SSHApproveController") as? SSHApproveController
+        case .ssh, .blob:
+            return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SimpleApproveController") as? SimpleApproveController
         case .git(let gitSign):
             switch gitSign.git {
             case .commit:
@@ -28,15 +28,7 @@ extension Request {
     }
     
     var autoApproveDisplay:String? {
-        switch self.body {
-        case .ssh(let sshRequest):
-            return sshRequest.display
-        case .git(let gitSign):
-            return gitSign.git.shortDisplay
-
-        default:
-            return nil
-        }
+        return self.notificationDetails().body
     }
 }
 

@@ -16,7 +16,6 @@ class ApproveController:UIViewController {
     @IBOutlet weak var resultView:UIView!
     @IBOutlet weak var resultViewHeight:NSLayoutConstraint!
     @IBOutlet weak var resultLabel:UILabel!
-
     
     @IBOutlet weak var deviceLabel:UILabel!
     
@@ -267,17 +266,20 @@ class ApproveController:UIViewController {
     }
 }
 
-class SSHApproveController:ApproveController {
+class SimpleApproveController:ApproveController {
     
-    @IBOutlet weak var commandLabel:UILabel!
+    @IBOutlet weak var titleLabel:UILabel!
+    @IBOutlet weak var bodyLabel:UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let type = request?.body, case .ssh(let sshSign) = type {
-            commandLabel.text = sshSign.display
+        if let (title, body) = self.request?.notificationDetails() {
+            titleLabel.text = title.uppercased()
+            bodyLabel.text = body
         } else {
-            commandLabel.text = "Unknown"
+            titleLabel.text = "--"
+            bodyLabel.text = "Unhandled Request Type"
         }
     }
 

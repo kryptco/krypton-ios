@@ -70,6 +70,7 @@ enum ResponseBody {
     case me(MeResponse)
     case ssh(SignResponse)
     case git(GitSignResponse)
+    case blob(BlobSignResponse)
     case ack(AckResponse)
     case unpair(UnpairResponse)
     
@@ -88,6 +89,10 @@ enum ResponseBody {
         
         if let json:Object = try? json ~> "git_sign_response" {
             responses.append(.git(try GitSignResponse(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "blob_sign_response" {
+            responses.append(.blob(try BlobSignResponse(json: json)))
         }
         
         if let json:Object = try? json ~> "unpair_response" {
@@ -117,6 +122,8 @@ enum ResponseBody {
             json["sign_response"] = s.object
         case .git(let g):
             json["git_sign_response"] = g.object
+        case .blob(let b):
+            json["blob_sign_response"] = b.object
         case .ack(let a):
             json["ack_response"] = a.object
         case .unpair(let u):
@@ -133,6 +140,9 @@ enum ResponseBody {
             
         case .git(let gitSign):
             return gitSign.error
+            
+        case .blob(let blobSign):
+            return blobSign.error
             
         case .me, .unpair, .ack:
             return nil
@@ -208,6 +218,38 @@ struct GitSignResponse:Jsonable {
     }
 }
 
+struct BlobSignResponse:Jsonable {
+    var signature:String?
+    var error:String?
+    
+    init(sig:String?, err:String? = nil) {
+        self.signature = sig
+        self.error = err
+    }
+    
+    init(json: Object) throws {
+        
+        if let sig:String = try? json ~> "signature" {
+            self.signature = sig
+        }
+        
+        if let err:String = try? json ~> "error" {
+            self.error = err
+        }
+    }
+    
+    var object: Object {
+        var map = [String:Any]()
+        
+        if let sig = signature {
+            map["signature"] = sig
+        }
+        if let err = error {
+            map["error"] = err
+        }
+        return map
+    }
+}
 
 
 // Me

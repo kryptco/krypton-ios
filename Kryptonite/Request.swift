@@ -52,13 +52,14 @@ enum RequestBody:Jsonable {
     case me(MeRequest)
     case ssh(SignRequest)
     case git(GitSignRequest)
+    case blob(BlobSignRequest)
     case unpair(UnpairRequest)
     case noOp
     
     
     var isApprovable:Bool {
         switch self {
-        case .ssh, .git:
+        case .ssh, .git, .blob:
             return true
         case .me, .unpair, .noOp:
             return false
@@ -81,6 +82,10 @@ enum RequestBody:Jsonable {
         
         if let json:Object = try? json ~> "git_sign_request" {
             requests.append(.git(try GitSignRequest(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "blob_sign_request" {
+            requests.append(.blob(try BlobSignRequest(json: json)))
         }
         
         if let json:Object = try? json ~> "unpair_request" {
@@ -113,6 +118,8 @@ enum RequestBody:Jsonable {
             json["sign_request"] = s.object
         case .git(let g):
             json["git_sign_request"] = g.object
+        case .blob(let b):
+            json["blob_sign_request"] = b.object
         case .unpair(let u):
             json["unpair_request"] = u.object
         case .noOp:
@@ -133,6 +140,8 @@ enum RequestBody:Jsonable {
             case .tag:
                 return "git-tag-signature"
             }
+        case .blob:
+            return "blob-signature"
         case .me:
             return "me"
         case .noOp:
@@ -266,6 +275,48 @@ struct GitSignRequest:Jsonable {
     }
 }
 
+struct BlobSignRequest:Jsonable {
+    let blob:String
+    let sigType:SigType
+    
+    struct InvalidSigType:Error {}
+    enum SigType:String {
+        case detach    = "detach"
+        case attach    = "attach"
+        case clearsign = "clearsign"
+        
+        init(type:String) throws {
+            guard let sigType = SigType(rawValue: type) else {
+                throw InvalidSigType()
+            }
+            
+            self = sigType
+        }
+    }
+    
+    init(blob:String, sigType:SigType) {
+        self.blob = blob
+        self.sigType = sigType
+    }
+    
+    init(json: Object) throws {
+        self.init(
+            blob:       try json ~> "blob",
+            sigType:    try SigType(type: json ~> "sig_type")
+        )
+    }
+    
+    var object: Object {
+        var json = Object()
+        
+        json["blob"] = blob
+        json["sig_type"] = sigType.rawValue
+
+        return json
+    }
+}
+
+
 // Me
 struct MeRequest:Jsonable {
     var pgpUserId: String?
@@ -289,7 +340,6 @@ struct UnpairRequest:Jsonable {
     init(json: Object) throws {}
     var object: Object {return [:]}
 }
-
 
 
 

@@ -26,7 +26,7 @@
         <!--SSHLoginController-->
         <scene sceneID="cwh-vc-ff4">
             <objects>
-                <viewController storyboardIdentifier="SSHLoginController" id="M4Y-Lb-cyx" userLabel="SSHLoginController" customClass="SSHLoginController" customModule="NotifyUI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SSHLoginController" id="M4Y-Lb-cyx" userLabel="SSHLoginController" customClass="SimpleController" customModule="NotifyUI" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ft6-oW-KC0"/>
                         <viewControllerLayoutGuide type="bottom" id="FKl-LY-JtV"/>
@@ -38,7 +38,7 @@
                             <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="8tx-Ui-MS8" userLabel="command" customClass="KRView" customModule="NotifyUI" customModuleProvider="target">
                                 <rect key="frame" x="69" y="51" width="182.5" height="61"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="748" text="root@server.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="20M-kb-6P7">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="748" text="root@server.com" lineBreakMode="tailTruncation" numberOfLines="8" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="20M-kb-6P7">
                                         <rect key="frame" x="10" y="28" width="162.5" height="23"/>
                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -99,8 +99,10 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="130"/>
                     <connections>
+                        <outlet property="bodyLabel" destination="20M-kb-6P7" id="y5q-W9-Syg"/>
                         <outlet property="deviceNameLabel" destination="uxw-eQ-V8K" id="WIg-dj-rdK"/>
                         <outlet property="sshDisplayLabel" destination="20M-kb-6P7" id="KS6-hr-dab"/>
+                        <outlet property="titleLabel" destination="x3X-1H-qSf" id="jEV-CU-QOw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -186,7 +188,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="Gsw-FO-ceV" userLabel="ssh">
+                            <containerView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="Gsw-FO-ceV" userLabel="simple">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                 <connections>
                                     <segue destination="M4Y-Lb-cyx" kind="embed" identifier="sshSegue" id="1j1-ld-U8U"/>
@@ -237,7 +239,7 @@
                     <connections>
                         <outlet property="commitContainerView" destination="Jja-j6-Oin" id="DQ7-wq-yNa"/>
                         <outlet property="errorContainerView" destination="dNF-9f-Eck" id="cj3-vB-CcP"/>
-                        <outlet property="sshContainerView" destination="Gsw-FO-ceV" id="rkZ-gT-3gU"/>
+                        <outlet property="simpleContainerView" destination="Gsw-FO-ceV" id="IsX-NI-b1J"/>
                         <outlet property="tagContainerView" destination="5bt-DH-e4z" id="elL-kA-FxI"/>
                     </connections>
                 </viewController>
