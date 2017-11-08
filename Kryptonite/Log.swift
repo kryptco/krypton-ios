@@ -8,13 +8,18 @@
 
 import Foundation
 
-enum LogType {
-    case info
-    case warning
-    case error
-    
+let DEFAULT_LOG_LEVEL = LogType.info
+
+enum LogType:Int {
+    case debug = 0
+    case info = 1
+    case warning = 2
+    case error = 3
+
     func getIndicator() -> String {
         switch self {
+        case .debug:
+            return "⚪️"
         case .info:
             return "🔵"
         case .warning:
@@ -31,7 +36,7 @@ func log(_ arg:CustomDebugStringConvertible?, _ type:LogType = .info, file:Strin
     let className = URL(fileURLWithPath: file).lastPathComponent.replacingOccurrences(of: ".swift", with: "")
     let statement = "[\(Date().timeIntervalSince1970)] - \(type.getIndicator()) \(className).\(function):\(line)> \(arg ?? "")"
     
-    if Platform.isDebug {
+    if Platform.isDebug && DEFAULT_LOG_LEVEL.rawValue <= type.rawValue {
         print(statement)
     }
 }
