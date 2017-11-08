@@ -16,7 +16,7 @@ extension Request {
         case .git, .ssh:
             return .authorizeWithTemporal
         case .hosts:
-            return .authorizeSimple
+            return .authorize
         }
     }
     

@@ -37,7 +37,6 @@ class Policy {
         case autoAuthorized = "auto_authorized_identifier"
         case authorizeWithTemporal = "authorize_temporal_identifier"
         case authorize = "authorize_identifier"
-        case authorizeSimple = "authorize_simple_identifier"
         case none = ""
         
         var identifier:String {
