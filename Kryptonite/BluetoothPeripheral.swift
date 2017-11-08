@@ -52,7 +52,8 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
         //  Restoring CBPeripheralManager services does not currently work, but iOS will atleast relaunch the app
         //  on terminate. However, even though the app remains paired to krd, writes from krd are not sent to this delegate.
         //  Instead we rely on krd to detect that Kryptonite is unresponsive and reconnect/susbscribe.
-        queue.async { self.advertiseLogic() }
+        //  TODO: this seems to be fixed in 11.2 beta 2
+        self.advertiseLogic()
     }
 
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
@@ -74,7 +75,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
 
     func advertiseLogic() {
         guard let peripheralManager = peripheralManager else {
-            log("peripheralManager nil")
+            log("peripheralManager nil", .error)
             return
         }
         if case .poweredOn = peripheralManager.state {
@@ -88,7 +89,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
                     service.characteristics = [characteristic]
                     peripheralManager.add(service)
                     addedServiceUUIDS.insert(nextService)
-                    log("adding service \(nextService) to advertised services")
+                    log("adding service \(nextService) to gatt database")
                     cbservicesByUUID[nextService] = service
                     cbcharacteristicsByUUID[nextService] = characteristic
                 }
@@ -105,15 +106,15 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
     }
 
     func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
-        log("did add service \(service.uuid)")
+        log("did add service \(service.uuid)", .debug)
         advertiseLogic()
     }
 
     func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
         if let e = error {
-            log("did start advertising, error: \(e)")
+            log("error starting advertising, error: \(e)", .error)
         } else {
-            log("did start advertising")
+            log("did start advertising", .debug)
         }
         let delay = DispatchTime.now() + Double(Int64(2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         let rotateEpoch = self.rotateEpoch
@@ -129,9 +130,6 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
         rotateEpoch += 1
         if let currentAdvertisement = advertisedServiceUUID,
             let currentIndex = serviceUUIDAdvertisementOrder.index(of: currentAdvertisement) {
-            guard serviceUUIDAdvertisementOrder.count > 1 else {
-                return
-            }
             let nextIndex = (currentIndex + 1) % serviceUUIDAdvertisementOrder.count
             advertisedServiceUUID = serviceUUIDAdvertisementOrder[nextIndex]
         } else {
@@ -140,7 +138,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
         peripheral.stopAdvertising()
         if let currentAdvertisement = advertisedServiceUUID {
             peripheral.startAdvertising([CBAdvertisementDataServiceUUIDsKey: [currentAdvertisement]])
-            log("advertising \(currentAdvertisement.uuidString)")
+            log("advertising \(currentAdvertisement.uuidString)", .debug)
         }
     }
 
@@ -171,7 +169,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
     }
 
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
-        log("received write")
+        log("received write", .debug)
         for write in requests {
             if let data = write.value {
                 mutex.lock {
@@ -204,7 +202,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
             for block in messageBlocks {
                 writeToServiceUUIDRawLocked(uuid: uuid, data: block)
             }
-            log("sent BT response")
+            log("sent BT response", .debug)
         } catch let e {
             log("bluetooth message split failed: \(e)", .error)
         }
@@ -243,7 +241,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
         defer { mutex.unlock() }
 
         if allServiceUUIDS.contains(uuid) {
-             log("already had uuid \(uuid.uuidString)")
+            log("already had uuid \(uuid.uuidString)")
             return
         }
 
@@ -262,7 +260,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
 
     func removeServiceUUIDLocked(uuid: CBUUID) {
         if !allServiceUUIDS.contains(uuid) {
-            log("didn't have uuid \(uuid.uuidString) in allServiceUUIDS")
+            log("didn't have uuid \(uuid.uuidString) in allServiceUUIDS", .error)
         } else {
             log("remove uuid \(uuid.uuidString)")
         }
@@ -278,7 +276,7 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
     //  precondition: mutex locked
     func onUpdateCharacteristicValueLocked(characteristic: CBCharacteristic, data: Data) {
         if data.count == 0 {
-            log("empty data")
+            log("empty data", .error)
             return
         }
 
@@ -297,14 +295,14 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
         if n == 0 {
             // buffer complete
             if let (fullBuffer, _) = characteristicMessageBuffersAndLastSplitNumber.removeValue(forKey: characteristic) {
-                log("reconstructed full message of length \(fullBuffer.count)")
+                log("reconstructed full message of length \(fullBuffer.count)", .debug)
                 
                 mutex.unlock()
                 do {
                     let message = try NetworkMessage(networkData: fullBuffer)
                     try self.onReceive?(characteristic.service.uuid, message)
                 } catch (let e) {
-                    log("error processing bluetooth message: \(e)")
+                    log("error processing bluetooth message: \(e)", .error)
                 }
                 mutex.lock()
 

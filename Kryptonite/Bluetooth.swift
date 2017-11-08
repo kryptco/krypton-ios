@@ -28,7 +28,7 @@ class BluetoothManager:TransportMedium {
         self.handler = handler
         let queue = DispatchQueue.global()
         self.bluetoothDelegate = BluetoothPeripheralDelegate(queue: queue)
-        self.peripheralManager = CBPeripheralManager(delegate: bluetoothDelegate, queue: queue, options: [CBPeripheralManagerOptionRestoreIdentifierKey: "bluetoothPeripheralManager"])
+        self.peripheralManager = CBPeripheralManager(delegate: bluetoothDelegate, queue: queue, options: nil)
         self.bluetoothDelegate.peripheralManager = self.peripheralManager
         self.bluetoothDelegate.onReceive = onBluetoothReceive
     }
@@ -61,9 +61,7 @@ class BluetoothManager:TransportMedium {
         // do nothing
     }
 
-    func refresh(for session:Session) {
-//        bluetoothDelegate.refreshServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid))
-    }
+    func refresh(for session:Session) { }
 
     
     // MARK: Bluetooth

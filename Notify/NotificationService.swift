@@ -54,7 +54,7 @@ class NotificationService: UNNotificationServiceExtension {
         
         do {
             
-            try TransportControl.shared(bluetoothEnabled: false).handle(medium: .remoteNotification, with: unsealedRequest, for: session, completionHandler: {
+            try TransportControl.shared.handle(medium: .remoteNotification, with: unsealedRequest, for: session, completionHandler: {
                 
                 dispatchMain {
                     UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in

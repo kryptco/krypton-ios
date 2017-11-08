@@ -49,28 +49,12 @@ class TransportControl {
         
         return tc
     }
-    
-    
-    // create shared instance with custom bluetooth on/off
-    static func shared(bluetoothEnabled:Bool = true) -> TransportControl {
-        defer { sharedControlMutex.unlock() }
-        sharedControlMutex.lock()
-        
-        guard let tc = sharedControl else {
-            sharedControl = TransportControl(bluetoothEnabled: bluetoothEnabled)
-            return sharedControl!
-        }
-        
-        return tc
+
+    init() {
+        addTransports(&transports)
     }
     
     init(bluetoothEnabled:Bool = true) {        
-        if bluetoothEnabled {
-            #if KRYPTONITE_MAIN_APP_TARGET
-            transports.append(BluetoothManager(handler: handle))
-            #endif
-        }
-        transports.append(SQSManager(handler: handle))
     }
     
     func transport(for medium:CommunicationMedium) -> TransportMedium? {
@@ -178,6 +162,5 @@ class TransportControl {
     func willEnterForeground() {
         transports.forEach({ $0.willEnterForeground() })
     }
-
 
 }

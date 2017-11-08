@@ -29,6 +29,9 @@
 		8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2EE381DBC18170079E468 /* Analytics.swift */; };
 		8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; };
 		8DB2EE541DBC56910079E468 /* SwiftHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB2EE461DBC54EF0079E468 /* SwiftHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8DB64E3C1FB4D6330083DA5D /* TransportControl+Kryptonite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB64E3B1FB4D6330083DA5D /* TransportControl+Kryptonite.swift */; };
+		8DB64E4E1FB4D6410083DA5D /* TransportControl+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB64E4C1FB4D63F0083DA5D /* TransportControl+Notify.swift */; };
+		8DB64E501FB4D64D0083DA5D /* TransportControl+Kryptonite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB64E3B1FB4D6330083DA5D /* TransportControl+Kryptonite.swift */; };
 		8DC2639C1ED23C4C00BF2E17 /* PGPFormat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA12EAA41ECFA917001603BF /* PGPFormat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8DC2639E1ED2459300BF2E17 /* CommitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */; };
 		8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */; };
@@ -559,6 +562,8 @@
 		8D83990B1E56063A0051C6BA /* HostAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostAuth.swift; sourceTree = "<group>"; };
 		8DB2EE381DBC18170079E468 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		8DB2EE3B1DBC54EF0079E468 /* SwiftHTTP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftHTTP.xcodeproj; path = SwiftHTTP/SwiftHTTP.xcodeproj; sourceTree = "<group>"; };
+		8DB64E3B1FB4D6330083DA5D /* TransportControl+Kryptonite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransportControl+Kryptonite.swift"; sourceTree = "<group>"; };
+		8DB64E4C1FB4D63F0083DA5D /* TransportControl+Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransportControl+Notify.swift"; sourceTree = "<group>"; };
 		8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitInfo.swift; sourceTree = "<group>"; };
 		8DC38BC21E689785007445B4 /* libsshwire.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsshwire.a; path = "ssh-wire/target/universal/release/libsshwire.a"; sourceTree = "<group>"; };
 		8DC38BC51E689A0F007445B4 /* sshwire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sshwire.h; path = "ssh-wire/src/sshwire.h"; sourceTree = "<group>"; };
@@ -1105,6 +1110,8 @@
 				FA4A84DC1E8D76800082274A /* SQS.swift */,
 				8DD436A31DF3719000201106 /* CommunicationActivity.swift */,
 				FA4A84DE1E8D77910082274A /* TransportControl.swift */,
+				8DB64E3B1FB4D6330083DA5D /* TransportControl+Kryptonite.swift */,
+				8DB64E4C1FB4D63F0083DA5D /* TransportControl+Notify.swift */,
 			);
 			name = Transport;
 			sourceTree = "<group>";
@@ -1995,6 +2002,7 @@
 				FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */,
 				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
+				8DB64E3C1FB4D6330083DA5D /* TransportControl+Kryptonite.swift in Sources */,
 				8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */,
 				FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */,
 				FACBEFEE1D77A2B7005D71B9 /* SetupController.swift in Sources */,
@@ -2138,6 +2146,7 @@
 				FA12EAC11ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				8D45B0071E8D7C0600E84A57 /* Request.swift in Sources */,
 				FAFE54721D7BB2E800391FDD /* Hash.swift in Sources */,
+				8DB64E501FB4D64D0083DA5D /* TransportControl+Kryptonite.swift in Sources */,
 				8D45AFF61E8D739500E84A57 /* SSHHostVerificationTests.swift in Sources */,
 				FAE45B9F1E64AA4500A583AB /* Ed25519.swift in Sources */,
 				8D003DF31D90EDE30085ED21 /* Sodium.swift in Sources */,
@@ -2175,6 +2184,7 @@
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
 				8D05CB321ED3E08500CCCC38 /* TagInfo.swift in Sources */,
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
+				8DB64E4E1FB4D6410083DA5D /* TransportControl+Notify.swift in Sources */,
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FA17B96F1FB3638100975FB0 /* Request+Policy.swift in Sources */,
@@ -2491,10 +2501,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					KRYPTONITE_MAIN_APP_TARGET,
-					"DEBUG=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -2505,7 +2512,7 @@
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
-				OTHER_SWIFT_FLAGS = "-DDEBUG -DKRYPTONITE_MAIN_APP_TARGET";
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2532,7 +2539,7 @@
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = KRYPTONITE_MAIN_APP_TARGET;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Kryptonite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -2543,7 +2550,7 @@
 					"$(PROJECT_DIR)/swift-sodium/Sodium",
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
-				OTHER_SWIFT_FLAGS = "-DKRYPTONITE_MAIN_APP_TARGET";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
