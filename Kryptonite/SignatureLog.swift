@@ -68,6 +68,29 @@ struct SSHSignatureLog:LogStatement {
         self.date = date
     }
     
+    func getUserAndHost() -> (user:String, host:String)? {
+        guard   let hostAuth:HostAuth = try? HostAuth(jsonString: self.hostAuth),
+                let hostname = hostAuth.hostNames.first
+        else {
+            return nil
+        }
+        
+        guard displayName.contains("rejected") == false else {
+            return nil
+        }
+        
+        guard displayName.contains(HostMistmatchError.prefix) == false else {
+            return nil
+        }
+        
+        guard let user = displayName.components(separatedBy: "@").first?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        else {
+            return nil
+        }
+        
+        return (user: user, host: hostname)
+    }
+    
     var managedObject:[String:Any] {
         return ["session": session,
                 "signature": signature,

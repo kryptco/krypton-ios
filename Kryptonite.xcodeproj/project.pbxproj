@@ -46,7 +46,6 @@
 		8DCB60431E94468100E1B924 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
 		8DCB60441E94468B00E1B924 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		8DCB60451E94468B00E1B924 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
-		8DCB60461E94469700E1B924 /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
 		8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		8DCB604C1E9446D300E1B924 /* AWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1F01D79E3ED007D1B3A /* AWS.swift */; };
 		8DCB604D1E9446D300E1B924 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
@@ -106,6 +105,9 @@
 		FA1682A51EB2B2D500D9CE40 /* KnownHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */; };
 		FA1682A81EB2C51C00D9CE40 /* KnownHosts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A61EB2C51C00D9CE40 /* KnownHosts.xcdatamodeld */; };
 		FA1682AA1EB3856600D9CE40 /* KnownHostsEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A91EB3856600D9CE40 /* KnownHostsEditController.swift */; };
+		FA17B96C1FB3636700975FB0 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
+		FA17B96E1FB3638100975FB0 /* Request+Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17B96D1FB3638100975FB0 /* Request+Policy.swift */; };
+		FA17B96F1FB3638100975FB0 /* Request+Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17B96D1FB3638100975FB0 /* Request+Policy.swift */; };
 		FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E706D1D9AC22900A14650 /* FirstPairController.swift */; };
 		FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */; };
 		FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2697311D99CA1100FE44D3 /* GenerateController.swift */; };
@@ -279,7 +281,6 @@
 		FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD361F61DF08F9E00D17BAB /* Connectivity.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
-		FADDE2831EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
 		FADDE2841EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
 		FAE45B991E64750E00A583AB /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B981E64750E00A583AB /* RSAKeyPair.swift */; };
 		FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE45B981E64750E00A583AB /* RSAKeyPair.swift */; };
@@ -575,6 +576,7 @@
 		FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHost.swift; sourceTree = "<group>"; };
 		FA1682A71EB2C51C00D9CE40 /* KnownHosts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KnownHosts.xcdatamodel; sourceTree = "<group>"; };
 		FA1682A91EB3856600D9CE40 /* KnownHostsEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHostsEditController.swift; sourceTree = "<group>"; };
+		FA17B96D1FB3638100975FB0 /* Request+Policy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Policy.swift"; sourceTree = "<group>"; };
 		FA1E706D1D9AC22900A14650 /* FirstPairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPairController.swift; sourceTree = "<group>"; };
 		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
 		FA2697311D99CA1100FE44D3 /* GenerateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateController.swift; sourceTree = "<group>"; };
@@ -929,6 +931,7 @@
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */,
+				FA17B96D1FB3638100975FB0 /* Request+Policy.swift */,
 				8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */,
 				8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */,
 				8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */,
@@ -1885,6 +1888,7 @@
 				8D05CB1F1ED3DCC000CCCC38 /* TagInfo.swift in Sources */,
 				FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
+				FA17B96E1FB3638100975FB0 /* Request+Policy.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* Keypair+SSHFormat.swift in Sources */,
 				FAE4958D1DBD89F100A97708 /* M13CheckboxDotController.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
@@ -2025,7 +2029,6 @@
 				FAC873F71E6A4DB9003D112E /* Pairing.swift in Sources */,
 				FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */,
 				8D05CB371ED3E4BD00CCCC38 /* GitInfo.swift in Sources */,
-				8DCB60461E94469700E1B924 /* Policy.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
 				FA2949E61EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */,
@@ -2089,6 +2092,7 @@
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
+				FA17B96F1FB3638100975FB0 /* Request+Policy.swift in Sources */,
 				FA1682A01EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* Keypair+SSHFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
@@ -2126,6 +2130,7 @@
 			files = (
 				FA8B54101ED773EE00891161 /* CommitInfo.swift in Sources */,
 				FAFF1E8D1ED6816B0063C44C /* NotificationViewController.swift in Sources */,
+				FA17B96C1FB3636700975FB0 /* Request+Notify.swift in Sources */,
 				FA8B54381ED7755000891161 /* Log.swift in Sources */,
 				FA8B543F1ED7887800891161 /* Resources.swift in Sources */,
 				FA8B542C1ED774C100891161 /* Keypair+PGPFormat.swift in Sources */,
@@ -2152,7 +2157,6 @@
 				FA8B542F1ED774C100891161 /* CryptoError.swift in Sources */,
 				FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */,
 				FA8B54171ED773EE00891161 /* Version.swift in Sources */,
-				FADDE2831EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
 				FA2949E41EDE379900A5C70B /* UserIDList.swift in Sources */,
 				FA8B54321ED774C100891161 /* Sodium.swift in Sources */,
 				FA8B542D1ED774C100891161 /* Wrap.swift in Sources */,

@@ -88,7 +88,7 @@ class ApproveController:UIViewController {
         isEnabled = false
         
         do {
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: true)
             try TransportControl.shared.send(resp, for: session)
             
             if case .ssh(let signResp) = resp.body, let errorMessage = signResp.error {
@@ -141,7 +141,7 @@ class ApproveController:UIViewController {
         
         do {
             Policy.allow(session: session, for: Policy.Interval.threeHours)
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: true)
             try TransportControl.shared.send(resp, for: session)
             
             if case .ssh(let signResp) = resp.body, let errorMessage = signResp.error {
@@ -192,7 +192,7 @@ class ApproveController:UIViewController {
         
         do {
             if let request = request, let session = session {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: false)
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: false)
                 try TransportControl.shared.send(resp, for: session)
             }
             

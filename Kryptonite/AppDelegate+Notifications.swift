@@ -116,7 +116,7 @@ extension AppDelegate {
                 return
         }
         
-        let signatureAllowed = (identifier == Policy.approveAction.identifier || identifier == Policy.approveTemporaryAction.identifier)
+        let allowed = (identifier == Policy.approveAction.identifier || identifier == Policy.approveTemporaryAction.identifier)
         
         switch actionIdentifier {
         case Policy.ActionIdentifier.approve:
@@ -135,7 +135,7 @@ extension AppDelegate {
         
         
         do {
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: signatureAllowed)
+            let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: allowed)
             try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)
             
             if let errorMessage = resp.body.error {

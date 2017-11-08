@@ -186,6 +186,11 @@ extension KeyManager {
         return try self.keyPair.exportAsciiArmoredPGPPublicKey(for: userIds, created: created)
     }
     
+    func getPGPUserIDList() -> [String] {
+        let userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))) ?? UserIDList.empty
+        return userIdList.ids
+    }
+    
     func updatePGPUserIDPreferences(for identity:String) -> [String] {
         
         var userIdList = (try? UserIDList(jsonString: KeychainStorage().get(key: PGPPublicKeyStorage.userIDs.key(tag: .me)))) ?? UserIDList.empty

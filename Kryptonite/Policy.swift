@@ -33,10 +33,19 @@ class Policy {
 
     }
     
+    enum NotificationCategory:String {
+        case autoAuthorized = "auto_authorized_identifier"
+        case authorizeWithTemporal = "authorize_temporal_identifier"
+        case authorize = "authorize_identifier"
+        case authorizeSimple = "authorize_simple_identifier"
+        case none = ""
+        
+        var identifier:String {
+            return self.rawValue
+        }
+    }
     
     // Category Identifiers
-    static let autoAuthorizedCategoryIdentifier = "auto_authorized_identifier"
-    static let authorizeCategoryIdentifier = "authorize_identifier"
     
     enum ActionIdentifier:String {
         case approve = "approve_identifier"
@@ -139,7 +148,7 @@ class Policy {
                 return true
             }
             
-        case .git, .me, .noOp, .unpair:
+        case .git, .me, .noOp, .unpair, .hosts:
             break
         }
         
@@ -254,7 +263,7 @@ class Policy {
             
             Policy.removePendingAuthorization(session: session, request: request)
             do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: true)
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: true)
                 try TransportControl.shared.send(resp, for: session)
                 
                 if let errorMessage = resp.body.error {
@@ -286,7 +295,7 @@ class Policy {
             Policy.removePendingAuthorization(session: session, request: request)
             
             do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, signatureAllowed: false)
+                let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: false)
                 try TransportControl.shared.send(resp, for: session)
             } catch (let e) {
                 log("got error \(e)", .error)

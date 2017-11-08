@@ -10,18 +10,51 @@ import Foundation
 import UIKit
 
 extension Request {
-    var approveController:ApproveController? {
+    func approveController(for session:Session) -> UIViewController? {
         
         switch self.body {
         case .ssh:
-            return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SSHApproveController") as? SSHApproveController
+            let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SSHApproveController") as? SSHApproveController
+            controller?.session = session
+            controller?.request = self
+            return controller
+
         case .git(let gitSign):
             switch gitSign.git {
             case .commit:
-                return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
+                let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
+                controller?.session = session
+                controller?.request = self
+                return controller
+
             case .tag:
-                return Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TagApproveController") as? TagApproveController
+                let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TagApproveController") as? TagApproveController
+                controller?.session = session
+                controller?.request = self
+                return controller
             }
+        case .hosts:
+            let (subtitle, body) = notificationDetails()
+            let controller = UIAlertController(title: "Request: \(subtitle)", message: body, preferredStyle: UIAlertControllerStyle.actionSheet)
+            controller.addAction(UIAlertAction(title: "Allow", style: UIAlertActionStyle.default, handler: { (_) in
+                do {
+                    let resp = try Silo.shared.lockResponseFor(request: self, session: session, allowed: true)
+                    try TransportControl.shared.send(resp, for: session)
+                } catch {
+                    log("error allowing: \(error)")
+                }
+            }))
+            controller.addAction(UIAlertAction(title: "Reject", style: UIAlertActionStyle.destructive, handler: { (_) in
+                do {
+                    let resp = try Silo.shared.lockResponseFor(request: self, session: session, allowed: false)
+                    try TransportControl.shared.send(resp, for: session)
+
+                } catch {
+                    log("error rejecting: \(error)")
+                }
+            }))
+            
+            return controller
         default:
             return nil
         }
@@ -49,16 +82,13 @@ extension UIViewController {
         Policy.removePendingAuthorization(session: session, request: request)
         
         // proceed to show approval request
-        guard let approvalController = request.approveController else {
+        guard let approvalController = request.approveController(for: session) else {
             log("nil approve controller", .error)
             return
         }
         
         approvalController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         approvalController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-        
-        approvalController.session = session
-        approvalController.request = request
         
         dispatchMain {
             if self.presentedViewController is AutoApproveController {

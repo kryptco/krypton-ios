@@ -53,6 +53,7 @@ enum RequestBody:Jsonable {
     case ssh(SignRequest)
     case git(GitSignRequest)
     case unpair(UnpairRequest)
+    case hosts(HostsRequest)
     case noOp
     
     
@@ -60,7 +61,7 @@ enum RequestBody:Jsonable {
         switch self {
         case .ssh, .git:
             return true
-        case .me, .unpair, .noOp:
+        case .me, .unpair, .noOp,  .hosts:
             return false
         }
     }
@@ -87,6 +88,10 @@ enum RequestBody:Jsonable {
             requests.append(.unpair(try UnpairRequest(json: json)))
         }
         
+        if let json:Object = try? json ~> "hosts_request" {
+            requests.append(.hosts(try HostsRequest(json: json)))
+        }
+
         
         // if no requests, it's a noOp
         if requests.isEmpty {
@@ -115,6 +120,8 @@ enum RequestBody:Jsonable {
             json["git_sign_request"] = g.object
         case .unpair(let u):
             json["unpair_request"] = u.object
+        case .hosts(let h):
+            json["hosts_request"] = h.object
         case .noOp:
             break
         }
@@ -133,6 +140,8 @@ enum RequestBody:Jsonable {
             case .tag:
                 return "git-tag-signature"
             }
+        case .hosts:
+            return "hosts"
         case .me:
             return "me"
         case .noOp:
@@ -290,6 +299,11 @@ struct UnpairRequest:Jsonable {
     var object: Object {return [:]}
 }
 
+// Hosts
+struct HostsRequest:Jsonable {
+    init(json: Object) throws {}
+    var object: Object {return [:]}
+}
 
 
 

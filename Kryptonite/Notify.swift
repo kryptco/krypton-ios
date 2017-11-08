@@ -116,7 +116,7 @@ class Notify {
                 content.body = noteBody
                 content.sound = UNNotificationSound.default()
                 content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
-                content.categoryIdentifier = Policy.authorizeCategoryIdentifier
+                content.categoryIdentifier = request.notificationCategory.identifier
                 content.threadIdentifier = request.id
                 
                 let noteId = request.id
@@ -149,7 +149,7 @@ class Notify {
         content.title = noteTitle
         content.subtitle = noteSubtitle
         content.body = noteBody
-        content.categoryIdentifier = Policy.autoAuthorizedCategoryIdentifier
+        content.categoryIdentifier = request.autoNotificationCategory.identifier
         content.sound = UNNotificationSound.default()
         content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
         

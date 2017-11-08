@@ -111,7 +111,8 @@ class Silo {
         case .noOp:
             return
             
-        case .ssh where Policy.needsUserApproval(for: session, and: request.body),
+        case .hosts,
+             .ssh where Policy.needsUserApproval(for: session, and: request.body),
              .git where Policy.needsUserApproval(for: session, and: request.body):
             
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
@@ -122,13 +123,11 @@ class Silo {
         }
 
         // otherwise, continue with creating and sending the response
-        let response = try responseFor(request: request, session: session, signatureAllowed: true)
+        let response = try responseFor(request: request, session: session, allowed: true)
         
         // analytics / notify user on error for signature response
         switch response.body {
         case .ssh(let sign):
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
-            
             if let error = sign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
@@ -140,18 +139,18 @@ class Silo {
             }
 
         case .git(let gitSign):
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
-            
             if let error = gitSign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
                 Policy.notifyUser(session: session, request: request)
             }
 
-        case .me, .ack, .unpair:
+        case .me, .ack, .unpair, .hosts:
             break
         }
         
+        Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
+
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
     }
 
@@ -189,14 +188,14 @@ class Silo {
     
     // MARK: Response
     
-    func lockResponseFor(request:Request, session:Session, signatureAllowed:Bool) throws -> Response {
+    func lockResponseFor(request:Request, session:Session, allowed:Bool) throws -> Response {
         mutex.lock()
         defer { mutex.unlock() }
-        return try responseFor(request: request, session: session, signatureAllowed: signatureAllowed)
+        return try responseFor(request: request, session: session, allowed: allowed)
     }
     
     // precondition: mutex locked
-    private func responseFor(request:Request, session:Session, signatureAllowed:Bool) throws -> Response {
+    private func responseFor(request:Request, session:Session, allowed:Bool) throws -> Response {
         let requestStart = Date().timeIntervalSince1970
         defer { log("response took \(Date().timeIntervalSince1970 - requestStart) seconds") }
         
@@ -217,7 +216,7 @@ class Silo {
             var err:String?
             do {
                 
-                if signatureAllowed {
+                if allowed {
                     
                     // if host auth provided, check known hosts
                     // fails in invalid signature -or- hostname not provided
@@ -253,7 +252,7 @@ class Silo {
             var sig:String?
             var err:String?
             do {
-                if signatureAllowed {
+                if allowed {
                     // only place where git signature should occur
                     
                     let keyManager = try KeyManager.sharedInstance()
@@ -305,6 +304,32 @@ class Silo {
             }
             
             responseType = .me(MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
+            
+        case .hosts:
+            
+            if allowed {
+                // git: get the list of PGP user ids
+                let pgpUserIDs = try KeyManager.sharedInstance().getPGPUserIDList()
+                
+                // ssh: read the logs and get a unique set of user@hostnames
+                let sshLogs:[SSHSignatureLog] = LogManager.shared.fetchAll()
+                
+                var userAndHosts = Set<HostsResponse.UserAndHost>()
+                
+                sshLogs.forEach({ log in
+                    guard let (user, host) = log.getUserAndHost() else {
+                        return
+                    }
+                    
+                    userAndHosts.insert(HostsResponse.UserAndHost(host: host, user: user))
+                })
+                
+                
+                let hostInfo = HostsResponse.HostInfo(pgpUserIDs: pgpUserIDs, hosts: [HostsResponse.UserAndHost](userAndHosts))
+                responseType = .hosts(HostsResponse(hostInfo: hostInfo))
+            } else {
+                responseType = .hosts(HostsResponse(hostInfo: nil, err: "\(UserRejectedError())"))
+            }
 
         case .noOp, .unpair:
             throw ResponseNotNeededError()

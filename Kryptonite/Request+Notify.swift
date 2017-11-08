@@ -24,8 +24,12 @@ extension Request {
             return ("Identity Request", "Public key exported")
         case .unpair:
             return ("Unpair", "Device has been unpaired")
+        case .hosts:
+            return ("Access Logs", "Send username and hostnames from access logs?")
         case .noOp:
             return ("Ping", "")
         }
     }
+    
+
 }

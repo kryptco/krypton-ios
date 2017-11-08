@@ -72,7 +72,8 @@ enum ResponseBody {
     case git(GitSignResponse)
     case ack(AckResponse)
     case unpair(UnpairResponse)
-    
+    case hosts(HostsResponse)
+
     init(json:Object) throws {
         
         var responses:[ResponseBody] = []
@@ -92,6 +93,10 @@ enum ResponseBody {
         
         if let json:Object = try? json ~> "unpair_response" {
             responses.append(.unpair(try UnpairResponse(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "hosts_response" {
+            responses.append(.hosts(try HostsResponse(json: json)))
         }
         
         if let json:Object = try? json ~> "ack_response" {
@@ -121,6 +126,9 @@ enum ResponseBody {
             json["ack_response"] = a.object
         case .unpair(let u):
             json["unpair_response"] = u.object
+        case .hosts(let h):
+            json["hosts_response"] = h.object
+
         }
         
         return json
@@ -133,6 +141,9 @@ enum ResponseBody {
             
         case .git(let gitSign):
             return gitSign.error
+            
+        case .hosts(let hosts):
+            return hosts.error
             
         case .me, .unpair, .ack:
             return nil
@@ -261,6 +272,88 @@ struct UnpairResponse:Jsonable {
     }
     var object: Object {
         return [:]
+    }
+}
+
+//HostsResponse
+struct HostsResponse:Jsonable {
+    
+    struct HostInfo:Jsonable {
+        let pgpUserIDs:[String]
+        let hosts:[UserAndHost]
+        
+        init(pgpUserIDs:[String], hosts:[UserAndHost]) {
+            self.pgpUserIDs = pgpUserIDs
+            self.hosts = hosts
+        }
+        
+        init(json: Object) throws {
+            try self.init(pgpUserIDs: json ~> "pgp_user_ids",
+                          hosts: [UserAndHost](json: json ~> "hosts"))
+        }
+        
+        var object: Object {
+            return ["pgp_user_ids": pgpUserIDs,
+                    "hosts": hosts.objects]
+        }
+    }
+    
+    struct UserAndHost:Jsonable, Equatable, Hashable {
+        let host:String
+        let user:String
+        
+        init(host:String, user:String) {
+            self.host = host
+            self.user = user
+        }
+        
+        init(json: Object) throws {
+            try self.init(host: json ~> "host",
+                          user: json ~> "user")
+        }
+        
+        var object: Object {
+            return ["host": host, "user": user]
+        }
+        
+        static func ==(l:UserAndHost, r:UserAndHost) -> Bool {
+            return l.user == r.user && l.host == r.host
+        }
+        
+        var hashValue: Int {
+            return "\(user)@\(host)".hashValue
+        }
+    }
+    
+    var hostInfo:HostInfo?
+    var error:String?
+    
+    init(hostInfo:HostInfo?, err:String? = nil) {
+        self.hostInfo = hostInfo
+        self.error = err
+    }
+    
+    init(json: Object) throws {
+        
+        if let json:Object = try? json ~> "host_info" {
+            self.hostInfo = try HostInfo(json: json)
+        }
+        
+        if let err:String = try? json ~> "error" {
+            self.error = err
+        }
+    }
+    
+    var object: Object {
+        var map = [String:Any]()
+        
+        if let hostInfo = hostInfo {
+            map["host_info"] = hostInfo.object
+        }
+        if let err = error {
+            map["error"] = err
+        }
+        return map
     }
 }
 

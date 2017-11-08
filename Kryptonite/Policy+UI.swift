@@ -12,18 +12,33 @@ import UserNotifications
 extension Policy {
     
     //MARK: Notification Actions
-    static var authorizeCategory:UNNotificationCategory = {
+    static var authorizeTemporalCategory:UNNotificationCategory = {
         if #available(iOS 11.0, *) {
-            return UNNotificationCategory(identifier: authorizeCategoryIdentifier,
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporal.identifier,
                                    actions: [Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction],
                                    intentIdentifiers: [],
                                    hiddenPreviewsBodyPlaceholder: "New Kryptonite request",
                                    options: .customDismissAction)
         } else {
-            return UNNotificationCategory(identifier: authorizeCategoryIdentifier,
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporal.identifier,
                                    actions: [Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction],
                                    intentIdentifiers: [],
                                    options: .customDismissAction)
+        }
+    }()
+    
+    static var authorizeCategory:UNNotificationCategory = {
+        if #available(iOS 11.0, *) {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorize.identifier,
+                                          actions: [Policy.approveAction, Policy.rejectAction],
+                                          intentIdentifiers: [],
+                                          hiddenPreviewsBodyPlaceholder: "New Kryptonite request",
+                                          options: .customDismissAction)
+        } else {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorize.identifier,
+                                          actions: [Policy.approveAction, Policy.rejectAction],
+                                          intentIdentifiers: [],
+                                          options: .customDismissAction)
         }
     }()
     
