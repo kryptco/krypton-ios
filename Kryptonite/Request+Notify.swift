@@ -25,7 +25,7 @@ extension Request {
         case .unpair:
             return ("Unpair", "Device has been unpaired")
         case .hosts:
-            return ("Host list", "Send username and hostnames from access logs?")
+            return ("Host list", "Send 'user@hostname' from access logs?")
         case .noOp:
             return ("Ping", "")
         }

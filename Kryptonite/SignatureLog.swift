@@ -75,11 +75,7 @@ struct SSHSignatureLog:LogStatement {
             return nil
         }
         
-        guard displayName.contains("rejected") == false else {
-            return nil
-        }
-        
-        guard displayName.contains(HostMistmatchError.prefix) == false else {
+        guard displayName.hasPrefix("rejected: ") == false else {
             return nil
         }
         

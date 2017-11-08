@@ -128,6 +128,8 @@ class Silo {
         // analytics / notify user on error for signature response
         switch response.body {
         case .ssh(let sign):
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
+
             if let error = sign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
@@ -139,17 +141,21 @@ class Silo {
             }
 
         case .git(let gitSign):
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
+
             if let error = gitSign.error {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
                 Policy.notifyUser(session: session, request: request)
             }
-
-        case .me, .ack, .unpair, .hosts:
+        
+        case .hosts:
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
+            
+        case .me, .ack, .unpair:
             break
         }
         
-        Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
 
         try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
     }
@@ -312,7 +318,7 @@ class Silo {
                 let pgpUserIDs = try KeyManager.sharedInstance().getPGPUserIDList()
                 
                 // ssh: read the logs and get a unique set of user@hostnames
-                let sshLogs:[SSHSignatureLog] = LogManager.shared.fetchAll()
+                let sshLogs:[SSHSignatureLog] = LogManager.shared.fetchAllSSHUniqueHosts()
                 
                 var userAndHosts = Set<HostsResponse.UserAndHost>()
                 

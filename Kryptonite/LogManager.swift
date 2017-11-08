@@ -134,6 +134,42 @@ class LogManager {
         return fetchObjects(for: fetchRequest)
     }
     
+    func fetchAllSSHUniqueHosts() -> [SSHSignatureLog] {
+        defer { mutex.unlock() }
+        mutex.lock()
+
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult>  = NSFetchRequest(entityName: SSHSignatureLog.entityName)
+
+        fetchRequest.propertiesToFetch = ["displayName"]
+        fetchRequest.resultType = NSFetchRequestResultType.managedObjectIDResultType
+        fetchRequest.returnsDistinctResults = true
+        
+        var logs:[SSHSignatureLog] = []
+
+        self.managedObjectContext.performAndWait {
+            do {
+                let objectIds = try self.managedObjectContext.fetch(fetchRequest) as? [NSManagedObjectID]
+                
+                for objectId in (objectIds ?? []) {
+                    
+                    guard
+                            let object = try? self.managedObjectContext.existingObject(with: objectId),
+                            let log = try? SSHSignatureLog(object: object)
+                    else {
+                            continue
+                    }
+                    
+                    logs.append(log)
+                }
+            } catch let error {
+                log("could not fetch SSH logs: \(error)")
+            }
+        }
+
+        
+        return logs
+    }
+    
     private func fetchObjects<L:LogStatement>(for request:NSFetchRequest<NSFetchRequestResult>) -> [L] {
         defer { mutex.unlock() }
         mutex.lock()
