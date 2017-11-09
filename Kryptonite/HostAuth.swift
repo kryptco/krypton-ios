@@ -9,8 +9,31 @@
 import Foundation
 import JSON
 
+struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
+    var debugDescription:String {
+        return "No hostnames provided"
+    }
+}
+
+struct VerifiedUserAndHostAuth {
+    let hostAuth:VerifiedHostAuth
+    let user:String
+    let uniqueID:String
+    
+    init(hostAuth:VerifiedHostAuth, user:String) {
+        self.hostAuth = hostAuth
+        self.user = user
+        
+        // ensure a unique id by: SHA2(SHA2(hostname)|SHA2(user))
+        let hostnameHash = Data(bytes: [UInt8](hostAuth.hostname.utf8)).SHA256
+        let userHash = Data(bytes: [UInt8](user.utf8)).SHA256
+        self.uniqueID = (hostnameHash + userHash).SHA256.toBase64(true)
+    }
+}
+
 struct VerifiedHostAuth:JsonWritable {
     private let hostAuth:HostAuth
+    let hostname:String
     
     var hostKey:String {
         return hostAuth.hostKey
@@ -18,10 +41,6 @@ struct VerifiedHostAuth:JsonWritable {
     
     var signature:String {
         return hostAuth.signature
-    }
-    
-    var hostName:String? {
-        return hostAuth.hostNames.first
     }
     
     var object:Object {
@@ -35,6 +54,11 @@ struct VerifiedHostAuth:JsonWritable {
             throw InvalidSignature()
         }
         
+        guard let hostname = hostAuth.hostNames.first else {
+            throw HostAuthHasNoHostnames()
+        }
+        
+        self.hostname = hostname
         self.hostAuth = hostAuth
     }
 }

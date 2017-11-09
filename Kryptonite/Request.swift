@@ -167,8 +167,16 @@ struct SignRequest:Jsonable {
     var digestType:DigestType
     
     
+    var verifiedUserAndHostAuth:VerifiedUserAndHostAuth? {
+        guard let verifiedHost = verifiedHostAuth else {
+            return nil
+        }
+        
+        return VerifiedUserAndHostAuth(hostAuth: verifiedHost, user: user)
+    }
+    
     var isUnknownHost:Bool {
-        return verifiedHostAuth?.hostName == nil
+        return verifiedHostAuth == nil
     }
 
     init(data: Data, fingerprint: String, hostAuth: HostAuth? = nil) throws {
@@ -244,7 +252,7 @@ struct SignRequest:Jsonable {
     }
     
     var display:String {
-        let host = verifiedHostAuth?.hostName ?? "unknown host"
+        let host = verifiedHostAuth?.hostname ?? "unknown host"
 
         return "\(user) @ \(host)"
     }

@@ -13,7 +13,15 @@ extension Request {
         switch self.body {
         case .me, .unpair, .noOp:
             return .none
-        case .git, .ssh:
+            
+        case .ssh(let signRequest):
+            if let _ = signRequest.verifiedHostAuth {
+                return .authorizeWithTemporalThis
+            }
+            
+            return .authorizeWithTemporal
+            
+        case .git:
             return .authorizeWithTemporal
         case .hosts:
             return .authorize

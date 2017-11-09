@@ -57,7 +57,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: Registering Notifications
     func registerPushNotifications() {
         DispatchQueue.main.async {
-            UNUserNotificationCenter.current().setNotificationCategories([Policy.authorizeCategory, Policy.authorizeTemporalCategory])
+            UNUserNotificationCenter.current().setNotificationCategories([Policy.authorizeCategory,
+                                                                          Policy.authorizeTemporalCategory,
+                                                                          Policy.authorizeTemporalThisCategory])
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (success, error) in
                 if let err = error {
                     log("got error requesting push notifications: \(err)", .error)

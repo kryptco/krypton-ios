@@ -107,7 +107,7 @@ extension AppDelegate {
         // remove pending if exists
         Policy.removePendingAuthorization(session: session, request: request)
         
-        guard let actionIdentifier = Policy.ActionIdentifier(rawValue: identifier)
+        guard let action = Policy.Action(rawValue: identifier)
             else {
                 log("nil identifier", .error)
                 Silo.shared.removePending(request: request, for: session)
@@ -116,21 +116,29 @@ extension AppDelegate {
                 return
         }
         
-        let allowed = (identifier == Policy.approveAction.identifier || identifier == Policy.approveTemporaryAction.identifier)
+        let allowed = action.isAllowed
         
-        switch actionIdentifier {
-        case Policy.ActionIdentifier.approve:
+        switch action {
+        case .approve:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "once")
+        
+        case .temporaryThis:
+            guard case .ssh(let signRequest) = request.body, let userAndHost = signRequest.verifiedUserAndHostAuth else {
+                // error can't temporarily approve this host
+                log("cannot temporarily approve request: \(request)", .error)
+                break
+            }
+            Policy.allow(userAndHost: userAndHost, on: session, for: Policy.Interval.threeHours)
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve this", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
-        case Policy.ActionIdentifier.temporary:
+        case .temporaryAll:
             Policy.allow(session: session, for: Policy.Interval.threeHours)
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
-        case Policy.ActionIdentifier.reject:
+        case .reject:
             Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background reject")
-            
         }
         
         

@@ -29,6 +29,7 @@
 				<string>auto_authorized_identifier</string>
 				<string>authorize_identifier</string>
 				<string>authorize_temporal_identifier</string>
+				<string>authorize_temporal_this_identifier</string>
 			</array>
 			<key>UNNotificationExtensionDefaultContentHidden</key>
 			<true/>

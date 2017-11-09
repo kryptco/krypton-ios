@@ -30,12 +30,17 @@ class Policy {
         func key(id:String) -> String {
             return "\(self.rawValue)_\(id)"
         }
+        
+        func key(id:String, userAndHost:VerifiedUserAndHostAuth) -> String {
+            return "\(key(id: id))_\(userAndHost.uniqueID)"
+        }
 
     }
     
     enum NotificationCategory:String {
         case autoAuthorized = "auto_authorized_identifier"
         case authorizeWithTemporal = "authorize_temporal_identifier"
+        case authorizeWithTemporalThis = "authorize_temporal_this_identifier"
         case authorize = "authorize_identifier"
         case none = ""
         
@@ -46,10 +51,25 @@ class Policy {
     
     // Category Identifiers
     
-    enum ActionIdentifier:String {
+    enum Action:String {
         case approve = "approve_identifier"
-        case temporary = "approve_temp_identifier"
+        case temporaryThis = "approve_temp_this_identifier"
+        case temporaryAll = "approve_temp_all_identifier"
         case reject = "reject_identifier"
+        
+        var identifier:String {
+            return self.rawValue
+        }
+        
+        // helper to know if action was allowed or rejected
+        var isAllowed:Bool {
+            switch self {
+            case .approve, .temporaryThis, .temporaryAll:
+                return true
+            case .reject:
+                return false
+            }
+        }
     }
     
     
@@ -78,6 +98,15 @@ class Policy {
         
         Policy.sendAllowedPendingIfNeeded()
     }
+    
+    static func allow(userAndHost:VerifiedUserAndHostAuth, on session:Session, for time:Interval) {
+        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost))
+        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
+        UserDefaults.group?.synchronize()
+        
+        Policy.sendAllowedPendingIfNeeded()
+    }
+
 
     
     //MARK: Getters
@@ -102,6 +131,27 @@ class Policy {
         return needsApproval
     }
     
+    class func needsUserApproval(for userAndHost:VerifiedUserAndHostAuth, on session:Session) -> Bool {
+        if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost)) as? Date
+        {
+            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost)) ?? 0
+            
+            return -lastApproved.timeIntervalSinceNow > approvalInterval
+            
+        }
+        
+        guard UserDefaults.group?.value(forKey: StorageKey.userApproval.key(id: session.id, userAndHost: userAndHost)) != nil else {
+            return true
+        }
+        
+        guard let needsApproval = UserDefaults.group?.bool(forKey: StorageKey.userApproval.key(id: session.id, userAndHost: userAndHost))
+            else {
+                return true
+        }
+        
+        return needsApproval
+    }
+    
     class func needsUnknownHostApproval(for session:Session) -> Bool {
         guard let needsApproval = UserDefaults.group?.object(forKey: StorageKey.manualUnknownHostApprovals.key(id: session.id)) as? Bool else {
             return true
@@ -120,38 +170,46 @@ class Policy {
     }
     
     /**
-        Session + SignRequest need approval if any of:
-            - Session requires approval
-            - SignRequest's hostName does not have a KnownHost entry
-            - SignRequest's hostName is unknown (and user has not turned off this policy check)
+        Evaluate Policies on a session and request for auto-allowing the request or
+        requiring user approval
      */
     class func needsUserApproval(for session:Session, and requestBody:RequestBody) -> Bool {
         
-        // MUST CHECK policy for session
-        if Policy.needsUserApproval(for: session) {
-            return true
-        }
-        
         switch requestBody {
         case .ssh(let sshSign):
-            // check if verifedHostAuth's 'hostName' does NOT have a KnownHost attached to it
-            if  let hostName = sshSign.verifiedHostAuth?.hostName,
-                KnownHostManager.shared.entryExists(for: hostName) == false
+            
+            // SignRequest's hostName does not have a KnownHost entry
+            if  let host = sshSign.verifiedHostAuth,
+                KnownHostManager.shared.entryExists(for: host.hostname) == false
             {
                 return true
             }
             
-            // check if unknown host and check policy for unknown hosts
+            // Unknown host
             if  Policy.needsUnknownHostApproval(for: session) && sshSign.isUnknownHost
             {
                 return true
             }
             
-        case .git, .me, .noOp, .unpair, .hosts:
-            break
-        }
+            // if this host is allowed temporarily
+            if  let userAndHost = sshSign.verifiedUserAndHostAuth,
+                Policy.needsUserApproval(for: userAndHost, on: session) == false
+            {
+                return false
+            }
+ 
+            // otherwise, only if all session operations are allowed temporarily
+            return Policy.needsUserApproval(for: session)
         
-        return false
+        case .git:
+            return Policy.needsUserApproval(for: session)
+        
+        case .hosts:
+            return true // always need permission
+            
+        case .me, .noOp, .unpair:
+            return false // never need permission
+        }
     }
     
 

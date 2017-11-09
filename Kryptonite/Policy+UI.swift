@@ -15,15 +15,30 @@ extension Policy {
     static var authorizeTemporalCategory:UNNotificationCategory = {
         if #available(iOS 11.0, *) {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporal.identifier,
-                                   actions: [Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction],
+                                   actions: [Policy.approveAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
                                    intentIdentifiers: [],
                                    hiddenPreviewsBodyPlaceholder: "New Kryptonite request",
                                    options: .customDismissAction)
         } else {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporal.identifier,
-                                   actions: [Policy.approveAction, Policy.approveTemporaryAction, Policy.rejectAction],
+                                   actions: [Policy.approveAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
                                    intentIdentifiers: [],
                                    options: .customDismissAction)
+        }
+    }()
+    
+    static var authorizeTemporalThisCategory:UNNotificationCategory = {
+        if #available(iOS 11.0, *) {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporalThis.identifier,
+                                          actions: [Policy.approveAction, Policy.approveTemporaryThisAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
+                                          intentIdentifiers: [],
+                                          hiddenPreviewsBodyPlaceholder: "New Kryptonite request",
+                                          options: .customDismissAction)
+        } else {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporalThis.identifier,
+                                          actions: [Policy.approveAction, Policy.approveTemporaryThisAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
+                                          intentIdentifiers: [],
+                                          options: .customDismissAction)
         }
     }()
     
@@ -44,20 +59,26 @@ extension Policy {
     
     
     static var approveAction:UNNotificationAction = {
-        return UNNotificationAction(identifier: ActionIdentifier.approve.rawValue,
+        return UNNotificationAction(identifier: Action.approve.identifier,
                                     title: "Allow once",
                                     options: .authenticationRequired)
     }()
     
     
-    static var approveTemporaryAction:UNNotificationAction = {
-        return UNNotificationAction(identifier: ActionIdentifier.temporary.rawValue,
-                                    title: "Allow for 3 hours",
+    static var approveTemporaryThisAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: Action.temporaryThis.identifier,
+                                    title: "Allow this host 3 hours",
+                                    options: .authenticationRequired)
+    }()
+    
+    static var approveTemporaryAllAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: Action.temporaryAll.identifier,
+                                    title: "Allow all for 3 hours",
                                     options: .authenticationRequired)
     }()
     
     static var rejectAction:UNNotificationAction = {
-        return UNNotificationAction(identifier: ActionIdentifier.reject.rawValue,
+        return UNNotificationAction(identifier: Action.reject.identifier,
                                     title: "Reject",
                                     options: .destructive)
     }()

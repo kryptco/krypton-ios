@@ -30,12 +30,6 @@ struct HostMistmatchError:Error, CustomDebugStringConvertible {
     }
 }
 
-struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
-    var debugDescription:String {
-        return "No hostnames provided"
-    }
-}
-
 
 class KnownHostManager {
     
@@ -128,18 +122,12 @@ class KnownHostManager {
     /**
      
         Match verifiedHostAuth (hostName, publicKey to a known host:
-            - if hostName not supplied: throw HostAuthHasNoHostnames
             - if hostName found and publicKey does match: do nothing
             - if hostName found and publicKey does NOT match: throw HostMistmatchError
             - if hostName does not exists: ping hostName <- publicKey and save it
      */
     func checkOrAdd(verifiedHostAuth:VerifiedHostAuth) throws {
-        
-        guard let hostName = verifiedHostAuth.hostName
-        else {
-            throw HostAuthHasNoHostnames()
-        }
-        
+        let hostName = verifiedHostAuth.hostname
         let hostPublicKey = verifiedHostAuth.hostKey
         
         guard let existingKnownHost = try self.fetch(for: hostName)
