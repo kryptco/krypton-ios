@@ -122,6 +122,20 @@
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F22A11DC3C3CA0094076E /* Onboarding.swift */; };
 		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
+		FA443DAC1FB6245B00EB452A /* SSHRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */; };
+		FA443DAE1FB624F400EB452A /* GitCommitRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */; };
+		FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */; };
+		FA443DB21FB6267000EB452A /* ApproveOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DB11FB6267000EB452A /* ApproveOptions.swift */; };
+		FA443DBB1FB6441200EB452A /* ApproveDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DBA1FB6441200EB452A /* ApproveDetailController.swift */; };
+		FA443DBD1FB6458600EB452A /* ErrorRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */; };
+		FA443DBE1FB6523700EB452A /* ApproveDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DBA1FB6441200EB452A /* ApproveDetailController.swift */; };
+		FA443DBF1FB6523700EB452A /* SSHRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */; };
+		FA443DC01FB6523700EB452A /* GitCommitRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */; };
+		FA443DC11FB6523700EB452A /* GitTagRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */; };
+		FA443DC21FB6523700EB452A /* ErrorRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */; };
+		FA443DC31FB652DD00EB452A /* Approval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE495991DBD98C400A97708 /* Approval.storyboard */; };
+		FA443DCC1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */; };
+		FA443DCD1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA49F7871D9B6B3300372556 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA49F7861D9B6B3300372556 /* NotificationCenter.framework */; };
@@ -587,6 +601,13 @@
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA2F22A11DC3C3CA0094076E /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
+		FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHRequestController.swift; sourceTree = "<group>"; };
+		FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitCommitRequestController.swift; sourceTree = "<group>"; };
+		FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitTagRequestController.swift; sourceTree = "<group>"; };
+		FA443DB11FB6267000EB452A /* ApproveOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveOptions.swift; sourceTree = "<group>"; };
+		FA443DBA1FB6441200EB452A /* ApproveDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveDetailController.swift; sourceTree = "<group>"; };
+		FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorRequestController.swift; sourceTree = "<group>"; };
+		FA443DCB1FB65DEE00EB452A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ApprovalDetail.storyboard; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA49F7851D9B6B3200372556 /* LastCommand.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastCommand.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -900,15 +921,29 @@
 				FA309F411DA42C69006D8D81 /* HelpController.swift */,
 				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
 				FAAE818E1E576DB8002A9AE6 /* Authorize.swift */,
-				FA6491111ED38314008C04A7 /* AutoApproveController.swift */,
-				FAE495701DBD741800A97708 /* ApproveController.swift */,
 				FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16824F1D774C2700A7ED53 /* Pair */,
 				FA61EF501D85DB19009FD899 /* Devices */,
+				FA443D9B1FB6240F00EB452A /* ApproveControllers */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FA443D9B1FB6240F00EB452A /* ApproveControllers */ = {
+			isa = PBXGroup;
+			children = (
+				FA443DB11FB6267000EB452A /* ApproveOptions.swift */,
+				FA6491111ED38314008C04A7 /* AutoApproveController.swift */,
+				FAE495701DBD741800A97708 /* ApproveController.swift */,
+				FA443DBA1FB6441200EB452A /* ApproveDetailController.swift */,
+				FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */,
+				FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */,
+				FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */,
+				FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */,
+			);
+			name = ApproveControllers;
 			sourceTree = "<group>";
 		};
 		FA49F7881D9B6B3300372556 /* LastCommand */ = {
@@ -1008,6 +1043,7 @@
 				FA29779E1D7746CC003EB1F7 /* Resources.swift */,
 				FA81413D1D70B0F4004FE58C /* Main.storyboard */,
 				FAE495991DBD98C400A97708 /* Approval.storyboard */,
+				FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */,
 				FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */,
 				FA8141401D70B0F4004FE58C /* Assets.xcassets */,
 			);
@@ -1604,6 +1640,7 @@
 				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
 				FA03C59A1E760CD50019649E /* COMMIT in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
+				FA443DCC1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */,
 				FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
 				FA632E441DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */,
@@ -1633,6 +1670,8 @@
 				FAFF1E901ED6816B0063C44C /* MainInterface.storyboard in Resources */,
 				FA8B540D1ED73C7E00891161 /* SourceCodePro-Regular.ttf in Resources */,
 				FA8B540C1ED73C7E00891161 /* SourceCodePro-Bold.ttf in Resources */,
+				FA443DC31FB652DD00EB452A /* Approval.storyboard in Resources */,
+				FA443DCD1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1883,9 +1922,11 @@
 			files = (
 				FAE4958A1DBD89F100A97708 /* M13CheckboxController.swift in Sources */,
 				FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */,
+				FA443DAE1FB624F400EB452A /* GitCommitRequestController.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,
 				8D05CB1F1ED3DCC000CCCC38 /* TagInfo.swift in Sources */,
+				FA443DBD1FB6458600EB452A /* ErrorRequestController.swift in Sources */,
 				FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FA17B96E1FB3638100975FB0 /* Request+Policy.swift in Sources */,
@@ -1935,6 +1976,8 @@
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				FAE495941DBD89F100A97708 /* M13CheckboxAddRemovePathGenerator.swift in Sources */,
+				FA443DAC1FB6245B00EB452A /* SSHRequestController.swift in Sources */,
+				FA443DB21FB6267000EB452A /* ApproveOptions.swift in Sources */,
 				FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */,
 				FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */,
 				8D05CB351ED3E25E00CCCC38 /* GitInfo.swift in Sources */,
@@ -1976,6 +2019,7 @@
 				FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
+				FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */,
 				FA1682A31EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
 				FAE495891DBD89F100A97708 /* M13CheckboxAnimationGenerator.swift in Sources */,
@@ -2004,6 +2048,7 @@
 				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,
 				FAA6E1F11D79E3ED007D1B3A /* AWS.swift in Sources */,
+				FA443DBB1FB6441200EB452A /* ApproveDetailController.swift in Sources */,
 				FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2133,8 +2178,10 @@
 				FA17B96C1FB3636700975FB0 /* Request+Notify.swift in Sources */,
 				FA8B54381ED7755000891161 /* Log.swift in Sources */,
 				FA8B543F1ED7887800891161 /* Resources.swift in Sources */,
+				FA443DC01FB6523700EB452A /* GitCommitRequestController.swift in Sources */,
 				FA8B542C1ED774C100891161 /* Keypair+PGPFormat.swift in Sources */,
 				FA8B54141ED773EE00891161 /* Pairing.swift in Sources */,
+				FA443DBE1FB6523700EB452A /* ApproveDetailController.swift in Sources */,
 				FA8B543E1ED7794D00891161 /* Mutex.swift in Sources */,
 				FA8B54161ED773EE00891161 /* KnownHost.swift in Sources */,
 				FA8B540F1ED773EE00891161 /* GitInfo.swift in Sources */,
@@ -2150,11 +2197,14 @@
 				FA8B540E1ED773EE00891161 /* Request.swift in Sources */,
 				FA8B542A1ED774C100891161 /* Ed25519.swift in Sources */,
 				FA8B54131ED773EE00891161 /* Response.swift in Sources */,
+				FA443DC21FB6523700EB452A /* ErrorRequestController.swift in Sources */,
 				FA8B54351ED774F700891161 /* String+User.swift in Sources */,
+				FA443DC11FB6523700EB452A /* GitTagRequestController.swift in Sources */,
 				FA8B54281ED774C100891161 /* KeyPair.swift in Sources */,
 				FA8B54151ED773EE00891161 /* Session.swift in Sources */,
 				FA8B54361ED7750B00891161 /* Properties.swift in Sources */,
 				FA8B542F1ED774C100891161 /* CryptoError.swift in Sources */,
+				FA443DBF1FB6523700EB452A /* SSHRequestController.swift in Sources */,
 				FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */,
 				FA8B54171ED773EE00891161 /* Version.swift in Sources */,
 				FA2949E41EDE379900A5C70B /* UserIDList.swift in Sources */,
@@ -2189,6 +2239,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA443DCB1FB65DEE00EB452A /* Base */,
+			);
+			name = ApprovalDetail.storyboard;
+			sourceTree = "<group>";
+		};
 		FA49F78B1D9B6B3300372556 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

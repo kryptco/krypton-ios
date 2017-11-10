@@ -9,25 +9,26 @@
 import UIKit
 import AVFoundation
 
+
+
+
 class ApproveController:UIViewController {
     
     @IBOutlet weak var contentView:UIView!
-    
-    @IBOutlet weak var resultView:UIView!
-    @IBOutlet weak var resultViewHeight:NSLayoutConstraint!
-    @IBOutlet weak var resultLabel:UILabel!
-
-    
     @IBOutlet weak var deviceLabel:UILabel!
-    
+    @IBOutlet weak var requestView:UIView!
+
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var arcView:UIView!
 
     @IBOutlet weak var swipeDownRejectGesture:UIGestureRecognizer!
+    
+
+    @IBOutlet weak var resultView:UIView!
+    @IBOutlet weak var resultViewHeight:NSLayoutConstraint!
+    @IBOutlet weak var resultLabel:UILabel!
 
     var rejectColor = UIColor.reject
-    
-    var heightCover:CGFloat = 215.0
     
     var request:Request?
     var session:Session?
@@ -38,8 +39,21 @@ class ApproveController:UIViewController {
         return request?.body.analyticsCategory ?? "unknown-request"
     }
     
+    var detailController:ApproveDetailController?
+
+    // options
+    @IBOutlet weak var optionView:UIView!
+    @IBOutlet weak var optionsHeight:NSLayoutConstraint!
+    var optionsController:ApproveOptionsController?
+    
+    typealias Option = ApproveOptionsController.Option
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        resultLabel.alpha = 0
+        resultViewHeight.constant = 0
         
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -47,15 +61,13 @@ class ApproveController:UIViewController {
         contentView.layer.shadowRadius = 3
         contentView.layer.masksToBounds = false
         
-        checkBox.animationDuration = 1.0
+        optionView.layer.cornerRadius = 16
         
-        resultViewHeight.constant = 0
-        resultLabel.alpha = 0
+        checkBox.animationDuration = 1.0
         
         if let session = session {
             deviceLabel.text = session.pairing.displayName.uppercased()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +75,13 @@ class ApproveController:UIViewController {
         UIView.animate(withDuration: 1.3) {
             self.view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         }
+        
+        self.detailController?.set(request: self.request)
 
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,47 +92,145 @@ class ApproveController:UIViewController {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
-    
-    //MARK: Response
-    @IBAction func approveOnce() {
+    var options:[Option] {
+        guard let requestBody = request?.body else {
+            return [.reject]
+        }
         
-        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        var responseOptions:[Option] = []
+        
+        switch requestBody {
+        case .ssh(let signRequest):
+            if let _ = signRequest.verifiedUserAndHostAuth {
+                responseOptions = [.allowOnce, .allowThis, .allowAll]
+            } else {
+                responseOptions = [.allowOnce, .allowAll]
+            }
+        case .git:
+            responseOptions = [.allowOnce, .allowAll]
+        
+        case .hosts, .me, .unpair, .noOp:
+            break
+        }
+        
+        return responseOptions + [.reject]
+    }
 
-        guard let request = request, let session = session, isEnabled else {
-            log("no valid request or session", .error)
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let optionsController = segue.destination as? ApproveOptionsController {
+            optionsController.options = self.options
+            optionsController.onSelect = onSelect
+            optionsController.doAdjustHeight = adjustSize
+            self.optionsController = optionsController
+            optionsController.tableView.reloadData()
+        }
+        else if let detail = segue.destination as? ApproveDetailController
+        {
+            self.detailController = detail
+            detail.view.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
+    func adjustSize(to height:CGFloat) {
+        optionsHeight.constant = height
+        self.view.layoutIfNeeded()
+    }
+    
+    // MARK: Option Selection
+    
+    func onSelect(option:Option) {
+        guard isEnabled else {
             return
         }
         
         isEnabled = false
+
         
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        
+        guard let request = request, let session = session else {
+            log("no valid request or session", .error)
+            self.dismissResponseFailed(errorMessage: "Invalid request or session")
+            return
+        }
+
+    
+        // set policy + post analytics
+        switch option {
+        case .allow, .allowOnce:
+            let success = approve(option: option, request: request, session: session)
+            
+            guard success else {
+                isEnabled = true
+                return
+            }
+
+            Analytics.postEvent(category: category, action: "foreground approve", label: "once")
+            
+        case .allowThis:
+            let success = approve(option: option, request: request, session: session)
+            
+            guard success else {
+                isEnabled = true
+                return
+            }
+
+            Analytics.postEvent(category: category, action: "foreground approve", label: "host-and-time", value: UInt(Policy.Interval.threeHours.rawValue))
+
+            if case .ssh(let signRequest) = request.body, let userAndHost = signRequest.verifiedUserAndHostAuth {
+                Policy.allow(userAndHost: userAndHost, on: session, for: Policy.Interval.threeHours)
+            }
+
+
+        case .allowAll:
+            let success = approve(option: option, request: request, session: session)
+            
+            guard success else {
+                isEnabled = true
+                return
+            }
+
+            Policy.allow(session: session, for: Policy.Interval.threeHours)
+            
+            Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
+
+
+        case .reject:
+            self.dismissReject()
+            Analytics.postEvent(category: category, action: "foreground reject")
+        }
+    }
+    
+    //MARK: Response
+    func approve(option:Option, request:Request, session:Session) -> Bool {
         do {
             let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: true)
             try TransportControl.shared.send(resp, for: session)
             
-            if case .ssh(let signResp) = resp.body, let errorMessage = signResp.error {
-                isEnabled = true
+            if let errorMessage = resp.body.error {
                 self.dismissResponseFailed(errorMessage: errorMessage)
-                return
+                return false
             }
             
         } catch (let e) {
-            isEnabled = true
             log("send error \(e)", .error)
             self.showWarning(title: "Error", body: "Could not approve request. \(e)")
-            return
+            return false
         }
         
         swipeDownRejectGesture.isEnabled = false
 
-        self.resultLabel.text = "Allow once".uppercased()
+        self.resultLabel.text = option.text.uppercased()
         
         UIView.animate(withDuration: 0.3, animations: {
             
             self.resultLabel.alpha = 1.0
             self.arcView.alpha = 0
-            self.resultViewHeight.constant = self.heightCover
+            self.resultViewHeight.constant = self.optionsHeight.constant + 2
             self.view.layoutIfNeeded()
-            
+            self.optionsController?.update()
+    
             
         }) { (_) in
             
@@ -123,61 +239,8 @@ class ApproveController:UIViewController {
                     self.animateDismiss(allowed: true)
                 }
         }
-
-        Analytics.postEvent(category: category, action: "foreground approve", label: "once")
-
-    }
-    
-    @IBAction func approveThreeHours() {
         
-        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        
-        guard let request = request, let session = session, isEnabled else {
-            log("no valid request or session", .error)
-            return
-        }
-        
-        isEnabled = false
-        
-        do {
-            Policy.allow(session: session, for: Policy.Interval.threeHours)
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: true)
-            try TransportControl.shared.send(resp, for: session)
-            
-            if case .ssh(let signResp) = resp.body, let errorMessage = signResp.error {
-                isEnabled = true
-                self.dismissResponseFailed(errorMessage: errorMessage)
-                return
-            }
-            
-        } catch (let e) {
-            isEnabled = true
-            log("send error \(e)", .error)
-            self.showWarning(title: "Error", body: "Could not approve request. \(e)")
-            return
-        }
-        
-        swipeDownRejectGesture.isEnabled = false
-
-        self.resultLabel.text = "Allow for 3 hours".uppercased()
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            
-            self.resultLabel.alpha = 1.0
-            self.arcView.alpha = 0
-            self.resultViewHeight.constant = self.heightCover
-            self.view.layoutIfNeeded()
-            
-            
-        }) { (_) in
-            dispatchMain{ self.checkBox.toggleCheckState(true) }
-            dispatchAfter(delay: 2.0) {
-                self.animateDismiss(allowed: true)
-            }
-        }
-
-        Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
-
+        return true
     }
     
     @IBAction func dismissReject() {
@@ -208,8 +271,9 @@ class ApproveController:UIViewController {
         UIView.animate(withDuration: 0.3, animations: {
             self.resultLabel.alpha = 1.0
             self.arcView.alpha = 0
-            self.resultViewHeight.constant = self.heightCover
+            self.resultViewHeight.constant = self.optionsHeight.constant + 2
             self.view.layoutIfNeeded()
+
             
         }) { (_) in
             self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
@@ -217,8 +281,6 @@ class ApproveController:UIViewController {
                 self.animateDismiss()
             }
         }
-        
-        Analytics.postEvent(category: category, action: "foreground reject")
         
     }
     
@@ -241,7 +303,7 @@ class ApproveController:UIViewController {
         UIView.animate(withDuration: 0.3, animations: {
             self.resultLabel.alpha = 1.0
             self.arcView.alpha = 0
-            self.resultViewHeight.constant = self.heightCover
+            self.resultViewHeight.constant = self.optionsHeight.constant + 2
             self.view.layoutIfNeeded()
             
         }) { (_) in
@@ -267,100 +329,7 @@ class ApproveController:UIViewController {
     }
 }
 
-class SSHApproveController:ApproveController {
-    
-    @IBOutlet weak var commandLabel:UILabel!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if let type = request?.body, case .ssh(let sshSign) = type {
-            commandLabel.text = sshSign.display
-        } else {
-            commandLabel.text = "Unknown"
-        }
-    }
 
-}
-
-class CommitApproveController:ApproveController {
-    
-    @IBOutlet weak var messageLabel:UILabel!
-    @IBOutlet weak var authorLabel:UILabel!
-    @IBOutlet weak var authorDateLabel:UILabel!
-    
-    @IBOutlet weak var committerLabel:UILabel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard   let body = request?.body,
-                case .git(let gitSign) = body,
-                case .commit(let commit) = gitSign.git
-        else {
-            clear()
-            return
-        }
-        
-        messageLabel.text = commit.messageString
-        let (author, date) = commit.author.userIdAndDateString
-        let (committer, committerDate) = commit.committer.userIdAndDateString
-        
-        if author == committer {
-            authorLabel.text = author
-            authorDateLabel.text = date
-            committerLabel.text = ""
-        } else {
-            authorLabel.text = "A: " + author
-            committerLabel.text = "C: " + committer
-            authorDateLabel.text = committerDate
-        }
-    }
-
-    func clear() {
-        messageLabel.text = "--"
-        authorLabel.text = "--"
-        authorDateLabel.text = "--"
-        committerLabel.text = "--"
-    }
-
-}
-
-class TagApproveController:ApproveController {
-    
-    @IBOutlet weak var messageLabel:UILabel!
-    @IBOutlet weak var objectHashLabel:UILabel!
-    @IBOutlet weak var tagLabel:UILabel!
-    @IBOutlet weak var taggerLabel:UILabel!
-    @IBOutlet weak var taggerDate:UILabel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let body = request?.body,
-            case .git(let gitSign) = body,
-            case .tag(let tag) = gitSign.git
-        else {
-            clear()
-            return
-        }
-        
-        messageLabel.text = tag.messageString
-        objectHashLabel.text = tag.objectShortHash
-        tagLabel.text = tag.tag
-        let (tagger, date) = tag.tagger.userIdAndDateString
-        taggerLabel.text = tagger
-        taggerDate.text = date
-    }
-    
-    func clear() {
-        messageLabel.text = "--"
-        objectHashLabel.text = "--"
-        tagLabel.text = "--"
-        taggerLabel.text = "--"
-        taggerDate.text = "--"
-    }
-    
-}
 
 

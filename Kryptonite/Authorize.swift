@@ -13,26 +13,12 @@ extension Request {
     func approveController(for session:Session) -> UIViewController? {
         
         switch self.body {
-        case .ssh:
-            let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "SSHApproveController") as? SSHApproveController
+        case .ssh, .git:
+            let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController") as? ApproveController
             controller?.session = session
             controller?.request = self
             return controller
 
-        case .git(let gitSign):
-            switch gitSign.git {
-            case .commit:
-                let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "CommitApproveController") as? CommitApproveController
-                controller?.session = session
-                controller?.request = self
-                return controller
-
-            case .tag:
-                let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "TagApproveController") as? TagApproveController
-                controller?.session = session
-                controller?.request = self
-                return controller
-            }
         case .hosts:
             let (subtitle, body) = notificationDetails()
             let controller = UIAlertController(title: "Request: \(subtitle)", message: body, preferredStyle: UIAlertControllerStyle.actionSheet)
