@@ -24,6 +24,9 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     @IBOutlet var sshLogButton:UIButton!
     @IBOutlet var gitLogButton:UIButton!
 
+    @IBOutlet var temporarilyApprovedHostsWarningLabel:UILabel!
+    @IBOutlet var viewTemporarilyApprovedHosts:UIButton!
+
     enum ApprovalControl:Int {
         case on = 0
         case timed = 1
@@ -63,6 +66,20 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         }
 
         
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SessionDetailController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
+
+        headerView.layer.shadowColor = UIColor.black.cgColor
+        headerView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        headerView.layer.shadowOpacity = 0.175
+        headerView.layer.shadowRadius = 3
+        headerView.layer.masksToBounds = false
+        
         if let session = session {
             deviceNameField.text = session.pairing.displayName.uppercased()
             unknownHostSwitch.isOn = Policy.needsUnknownHostApproval(for: session)
@@ -80,22 +97,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
                 
                 showLogs(for: logType)
             }
-
-        
+            
+            
             updateLogs()
         }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(SessionDetailController.newLogLine), name: NSNotification.Name(rawValue: "new_log"), object: nil)
-
-        headerView.layer.shadowColor = UIColor.black.cgColor
-        headerView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        headerView.layer.shadowOpacity = 0.175
-        headerView.layer.shadowRadius = 3
-        headerView.layer.masksToBounds = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,6 +111,13 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    
+    // MARK: View Temporary Allowed detail
+    
+    @IBAction func viewTemporarilyApprovedTapped() {
+        self.performSegue(withIdentifier: "showViewTemporaryApproved", sender: nil)
     }
     
     // MARK: Changing Log Type
@@ -240,6 +252,15 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     
     func updateApprovalControl(session:Session) {
         if Policy.needsUserApproval(for: session)  {
+            if Policy.getTemporarilyApprovedUserAndHostsAndExpirations(on: session).isEmpty {
+                approvalSegmentedControl.setTitle("Always ask", forSegmentAt: ApprovalControl.on.rawValue)
+                self.temporarilyApprovedHostsWarningLabel.isHidden = true
+                self.viewTemporarilyApprovedHosts.isHidden = true
+            } else {
+                approvalSegmentedControl.setTitle("Always ask *", forSegmentAt: ApprovalControl.on.rawValue)
+                self.temporarilyApprovedHostsWarningLabel.isHidden = false
+                self.viewTemporarilyApprovedHosts.isHidden = false
+            }
             approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.on.rawValue
         }
         else if let remaining = Policy.approvalTimeRemaining(for: session) {
@@ -374,6 +395,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         {
             logDetailController.tagCommitLogPair = tagCommitPair
         }
+        else if let temporaryHostsController = segue.destination as? TemporarilyApprovedHostsController {
+            temporaryHostsController.session = self.session
+        }
+        
     }
 
 }

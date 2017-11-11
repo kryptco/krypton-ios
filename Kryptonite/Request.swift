@@ -172,7 +172,7 @@ struct SignRequest:Jsonable {
             return nil
         }
         
-        return VerifiedUserAndHostAuth(hostAuth: verifiedHost, user: user)
+        return VerifiedUserAndHostAuth(hostname: verifiedHost.hostname, user: user)
     }
     
     var isUnknownHost:Bool {

@@ -15,20 +15,29 @@ struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
     }
 }
 
-struct VerifiedUserAndHostAuth {
-    let hostAuth:VerifiedHostAuth
+struct VerifiedUserAndHostAuth:Jsonable {
+    let hostname:String
     let user:String
     let uniqueID:String
     
-    init(hostAuth:VerifiedHostAuth, user:String) {
-        self.hostAuth = hostAuth
+    init(hostname:String, user:String) {
+        self.hostname = hostname
         self.user = user
         
         // ensure a unique id by: SHA2(SHA2(hostname)|SHA2(user))
-        let hostnameHash = Data(bytes: [UInt8](hostAuth.hostname.utf8)).SHA256
+        let hostnameHash = Data(bytes: [UInt8](hostname.utf8)).SHA256
         let userHash = Data(bytes: [UInt8](user.utf8)).SHA256
         self.uniqueID = (hostnameHash + userHash).SHA256.toBase64(true)
     }
+    
+    init(json: Object) throws {
+        try self.init(hostname: json ~> "hostname", user: json ~> "user")
+    }
+    
+    var object: Object {
+        return ["hostname": hostname, "user": user]
+    }
+    
 }
 
 struct VerifiedHostAuth:JsonWritable {

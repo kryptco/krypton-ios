@@ -78,6 +78,11 @@ class Policy {
         UserDefaults.group?.set(needsUserApproval, forKey: StorageKey.userApproval.key(id: session.id))
         UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id))
         UserDefaults.group?.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        
+        for (userAndHost, _) in Policy.getTemporarilyApprovedUserAndHostsAndExpirations(on: session) {
+            Policy.removeTemporarilyAllowed(on: session, for: userAndHost)
+        }
+
         UserDefaults.group?.synchronize()
     }
     
@@ -94,6 +99,12 @@ class Policy {
     static func allow(session:Session, for time:Interval) {
         UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
         UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        
+        for (userAndHost, _) in Policy.getTemporarilyApprovedUserAndHostsAndExpirations(on: session) {
+            UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost))
+            UserDefaults.group?.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
+        }
+
         UserDefaults.group?.synchronize()
         
         Policy.sendAllowedPendingIfNeeded()
@@ -104,9 +115,19 @@ class Policy {
         UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
         UserDefaults.group?.synchronize()
         
+        let cache = try? Cache<NSData>(name: "policy_temporarily_approves_user_at_hosts", directory: policyCacheURL)
+        try? cache?.setObject(userAndHost.jsonData() as NSData, forKey: userAndHost.uniqueID, expires: .seconds(time.rawValue))
+        
         Policy.sendAllowedPendingIfNeeded()
     }
+    
+    static func removeTemporarilyAllowed(on session:Session, for userAndHost: VerifiedUserAndHostAuth) {
+        UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost))
+        UserDefaults.group?.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
 
+        let cache = try? Cache<NSData>(name: "policy_temporarily_approves_user_at_hosts", directory: policyCacheURL)
+        cache?.removeObject(forKey: userAndHost.uniqueID)
+    }
 
     
     //MARK: Getters
@@ -151,6 +172,7 @@ class Policy {
         
         return needsApproval
     }
+    
     
     class func needsUnknownHostApproval(for session:Session) -> Bool {
         guard let needsApproval = UserDefaults.group?.object(forKey: StorageKey.manualUnknownHostApprovals.key(id: session.id)) as? Bool else {
@@ -223,6 +245,17 @@ class Policy {
         
         return lastApproved.addingTimeInterval(approvalInterval)
     }
+    
+    class func approvedUntil(for userAndHost:VerifiedUserAndHostAuth, on session:Session) -> Date? {
+        guard
+            let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost)) as? Date ,
+            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
+            else {
+                return nil
+        }
+        
+        return lastApproved.addingTimeInterval(approvalInterval)
+    }
 
     class func approvedUntilUnixSeconds(for session:Session) -> Int? {
         if let time = Policy.approvedUntil(for: session)?.timeIntervalSince1970 {
@@ -230,6 +263,7 @@ class Policy {
         }
         return nil
     }
+    
 
     class func approvalTimeRemaining(for session:Session) -> String? {
         if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date,
@@ -244,6 +278,27 @@ class Policy {
         }
         
         return nil
+    }
+    
+    // MARK: Temporarily Approved Hosts
+    class func getTemporarilyApprovedUserAndHostsAndExpirations(on session:Session) -> [(VerifiedUserAndHostAuth, TimeInterval)] {
+        let cache = try? Cache<NSData>(name: "policy_temporarily_approves_user_at_hosts", directory: policyCacheURL)
+        cache?.removeExpiredObjects()
+        let results:[NSData] = cache?.allObjects() ?? []
+        
+        var temporarilyApproved:[(VerifiedUserAndHostAuth, TimeInterval)] = []
+        
+        for object in results {
+            guard let userAndHost = try? VerifiedUserAndHostAuth(jsonData: object as Data),
+                  let approvedUntil = Policy.approvedUntil(for: userAndHost, on: session)
+            else {
+                continue
+            }
+            
+            temporarilyApproved.append((userAndHost, approvedUntil.timeIntervalSince1970))
+        }
+        
+        return temporarilyApproved
     }
     
     //MARK: Pending Authoirizations

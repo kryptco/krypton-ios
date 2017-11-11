@@ -136,6 +136,7 @@
 		FA443DC31FB652DD00EB452A /* Approval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE495991DBD98C400A97708 /* Approval.storyboard */; };
 		FA443DCC1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */; };
 		FA443DCD1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */; };
+		FA443DD41FB66D7200EB452A /* TemporarilyApprovedHostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DD31FB66D7200EB452A /* TemporarilyApprovedHostsController.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA49F7871D9B6B3300372556 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA49F7861D9B6B3300372556 /* NotificationCenter.framework */; };
@@ -608,6 +609,7 @@
 		FA443DBA1FB6441200EB452A /* ApproveDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveDetailController.swift; sourceTree = "<group>"; };
 		FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorRequestController.swift; sourceTree = "<group>"; };
 		FA443DCB1FB65DEE00EB452A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ApprovalDetail.storyboard; sourceTree = "<group>"; };
+		FA443DD31FB66D7200EB452A /* TemporarilyApprovedHostsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporarilyApprovedHostsController.swift; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA49F7851D9B6B3200372556 /* LastCommand.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastCommand.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -993,6 +995,7 @@
 				FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */,
 				FA61EF481D835EEB009FD899 /* LogCell.swift */,
 				FA2949CA1EDCB77800A5C70B /* LogDetailController.swift */,
+				FA443DD31FB66D7200EB452A /* TemporarilyApprovedHostsController.swift */,
 			);
 			name = Devices;
 			sourceTree = "<group>";
@@ -2020,6 +2023,7 @@
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */,
+				FA443DD41FB66D7200EB452A /* TemporarilyApprovedHostsController.swift in Sources */,
 				FA1682A31EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
 				FAE495891DBD89F100A97708 /* M13CheckboxAnimationGenerator.swift in Sources */,
