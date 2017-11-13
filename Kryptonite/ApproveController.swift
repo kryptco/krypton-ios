@@ -104,7 +104,13 @@ class ApproveController:UIViewController {
             if let _ = signRequest.verifiedUserAndHostAuth {
                 responseOptions = [.allowOnce, .allowThis, .allowAll]
             } else {
-                responseOptions = [.allowOnce, .allowAll]
+                
+                // don't show the allow-all option unless it's enabled
+                if let session = self.session, Policy.SessionSettings(for: session).settings.shouldPermitUnknownHostsAllowed {
+                    responseOptions = [.allowOnce, .allowAll]
+                } else {
+                    responseOptions = [.allow]
+                }
             }
         case .git:
             responseOptions = [.allowOnce, .allowAll]
@@ -154,6 +160,8 @@ class ApproveController:UIViewController {
             self.dismissResponseFailed(errorMessage: "Invalid request or session")
             return
         }
+        
+        let policySession = Policy.SessionSettings(for: session)
 
     
         // set policy + post analytics
@@ -179,7 +187,7 @@ class ApproveController:UIViewController {
             Analytics.postEvent(category: category, action: "foreground approve", label: "host-and-time", value: UInt(Policy.Interval.threeHours.rawValue))
 
             if case .ssh(let signRequest) = request.body, let userAndHost = signRequest.verifiedUserAndHostAuth {
-                Policy.allow(userAndHost: userAndHost, on: session, for: Policy.Interval.threeHours)
+                policySession.allowThis(userAndHost: userAndHost, for: Policy.Interval.threeHours.seconds)
             }
 
 
@@ -190,8 +198,12 @@ class ApproveController:UIViewController {
                 isEnabled = true
                 return
             }
-
-            Policy.allow(session: session, for: Policy.Interval.threeHours)
+            
+            do {
+                try policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
+            } catch {
+                log("error savining policy pref for allow all: \(error)", .error)
+            }
             
             Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
 
@@ -246,12 +258,6 @@ class ApproveController:UIViewController {
     @IBAction func dismissReject() {
         
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-        
-        guard isEnabled else {
-            return
-        }
-        
-        isEnabled = false
         
         do {
             if let request = request, let session = session {

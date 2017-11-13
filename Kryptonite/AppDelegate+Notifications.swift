@@ -118,9 +118,10 @@ extension AppDelegate {
         
         let allowed = action.isAllowed
         
+        let policySession = Policy.SessionSettings(for: session)
+        
         switch action {
         case .approve:
-            Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "once")
         
         case .temporaryThis:
@@ -129,15 +130,19 @@ extension AppDelegate {
                 log("cannot temporarily approve request: \(request)", .error)
                 break
             }
-            Policy.allow(userAndHost: userAndHost, on: session, for: Policy.Interval.threeHours)
+            policySession.allowThis(userAndHost: userAndHost, for: Policy.Interval.threeHours.seconds)
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve this", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
         case .temporaryAll:
-            Policy.allow(session: session, for: Policy.Interval.threeHours)
+            do {
+                try policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
+            } catch {
+                log("error saving allow all policy preference: \(error)", .error)
+            }
+            
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
         case .reject:
-            Policy.set(needsUserApproval: true, for: session) // override setting incase app terminated
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background reject")
         }
         

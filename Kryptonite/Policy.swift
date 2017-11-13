@@ -12,410 +12,313 @@ import AwesomeCache
 
 class Policy {
     
+    /// Interval Options
     enum Interval:TimeInterval {
         //case fifteenSeconds = 15
         case oneHour = 3600
         case threeHours = 10800
+        
+        var seconds:TimeInterval {
+            return self.rawValue
+        }
     }
-
     
-    //MARK: Settings
+    /// The policy cache directory
+    static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("policy_cache")
+    
+    
+    /// Policy Storage Keys
     enum StorageKey:String {
-        case userApproval = "policy_user_approval"
-        case userLastApproved = "policy_user_last_approved"
-        case userApprovalInterval = "policy_user_approval_interval"
-        case manualUnknownHostApprovals = "policy_manual_unknown_host_approvals"
-        case showApprovedNotifications = "policy_show_approved_notifications"
+        case settings = "policy_settings"
+        case temporarilyAllowedHosts = "policy_temporarily_approved_user_at_hosts"
+        
+        func key(for sessionID:String) -> String {
+            return "\(self.rawValue)_\(sessionID)"
+        }
+    }
+    
+    
+    /// A temporarily allowed user@hostname
+    struct TemporarilyAllowedHost:Jsonable {
+        let userAndHost:VerifiedUserAndHostAuth
+        let expires:Date
+        
+        init(userAndHost:VerifiedUserAndHostAuth, expires:Date) {
+            self.userAndHost = userAndHost
+            self.expires = expires
+        }
+        
+        init(json: Object) throws {
+            try self.init(userAndHost: VerifiedUserAndHostAuth(json: json ~> "user_and_host"),
+                          expires: Date(timeIntervalSince1970: json ~> "expires"))
+        }
+        
+        var object: Object {
+            return ["user_and_host": userAndHost.object, "expires": expires.timeIntervalSince1970]
+        }
+    }
+    
+    /// Policy Settings
+    struct Settings:Jsonable {
+        
+        /// Storage key for `allowedUntil` preferences on specific request types
+        typealias AllowedUntilTypeKey = String
 
-        func key(id:String) -> String {
-            return "\(self.rawValue)_\(id)"
+        enum AllowedUntilType:AllowedUntilTypeKey {
+            case ssh = "ssh"
+            case gitCommit = "git_commit"
+            case gitTag = "git_tag"
+            
+            static var all:[AllowedUntilType] { return [.ssh, .gitCommit, .gitTag] }
+            
+            var key:AllowedUntilTypeKey { return self.rawValue }
         }
         
-        func key(id:String, userAndHost:VerifiedUserAndHostAuth) -> String {
-            return "\(key(id: id))_\(userAndHost.uniqueID)"
-        }
-
-    }
-    
-    enum NotificationCategory:String {
-        case autoAuthorized = "auto_authorized_identifier"
-        case authorizeWithTemporal = "authorize_temporal_identifier"
-        case authorizeWithTemporalThis = "authorize_temporal_this_identifier"
-        case authorize = "authorize_identifier"
-        case none = ""
         
-        var identifier:String {
-            return self.rawValue
-        }
-    }
-    
-    // Category Identifiers
-    
-    enum Action:String {
-        case approve = "approve_identifier"
-        case temporaryThis = "approve_temp_this_identifier"
-        case temporaryAll = "approve_temp_all_identifier"
-        case reject = "reject_identifier"
+        // key the request policy to the time remaining
+        var allowedUntil:[AllowedUntilTypeKey:UInt64] = [:]
         
-        var identifier:String {
-            return self.rawValue
-        }
+        // other settings
+        var shouldShowApprovedNotifications:Bool = true
+        var shouldPermitUnknownHostsAllowed:Bool = false
         
-        // helper to know if action was allowed or rejected
-        var isAllowed:Bool {
-            switch self {
-            case .approve, .temporaryThis, .temporaryAll:
-                return true
-            case .reject:
-                return false
-            }
-        }
-    }
-    
-    
-    //MARK: Setters
-    class func set(needsUserApproval:Bool, for session:Session) {
-        UserDefaults.group?.set(needsUserApproval, forKey: StorageKey.userApproval.key(id: session.id))
-        UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id))
-        UserDefaults.group?.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        // dangerous setting: never ask
+        var shouldNeverAsk:Bool = false
         
-        for (userAndHost, _) in Policy.getTemporarilyApprovedUserAndHostsAndExpirations(on: session) {
-            Policy.removeTemporarilyAllowed(on: session, for: userAndHost)
-        }
-
-        UserDefaults.group?.synchronize()
-    }
-    
-    class func set(manualUnknownHostApprovals:Bool, for session:Session) {
-        UserDefaults.group?.set(manualUnknownHostApprovals, forKey: StorageKey.manualUnknownHostApprovals.key(id: session.id))
-        UserDefaults.group?.synchronize()
-    }
-    
-    class func set(shouldShowApprovedNotifications:Bool, for session:Session) {
-        UserDefaults.group?.set(shouldShowApprovedNotifications, forKey: StorageKey.showApprovedNotifications.key(id: session.id))
-        UserDefaults.group?.synchronize()
-    }
-    
-    static func allow(session:Session, for time:Interval) {
-        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id))
-        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id))
+        init() {}
         
-        for (userAndHost, _) in Policy.getTemporarilyApprovedUserAndHostsAndExpirations(on: session) {
-            UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost))
-            UserDefaults.group?.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
-        }
-
-        UserDefaults.group?.synchronize()
-        
-        Policy.sendAllowedPendingIfNeeded()
-    }
-    
-    static func allow(userAndHost:VerifiedUserAndHostAuth, on session:Session, for time:Interval) {
-        UserDefaults.group?.set(Date(), forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost))
-        UserDefaults.group?.set(time.rawValue, forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
-        UserDefaults.group?.synchronize()
-        
-        let cache = try? Cache<NSData>(name: "policy_temporarily_approves_user_at_hosts", directory: policyCacheURL)
-        try? cache?.setObject(userAndHost.jsonData() as NSData, forKey: userAndHost.uniqueID, expires: .seconds(time.rawValue))
-        
-        Policy.sendAllowedPendingIfNeeded()
-    }
-    
-    static func removeTemporarilyAllowed(on session:Session, for userAndHost: VerifiedUserAndHostAuth) {
-        UserDefaults.group?.removeObject(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost))
-        UserDefaults.group?.removeObject(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
-
-        let cache = try? Cache<NSData>(name: "policy_temporarily_approves_user_at_hosts", directory: policyCacheURL)
-        cache?.removeObject(forKey: userAndHost.uniqueID)
-    }
-
-    
-    //MARK: Getters
-    class func needsUserApproval(for session:Session) -> Bool {
-        if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date
+        init( allowedUntil:[AllowedUntilTypeKey:UInt64],
+              shouldShowApprovedNotifications:Bool,
+              shouldPermitUnknownHostsAllowed:Bool,
+              shouldNeverAsk:Bool)
         {
-            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id)) ?? 0
-            
-            return -lastApproved.timeIntervalSinceNow > approvalInterval
-            
-        }
-
-        guard UserDefaults.group?.value(forKey: StorageKey.userApproval.key(id: session.id)) != nil else {
-            return true
+            self.allowedUntil = allowedUntil
+            self.shouldShowApprovedNotifications = shouldShowApprovedNotifications
+            self.shouldPermitUnknownHostsAllowed = shouldPermitUnknownHostsAllowed
+            self.shouldNeverAsk = shouldNeverAsk
         }
         
-        guard let needsApproval = UserDefaults.group?.bool(forKey: StorageKey.userApproval.key(id: session.id))
-        else {
-            return true
+        init(json: Object) throws {
+            try self.init(allowedUntil: json ~> "allowed_until",
+                          shouldShowApprovedNotifications: json ~> "should_show_approved_notifications",
+                          shouldPermitUnknownHostsAllowed: json ~> "should_permit_unknownHosts_allowed",
+                          shouldNeverAsk: json ~> "should_never_ask")
         }
         
-        return needsApproval
+        var object: Object {
+            return [ "allowed_until": allowedUntil,
+                     "should_show_approved_notifications": shouldShowApprovedNotifications,
+                     "should_permit_unknownHosts_allowed": shouldPermitUnknownHostsAllowed,
+                     "should_never_ask": shouldNeverAsk]
+        }
+        
     }
     
-    class func needsUserApproval(for userAndHost:VerifiedUserAndHostAuth, on session:Session) -> Bool {
-        if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost)) as? Date
-        {
-            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost)) ?? 0
+    /// Policy Session based Settings
+    class SessionSettings {
+        // policy settings
+        let sessionID:String
+        private var _settings:Settings
+        
+        var settings:Settings {
+            return _settings
+        }
+        
+        // special case cache
+        private let sshUserAndHostAllowedUntil:Cache<NSData>?
+        
+        
+        /// init
+        init(for session:Session) {
+            self.sessionID = session.id
+            self.sshUserAndHostAllowedUntil = try? Cache<NSData>(
+                name: StorageKey.temporarilyAllowedHosts.key(for: session.id),
+                directory: Policy.policyCacheURL)
             
-            return -lastApproved.timeIntervalSinceNow > approvalInterval
-            
-        }
-        
-        guard UserDefaults.group?.value(forKey: StorageKey.userApproval.key(id: session.id, userAndHost: userAndHost)) != nil else {
-            return true
-        }
-        
-        guard let needsApproval = UserDefaults.group?.bool(forKey: StorageKey.userApproval.key(id: session.id, userAndHost: userAndHost))
-            else {
-                return true
-        }
-        
-        return needsApproval
-    }
-    
-    
-    class func needsUnknownHostApproval(for session:Session) -> Bool {
-        guard let needsApproval = UserDefaults.group?.object(forKey: StorageKey.manualUnknownHostApprovals.key(id: session.id)) as? Bool else {
-            return true
-        }
-        
-        return needsApproval
-    }
-    
-    class func shouldShowApprovedNotifications(for session:Session) -> Bool {
-        guard let shouldShow = UserDefaults.group?.object(forKey: StorageKey.showApprovedNotifications.key(id: session.id)) as? Bool
-        else {
-            return true
-        }
-        
-        return shouldShow
-    }
-    
-    /**
-        Evaluate Policies on a session and request for auto-allowing the request or
-        requiring user approval
-     */
-    class func needsUserApproval(for session:Session, and requestBody:RequestBody) -> Bool {
-        
-        switch requestBody {
-        case .ssh(let sshSign):
-            
-            // SignRequest's hostName does not have a KnownHost entry
-            if  let host = sshSign.verifiedHostAuth,
-                KnownHostManager.shared.entryExists(for: host.hostname) == false
-            {
-                return true
+            guard let settingsObject = UserDefaults.group?.object(forKey: StorageKey.settings.key(for: session.id)) as? Object,
+                let settings = try? Settings(json: settingsObject)
+                else {
+                    self._settings = Settings()
+                    return
             }
             
-            // Unknown host
-            if  Policy.needsUnknownHostApproval(for: session) && sshSign.isUnknownHost
-            {
-                return true
-            }
+            self._settings = settings
+        }
+        
+        // Set  settings
+        func setAlwaysAsk() {
+            _settings.shouldNeverAsk = false
+            _settings.allowedUntil = [:]
+            sshUserAndHostAllowedUntil?.removeAllObjects()
             
-            // if this host is allowed temporarily
-            if  let userAndHost = sshSign.verifiedUserAndHostAuth,
-                Policy.needsUserApproval(for: userAndHost, on: session) == false
-            {
-                return false
-            }
- 
-            // otherwise, only if all session operations are allowed temporarily
-            return Policy.needsUserApproval(for: session)
+            save()
+        }
         
-        case .git:
-            return Policy.needsUserApproval(for: session)
+        func setAlwaysAsk(for allowedType:Settings.AllowedUntilType) {
+            _settings.allowedUntil.removeValue(forKey: allowedType.key)
+            save()
+        }
         
-        case .hosts:
-            return true // always need permission
+        func setAlwaysAsk(for userAndHost:VerifiedUserAndHostAuth)  {
+            sshUserAndHostAllowedUntil?.removeObject(forKey: userAndHost.uniqueID)
+        }
+        
+        func setNeverAsk() {
+            _settings.shouldNeverAsk = true
+            _settings.allowedUntil = [:]
+            sshUserAndHostAllowedUntil?.removeAllObjects()
             
-        case .me, .noOp, .unpair:
-            return false // never need permission
-        }
-    }
-    
-
-    class func approvedUntil(for session:Session) -> Date? {
-        guard
-            let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date ,
-            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id))
-        else {
-            return nil
+            save()
         }
         
-        return lastApproved.addingTimeInterval(approvalInterval)
-    }
-    
-    class func approvedUntil(for userAndHost:VerifiedUserAndHostAuth, on session:Session) -> Date? {
-        guard
-            let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id, userAndHost: userAndHost)) as? Date ,
-            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id, userAndHost: userAndHost))
-            else {
-                return nil
+        
+        func set(shouldShowApprovedNotifications:Bool) {
+            _settings.shouldShowApprovedNotifications = shouldShowApprovedNotifications
+            save()
         }
         
-        return lastApproved.addingTimeInterval(approvalInterval)
-    }
-
-    class func approvedUntilUnixSeconds(for session:Session) -> Int? {
-        if let time = Policy.approvedUntil(for: session)?.timeIntervalSince1970 {
-            return Int(time)
+        func set(shouldPermitUnknownHostsAllowed:Bool) {
+            _settings.shouldPermitUnknownHostsAllowed = shouldPermitUnknownHostsAllowed
+            save()
         }
-        return nil
-    }
-    
-
-    class func approvalTimeRemaining(for session:Session) -> String? {
-        if  let lastApproved = UserDefaults.group?.object(forKey: StorageKey.userLastApproved.key(id: session.id)) as? Date,
-            let approvalInterval = UserDefaults.group?.double(forKey: StorageKey.userApprovalInterval.key(id: session.id))
-        {
+        
+        /// Set Allow
+        func allowAll(request:Request, for timeInterval:TimeInterval) throws {
             
-            if -lastApproved.timeIntervalSinceNow > approvalInterval {
-                return nil
-            }
+            let allowedUntil = Date().addingTimeInterval(timeInterval).timeIntervalSince1970
             
-            return lastApproved.addingTimeInterval(approvalInterval + lastApproved.timeIntervalSinceNow).timeAgo(suffix: "")
-        }
-        
-        return nil
-    }
-    
-    // MARK: Temporarily Approved Hosts
-    class func getTemporarilyApprovedUserAndHostsAndExpirations(on session:Session) -> [(VerifiedUserAndHostAuth, TimeInterval)] {
-        let cache = try? Cache<NSData>(name: "policy_temporarily_approves_user_at_hosts", directory: policyCacheURL)
-        cache?.removeExpiredObjects()
-        let results:[NSData] = cache?.allObjects() ?? []
-        
-        var temporarilyApproved:[(VerifiedUserAndHostAuth, TimeInterval)] = []
-        
-        for object in results {
-            guard let userAndHost = try? VerifiedUserAndHostAuth(jsonData: object as Data),
-                  let approvedUntil = Policy.approvedUntil(for: userAndHost, on: session)
-            else {
-                continue
-            }
-            
-            temporarilyApproved.append((userAndHost, approvedUntil.timeIntervalSince1970))
-        }
-        
-        return temporarilyApproved
-    }
-    
-    //MARK: Pending Authoirizations
-    struct PendingAuthorization:Jsonable, Equatable {
-        let session:Session
-        let request:Request
-        
-        init (session:Session, request:Request) {
-            self.session = session
-            self.request = request
-        }
-        
-        init(json:Object) throws {
-            session = try Session(json: json ~> "session")
-            request = try Request(json: json ~> "request")
-        }
-        
-        var object:Object {
-            return ["session": session.object, "request": request.object]
-        }
-        
-        var cacheKey:String {
-            return CacheKey(session, request)
-        }
-        
-    }
-    
-    private static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("policy_cache")
-    
-    static var lastPendingAuthorization:PendingAuthorization? {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeExpiredObjects()
-        
-        guard   let pendingData = cache?.allObjects().last,
-                let pending =  try? PendingAuthorization(jsonData: pendingData as Data)
-        else {
-            return nil
-        }
-        
-        return pending
-    }
-    
-    static func addPendingAuthorization(session:Session, request:Request) {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        let pending = PendingAuthorization(session: session, request: request)
-        
-        do {
-            let pendingData = try pending.jsonData()
-            cache?.setObject(pendingData as NSData, forKey: pending.cacheKey, expires: .seconds(Properties.requestTimeTolerance * 2))
-        } catch {
-            log ("json error: \(error)")
-        }
-    }
-    
-    static func removePendingAuthorization(session:Session, request:Request) {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeObject(forKey: PendingAuthorization(session: session, request: request).cacheKey)
-    }
-    
-    static func sendAllowedPendingIfNeeded() {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeExpiredObjects()
-        
-        cache?.allObjects().forEach {
-            
-            guard   let pending = try? PendingAuthorization(jsonData: $0 as Data),
-                    false == Policy.needsUserApproval(for: pending.session, and: pending.request.body)
-            else {
+            guard let allowAllRequestKey = request.allowAllUntilPolicyKey else {
+                // not auto allow-all-able
                 return
             }
             
-            let session = pending.session
-            let request = pending.request
+            _settings.allowedUntil[allowAllRequestKey.key] = UInt64(allowedUntil)
             
-            Policy.removePendingAuthorization(session: session, request: request)
+            // special case: remove specific hosts if *all* ssh is temporarily allowed
+            if case .ssh = allowAllRequestKey {
+                sshUserAndHostAllowedUntil?.removeAllObjects()
+            }
+            
+            save()
+        }
+        
+        func allowThis(userAndHost:VerifiedUserAndHostAuth, for timeInterval:TimeInterval) {
+            let allowedUntil = Date().addingTimeInterval(timeInterval)
+            let temporarilyAllowedHost = TemporarilyAllowedHost(userAndHost: userAndHost, expires: allowedUntil)
+            
             do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: true)
-                try TransportControl.shared.send(resp, for: session)
+                try sshUserAndHostAllowedUntil?.setObject(temporarilyAllowedHost.jsonData() as NSData,
+                                                          forKey: userAndHost.uniqueID,
+                                                          expires: .seconds(timeInterval))
+            } catch {
+                log("error saving temporary host: \(error)", .error)
+            }
+        }
+        
+        
+        /// Get Allow
+        func isAllowed(for request:Request) -> Bool {
+            
+            let allAllowed = isAllAllowed(for: request)
+            
+            switch request.body {
+            case .me, .unpair, .noOp:
+                return true
                 
-                if let errorMessage = resp.body.error {
-                    Policy.notifyUser(errorMessage: errorMessage, session: session)
-                } else {
-                    Policy.notifyUser(session: session, request: request)
-                }                
-            } catch (let e) {
-                log("got error \(e)", .error)
-                return
+            case .hosts:
+                return false
+                
+            case .ssh(let sshSign):
+                sshUserAndHostAllowedUntil?.removeExpiredObjects()
+                
+                // do we have a host auth?
+                guard let userAndHost = sshSign.verifiedUserAndHostAuth else {
+                    return allAllowed && settings.shouldPermitUnknownHostsAllowed
+                }
+                
+                // is this host temporarily allowed?
+                guard   let data = sshUserAndHostAllowedUntil?.object(forKey: userAndHost.uniqueID),
+                        let temporarilyAllowedHost = try? TemporarilyAllowedHost(jsonData: data as Data)
+                else {
+                        return allAllowed
+                }
+                
+                
+                return allAllowed || ( Date() < temporarilyAllowedHost.expires )
+                
+            case .git:
+                return allAllowed
+                
             }
         }
-    }
-    
-    static func rejectAllPendingIfNeeded() {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeExpiredObjects()
         
-        cache?.allObjects().forEach {
-            
-            guard let pending = try? PendingAuthorization(jsonData: $0 as Data)
+        private func isAllAllowed(for request:Request) -> Bool {
+            // if never ask is on, all requests should go through automatically
+            guard settings.shouldNeverAsk == false
             else {
-                return
+                return true
             }
             
-            let session = pending.session
-            let request = pending.request
-            
-            Policy.removePendingAuthorization(session: session, request: request)
-            
-            do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: false)
-                try TransportControl.shared.send(resp, for: session)
-            } catch (let e) {
-                log("got error \(e)", .error)
-                return
+            guard   let allowAllRequestKey = request.allowAllUntilPolicyKey,
+                    let allowedUntil = self.settings.allowedUntil[allowAllRequestKey.key]
+                else {
+                    return false
             }
+            
+            let allowedUntilDate = Date(timeIntervalSince1970: TimeInterval(allowedUntil))
+            
+            return Date() < allowedUntilDate
+        }
+        
+        
+        var temporarilyApprovedSSHHosts:[TemporarilyAllowedHost] {
+            sshUserAndHostAllowedUntil?.removeExpiredObjects()
+            let results:[NSData] = sshUserAndHostAllowedUntil?.allObjects() ?? []
+            
+            var temporarilyApproved:[TemporarilyAllowedHost] = []
+            
+            results.forEach({ object in
+                guard let allowedHost = try? TemporarilyAllowedHost(jsonData: object as Data)
+                    else {
+                        return
+                }
+                
+                temporarilyApproved.append(allowedHost)
+            })
+            
+            return temporarilyApproved
+        }
+        
+        /// Save
+        private func save() {
+            UserDefaults.group?.set(self.settings.object, forKey: StorageKey.settings.key(for: sessionID))
+            UserDefaults.group?.synchronize()
         }
     }
 
+    
+}
+
+extension Request {
+    internal var allowAllUntilPolicyKey:Policy.Settings.AllowedUntilType? {
+        switch body {
+        case .me, .unpair, .noOp, .hosts:
+            // not auto-allowable
+            return nil
+            
+        case .ssh:
+            return .ssh
+            
+        case .git(let gitSign):
+            switch gitSign.git {
+            case .commit:
+                return .gitCommit
+                
+            case .tag:
+                return .gitTag
+            }
+        }
+    }
     
 }
 

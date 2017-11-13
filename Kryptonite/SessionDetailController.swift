@@ -29,7 +29,6 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
     enum ApprovalControl:Int {
         case on = 0
-        case timed = 1
         case off = 2
     }
     
@@ -82,8 +81,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         if let session = session {
             deviceNameField.text = session.pairing.displayName.uppercased()
-            unknownHostSwitch.isOn = Policy.needsUnknownHostApproval(for: session)
-            silenceApprovedSwitch.isOn = Policy.shouldShowApprovedNotifications(for: session)
+            
+            let policySession = Policy.SessionSettings(for: session)
+            unknownHostSwitch.isOn = !policySession.settings.shouldPermitUnknownHostsAllowed
+            silenceApprovedSwitch.isOn = policySession.settings.shouldShowApprovedNotifications
             
             if let lastLog = LogManager.shared.fetchCompleteLatest(for: session.id) {
                 switch lastLog {
@@ -203,18 +204,26 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         switch approvalControlType {
         case .on:
             Analytics.postEvent(category: "manual approval", action: String(true))
-            Policy.set(needsUserApproval: true, for: session)
-
-        case .timed:
-            Analytics.postEvent(category: "manual approval", action: "time", value: UInt(Policy.Interval.threeHours.rawValue))
-            Policy.allow(session: session, for: Policy.Interval.threeHours)
+            
+            Policy.SessionSettings(for: session).setAlwaysAsk()
 
         case .off:
             Analytics.postEvent(category: "manual approval", action: String(false))
-            Policy.set(needsUserApproval: false, for: session)
+            
+            self.askConfirmationIn(title: "Never Ask?",
+                                   text: "Are you sure you want to disable manually approving requests? This means every incoming SSH login, Git commit or tag signature, or otherwise request will be automatically approved without your direct approval.",
+                                   accept: "Yes, never ask",
+                                   cancel: "Cancel",
+                                   handler:
+            { (didConfirm) in
+                if didConfirm  {
+                    Policy.SessionSettings(for: session).setNeverAsk()
+                } else {
+                    dispatchMain { self.approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.on.rawValue }
+                }
+            })
         }
         
-        approvalSegmentedControl.setTitle("Don't ask for 3hrs", forSegmentAt: ApprovalControl.timed.rawValue)
     }
 
     @IBAction func unknownHostApprovalChanged(sender:UISwitch) {
@@ -224,7 +233,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         Analytics.postEvent(category: "unknownhost-approval-setting", action: "toggle", value: sender.isOn ? 1 : 0)
 
-        Policy.set(manualUnknownHostApprovals: sender.isOn, for: session)
+        Policy.SessionSettings(for: session).set(shouldPermitUnknownHostsAllowed: !sender.isOn)
+        
     }
     
     @IBAction func silenceApproveToggled(sender:UISwitch) {
@@ -234,7 +244,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         Analytics.postEvent(category: "silence-notification-setting", action: "toggle", value: sender.isOn ? 1 : 0)
         
-        Policy.set(shouldShowApprovedNotifications: sender.isOn, for: session)
+        Policy.SessionSettings(for: session).set(shouldShowApprovedNotifications: sender.isOn)
     }
 
     //MARK: Revoke
@@ -251,8 +261,16 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     }
     
     func updateApprovalControl(session:Session) {
-        if Policy.needsUserApproval(for: session)  {
-            if Policy.getTemporarilyApprovedUserAndHostsAndExpirations(on: session).isEmpty {
+        let policySession = Policy.SessionSettings(for: session)
+        
+        if policySession.settings.shouldNeverAsk  {
+            approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.off.rawValue
+            self.temporarilyApprovedHostsWarningLabel.isHidden = true
+            self.viewTemporarilyApprovedHosts.isHidden = true
+
+        } else {
+            if policySession.temporarilyApprovedSSHHosts.isEmpty && policySession.settings.allowedUntil.isEmpty
+            {
                 approvalSegmentedControl.setTitle("Always ask", forSegmentAt: ApprovalControl.on.rawValue)
                 self.temporarilyApprovedHostsWarningLabel.isHidden = true
                 self.viewTemporarilyApprovedHosts.isHidden = true
@@ -261,14 +279,6 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
                 self.temporarilyApprovedHostsWarningLabel.isHidden = false
                 self.viewTemporarilyApprovedHosts.isHidden = false
             }
-            approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.on.rawValue
-        }
-        else if let remaining = Policy.approvalTimeRemaining(for: session) {
-            approvalSegmentedControl.selectedSegmentIndex = 1
-            approvalSegmentedControl.setTitle("Don't ask for \(remaining)", forSegmentAt: ApprovalControl.timed.rawValue)
-        }
-        else {
-            approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.off.rawValue
         }
     }
     
@@ -395,8 +405,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         {
             logDetailController.tagCommitLogPair = tagCommitPair
         }
-        else if let temporaryHostsController = segue.destination as? TemporarilyApprovedHostsController {
-            temporaryHostsController.session = self.session
+        else if let temporaryController = segue.destination as? TemporaryApprovalController {
+            temporaryController.session = self.session
         }
         
     }

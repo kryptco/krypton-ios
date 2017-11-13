@@ -116,7 +116,7 @@ class Notify {
                 content.body = noteBody
                 content.sound = UNNotificationSound.default()
                 content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
-                content.categoryIdentifier = request.notificationCategory.identifier
+                content.categoryIdentifier = request.notificationCategory(for: session).identifier
                 content.threadIdentifier = request.id
                 
                 let noteId = request.id

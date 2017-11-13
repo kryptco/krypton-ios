@@ -116,7 +116,7 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
-            Policy.set(needsUserApproval: false, for: session)
+            Policy.SessionSettings(for: session).setNeverAsk()
 
             do {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
@@ -142,7 +142,7 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
-            Policy.set(needsUserApproval: false, for: session)
+            Policy.SessionSettings(for: session).setNeverAsk()
 
             do {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
@@ -168,7 +168,7 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
-            Policy.set(needsUserApproval: false, for: session)
+            Policy.SessionSettings(for: session).setNeverAsk()
 
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
         } catch let e {
@@ -186,9 +186,10 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
-            Policy.set(manualUnknownHostApprovals: false, for: session)
-            Policy.set(needsUserApproval: false, for: session)
-
+            
+            Policy.SessionSettings(for: session).set(shouldPermitUnknownHostsAllowed: true)
+            Policy.SessionSettings(for: session).setNeverAsk()
+            
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
         } catch let e {
@@ -206,8 +207,8 @@ class SiloTests: XCTestCase {
             let session = try Session(pairing: pairing)
 
             SessionManager.shared.add(session: session, temporary: true)
-            Policy.set(manualUnknownHostApprovals: false, for: session)
-            Policy.set(needsUserApproval: false, for: session)
+            Policy.SessionSettings(for: session).set(shouldPermitUnknownHostsAllowed: true)
+            Policy.SessionSettings(for: session).setNeverAsk()
 
             do {
                 try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
@@ -232,10 +233,9 @@ class SiloTests: XCTestCase {
             let pairing = try Pairing(name: "test", workstationPublicKey: KRSodium.instance().box.keyPair()!.publicKey)
             let session = try Session(pairing: pairing)
             
-            SessionManager.shared.add(session: session, temporary: true)
-            
-            Policy.set(needsUserApproval: false, for: session)
-            
+            SessionManager.shared.add(session: session, temporary: true)            
+            Policy.SessionSettings(for: session).setNeverAsk()
+
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
             try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
             XCTFail("expected RequestPendingError")

@@ -95,7 +95,7 @@ class NotificationService: UNNotificationServiceExtension {
                             // pending response
                             else {
                                 content.title = "Request from \(session.pairing.displayName)."
-                                content.categoryIdentifier = unsealedRequest.notificationCategory.identifier
+                                content.categoryIdentifier = unsealedRequest.notificationCategory(for: session).identifier
                             }
                             
                             content.userInfo = ["session_display": session.pairing.displayName,

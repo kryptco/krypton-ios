@@ -136,7 +136,14 @@
 		FA443DC31FB652DD00EB452A /* Approval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE495991DBD98C400A97708 /* Approval.storyboard */; };
 		FA443DCC1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */; };
 		FA443DCD1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */; };
-		FA443DD41FB66D7200EB452A /* TemporarilyApprovedHostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DD31FB66D7200EB452A /* TemporarilyApprovedHostsController.swift */; };
+		FA443DD41FB66D7200EB452A /* TemporaryApprovalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DD31FB66D7200EB452A /* TemporaryApprovalController.swift */; };
+		FA443DE51FB9123400EB452A /* Policy+UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */; };
+		FA443DE71FB95CB300EB452A /* Policy+Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE61FB95CB300EB452A /* Policy+Pending.swift */; };
+		FA443DE81FB95CB300EB452A /* Policy+Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE61FB95CB300EB452A /* Policy+Pending.swift */; };
+		FA443DE91FB9630900EB452A /* Policy+UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */; };
+		FA443DF31FBA36D900EB452A /* Policy+UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */; };
+		FA443DF41FBA36D900EB452A /* Policy+Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE61FB95CB300EB452A /* Policy+Pending.swift */; };
+		FA443E041FBA370E00EB452A /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA49F7871D9B6B3300372556 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA49F7861D9B6B3300372556 /* NotificationCenter.framework */; };
@@ -609,7 +616,9 @@
 		FA443DBA1FB6441200EB452A /* ApproveDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveDetailController.swift; sourceTree = "<group>"; };
 		FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorRequestController.swift; sourceTree = "<group>"; };
 		FA443DCB1FB65DEE00EB452A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ApprovalDetail.storyboard; sourceTree = "<group>"; };
-		FA443DD31FB66D7200EB452A /* TemporarilyApprovedHostsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporarilyApprovedHostsController.swift; sourceTree = "<group>"; };
+		FA443DD31FB66D7200EB452A /* TemporaryApprovalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryApprovalController.swift; sourceTree = "<group>"; };
+		FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Policy+UserNotifications.swift"; sourceTree = "<group>"; };
+		FA443DE61FB95CB300EB452A /* Policy+Pending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Policy+Pending.swift"; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA49F7851D9B6B3200372556 /* LastCommand.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastCommand.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -964,6 +973,8 @@
 			children = (
 				FAA1B9211D81AEA000FF37CC /* Silo.swift */,
 				FACAA4C51D89FEB5000B9A01 /* Policy.swift */,
+				FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */,
+				FA443DE61FB95CB300EB452A /* Policy+Pending.swift */,
 				FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */,
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
@@ -995,7 +1006,7 @@
 				FACAA4BB1D888AB9000B9A01 /* SessionDetailController.swift */,
 				FA61EF481D835EEB009FD899 /* LogCell.swift */,
 				FA2949CA1EDCB77800A5C70B /* LogDetailController.swift */,
-				FA443DD31FB66D7200EB452A /* TemporarilyApprovedHostsController.swift */,
+				FA443DD31FB66D7200EB452A /* TemporaryApprovalController.swift */,
 			);
 			name = Devices;
 			sourceTree = "<group>";
@@ -1998,6 +2009,7 @@
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
 				FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
+				FA443DE51FB9123400EB452A /* Policy+UserNotifications.swift in Sources */,
 				FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */,
 				FA16827B1D774D6000A7ED53 /* UIColorExtension.swift in Sources */,
 				FA1682761D774D6000A7ED53 /* RSITFGenerator.swift in Sources */,
@@ -2020,10 +2032,11 @@
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
 				FAAE818F1E576DB8002A9AE6 /* Authorize.swift in Sources */,
 				FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */,
+				FA443DE71FB95CB300EB452A /* Policy+Pending.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */,
-				FA443DD41FB66D7200EB452A /* TemporarilyApprovedHostsController.swift in Sources */,
+				FA443DD41FB66D7200EB452A /* TemporaryApprovalController.swift in Sources */,
 				FA1682A31EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
 				FAE495891DBD89F100A97708 /* M13CheckboxAnimationGenerator.swift in Sources */,
@@ -2079,6 +2092,7 @@
 				FACE33671EC186E9003EC6C0 /* SSHUtil.swift in Sources */,
 				8D05CB371ED3E4BD00CCCC38 /* GitInfo.swift in Sources */,
 				FA6C5CF91D772B0D00CE2323 /* Log.swift in Sources */,
+				FA443E041FBA370E00EB452A /* Policy.swift in Sources */,
 				FA2949E61EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */,
 				FAC874001E6A5342003D112E /* String+User.swift in Sources */,
@@ -2086,9 +2100,11 @@
 				8DCB60431E94468100E1B924 /* LogManager.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */,
+				FA443DF41FBA36D900EB452A /* Policy+Pending.swift in Sources */,
 				FA1682A51EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
 				FAF0B0981F04500400F65E04 /* UtilTests.swift in Sources */,
 				8DCB60421E94468100E1B924 /* SessionManager.swift in Sources */,
+				FA443DF31FBA36D900EB452A /* Policy+UserNotifications.swift in Sources */,
 				8DCB604F1E9446D300E1B924 /* CommunicationActivity.swift in Sources */,
 				8DCB60671E94473B00E1B924 /* Policy+UI.swift in Sources */,
 				8DCB60351E94433100E1B924 /* Session.swift in Sources */,
@@ -2135,6 +2151,7 @@
 				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
 				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
+				FA443DE91FB9630900EB452A /* Policy+UserNotifications.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
 				8D05CB321ED3E08500CCCC38 /* TagInfo.swift in Sources */,
@@ -2166,6 +2183,7 @@
 				FAAE81941E577063002A9AE6 /* Policy.swift in Sources */,
 				FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */,
 				8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */,
+				FA443DE81FB95CB300EB452A /* Policy+Pending.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,

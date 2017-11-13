@@ -14,15 +14,13 @@ final class Response:Jsonable {
     var requestID:String
     var snsEndpointARN:String
     var version:Version?
-    var approvedUntil:Int?
     var trackingID:String?
     
     var body:ResponseBody
 
-    init(requestID:String, endpoint:String, body:ResponseBody, approvedUntil:Int? = nil, trackingID:String? = nil) {
+    init(requestID:String, endpoint:String, body:ResponseBody, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
-        self.approvedUntil = approvedUntil
         self.body = body
         self.trackingID = trackingID
         self.version = Properties.currentVersion
@@ -34,10 +32,6 @@ final class Response:Jsonable {
         self.version = try Version(string: json ~> "v")
         self.body = try ResponseBody(json: json)
         
-        if let approvedUntil:Int = try? json ~> "approved_until" {
-            self.approvedUntil = approvedUntil
-        }
-
         if let trackingID:String = try? json ~> "tracking_id" {
             self.trackingID = trackingID
         }
@@ -47,10 +41,6 @@ final class Response:Jsonable {
         var json = body.object
         json["request_id"] = requestID
         json["sns_endpoint_arn"] = snsEndpointARN
-        
-        if let approvedUntil = approvedUntil {
-            json["approved_until"] = approvedUntil
-        }
 
         if let trackingID = self.trackingID {
             json["tracking_id"] = trackingID

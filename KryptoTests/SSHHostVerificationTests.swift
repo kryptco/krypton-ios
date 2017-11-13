@@ -78,7 +78,7 @@ class SSHHostVerificationTests: XCTestCase {
                 hostAuth: HostAuth(
                     hostKey: testCase.pk,
                     signature: testCase.sig,
-                    hostNames: []
+                    hostNames: ["abc.com"]
                     )
             )
             XCTAssert(signRequest.user == "git")

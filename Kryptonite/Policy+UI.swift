@@ -15,13 +15,13 @@ extension Policy {
     static var authorizeTemporalCategory:UNNotificationCategory = {
         if #available(iOS 11.0, *) {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporal.identifier,
-                                   actions: [Policy.approveAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
+                                   actions: [Policy.approveOnceAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
                                    intentIdentifiers: [],
                                    hiddenPreviewsBodyPlaceholder: "New Kryptonite request",
                                    options: .customDismissAction)
         } else {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporal.identifier,
-                                   actions: [Policy.approveAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
+                                   actions: [Policy.approveOnceAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
                                    intentIdentifiers: [],
                                    options: .customDismissAction)
         }
@@ -30,13 +30,13 @@ extension Policy {
     static var authorizeTemporalThisCategory:UNNotificationCategory = {
         if #available(iOS 11.0, *) {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporalThis.identifier,
-                                          actions: [Policy.approveAction, Policy.approveTemporaryThisAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
+                                          actions: [Policy.approveOnceAction, Policy.approveTemporaryThisAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
                                           intentIdentifiers: [],
                                           hiddenPreviewsBodyPlaceholder: "New Kryptonite request",
                                           options: .customDismissAction)
         } else {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeWithTemporalThis.identifier,
-                                          actions: [Policy.approveAction, Policy.approveTemporaryThisAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
+                                          actions: [Policy.approveOnceAction, Policy.approveTemporaryThisAction, Policy.approveTemporaryAllAction, Policy.rejectAction],
                                           intentIdentifiers: [],
                                           options: .customDismissAction)
         }
@@ -60,9 +60,16 @@ extension Policy {
     
     static var approveAction:UNNotificationAction = {
         return UNNotificationAction(identifier: Action.approve.identifier,
+                                    title: "Allow",
+                                    options: .authenticationRequired)
+    }()
+    
+    static var approveOnceAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: Action.approve.identifier,
                                     title: "Allow once",
                                     options: .authenticationRequired)
     }()
+    
     
     
     static var approveTemporaryThisAction:UNNotificationAction = {
@@ -125,7 +132,7 @@ extension Policy {
             switch UIApplication.shared.applicationState {
                 
             case .background: // Background: then present local notification
-                guard Policy.shouldShowApprovedNotifications(for: session) else {
+                guard Policy.SessionSettings(for: session).settings.shouldShowApprovedNotifications else {
                     log("skip sending push notification on approved request due to policy setting")
                     return
                 }

@@ -95,10 +95,8 @@ class Silo {
             return
         }
 
-
-        // decide if request body can be responded to immediately
-        // or doesn't need response,
-        // or needs user's approval first
+        
+        // handle special cases
         switch request.body {
         case .unpair:
             Analytics.postEvent(category: "device", action: "unpair", label: "request")
@@ -111,16 +109,18 @@ class Silo {
         case .noOp:
             return
             
-        case .hosts,
-             .ssh where Policy.needsUserApproval(for: session, and: request.body),
-             .git where Policy.needsUserApproval(for: session, and: request.body):
-            
+        default: break
+        }
+        
+        
+        // decide if request body can be responded to immediately
+        let isAllowed = Policy.SessionSettings(for: session).isAllowed(for: request)
+        
+        guard isAllowed else {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
-            
-        case .me, .ssh, .git:
-            break
         }
+ 
 
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, allowed: true)
@@ -172,7 +172,7 @@ class Silo {
         
         if request.sendACK {
             let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
-            let ack = Response(requestID: request.id, endpoint: arn, body: .ack(AckResponse()), approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            let ack = Response(requestID: request.id, endpoint: arn, body: .ack(AckResponse()), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
             do {
                 try TransportControl.shared.send(ack, for: session)
             } catch (let e) {
@@ -343,7 +343,7 @@ class Silo {
         
         let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
         
-        let response = Response(requestID: request.id, endpoint: arn, body: responseType, approvedUntil: Policy.approvedUntilUnixSeconds(for: session), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+        let response = Response(requestID: request.id, endpoint: arn, body: responseType, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
         let responseData = try response.jsonData() as NSData
         

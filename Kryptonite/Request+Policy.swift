@@ -9,7 +9,7 @@
 import Foundation
 
 extension Request {
-    var notificationCategory:Policy.NotificationCategory {
+    func notificationCategory(for session:Session) -> Policy.NotificationCategory {
         switch self.body {
         case .me, .unpair, .noOp:
             return .none
@@ -19,7 +19,12 @@ extension Request {
                 return .authorizeWithTemporalThis
             }
             
-            return .authorizeWithTemporal
+            // don't show the allow-all option unless it's enabled
+            if Policy.SessionSettings(for: session).settings.shouldPermitUnknownHostsAllowed {
+                return .authorizeWithTemporal
+            }
+            
+            return .authorize
             
         case .git:
             return .authorizeWithTemporal

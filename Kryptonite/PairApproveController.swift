@@ -155,7 +155,7 @@ class PairApproveController: UIViewController {
                 SessionManager.shared.add(session: session, temporary: true)
                 TransportControl.shared.add(session: session, newPairing: true)
 
-                Policy.set(needsUserApproval: true, for: session)
+                Policy.SessionSettings(for: session).setAlwaysAsk()
 
                 dispatchAsync {
                     guard TransportControl.shared.waitForPairing(session: session) else {
