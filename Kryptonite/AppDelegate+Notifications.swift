@@ -134,11 +134,7 @@ extension AppDelegate {
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve this", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
         case .temporaryAll:
-            do {
-                try policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
-            } catch {
-                log("error saving allow all policy preference: \(error)", .error)
-            }
+            policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
             
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             

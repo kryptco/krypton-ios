@@ -11,6 +11,9 @@ import JSON
 import AwesomeCache
 
 extension Policy {
+    
+    internal static let pendingCache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
+
     /// Pending Authoirizations
     struct PendingAuthorization:Jsonable, Equatable {
         let session:Session
@@ -37,10 +40,9 @@ extension Policy {
     }
     
     static var lastPendingAuthorization:PendingAuthorization? {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeExpiredObjects()
+        pendingCache?.removeExpiredObjects()
         
-        guard   let pendingData = cache?.allObjects().last,
+        guard   let pendingData = pendingCache?.allObjects().last,
             let pending =  try? PendingAuthorization(jsonData: pendingData as Data)
             else {
                 return nil
@@ -50,30 +52,27 @@ extension Policy {
     }
     
     static func addPendingAuthorization(session:Session, request:Request) {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
         let pending = PendingAuthorization(session: session, request: request)
         
         do {
             let pendingData = try pending.jsonData()
-            cache?.setObject(pendingData as NSData, forKey: pending.cacheKey, expires: .seconds(Properties.requestTimeTolerance * 2))
+            pendingCache?.setObject(pendingData as NSData, forKey: pending.cacheKey, expires: .seconds(Properties.requestTimeTolerance * 2))
         } catch {
             log ("json error: \(error)")
         }
     }
     
     static func removePendingAuthorization(session:Session, request:Request) {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeObject(forKey: PendingAuthorization(session: session, request: request).cacheKey)
+        pendingCache?.removeObject(forKey: PendingAuthorization(session: session, request: request).cacheKey)
     }
     
     static func sendAllowedPendingIfNeeded() {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeExpiredObjects()
+        pendingCache?.removeExpiredObjects()
         
-        cache?.allObjects().forEach {
+        pendingCache?.allObjects().forEach {
             
             guard   let pending = try? PendingAuthorization(jsonData: $0 as Data),
-                    false == Policy.SessionSettings(for: pending.session).isAllowed(for: pending.request)
+                    Policy.SessionSettings(for: pending.session).isAllowed(for: pending.request)
                 else {
                     return
             }
@@ -99,10 +98,9 @@ extension Policy {
     }
     
     static func rejectAllPendingIfNeeded() {
-        let cache = try? Cache<NSData>(name: "policy_pending_authorizations", directory: policyCacheURL)
-        cache?.removeExpiredObjects()
+        pendingCache?.removeExpiredObjects()
         
-        cache?.allObjects().forEach {
+        pendingCache?.allObjects().forEach {
             
             guard let pending = try? PendingAuthorization(jsonData: $0 as Data)
                 else {

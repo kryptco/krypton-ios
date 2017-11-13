@@ -183,7 +183,7 @@ class Policy {
         }
         
         /// Set Allow
-        func allowAll(request:Request, for timeInterval:TimeInterval) throws {
+        func allowAll(request:Request, for timeInterval:TimeInterval) {
             
             let allowedUntil = Date().addingTimeInterval(timeInterval).timeIntervalSince1970
             

@@ -55,7 +55,6 @@ class ApproveDetailController: UIViewController {
 
     }
     func removeAllBut(view:UIView) {
-        //errorContainerView.isHidden = true
         for v in [sshContainerView, commitContainerView, tagContainerView, errorContainerView] {
             guard v != view else {
                 continue

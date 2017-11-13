@@ -109,7 +109,9 @@ class Silo {
         case .noOp:
             return
             
-        default: break
+        // typical cases
+        case .git, .ssh, .hosts, .me:
+            break
         }
         
         

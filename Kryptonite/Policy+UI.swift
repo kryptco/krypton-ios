@@ -74,7 +74,7 @@ extension Policy {
     
     static var approveTemporaryThisAction:UNNotificationAction = {
         return UNNotificationAction(identifier: Action.temporaryThis.identifier,
-                                    title: "Allow this host 3 hours",
+                                    title: "Allow this host for 3 hours",
                                     options: .authenticationRequired)
     }()
     

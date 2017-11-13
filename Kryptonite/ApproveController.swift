@@ -80,15 +80,10 @@ class ApproveController:UIViewController {
 
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
-        //arcView.timeoutProgress(lineWidth: checkBox.checkmarkLineWidth, seconds: Properties.requestTimeTolerance)
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
@@ -199,12 +194,8 @@ class ApproveController:UIViewController {
                 return
             }
             
-            do {
-                try policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
-            } catch {
-                log("error savining policy pref for allow all: \(error)", .error)
-            }
-            
+            policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
+
             Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
 
 
