@@ -40,28 +40,29 @@ class Silo {
     
     var mutex = Mutex()
 
-    var requestCache: Cache<NSData>?
+    var requestCache: Cache<NSData>
     //  store requests waiting for user approval
-    var pendingRequests: Cache<NSString>?
+    var pendingRequests: Cache<NSString>
     
     // singelton
     private static var sharedSiloMutex = Mutex()
     private static var sharedSilo:Silo?
-    class var shared:Silo {
+    
+    class func shared() throws -> Silo {
         defer { sharedSiloMutex.unlock() }
         sharedSiloMutex.lock()
         
         guard let ss = sharedSilo else {
-            sharedSilo = Silo()
+            sharedSilo = try Silo()
             return sharedSilo!
         }
         return ss
     }
 
     
-    init() {
-        requestCache = try? Cache<NSData>(name: "silo_cache", directory: Caches.directory(for: "silo_cache"))
-        pendingRequests = try? Cache<NSString>(name: "silo_pending_requests", directory: Caches.directory(for: "silo_pending_requests"))
+    init() throws {
+        requestCache = try Cache<NSData>(name: "silo_cache", directory: Caches.directory(for: "silo_cache"))
+        pendingRequests = try Cache<NSString>(name: "silo_pending_requests", directory: Caches.directory(for: "silo_pending_requests"))
     }
     
     //MARK: Handle Logic
@@ -81,8 +82,8 @@ class Silo {
         }
         
         // check if the request has already been received and cached
-        requestCache?.removeExpiredObjects()
-        if  let cachedResponseData = requestCache?[CacheKey(session, request)] as Data? {
+        requestCache.removeExpiredObjects()
+        if  let cachedResponseData = requestCache[CacheKey(session, request)] as Data? {
             let json:Object = try JSON.parse(data: cachedResponseData)
             let response = try Response(json: json)
             try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
@@ -157,11 +158,11 @@ class Silo {
     }
 
     func handleRequestRequiresApproval(request: Request, session: Session, communicationMedium: CommunicationMedium, completionHandler: (() -> ())?) throws {
-        pendingRequests?.removeExpiredObjects()
-        if pendingRequests?.object(forKey: CacheKey(session, request)) != nil {
+        pendingRequests.removeExpiredObjects()
+        if pendingRequests.object(forKey: CacheKey(session, request)) != nil {
             throw RequestPendingError()
         }
-        pendingRequests?.setObject("", forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
+        pendingRequests.setObject("", forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
         
         Policy.addPendingAuthorization(session: session, request: request)
         Policy.requestUserAuthorization(session: session, request: request)
@@ -185,7 +186,7 @@ class Silo {
         mutex.lock()
         defer { mutex.unlock() }
         
-        pendingRequests?.removeObject(forKey: CacheKey(session, request))
+        pendingRequests.removeObject(forKey: CacheKey(session, request))
     }
     
     // MARK: Response
@@ -343,14 +344,14 @@ class Silo {
         
         let responseData = try response.jsonData() as NSData
         
-        requestCache?.setObject(responseData, forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
+        requestCache.setObject(responseData, forKey: CacheKey(session, request), expires: .seconds(Properties.requestTimeTolerance * 2))
         
         return response
 
     }
     
     func cachedResponse(for session:Session,with request:Request) -> Response? {
-        if  let cachedResponseData = requestCache?[CacheKey(session, request)] as Data?,
+        if  let cachedResponseData = requestCache[CacheKey(session, request)] as Data?,
             let json:Object = try? JSON.parse(data: cachedResponseData),
             let response = try? Response(json: json)
         {

@@ -110,7 +110,7 @@ extension AppDelegate {
         guard let action = Policy.Action(rawValue: identifier)
             else {
                 log("nil identifier", .error)
-                Silo.shared.removePending(request: request, for: session)
+                try? Silo.shared().removePending(request: request, for: session)
                 try? TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
                 completionHandler()
                 return
@@ -144,7 +144,7 @@ extension AppDelegate {
         
         
         do {
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: allowed)
+            let resp = try Silo.shared().lockResponseFor(request: request, session: session, allowed: allowed)
             try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)
             
             if let errorMessage = resp.body.error {

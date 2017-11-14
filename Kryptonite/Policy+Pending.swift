@@ -13,7 +13,21 @@ import AwesomeCache
 extension Policy {
     
     private static let pendingCacheName = "policy_pending_authorizations"
-    static let pendingCache:Cache<NSData>? = try? Cache<NSData>(name: pendingCacheName, directory: Caches.directory(for: pendingCacheName))
+    
+    private static let pendingCacheMutex = Mutex()
+    private static var _pendingCache:Cache<NSData>?
+    
+    static var pendingCache:Cache<NSData>? {
+        pendingCacheMutex.lock()
+        defer { pendingCacheMutex.unlock() }
+        
+        guard let pending  = _pendingCache else {
+            _pendingCache = try? Cache<NSData>(name: pendingCacheName, directory: Caches.directory(for: pendingCacheName))
+            return _pendingCache
+        }
+        
+        return pending
+    }
 
 
     /// Pending Authoirizations
@@ -78,7 +92,7 @@ extension Policy {
                 return
             }
             do {
-                try Silo.shared.handle(request: pending.request, session: pending.session, communicationMedium: .internalPending)
+                try Silo.shared().handle(request: pending.request, session: pending.session, communicationMedium: .internalPending)
                 pendingCache?.removeObject(forKey: pending.cacheKey)
             } catch (let e) {
                 log("got error \(e)", .error)
@@ -103,7 +117,7 @@ extension Policy {
             Policy.removePendingAuthorization(session: session, request: request)
             
             do {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: false)
+                let resp = try Silo.shared().lockResponseFor(request: request, session: session, allowed: false)
                 try TransportControl.shared.send(resp, for: session)
             } catch (let e) {
                 log("got error \(e)", .error)

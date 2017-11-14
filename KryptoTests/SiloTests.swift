@@ -30,7 +30,7 @@ class SiloTests: XCTestCase {
 
 
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .noOp)
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
             XCTFail("expected exception")
         } catch let e {
             guard let _ = e as? SessionRemovedError else {
@@ -48,7 +48,7 @@ class SiloTests: XCTestCase {
             SessionManager.shared.add(session: session, temporary: true)
 
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .noOp)
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
         } catch let e {
             XCTFail("\(e)")
         }
@@ -62,12 +62,12 @@ class SiloTests: XCTestCase {
             SessionManager.shared.add(session: session, temporary: true)
 
             let request = try Request(id: Data.random(size: 16).toBase64(), unixSeconds: Int(Date().timeIntervalSince1970), sendACK: false, version: Properties.currentVersion, body: .noOp)
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
 
             SessionManager.shared.remove(session: session)
 
             do {
-                try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+                try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch let e {
                 guard let _ = e as? SessionRemovedError else {
@@ -91,9 +91,9 @@ class SiloTests: XCTestCase {
 
             SessionManager.shared.add(session: session, temporary: true)
 
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
             do {
-                try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+                try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch let e {
                 guard let _ = e as? RequestPendingError else {
@@ -119,7 +119,7 @@ class SiloTests: XCTestCase {
             Policy.SessionSettings(for: session).setNeverAsk()
 
             do {
-                try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+                try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch let e {
                 guard let _ = e as? InvalidRequestTimeError else {
@@ -145,7 +145,7 @@ class SiloTests: XCTestCase {
             Policy.SessionSettings(for: session).setNeverAsk()
 
             do {
-                try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+                try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch let e {
                 guard let _ = e as? InvalidRequestTimeError else {
@@ -170,7 +170,7 @@ class SiloTests: XCTestCase {
             SessionManager.shared.add(session: session, temporary: true)
             Policy.SessionSettings(for: session).setNeverAsk()
 
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
         } catch let e {
             XCTFail("\(e)")
         }
@@ -190,8 +190,8 @@ class SiloTests: XCTestCase {
             Policy.SessionSettings(for: session).set(shouldPermitUnknownHostsAllowed: true)
             Policy.SessionSettings(for: session).setNeverAsk()
             
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
         } catch let e {
             XCTFail("\(e)")
         }
@@ -211,7 +211,7 @@ class SiloTests: XCTestCase {
             Policy.SessionSettings(for: session).setNeverAsk()
 
             do {
-                try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+                try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
                 XCTFail("expected exception")
             } catch let e {
                 guard let _ = e as? KeyManagerError else {
@@ -236,8 +236,8 @@ class SiloTests: XCTestCase {
             SessionManager.shared.add(session: session, temporary: true)            
             Policy.SessionSettings(for: session).setNeverAsk()
 
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
-            try Silo.shared.handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
+            try Silo.shared().handle(request: request, session: session, communicationMedium: .remoteNotification)
             XCTFail("expected RequestPendingError")
 
         } catch {

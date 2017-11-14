@@ -26,7 +26,7 @@ extension Request {
             let controller = UIAlertController(title: "Request: \(subtitle)", message: body, preferredStyle: UIAlertControllerStyle.actionSheet)
             controller.addAction(UIAlertAction(title: "Allow", style: UIAlertActionStyle.default, handler: { (_) in
                 do {
-                    let resp = try Silo.shared.lockResponseFor(request: self, session: session, allowed: true)
+                    let resp = try Silo.shared().lockResponseFor(request: self, session: session, allowed: true)
                     try TransportControl.shared.send(resp, for: session)
                 } catch {
                     log("error allowing: \(error)")
@@ -34,7 +34,7 @@ extension Request {
             }))
             controller.addAction(UIAlertAction(title: "Reject", style: UIAlertActionStyle.destructive, handler: { (_) in
                 do {
-                    let resp = try Silo.shared.lockResponseFor(request: self, session: session, allowed: false)
+                    let resp = try Silo.shared().lockResponseFor(request: self, session: session, allowed: false)
                     try TransportControl.shared.send(resp, for: session)
 
                 } catch {

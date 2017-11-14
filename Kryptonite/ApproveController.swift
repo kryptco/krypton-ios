@@ -210,7 +210,7 @@ class ApproveController:UIViewController {
     //MARK: Response
     func approve(option:Option, request:Request, session:Session) -> Bool {
         do {
-            let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: true)
+            let resp = try Silo.shared().lockResponseFor(request: request, session: session, allowed: true)
             try TransportControl.shared.send(resp, for: session)
             
             if let errorMessage = resp.body.error {
@@ -254,7 +254,7 @@ class ApproveController:UIViewController {
         
         do {
             if let request = request, let session = session {
-                let resp = try Silo.shared.lockResponseFor(request: request, session: session, allowed: false)
+                let resp = try Silo.shared().lockResponseFor(request: request, session: session, allowed: false)
                 try TransportControl.shared.send(resp, for: session)
             }
             

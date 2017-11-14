@@ -133,9 +133,8 @@ class Policy {
             self.sessionID = session.id
             
             let cacheName = StorageKey.temporarilyAllowedHosts.key(for: session.id)
-            self.sshUserAndHostAllowedUntil = try? Cache<NSData>(
-                name: cacheName,
-                directory: Policy.policyCacheURL?.appendingPathComponent(cacheName))
+            self.sshUserAndHostAllowedUntil = try? Cache<NSData>(name: cacheName,
+                                                                 directory: Caches.directory(for: cacheName))
             
             guard let settingsObject = try? KeychainStorage().getData(key: StorageKey.settings.key(for: session.id)),
                 let settings = try? Settings(jsonData: settingsObject)
