@@ -10,18 +10,43 @@ import Foundation
 
 class Caches {
     
-    private static let cachesRootDirectoryName = "co.krypt.kryptonite.caches"
-    
+    private static let cachesRootDirectoryNameKey = "co.krypt.kryptonite.caches.key"
+
     enum Errors:Error {
         case noGroupDirectory
     }
     
-    static func createCachesRootDirectory() throws {
-        guard let groupDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID) else {
-            throw Errors.noGroupDirectory
+    /// Use a random id as the caches root directory name, store the id in keychain
+    static func rootDirectory() throws -> URL? {
+        let groupDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)
+        
+        var randomID:Data
+        if let storedRandomID = try? KeychainStorage().getData(key: cachesRootDirectoryNameKey) {
+            randomID = storedRandomID
+        } else {
+            randomID = try Data.random(size: 32)
+            try KeychainStorage().setData(key: cachesRootDirectoryNameKey, data: randomID)
         }
         
-        var cachesRootDirectory = groupDirectory.appendingPathComponent(cachesRootDirectoryName)
+        let cachesRootDirectory = groupDirectory?.appendingPathComponent(randomID.toBase64(true))
+        return cachesRootDirectory
+
+    }
+    
+    static func directory(for name:String) -> URL? {
+        guard let cachesRootDirectory:URL? = try? Caches.rootDirectory() else {
+            return nil
+        }
+        
+        let cacheDirectory = cachesRootDirectory?.appendingPathComponent(name)
+        return cacheDirectory
+    }
+    
+    /// Create the caches root directory marking it to not be backedup
+    static func createCachesRootDirectory() throws {
+        guard var cachesRootDirectory = try Caches.rootDirectory() else {
+            throw Errors.noGroupDirectory
+        }
         
         // create the directory if it doesn't exist
         try FileManager.default.createDirectory(at: cachesRootDirectory,
@@ -33,14 +58,4 @@ class Caches {
         resourceValues.isExcludedFromBackup = true
         try cachesRootDirectory.setResourceValues(resourceValues)
     }
-    
-    static func directory(for name:String) -> URL? {
-        let groupDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)
-        let cachesRootDirectory = groupDirectory?.appendingPathComponent(cachesRootDirectoryName)
-        let cacheDirectory = cachesRootDirectory?.appendingPathComponent(name)
-        
-        return cacheDirectory
-    }
-    
-    
 }
