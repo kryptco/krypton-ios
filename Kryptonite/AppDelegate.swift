@@ -24,12 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Analytics.migrateOldIDIfExists()
         Analytics.migrateAnalyticsDisabled()
         
-        do {
-            try Caches.createCachesRootDirectory()
-        } catch {
-            log("error: could not create caches root directory!. \(error)", .error)
-        }
-        
         Resources.makeAppearences()
         
         if !API.provision() {
