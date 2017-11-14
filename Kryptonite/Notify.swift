@@ -215,6 +215,11 @@ class Notify {
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
     
+    static func presentAppDataProtectionNotAvailableError() {
+        let request = UNNotificationRequest(identifier: "app_error_identifier", content: NotifyShared.appDataProtectionNotAvailableError(), trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
+    
     /**
         Tell the user that their PGP Key was exported
      */

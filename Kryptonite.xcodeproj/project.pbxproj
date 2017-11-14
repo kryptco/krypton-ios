@@ -216,6 +216,8 @@
 		FA8B54411ED7BD1200891161 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
+		FA9520681FBB957A00E59884 /* NotifyShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9520671FBB957A00E59884 /* NotifyShared.swift */; };
+		FA9520691FBB957A00E59884 /* NotifyShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9520671FBB957A00E59884 /* NotifyShared.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
@@ -655,6 +657,7 @@
 		FA8B543D1ED7780500891161 /* NotifyUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifyUI.entitlements; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
+		FA9520671FBB957A00E59884 /* NotifyShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyShared.swift; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
@@ -981,6 +984,7 @@
 				FA443DE61FB95CB300EB452A /* Policy+Pending.swift */,
 				FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */,
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
+				FA9520671FBB957A00E59884 /* NotifyShared.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */,
 				FA17B96D1FB3638100975FB0 /* Request+Policy.swift */,
@@ -2062,6 +2066,7 @@
 				FA5A9E741F9BC75300954872 /* AppDelegate+Notifications.swift in Sources */,
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
 				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
+				FA9520681FBB957A00E59884 /* NotifyShared.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
@@ -2185,6 +2190,7 @@
 				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
 				FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */,
+				FA9520691FBB957A00E59884 /* NotifyShared.swift in Sources */,
 				FA2949E51EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,

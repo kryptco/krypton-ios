@@ -20,9 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var pendingLink:Link?
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-
-        Analytics.migrateOldIDIfExists()
-        Analytics.migrateAnalyticsDisabled()
         
         Resources.makeAppearences()
         
@@ -31,8 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         AWSLogger.default().logLevel = .none
-        TransportControl.shared.add(sessions: SessionManager.shared.all)
-                
+        
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
             let link = Link(url: url)
@@ -47,8 +43,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.registerPushNotifications()
         }
 
-        Analytics.appLaunch()
-        
+        /// if app is ever launched in the background *before* device is "unlocked for the first time":
+        /// ensure that we wait until the device is "unlocked for the first time" so that the sessions
+        /// can be loaded
+        dispatchAsync {
+            
+            // do one check to alert the user if needed
+            if !KeychainStorage().isInteractionAllowed() {
+                Notify.presentAppDataProtectionNotAvailableError()
+            }
+            
+            // keep checking for data protection to be available
+            // before we initialize the sessions
+            while !KeychainStorage().isInteractionAllowed() {
+                sleep(1)
+            }
+            
+            Analytics.migrateOldIDIfExists()
+            Analytics.migrateAnalyticsDisabled()
+            
+            TransportControl.shared.add(sessions: SessionManager.shared.all)
+            Analytics.appLaunch()
+        }
 
         return true
     }

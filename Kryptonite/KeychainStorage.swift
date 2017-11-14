@@ -9,9 +9,11 @@
 import Foundation
 
 private let KrKeychainServiceName = "kr_keychain_service"
+private let TestKey = "kr_test_for_interaction_allowed_key"
 
 enum KeychainStorageError:Error {
     case notFound
+    case notAllowed
     case saveError(OSStatus?)
     case delete(OSStatus?)
     case unknown(OSStatus?)
@@ -39,6 +41,9 @@ class KeychainStorage {
         let _ = SecItemDelete(params as CFDictionary)
         
         let status = SecItemAdd(params as CFDictionary, nil)
+        if status == errSecInteractionNotAllowed {
+            throw KeychainStorageError.notAllowed
+        }
         guard status.isSuccess() else {
             throw KeychainStorageError.saveError(status)
         }
@@ -67,6 +72,9 @@ class KeychainStorage {
         if status == errSecItemNotFound {
             throw KeychainStorageError.notFound
         }
+        if status == errSecInteractionNotAllowed {
+            throw KeychainStorageError.notAllowed
+        }
         
         guard let data = object as? Data, status.isSuccess() else {
             throw KeychainStorageError.unknown(status)
@@ -93,6 +101,17 @@ class KeychainStorage {
         guard status.isSuccess() else {
             throw KeychainStorageError.delete(status)
         }
+    }
+    
+    /// Workaround: test if the device has been "first unlocked"
+    func isInteractionAllowed() -> Bool {
+        do {
+            try set(key: TestKey, value: "")
+        } catch KeychainStorageError.notAllowed {
+            return false
+        } catch {}
+        
+        return true
     }
     
 }

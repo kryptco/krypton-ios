@@ -19,8 +19,15 @@ class NotificationService: UNNotificationServiceExtension {
     var bestAttemptMutex = Mutex()
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        
         self.contentHandler = contentHandler
+        
+        /// if app is ever launched in the background *before* device is "unlocked for the first time":
+        /// ensure that we wait until the device is "unlocked for the first time" so that the sessions
+        /// can be loaded
+        guard KeychainStorage().isInteractionAllowed() else {
+            contentHandler(NotifyShared.appDataProtectionNotAvailableError())
+            return
+        }
         
         // provision AWS API
         guard API.provision() else {
