@@ -29,7 +29,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
     enum ApprovalControl:Int {
         case on = 0
-        case off = 2
+        case off = 1
     }
     
     enum LogType {

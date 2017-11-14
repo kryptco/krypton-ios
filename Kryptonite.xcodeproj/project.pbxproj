@@ -144,6 +144,9 @@
 		FA443DF31FBA36D900EB452A /* Policy+UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */; };
 		FA443DF41FBA36D900EB452A /* Policy+Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE61FB95CB300EB452A /* Policy+Pending.swift */; };
 		FA443E041FBA370E00EB452A /* Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4C51D89FEB5000B9A01 /* Policy.swift */; };
+		FA443E061FBA924000EB452A /* Caches.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* Caches.swift */; };
+		FA443E071FBA924000EB452A /* Caches.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* Caches.swift */; };
+		FA443E081FBA924300EB452A /* Caches.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* Caches.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA49F7871D9B6B3300372556 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA49F7861D9B6B3300372556 /* NotificationCenter.framework */; };
@@ -619,6 +622,7 @@
 		FA443DD31FB66D7200EB452A /* TemporaryApprovalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryApprovalController.swift; sourceTree = "<group>"; };
 		FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Policy+UserNotifications.swift"; sourceTree = "<group>"; };
 		FA443DE61FB95CB300EB452A /* Policy+Pending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Policy+Pending.swift"; sourceTree = "<group>"; };
+		FA443E051FBA924000EB452A /* Caches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caches.swift; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA49F7851D9B6B3200372556 /* LastCommand.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastCommand.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1077,6 +1081,7 @@
 				FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */,
 				FAB664EE1DBFF18C0094896F /* Updater.swift */,
 				FAD361F61DF08F9E00D17BAB /* Connectivity.swift */,
+				FA443E051FBA924000EB452A /* Caches.swift */,
 				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */,
 				FA1682891EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld */,
@@ -1430,6 +1435,9 @@
 								enabled = 1;
 							};
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
 								enabled = 1;
 							};
 							com.apple.Keychain = {
@@ -2042,6 +2050,7 @@
 				FAE495891DBD89F100A97708 /* M13CheckboxAnimationGenerator.swift in Sources */,
 				FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
+				FA443E061FBA924000EB452A /* Caches.swift in Sources */,
 				FAE495901DBD89F100A97708 /* M13CheckboxFillController.swift in Sources */,
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
@@ -2080,6 +2089,7 @@
 				FACE33691EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift in Sources */,
 				8DCB604C1E9446D300E1B924 /* AWS.swift in Sources */,
 				8D003DF61D90EECE0085ED21 /* SodiumTests.swift in Sources */,
+				FA443E081FBA924300EB452A /* Caches.swift in Sources */,
 				8DCB603C1E9445F200E1B924 /* Silo.swift in Sources */,
 				8DCB60451E94468B00E1B924 /* SignatureLog.swift in Sources */,
 				8D05CB331ED3E08500CCCC38 /* TagInfo.swift in Sources */,
@@ -2159,6 +2169,7 @@
 				FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */,
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FA17B96F1FB3638100975FB0 /* Request+Policy.swift in Sources */,
+				FA443E071FBA924000EB452A /* Caches.swift in Sources */,
 				FA1682A01EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* Keypair+SSHFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,

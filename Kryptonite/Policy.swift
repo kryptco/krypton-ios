@@ -31,7 +31,7 @@ class Policy {
     enum StorageKey:String {
         case settings = "policy_settings"
         case temporarilyAllowedHosts = "policy_temporarily_approved_user_at_hosts"
-        
+
         func key(for sessionID:String) -> String {
             return "\(self.rawValue)_\(sessionID)"
         }
@@ -131,12 +131,14 @@ class Policy {
         /// init
         init(for session:Session) {
             self.sessionID = session.id
-            self.sshUserAndHostAllowedUntil = try? Cache<NSData>(
-                name: StorageKey.temporarilyAllowedHosts.key(for: session.id),
-                directory: Policy.policyCacheURL)
             
-            guard let settingsObject = UserDefaults.group?.object(forKey: StorageKey.settings.key(for: session.id)) as? Object,
-                let settings = try? Settings(json: settingsObject)
+            let cacheName = StorageKey.temporarilyAllowedHosts.key(for: session.id)
+            self.sshUserAndHostAllowedUntil = try? Cache<NSData>(
+                name: cacheName,
+                directory: Policy.policyCacheURL?.appendingPathComponent(cacheName))
+            
+            guard let settingsObject = try? KeychainStorage().getData(key: StorageKey.settings.key(for: session.id)),
+                let settings = try? Settings(jsonData: settingsObject)
                 else {
                     self._settings = Settings()
                     return
@@ -200,6 +202,9 @@ class Policy {
             }
             
             save()
+            
+            // send allowed pending
+            Policy.sendAllowedPendingIfNeeded()
         }
         
         func allowThis(userAndHost:VerifiedUserAndHostAuth, for timeInterval:TimeInterval) {
@@ -213,6 +218,9 @@ class Policy {
             } catch {
                 log("error saving temporary host: \(error)", .error)
             }
+            
+            // send allowed pending
+            Policy.sendAllowedPendingIfNeeded()
         }
         
         
@@ -291,8 +299,12 @@ class Policy {
         
         /// Save
         private func save() {
-            UserDefaults.group?.set(self.settings.object, forKey: StorageKey.settings.key(for: sessionID))
-            UserDefaults.group?.synchronize()
+            do {
+                try KeychainStorage().setData(key: StorageKey.settings.key(for: sessionID), data: self.settings.jsonData())
+            } catch {
+                log("error: could not save policy prefs \(error)", .error)
+            }
+            
         }
     }
 

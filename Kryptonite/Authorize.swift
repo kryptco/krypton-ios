@@ -10,13 +10,15 @@ import Foundation
 import UIKit
 
 extension Request {
-    func approveController(for session:Session) -> UIViewController? {
+    func approveController(for session:Session, from presenter:UIViewController) -> UIViewController? {
         
         switch self.body {
         case .ssh, .git:
             let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController") as? ApproveController
             controller?.session = session
             controller?.request = self
+            controller?.presentingBaseController = presenter
+            
             return controller
 
         case .hosts:
@@ -68,7 +70,7 @@ extension UIViewController {
         Policy.removePendingAuthorization(session: session, request: request)
         
         // proceed to show approval request
-        guard let approvalController = request.approveController(for: session) else {
+        guard let approvalController = request.approveController(for: session, from: self) else {
             log("nil approve controller", .error)
             return
         }

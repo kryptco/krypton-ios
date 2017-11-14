@@ -12,6 +12,7 @@ enum CommunicationMedium:String {
     case bluetooth
     case remoteNotification
     case sqs
+    case internalPending
 }
 
 class CommunicationActivity {

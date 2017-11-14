@@ -40,6 +40,8 @@ class ApproveController:UIViewController {
     }
     
     var detailController:ApproveDetailController?
+    
+    var presentingBaseController:UIViewController?
 
     // options
     @IBOutlet weak var optionView:UIView!
@@ -319,12 +321,13 @@ class ApproveController:UIViewController {
             self.view.backgroundColor = UIColor.clear
         }
         
-        let presenting = self.presentingViewController 
+        let presenting = self.presentingBaseController
         self.dismiss(animated: true, completion: {
             (presenting as? KRBase)?.approveControllerDismissed(allowed: allowed)
         })
     }
 }
+
 
 
 

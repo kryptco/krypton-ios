@@ -60,15 +60,9 @@ class Silo {
 
     
     init() {
-        requestCache = try? Cache<NSData>(name: "silo_cache", directory: sharedDirectory)
-        pendingRequests = try? Cache<NSString>(name: "silo_pending_requests", directory: sharedDirectory)
+        requestCache = try? Cache<NSData>(name: "silo_cache", directory: Caches.directory(for: "silo_cache"))
+        pendingRequests = try? Cache<NSString>(name: "silo_pending_requests", directory: Caches.directory(for: "silo_pending_requests"))
     }
-    
-    lazy var sharedDirectory:URL? = {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("cache")
-    }()
-
-
     
     //MARK: Handle Logic
     func handle(request:Request, session:Session, communicationMedium: CommunicationMedium, completionHandler: (()->Void)? = nil) throws {
