@@ -19,6 +19,8 @@ struct Session:Jsonable {
         case pub = "public"
         case priv = "private"
         
+        case workstationPub = "workstation_public"
+        
         func tag(for id:String) -> String {
             return "\(id)_\(self.rawValue)"
         }
@@ -33,7 +35,16 @@ struct Session:Jsonable {
     init(json: Object) throws {
         id  = try json ~> "id"
         
-        let workstationPublicKey = try ((try json ~> "workstation_public_key") as String).fromBase64()
+        var workstationPublicKey:Box.PublicKey
+        do {
+            workstationPublicKey = try KeychainStorage().get(key: KeychainKey.workstationPub.tag(for: id)).fromBase64()
+        } catch KeychainStorageError.notFound {
+            // get from json
+            workstationPublicKey = try ((try json ~> "workstation_public_key") as String).fromBase64()
+            
+            // migrate key to keychain
+            try KeychainStorage().set(key: KeychainKey.workstationPub.tag(for: id), value: workstationPublicKey.toBase64())
+        }
         
         let publicKey = try KeychainStorage().get(key: KeychainKey.pub.tag(for: id)).fromBase64()
         let privateKey = try KeychainStorage().get(key: KeychainKey.priv.tag(for: id)).fromBase64()
@@ -45,7 +56,6 @@ struct Session:Jsonable {
 
         pairing = try Pairing(name: json ~> "name", workstationPublicKey: workstationPublicKey, keyPair: Box.KeyPair(publicKey: publicKey, secretKey: privateKey), version: version)
         
-
         created = Date(timeIntervalSince1970: try json ~> "created")
     }
     
@@ -53,8 +63,7 @@ struct Session:Jsonable {
         var objectMap:[String : Any] = ["id": id,
                          "name": pairing.name,
                          "queue": pairing.queue,
-                         "created": created.timeIntervalSince1970,
-                         "workstation_public_key": pairing.workstationPublicKey.toBase64()]
+                         "created": created.timeIntervalSince1970]
         
         if let ver = pairing.version {
             objectMap["version"] = ver.string
