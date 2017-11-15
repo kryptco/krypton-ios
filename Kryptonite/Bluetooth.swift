@@ -12,12 +12,14 @@ import AwesomeCache
 
 
 class BluetoothManager:TransportMedium {
-    
+
+    let queue: DispatchQueue
     var handler:TransportControlRequestHandler
-    
-    var peripheralManager:CBPeripheralManager
-    var bluetoothDelegate:BluetoothPeripheralDelegate
+
+    var peripheralManager:CBPeripheralManager? = nil
+    var bluetoothDelegate:BluetoothPeripheralDelegate? = nil
     var sessionServiceUUIDS: [String: Session] = [:]
+    var queuedMessages : [(Session, NetworkMessage)] = []
     var mutex = Mutex()
     
     var medium:CommunicationMedium {
@@ -26,32 +28,79 @@ class BluetoothManager:TransportMedium {
     
     required init(handler: @escaping TransportControlRequestHandler) {
         self.handler = handler
-        let queue = DispatchQueue.global()
+        self.queue = DispatchQueue.global()
+    }
+
+    private lazy var spawnBluetoothInitOnce : () = {
+        dispatchAsync {
+            while !self.tryInitBluetooth() {
+                sleep(1)
+            }
+        }
+    }()
+
+    //  check for background bluetooth authorization and initialize bluetooth if enabled
+    //  else prompt user to enable bluetooth
+    func tryInitBluetooth() -> Bool {
+        mutex.lock()
+        defer { mutex.unlock() }
+        guard case .authorized = CBPeripheralManager.authorizationStatus() else {
+            //  prompt for bluetooth permission
+            log("bluetooth authorization failed: \(CBPeripheralManager.authorizationStatus())")
+            let _ = CBPeripheralManager()
+            return false
+        }
         self.bluetoothDelegate = BluetoothPeripheralDelegate(queue: queue)
         self.peripheralManager = CBPeripheralManager(delegate: bluetoothDelegate, queue: queue, options: nil)
-        self.bluetoothDelegate.peripheralManager = self.peripheralManager
-        self.bluetoothDelegate.onReceive = onBluetoothReceive
+        self.bluetoothDelegate?.peripheralManager = self.peripheralManager
+        self.bluetoothDelegate?.onReceive = onBluetoothReceive
+        for session in sessionServiceUUIDS.values {
+            addLocked(session: session)
+        }
+        for (session, message) in queuedMessages {
+            sendLocked(message: message, for: session, completionHandler: nil)
+        }
+        queuedMessages.removeAll()
+        return true
     }
     
     //MARK: Transport
     
     func send(message:NetworkMessage, for session:Session, completionHandler: (()->Void)?) {
         //TODO: bluetooth completion
-        bluetoothDelegate.writeToServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid), message: message)
+        mutex.lock()
+        defer { mutex.unlock() }
+        sendLocked(message: message, for: session, completionHandler: completionHandler)
     }
-    func add(session:Session) {
-        mutex.lock {
-            let uuid = session.pairing.uuid
-            sessionServiceUUIDS[uuid.uuidString] = session
-            bluetoothDelegate.addServiceUUID(uuid: CBUUID(nsuuid: uuid))
-        }
 
+    private func sendLocked(message:NetworkMessage, for session:Session, completionHandler: (()->Void)?) {
+        //TODO: bluetooth completion
+        guard let delegate = bluetoothDelegate else {
+            queuedMessages.append((session, message))
+            while queuedMessages.count > 5 {
+                let _ = queuedMessages.dropFirst()
+            }
+            return
+        }
+        delegate.writeToServiceUUID(uuid: CBUUID(nsuuid: session.pairing.uuid), message: message)
+    }
+
+    func add(session:Session) {
+        let _ = self.spawnBluetoothInitOnce
+        mutex.lock {
+            addLocked(session: session)
+        }
+    }
+    private func addLocked(session:Session) {
+        let uuid = session.pairing.uuid
+        sessionServiceUUIDS[uuid.uuidString] = session
+        bluetoothDelegate?.addServiceUUID(uuid: CBUUID(nsuuid: uuid))
     }
     func remove(session:Session) {
         mutex.lock {
             let uuid = session.pairing.uuid
             sessionServiceUUIDS.removeValue(forKey: uuid.uuidString)
-            bluetoothDelegate.removeServiceUUID(uuid: CBUUID(nsuuid: uuid))
+            bluetoothDelegate?.removeServiceUUID(uuid: CBUUID(nsuuid: uuid))
         }
     }
     func willEnterBackground() {

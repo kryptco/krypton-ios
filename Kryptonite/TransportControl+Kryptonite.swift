@@ -14,7 +14,8 @@ extension TransportControl {
         transports.append(SQSManager(handler: handle))
     }
     func isBluetoothPoweredOn() -> Bool {
-        if (TransportControl.shared.transport(for: .bluetooth) as? BluetoothManager)?.bluetoothDelegate.peripheralManager?.state == .poweredOn {
+        if (TransportControl.shared.transport(for: .bluetooth) as? BluetoothManager)?.bluetoothDelegate?.peripheralManager?.state == .poweredOn,
+            case .authorized = CBPeripheralManager.authorizationStatus() {
             return true
         }
         return false
