@@ -33,8 +33,8 @@ class KRScanController: RSCodeReaderViewController {
         super.viewDidLoad()
         
         self.focusMarkLayer.strokeColor = UIColor.reject.cgColor
-        self.cornersLayer.strokeColor = UIColor.appBlack.cgColor
-        self.cornersLayer.strokeWidth = 6.0
+        self.cornersLayer.strokeColor = UIColor.app.cgColor
+        self.cornersLayer.strokeWidth = 4.0
         if self.output.availableMetadataObjectTypes.contains(where: { $0 == .qr }) {
             self.output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
         }
