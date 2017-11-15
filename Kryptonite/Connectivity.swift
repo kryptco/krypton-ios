@@ -44,7 +44,8 @@ class Connectivity {
         log("bluetooth off")
         
         //otherwise, completely unreachable
-        presenter.showSettings(with: "Not connected to internet and Bluetooth", message: "Please make sure that either you are connected to the internet or that Bluetooth is turned on. Host \(Connectivity.host) unreachable.", then: nil)
+        presenter.showSettings(with: "Not connected to internet and Bluetooth",
+                               message: "Please make sure that either you are connected to the internet or that Bluetooth is enabled. Host \(Connectivity.host) unreachable.", then: nil)
         
     }
 }

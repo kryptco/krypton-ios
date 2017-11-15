@@ -85,6 +85,8 @@ class SessionManager {
         do {
             try KeychainStorage().set(key: Session.KeychainKey.pub.tag(for: session.id), value: session.pairing.keyPair.publicKey.toBase64())
             try KeychainStorage().set(key: Session.KeychainKey.priv.tag(for: session.id), value: session.pairing.keyPair.secretKey.toBase64())
+            
+            try KeychainStorage().set(key: Session.KeychainKey.workstationPub.tag(for: session.id), value: session.pairing.workstationPublicKey.toBase64())
         } catch {
             log("could not save keypair for id: \(session.id)", .error)
         }
@@ -128,11 +130,13 @@ class SessionManager {
         sessions.values.forEach({
             try? KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
             try? KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
+            try? KeychainStorage().delete(key: Session.KeychainKey.workstationPub.tag(for: $0.id))
         })
         
         temporarySessions.values.forEach({
             try? KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
             try? KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
+            try? KeychainStorage().delete(key: Session.KeychainKey.workstationPub.tag(for: $0.id))
         })
 
 
