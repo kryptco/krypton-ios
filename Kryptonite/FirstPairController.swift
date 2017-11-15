@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 import LocalAuthentication
+import CoreBluetooth
 
 class FirstPairController:UIViewController, KRScanDelegate {
     
@@ -70,11 +71,26 @@ class FirstPairController:UIViewController, KRScanDelegate {
             { (enable) in
                 
                 if enable {
-                    (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+                    (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications {
+                        self.askBluetoothPermissionIfNeeded()
+                    }
                     Analytics.postEvent(category: "push", action: "enabled")
                 } else {
                     Analytics.postEvent(category: "push", action: "not-enabled")
+                    self.askBluetoothPermissionIfNeeded()
                 }
+                
+            }
+        } else {
+            askBluetoothPermissionIfNeeded()
+        }
+    }
+    
+    // ask bluetooth peripheral permission
+    func askBluetoothPermissionIfNeeded() {
+        dispatchMain {
+            if !TransportControl.shared.isBluetoothPoweredOn() {
+                let _ = CBPeripheralManager()
             }
         }
     }

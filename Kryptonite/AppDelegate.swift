@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     
     //MARK: Registering Notifications
-    func registerPushNotifications() {
+    func registerPushNotifications(then:(()->())? = nil) {
         DispatchQueue.main.async {
             UNUserNotificationCenter.current().setNotificationCategories([Policy.authorizeCategory,
                                                                           Policy.authorizeTemporalCategory,
@@ -86,6 +86,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 dispatchMain {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
+                
+                then?()
             })
         }
     }
