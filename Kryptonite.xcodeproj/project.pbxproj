@@ -1314,7 +1314,6 @@
 			buildConfigurationList = FA49F7921D9B6B3300372556 /* Build configuration list for PBXNativeTarget "LastCommand" */;
 			buildPhases = (
 				FA49F7811D9B6B3200372556 /* Sources */,
-				FA309F431DA5947C006D8D81 /* Build Bump */,
 				FA49F7821D9B6B3200372556 /* Frameworks */,
 				FA49F7831D9B6B3200372556 /* Resources */,
 			);
@@ -1331,10 +1330,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
+				FA03C5961E7609940019649E /* Bump Build */,
 				8D45AFEF1E8D718200E84A57 /* Compile ssh-wire */,
 				FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */,
 				FA8141521D714250004FE58C /* CommonCrypto */,
-				FA03C5961E7609940019649E /* Bump Build */,
 				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
 				FA8141321D70B0F4004FE58C /* Sources */,
@@ -1383,7 +1382,6 @@
 				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
 				8D45AFDE1E8D59CB00E84A57 /* Compile ssh-wire */,
 				FA1951111E96CFF70036B425 /* Compile AWS Core,SQS,SNS */,
-				FAB517BE1E54D6C90032DD47 /* Build Bump */,
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
 				FAF1E61C1E031BB9003CBEA2 /* Frameworks */,
 				FAF1E61D1E031BB9003CBEA2 /* Resources */,
@@ -1403,7 +1401,6 @@
 			buildPhases = (
 				FA8B54471ED7F89200891161 /* Common Crypto */,
 				FAFF1E831ED6816B0063C44C /* Sources */,
-				FA8B54461ED7F84B00891161 /* Build Bump */,
 				FAFF1E841ED6816B0063C44C /* Frameworks */,
 				FAFF1E851ED6816B0063C44C /* Resources */,
 			);
@@ -1768,7 +1765,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
+			shellScript = "buildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/NotifyUI/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n\n";
 		};
 		FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1812,20 +1809,6 @@
 			shellPath = /bin/sh;
 			shellScript = "";
 		};
-		FA309F431DA5947C006D8D81 /* Build Bump */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build Bump";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n";
-		};
 		FA8141521D714250004FE58C /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1853,20 +1836,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"\n";
-		};
-		FA8B54461ED7F84B00891161 /* Build Bump */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build Bump";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/NotifyUI/Info.plist\"\n";
 		};
 		FA8B54471ED7F89200891161 /* Common Crypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1909,20 +1878,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
-		};
-		FAB517BE1E54D6C90032DD47 /* Build Bump */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build Bump";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\n\nbuildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n";
 		};
 		FAEE04A41D74BCCF002A7AFD /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
