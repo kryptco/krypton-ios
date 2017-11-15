@@ -1330,7 +1330,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Kryptonite" */;
 			buildPhases = (
-				FA03C5961E7609940019649E /* Bump Build */,
 				8D45AFEF1E8D718200E84A57 /* Compile ssh-wire */,
 				FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */,
 				FA8141521D714250004FE58C /* CommonCrypto */,
@@ -1379,6 +1378,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAF1E6381E031BB9003CBEA2 /* Build configuration list for PBXNativeTarget "Notify" */;
 			buildPhases = (
+				FA064FEA1FBCC18000A62A3F /* Build Bump */,
 				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
 				8D45AFDE1E8D59CB00E84A57 /* Compile ssh-wire */,
 				FA1951111E96CFF70036B425 /* Compile AWS Core,SQS,SNS */,
@@ -1753,19 +1753,19 @@
 			shellPath = /bin/bash;
 			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
-		FA03C5961E7609940019649E /* Bump Build */ = {
+		FA064FEA1FBCC18000A62A3F /* Build Bump */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Bump Build";
+			name = "Build Bump";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/NotifyUI/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n\n";
+			shellScript = "buildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/NotifyUI/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n";
 		};
 		FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */ = {
 			isa = PBXShellScriptBuildPhase;
