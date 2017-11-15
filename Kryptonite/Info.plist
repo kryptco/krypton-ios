@@ -17,19 +17,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2.0</string>
+	<string>2.3.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>522</string>
+	<string>634</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Kryptonite uses bluetooth to communicate to paired devices.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan QR codes to pair Kryptonite with your computer.</string>
-    <key>NSFaceIDUsageDescription</key>
-    <string>Kryptonite uses FaceID to authenticate you before pairing with a new computer.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Kryptonite uses FaceID to authenticate you before pairing with a new computer.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceCodePro-Regular</string>

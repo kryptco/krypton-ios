@@ -11,7 +11,7 @@ import Foundation
 struct Properties {
     
     //MARK: Version
-    static let currentVersion = Version(major: 2, minor: 2, patch: 0)
+    static let currentVersion = Version(major: 2, minor: 3, patch: 0)
     
     struct Compatibility {
         static let rsaSha256Sha512Support = Version(major: 2, minor: 1, patch: 0)
