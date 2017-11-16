@@ -17,6 +17,7 @@ enum CryptoError : Error {
     case encrypt
     case decrypt
     case export(OSStatus?)
+    case publicKeyImport(KeyType)
     case load(KeyType, OSStatus?)
     case destroy(KeyType, OSStatus?)
     case tagExists
@@ -26,6 +27,8 @@ enum CryptoError : Error {
     case fingerprint
     case certImport
     case keyNotFound
+    case badAccess
+    case verify(KeyType)
 }
 
 

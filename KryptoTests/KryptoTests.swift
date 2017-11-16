@@ -8,14 +8,32 @@
 
 import XCTest
 import Sodium
+import Security
+
+
 
 class KryptoTests: XCTestCase {
     
-    var keypairClasses:[KeyPair.Type] = [RSAKeyPair.self, Ed25519KeyPair.self]
-    var publicKeyClasses:[PublicKey.Type] = [RSAPublicKey.self, Sign.PublicKey.self]
-    var digestTypes:[[DigestType]] = [[.sha1, .sha256, .sha512], [.ed25519]]
+    var keypairClasses:[KeyPair.Type] = []
+    var publicKeyClasses:[PublicKey.Type] = []
+    var digestTypes:[[DigestType]] = []
 
+    class UnsafeNISTP256KeyPair:NISTP256KeyPair {
+        override class var useSecureEnclave:Bool { return false }
+    }
+    
     override func setUp() {
+        keypairClasses = [RSAKeyPair.self, Ed25519KeyPair.self]
+
+        if Platform.isSimulator {
+            keypairClasses.append(UnsafeNISTP256KeyPair.self)
+        } else {
+            keypairClasses.append(NISTP256KeyPair.self)
+        }
+        
+        publicKeyClasses = [RSAPublicKey.self, Sign.PublicKey.self, NISTP256PublicKey.self]
+        digestTypes = [[.sha1, .sha256, .sha512], [.ed25519], [.sha1, .sha224, .sha256, .sha384, .sha512]]
+        
         super.setUp()
     }
     
@@ -187,6 +205,7 @@ class KryptoTests: XCTestCase {
     func testGenSignExportVerify() {
         
         for (index, KPClass) in keypairClasses.enumerated() {
+            
             let PKClass = publicKeyClasses[index]
 
             for digestType in digestTypes[index] {
@@ -264,6 +283,34 @@ class KryptoTests: XCTestCase {
             }
         }
         
+        
+    }
+    
+    func testFailExportKeyFromEnclave() {
+        guard !Platform.isSimulator else {
+            return
+        }
+        
+        do {
+            try NISTP256KeyPair.destroy("test")
+            let nistP256KP = try NISTP256KeyPair.generate("test")
+            
+            var error: Unmanaged<CFError>?
+            guard let keyData = SecKeyCopyExternalRepresentation(nistP256KP.privateKey as! SecKey, &error) else {
+                if let err = error?.takeRetainedValue() {
+                    throw err as Error
+                }
+                
+                throw CryptoError.export(nil)
+            }
+            
+            let key = keyData as Data
+            XCTFail("Error: extracted key successfully !!!!!: \(key.bytes)")
+
+        } catch {
+            XCTAssertTrue(true, "\(error)")
+        }
+
         
     }
     

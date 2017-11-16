@@ -82,7 +82,20 @@ extension Data {
             throw UTF8EncodingError()
         }
         return utf8String
-    }    
+    }
+    
+    func stripLeadingZeros() -> Data {
+        guard self.count > 0 else {
+            return self
+        }
+        
+        var data = Data(self)
+        while data.first == 0x00 {
+            data = data.suffix(from: 1)
+        }
+        
+        return data    
+    }
 }
 
 extension NSMutableData {

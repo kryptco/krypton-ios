@@ -32,7 +32,14 @@ extension PublicKey {
 //MARK: SSH Key Type
 extension KeyType {
     func sshHeader() -> String {
-        return "ssh-\(self.rawValue)"
+        switch self {
+        case .RSA:
+            return "ssh-rsa"
+        case .Ed25519:
+            return "ssh-ed25519"
+        case .nistP256:
+            return "ecdsa-sha2-nistp256"
+        }
     }
     func sshHeaderBytes() throws -> [UInt8] {
         guard  let keyTypeBytes = self.sshHeader().data(using: String.Encoding.utf8)?.bytes
@@ -130,6 +137,27 @@ extension Sign.PublicKey:SSHPublicKey {
     }
 }
 
+extension NISTP256PublicKey:SSHPublicKey {
+    func wireFormat() throws -> Data {
+        // ssh-wire-encoding(ecdsa-sha2-nistp256, len pub key, pub key)
+        
+        var wireBytes:[UInt8] = [0x00, 0x00, 0x00, UInt8(19)]
+        wireBytes.append(contentsOf: try self.type.sshHeaderBytes())
+        
+        
+        let identifier = [UInt8]("nistp256".utf8)
+        wireBytes.append(contentsOf: Data(bytes: identifier).bigEndianByteSize())
+        wireBytes.append(contentsOf: identifier)
+        
+        let publicKeyRaw = try self.export()
+        
+        wireBytes.append(contentsOf: publicKeyRaw.bigEndianByteSize())
+        wireBytes.append(contentsOf: publicKeyRaw.bytes)
+        
+        return Data(bytes: wireBytes)
+    }
+}
+
 // MARK: SSH Digest Type
 struct UnsupportedSSHDigestAlgorithm:Error {}
 
@@ -151,6 +179,8 @@ extension DigestType {
                 self = .sha512
             case KeyType.Ed25519.sshHeader():
                 self = .ed25519
+            case KeyType.nistP256.sshHeader():
+                self = .sha256
             default:
                 throw UnsupportedSSHDigestAlgorithm()
         }
@@ -187,8 +217,19 @@ extension DigestType {
 }
 
 // MARK: SSH Signature Format
+struct UnknownSSHSignatureFormatFormat:Error {}
+
 extension KeyPair {
     func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
+        guard let sshKeyPair = self as? SSHKeyPair
+            else {
+                return try defaultSignAppendingSSHWirePubkeyToPayload(data: data, digestType: digestType)
+        }
+        
+        return try sshKeyPair.signAppendingSSHWirePubkeyToPayload(data: data, digestType: digestType)
+    }
+    
+    func defaultSignAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
         var dataClone = Data(data)
         let pubkeyWire = try publicKey.wireFormat()
         dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
@@ -198,4 +239,34 @@ extension KeyPair {
     
 }
 
+protocol SSHKeyPair {
+    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String
+}
+
+extension NISTP256KeyPair:SSHKeyPair {
+    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
+        var dataClone = Data(data)
+        let pubkeyWire = try publicKey.wireFormat()
+        dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
+        dataClone.append(pubkeyWire)
+        
+        let signature = try sign(data: dataClone, digestType: digestType)
+        let (sigR, sigS) = try NISTP256X962Signature(asn1Encoding: signature).splitIntoComponents()
+    
+        
+        // encode the signature
+        var encodedSignature = Data()
+        
+        // r
+        encodedSignature.append(contentsOf: sigR.bigEndianByteSize())
+        encodedSignature.append(sigR)
+        
+        // s
+        encodedSignature.append(contentsOf: sigS.bigEndianByteSize())
+        encodedSignature.append(sigS)
+        
+        return encodedSignature.toBase64()
+    }
+
+}
 

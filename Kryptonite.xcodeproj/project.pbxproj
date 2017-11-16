@@ -66,6 +66,10 @@
 		FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03C5841E749A520019649E /* RePairWarningController.swift */; };
 		FA03C5991E760CD50019649E /* BUILD in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5971E760CD50019649E /* BUILD */; };
 		FA03C59A1E760CD50019649E /* COMMIT in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5981E760CD50019649E /* COMMIT */; };
+		FA064FED1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */; };
+		FA064FEE1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */; };
+		FA064FEF1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */; };
+		FA0650041FBE090200A62A3F /* NISTP256KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */; };
 		FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */; };
 		FA12EAB41ECFA942001603BF /* CodeSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */; };
 		FA12EAB51ECFA96C001603BF /* PGPFormat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA12EAA41ECFA917001603BF /* PGPFormat.framework */; };
@@ -575,6 +579,7 @@
 		FA03C5841E749A520019649E /* RePairWarningController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RePairWarningController.swift; sourceTree = "<group>"; };
 		FA03C5971E760CD50019649E /* BUILD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD; sourceTree = "<group>"; };
 		FA03C5981E760CD50019649E /* COMMIT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMMIT; sourceTree = "<group>"; };
+		FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NISTP256KeyPair.swift; sourceTree = "<group>"; };
 		FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallMethod.swift; sourceTree = "<group>"; };
 		FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PGPFormat.xcodeproj; path = "swift-pgp/PGPFormat.xcodeproj"; sourceTree = "<group>"; };
 		FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSigningTests.swift; sourceTree = "<group>"; };
@@ -1223,6 +1228,7 @@
 				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
 				FAE45B9C1E64AA3E00A583AB /* Ed25519.swift */,
 				FAE45B981E64750E00A583AB /* RSAKeyPair.swift */,
+				FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */,
 				FAEE048B1D7369C3002A7AFD /* Keypair+SSHFormat.swift */,
 				FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */,
 				FAFE546E1D7B9C1400391FDD /* Wrap.swift */,
@@ -1983,6 +1989,7 @@
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAE4958F1DBD89F100A97708 /* M13CheckboxFadeController.swift in Sources */,
 				FAAE81911E576FC2002A9AE6 /* Policy+UI.swift in Sources */,
+				FA064FED1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
 				FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */,
@@ -2110,6 +2117,7 @@
 				FA1682A11EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FA12EAB41ECFA942001603BF /* CodeSigningTests.swift in Sources */,
 				8DCB60381E94438C00E1B924 /* Mutex.swift in Sources */,
+				FA064FEF1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */,
 				FAEE04A71D74BD47002A7AFD /* CryptoError.swift in Sources */,
 				8DCB604D1E9446D300E1B924 /* Bluetooth.swift in Sources */,
 				8D45B0081E8D7CEA00E84A57 /* HostAuth.swift in Sources */,
@@ -2171,6 +2179,7 @@
 				8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */,
 				FA443DE81FB95CB300EB452A /* Policy+Pending.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
+				FA064FEE1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
 				FAB517961E54D52F0032DD47 /* Response.swift in Sources */,
@@ -2205,6 +2214,7 @@
 				FA8B540E1ED773EE00891161 /* Request.swift in Sources */,
 				FA8B542A1ED774C100891161 /* Ed25519.swift in Sources */,
 				FA8B54131ED773EE00891161 /* Response.swift in Sources */,
+				FA0650041FBE090200A62A3F /* NISTP256KeyPair.swift in Sources */,
 				FA443DC21FB6523700EB452A /* ErrorRequestController.swift in Sources */,
 				FA8B54351ED774F700891161 /* String+User.swift in Sources */,
 				FA443DC11FB6523700EB452A /* GitTagRequestController.swift in Sources */,
@@ -2527,6 +2537,7 @@
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				INFOPLIST_FILE = KryptoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2551,6 +2562,7 @@
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
 				INFOPLIST_FILE = KryptoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

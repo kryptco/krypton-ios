@@ -9,7 +9,7 @@
 import Foundation
 import JSON
 import AwesomeCache
-
+import PGPFormat
 
 struct InvalidRequestTimeError:Error{}
 struct RequestPendingError:Error{}
@@ -310,7 +310,9 @@ class Silo {
             
             var pgpPublicKey:Data?
             if let pgpUserID = meRequest.pgpUserId {
-                pgpPublicKey = try keyManager.loadPGPPublicKey(for: pgpUserID).packetData
+                let message = try keyManager.loadPGPPublicKey(for: pgpUserID)
+                pgpPublicKey = message.packetData
+                log("pgp public key:\n\(message.toString())", .warning)
             }
             
             responseType = .me(MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))

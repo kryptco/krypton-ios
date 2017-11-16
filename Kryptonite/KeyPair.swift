@@ -18,11 +18,16 @@ enum KeyIdentifier:String {
     func tag(_ tag:String) -> String {
         return "\(self.rawValue).\(tag)"
     }
+    
+    func tag(_ tag:String, type:KeyType) -> String {
+        return "\(self.rawValue).\(type.rawValue).\(tag)"
+    }
 }
 
 enum KeyType:String {
     case RSA = "rsa"
     case Ed25519 = "ed25519"
+    case nistP256 = "ecdsa-sha2-nistp256"
 }
 
 enum DigestType {

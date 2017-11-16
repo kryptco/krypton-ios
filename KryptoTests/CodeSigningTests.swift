@@ -14,165 +14,158 @@ import Sodium
 
 class CodeSigningTests: XCTestCase {
     
+    var keypairClasses:[KeyPair.Type] = []
+    var publicKeyClasses:[PublicKey.Type] = []
+    var hashAlgorithms:[Signature.HashAlgorithm] = [.sha1, .sha224, .sha256, .sha384, .sha512]
+
+    class UnsafeNISTP256KeyPair:NISTP256KeyPair {
+        override class var useSecureEnclave:Bool { return false }
+    }
+    
     override func setUp() {
+        keypairClasses = [RSAKeyPair.self, Ed25519KeyPair.self]
+        
+        if Platform.isSimulator {
+            keypairClasses.append(UnsafeNISTP256KeyPair.self)
+        } else {
+            keypairClasses.append(NISTP256KeyPair.self)
+        }
+        
+        publicKeyClasses = [RSAPublicKey.self, Sign.PublicKey.self, NISTP256PublicKey.self]
         super.setUp()
     }
     
+
     override func tearDown() {
         super.tearDown()
     }
     
-    
-    func testCreatePGPPublicKeyRSA() {
-        do {
-            try RSAKeyPair.destroy("test")
-            let keypair = try RSAKeyPair.generate("test")
-
-            let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
-            print(armoredPubKey.toString())
+    func testCreatePGPPublicKeys() {
+        for KPClass in keypairClasses {
+            log("Testing \(KPClass)")
             
-            let packets  = try [Packet](data: armoredPubKey.packetData)
-            
-            let _ = try PGPFormat.PublicKey(packet: packets[0])
-            let _ = try PGPFormat.UserID(packet: packets[1])
-            let _ = try PGPFormat.Signature(packet: packets[2])
+            for hashAlgorithm in hashAlgorithms {
+                log("Testing hash algorithm \(hashAlgorithm)")
 
-        } catch (let e) {
-            if let ce = e as? CryptoError {
-                XCTFail("test failed: \(ce.getError())")
-            } else {
-                XCTFail("\(e)")
+                do {
+                    try KPClass.destroy("test")
+                    let keypair = try KPClass.generate("test")
+                    
+                    // rsa
+                    if let (m,_) = try (keypair.publicKey as? RSAPublicKey)?.splitIntoComponents() {
+                        if m.bytes[0] != 0x00 {
+                            XCTFail("first byte not 0!!!!")
+                            return
+                        }
+                    }
+                    
+                    let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>", hashAlgorithm: hashAlgorithm)
+                    print(armoredPubKey.toString())
+                    
+                    let packets  = try [Packet](data: armoredPubKey.packetData)
+                    
+                    let _ = try PGPFormat.PublicKey(packet: packets[0])
+                    let _ = try PGPFormat.UserID(packet: packets[1])
+                    let _ = try PGPFormat.Signature(packet: packets[2])
+                    
+                } catch (let e) {
+                    if let ce = e as? CryptoError {
+                        XCTFail("test failed: \(ce.getError())")
+                    } else {
+                        XCTFail("\(e)")
+                    }
+                }
+
             }
+
         }
     }
     
-    func testCreatePGPPublicKeyEd25519(i:Int) {
-        do {
-            try Ed25519KeyPair.destroy("test")
-            let keypair = try Ed25519KeyPair.generate("test")
-
-            let armoredPubKey = try keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>")
-
-            let packets  = try [Packet](data: armoredPubKey.packetData)
-            
-            let _ = try PGPFormat.PublicKey(packet: packets[0])
-            let _ = try PGPFormat.UserID(packet: packets[1])
-            let _ = try PGPFormat.Signature(packet: packets[2])
-
-        } catch (let e) {
-            if let ce = e as? CryptoError {
-                XCTFail("test failed: \(ce.getError())")
-            } else {
-                print("failed at \(i)")
-                XCTFail("\(e)")
-            }
-        }
-    }
-    
-    func testVerifyRSAPublicKey() {
+    func testVerifyPGPPublicKey() {
         
-        do  {
-            try RSAKeyPair.destroy("test")
-            let keypair = try RSAKeyPair.generate("test")
-            let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
+        for (_, KPClass) in keypairClasses.enumerated() {
+            log("Testing \(KPClass)")
             
-            let publicKey = try PGPFormat.PublicKey(packet: packets[0])
-            let userID = try PGPFormat.UserID(packet: packets[1])
-            let signature = try Signature(packet: packets[2])
-            
-            var pubKeyToSign = try SignedPublicKeyIdentity(publicKey: publicKey, userID: userID, hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
-            
-            let dataToHash = try pubKeyToSign.dataToHash()
-            
-            var hash:Data
-            var digestType:DigestType
-            
-            switch signature.hashAlgorithm {
-            case .sha1:
-                hash = dataToHash.SHA1
-                digestType = .sha1
-            case .sha224:
-                hash = dataToHash.SHA224
-                digestType = .sha224
-            case .sha256:
-                hash = dataToHash.SHA256
-                digestType = .sha256
-            case .sha384:
-                hash = dataToHash.SHA384
-                digestType = .sha384
-            case .sha512:
-                hash = dataToHash.SHA512
-                digestType = .sha512
-            }
-            
-            try pubKeyToSign.set(hash: hash, signedHash: signature.signature)
-            
-            guard pubKeyToSign.signature.leftTwoHashBytes == signature.leftTwoHashBytes else {
-                XCTFail("Left two hash bytes don't match: \nGot: \(pubKeyToSign.signature.leftTwoHashBytes)\nExpected: \(signature.leftTwoHashBytes)")
-                return
-            }
-            
-            
-            guard try keypair.publicKey.verify(dataToHash, signature: signature.signature, digestType: digestType)
-            else {
-                XCTFail("signature doesn't match!")
-                return
-            }
-            
-        } catch {
-            XCTFail("Unexpected error: \(error)")
-            
-        }
-    }
+            for hashAlgorithm in hashAlgorithms {
+                log("Testing hash algorithm \(hashAlgorithm)")
 
+                do  {
+                    try KPClass.destroy("test")
+                    let keypair = try KPClass.generate("test")
+                                        
+                    let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>", hashAlgorithm: hashAlgorithm).packetData)
+                    
+                    let publicKey = try PGPFormat.PublicKey(packet: packets[0])
+                    let userID = try PGPFormat.UserID(packet: packets[1])
+                    let signature = try Signature(packet: packets[2])
+                    
+                    var pubKeyToSign = try SignedPublicKeyIdentity(publicKey: publicKey, userID: userID, hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
+                    
+                    let dataToHash = try pubKeyToSign.dataToHash()
+                    
+                    var hash:Data
+                    var digestType:DigestType
+                    
+                    switch signature.hashAlgorithm {
+                    case .sha1:
+                        hash = dataToHash.SHA1
+                        digestType = .sha1
+                    case .sha224:
+                        hash = dataToHash.SHA224
+                        digestType = .sha224
+                    case .sha256:
+                        hash = dataToHash.SHA256
+                        digestType = .sha256
+                    case .sha384:
+                        hash = dataToHash.SHA384
+                        digestType = .sha384
+                    case .sha512:
+                        hash = dataToHash.SHA512
+                        digestType = .sha512
+                    }
+                    
+                    try pubKeyToSign.set(hash: hash, signedHash: signature.signature)
+                    
+                    guard pubKeyToSign.signature.leftTwoHashBytes == signature.leftTwoHashBytes else {
+                        XCTFail("Left two hash bytes don't match: \nGot: \(pubKeyToSign.signature.leftTwoHashBytes)\nExpected: \(signature.leftTwoHashBytes)")
+                        return
+                    }
+                    
+                    var sig = Data()
+                    for sigComp in signature.signature {
+                        sig += sigComp
+                    }
+                    
+                    // special case for ed25519 verification
+                    if KPClass == Ed25519KeyPair.self {
+                        guard try keypair.publicKey.verify(hash, signature: sig, digestType: .ed25519)
+                            else {
+                                XCTFail("signature doesn't match!")
+                                return
+                        }
 
-    
-    func testVerifyEd25519PublicKey() {
-        do  {
-            try Ed25519KeyPair.destroy("test")
-            let keypair = try Ed25519KeyPair.generate("test")
-            let packets = try [Packet](data: keypair.exportAsciiArmoredPGPPublicKey(for: "alex test <alex@test.com>").packetData)
-            
-            let publicKey = try PGPFormat.PublicKey(packet: packets[0])
-            let userID = try PGPFormat.UserID(packet: packets[1])
-            let signature = try Signature(packet: packets[2])
-            
-            var pubKeyToSign = try SignedPublicKeyIdentity(publicKey: publicKey, userID: userID, hashAlgorithm: signature.hashAlgorithm, hashedSubpacketables: signature.hashedSubpacketables)
-            
-            let dataToHash = try pubKeyToSign.dataToHash()
-            
-            var hash:Data
-            
-            switch signature.hashAlgorithm {
-            case .sha1:
-                hash = dataToHash.SHA1
-            case .sha224:
-                hash = dataToHash.SHA224
-            case .sha256:
-                hash = dataToHash.SHA256
-            case .sha384:
-                hash = dataToHash.SHA384
-            case .sha512:
-                hash = dataToHash.SHA512
+                    } else if keypair.publicKey is NISTP256PublicKey {
+                        //TODO: implementing wrapping split r,s in asn1
+                    }
+                    else {
+                        guard try keypair.publicKey.verify(dataToHash, signature: sig, digestType: digestType)
+                            else {
+                                XCTFail("signature doesn't match!")
+                                return
+                        }
+
+                    }
+                    
+                    
+                } catch {
+                    XCTFail("Unexpected error: \(error)")
+                    
+                }
+
             }
-            
-            try pubKeyToSign.set(hash: hash, signedHash: signature.signature)
-            
-            guard pubKeyToSign.signature.leftTwoHashBytes == signature.leftTwoHashBytes else {
-                XCTFail("Left two hash bytes don't match: \nGot: \(pubKeyToSign.signature.leftTwoHashBytes)\nExpected: \(signature.leftTwoHashBytes)")
-                return
-            }
-            
-            guard try keypair.publicKey.verify(hash, signature: signature.signature, digestType: DigestType.ed25519)
-            else {
-                XCTFail("signature doesn't match!")
-                return
-            }
-            
-        } catch {
-            XCTFail("Unexpected error: \(error)")
-            
+
         }
+        
     }
     
     func testComputeCommitHash() {

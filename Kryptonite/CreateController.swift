@@ -41,13 +41,15 @@ class CreateController: UIViewController {
     
     @IBAction func switchKeyTypeTapped(sender: AnyObject) {
         switch keyType {
-        case .Ed25519:
+        case .nistP256:
             keyTypeButton.setTitle(KeyType.RSA.prettyPrint(), for: UIControlState.normal)
             keyType = .RSA
+        case .Ed25519:
+            keyTypeButton.setTitle(KeyType.nistP256.prettyPrint(), for: UIControlState.normal)
+            keyType = .nistP256
         case .RSA:
             keyTypeButton.setTitle(KeyType.Ed25519.prettyPrint(), for: UIControlState.normal)
             keyType = .Ed25519
-
         }
     }
 
@@ -65,9 +67,11 @@ extension KeyType {
     func prettyPrint() -> String{
         switch self {
         case .Ed25519:
-            return "Ed25519"
+            return " Ed25519 "
         case .RSA:
-            return "RSA"
+            return " RSA "
+        case .nistP256:
+            return " NIST P-256 (Secure Element) "
         }
 
     }

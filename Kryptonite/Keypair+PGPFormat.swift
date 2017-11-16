@@ -16,28 +16,27 @@ extension KeyType {
         switch self {
         case .Ed25519:
             return PGPFormat.PublicKeyAlgorithm.ed25519
+        case .nistP256:
+            return PGPFormat.PublicKeyAlgorithm.ecdsa
         case .RSA:
             return PGPFormat.PublicKeyAlgorithm.rsaSignOnly
         }
     }
+}
 
-    func digestType(for hashAlgorithm:Signature.HashAlgorithm) -> DigestType {
-        switch self {
-        case .Ed25519:
-            return DigestType.ed25519
-        case .RSA:
-            switch hashAlgorithm {
-            case .sha1:
-                return DigestType.sha1
-            case .sha224:
-                return DigestType.sha224
-            case .sha256:
-                return DigestType.sha256
-            case .sha384:
-                return DigestType.sha384
-            case .sha512:
-                return DigestType.sha512
-            }
+extension DigestType {
+    init(from hashAlgorithm:Signature.HashAlgorithm) {
+        switch hashAlgorithm {
+        case .sha1:
+            self = .sha1
+        case .sha224:
+            self = .sha224
+        case .sha256:
+            self = .sha256
+        case .sha384:
+            self = .sha384
+        case .sha512:
+            self = .sha512
         }
     }
 }
@@ -77,7 +76,13 @@ extension RSAPublicKey:PGPPublicKeyConvertible {
 
 extension Sign.PublicKey:PGPPublicKeyConvertible {
     func pgpPublicKeyData() throws -> PGPFormat.PublicKeyData {
-        return PGPFormat.Ed25519PublicKey(rawData: self)
+        return PGPFormat.ECPublicKey(curve: .ed25519, rawData: self)
+    }
+}
+
+extension NISTP256PublicKey:PGPPublicKeyConvertible {
+    func pgpPublicKeyData() throws -> PGPFormat.PublicKeyData {
+        return try PGPFormat.ECPublicKey(curve: .nistP256, prefixedRawData: self.export())
     }
 }
 
@@ -91,9 +96,9 @@ extension KeyPair {
         Return the hash and the signed hash
         Note: Ed25519 signs the hash itself as per OpenPGP RFC for Ed25519.
      */
-    func sign(data:Data, using hashAlgorithm:Signature.HashAlgorithm) throws -> (hash:Data, signedHash:Data) {
+    func sign(data:Data, using hashAlgorithm:Signature.HashAlgorithm) throws -> (hash:Data, signedHash:[Data]) {
         var hash:Data
-        var signedHash:Data
+        var signedHash:[Data]
         
         switch hashAlgorithm {
         case .sha1:
@@ -108,13 +113,31 @@ extension KeyPair {
             hash = data.SHA512
         }
         
-        let digestType = self.publicKey.type.digestType(for: hashAlgorithm)
+        let digestType = DigestType(from: hashAlgorithm)
         
         switch self.publicKey.type {
         case .Ed25519: // sign the hash for Ed25519
-            signedHash = try self.sign(data: hash, digestType: digestType)
+            let signature = try self.sign(data: hash, digestType: .ed25519)
+            
+            guard signature.count == KRSodium.instance().sign.Bytes
+            else {
+                throw CryptoError.sign(.Ed25519, nil)
+            }
+            
+            let r = signature[0 ..< signature.count/2]
+            let s = signature[signature.count/2 ..< signature.count]
+            
+            signedHash = [r,s]
+            
+        case .nistP256: // sign the hash for nistp256 and format signature from asn1:
+            let signature = try self.sign(data: data, digestType: digestType)
+            let asn1Signature = NISTP256X962Signature(asn1Encoding: signature)
+            let (r,s) = try asn1Signature.splitIntoComponents()
+            
+            signedHash = [r,s]
+            
         case .RSA: // sign the pre hashed data (data will be hashed before signed)
-            signedHash = try self.sign(data: data, digestType: digestType)
+            signedHash = [try self.sign(data: data, digestType: digestType)]
         }
         
         return (hash, signedHash)
@@ -164,16 +187,16 @@ extension KeyPair {
         Export a public key as a PGP Public Key by
         creating a self-signed PGP PublicKey for multiple identities
      */
-    func exportAsciiArmoredPGPPublicKey(for identities:[String], created:Date = Date()) throws -> AsciiArmorMessage {
-        return try createPGPPublicKeyMessage(for: identities, created: created).armoredMessage(blockType: .publicKey, comment: Properties.pgpMessageComment)
+    func exportAsciiArmoredPGPPublicKey(for identities:[String], created:Date = Date(), hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> AsciiArmorMessage {
+        return try createPGPPublicKeyMessage(for: identities, created: created, hashAlgorithm: hashAlgorithm).armoredMessage(blockType: .publicKey, comment: Properties.pgpMessageComment)
     }
     
     /**
         Export a public key as a PGP Public Key by
         creating a self-signed PGP PublicKey
     */
-    func exportAsciiArmoredPGPPublicKey(for identity:String, created:Date = Date()) throws -> AsciiArmorMessage {
-        return try self.exportAsciiArmoredPGPPublicKey(for: [identity])
+    func exportAsciiArmoredPGPPublicKey(for identity:String, created:Date = Date(), hashAlgorithm:PGPFormat.Signature.HashAlgorithm = .sha512) throws -> AsciiArmorMessage {
+        return try self.exportAsciiArmoredPGPPublicKey(for: [identity], created: created, hashAlgorithm: hashAlgorithm)
     }
     
     /**

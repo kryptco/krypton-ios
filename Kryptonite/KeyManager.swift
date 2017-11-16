@@ -36,6 +36,9 @@ class KeyManager {
             else if let edKP = try Ed25519KeyPair.load(KeyTag.me.rawValue) {
                 return KeyManager(edKP)
             }
+            else if let p256KP = try NISTP256KeyPair.load(KeyTag.me.rawValue) {
+                return KeyManager(p256KP)
+            }
             else {
                 throw KeyManagerError.keyDoesNotExist
             }
@@ -59,6 +62,9 @@ class KeyManager {
                 let _ = try RSAKeyPair.generate(KeyTag.me.rawValue)
             case .Ed25519:
                 let _ = try Ed25519KeyPair.generate(KeyTag.me.rawValue)
+            case .nistP256:
+                let _ = try NISTP256KeyPair.generate(KeyTag.me.rawValue)
+
             }
         }
         catch let e {
@@ -79,6 +85,13 @@ class KeyManager {
         // destroy ed
         do {
             try Ed25519KeyPair.destroy(KeyTag.me.rawValue)
+        } catch {
+            log("failed to destroy Ed25519 Keypair: \(error)")
+        }
+        
+        // destroy p256
+        do {
+            try NISTP256KeyPair.destroy(KeyTag.me.rawValue)
         } catch {
             log("failed to destroy Ed25519 Keypair: \(error)")
         }
@@ -104,6 +117,9 @@ class KeyManager {
                 return true
             } else if let _ = try Ed25519KeyPair.load(KeyTag.me.rawValue) {
                 log("has ed25519 key is true")
+                return true
+            }  else if let _ = try NISTP256KeyPair.load(KeyTag.me.rawValue) {
+                log("has nistp256 key is true")
                 return true
             }
 
