@@ -206,8 +206,6 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
         } catch let e {
             log("bluetooth message split failed: \(e)", .error)
         }
-
-        writeToServiceUUIDRawLocked(uuid: uuid, data: data)
     }
 
     func writeToServiceUUIDRawLocked(uuid: CBUUID, data: Data) {
