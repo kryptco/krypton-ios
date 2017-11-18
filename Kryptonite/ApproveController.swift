@@ -203,7 +203,6 @@ class ApproveController:UIViewController {
 
         case .reject:
             self.dismissReject()
-            Analytics.postEvent(category: category, action: "foreground reject")
         }
     }
     
@@ -249,7 +248,8 @@ class ApproveController:UIViewController {
     }
     
     @IBAction func dismissReject() {
-        
+        Analytics.postEvent(category: category, action: "foreground reject")
+
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         
         do {
@@ -287,12 +287,6 @@ class ApproveController:UIViewController {
     func dismissResponseFailed(errorMessage:String) {
 
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-
-        guard isEnabled else {
-            return
-        }
-        
-        isEnabled = false
         
         self.resultLabel.text = errorMessage.uppercased()
         self.resultView.backgroundColor = rejectColor

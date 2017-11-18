@@ -26,6 +26,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
     @IBOutlet var temporarilyApprovedHostsWarningLabel:UILabel!
     @IBOutlet var viewTemporarilyApprovedHosts:UIButton!
+    @IBOutlet var resetTemporarilyApprovedHosts:UIButton!
 
     enum ApprovalControl:Int {
         case on = 0
@@ -192,6 +193,19 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         log("new log")
         updateLogs()
     }
+    
+    @IBAction func resetToAlwaysAskTapped() {
+        guard let session = session else {
+            log("unknown session or approval segmented control index", .error)
+            return
+        }
+
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+
+        Analytics.postEvent(category: "manual approval", action: "reset")
+        Policy.SessionSettings(for: session).setAlwaysAsk()
+        self.updateApprovalControl(session: session)
+    }
 
     @IBAction func userApprovalSettingChanged(sender:UISegmentedControl) {
         guard let session = session, let approvalControlType = ApprovalControl(rawValue: sender.selectedSegmentIndex) else {
@@ -211,7 +225,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             Analytics.postEvent(category: "manual approval", action: String(false))
             
             self.askConfirmationIn(title: "Never Ask?",
-                                   text: "Are you sure you want to disable manually approving requests? This means every incoming SSH login, Git commit or tag signature, or otherwise request will be automatically approved without your direct approval.",
+                                   text: "Are you sure you want to disable manually approving requests? This means every incoming SSH login, Git commit or tag signature, or other request will be automatically approved without your direct approval.",
                                    accept: "Yes, never ask",
                                    cancel: "Cancel",
                                    handler:
@@ -267,6 +281,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.off.rawValue
             self.temporarilyApprovedHostsWarningLabel.isHidden = true
             self.viewTemporarilyApprovedHosts.isHidden = true
+            self.resetTemporarilyApprovedHosts.isHidden = true
 
         } else {
             if policySession.temporarilyApprovedSSHHosts.isEmpty && policySession.settings.allowedUntil.isEmpty
@@ -274,10 +289,12 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
                 approvalSegmentedControl.setTitle("Always ask", forSegmentAt: ApprovalControl.on.rawValue)
                 self.temporarilyApprovedHostsWarningLabel.isHidden = true
                 self.viewTemporarilyApprovedHosts.isHidden = true
+                self.resetTemporarilyApprovedHosts.isHidden = true
             } else {
                 approvalSegmentedControl.setTitle("Always ask *", forSegmentAt: ApprovalControl.on.rawValue)
                 self.temporarilyApprovedHostsWarningLabel.isHidden = false
                 self.viewTemporarilyApprovedHosts.isHidden = false
+                self.resetTemporarilyApprovedHosts.isHidden = false
             }
         }
     }
