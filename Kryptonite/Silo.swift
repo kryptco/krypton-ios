@@ -312,7 +312,6 @@ class Silo {
             if let pgpUserID = meRequest.pgpUserId {
                 let message = try keyManager.loadPGPPublicKey(for: pgpUserID)
                 pgpPublicKey = message.packetData
-                log("pgp public key:\n\(message.toString())", .warning)
             }
             
             responseType = .me(MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))

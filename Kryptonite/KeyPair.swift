@@ -19,6 +19,10 @@ enum KeyIdentifier:String {
         return "\(self.rawValue).\(tag)"
     }
     
+    func tagCFData(_ tag:String) -> CFData {
+        return Data(bytes: [UInt8](self.tag(tag).utf8)) as CFData
+    }
+    
     func tag(_ tag:String, type:KeyType) -> String {
         return "\(self.rawValue).\(type.rawValue).\(tag)"
     }
@@ -39,7 +43,7 @@ enum DigestType {
     case sha512
 }
 
-let KeychainAccessiblity = String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
+let KeychainAccessiblity = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
 protocol PublicKey {
     var type:KeyType {  get }

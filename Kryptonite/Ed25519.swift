@@ -179,7 +179,7 @@ extension Sign.PublicKey:PublicKey {
         return KeyType.Ed25519
     }
     
-    // digest type ignore as hashes are performed internally by libsodium
+    // ignore digest type as hashes are performed internally by libsodium
     func verify(_ message:Data, signature:Data, digestType:DigestType) throws -> Bool {
         return KRSodium.instance().sign.verify(message: message, publicKey: self, signature: signature)
     }

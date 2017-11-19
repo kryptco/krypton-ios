@@ -29,7 +29,7 @@ class NISTP256KeyPair:KeyPair {
     private static func access() throws -> SecAccessControl {
         guard let access = SecAccessControlCreateWithFlags(
                                                 kCFAllocatorDefault,
-                                                kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                                KeychainAccessiblity,
                                                 .privateKeyUsage,
                                                 nil)
         else {
@@ -64,7 +64,7 @@ class NISTP256KeyPair:KeyPair {
             String(kSecClass): kSecClassKey,
             String(kSecReturnRef): kCFBooleanTrue,
             String(kSecAttrKeyType): kSecAttrKeyTypeECSECPrimeRandom,
-            String(kSecAttrApplicationTag): KeyIdentifier.Private.tag(tag),
+            String(kSecAttrApplicationTag): KeyIdentifier.Private.tagCFData(tag),
             String(kSecAttrTokenID): kSecAttrTokenIDSecureEnclave,
             String(kSecAttrAccessControl): try access(),
             ]
@@ -93,7 +93,7 @@ class NISTP256KeyPair:KeyPair {
 
         // get the public key
         guard let publicKey = SecKeyCopyPublicKey(privateKey) else {
-            throw CryptoError.generate(.nistP256, nil)
+            throw CryptoError.load(.nistP256, nil)
         }
 
         // return the keypair
@@ -108,7 +108,7 @@ class NISTP256KeyPair:KeyPair {
             String(kSecAttrTokenID): kSecAttrTokenIDSecureEnclave,
             String(kSecPrivateKeyAttrs): [
                 String(kSecAttrIsPermanent): true,
-                String(kSecAttrApplicationTag): KeyIdentifier.Private.tag(tag),
+                String(kSecAttrApplicationTag): KeyIdentifier.Private.tagCFData(tag),
                 String(kSecAttrAccessControl): try access()
             ]
         ]
@@ -147,7 +147,7 @@ class NISTP256KeyPair:KeyPair {
         var attributes:[String: Any] = [
             String(kSecClass): kSecClassKey,
             String(kSecAttrKeyType): kSecAttrKeyTypeECSECPrimeRandom,
-            String(kSecAttrApplicationTag): KeyIdentifier.Private.tag(tag),
+            String(kSecAttrApplicationTag): KeyIdentifier.Private.tagCFData(tag),
             String(kSecAttrTokenID): kSecAttrTokenIDSecureEnclave,
             String(kSecAttrAccessControl): try access(),
         ]
@@ -260,7 +260,7 @@ struct NISTP256PublicKey:PublicKey {
         let attributes:[String: Any] = [ String(kSecAttrKeyClass): kSecAttrKeyClassPublic,
                                          String(kSecAttrKeyType): kSecAttrKeyTypeECSECPrimeRandom,
                                          String(kSecAttrKeySizeInBits): NISTP256KeyPair.keySize,
-                                         String(kSecAttrApplicationTag): KeyIdentifier.Public.tag(tag)]
+                                         String(kSecAttrApplicationTag): KeyIdentifier.Public.tagCFData(tag)]
         
         var error: Unmanaged<CFError>?
         guard let key = SecKeyCreateWithData(publicKeyRaw as CFData, attributes as CFDictionary, &error) else {
@@ -280,35 +280,7 @@ struct NISTP256X962Signature {
     let asn1Encoding:Data
     
     func splitIntoComponents() throws -> (r: Data, s: Data) {
-        let bytes = asn1Encoding.bytes
-        
-        // first byte is the ASN.1 Sequence
-        guard bytes.count > 1, bytes[0] == 0x30 else {
-            throw CryptoError.encoding
-        }
-        
-        var i = 1
-        
-        // Total length of the container
-        if let _ = Int(octetBytes: bytes, startIdx: &i) {
-            // First component is r
-            var j = i+1
-            if bytes[i] == 0x02, let rLength = Int(octetBytes: bytes, startIdx: &j) {
-                let r = asn1Encoding.subdata(in: j ..< j+rLength)
-                j += rLength
-
-                var k = j+1
-                // Second component is s
-                if bytes[j] == 0x02, let sLength = Int(octetBytes: bytes, startIdx: &k) {
-                    let s = asn1Encoding.subdata(in: k ..< k+sLength)
-                    k += sLength
-
-                    return (r.stripLeadingZeros(), s.stripLeadingZeros())
-                }
-            }
-        }
-
-        throw CryptoError.encoding
+        return try ASN1(data: asn1Encoding).parseSequenceOfTwoIntegers()
     }
 }
 

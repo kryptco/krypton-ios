@@ -131,6 +131,10 @@
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F22A11DC3C3CA0094076E /* Onboarding.swift */; };
 		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
+		FA3BFC681FC0F9D00053A762 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFC671FC0F9D00053A762 /* ASN1.swift */; };
+		FA3BFC781FC0FEC20053A762 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFC671FC0F9D00053A762 /* ASN1.swift */; };
+		FA3BFC791FC0FEC20053A762 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFC671FC0F9D00053A762 /* ASN1.swift */; };
+		FA3BFC7A1FC0FEC20053A762 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFC671FC0F9D00053A762 /* ASN1.swift */; };
 		FA443DAC1FB6245B00EB452A /* SSHRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */; };
 		FA443DAE1FB624F400EB452A /* GitCommitRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */; };
 		FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */; };
@@ -626,6 +630,7 @@
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		FA2F22A11DC3C3CA0094076E /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
+		FA3BFC671FC0F9D00053A762 /* ASN1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHRequestController.swift; sourceTree = "<group>"; };
 		FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitCommitRequestController.swift; sourceTree = "<group>"; };
 		FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitTagRequestController.swift; sourceTree = "<group>"; };
@@ -1234,6 +1239,7 @@
 				FAFE546E1D7B9C1400391FDD /* Wrap.swift */,
 				FAAD091C1D78BA0000EAB665 /* Hash.swift */,
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
+				FA3BFC671FC0F9D00053A762 /* ASN1.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
 				FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */,
 				8D003DF11D90EDE30085ED21 /* Sodium.swift */,
@@ -2031,6 +2037,7 @@
 				FA443E061FBA924000EB452A /* Caches.swift in Sources */,
 				FAE495901DBD89F100A97708 /* M13CheckboxFillController.swift in Sources */,
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
+				FA3BFC681FC0F9D00053A762 /* ASN1.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
 				FAE495871DBD89F100A97708 /* M13Checkbox+IB.swift in Sources */,
 				FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */,
@@ -2086,6 +2093,7 @@
 				8DCB60481E9446CA00E1B924 /* TransportControl.swift in Sources */,
 				FAC874001E6A5342003D112E /* String+User.swift in Sources */,
 				FAEE04A51D74BD47002A7AFD /* KeyPair.swift in Sources */,
+				FA3BFC7A1FC0FEC20053A762 /* ASN1.swift in Sources */,
 				8DCB60431E94468100E1B924 /* LogManager.swift in Sources */,
 				FAEE04A81D74BD47002A7AFD /* Util.swift in Sources */,
 				FA15EB431DA5B4E800BED16C /* Globals.swift in Sources */,
@@ -2160,6 +2168,7 @@
 				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
 				FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */,
 				FAAE819A1E5770EF002A9AE6 /* AWS.swift in Sources */,
+				FA3BFC791FC0FEC20053A762 /* ASN1.swift in Sources */,
 				FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */,
 				FAB517C01E54D7330032DD47 /* Version.swift in Sources */,
 				FA1682A41EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
@@ -2190,6 +2199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA3BFC781FC0FEC20053A762 /* ASN1.swift in Sources */,
 				FA8B54101ED773EE00891161 /* CommitInfo.swift in Sources */,
 				FAFF1E8D1ED6816B0063C44C /* NotificationViewController.swift in Sources */,
 				FA17B96C1FB3636700975FB0 /* Request+Notify.swift in Sources */,

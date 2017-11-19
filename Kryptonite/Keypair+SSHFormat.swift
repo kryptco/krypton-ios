@@ -217,16 +217,14 @@ extension DigestType {
 }
 
 // MARK: SSH Signature Format
-struct UnknownSSHSignatureFormatFormat:Error {}
-
 extension KeyPair {
     func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
-        guard let sshKeyPair = self as? SSHKeyPair
+        guard let sshKeyPair = self as? SSHCustomSignableFormat
             else {
                 return try defaultSignAppendingSSHWirePubkeyToPayload(data: data, digestType: digestType)
         }
         
-        return try sshKeyPair.signAppendingSSHWirePubkeyToPayload(data: data, digestType: digestType)
+        return try sshKeyPair.customSignAppendingSSHWirePubkeyToPayload(data: data, digestType: digestType)
     }
     
     func defaultSignAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
@@ -239,12 +237,12 @@ extension KeyPair {
     
 }
 
-protocol SSHKeyPair {
-    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String
+protocol SSHCustomSignableFormat {
+    func customSignAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String
 }
 
-extension NISTP256KeyPair:SSHKeyPair {
-    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
+extension NISTP256KeyPair:SSHCustomSignableFormat {
+    func customSignAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
         var dataClone = Data(data)
         let pubkeyWire = try publicKey.wireFormat()
         dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())

@@ -71,7 +71,7 @@ extension KeyType {
         case .RSA:
             return " RSA "
         case .nistP256:
-            return " NIST P-256 (Secure Element) "
+            return " NIST P-256 (Secure Enclave) "
         }
 
     }
