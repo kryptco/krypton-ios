@@ -19,6 +19,9 @@ class PairedUploadController:KRBaseController {
     @IBOutlet weak var githubLabel:UILabel!
     @IBOutlet weak var githubCommandView:UIView!
 
+    @IBOutlet weak var codesignLabel:UILabel!
+    @IBOutlet weak var codesignCommandView:UIView!
+
     @IBOutlet weak var skipButton:UIButton!
 
     var session:Session?
@@ -37,6 +40,9 @@ class PairedUploadController:KRBaseController {
         githubLabel.alpha = 0
         githubCommandView.alpha = 0
         
+        codesignLabel.alpha = 0
+        codesignCommandView.alpha = 0
+
         Onboarding.isActive = false
     }
     
@@ -65,12 +71,19 @@ class PairedUploadController:KRBaseController {
             self.githubLabel.alpha = 1
             self.githubCommandView.alpha = 1
             
+
             self.skipButton.setTitle("DONE", for: UIControlState.normal)
             self.skipButton.setTitleColor(UIColor.app, for: UIControlState.normal)
 
-
         }, completion: {(_) -> Void in
-                        
+            
+            dispatchAfter(delay: 1.0, task: {
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.codesignLabel.alpha = 1
+                    self.codesignCommandView.alpha = 1
+                })
+            })
+
         })
     }
     
