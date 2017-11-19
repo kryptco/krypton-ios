@@ -96,7 +96,7 @@ extension Int {
             // Long form
             let octets = Int(octetBytes[startIdx]) - 128
             
-            if octets > octetBytes.count - startIdx {
+            guard octetBytes.count > octets + startIdx else {
                 return nil
             }
             

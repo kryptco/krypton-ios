@@ -219,52 +219,34 @@ extension DigestType {
 // MARK: SSH Signature Format
 extension KeyPair {
     func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
-        guard let sshKeyPair = self as? SSHCustomSignableFormat
-            else {
-                return try defaultSignAppendingSSHWirePubkeyToPayload(data: data, digestType: digestType)
-        }
         
-        return try sshKeyPair.customSignAppendingSSHWirePubkeyToPayload(data: data, digestType: digestType)
-    }
-    
-    func defaultSignAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
         var dataClone = Data(data)
         let pubkeyWire = try publicKey.wireFormat()
         dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
         dataClone.append(pubkeyWire)
-        return try sign(data: dataClone, digestType: digestType).toBase64()
-    }
-    
-}
 
-protocol SSHCustomSignableFormat {
-    func customSignAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String
-}
-
-extension NISTP256KeyPair:SSHCustomSignableFormat {
-    func customSignAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
-        var dataClone = Data(data)
-        let pubkeyWire = try publicKey.wireFormat()
-        dataClone.append(contentsOf: pubkeyWire.bigEndianByteSize())
-        dataClone.append(pubkeyWire)
-        
         let signature = try sign(data: dataClone, digestType: digestType)
-        let (sigR, sigS) = try NISTP256X962Signature(asn1Encoding: signature).splitIntoComponents()
-    
-        
-        // encode the signature
-        var encodedSignature = Data()
-        
-        // r
-        encodedSignature.append(contentsOf: sigR.bigEndianByteSize())
-        encodedSignature.append(sigR)
-        
-        // s
-        encodedSignature.append(contentsOf: sigS.bigEndianByteSize())
-        encodedSignature.append(sigS)
-        
-        return encodedSignature.toBase64()
-    }
 
+        switch self.publicKey.type {
+        case .RSA, .Ed25519:
+            return signature.toBase64()
+
+        case .nistP256:
+            let (sigR, sigS) = try NISTP256X962Signature(asn1Encoding: signature).splitIntoComponents()
+            
+            // encode the signature components individually
+            var encodedSignature = Data()
+            
+            // r
+            encodedSignature.append(contentsOf: sigR.bigEndianByteSize())
+            encodedSignature.append(sigR)
+            
+            // s
+            encodedSignature.append(contentsOf: sigS.bigEndianByteSize())
+            encodedSignature.append(sigS)
+            
+            return encodedSignature.toBase64()
+        }
+    }
 }
 
