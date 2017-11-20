@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8D003DF01D90EBBD0085ED21 /* Sodium.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8D003DE31D90EBB10085ED21 /* Sodium.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
+		8D01574E1FC3363300688FE6 /* Pair.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D01573D1FC3363300688FE6 /* Pair.storyboard */; };
+		8D0157531FC3367500688FE6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D01574F1FC3367400688FE6 /* Settings.storyboard */; };
+		8D0157541FC3367500688FE6 /* Sessions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0157511FC3367500688FE6 /* Sessions.storyboard */; };
 		8D05CB1F1ED3DCC000CCCC38 /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */; };
 		8D05CB321ED3E08500CCCC38 /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */; };
 		8D05CB351ED3E25E00CCCC38 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */; };
@@ -107,9 +110,6 @@
 		FA3BFCAE1FC282DA0053A762 /* DigestAlgorithmParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */; };
 		FA3BFCAF1FC282DA0053A762 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0B0971F04500400F65E04 /* UtilTests.swift */; };
 		FA3BFCB01FC282DA0053A762 /* AnalyticsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */; };
-		FA3BFCB41FC288090053A762 /* Sessions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3BFCB21FC288090053A762 /* Sessions.storyboard */; };
-		FA3BFCB61FC288610053A762 /* Pair.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3BFCB51FC288610053A762 /* Pair.storyboard */; };
-		FA3BFCB91FC288D40053A762 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3BFCB71FC288D40053A762 /* Settings.storyboard */; };
 		FA443DAC1FB6245B00EB452A /* SSHRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */; };
 		FA443DAE1FB624F400EB452A /* GitCommitRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */; };
 		FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */; };
@@ -511,6 +511,9 @@
 		8D003DD81D90EBB10085ED21 /* Sodium.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sodium.xcodeproj; path = "swift-sodium/Sodium.xcodeproj"; sourceTree = "<group>"; };
 		8D003DF11D90EDE30085ED21 /* Sodium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sodium.swift; sourceTree = "<group>"; };
 		8D003DF41D90EECE0085ED21 /* SodiumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumTests.swift; sourceTree = "<group>"; };
+		8D01573E1FC3363300688FE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Pair.storyboard; sourceTree = "<group>"; };
+		8D0157501FC3367400688FE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		8D0157521FC3367500688FE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Sessions.storyboard; sourceTree = "<group>"; };
 		8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagInfo.swift; sourceTree = "<group>"; };
 		8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitInfo.swift; sourceTree = "<group>"; };
 		8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
@@ -582,9 +585,6 @@
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
 		FA3BFC671FC0F9D00053A762 /* ASN1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA3BFCB11FC285B10053A762 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		FA3BFCB31FC288090053A762 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Kryptonite/Base.lproj/Sessions.storyboard; sourceTree = "<group>"; };
-		FA3BFCB51FC288610053A762 /* Pair.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Pair.storyboard; sourceTree = "<group>"; };
-		FA3BFCB81FC288D40053A762 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Kryptonite/Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHRequestController.swift; sourceTree = "<group>"; };
 		FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitCommitRequestController.swift; sourceTree = "<group>"; };
 		FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitTagRequestController.swift; sourceTree = "<group>"; };
@@ -1037,9 +1037,9 @@
 			children = (
 				FA29779E1D7746CC003EB1F7 /* Resources.swift */,
 				FA81413D1D70B0F4004FE58C /* Main.storyboard */,
-				FA3BFCB21FC288090053A762 /* Sessions.storyboard */,
-				FA3BFCB71FC288D40053A762 /* Settings.storyboard */,
-				FA3BFCB51FC288610053A762 /* Pair.storyboard */,
+				8D0157511FC3367500688FE6 /* Sessions.storyboard */,
+				8D01574F1FC3367400688FE6 /* Settings.storyboard */,
+				8D01573D1FC3363300688FE6 /* Pair.storyboard */,
 				FAE495991DBD98C400A97708 /* Approval.storyboard */,
 				FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */,
 				FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */,
@@ -1636,19 +1636,19 @@
 			files = (
 				FA03C5991E760CD50019649E /* BUILD in Resources */,
 				FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
+				8D01574E1FC3363300688FE6 /* Pair.storyboard in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
 				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
-				FA3BFCB41FC288090053A762 /* Sessions.storyboard in Resources */,
 				FA03C59A1E760CD50019649E /* COMMIT in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
-				FA3BFCB91FC288D40053A762 /* Settings.storyboard in Resources */,
 				FA443DCC1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */,
-				FA3BFCB61FC288610053A762 /* Pair.storyboard in Resources */,
 				FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
 				FA632E441DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */,
+				8D0157531FC3367500688FE6 /* Settings.storyboard in Resources */,
+				8D0157541FC3367500688FE6 /* Sessions.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2175,20 +2175,28 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FA3BFCB21FC288090053A762 /* Sessions.storyboard */ = {
+		8D01573D1FC3363300688FE6 /* Pair.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FA3BFCB31FC288090053A762 /* Base */,
+				8D01573E1FC3363300688FE6 /* Base */,
 			);
-			name = Sessions.storyboard;
+			name = Pair.storyboard;
 			sourceTree = "<group>";
 		};
-		FA3BFCB71FC288D40053A762 /* Settings.storyboard */ = {
+		8D01574F1FC3367400688FE6 /* Settings.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FA3BFCB81FC288D40053A762 /* Base */,
+				8D0157501FC3367400688FE6 /* Base */,
 			);
 			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
+		8D0157511FC3367500688FE6 /* Sessions.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8D0157521FC3367500688FE6 /* Base */,
+			);
+			name = Sessions.storyboard;
 			sourceTree = "<group>";
 		};
 		FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */ = {
