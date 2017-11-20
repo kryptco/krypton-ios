@@ -1,5 +1,5 @@
-
 <a href="https://krypt.co"><img src="https://krypt.co/static/dist/img/kryptonite-logo-green-on-white.svg" width="400"/> </a>
+[![Build Status](https://travis-ci.org/kryptco/kryptonite-ios.svg?branch=master)](https://travis-ci.org/kryptco/kryptonite-ios)
 
 __Kryptonite__ generates and stores an SSH key pair on a mobile phone. The
 Kryptonite app is paired with one or more workstations by scanning a QR code

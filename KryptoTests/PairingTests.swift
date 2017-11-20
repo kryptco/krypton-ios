@@ -12,6 +12,8 @@ import XCTest
 import Sodium
 import JSON
 
+@testable import Kryptonite
+
 class PairingTests: XCTestCase {
     
     

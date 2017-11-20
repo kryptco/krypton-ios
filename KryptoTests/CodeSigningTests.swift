@@ -12,10 +12,12 @@ import XCTest
 import PGPFormat
 import Sodium
 
+@testable import Kryptonite
+
 class CodeSigningTests: XCTestCase {
     
     var keypairClasses:[KeyPair.Type] = []
-    var publicKeyClasses:[PublicKey.Type] = []
+    var publicKeyClasses:[Kryptonite.PublicKey.Type] = []
     var hashAlgorithms:[Signature.HashAlgorithm] = [.sha1, .sha224, .sha256, .sha384, .sha512]
 
     class UnsafeNISTP256KeyPair:NISTP256KeyPair {
@@ -52,7 +54,7 @@ class CodeSigningTests: XCTestCase {
                     let keypair = try KPClass.generate("test")
                     
                     // rsa
-                    if let (m,_) = try (keypair.publicKey as? RSAPublicKey)?.splitIntoComponents() {
+                    if let (m,_) = try (keypair.publicKey as? Kryptonite.RSAPublicKey)?.splitIntoComponents() {
                         if m.bytes[0] != 0x00 {
                             XCTFail("first byte not 0!!!!")
                             return

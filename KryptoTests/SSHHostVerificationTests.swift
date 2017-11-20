@@ -8,6 +8,8 @@
 
 import XCTest
 
+@testable import Kryptonite
+
 class HostAuthTestCase {
     let pk: String
     let sig: String
