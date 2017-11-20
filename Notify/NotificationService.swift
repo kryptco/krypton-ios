@@ -51,6 +51,8 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
         
+        // migrations
+        Policy.migrateOldPolicySettingsIfNeeded(for: session)
         
         do {
             

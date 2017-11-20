@@ -59,8 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 sleep(1)
             }
             
+            // run migrations
             Analytics.migrateOldIDIfExists()
             Analytics.migrateAnalyticsDisabled()
+            
+            for session in SessionManager.shared.all {
+                Policy.migrateOldPolicySettingsIfNeeded(for: session)
+            }
             
             TransportControl.shared.add(sessions: SessionManager.shared.all)
             Analytics.appLaunch()

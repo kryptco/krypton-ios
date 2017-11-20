@@ -85,31 +85,38 @@ class Policy {
         // dangerous setting: never ask
         var shouldNeverAsk:Bool = false
         
+        var hasMigratedOldPolicies:Bool = false
+
+        
         init() {}
         
         init( allowedUntil:[AllowedUntilTypeKey:UInt64],
               shouldShowApprovedNotifications:Bool,
               shouldPermitUnknownHostsAllowed:Bool,
-              shouldNeverAsk:Bool)
+              shouldNeverAsk:Bool,
+              hasMigratedOldPolicies:Bool)
         {
             self.allowedUntil = allowedUntil
             self.shouldShowApprovedNotifications = shouldShowApprovedNotifications
             self.shouldPermitUnknownHostsAllowed = shouldPermitUnknownHostsAllowed
             self.shouldNeverAsk = shouldNeverAsk
+            self.hasMigratedOldPolicies = hasMigratedOldPolicies
         }
         
         init(json: Object) throws {
             try self.init(allowedUntil: json ~> "allowed_until",
                           shouldShowApprovedNotifications: json ~> "should_show_approved_notifications",
                           shouldPermitUnknownHostsAllowed: json ~> "should_permit_unknownHosts_allowed",
-                          shouldNeverAsk: json ~> "should_never_ask")
+                          shouldNeverAsk: json ~> "should_never_ask",
+                          hasMigratedOldPolicies: json ~> "has_migrated_old_policies")
         }
         
         var object: Object {
             return [ "allowed_until": allowedUntil,
                      "should_show_approved_notifications": shouldShowApprovedNotifications,
                      "should_permit_unknownHosts_allowed": shouldPermitUnknownHostsAllowed,
-                     "should_never_ask": shouldNeverAsk]
+                     "should_never_ask": shouldNeverAsk,
+                     "has_migrated_old_policies": hasMigratedOldPolicies]
         }
         
     }
@@ -126,7 +133,6 @@ class Policy {
         
         // special case cache
         private let sshUserAndHostAllowedUntil:Cache<NSData>?
-        
         
         /// init
         init(for session:Session) {
@@ -147,11 +153,15 @@ class Policy {
         }
         
         // Set  settings
+        
         func setAlwaysAsk() {
             _settings.shouldNeverAsk = false
             _settings.allowedUntil = [:]
-            sshUserAndHostAllowedUntil?.removeAllObjects()
             
+            // if always ask selected: turn off migration abilities
+            _settings.hasMigratedOldPolicies = true
+            
+            sshUserAndHostAllowedUntil?.removeAllObjects()
             save()
         }
         
@@ -180,6 +190,11 @@ class Policy {
         
         func set(shouldPermitUnknownHostsAllowed:Bool) {
             _settings.shouldPermitUnknownHostsAllowed = shouldPermitUnknownHostsAllowed
+            save()
+        }
+        
+        func setHasMigratedOldPolicySettings() {
+            _settings.hasMigratedOldPolicies = true
             save()
         }
         
@@ -305,6 +320,22 @@ class Policy {
             }
             
         }
+    }
+    
+    
+    // migrate old policy settings if needed
+    static func migrateOldPolicySettingsIfNeeded(for session:Session) {
+        let sessionPolicy = Policy.SessionSettings(for: session)
+        
+        guard   sessionPolicy.settings.hasMigratedOldPolicies == false,
+                let oldPolicyNeedsUserApproval = UserDefaults.group?.object(forKey: "policy_user_approval_\(session.id)") as? Bool,
+                oldPolicyNeedsUserApproval == false
+        else {
+            return
+        }
+        
+        sessionPolicy.setHasMigratedOldPolicySettings()
+        sessionPolicy.setNeverAsk()
     }
 
     
