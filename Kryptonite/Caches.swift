@@ -18,7 +18,7 @@ class Caches {
     
     /// Use a random id as the caches root directory name, store the id in keychain
     private static func rootDirectory() throws -> URL {
-        guard let groupDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID) else {
+        guard let groupDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID) else {
             throw Errors.noGroupDirectory
         }
         

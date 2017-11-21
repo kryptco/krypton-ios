@@ -115,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             
             do {
-                try KeychainStorage().set(key: KR_ENDPOINT_ARN_KEY, value: arn)
+                try KeychainStorage().set(key: Constants.arnEndpointKey, value: arn)
             } catch {
                 log("Could not save push ARN", .error)
             }

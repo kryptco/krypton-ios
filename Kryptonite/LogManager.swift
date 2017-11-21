@@ -30,7 +30,7 @@ class LogManager {
     
     //MARK: Core Data setup
     lazy var applicationDocumentsDirectory:URL? = {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("logs")
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("logs")
     }()
     
     lazy var managedObjectModel:NSManagedObjectModel? = {

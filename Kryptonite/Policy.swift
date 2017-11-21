@@ -24,7 +24,7 @@ class Policy {
     }
     
     /// The policy cache directory
-    static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_SECURITY_ID)?.appendingPathComponent("policy_cache")
+    static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("policy_cache")
     
     
     /// Policy Storage Keys

@@ -17,7 +17,7 @@ final class Response:Jsonable {
     var trackingID:String?
     
     var body:ResponseBody
-
+    
     init(requestID:String, endpoint:String, body:ResponseBody, trackingID:String? = nil) {
         self.requestID = requestID
         self.snsEndpointARN = endpoint
@@ -41,15 +41,15 @@ final class Response:Jsonable {
         var json = body.object
         json["request_id"] = requestID
         json["sns_endpoint_arn"] = snsEndpointARN
-
+        
         if let trackingID = self.trackingID {
             json["tracking_id"] = trackingID
         }
-
+        
         if let v = self.version {
             json["v"] = v.string
         }
-
+        
         return json
     }
 }
@@ -57,40 +57,40 @@ final class Response:Jsonable {
 struct MultipleResponsesError:Error {}
 
 enum ResponseBody {
-    case me(MeResponse)
-    case ssh(SignResponse)
-    case git(GitSignResponse)
-    case ack(AckResponse)
-    case unpair(UnpairResponse)
-    case hosts(HostsResponse)
-
+    case me(ResponseResult<MeResponse>)
+    case ssh(ResponseResult<SSHSignResponse>)
+    case git(ResponseResult<GitSignResponse>)
+    case ack(ResponseResult<AckResponse>)
+    case unpair(ResponseResult<UnpairResponse>)
+    case hosts(ResponseResult<HostsResponse>)
+    
     init(json:Object) throws {
         
         var responses:[ResponseBody] = []
         
         // parse the requests
         if let json:Object = try? json ~> "me_response" {
-            responses.append(.me(try MeResponse(json: json)))
+            responses.append(.me(try ResponseResult<MeResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "sign_response" {
-            responses.append(.ssh(try SignResponse(json: json)))
+            responses.append(.ssh(try ResponseResult<SSHSignResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "git_sign_response" {
-            responses.append(.git(try GitSignResponse(json: json)))
+            responses.append(.git(try ResponseResult<GitSignResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "unpair_response" {
-            responses.append(.unpair(try UnpairResponse(json: json)))
+            responses.append(.unpair(try ResponseResult<UnpairResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "hosts_response" {
-            responses.append(.hosts(try HostsResponse(json: json)))
+            responses.append(.hosts(try ResponseResult<HostsResponse>(json: json)))
         }
         
         if let json:Object = try? json ~> "ack_response" {
-            responses.append(.ack(try AckResponse(json: json)))
+            responses.append(.ack(try ResponseResult<AckResponse>(json: json)))
         }
         
         // if more than one request, it's an error
@@ -118,7 +118,6 @@ enum ResponseBody {
             json["unpair_response"] = u.object
         case .hosts(let h):
             json["hosts_response"] = h.object
-
         }
         
         return json
@@ -141,75 +140,66 @@ enum ResponseBody {
     }
 }
 
-//MARK: Responses
-
-struct SignResponse:Jsonable {
-    var signature:String?
-    var error:String?
-    
-    init(sig:String?, err:String? = nil) {
-        self.signature = sig
-        self.error = err
-    }
+//MARK: Response Results
+enum ResponseResult<T:Jsonable>:Jsonable {
+    case ok(T)
+    case error(String)
     
     init(json: Object) throws {
-        
-        if let sig:String = try? json ~> "signature" {
-            self.signature = sig
-        }
-        
         if let err:String = try? json ~> "error" {
-            self.error = err
+            self = .error(err)
+            return
         }
+        
+        self = try .ok(T(json: json))
     }
     
     var object: Object {
-        var map = [String:Any]()
-
-        if let sig = signature {
-            map["signature"] = sig
-        }
-        if let err = error {
-            map["error"] = err
-        }
-        return map
-    }
-}
-
-struct GitSignResponse:Jsonable {
-    var signature:String?
-    var error:String?
-    
-    init(sig:String?, err:String? = nil) {
-        self.signature = sig
-        self.error = err
-    }
-    
-    init(json: Object) throws {
-        
-        if let sig:String = try? json ~> "signature" {
-            self.signature = sig
-        }
-        
-        if let err:String = try? json ~> "error" {
-            self.error = err
+        switch self {
+        case .ok(let r):
+            return r.object
+        case .error(let err):
+            return ["error": err]
         }
     }
     
-    var object: Object {
-        var map = [String:Any]()
-        
-        if let sig = signature {
-            map["signature"] = sig
+    var error:String? {
+        switch self {
+        case .ok:
+            return nil
+        case .error(let e):
+            return e
         }
-        if let err = error {
-            map["error"] = err
-        }
-        return map
     }
 }
 
 
+struct SignatureResponse:Jsonable {
+    let signature:String
+    
+    init(signature:String) {
+        self.signature = signature
+    }
+    
+    init(json: Object) throws {
+        try self.init(signature: json ~> "signature")
+    }
+    
+    var object: Object {
+        return ["signature": signature]
+    }
+}
+
+struct EmptyResponse:Jsonable {
+    init(){}
+    init(json: Object) throws { }
+    var object: Object {
+        return [:]
+    }
+}
+
+typealias SSHSignResponse = SignatureResponse
+typealias GitSignResponse = SignatureResponse
 
 // Me
 struct MeResponse:Jsonable {
@@ -247,47 +237,18 @@ struct MeResponse:Jsonable {
     }
     init(json: Object) throws {
         self.me = try Me(json: json ~> "me")
-
+        
     }
     var object: Object {
         return ["me": me.object]
     }
 }
 
-// Unpair
-struct UnpairResponse:Jsonable {
-    init(){}
-    init(json: Object) throws {
-
-    }
-    var object: Object {
-        return [:]
-    }
-}
+typealias UnpairResponse = EmptyResponse
+typealias AckResponse = EmptyResponse
 
 //HostsResponse
 struct HostsResponse:Jsonable {
-    
-    struct HostInfo:Jsonable {
-        let pgpUserIDs:[String]
-        let hosts:[UserAndHost]
-        
-        init(pgpUserIDs:[String], hosts:[UserAndHost]) {
-            self.pgpUserIDs = pgpUserIDs
-            self.hosts = hosts
-        }
-        
-        init(json: Object) throws {
-            try self.init(pgpUserIDs: json ~> "pgp_user_ids",
-                          hosts: [UserAndHost](json: json ~> "hosts"))
-        }
-        
-        var object: Object {
-            return ["pgp_user_ids": pgpUserIDs,
-                    "hosts": hosts.objects]
-        }
-    }
-    
     struct UserAndHost:Jsonable, Equatable, Hashable {
         let host:String
         let user:String
@@ -315,42 +276,23 @@ struct HostsResponse:Jsonable {
         }
     }
     
-    var hostInfo:HostInfo?
-    var error:String?
+    let pgpUserIDs:[String]
+    let hosts:[UserAndHost]
     
-    init(hostInfo:HostInfo?, err:String? = nil) {
-        self.hostInfo = hostInfo
-        self.error = err
+    init(pgpUserIDs:[String], hosts:[UserAndHost]) {
+        self.pgpUserIDs = pgpUserIDs
+        self.hosts = hosts
     }
     
     init(json: Object) throws {
-        
-        if let json:Object = try? json ~> "host_info" {
-            self.hostInfo = try HostInfo(json: json)
-        }
-        
-        if let err:String = try? json ~> "error" {
-            self.error = err
-        }
+        try self.init(pgpUserIDs: json ~> "pgp_user_ids",
+                      hosts: [UserAndHost](json: json ~> "hosts"))
     }
     
     var object: Object {
-        var map = [String:Any]()
-        
-        if let hostInfo = hostInfo {
-            map["host_info"] = hostInfo.object
-        }
-        if let err = error {
-            map["error"] = err
-        }
-        return map
+        return ["pgp_user_ids": pgpUserIDs,
+                "hosts": hosts.objects]
     }
+    
 }
 
-// Ack
-struct AckResponse:Jsonable {
-    init(){}
-    init(json: Object) throws { }
-    var object: Object {
-        return [:]
-    }}

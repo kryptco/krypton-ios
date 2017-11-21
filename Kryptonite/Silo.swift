@@ -175,8 +175,8 @@ class Silo {
         Policy.requestUserAuthorization(session: session, request: request)
         
         if request.sendACK {
-            let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
-            let ack = Response(requestID: request.id, endpoint: arn, body: .ack(AckResponse()), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
+            let arn = (try? KeychainStorage().get(key: Constants.arnEndpointKey)) ?? ""
+            let ack = Response(requestID: request.id, endpoint: arn, body: .ack(.ok(AckResponse())), trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
             do {
                 try TransportControl.shared.send(ack, for: session)
             } catch (let e) {
@@ -222,88 +222,83 @@ class Silo {
                 throw KeyManagerError.keyDoesNotExist
             }
             
-            var sig:String?
-            var err:String?
             do {
                 
-                if allowed {
-                    
-                    // if host auth provided, check known hosts
-                    // fails in invalid signature -or- hostname not provided
-                    if let verifiedHostAuth = signRequest.verifiedHostAuth {
-                        try KnownHostManager.shared.checkOrAdd(verifiedHostAuth: verifiedHostAuth)
-                    }
-                    
-                    // only place where signature should occur
-                    sig = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
-                    
-                    LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: sig ?? "<err>", displayName: signRequest.display), deviceName: session.pairing.name)
-                } else {
+                guard allowed else {
                     throw UserRejectedError()
                 }
                 
+                // if host auth provided, check known hosts
+                // fails in invalid signature -or- hostname not provided
+                if let verifiedHostAuth = signRequest.verifiedHostAuth {
+                    try KnownHostManager.shared.checkOrAdd(verifiedHostAuth: verifiedHostAuth)
+                }
+                
+                // only place where signature should occur
+                let signature = try kp.keyPair.signAppendingSSHWirePubkeyToPayload(data: signRequest.data, digestType: signRequest.digestType.based(on: request.version))
+                
+                LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: signature, displayName: signRequest.display), deviceName: session.pairing.name)
+                
+                responseType = .ssh(.ok(SSHSignResponse(signature: signature)))
+
             }
             catch let error as UserRejectedError {
                 LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(signRequest.display)"), deviceName: session.pairing.name)
-                err = "\(error)"
+                responseType = .ssh(.error("\(error)"))
             }
             catch let error as HostMistmatchError {
                 LogManager.shared.save(theLog: SSHSignatureLog(session: session.id, hostAuth: signRequest.verifiedHostAuth, signature: "request failed", displayName: "rejected: \(error)"), deviceName: session.pairing.name)
-                err = "\(error)"
+                responseType = .ssh(.error("\(error)"))
             }
             catch {
-                err = "\(error)"
+                responseType = .ssh(.error("\(error)"))
             }
             
-            responseType = .ssh(SignResponse(sig: sig, err: err))
 
             
         case .git(let gitSignRequest):
-            var sig:String?
-            var err:String?
             do {
-                if allowed {
-                    // only place where git signature should occur
-                    
-                    let keyManager = try KeyManager.sharedInstance()
-                    let keyID = try keyManager.getPGPPublicKeyID()                    
-                    let _ = keyManager.updatePGPUserIDPreferences(for: gitSignRequest.userId)
-
-                    switch gitSignRequest.git {
-                    case .commit(let commit):
-                        
-                        let asciiArmoredSig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID)
-                        let signature = asciiArmoredSig.packetData.toBase64()
-                        sig = signature
-                        
-                        let commitHash = try commit.commitHash(asciiArmoredSignature: asciiArmoredSig.toString()).hex
-                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: signature, commitHash: commitHash, commit: commit), deviceName: session.pairing.name)
-                        
-                    case .tag(let tag):
-                        
-                        let signature = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
-                        sig = signature
-                        
-                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: signature, tag: tag), deviceName: session.pairing.name)
-                    }
-                    
-                } else {
-                    
-                    switch gitSignRequest.git {
-                    case .commit(let commit):
-                        LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: CommitSignatureLog.rejectedConstant, commitHash: "", commit: commit), deviceName: session.pairing.name)
-                    case .tag(let tag):
-                        LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: TagSignatureLog.rejectedConstant, tag: tag), deviceName: session.pairing.name)
-                    }
-                    
+                guard allowed else {
                     throw UserRejectedError()
                 }
                 
-            }  catch {
-                err = "\(error)"
+                // only place where git signature should occur
+                
+                let keyManager = try KeyManager.sharedInstance()
+                let keyID = try keyManager.getPGPPublicKeyID()
+                let _ = keyManager.updatePGPUserIDPreferences(for: gitSignRequest.userId)
+                
+                switch gitSignRequest.git {
+                case .commit(let commit):
+                    
+                    let asciiArmoredSig = try keyManager.keyPair.signGitCommit(with: commit, keyID: keyID)
+                    let signature = asciiArmoredSig.packetData.toBase64()
+                    
+                    let commitHash = try commit.commitHash(asciiArmoredSignature: asciiArmoredSig.toString()).hex
+                    LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: signature, commitHash: commitHash, commit: commit), deviceName: session.pairing.name)
+                    
+                    responseType = .git(.ok(GitSignResponse(signature: signature)))
+
+                case .tag(let tag):
+                    let signature = try keyManager.keyPair.signGitTag(with: tag, keyID: keyID).packetData.toBase64()
+                    
+                    LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: signature, tag: tag), deviceName: session.pairing.name)
+                    
+                    responseType = .git(.ok(GitSignResponse(signature: signature)))
+                }
+                
+            } catch is UserRejectedError {
+                switch gitSignRequest.git {
+                case .commit(let commit):
+                    LogManager.shared.save(theLog: CommitSignatureLog(session: session.id, signature: CommitSignatureLog.rejectedConstant, commitHash: "", commit: commit), deviceName: session.pairing.name)
+                case .tag(let tag):
+                    LogManager.shared.save(theLog: TagSignatureLog(session: session.id, signature: TagSignatureLog.rejectedConstant, tag: tag), deviceName: session.pairing.name)
+                }
+                
+                responseType = .git(.error("\(UserRejectedError())"))
+            } catch {
+                responseType = .git(.error("\(error)"))
             }
-            
-            responseType = .git(GitSignResponse(sig: sig, err: err))
             
         case .me(let meRequest):
             let keyManager = try KeyManager.sharedInstance()
@@ -314,39 +309,43 @@ class Silo {
                 pgpPublicKey = message.packetData
             }
             
-            responseType = .me(MeResponse(me: MeResponse.Me(email: try keyManager.getMe(), publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(), pgpPublicKey: pgpPublicKey)))
+            let meResponse = MeResponse(me: MeResponse.Me(email: try keyManager.getMe(),
+                                                          publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(),
+                                                          pgpPublicKey: pgpPublicKey))
+            responseType = .me(.ok(meResponse))
             
         case .hosts:
-            
-            if allowed {
-                // git: get the list of PGP user ids
-                let pgpUserIDs = try KeyManager.sharedInstance().getPGPUserIDList()
-                
-                // ssh: read the logs and get a unique set of user@hostnames
-                let sshLogs:[SSHSignatureLog] = LogManager.shared.fetchAllSSHUniqueHosts()
-                
-                var userAndHosts = Set<HostsResponse.UserAndHost>()
-                
-                sshLogs.forEach({ log in
-                    guard let (user, host) = log.getUserAndHost() else {
-                        return
-                    }
-                    
-                    userAndHosts.insert(HostsResponse.UserAndHost(host: host, user: user))
-                })
-                
-                
-                let hostInfo = HostsResponse.HostInfo(pgpUserIDs: pgpUserIDs, hosts: [HostsResponse.UserAndHost](userAndHosts))
-                responseType = .hosts(HostsResponse(hostInfo: hostInfo))
-            } else {
-                responseType = .hosts(HostsResponse(hostInfo: nil, err: "\(UserRejectedError())"))
+
+            guard allowed else {
+                responseType = .hosts(.error("\(UserRejectedError())"))
+                break
             }
+            
+            // git: get the list of PGP user ids
+            let pgpUserIDs = try KeyManager.sharedInstance().getPGPUserIDList()
+            
+            // ssh: read the logs and get a unique set of user@hostnames
+            let sshLogs:[SSHSignatureLog] = LogManager.shared.fetchAllSSHUniqueHosts()
+            
+            var userAndHosts = Set<HostsResponse.UserAndHost>()
+            
+            sshLogs.forEach({ log in
+                guard let (user, host) = log.getUserAndHost() else {
+                    return
+                }
+                
+                userAndHosts.insert(HostsResponse.UserAndHost(host: host, user: user))
+            })
+            
+            
+            let hostResponse = HostsResponse(pgpUserIDs: pgpUserIDs, hosts: [HostsResponse.UserAndHost](userAndHosts))
+            responseType = .hosts(.ok(hostResponse))
 
         case .noOp, .unpair:
             throw ResponseNotNeededError()
         }
         
-        let arn = (try? KeychainStorage().get(key: KR_ENDPOINT_ARN_KEY)) ?? ""
+        let arn = (try? KeychainStorage().get(key: Constants.arnEndpointKey)) ?? ""
         
         let response = Response(requestID: request.id, endpoint: arn, body: responseType, trackingID: (Analytics.enabled ? Analytics.userID : "disabled"))
         
