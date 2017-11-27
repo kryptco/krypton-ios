@@ -68,8 +68,9 @@ class Policy {
             case ssh = "ssh"
             case gitCommit = "git_commit"
             case gitTag = "git_tag"
+            case blob = "pgp_blob"
             
-            static var all:[AllowedUntilType] { return [.ssh, .gitCommit, .gitTag] }
+            static var all:[AllowedUntilType] { return [.ssh, .gitCommit, .gitTag, .blob] }
             
             var key:AllowedUntilTypeKey { return self.rawValue }
         }
@@ -268,7 +269,7 @@ class Policy {
                 
                 return allAllowed || ( Date() < temporarilyAllowedHost.expires )
                 
-            case .git:
+            case .git, .blob:
                 return allAllowed
                 
             }
@@ -350,6 +351,9 @@ extension Request {
             
         case .ssh:
             return .ssh
+            
+        case .blob:
+            return .blob
             
         case .git(let gitSign):
             switch gitSign.git {

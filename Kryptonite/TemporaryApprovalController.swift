@@ -174,6 +174,8 @@ extension Policy.Settings.AllowedUntilType {
             return "Git Commit Signatures"
         case .gitTag:
             return "Git Tag Signatures"
+        case .blob:
+            return "PGP Blob Signatures"
         }
     }
 }

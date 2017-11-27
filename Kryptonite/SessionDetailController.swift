@@ -23,6 +23,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
 
     @IBOutlet var sshLogButton:UIButton!
     @IBOutlet var gitLogButton:UIButton!
+    @IBOutlet var pgpBlobLogButton:UIButton!
 
     @IBOutlet var temporarilyApprovedHostsWarningLabel:UILabel!
     @IBOutlet var viewTemporarilyApprovedHosts:UIButton!
@@ -34,7 +35,7 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     }
     
     enum LogType {
-        case ssh, git
+        case ssh, git, pgpBlob
         
         var emptyCell:String {
             switch self {
@@ -42,6 +43,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
                 return "EmptySSHCell"
             case .git:
                 return "EmptyGitCell"
+            case .pgpBlob:
+                return "EmptyPGPBlobCell"
             }
         }
     }
@@ -93,6 +96,8 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
                     logType = .ssh
                 case is CommitSignatureLog, is TagSignatureLog:
                     logType = .git
+                case is PGPBlobSignatureLog:
+                    logType = .pgpBlob
                 default:
                     break
                 }
@@ -138,14 +143,27 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         updateLogs()
     }
     
+    @IBAction func pgpBlobLogsTapepd() {
+        let type = LogType.pgpBlob
+        showLogs(for: type)
+        logType = type
+        updateLogs()
+    }
+
+    
     func showLogs(for type:LogType) {
+        
+        [sshLogButton, gitLogButton, pgpBlobLogButton].forEach {
+            $0.alpha = 0.5
+        }
+        
         switch type {
         case .ssh:
-            gitLogButton.alpha = 0.5
             sshLogButton.alpha = 1.0
         case .git:
-            sshLogButton.alpha = 0.5
             gitLogButton.alpha = 1.0
+        case .pgpBlob:
+            pgpBlobLogButton.alpha = 1.0
         }
     }
     
@@ -171,6 +189,9 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
                 self.logs = ((commitLogs as [LogStatement]) + (tagLogs as [LogStatement])).sorted {
                     $0.date > $1.date
                 }
+            case .pgpBlob:
+                let pgpBlobLogs:[PGPBlobSignatureLog] = LogManager.shared.fetch(for: session.id)
+                self.logs = pgpBlobLogs
             }
             
             dispatchMain {
@@ -387,6 +408,11 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             cell.set(log: tagLog)
             
             return cell
+        } else if let pgpBlobLog = log as?  PGPBlobSignatureLog {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PGPBlobLogCell") as! PGPBlobLogCell
+            cell.set(log: pgpBlobLog)
+
+            return cell
         }
         
         return UITableViewCell()
@@ -402,10 +428,11 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         if let commitLog = log as? CommitSignatureLog, !commitLog.isRejected {
             self.performSegue(withIdentifier: "showCommitLogDetail", sender: commitLog)
-            
         } else if let tagLog = log as? TagSignatureLog, !tagLog.isRejected {
             let commitLog = self.logs.filter({ ($0 as? CommitSignatureLog)?.commitHash == tagLog.tag._object }).first
             self.performSegue(withIdentifier: "showTagLogDetail", sender: (tagLog, commitLog))
+        } else if let pgpBlobLog = log as? PGPBlobSignatureLog, !pgpBlobLog.isRejected {
+            self.performSegue(withIdentifier: "showPGPBlobLogDetail", sender: pgpBlobLog)
         }
     }
 
@@ -424,6 +451,11 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         }
         else if let temporaryController = segue.destination as? TemporaryApprovalController {
             temporaryController.session = self.session
+        }
+        else if   let pgpBlobLog = sender as? PGPBlobSignatureLog,
+            let logDetailController = segue.destination as? PGPBlobDetailController
+        {
+            logDetailController.pgpBlobSignatureLog = pgpBlobLog
         }
         
     }

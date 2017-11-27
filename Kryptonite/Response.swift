@@ -63,7 +63,8 @@ enum ResponseBody {
     case ack(ResponseResult<AckResponse>)
     case unpair(ResponseResult<UnpairResponse>)
     case hosts(ResponseResult<HostsResponse>)
-    
+    case blob(ResponseResult<PGPBlobSignResponse>)
+
     init(json:Object) throws {
         
         var responses:[ResponseBody] = []
@@ -93,6 +94,10 @@ enum ResponseBody {
             responses.append(.ack(try ResponseResult<AckResponse>(json: json)))
         }
         
+        if let json:Object = try? json ~> "blob_sign_response" {
+            responses.append(.blob(try ResponseResult<PGPBlobSignResponse>(json: json)))
+        }
+        
         // if more than one request, it's an error
         if responses.count > 1 {
             throw MultipleResponsesError()
@@ -118,6 +123,8 @@ enum ResponseBody {
             json["unpair_response"] = u.object
         case .hosts(let h):
             json["hosts_response"] = h.object
+        case .blob(let b):
+            json["blob_sign_response"] = b.object
         }
         
         return json
@@ -133,6 +140,9 @@ enum ResponseBody {
             
         case .hosts(let hosts):
             return hosts.error
+        
+        case .blob(let blob):
+            return blob.error
             
         case .me, .unpair, .ack:
             return nil
@@ -200,6 +210,7 @@ struct EmptyResponse:Jsonable {
 
 typealias SSHSignResponse = SignatureResponse
 typealias GitSignResponse = SignatureResponse
+typealias PGPBlobSignResponse = SignatureResponse
 
 // Me
 struct MeResponse:Jsonable {

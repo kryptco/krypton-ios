@@ -13,7 +13,7 @@ extension Request {
     func approveController(for session:Session, from presenter:UIViewController) -> UIViewController? {
         
         switch self.body {
-        case .ssh, .git:
+        case .ssh, .git, .blob:
             let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController") as? ApproveController
             controller?.session = session
             controller?.request = self
@@ -43,19 +43,7 @@ extension Request {
             }))
             
             return controller
-        default:
-            return nil
-        }
-    }
-    
-    var autoApproveDisplay:String? {
-        switch self.body {
-        case .ssh(let sshRequest):
-            return sshRequest.display
-        case .git(let gitSign):
-            return gitSign.git.shortDisplay
-
-        default:
+        case .me, .unpair, .noOp:
             return nil
         }
     }
@@ -106,7 +94,10 @@ extension UIViewController {
         autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
         (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
-        (autoApproveController as? AutoApproveController)?.command = request.autoApproveDisplay        
+        
+        let (type, title) = request.notificationDetails()
+        (autoApproveController as? AutoApproveController)?.type = type
+        (autoApproveController as? AutoApproveController)?.value = title
         
         dispatchMain {
             if self.presentedViewController is AutoApproveController {

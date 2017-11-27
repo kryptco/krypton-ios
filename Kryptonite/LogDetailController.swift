@@ -149,3 +149,53 @@ class TagLogDetailController:UIViewController {
     }
 
 }
+
+class PGPBlobDetailController:UIViewController {
+    
+    @IBOutlet weak var blobLabel:UILabel!
+    @IBOutlet weak var dateLabel:UILabel!
+    @IBOutlet weak var signatureLabel:UILabel!
+
+    var pgpBlobSignatureLog:PGPBlobSignatureLog?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "PGP Blob"
+        
+        guard let log = pgpBlobSignatureLog else {
+            blobLabel.text = "-- error --"
+            dateLabel.text = "--"
+            return
+        }
+        
+        dateLabel.text = log.date.trailingTimeAgo()
+        
+        if let signature = try? log.signature.fromBase64() {
+            signatureLabel.text = AsciiArmorMessage(packetData: signature,
+                                                    blockType: .signature,
+                                                    comment: Properties.pgpMessageComment).toString()
+        } else {
+            signatureLabel.text = log.signature
+        }
+        
+        if let blobString = try? log.blob.utf8String() {
+            blobLabel.text = blobString
+        } else {
+            blobLabel.text = "Binary data (\(log.blob.count) bytes)\nSHA-256 digest: \(log.blob.SHA256.hexPretty)"
+        }
+    }
+    
+    @IBAction func copyTapped() {
+        
+        guard let text = signatureLabel.text else {
+            return
+        }
+        
+        let otherDialogue = UIActivityViewController(activityItems: [text
+            ], applicationActivities: nil)
+        
+        
+        self.present(otherDialogue, animated: true, completion: nil)
+    }
+}

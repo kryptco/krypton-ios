@@ -412,10 +412,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9Y-aM-j36" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                <rect key="frame" x="10" y="509.5" width="355" height="93.5"/>
+                                <rect key="frame" x="10" y="493.5" width="355" height="109.5"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-Mk-LFw" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="93.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="109.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32U-6O-1By">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
@@ -461,21 +461,30 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="41" width="355" height="52.5"/>
+                                                <rect key="frame" x="0.0" y="41" width="355" height="68.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
-                                                        <rect key="frame" x="10" y="16" width="335" height="20.5"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="ssh git @ github.com" lineBreakMode="tailTruncation" numberOfLines="12" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
+                                                        <rect key="frame" x="8" y="32" width="337" height="21"/>
                                                         <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="16"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="SSH LOGIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3b-xe-T6S">
+                                                        <rect key="frame" x="8" y="8" width="337" height="14"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstItem="qkt-sF-Z2B" firstAttribute="top" secondItem="HXN-QP-z1c" secondAttribute="top" constant="16" id="AoJ-mN-cOy"/>
-                                                    <constraint firstItem="qkt-sF-Z2B" firstAttribute="leading" secondItem="HXN-QP-z1c" secondAttribute="leading" constant="10" id="DI7-S0-BMM"/>
+                                                    <constraint firstItem="qkt-sF-Z2B" firstAttribute="leading" secondItem="HXN-QP-z1c" secondAttribute="leading" constant="8" id="DI7-S0-BMM"/>
                                                     <constraint firstAttribute="trailing" secondItem="qkt-sF-Z2B" secondAttribute="trailing" constant="10" id="Kmh-lo-Eiv"/>
+                                                    <constraint firstItem="qkt-sF-Z2B" firstAttribute="top" secondItem="U3b-xe-T6S" secondAttribute="bottom" constant="10" id="OPo-ZD-PIm"/>
                                                     <constraint firstAttribute="bottom" secondItem="qkt-sF-Z2B" secondAttribute="bottom" constant="16" id="QZp-DE-p9W"/>
+                                                    <constraint firstAttribute="trailing" secondItem="U3b-xe-T6S" secondAttribute="trailing" constant="10" id="Wt8-8I-Rct"/>
+                                                    <constraint firstItem="U3b-xe-T6S" firstAttribute="top" secondItem="HXN-QP-z1c" secondAttribute="top" constant="8" id="nFM-zB-68Z"/>
+                                                    <constraint firstItem="U3b-xe-T6S" firstAttribute="leading" secondItem="HXN-QP-z1c" secondAttribute="leading" constant="8" id="qGQ-i8-X31"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -527,11 +536,12 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="checkBox" destination="qIV-jc-ntL" id="m4g-lc-Caa"/>
-                        <outlet property="commandLabel" destination="qkt-sF-Z2B" id="6nK-S8-vAD"/>
                         <outlet property="commandView" destination="HXN-QP-z1c" id="WaO-qp-nhQ"/>
                         <outlet property="contentView" destination="f9Y-aM-j36" id="OK1-H5-IDt"/>
                         <outlet property="deviceLabel" destination="E5I-Q2-AML" id="ytV-60-mEd"/>
                         <outlet property="deviceView" destination="32U-6O-1By" id="6RG-wN-EyO"/>
+                        <outlet property="typeLabel" destination="U3b-xe-T6S" id="vYz-ax-ZaM"/>
+                        <outlet property="valueLabel" destination="qkt-sF-Z2B" id="NlT-R9-fGy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WtT-kU-obP" userLabel="First Responder" sceneMemberID="firstResponder"/>

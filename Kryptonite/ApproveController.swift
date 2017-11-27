@@ -109,7 +109,7 @@ class ApproveController:UIViewController {
                     responseOptions = [.allow]
                 }
             }
-        case .git:
+        case .git, .blob:
             responseOptions = [.allowOnce, .allowAll]
         
         case .hosts, .me, .unpair, .noOp:

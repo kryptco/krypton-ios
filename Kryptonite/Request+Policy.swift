@@ -26,7 +26,7 @@ extension Request {
             
             return .authorize
             
-        case .git:
+        case .git, .blob:
             return .authorizeWithTemporal
         case .hosts:
             return .authorize
@@ -37,7 +37,7 @@ extension Request {
         switch self.body {
         case .hosts, .me, .unpair, .noOp:
             return .none
-        case .git, .ssh:
+        case .git, .ssh, .blob:
             return .autoAuthorized
         }
     }

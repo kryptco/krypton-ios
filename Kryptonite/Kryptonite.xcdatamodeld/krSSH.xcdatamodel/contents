@@ -1,37 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B48" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CommitSignatureLog" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="commit_hash" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="committer" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="merge_parents" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="session" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tree" optional="YES" attributeType="String" syncable="YES"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="bySessionIndex">
+            <fetchIndexElement property="session" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="PGPBlobSignatureLog" syncable="YES">
+        <attribute name="blob" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="session" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="bySessionIndex">
+            <fetchIndexElement property="session" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="SignatureLog" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="host_auth" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="session" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="bySessionIndex">
+            <fetchIndexElement property="session" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="TagSignatureLog" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="object" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="session" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="session" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tagger" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="bySessionIndex">
+            <fetchIndexElement property="session" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <elements>
         <element name="CommitSignatureLog" positionX="180" positionY="18" width="128" height="195"/>
         <element name="SignatureLog" positionX="117" positionY="-18" width="252" height="120"/>
         <element name="TagSignatureLog" positionX="189" positionY="72" width="128" height="165"/>
+        <element name="PGPBlobSignatureLog" positionX="180" positionY="90" width="128" height="120"/>
     </elements>
 </model>

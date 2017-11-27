@@ -216,21 +216,84 @@ struct TagSignatureLog:LogStatement {
     }
 }
 
-/** 
-    Git Signature Logs, identify rejections 
+/**
+    PGP Blob Signature Logs
  */
-protocol GitSignatureLog:LogStatement {}
+struct PGPBlobSignatureLog:LogStatement {
+    let session:String
+    let signature:String
+    let date:Date
+    let blob:Data
+    
+    var blobString:String {
+        guard let string = try? blob.utf8String() else {
+            return "<digest \(blob.SHA256.hexPretty)>"
+        }
+        
+        return string
+    }
+    
+    var displayName:String {
+        let blobString = self.blobString
+        
+        guard !isRejected else {
+            return "Rejected: \(blobString)"
+        }
+        
+        return blobString
+    }
+    
+    static var entityName:String {
+        return "PGPBlobSignatureLog"
+    }
+    
+    init(object:NSManagedObject) throws {
+        guard   let session = object.value(forKey: "session") as? String,
+                let date = object.value(forKey: "date") as? Date,
+                let signature = object.value(forKey: "signature") as? String,
+                let blob = object.value(forKey: "blob") as? Data
+        else {
+                throw LogStatementParsingError()
+        }
+        
+        self.init(session: session, signature: signature, date: date, blob: blob)
+    }
+    
+    
+    
+    init(session:String, signature:String, date:Date = Date(), blob:Data) {
+        self.session = session
+        self.signature = signature
+        self.date = date
+        self.blob = blob
+    }
+    
+    var managedObject:[String:Any] {
+        var object:[String:Any] = [:]
+        object["session"] = session
+        object["date"] = date
+        object["signature"] = signature
+        object["blob"] = blob
+        return object
+    }
+}
 
-extension CommitSignatureLog:GitSignatureLog {}
-extension TagSignatureLog:GitSignatureLog {}
+/**
+ "Rejectable" Signature Logs, identify rejections
+ */
+protocol RejectableSignatureLog:LogStatement {}
 
-extension GitSignatureLog {
+extension RejectableSignatureLog {
     
     static var rejectedConstant:String {
         return "rejected"
     }
     
     var isRejected:Bool {
-        return signature == Self.rejectedConstant
+        return self.signature == Self.rejectedConstant
     }
 }
+
+extension CommitSignatureLog:RejectableSignatureLog {}
+extension TagSignatureLog:RejectableSignatureLog {}
+extension PGPBlobSignatureLog:RejectableSignatureLog {}

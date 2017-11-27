@@ -113,7 +113,7 @@ class Silo {
             return
             
         // typical cases
-        case .git, .ssh, .hosts, .me:
+        case .git, .ssh, .hosts, .me, .blob:
             break
         }
         
@@ -131,10 +131,10 @@ class Silo {
         
         // analytics / notify user on error for signature response
         switch response.body {
-        case .ssh(let sign):
+        case .ssh, .git, .blob:
             Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
 
-            if let error = sign.error {
+            if let error = response.body.error {
                 Policy.notifyUser(errorMessage: error, session: session)
             } else {
                 Policy.notifyUser(session: session, request: request)
@@ -143,20 +143,8 @@ class Silo {
             if case .ssh(let sshRequest) = request.body, sshRequest.verifiedHostAuth == nil {
                 Analytics.postEvent(category: "host", action: "unknown")
             }
-
-        case .git(let gitSign):
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
-
-            if let error = gitSign.error {
-                Policy.notifyUser(errorMessage: error, session: session)
-            } else {
-                Policy.notifyUser(session: session, request: request)
-            }
-        
-        case .hosts:
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
             
-        case .me, .ack, .unpair:
+        case .me, .ack, .unpair, .hosts:
             break
         }
         
@@ -298,6 +286,44 @@ class Silo {
                 responseType = .git(.error("\(UserRejectedError())"))
             } catch {
                 responseType = .git(.error("\(error)"))
+            }
+        
+        case .blob(let blobSignRequest):
+            do {
+                guard allowed else {
+                    throw UserRejectedError()
+                }
+                
+                let keyManager = try KeyManager.sharedInstance()
+                let keyID = try keyManager.getPGPPublicKeyID()
+                
+                var asciiArmoredSig:AsciiArmorMessage
+                
+                switch blobSignRequest.signatureType {
+                case .detached, .clearsign:
+                    asciiArmoredSig = try keyManager.keyPair.createAsciiArmoredBinaryDocumentSignature(for: blobSignRequest.blob, keyID: keyID)
+                case .attached:
+                    asciiArmoredSig = try keyManager.keyPair.createAsciiArmoredAttachedBinaryDocumentSignature(for: blobSignRequest.blob, keyID: keyID)
+                }
+                
+                let signature = asciiArmoredSig.packetData
+                let signatureB64 = signature.toBase64()
+                responseType = .blob(.ok(PGPBlobSignResponse(signature: signatureB64)))
+                
+                LogManager.shared.save(theLog: PGPBlobSignatureLog(session: session.id,
+                                                                   signature: signatureB64,
+                                                                   blob: blobSignRequest.blob),
+                                       deviceName: session.pairing.name)
+                
+            } catch is UserRejectedError {
+                responseType = .blob(.error("\(UserRejectedError())"))
+                
+                LogManager.shared.save(theLog: PGPBlobSignatureLog(session: session.id, signature: PGPBlobSignatureLog.rejectedConstant, blob: blobSignRequest.blob), deviceName: session.pairing.name)
+
+            } catch {
+                responseType = .blob(.error("\(error)"))
+                
+                LogManager.shared.save(theLog: PGPBlobSignatureLog(session: session.id, signature: PGPBlobSignatureLog.rejectedConstant, blob: blobSignRequest.blob), deviceName: session.pairing.name)
             }
             
         case .me(let meRequest):

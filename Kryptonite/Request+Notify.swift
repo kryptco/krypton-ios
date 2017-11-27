@@ -20,6 +20,8 @@ extension Request {
         case .git(let gitSign):
             let git = gitSign.git
             return (git.subtitle + " Signature", git.shortDisplay)
+        case .blob(let blobSign):
+            return ("PGP Blob Signature", blobSign.blobString)
         case .me:
             return ("Identity Request", "Public key exported")
         case .unpair:

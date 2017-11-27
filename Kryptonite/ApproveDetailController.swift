@@ -14,12 +14,14 @@ class ApproveDetailController: UIViewController {
     @IBOutlet weak var commitContainerView:UIView!
     @IBOutlet weak var tagContainerView:UIView!
     @IBOutlet weak var errorContainerView:UIView!
+    @IBOutlet weak var blobContainerView:UIView!
 
     var sshController:SSHRequestController?
     var commitController:GitCommitRequestController?
     var tagController:GitTagRequestController?
     var errorController:ErrorRequestController?
-    
+    var blobController:PGPBlobRequestController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -48,6 +50,10 @@ class ApproveDetailController: UIViewController {
                 tagController?.set(tag: tag)
                 removeAllBut(view: tagContainerView)
             }
+        case .blob(let blobSign):
+            blobController?.set(blob: blobSign.blob)
+            removeAllBut(view: blobContainerView)
+
         case .hosts, .me, .noOp, .unpair:
             errorController?.set(errorMessage: "Unhandled request type.")
             removeAllBut(view: errorContainerView)
@@ -55,7 +61,7 @@ class ApproveDetailController: UIViewController {
 
     }
     func removeAllBut(view:UIView) {
-        for v in [sshContainerView, commitContainerView, tagContainerView, errorContainerView] {
+        for v in [sshContainerView, commitContainerView, tagContainerView, errorContainerView, blobContainerView] {
             guard v != view else {
                 continue
             }
@@ -74,6 +80,8 @@ class ApproveDetailController: UIViewController {
             self.tagController = tag
         } else if let error = segue.destination as? ErrorRequestController {
             self.errorController = error
+        } else if let blob = segue.destination as? PGPBlobRequestController {
+            self.blobController = blob
         }
         
         segue.destination.view.translatesAutoresizingMaskIntoConstraints = false

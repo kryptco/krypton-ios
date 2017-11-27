@@ -131,3 +131,28 @@ class GitTagLogCell: UITableViewCell {
     
 }
 
+class PGPBlobLogCell: UITableViewCell {
+    
+    @IBOutlet var titleLabel:UILabel!
+    @IBOutlet var blobLabel:UILabel!
+    @IBOutlet var timeLabel:UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    func set(log:PGPBlobSignatureLog) {
+        blobLabel.text = log.blobString
+        timeLabel.text = log.date.trailingTimeAgo()
+
+        if log.isRejected {
+            titleLabel.text = "Rejected"
+            titleLabel.textColor = UIColor.reject
+        } else {
+            titleLabel.text = "Signed"
+            titleLabel.textColor = UIColor.app
+        }
+    }
+    
+}
+

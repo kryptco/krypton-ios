@@ -52,6 +52,7 @@ enum RequestBody:Jsonable {
     case me(MeRequest)
     case ssh(SignRequest)
     case git(GitSignRequest)
+    case blob(PGPBlobSignRequest)
     case unpair(UnpairRequest)
     case hosts(HostsRequest)
     case noOp
@@ -59,7 +60,7 @@ enum RequestBody:Jsonable {
     
     var isApprovable:Bool {
         switch self {
-        case .ssh, .git, .hosts:
+        case .ssh, .git, .hosts, .blob:
             return true
         case .me, .unpair, .noOp:
             return false
@@ -90,6 +91,10 @@ enum RequestBody:Jsonable {
         
         if let json:Object = try? json ~> "hosts_request" {
             requests.append(.hosts(try HostsRequest(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "blob_sign_request" {
+            requests.append(.blob(try PGPBlobSignRequest(json: json)))
         }
 
         
@@ -122,6 +127,8 @@ enum RequestBody:Jsonable {
             json["unpair_request"] = u.object
         case .hosts(let h):
             json["hosts_request"] = h.object
+        case .blob(let b):
+            json["blob_sign_request"] = b.object
         case .noOp:
             break
         }
@@ -140,6 +147,8 @@ enum RequestBody:Jsonable {
             case .tag:
                 return "git-tag-signature"
             }
+        case .blob:
+            return "pgp-blob-signature"
         case .hosts:
             return "hosts"
         case .me:
@@ -280,6 +289,53 @@ struct GitSignRequest:Jsonable {
         json["user_id"] = userId
         
         return json
+    }
+}
+
+struct PGPBlobSignRequest:Jsonable {
+    let blob:Data
+    let signatureType:SignatureType
+    
+    var blobString:String {
+        guard let blobText = try? blob.utf8String() else {
+            return "Binary data <digest \(blob.SHA256.hexPretty.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)),  \(blob.count) bytes>"
+        }
+
+        return blobText
+    }
+    
+    struct UnknownSignatureType:Error {
+        let type:String
+    }
+    enum SignatureType:String {
+        case detached = "detach"
+        case clearsign = "clearsign"
+        case attached = "attach"
+        
+        init(typeString:String) throws {
+            guard let type = SignatureType(rawValue: typeString) else {
+                throw UnknownSignatureType(type: typeString)
+            }
+            
+            self = type
+        }
+    }
+    
+    init(blob: Data, signatureType: SignatureType) {
+        self.blob = blob
+        self.signatureType = signatureType
+    }
+    
+    init(json: Object) throws {
+        try self.init(
+            blob: ((json ~> "blob") as String).fromBase64(),
+            signatureType: SignatureType(typeString: json ~> "sig_type")
+        )
+    }
+    
+    var object: Object {
+        return ["blob": blob.toBase64(),
+                "sig_type": signatureType.rawValue]
     }
 }
 

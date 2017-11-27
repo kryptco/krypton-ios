@@ -106,6 +106,10 @@ class LogManager {
             latestLogs.append(tagLog)
         }
         
+        if let pgpBlobLog:PGPBlobSignatureLog = self.fetchLatest(for: session) {
+            latestLogs.append(pgpBlobLog)
+        }
+        
         return latestLogs.max(by: { $0.date < $1.date })
     }
     

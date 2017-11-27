@@ -10,7 +10,9 @@ import Foundation
 
 class AutoApproveController:UIViewController {
     @IBOutlet weak var deviceLabel:UILabel!
-    @IBOutlet weak var commandLabel:UILabel!
+    @IBOutlet weak var typeLabel:UILabel!
+    @IBOutlet weak var valueLabel:UILabel!
+    
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var contentView:UIView!
     
@@ -19,8 +21,11 @@ class AutoApproveController:UIViewController {
     
     
     var deviceName:String?
-    var command:String?
     var errorMessage:String?
+    
+    var type:String?
+    var value:String?
+    
     
     var rejectColor = UIColor.reject
     
@@ -33,14 +38,17 @@ class AutoApproveController:UIViewController {
         contentView.layer.shadowRadius = 3
         contentView.layer.masksToBounds = false
         
+        typeLabel.text = "\(type ?? "unknown request type")".uppercased()
+        
         deviceLabel.text = deviceName
         if let error = errorMessage  {
-            commandLabel.text = error
+            valueLabel.text = error
+            
             commandView.backgroundColor = rejectColor
             deviceView.backgroundColor = rejectColor
             checkBox.secondaryTintColor = rejectColor
         } else {
-            commandLabel.text = "\(command ?? "SSH login request")"
+            valueLabel.text = "\(value ?? "unknown error")"
         }
         
         checkBox.animationDuration = 1.0

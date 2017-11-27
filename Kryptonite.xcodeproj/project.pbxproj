@@ -153,6 +153,9 @@
 		FA6491121ED38314008C04A7 /* AutoApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6491111ED38314008C04A7 /* AutoApproveController.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
+		FA80D7121FCA07E1008391EF /* PGPBlobRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7111FCA07E1008391EF /* PGPBlobRequestController.swift */; };
+		FA80D7131FCA07E1008391EF /* PGPBlobRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7111FCA07E1008391EF /* PGPBlobRequestController.swift */; };
+		FA80D7231FCA97D1008391EF /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8141391D70B0F4004FE58C /* AppDelegate.swift */; };
 		FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81413B1D70B0F4004FE58C /* MainController.swift */; };
 		FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA81413D1D70B0F4004FE58C /* Main.storyboard */; };
@@ -266,7 +269,6 @@
 		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
 		FAC5613E1E6F678500150FB2 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FAC5613F1E6F678500150FB2 /* AwesomeCache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC874031E6F0E17003D112E /* Kryptonite.xcdatamodeld */; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
 		FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
@@ -616,6 +618,7 @@
 		FA6491111ED38314008C04A7 /* AutoApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoApproveController.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FA80D7111FCA07E1008391EF /* PGPBlobRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGPBlobRequestController.swift; sourceTree = "<group>"; };
 		FA8141361D70B0F4004FE58C /* Kryptonite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kryptonite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA81413B1D70B0F4004FE58C /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -932,6 +935,7 @@
 				FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */,
 				FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */,
 				FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */,
+				FA80D7111FCA07E1008391EF /* PGPBlobRequestController.swift */,
 				FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */,
 			);
 			name = ApproveControllers;
@@ -1906,6 +1910,7 @@
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAE495971DBD89F100A97708 /* M13CheckboxPathGenerator.swift in Sources */,
 				FAE4958B1DBD89F100A97708 /* M13CheckboxGestureRecognizer.swift in Sources */,
+				FA80D7121FCA07E1008391EF /* PGPBlobRequestController.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
 				FACAA4C61D89FEB5000B9A01 /* Policy.swift in Sources */,
 				FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */,
@@ -2045,7 +2050,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB517981E54D52F0032DD47 /* Session.swift in Sources */,
-				FAC874051E6F0E17003D112E /* Kryptonite.xcdatamodeld in Sources */,
 				FA12EAC01ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
 				FACE33661EC186E8003EC6C0 /* SSHUtil.swift in Sources */,
@@ -2096,6 +2100,7 @@
 				8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */,
 				FA443DE81FB95CB300EB452A /* Policy+Pending.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
+				FA80D7231FCA97D1008391EF /* Kryptonite.xcdatamodeld in Sources */,
 				FA064FEE1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
@@ -2111,6 +2116,7 @@
 				FA8B54101ED773EE00891161 /* CommitInfo.swift in Sources */,
 				FAFF1E8D1ED6816B0063C44C /* NotificationViewController.swift in Sources */,
 				FA17B96C1FB3636700975FB0 /* Request+Notify.swift in Sources */,
+				FA80D7131FCA07E1008391EF /* PGPBlobRequestController.swift in Sources */,
 				FA8B54381ED7755000891161 /* Log.swift in Sources */,
 				FA8B543F1ED7887800891161 /* Resources.swift in Sources */,
 				FA443DC01FB6523700EB452A /* GitCommitRequestController.swift in Sources */,
