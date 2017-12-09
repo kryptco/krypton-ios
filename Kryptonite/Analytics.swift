@@ -15,7 +15,11 @@ class Analytics {
     static var enabled : Bool {
         mutex.lock()
         defer { mutex.unlock() }
-        return !(UserDefaults.group?.bool(forKey: analyticsDisabledKey) ?? false)
+        if let isDisabledObject = UserDefaults.group?.object(forKey: analyticsDisabledKey),
+            let isDisabled = isDisabledObject as? Bool {
+            return !isDisabled
+        }
+        return !Platform.isDebug
     }
 
     static var publishedEmail:String? {
