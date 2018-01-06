@@ -1,6 +1,6 @@
 *.xcuserdatad/
-Kryptonite.xcodeproj/project.xcworkspace/xcshareddata/
-Kryptonite.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+*.xcodeproj/project.xcworkspace/xcshareddata/
+*.xcodeproj/project.xcworkspace/contents.xcworkspacedata
 BUILD
 COMMIT
 AWS_COMMIT

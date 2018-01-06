@@ -1,6 +1,6 @@
 //
 //  SodiumTests.swift
-//  Kryptonite
+//  Krypton
 //
 //  Created by Kevin King on 9/20/16.
 //  Copyright © 2016 KryptCo, Inc. All rights reserved.
@@ -9,7 +9,7 @@
 import XCTest
 import Sodium
 
-@testable import Kryptonite
+@testable import Krypton
 
 class SodiumTests: XCTestCase {
 

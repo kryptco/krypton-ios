@@ -1,6 +1,6 @@
 //
 //  PairingTests.swift
-//  Kryptonite
+//  Krypton
 //
 //  Created by Alex Grinman on 3/3/17.
 //  Copyright © 2017 KryptCo. All rights reserved.
@@ -12,7 +12,7 @@ import XCTest
 import Sodium
 import JSON
 
-@testable import Kryptonite
+@testable import Krypton
 
 class PairingTests: XCTestCase {
     

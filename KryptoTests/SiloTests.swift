@@ -8,7 +8,7 @@
 
 import XCTest
 import UIKit
-@testable import Kryptonite
+@testable import Krypton
 
 class SiloTests: XCTestCase {
 

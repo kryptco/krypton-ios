@@ -1,13 +1,13 @@
 //
 //  AnalyticsStub.swift
-//  Kryptonite
+//  Krypton
 //
 //  Created by Kevin King on 4/4/17.
 //  Copyright © 2017 KryptCo. All rights reserved.
 //
 
 import Foundation
-@testable import Kryptonite
+@testable import Krypton
 
 class Analytics {
 

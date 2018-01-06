@@ -1,6 +1,6 @@
 //
 //  SSHHostVerificationTests.swift
-//  Kryptonite
+//  Krypton
 //
 //  Created by Kevin King on 3/29/17.
 //  Copyright © 2017 KryptCo. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-@testable import Kryptonite
+@testable import Krypton
 
 class HostAuthTestCase {
     let pk: String

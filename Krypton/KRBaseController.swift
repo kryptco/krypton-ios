@@ -1,0 +1,198 @@
+//
+//  KRBaseController.swift
+//  Krypton
+//
+//  Created by Alex Grinman on 9/26/16.
+//  Copyright © 2016 KryptCo, Inc. All rights reserved.
+//
+
+import Foundation
+import UIKit
+import UserNotifications
+
+class Current {
+    private static var mutex = Mutex()
+    static var _viewController:UIViewController?
+    static var viewController:UIViewController? {
+        get {
+            var controller:UIViewController?
+            mutex.lock {
+                controller = _viewController
+            }
+            
+            return controller
+        }
+        
+        set(c) {
+            mutex.lock {
+                _viewController = c
+            }
+            
+        }
+    }
+}
+
+protocol KRBase {
+    func approveControllerDismissed(allowed:Bool)
+}
+
+extension KRBase {
+    func defaultApproveControllerDismissed(viewController:UIViewController, allowed:Bool) {
+        let result = allowed ? "allowed" : "rejected"
+        log("approve modal finished with result: \(result)")
+        
+        // if rejected, reject all pending
+        guard allowed else {
+            Policy.rejectAllPendingIfNeeded()
+            return
+        }
+        
+        // send and remove pending that are already allowed
+        Policy.sendAllowedPendingIfNeeded()
+        
+        // move on to next pending if necessary
+        if let pending = Policy.lastPendingAuthorization {
+            log("requesting pending authorization")
+            viewController.requestUserAuthorization(session: pending.session, request: pending.request)
+        }
+    }
+}
+
+class KRBaseController: UIViewController, KRBase {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    var connectivity:Connectivity?
+    
+    //MARK: Policy
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Current.viewController = self
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
+        
+        checkIfPushEnabled()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        checkForUpdatesIfNeeded()
+        connectivity = Connectivity(presenter: self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        connectivity = nil
+    }
+
+    func shouldPostAnalytics() -> Bool {
+        return true
+    }
+    
+    func approveControllerDismissed(allowed:Bool) {
+        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
+    }
+}
+
+
+
+class KRBaseTableController: UITableViewController, KRBase {
+    
+    //MARK: Policy
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Current.viewController = self
+
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
+        
+        checkIfPushEnabled()
+    }
+    
+    var connectivity:Connectivity?
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        checkForUpdatesIfNeeded()
+        connectivity = Connectivity(presenter: self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        connectivity = nil
+    }
+
+    func shouldPostAnalytics() -> Bool {
+        return true
+    }
+
+    func approveControllerDismissed(allowed:Bool) {
+        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
+    }
+}
+
+extension UIViewController {
+    
+    //MARK: Check For push notifications
+    func checkIfPushEnabled() {
+        if Platform.isSimulator {
+            return
+        }
+        
+        
+        // check app is registered for push notifications
+        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
+            if settings.authorizationStatus == .notDetermined && KeyManager.hasKey() && Onboarding.isActive == false  {
+                dispatchMain {
+                    (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
+                }
+                return
+            }
+            
+            // dont bother
+            if UserDefaults.standard.bool(forKey: "push_dnd") {
+                return
+            }
+            
+            if settings.alertSetting == .disabled || settings.authorizationStatus == .denied {
+                self.showSettings(with: "Push Notifications",
+                                  message: "Enable push notifications to receive SSH Login and Git Commit/Tag Signing requests when your phone is locked or the app is in the background. Tap \"Settings\" to continue.",
+                                  dnd: "push_dnd")
+            }
+        })
+    }
+
+    //MARK: Updates
+    func checkForUpdatesIfNeeded() {
+        Updater.checkForUpdateIfNeeded { (version) in
+            guard let newVersion = version else {
+                return
+            }
+            
+            let alertController = UIAlertController(title: "New Version",
+                                                    message: "\(Properties.appName) v\(newVersion.string) is now available! Tap \"Download\" to go to the App Store to get the latest and greatest features.",
+                                                    preferredStyle: .alert)
+            
+            let downloadAction = UIAlertAction(title: "Download", style: .default) { (alertAction) in
+                
+                if let appStoreURL = URL(string: Properties.appStoreURL) {
+                    UIApplication.shared.open(appStoreURL, options: [:], completionHandler: nil)
+                }
+            }
+            alertController.addAction(downloadAction)
+            
+            let cancelAction = UIAlertAction(title: "Later", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+   
+}

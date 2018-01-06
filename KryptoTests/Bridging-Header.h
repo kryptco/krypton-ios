@@ -1,6 +1,6 @@
 //
 //  Bridging-Header.h
-//  Kryptonite
+//  Krypton
 //
 //  Created by Kevin King on 3/30/17.
 //  Copyright © 2017 KryptCo. All rights reserved.

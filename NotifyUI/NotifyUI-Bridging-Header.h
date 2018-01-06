@@ -1,6 +1,6 @@
 //
 //  NotifyUI-Bridging-Header.h
-//  Kryptonite
+//  Krypton
 //
 //  Created by Alex Grinman on 5/25/17.
 //  Copyright © 2017 KryptCo. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  CodeSigningTests.swift
-//  Kryptonite
+//  Krypton
 //
 //  Created by Alex Grinman on 5/19/17.
 //  Copyright © 2017 KryptCo. All rights reserved.
@@ -12,12 +12,12 @@ import XCTest
 import PGPFormat
 import Sodium
 
-@testable import Kryptonite
+@testable import Krypton
 
 class CodeSigningTests: XCTestCase {
     
     var keypairClasses:[KeyPair.Type] = []
-    var publicKeyClasses:[Kryptonite.PublicKey.Type] = []
+    var publicKeyClasses:[Krypton.PublicKey.Type] = []
     var hashAlgorithms:[Signature.HashAlgorithm] = [.sha1, .sha224, .sha256, .sha384, .sha512]
 
     class UnsafeNISTP256KeyPair:NISTP256KeyPair {
@@ -54,7 +54,7 @@ class CodeSigningTests: XCTestCase {
                     let keypair = try KPClass.generate("test")
                     
                     // rsa
-                    if let (m,_) = try (keypair.publicKey as? Kryptonite.RSAPublicKey)?.splitIntoComponents() {
+                    if let (m,_) = try (keypair.publicKey as? Krypton.RSAPublicKey)?.splitIntoComponents() {
                         if m.bytes[0] != 0x00 {
                             XCTFail("first byte not 0!!!!")
                             return

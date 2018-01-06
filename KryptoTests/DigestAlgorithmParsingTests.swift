@@ -1,13 +1,13 @@
 //
 //  DigestAlgorithmParsingTests.swift
-//  Kryptonite
+//  Krypton
 //
 //  Created by Alex Grinman on 5/9/17.
 //  Copyright © 2017 KryptCo. All rights reserved.
 //
 
 import XCTest
-@testable import Kryptonite
+@testable import Krypton
 
 class DigestAlgorithmParsingTests: XCTestCase {
     
