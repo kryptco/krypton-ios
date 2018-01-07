@@ -21,6 +21,7 @@ class BluetoothManager:TransportMedium {
     var sessionServiceUUIDS: [String: Session] = [:]
     var queuedMessages : [(Session, NetworkMessage)] = []
     var mutex = Mutex()
+    var hasPromptedForBluetoothPermission = false
     
     var medium:CommunicationMedium {
         return .bluetooth
@@ -40,14 +41,18 @@ class BluetoothManager:TransportMedium {
     }()
 
     //  check for background bluetooth authorization and initialize bluetooth if enabled
-    //  else prompt user to enable bluetooth
+    //  if bluetooth is not powered on, prompt user to do so once per app launch
     func tryInitBluetooth() -> Bool {
         mutex.lock()
         defer { mutex.unlock() }
+        log("\(CBPeripheralManager.authorizationStatus())")
         guard case .authorized = CBPeripheralManager.authorizationStatus() else {
-            //  prompt for bluetooth permission
+            //  prompt for user to turn bluetooth on once per app launch
             log("bluetooth authorization failed: \(CBPeripheralManager.authorizationStatus())")
-            let _ = CBPeripheralManager()
+            if !hasPromptedForBluetoothPermission {
+                hasPromptedForBluetoothPermission = true
+                let _ = CBPeripheralManager()
+            }
             return false
         }
         self.bluetoothDelegate = BluetoothPeripheralDelegate(queue: queue)
