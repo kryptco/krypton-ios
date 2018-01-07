@@ -265,7 +265,6 @@
 		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
 		FAC535D22001604F007C21E4 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FAC535D32001604F007C21E4 /* KnownHosts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA1682891EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld */; };
-		FAC535D920016308007C21E4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAC535D820016308007C21E4 /* Info.plist */; };
 		FAC5613E1E6F678500150FB2 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FAC5613F1E6F678500150FB2 /* AwesomeCache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
@@ -1631,7 +1630,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAC535D920016308007C21E4 /* Info.plist in Resources */,
 				FA03C5991E760CD50019649E /* BUILD in Resources */,
 				FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
 				FA3BFCBC1FC28C610053A762 /* Pair.storyboard in Resources */,
