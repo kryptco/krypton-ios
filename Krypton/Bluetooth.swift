@@ -51,7 +51,14 @@ class BluetoothManager:TransportMedium {
             return false
         }
         self.bluetoothDelegate = BluetoothPeripheralDelegate(queue: queue)
-        self.peripheralManager = CBPeripheralManager(delegate: bluetoothDelegate, queue: queue, options: nil)
+
+        var cbPeripheralManagerOptions : [String: String]? = nil
+        //  Note: restoring CBPeripheralManager services only works on iOS 11.2+ (it was buggy in previous iOS11 versions)
+        if #available(iOS 11.2, *) {
+            cbPeripheralManagerOptions = [CBPeripheralManagerOptionRestoreIdentifierKey: "bluetoothPeripheralManager"]
+        }
+        self.peripheralManager = CBPeripheralManager(delegate: bluetoothDelegate, queue: queue, options: cbPeripheralManagerOptions)
+
         self.bluetoothDelegate?.peripheralManager = self.peripheralManager
         self.bluetoothDelegate?.onReceive = onBluetoothReceive
         for session in sessionServiceUUIDS.values {

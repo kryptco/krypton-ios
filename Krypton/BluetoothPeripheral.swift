@@ -49,10 +49,38 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
     func peripheralManager(_ peripheral: CBPeripheralManager, willRestoreState dict: [String : Any]) {
         self.peripheralManager = peripheral
         log("\(dict)")
-        //  Restoring CBPeripheralManager services does not currently work, but iOS will atleast relaunch the app
-        //  on terminate. However, even though the app remains paired to krd, writes from krd are not sent to this delegate.
-        //  Instead we rely on krd to detect that the app is unresponsive and reconnect/susbscribe.
-        //  TODO: this seems to be fixed in 11.2 beta 2
+        //  Note: restoring CBPeripheralManager services only works on iOS 11.2+ (it was buggy in previous iOS11 versions)
+        guard let services = dict[CBPeripheralManagerRestoredStateServicesKey] as? [CBMutableService] else {
+            return
+        }
+        for service in services {
+            log("restoring service \(service)")
+            allServiceUUIDS.insert(service.uuid)
+            addedServiceUUIDS.insert(service.uuid)
+            cbservicesByUUID[service.uuid] = service
+            guard let characteristics = service.characteristics else {
+                continue
+            }
+            for characteristic in characteristics {
+                guard characteristic.uuid == BluetoothPeripheralDelegate.krsshCharUUID else {
+                    continue
+                }
+                log("restoring characteristic \(characteristic)")
+                guard let mutableCharacteristic = characteristic as? CBMutableCharacteristic else {
+                    continue
+                }
+                cbcharacteristicsByUUID[service.uuid] = mutableCharacteristic
+                guard let newSubscribedCentrals = mutableCharacteristic.subscribedCentrals else {
+                    continue
+                }
+                var allSubscribedCentrals = subscribedCentralsByServiceUUID[service.uuid] ?? Set()
+                for subscribedCentral in newSubscribedCentrals {
+                    log("restoring central \(subscribedCentral)")
+                    allSubscribedCentrals.insert(subscribedCentral)
+                }
+                subscribedCentralsByServiceUUID[service.uuid] = allSubscribedCentrals
+            }
+        }
         self.advertiseLogic()
     }
 
