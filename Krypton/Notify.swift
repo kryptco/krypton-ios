@@ -81,30 +81,29 @@ class Notify {
         // check if request exists in pending notifications
         UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (noteRequests) in
             for noteRequest in noteRequests {
-                guard   let requestObject = noteRequest.content.userInfo["request"] as? JSON.Object,
-                    let deliveredRequest = try? Request(json: requestObject)
+                guard   let payload = noteRequest.content.userInfo as? JSON.Object,
+                        let verifiedRequest = try? LocalNotificationAuthority.verifiedLocalNotification(with: payload)
                     else {
                         continue
                 }
                 
                 // return if it's already there
-                if deliveredRequest.id == request.id {
+                if verifiedRequest.request.id == request.id {
                     return
                 }
             }
             
             // then, check if request exists in delivered notifications
             UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
-                
                 for note in notes {
-                    guard   let requestObject = note.request.content.userInfo["request"] as? JSON.Object,
-                        let deliveredRequest = try? Request(json: requestObject)
-                        else {
-                            continue
+                    guard   let payload = note.request.content.userInfo as? JSON.Object,
+                            let verifiedRequest = try? LocalNotificationAuthority.verifiedLocalNotification(with: payload)
+                    else {
+                        continue
                     }
-                    
+
                     // return if it's already there
-                    if deliveredRequest.id == request.id {
+                    if verifiedRequest.request.id == request.id {
                         return
                     }
                 }
@@ -115,7 +114,14 @@ class Notify {
                 content.subtitle = noteSubtitle
                 content.body = noteBody
                 content.sound = UNNotificationSound.default()
-                content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
+                
+                let localRequest = LocalNotificationAuthority.VerifiedLocalRequest(alertText: noteBody,
+                                                                                   request: request,
+                                                                                   sessionID: session.id,
+                                                                                   sessionName: session.pairing.displayName)
+                
+                content.userInfo = (try? LocalNotificationAuthority.createSignedPayload(for: localRequest)) ?? [:]
+                
                 content.categoryIdentifier = request.notificationCategory(for: session).identifier
                 content.threadIdentifier = request.id
                 
@@ -151,8 +157,6 @@ class Notify {
         content.body = noteBody
         content.categoryIdentifier = request.autoNotificationCategory.identifier
         content.sound = UNNotificationSound.default()
-        content.userInfo = ["session_display": session.pairing.displayName, "session_id": session.id, "request": request.object]
-        
         
         // check grouping index for same notification
         var noteIndex = 0
@@ -182,6 +186,14 @@ class Notify {
             self.noteMutex.unlock()
             
             log("pushing note with id: \(noteId)")
+            
+            let localRequest = LocalNotificationAuthority.VerifiedLocalRequest(alertText: content.body,
+                                                                               request: request,
+                                                                               sessionID: session.id,
+                                                                               sessionName: session.pairing.displayName)
+            
+            content.userInfo = (try? LocalNotificationAuthority.createSignedPayload(for: localRequest)) ?? [:]
+
             let request = UNNotificationRequest(identifier: noteId.with(count: noteIndex+1), content: content, trigger: nil)
             
             UNUserNotificationCenter.current().add(request) {(error) in

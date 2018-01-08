@@ -11,6 +11,7 @@ import Foundation
 enum CommunicationMedium:String {
     case bluetooth
     case remoteNotification
+    case silentNotification
     case sqs
     case internalPending
 }

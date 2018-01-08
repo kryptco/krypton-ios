@@ -12,6 +12,9 @@ struct Properties {
     
     static let appName = "Krypton"
     
+    static let defaultRemoteRequestAlert = "Krypton Request"
+    static let defaultRemoteRequestAlertOld = "Kryptonite Request"
+
     //MARK: Version
     static let currentVersion = Version(major: 2, minor: 3, patch: 1)
     

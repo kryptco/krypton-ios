@@ -15,7 +15,8 @@ class NotificationService: UNNotificationServiceExtension {
     
     struct UnknownSessionError:Error{}
     struct InvalidCipherTextError:Error{}
-    
+    struct InvalidAlertTextError:Error{}
+
     var bestAttemptMutex = Mutex()
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
@@ -26,15 +27,6 @@ class NotificationService: UNNotificationServiceExtension {
         /// can be loaded
         guard KeychainStorage().isInteractionAllowed() else {
             contentHandler(NotifyShared.appDataProtectionNotAvailableError())
-            return
-        }
-        
-        // provision AWS API
-        guard API.provision() else {
-            log("API provision failed.", LogType.error)
-            
-            failUnknown(with: nil)
-            
             return
         }
         
@@ -51,6 +43,15 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
         
+        // provision AWS API
+        guard API.provision() else {
+            log("API provision failed.", LogType.error)
+            
+            failUnknown(with: nil)
+            
+            return
+        }
+
         // migrations
         Policy.migrateOldPolicySettingsIfNeeded(for: session)
         
@@ -78,52 +79,60 @@ class NotificationService: UNNotificationServiceExtension {
                             }
                         }
                         
-                        self.bestAttemptMutex.lock {
-                            
-                            let content = UNMutableNotificationContent()
-                            let (noteSubtitle, noteBody) = unsealedRequest.notificationDetails()
-                            
-                            content.subtitle = noteSubtitle
-                            content.body = noteBody
-
-                            // special case: me request
-                            if case .me = unsealedRequest.body {
-                                content.title = "\(session.pairing.displayName)."
-                            }
+                        self.bestAttemptMutex.lock()
+                        
+                        let content = UNMutableNotificationContent()
+                        let (noteSubtitle, noteBody) = unsealedRequest.notificationDetails()
+                        
+                        content.subtitle = noteSubtitle
+                        content.body = noteBody
+                        
+                        // special case: me request
+                        if case .me = unsealedRequest.body {
+                            content.title = "\(session.pairing.displayName)."
+                        }
                             // cached
-                            else if let optionalResponse = try? Silo.shared().cachedResponse(for: session, with: unsealedRequest),
-                                    let resp = optionalResponse
-                            {
-
-                                if let error = resp.body.error {
-                                    content.title = "Failed approval for \(session.pairing.displayName)."
-                                    content.body = error
-                                } else {
-                                    content.title = "Approved request from \(session.pairing.displayName)."
-                                    content.categoryIdentifier = unsealedRequest.autoNotificationCategory.identifier
-                                }
-                            }
-                            // pending response
-                            else {
-                                content.title = "Request from \(session.pairing.displayName)."
-                                content.categoryIdentifier = unsealedRequest.notificationCategory(for: session).identifier
-                            }
+                        else if let optionalResponse = try? Silo.shared().cachedResponse(for: session, with: unsealedRequest),
+                            let resp = optionalResponse
+                        {
                             
-                            content.userInfo = ["session_display": session.pairing.displayName,
-                                                "session_id": session.id,
-                                                "request": unsealedRequest.object]
-
-                            
-                            if noSound {
-                                content.sound = nil
+                            if let error = resp.body.error {
+                                content.title = "Failed approval for \(session.pairing.displayName)."
+                                content.body = error
                             } else {
-                                content.sound = UNNotificationSound.default()
+                                content.title = "Approved request from \(session.pairing.displayName)."
+                                content.categoryIdentifier = unsealedRequest.autoNotificationCategory.identifier
                             }
-                            
-                            contentHandler(content)
-                            
+                        }
+                            // pending response
+                        else {
+                            content.title = "Request from \(session.pairing.displayName)."
+                            content.categoryIdentifier = unsealedRequest.notificationCategory(for: session).identifier
                         }
                         
+                        do {
+                            let localRequest = LocalNotificationAuthority.VerifiedLocalRequest(alertText: noteBody,
+                                                                                               request: unsealedRequest,
+                                                                                               sessionID: session.id,
+                                                                                               sessionName: session.pairing.displayName)
+                            
+                            content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
+                        } catch {
+                            self.bestAttemptMutex.unlock()
+                            self.failUnknown(with: error)
+                            return
+                        }
+                        
+                        
+                        if noSound {
+                            content.sound = nil
+                        } else {
+                            content.sound = UNNotificationSound.default()
+                        }
+                        
+                        contentHandler(content)
+                        
+                        self.bestAttemptMutex.unlock()
                     })
                     
                 }
@@ -241,6 +250,12 @@ class NotificationService: UNNotificationServiceExtension {
             throw InvalidCipherTextError()
         }
         
+        guard   let alert = notificationDict["alert"] as? String,
+                alert == Properties.defaultRemoteRequestAlert || alert == Properties.defaultRemoteRequestAlertOld
+        else {
+            throw InvalidAlertTextError()
+        }
+
         guard let sessionUUID = notificationDict["session_uuid"] as? String,
                 let session = SessionManager.shared.get(queue: sessionUUID)
         else {

@@ -8,6 +8,14 @@
 
 import Foundation
 import UserNotifications
+import JSON
+
+enum LocalNotificationProcessError:Error {
+    case invalidUserInfoPayload
+    case unknownSession
+    case mismatchingAlertBody
+    case invalidSilentNotificationPayload
+}
 
 extension AppDelegate {
     
@@ -22,88 +30,80 @@ extension AppDelegate {
     }
     
     
+    // MARK: SILENT NOTIFICATION PROCESSING
+    // silent notification
+    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Swift.Void) {
+        log("didReceieveRemoteNotification")
+                
+        // silent notification (untrusted)
+        do {
+            guard let notificationDict = userInfo["aps"] as? [String:Any],
+                let ciphertextB64 = notificationDict["c"] as? String,
+                let ciphertext = try? ciphertextB64.fromBase64(),
+                let queue = notificationDict["queue"] as? String
+                else {
+                    throw LocalNotificationProcessError.invalidSilentNotificationPayload
+            }
+            
+            guard let session = SessionManager.shared.get(queue: queue) else {
+                throw LocalNotificationProcessError.unknownSession
+            }
+
+            let sealed = try NetworkMessage(networkData: ciphertext).data
+            let request = try Request(from: session.pairing, sealed: sealed)
+            
+            try TransportControl.shared.handle(medium: .silentNotification, with: request, for: session, completionHandler: {
+                completionHandler(.newData)
+            })
+            
+        } catch {
+            log("invalid silent kryptonite request payload: \(error)", .error)
+            completionHandler(.noData)
+        }
+        
+    }
+
+    
+    // MARK: REMOTE NOTIFICATION ACTION OR OPENED
     // The method will be called on the delegate when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction. The delegate must be set before the application returns from application:didFinishLaunchingWithOptions:.
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void) {
 
-        // user didn't select option, simply opened the app with the notification
-        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            handleNotification(userInfo: response.notification.request.content.userInfo)
-            return
-        }
-    
-        handleAction(userInfo: response.notification.request.content.userInfo, identifier: response.actionIdentifier, completionHandler: completionHandler)
-    }
-    
-    
-    
-    // MARK: Application remote notification
-    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Swift.Void) {
-        log("didReceieveRemoteNotification", .warning)
-        completionHandler(.noData)
-    }
-
-
-    //MARK: Notification Handler Methods
-    func handleNotification(userInfo:[AnyHashable : Any]?) {
-        if
-            let sessionID = userInfo?["session_id"] as? String,
-            let session = SessionManager.shared.get(id: sessionID),
-            let requestObject = userInfo?["request"] as? [String:Any],
-            let request = try? Request(json: requestObject)
-            
-        {
-            // if approval notification
-            do {
-                try TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
-            } catch {
-                log("handle failed \(error)", .error)
+        do {
+            guard let payload = response.notification.request.content.userInfo as? JSON.Object else {
+                throw LocalNotificationProcessError.invalidUserInfoPayload
             }
-        }
-        
-    }
-    
-    
-    func handleAction(userInfo:[AnyHashable : Any]?, identifier:String, completionHandler:@escaping ()->Void) {
-        
-        if let (session, request) = try? convertLocalJSONAction(userInfo: userInfo) {
-            handleRequestAction(session: session, request: request, identifier: identifier, completionHandler: completionHandler)
-        } else if let (session, request) = try? unsealUntrustedAction(userInfo: userInfo) {
-            handleRequestAction(session: session, request: request, identifier: identifier, completionHandler: completionHandler)
-        } else {
-            log("invalid notification", .error)
+            
+            let verifiedLocalNotification = try LocalNotificationAuthority.verifiedLocalNotification(with: payload)
+            
+            guard let session = SessionManager.shared.get(id: verifiedLocalNotification.sessionID) else {
+                throw LocalNotificationProcessError.unknownSession
+            }
+            
+            guard response.notification.request.content.body == verifiedLocalNotification.alertText else {
+                throw LocalNotificationProcessError.mismatchingAlertBody
+            }
+            
+            
+            // user didn't select option, simply opened the app with the notification
+            if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+                try TransportControl.shared.handle(medium: .remoteNotification, with: verifiedLocalNotification.request, for: session, completionHandler: completionHandler)
+                return
+            }
+            
+            // otherwise, process the action
+            handleAuthenticatedRequestAction(session: session,
+                                             request: verifiedLocalNotification.request,
+                                             identifier: response.actionIdentifier,
+                                             completionHandler: completionHandler)
+            
+        } catch {
+            log("error processing notification: \(error)", .error)
             completionHandler()
         }
     }
     
-    func unsealUntrustedAction(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
-        guard let notificationDict = userInfo?["aps"] as? [String:Any],
-            let ciphertextB64 = notificationDict["c"] as? String,
-            let ciphertext = try? ciphertextB64.fromBase64(),
-            let sessionUUID = notificationDict["session_uuid"] as? String,
-            let session = SessionManager.shared.get(queue: sessionUUID),
-            let alert = notificationDict["alert"] as? String,
-            alert == "\(Properties.appName) Request"
-            else {
-                log("invalid untrusted encrypted notification", .error)
-                throw InvalidNotification()
-        }
-        let sealed = try NetworkMessage(networkData: ciphertext).data
-        let request = try Request(from: session.pairing, sealed: sealed)
-        return (session, request)
-    }
     
-    func convertLocalJSONAction(userInfo:[AnyHashable : Any]?) throws -> (Session,Request) {
-        guard let sessionID = userInfo?["session_id"] as? String,
-            let session = SessionManager.shared.get(id: sessionID),
-            let requestObject = userInfo?["request"] as? [String:Any]
-            else {
-                log("invalid notification", .error)
-                throw InvalidNotification()
-        }
-        return try (session, Request(json: requestObject))
-    }
-    
-    func handleRequestAction(session: Session, request: Request, identifier:String, completionHandler:@escaping ()->Void) {
+    func handleAuthenticatedRequestAction(session: Session, request: Request, identifier:String, completionHandler:@escaping ()->Void) {
         // remove pending if exists
         Policy.removePendingAuthorization(session: session, request: request)
         

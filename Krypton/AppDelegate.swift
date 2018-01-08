@@ -11,7 +11,6 @@
 import UIKit
 import UserNotifications
 
-struct InvalidNotification:Error{}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -21,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
+        // do necessary set up
         Resources.makeAppearences()
         
         if !API.provision() {
@@ -28,6 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         AWSLogger.default().logLevel = .none
+        
+        do {
+            try LocalNotificationAuthority.createSigningKeyIfNeeded()
+        } catch {
+            log("error creating local notification authority signing key: \(error)", .error)
+        }
         
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,

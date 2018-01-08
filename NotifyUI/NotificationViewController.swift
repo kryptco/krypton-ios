@@ -22,35 +22,22 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     }
     
     enum InvalidNotificationError:Error {
-        case badRequest
-        case badSessionDisplay
+        case badUserInfoData
     }
     
     func didReceive(_ notification: UNNotification) {
-        let userInfo = notification.request.content.userInfo
-        
         do {
-            guard   let sessionName = userInfo["session_display"] as? String
+            guard let payload = notification.request.content.userInfo as? JSON.Object
             else {
-                    log("invalid notification", .error)
-                    throw InvalidNotificationError.badSessionDisplay
+                throw InvalidNotificationError.badUserInfoData
             }
             
-            sessionLabel.text = sessionName.uppercased()
-
-            guard let requestObject = userInfo["request"] as? JSON.Object else {
-                throw InvalidNotificationError.badRequest
-            }
+            let unverifiedLocalRequest = try LocalNotificationAuthority.unverifiedLocalNotification(with: payload)
+            sessionLabel.text = unverifiedLocalRequest.sessionName.uppercased()
 
             // set request specifcs
-            let request = try Request(json: requestObject)
-            self.detailController?.set(request: request)
+            self.detailController?.set(request: unverifiedLocalRequest.request)
             
-        } catch InvalidNotificationError.badSessionDisplay {
-            sessionLabel.text = "Unknown!"
-            sessionLabel.textColor = UIColor.reject
-            self.detailController?.set(request: nil)
-
         } catch  {
             log("error: \(error)")
             self.detailController?.set(request: nil)
