@@ -43,6 +43,14 @@ class SessionManager {
         return sm
     }
     
+    // explicitly reload from disk
+    static func reload() {
+        defer { sharedSessionManagerMutex.unlock() }
+        sharedSessionManagerMutex.lock()
+
+        sharedSessionManager = SessionManager(SessionManager.load())
+    }
+    
     init(_ sessions:[String:Session] = [:]) {
         self.sessions = sessions
         self.temporarySessions = [:]

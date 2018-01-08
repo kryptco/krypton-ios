@@ -34,7 +34,7 @@ extension AppDelegate {
     // silent notification
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Swift.Void) {
         log("didReceieveRemoteNotification")
-                
+        
         // silent notification (untrusted)
         do {
             guard let notificationDict = userInfo["aps"] as? [String:Any],
@@ -60,7 +60,6 @@ extension AppDelegate {
             log("invalid silent kryptonite request payload: \(error)", .error)
             completionHandler(.noData)
         }
-        
     }
 
     
@@ -73,7 +72,7 @@ extension AppDelegate {
                 throw LocalNotificationProcessError.invalidUserInfoPayload
             }
             
-            let verifiedLocalNotification = try LocalNotificationAuthority.verifiedLocalNotification(with: payload)
+            let verifiedLocalNotification = try LocalNotificationAuthority.verifyLocalNotification(with: payload)
             
             guard let session = SessionManager.shared.get(id: verifiedLocalNotification.sessionID) else {
                 throw LocalNotificationProcessError.unknownSession

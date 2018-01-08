@@ -32,7 +32,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
                 throw InvalidNotificationError.badUserInfoData
             }
             
-            let unverifiedLocalRequest = try LocalNotificationAuthority.unverifiedLocalNotification(with: payload)
+            let unverifiedLocalRequest = try LocalNotificationAuthority.parseUnverifiedLocalNotification(with: payload)
             sessionLabel.text = unverifiedLocalRequest.sessionName.uppercased()
 
             // set request specifcs

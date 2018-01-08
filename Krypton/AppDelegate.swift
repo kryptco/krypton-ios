@@ -29,12 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         AWSLogger.default().logLevel = .none
         
-        do {
-            try LocalNotificationAuthority.createSigningKeyIfNeeded()
-        } catch {
-            log("error creating local notification authority signing key: \(error)", .error)
-        }
-        
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
             let link = Link(url: url)

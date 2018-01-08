@@ -82,7 +82,7 @@ class Notify {
         UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (noteRequests) in
             for noteRequest in noteRequests {
                 guard   let payload = noteRequest.content.userInfo as? JSON.Object,
-                        let verifiedRequest = try? LocalNotificationAuthority.verifiedLocalNotification(with: payload)
+                        let verifiedRequest = try? LocalNotificationAuthority.verifyLocalNotification(with: payload)
                     else {
                         continue
                 }
@@ -97,7 +97,7 @@ class Notify {
             UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
                 for note in notes {
                     guard   let payload = note.request.content.userInfo as? JSON.Object,
-                            let verifiedRequest = try? LocalNotificationAuthority.verifiedLocalNotification(with: payload)
+                            let verifiedRequest = try? LocalNotificationAuthority.verifyLocalNotification(with: payload)
                     else {
                         continue
                     }
@@ -119,8 +119,12 @@ class Notify {
                                                                                    request: request,
                                                                                    sessionID: session.id,
                                                                                    sessionName: session.pairing.displayName)
-                
-                content.userInfo = (try? LocalNotificationAuthority.createSignedPayload(for: localRequest)) ?? [:]
+                do {
+                    content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
+                } catch {
+                    self.presentError(message: "Cannot display request: \(error)", session: session)
+                    return
+                }
                 
                 content.categoryIdentifier = request.notificationCategory(for: session).identifier
                 content.threadIdentifier = request.id
@@ -192,7 +196,12 @@ class Notify {
                                                                                sessionID: session.id,
                                                                                sessionName: session.pairing.displayName)
             
-            content.userInfo = (try? LocalNotificationAuthority.createSignedPayload(for: localRequest)) ?? [:]
+            do {
+                content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
+            } catch {
+                self.presentError(message: "Cannot display request: \(error)", session: session)
+                return
+            }
 
             let request = UNNotificationRequest(identifier: noteId.with(count: noteIndex+1), content: content, trigger: nil)
             

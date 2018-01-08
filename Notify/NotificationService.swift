@@ -20,7 +20,13 @@ class NotificationService: UNNotificationServiceExtension {
     var bestAttemptMutex = Mutex()
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        self.contentHandler = contentHandler
+        
+        bestAttemptMutex.lock {
+            self.contentHandler = contentHandler
+        }
+    
+        /// resync shared session manager
+        SessionManager.reload()
         
         /// if app is ever launched in the background *before* device is "unlocked for the first time":
         /// ensure that we wait until the device is "unlocked for the first time" so that the sessions
@@ -38,7 +44,7 @@ class NotificationService: UNNotificationServiceExtension {
         } catch {
             log("could not processess remote notification content: \(error)")
             
-            failUnknown(with: error)
+            failUnknown(with: error, contentHandler: contentHandler)
             
             return
         }
@@ -47,7 +53,7 @@ class NotificationService: UNNotificationServiceExtension {
         guard API.provision() else {
             log("API provision failed.", LogType.error)
             
-            failUnknown(with: nil)
+            failUnknown(with: nil, contentHandler: contentHandler)
             
             return
         }
@@ -78,8 +84,6 @@ class NotificationService: UNNotificationServiceExtension {
                                 break
                             }
                         }
-                        
-                        self.bestAttemptMutex.lock()
                         
                         let content = UNMutableNotificationContent()
                         let (noteSubtitle, noteBody) = unsealedRequest.notificationDetails()
@@ -118,8 +122,7 @@ class NotificationService: UNNotificationServiceExtension {
                             
                             content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
                         } catch {
-                            self.bestAttemptMutex.unlock()
-                            self.failUnknown(with: error)
+                            self.failUnknown(with: error, contentHandler: contentHandler)
                             return
                         }
                         
@@ -130,9 +133,7 @@ class NotificationService: UNNotificationServiceExtension {
                             content.sound = UNNotificationSound.default()
                         }
                         
-                        contentHandler(content)
-                        
-                        self.bestAttemptMutex.unlock()
+                        contentHandler(content)                        
                     })
                     
                 }
@@ -144,25 +145,22 @@ class NotificationService: UNNotificationServiceExtension {
             UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notes) in
                 for request in notes {
                     if request.identifier == unsealedRequest.id {
-                        
                         let noteContent = request.content
                         
-                        self.bestAttemptMutex.lock {
-                            let currentContent = UNMutableNotificationContent()
-                            currentContent.title = noteContent.title + "." // period for testing
-                            currentContent.subtitle = noteContent.subtitle
-                            currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                            currentContent.body = noteContent.body
-                            currentContent.userInfo = noteContent.userInfo
-                            currentContent.sound = UNNotificationSound.default()
-                            
-                            // remove old note
-                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
-                            
-                            // replace with remote with same content
-                            contentHandler(currentContent)
-                        }
+                        let currentContent = UNMutableNotificationContent()
+                        currentContent.title = noteContent.title + "." // period for testing
+                        currentContent.subtitle = noteContent.subtitle
+                        currentContent.categoryIdentifier = noteContent.categoryIdentifier
+                        currentContent.body = noteContent.body
+                        currentContent.userInfo = noteContent.userInfo
+                        currentContent.sound = UNNotificationSound.default()
                         
+                        // remove old note
+                        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
+                        
+                        // replace with remote with same content
+                        contentHandler(currentContent)
+
                         return
                     }
                 }
@@ -173,25 +171,21 @@ class NotificationService: UNNotificationServiceExtension {
                     for note in notes {
                         
                         if note.request.identifier == unsealedRequest.id {
-                            
                             let noteContent = note.request.content
                             
-                            self.bestAttemptMutex.lock {
-                                let currentContent = UNMutableNotificationContent()
-                                currentContent.title = noteContent.title  + "." // period for testing
-                                currentContent.subtitle = noteContent.subtitle
-                                currentContent.categoryIdentifier = noteContent.categoryIdentifier
-                                currentContent.body = noteContent.body
-                                currentContent.userInfo = noteContent.userInfo
-                                currentContent.sound = UNNotificationSound.default()
-                                
-                                // remove old note
-                                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
-                                
-                                // replace with remote with same content
-                                contentHandler(currentContent)
-                            }
+                            let currentContent = UNMutableNotificationContent()
+                            currentContent.title = noteContent.title  + "." // period for testing
+                            currentContent.subtitle = noteContent.subtitle
+                            currentContent.categoryIdentifier = noteContent.categoryIdentifier
+                            currentContent.body = noteContent.body
+                            currentContent.userInfo = noteContent.userInfo
+                            currentContent.sound = UNNotificationSound.default()
                             
+                            // remove old note
+                            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                            
+                            // replace with remote with same content
+                            contentHandler(currentContent)
                             
                             return
                         }
@@ -199,7 +193,7 @@ class NotificationService: UNNotificationServiceExtension {
                     
                     
                     // if not pending or delivered, fail with unknown error.
-                    self.failUnknown(with: error)
+                    self.failUnknown(with: error, contentHandler: contentHandler)
                 })
                 
             })
@@ -207,7 +201,7 @@ class NotificationService: UNNotificationServiceExtension {
         
     }
     
-    func failUnknown(with error:Error?) {
+    func failUnknown(with error:Error?, contentHandler:((UNNotificationContent) -> Void)) {
         
         let content = UNMutableNotificationContent()
         
@@ -219,9 +213,7 @@ class NotificationService: UNNotificationServiceExtension {
         }
         content.userInfo = [:]
         
-        self.bestAttemptMutex.lock {
-            contentHandler?(content)
-        }
+        contentHandler(content)
     }
     
     override func serviceExtensionTimeWillExpire() {
@@ -255,8 +247,9 @@ class NotificationService: UNNotificationServiceExtension {
         else {
             throw InvalidAlertTextError()
         }
-
-        guard let sessionUUID = notificationDict["session_uuid"] as? String,
+        
+        
+        guard   let sessionUUID = notificationDict["session_uuid"] as? String,
                 let session = SessionManager.shared.get(queue: sessionUUID)
         else {
             log("unknown session id", .error)
