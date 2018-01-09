@@ -661,6 +661,7 @@
 		FAC535D7200162F6007C21E4 /* Krypton.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Krypton.entitlements; path = Krypton/Krypton.entitlements; sourceTree = "<group>"; };
 		FAC535D820016308007C21E4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Krypton/Info.plist; sourceTree = "<group>"; };
 		FAC536712002D9AE007C21E4 /* LocalNotificationAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationAuthority.swift; sourceTree = "<group>"; };
+		FAC536C0200553F4007C21E4 /* buildbump.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = buildbump.sh; sourceTree = "<group>"; };
 		FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AwesomeCache.xcodeproj; path = AwesomeCache/AwesomeCache.xcodeproj; sourceTree = "<group>"; };
 		FAC873F51E6A4D32003D112E /* PairingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTests.swift; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -1212,6 +1213,7 @@
 			isa = PBXGroup;
 			children = (
 				FA3BFCB11FC285B10053A762 /* README.md */,
+				FAC536C0200553F4007C21E4 /* buildbump.sh */,
 				FA03C5971E760CD50019649E /* BUILD */,
 				FAC535D6200162F6007C21E4 /* Krypton-Bridging-Header.h */,
 				FAC535D7200162F6007C21E4 /* Krypton.entitlements */,
@@ -1300,7 +1302,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA8141481D70B0F4004FE58C /* Build configuration list for PBXNativeTarget "Krypton" */;
 			buildPhases = (
-				FA064FEB1FBCC5AD00A62A3F /* Build Bump */,
 				8D45AFEF1E8D718200E84A57 /* Compile ssh-wire */,
 				FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */,
 				FA8141521D714250004FE58C /* CommonCrypto */,
@@ -1725,20 +1726,6 @@
 			shellPath = /bin/bash;
 			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
-		FA064FEB1FBCC5AD00A62A3F /* Build Bump */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build Bump";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(git rev-list --count HEAD)\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Notify/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/NotifyUI/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/LastCommand/Info.plist\"\n";
-		};
 		FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1835,7 +1822,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\necho \"$buildNumber\" > \"${PROJECT_DIR}/BUILD\"\necho \"$gitHash\" > \"${PROJECT_DIR}/COMMIT\"\n#/usr/libexec/PlistBuddy -c \"Set :GitHash $gitHash\" \"${PROJECT_DIR}/Kryptonite/Info.plist\"\n";
+			shellScript = "buildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\necho \"$buildNumber\" > \"${PROJECT_DIR}/BUILD\"\necho \"$gitHash\" > \"${PROJECT_DIR}/COMMIT\"\n";
 		};
 		FAB517AD1E54D5AB0032DD47 /* Common Crypto */ = {
 			isa = PBXShellScriptBuildPhase;
