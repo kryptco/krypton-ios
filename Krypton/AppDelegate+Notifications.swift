@@ -84,16 +84,31 @@ extension AppDelegate {
             
             
             // user didn't select option, simply opened the app with the notification
-            if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            switch response.actionIdentifier {
+            case UNNotificationDismissActionIdentifier:
+                completionHandler()
+                return
+
+            case UNNotificationDefaultActionIdentifier:
                 try TransportControl.shared.handle(medium: .remoteNotification, with: verifiedLocalNotification.request, for: session, completionHandler: completionHandler)
                 return
+
+            default:
+                guard let action = Policy.Action(rawValue: response.actionIdentifier) else {
+                    log("unknown action identifier: \(response.actionIdentifier)", .error)
+                    completionHandler()
+                    return
+
+                }
+                
+                handleAuthenticatedRequestAction(session: session,
+                                                 request: verifiedLocalNotification.request,
+                                                 action: action,
+                                                 completionHandler: completionHandler)
             }
             
+            
             // otherwise, process the action
-            handleAuthenticatedRequestAction(session: session,
-                                             request: verifiedLocalNotification.request,
-                                             identifier: response.actionIdentifier,
-                                             completionHandler: completionHandler)
             
         } catch {
             log("error processing notification: \(error)", .error)
@@ -102,18 +117,9 @@ extension AppDelegate {
     }
     
     
-    func handleAuthenticatedRequestAction(session: Session, request: Request, identifier:String, completionHandler:@escaping ()->Void) {
+    func handleAuthenticatedRequestAction(session: Session, request: Request, action:Policy.Action, completionHandler:@escaping ()->Void) {
         // remove pending if exists
         Policy.removePendingAuthorization(session: session, request: request)
-        
-        guard let action = Policy.Action(rawValue: identifier)
-            else {
-                log("nil identifier", .error)
-                try? Silo.shared().removePending(request: request, for: session)
-                try? TransportControl.shared.handle(medium: .remoteNotification, with: request, for: session)
-                completionHandler()
-                return
-        }
         
         let allowed = action.isAllowed
         
