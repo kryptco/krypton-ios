@@ -1,30 +1,31 @@
-<a href="https://krypt.co"><img src="https://krypt.co/static/dist/img/apple-touch-icon.png" width="400"/> </a>
+<a href="https://krypt.co"><img src="https://krypt.co/static/dist/img/krypton_core_logo.svg" width="200"/> </a>
+
 [![Build Status](https://travis-ci.org/kryptco/kryptonite-ios.svg?branch=master)](https://travis-ci.org/kryptco/kryptonite-ios)
 
 __Krypton__ generates and stores an SSH key pair on a mobile phone. The
 Krypton app is paired with one or more workstations by scanning a QR code
 presented in the terminal. When using SSH from a paired workstation, the
 workstation requests a private key signature from the phone. The user then
-receives a notification and chooses whether to allow the SSH login. 
+receives a notification and chooses whether to allow the SSH login.
 
 For more information, check out [krypt.co](https://krypt.co).
 
 
 # Build Instructions
 - Install dependencies (OSX)
-  ```sh 
-  curl https://sh.rustup.rs -sSf | sh
-  rustup target add aarch64-apple-ios
-  rustup target add armv7-apple-ios
-  rustup target add armv7s-apple-ios
-  rustup target add x86_64-apple-ios
-  rustup target add i386-apple-ios
-  rustup update
-  cargo install cargo-lipo
+```sh
+curl https://sh.rustup.rs -sSf | sh
+rustup target add aarch64-apple-ios
+rustup target add armv7-apple-ios
+rustup target add armv7s-apple-ios
+rustup target add x86_64-apple-ios
+rustup target add i386-apple-ios
+rustup update
+cargo install cargo-lipo
 
-  cd ssh-wire
-  ./build.sh
-  ```
+cd ssh-wire
+./build.sh
+```
 
 # Have an Android phone?
 The Android implementation is located [here](https://github.com/kryptco/kryptonite-android).
@@ -101,3 +102,4 @@ C6kMeRvyJtlm/+OvMe2MUvyKnQpbXo6Zj2HXBiuegvgKUTydpwx10/g+odIR
 # LICENSE
 We are currently working on a new license for Krypton. For now, the code
 is released under All Rights Reserved.
+
