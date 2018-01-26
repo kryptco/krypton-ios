@@ -156,12 +156,15 @@ class BluetoothPeripheralDelegate : NSObject, CBPeripheralManagerDelegate {
             return
         }
         rotateEpoch += 1
+        
+        let localServiceUUIDAdvertisementOrder = serviceUUIDAdvertisementOrder
+        
         if let currentAdvertisement = advertisedServiceUUID,
-            let currentIndex = serviceUUIDAdvertisementOrder.index(of: currentAdvertisement) {
-            let nextIndex = (currentIndex + 1) % serviceUUIDAdvertisementOrder.count
-            advertisedServiceUUID = serviceUUIDAdvertisementOrder[nextIndex]
+            let currentIndex = localServiceUUIDAdvertisementOrder.index(of: currentAdvertisement) {
+            let nextIndex = (currentIndex + 1) % localServiceUUIDAdvertisementOrder.count
+            advertisedServiceUUID = localServiceUUIDAdvertisementOrder[nextIndex]
         } else {
-            advertisedServiceUUID = serviceUUIDAdvertisementOrder.first
+            advertisedServiceUUID = localServiceUUIDAdvertisementOrder.first
         }
         peripheral.stopAdvertising()
         if let currentAdvertisement = advertisedServiceUUID {
