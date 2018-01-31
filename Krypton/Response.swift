@@ -276,23 +276,38 @@ struct HostsResponse:Jsonable {
         }
     }
     
-    let pgpUserIDs:[String]
-    let hosts:[UserAndHost]
+    struct HostInfo {
+        let pgpUserIDs:[String]
+        let hosts:[UserAndHost]
+        
+        init(pgpUserIDs:[String], hosts:[UserAndHost]) {
+            self.pgpUserIDs = pgpUserIDs
+            self.hosts = hosts
+        }
+
+        init(json: Object) throws {
+            try self.init(pgpUserIDs: json ~> "pgp_user_ids",
+                          hosts: [UserAndHost](json: json ~> "hosts"))
+        }
+        
+        var object: Object {
+            return ["pgp_user_ids": pgpUserIDs,
+                    "hosts": hosts.objects]
+        }
+    }
+    
+    let hostInfo:HostInfo
     
     init(pgpUserIDs:[String], hosts:[UserAndHost]) {
-        self.pgpUserIDs = pgpUserIDs
-        self.hosts = hosts
+        self.hostInfo = HostInfo(pgpUserIDs: pgpUserIDs, hosts: hosts)
     }
     
     init(json: Object) throws {
-        try self.init(pgpUserIDs: json ~> "pgp_user_ids",
-                      hosts: [UserAndHost](json: json ~> "hosts"))
+        self.hostInfo = try HostInfo(json: json ~> "host_info")
     }
     
     var object: Object {
-        return ["pgp_user_ids": pgpUserIDs,
-                "hosts": hosts.objects]
+        return ["host_info": hostInfo.object]
     }
-    
 }
 
