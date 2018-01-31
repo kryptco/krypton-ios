@@ -16,7 +16,7 @@ struct Properties {
     static let defaultRemoteRequestAlertOld = "Kryptonite Request"
 
     //MARK: Version
-    static let currentVersion = Version(major: 2, minor: 3, patch: 1)
+    static let currentVersion = Version(major: 2, minor: 3, patch: 2)
     
     struct Compatibility {
         static let rsaSha256Sha512Support = Version(major: 2, minor: 1, patch: 0)
