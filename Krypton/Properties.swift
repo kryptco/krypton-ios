@@ -16,7 +16,7 @@ struct Properties {
     static let defaultRemoteRequestAlertOld = "Kryptonite Request"
 
     //MARK: Version
-    static let currentVersion = Version(major: 2, minor: 3, patch: 2)
+    static let currentVersion = Version(major: 2, minor: 4, patch: 0)
     
     struct Compatibility {
         static let rsaSha256Sha512Support = Version(major: 2, minor: 1, patch: 0)
@@ -26,8 +26,15 @@ struct Properties {
     
     static let appVersionURL = "https://s3.amazonaws.com/kr-versions/versions"
     
-    static let updateCheckIntervalForeground = TimeSeconds.hour.multiplied(by: 6)
-    static let updateCheckIntervalBackground = TimeSeconds.week.rawValue
+    struct AppUpdateCheckInterval {
+        static var foreground:TimeInterval {
+            return TimeSeconds.hour.multiplied(by: 6)
+        }
+        
+        static var background:TimeInterval {
+            return TimeSeconds.week.rawValue
+        }
+    }
 
     //MARK: AWS
     static let awsAccessKey = "AKIAJMZJ3X6MHMXRF7QQ"
@@ -44,6 +51,12 @@ struct Properties {
     
     static let awsQueueURLBase = "https://sqs.us-east-1.amazonaws.com/911777333295/"
     
+    //MARK: Constants
+    enum Interval:TimeInterval {
+        //case fifteenSeconds = 15
+        case oneHour = 3600
+        case threeHours = 10800
+    }
 
     //MARK: URLs
 
@@ -53,7 +66,66 @@ struct Properties {
     
     static let appStoreURL = "https://get.krypt.co"
     static let appURL = "https://krypt.co"
+    
+    static let transport = "https"
+    
+    //MARK: Teams
+    static func teamsServerEndpoints() -> ServerEndpoints {
+        if Platform.isDebug {
+            return ServerEndpoints(apiHost: "api-dev.krypt.co",
+                                   billingHost: "www-dev.krypt.co")
+        } else {
+            return ServerEndpoints(apiHost: "api.krypt.co",
+                                   billingHost: "www.krypt.co")
+        }
 
+    }
+    
+    struct SigChainUpdateCheckInterval {
+        static var foreground:TimeInterval {
+            return TimeSeconds.hour.rawValue
+        }
+        
+        static var background:TimeInterval {
+            return TimeSeconds.hour.rawValue
+        }
+    }
+    
+    static func invitationText(for teamName:String) -> String {
+        return  """
+                You're invited to join \(teamName) on \(Properties.appName)!\n
+                Step 1. Install: https://get.krypt.co
+                Step 2. Accept Invite: tap the link below on your phone or copy this message (including the link) into \(Properties.appName).
+                """
+    }
+    
+    static func invitationHTML(for teamName:String, link:String) -> String? {
+        guard let path = Bundle.main.path(forResource: "teams_invite_email_template", ofType: "html")
+        else {
+            return nil
+        }
+
+        do {
+            var content = try String(contentsOfFile: path)
+            content = content.replacingOccurrences(of: "TEAM_NAME", with: teamName)
+            content = content.replacingOccurrences(of: "APP_NAME", with: Properties.appName)
+            content = content.replacingOccurrences(of: "INVITE_LINK", with: link)
+            
+            return content
+            
+        } catch {
+            return nil
+        }
+
+    }
+    
+    static func billingURL(for teamName:String, teamInitialPublicKey:Data, adminPublicKey:Data, adminEmail:String)-> String {
+        let baseURL = "https://\(Properties.teamsServerEndpoints().billingHost)/billing/"
+        
+        let fullURL = "\(baseURL)?tn=\(teamName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? teamName)&tid=\(teamInitialPublicKey.toBase64(true))&aid=\(adminPublicKey.toBase64(true))&aem=\(adminEmail.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? adminEmail)"
+        return fullURL
+    }
+ 
     //MARK: Analytics
     static var trackingID:String {
         if Platform.isDebug {

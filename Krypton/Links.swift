@@ -8,52 +8,111 @@
 
 import Foundation
 
-
-
-
-enum LinkType:String {
-    case kr = "kr"
-}
-
-enum LinkCommand:String {
-    case share = "share"
-    case none = ""
+enum CopyToken {
+    case joinTeam(SodiumSecretBoxKey)
     
-    static let all = [share]
-
+    enum Errors:Error {
+        case tooShort
+        case badPrefix
+    }
     
-    init(url:URL) {
-        guard
-            let commandParam = url.queryItems()["c"],
-            let command = LinkCommand(rawValue: commandParam)
-        else {
-            self = .none
-            return
+    enum Prefix:String {
+        case joinTeam = "JT"
+        
+        static var length:Int { return 2 }
+    }
+    
+    init(string:String) throws {
+        guard string.count > Prefix.length else {
+            throw Errors.tooShort
         }
         
-        self = command
+        switch Prefix(rawValue: String(string.prefix(Prefix.length))) {
+        case .some(.joinTeam):
+            self = try .joinTeam(String(string.suffix(from: string.index(string.startIndex, offsetBy: Prefix.length))).fromBase64())
+        case .none:
+            throw Errors.badPrefix
+        }
     }
-
+    
+    var string:String {
+        switch self {
+        case .joinTeam(let secret):
+            return "\(Prefix.joinTeam.rawValue)\(secret.toBase64())"
+        }
+    }
+    
+    var link:String {
+        switch self {
+        case .joinTeam(let secret):
+            return SigChain.Link.invite(SigChain.JoinTeamInvite(symmetricKey: secret)).string(for: Constants.appURLScheme)
+        }
+    }
 }
+
+enum LinkType:String {
+    case app = "krypton"
+    case site = "https"
+}
+            
+enum LinkError:Error {
+    case invalidType
+    case invalidCommand
+}
+
+struct LinkCommand {
+    
+    enum Host:String {
+        case joinTeam = "join_team"
+        case emailChallenge = "verify_email"
+        case emailChallengeRemote = "krypt.co"
+        
+        func matchesPathIfNeeded(of url:URL) -> Bool {
+            switch self {
+            case .joinTeam, .emailChallenge:
+                return true // url validation done individually
+            case .emailChallengeRemote:
+                return url.cleanPathComponents() == ["app", "verify_email.html"]
+            }
+        }
+    }
+    
+    let host:Host
+    
+    init(url:URL) throws {
+        guard   let hostString = url.host,
+                let host = Host(rawValue: hostString),
+                host.matchesPathIfNeeded(of: url)
+        else {
+            throw LinkError.invalidCommand
+        }
+        
+        self.host = host
+    }
+}
+
 class Link {
     let type:LinkType
     let command:LinkCommand
+    let path:[String]
     let properties:[String:String]
- 
+    
     let url:URL
     
-    init?(url:URL) {
+    init(url:URL) throws {
         guard
             let scheme = url.scheme,
             let type = LinkType(rawValue: scheme)
         else {
-            return nil
+            throw LinkError.invalidType
         }
         
         self.url = url
         self.type = type
-        self.command = LinkCommand(url: url)
+        self.command = try LinkCommand(url: url)
         self.properties = url.queryItems()
+        self.path = url.cleanPathComponents()
+        log(self.path)
     }
     
     static var notificationName:NSNotification.Name {
@@ -62,9 +121,6 @@ class Link {
 
 }
 
-extension Link {
-
-}
 
 class LinkListener {
     var onListen:(Link)->()
@@ -89,16 +145,23 @@ class LinkListener {
     
     @objc dynamic func didReceive(note:NSNotification) {
         guard let link = note.object as? Link else {
+            log("empty link in link notification", .error)
             return
         }
         
-        (UIApplication.shared.delegate as? AppDelegate)?.pendingLink = nil
-        onListen(link)
+        dispatchMain {
+            (UIApplication.shared.delegate as? AppDelegate)?.pendingLink = nil
+        }
+        
+        self.onListen(link)
     }
 }
 
 
 extension URL {
+    func cleanPathComponents() -> [String] {
+        return self.pathComponents.filter({ $0 != "/" }).filter({ !$0.isEmpty })
+    }
     func queryItems() -> [String:String] {
         guard
             let components = URLComponents(url: self, resolvingAgainstBaseURL: false),

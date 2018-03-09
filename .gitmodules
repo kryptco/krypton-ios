@@ -19,3 +19,6 @@
 [submodule "swift-pgp"]
 	path = swift-pgp
 	url = git@github.com:kryptco/swift-pgp.git
+[submodule "SigchainTests/sigchain"]
+	path = SigchainTests/sigchain
+	url = git@github.com:kryptco/sigchain.git

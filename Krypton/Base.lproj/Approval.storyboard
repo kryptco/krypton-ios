@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
         <!--Approve Controller-->
         <scene sceneID="Lko-ba-iqD">
             <objects>
-                <viewController storyboardIdentifier="ApproveController" id="msB-gB-cZy" customClass="ApproveController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ApproveController" id="msB-gB-cZy" customClass="ApproveController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GOF-aw-DR1"/>
                         <viewControllerLayoutGuide type="bottom" id="CEu-2I-7un"/>
@@ -36,7 +36,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wYZ-70-qbu">
                                 <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
                                 <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnG-qN-IfJ" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnG-qN-IfJ" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                         <rect key="frame" x="-0.5" y="120" width="375" height="771"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REQUEST FROM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AtN-i3-krO">
@@ -51,7 +51,7 @@
                                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCZ-cb-ijv" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
+                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCZ-cb-ijv" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
                                                 <rect key="frame" x="148" y="8" width="80" height="80"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -78,7 +78,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eeh-tD-PoY">
                                                 <rect key="frame" x="148" y="8" width="80" height="80"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-HX-c1k" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-HX-c1k" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                                         <rect key="frame" x="30" y="30" width="20" height="20"/>
                                                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -100,6 +100,13 @@
                                                     <constraint firstItem="sTb-HX-c1k" firstAttribute="centerX" secondItem="eeh-tD-PoY" secondAttribute="centerX" id="uii-vM-VCO"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AGg-HO-s4n">
+                                                <rect key="frame" x="0.0" y="370" width="375" height="1"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="GCk-ui-574"/>
+                                                </constraints>
+                                            </view>
                                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="400" translatesAutoresizingMaskIntoConstraints="NO" id="Mal-qM-pdX">
                                                 <rect key="frame" x="0.0" y="371" width="375" height="400"/>
                                                 <constraints>
@@ -109,7 +116,7 @@
                                                     <segue destination="nvc-AL-bD0" kind="embed" id="xpd-Fa-yuP"/>
                                                 </connections>
                                             </containerView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Vn-r6-u2i" customClass="RoundedView" customModule="Kryptonite" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Vn-r6-u2i" customClass="RoundedView" customModule="Krypton" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="371" width="375" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="APPROVED" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.0099999997764825821" translatesAutoresizingMaskIntoConstraints="NO" id="Ypm-ai-5yB">
@@ -152,6 +159,7 @@
                                             <constraint firstItem="L0W-7f-ATi" firstAttribute="top" secondItem="AtN-i3-krO" secondAttribute="firstBaseline" id="6B9-u8-1Uu"/>
                                             <constraint firstItem="eeh-tD-PoY" firstAttribute="centerY" secondItem="nCZ-cb-ijv" secondAttribute="centerY" id="8KY-bn-89d"/>
                                             <constraint firstAttribute="trailing" secondItem="Mal-qM-pdX" secondAttribute="trailing" id="B08-dr-vrb"/>
+                                            <constraint firstItem="AGg-HO-s4n" firstAttribute="leading" secondItem="Mal-qM-pdX" secondAttribute="leading" id="D7C-zQ-eEy"/>
                                             <constraint firstItem="Mal-qM-pdX" firstAttribute="leading" secondItem="xnG-qN-IfJ" secondAttribute="leading" id="EBt-5m-87p"/>
                                             <constraint firstItem="AtN-i3-krO" firstAttribute="top" secondItem="nCZ-cb-ijv" secondAttribute="bottom" constant="20" id="EGg-3D-EYd"/>
                                             <constraint firstItem="eeh-tD-PoY" firstAttribute="centerX" secondItem="nCZ-cb-ijv" secondAttribute="centerX" id="FlV-bu-ow8"/>
@@ -163,8 +171,10 @@
                                             <constraint firstItem="AtN-i3-krO" firstAttribute="centerX" secondItem="xnG-qN-IfJ" secondAttribute="centerX" id="hps-y5-dIq"/>
                                             <constraint firstItem="nCZ-cb-ijv" firstAttribute="centerX" secondItem="xnG-qN-IfJ" secondAttribute="centerX" id="iZe-m7-0rS"/>
                                             <constraint firstAttribute="bottom" secondItem="Mal-qM-pdX" secondAttribute="bottom" priority="999" id="kK4-4e-OE1"/>
+                                            <constraint firstItem="Mal-qM-pdX" firstAttribute="top" secondItem="AGg-HO-s4n" secondAttribute="bottom" id="lCj-G3-8at"/>
                                             <constraint firstItem="2Vn-r6-u2i" firstAttribute="top" secondItem="Mal-qM-pdX" secondAttribute="top" id="nk1-s5-f9K"/>
                                             <constraint firstItem="QCo-GB-Fnv" firstAttribute="width" secondItem="xnG-qN-IfJ" secondAttribute="width" id="q8h-8n-enW"/>
+                                            <constraint firstItem="AGg-HO-s4n" firstAttribute="trailing" secondItem="Mal-qM-pdX" secondAttribute="trailing" id="sRD-Yy-LsU"/>
                                             <constraint firstItem="Mal-qM-pdX" firstAttribute="width" secondItem="xnG-qN-IfJ" secondAttribute="width" id="uRh-1C-ex6"/>
                                             <constraint firstItem="L0W-7f-ATi" firstAttribute="leading" secondItem="xnG-qN-IfJ" secondAttribute="leading" constant="20" id="vmD-c4-277"/>
                                         </constraints>
@@ -229,13 +239,13 @@
         <!--Approve Options Controller-->
         <scene sceneID="Rkc-tU-4TI">
             <objects>
-                <tableViewController id="nvc-AL-bD0" customClass="ApproveOptionsController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="nvc-AL-bD0" customClass="ApproveOptionsController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wcy-JW-Fvn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Allow" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Allow" focusStyle="custom" rowHeight="70" id="PRp-uN-qtO" customClass="ApproveOptionsCell" customModule="Kryptonite" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Allow" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Allow" focusStyle="custom" rowHeight="70" id="PRp-uN-qtO" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PRp-uN-qtO" id="OIY-Qu-Zep">
@@ -265,7 +275,7 @@
                                     <outlet property="button" destination="JtY-Mg-Bdy" id="U3z-sG-dlO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowOnce" focusStyle="custom" rowHeight="70" id="XwT-H8-uZB" customClass="ApproveOptionsCell" customModule="Kryptonite" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowOnce" focusStyle="custom" rowHeight="70" id="XwT-H8-uZB" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="98" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XwT-H8-uZB" id="orB-jL-Mfv">
@@ -295,7 +305,7 @@
                                     <outlet property="button" destination="9n6-Fx-ZrN" id="Ub1-aZ-xeh"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowThis" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowThis" focusStyle="custom" rowHeight="70" id="l1N-9R-bUD" customClass="ApproveOptionsCell" customModule="Kryptonite" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowThis" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowThis" focusStyle="custom" rowHeight="70" id="l1N-9R-bUD" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="168" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="l1N-9R-bUD" id="Qo9-ym-75l">
@@ -325,7 +335,7 @@
                                     <outlet property="button" destination="j2d-Qi-bkp" id="rcc-6L-bMm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowAll" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowAll" focusStyle="custom" rowHeight="70" id="Q5w-Zl-sTN" customClass="ApproveOptionsCell" customModule="Kryptonite" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowAll" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowAll" focusStyle="custom" rowHeight="70" id="Q5w-Zl-sTN" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="238" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q5w-Zl-sTN" id="Cel-Dt-Pa0">
@@ -355,7 +365,7 @@
                                     <outlet property="button" destination="ML2-ac-Un7" id="5am-Tg-H2A"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Reject" focusStyle="custom" rowHeight="70" id="ZeD-kq-8Yp" customClass="ApproveOptionsCell" customModule="Kryptonite" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Reject" focusStyle="custom" rowHeight="70" id="ZeD-kq-8Yp" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="308" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZeD-kq-8Yp" id="PFc-hR-pWB">
@@ -402,7 +412,7 @@
         <!--Auto Approve Controller-->
         <scene sceneID="Bq2-fw-abj">
             <objects>
-                <viewController storyboardIdentifier="AutoApproveController" id="Qit-Yq-gLb" customClass="AutoApproveController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AutoApproveController" id="Qit-Yq-gLb" customClass="AutoApproveController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Snd-f0-JV1"/>
                         <viewControllerLayoutGuide type="bottom" id="dA1-6U-hNs"/>
@@ -411,16 +421,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9Y-aM-j36" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9Y-aM-j36" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="10" y="509.5" width="355" height="93.5"/>
                                 <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-Mk-LFw" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-Mk-LFw" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="93.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32U-6O-1By">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
                                                 <subviews>
-                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIV-jc-ntL" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
+                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIV-jc-ntL" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
                                                         <rect key="frame" x="323" y="8" width="24" height="24"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
@@ -460,7 +470,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="qIV-jc-ntL" secondAttribute="bottom" constant="8" id="zBY-y6-h7b"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="41" width="355" height="52.5"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">

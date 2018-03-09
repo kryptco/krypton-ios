@@ -38,5 +38,15 @@ extension String {
         return sanitizedPhone
     }
     
+    func getEmailDomain() -> String? {
+        let components = self.components(separatedBy: "@")
+        
+        guard components.count == 2 else {
+            return nil
+        }
+        
+        return components[1]
+    }
+    
 }
 

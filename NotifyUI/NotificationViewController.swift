@@ -40,6 +40,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             
         } catch  {
             log("error: \(error)")
+            sessionLabel.text = "INVALID"
             self.detailController?.set(request: nil)
         }
     }

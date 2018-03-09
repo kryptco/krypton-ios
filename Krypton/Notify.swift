@@ -67,7 +67,7 @@ class Notify {
     var pushedNotifications:[String:Int] = [:]
     var noteMutex = Mutex()
     
-    func present(request:Request, for session:Session) {
+    static func present(request:Request, for session:Session) {
         
         guard request.body.isApprovable else {
             log("trying to present approval notification for non approvable request type", .error)
@@ -76,13 +76,12 @@ class Notify {
         
         let noteTitle = "Request from \(session.pairing.displayName)"
         let (noteSubtitle, noteBody) = request.notificationDetails()
-
         
-        // check if request exists in pending notifications
-        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (noteRequests) in
-            for noteRequest in noteRequests {
-                guard   let payload = noteRequest.content.userInfo as? JSON.Object,
-                        let verifiedRequest = try? LocalNotificationAuthority.verifyLocalNotification(with: payload)
+        // check if request exists in delivered notifications
+        UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+            for note in notes {
+                guard   let payload = note.request.content.userInfo as? JSON.Object,
+                    let verifiedRequest = try? LocalNotificationAuthority.verifyLocalNotification(with: payload)
                     else {
                         continue
                 }
@@ -93,52 +92,35 @@ class Notify {
                 }
             }
             
-            // then, check if request exists in delivered notifications
-            UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
-                for note in notes {
-                    guard   let payload = note.request.content.userInfo as? JSON.Object,
-                            let verifiedRequest = try? LocalNotificationAuthority.verifyLocalNotification(with: payload)
-                    else {
-                        continue
-                    }
-
-                    // return if it's already there
-                    if verifiedRequest.request.id == request.id {
-                        return
-                    }
-                }
-                
-                // otherwise, no notificiation so display it:
-                let content = UNMutableNotificationContent()
-                content.title = noteTitle
-                content.subtitle = noteSubtitle
-                content.body = noteBody
-                content.sound = UNNotificationSound.default()
-                
-                let localRequest = LocalNotificationAuthority.VerifiedLocalRequest(alertText: noteBody,
-                                                                                   request: request,
-                                                                                   sessionID: session.id,
-                                                                                   sessionName: session.pairing.displayName)
-                do {
-                    content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
-                } catch {
-                    self.presentError(message: "Cannot display request: \(error)", session: session)
-                    return
-                }
-                
-                content.categoryIdentifier = request.notificationCategory(for: session).identifier
-                content.threadIdentifier = request.id
-                
-                let noteId = request.id
-                log("pushing note with id: \(noteId)")
-                let request = UNNotificationRequest(identifier: noteId, content: content, trigger: nil)
-                
-                UNUserNotificationCenter.current().add(request) {(error) in
-                    log("error firing notification: \(String(describing: error))")
-                }
-            })
+            // otherwise, no notificiation so display it:
+            let content = UNMutableNotificationContent()
+            content.title = noteTitle
+            content.subtitle = noteSubtitle
+            content.body = noteBody
+            content.sound = UNNotificationSound.default()
+            
+            let localRequest = LocalNotificationAuthority.VerifiedLocalRequest(alertText: noteBody,
+                                                                               request: request,
+                                                                               sessionID: session.id,
+                                                                               sessionName: session.pairing.displayName)
+            do {
+                content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
+            } catch {
+                Notify.presentError(message: "Cannot display request: \(error)", session: session)
+                return
+            }
+            
+            content.categoryIdentifier = request.notificationCategory(for: session).identifier
+            content.threadIdentifier = request.id
+            
+            let noteId = request.id
+            log("pushing note with id: \(noteId)")
+            let request = UNNotificationRequest(identifier: noteId, content: content, trigger: nil)
+            
+            UNUserNotificationCenter.current().add(request) {(error) in
+                log("error firing notification: \(String(describing: error))")
+            }
         })
-
     }
     
 
@@ -199,7 +181,7 @@ class Notify {
             do {
                 content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
             } catch {
-                self.presentError(message: "Cannot display request: \(error)", session: session)
+                Notify.presentError(message: "Cannot display request: \(error)", session: session)
                 return
             }
 
@@ -218,7 +200,7 @@ class Notify {
     /**
         Show "error" local notification
     */
-    func presentError(message:String, session:Session) {
+    static func presentError(message:String, session:Session) {
         
         if UserRejectedError.isRejected(errorString: message) {
             return

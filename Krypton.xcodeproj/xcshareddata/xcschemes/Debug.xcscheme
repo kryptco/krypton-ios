@@ -34,8 +34,18 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FAEE04991D74BCC3002A7AFD"
-               BuildableName = "KryptoTests.xctest"
-               BlueprintName = "KryptoTests"
+               BuildableName = "KryptonTests.xctest"
+               BlueprintName = "KryptonTests"
+               ReferencedContainer = "container:Krypton.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA11A56C2031F4A8000E46B1"
+               BuildableName = "SigchainTests.xctest"
+               BlueprintName = "SigchainTests"
                ReferencedContainer = "container:Krypton.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -73,6 +83,12 @@
             ReferencedContainer = "container:Krypton.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-com.apple.CoreData.SQLDebug 3"
+            isEnabled = "NO">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

@@ -68,8 +68,9 @@ class Policy {
             case ssh = "ssh"
             case gitCommit = "git_commit"
             case gitTag = "git_tag"
+            case decryptLog = "teams_decrypt_log"
             
-            static var all:[AllowedUntilType] { return [.ssh, .gitCommit, .gitTag] }
+            static var all:[AllowedUntilType] { return [.ssh, .gitCommit, .gitTag, .decryptLog] }
             
             var key:AllowedUntilTypeKey { return self.rawValue }
         }
@@ -140,7 +141,7 @@ class Policy {
             
             let cacheName = StorageKey.temporarilyAllowedHosts.key(for: session.id)
             self.sshUserAndHostAllowedUntil = try? Cache<NSData>(name: cacheName,
-                                                                 directory: Caches.directory(for: cacheName))
+                                                                 directory: SecureLocalStorage.directory(for: cacheName))
             
             guard let settingsObject = try? KeychainStorage().getData(key: StorageKey.settings.key(for: session.id)),
                 let settings = try? Settings(jsonData: settingsObject)
@@ -199,11 +200,24 @@ class Policy {
         }
         
         /// Set Allow
+        func allow(request:Request) {
+            switch request.body {
+            case .ssh, .git, .hosts, .me, .decryptLog, .noOp, .unpair, .teamOperation:
+                return
+            case .readTeam:
+                // special cases to allow logs for 6 hours when the readTeam request is allowed.
+                self.allowAll(allowAllType: Policy.Settings.AllowedUntilType.decryptLog, for: TimeSeconds.hour.multiplied(by: 6))
+            }
+        }
         func allowAll(request:Request, for timeInterval:TimeInterval) {
+            self.allowAll(allowAllType: request.allowAllUntilPolicyKey, for: timeInterval)
+        }
+        
+        func allowAll(allowAllType:Policy.Settings.AllowedUntilType?, for timeInterval:TimeInterval) {
             
             let allowedUntil = Date().addingTimeInterval(timeInterval).timeIntervalSince1970
             
-            guard let allowAllRequestKey = request.allowAllUntilPolicyKey else {
+            guard let allowAllRequestKey = allowAllType else {
                 // not auto allow-all-able
                 return
             }
@@ -247,7 +261,7 @@ class Policy {
             case .me, .unpair, .noOp:
                 return true
                 
-            case .hosts:
+            case .hosts, .readTeam, .teamOperation:
                 return false
                 
             case .ssh(let sshSign):
@@ -268,7 +282,7 @@ class Policy {
                 
                 return allAllowed || ( Date() < temporarilyAllowedHost.expires )
                 
-            case .git:
+            case .git, .decryptLog:
                 return allAllowed
                 
             }
@@ -344,12 +358,15 @@ class Policy {
 extension Request {
     internal var allowAllUntilPolicyKey:Policy.Settings.AllowedUntilType? {
         switch body {
-        case .me, .unpair, .noOp, .hosts:
+        case .me, .unpair, .noOp, .hosts, .readTeam, .teamOperation:
             // not auto-allowable
             return nil
             
         case .ssh:
             return .ssh
+            
+        case .decryptLog:
+            return .decryptLog
             
         case .git(let gitSign):
             switch gitSign.git {

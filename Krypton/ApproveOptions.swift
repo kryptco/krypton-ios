@@ -43,9 +43,9 @@ class ApproveOptionsController:UITableViewController {
             case .allowOnce:
                 return "Allow once"
             case .allowThis:
-                return "Allow this host for 3 hours"
+                return "Allow this host for " + Policy.temporaryApprovalInterval.description
             case .allowAll:
-                return "Allow all for 3 hours"
+                return "Allow all for " + Policy.temporaryApprovalInterval.description
             case .reject:
                 return "Reject"
             }
@@ -97,8 +97,10 @@ class ApproveOptionsController:UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: options[indexPath.row].identifier, for: indexPath) as? ApproveOptionsCell
+        let option = options[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: option.identifier, for: indexPath) as? ApproveOptionsCell
         cell?.onSelect = onSelect
+        cell?.button.setTitle(option.text, for: .normal)
         
         return cell ?? UITableViewCell()
     }

@@ -14,7 +14,6 @@
 		8D05CB351ED3E25E00CCCC38 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */; };
 		8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */; };
 		8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CDC941D8789FB00CDBC3C /* Bluetooth.swift */; };
-		8D45B00A1E8D7DBB00E84A57 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8D65116A1FABAA3D00873320 /* BluetoothPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D65115A1FABAA3C00873320 /* BluetoothPeripheral.swift */; };
 		8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
@@ -29,19 +28,23 @@
 		8DC38BC31E689785007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC38BC61E689A12007445B4 /* libsshwire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC38BC21E689785007445B4 /* libsshwire.a */; };
 		8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D83990B1E56063A0051C6BA /* HostAuth.swift */; };
-		8DCB60541E94470A00E1B924 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1F41D79E4FC007D1B3A /* AWSCore.framework */; };
-		8DCB60551E94470A00E1B924 /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EB1D79E24F007D1B3A /* AWSSNS.framework */; };
-		8DCB60561E94470A00E1B924 /* AWSSQS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6E1EC1D79E24F007D1B3A /* AWSSQS.framework */; };
 		8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD436A31DF3719000201106 /* CommunicationActivity.swift */; };
 		FA0322731D74D39100CD7622 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322721D74D39100CD7622 /* Globals.swift */; };
 		FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0322CD1D7A72E800CD7622 /* Session.swift */; };
 		FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03C5841E749A520019649E /* RePairWarningController.swift */; };
 		FA03C5991E760CD50019649E /* BUILD in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5971E760CD50019649E /* BUILD */; };
 		FA03C59A1E760CD50019649E /* COMMIT in Resources */ = {isa = PBXBuildFile; fileRef = FA03C5981E760CD50019649E /* COMMIT */; };
+		FA0609D6203C827E00068B52 /* Billing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0609D5203C827E00068B52 /* Billing.swift */; };
+		FA0609D7203C827E00068B52 /* Billing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0609D5203C827E00068B52 /* Billing.swift */; };
+		FA0609D8203C827E00068B52 /* Billing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0609D5203C827E00068B52 /* Billing.swift */; };
+		FA0609DA203C8F6C00068B52 /* TeamService+Billing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0609D9203C8F6C00068B52 /* TeamService+Billing.swift */; };
+		FA0609DC203C8F6C00068B52 /* TeamService+Billing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0609D9203C8F6C00068B52 /* TeamService+Billing.swift */; };
 		FA064FED1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */; };
 		FA064FEE1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */; };
 		FA0650041FBE090200A62A3F /* NISTP256KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */; };
 		FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */; };
+		FA11A5702031F4A8000E46B1 /* SigchainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11A56F2031F4A8000E46B1 /* SigchainTests.swift */; };
+		FA11A57A2031F58D000E46B1 /* TestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11A5792031F58D000E46B1 /* TestProtocol.swift */; };
 		FA12EAB51ECFA96C001603BF /* PGPFormat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA12EAA41ECFA917001603BF /* PGPFormat.framework */; };
 		FA12EABF1ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */; };
 		FA12EAC01ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */; };
@@ -50,7 +53,6 @@
 		FA15EB491DA5C6CC00BED16C /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15EB481DA5C6CC00BED16C /* Properties.swift */; };
 		FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA16824D1D774C2200A7ED53 /* KRScanController.swift */; };
 		FA1682511D774C3900A7ED53 /* PairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682501D774C3900A7ED53 /* PairController.swift */; };
-		FA1682681D774D6000A7ED53 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1682541D774D6000A7ED53 /* Info.plist */; };
 		FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682551D774D6000A7ED53 /* RSCode128Generator.swift */; };
 		FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682561D774D6000A7ED53 /* RSCode39Generator.swift */; };
 		FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682571D774D6000A7ED53 /* RSCode39Mod43Generator.swift */; };
@@ -78,6 +80,9 @@
 		FA1682A31EB2B2D500D9CE40 /* KnownHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */; };
 		FA1682A41EB2B2D500D9CE40 /* KnownHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */; };
 		FA1682AA1EB3856600D9CE40 /* KnownHostsEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1682A91EB3856600D9CE40 /* KnownHostsEditController.swift */; };
+		FA171EEB205A4512003CD9CC /* TeamDataTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171EEA205A4512003CD9CC /* TeamDataTransaction.swift */; };
+		FA171EEC205A4512003CD9CC /* TeamDataTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171EEA205A4512003CD9CC /* TeamDataTransaction.swift */; };
+		FA171EED205A4512003CD9CC /* TeamDataTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171EEA205A4512003CD9CC /* TeamDataTransaction.swift */; };
 		FA17B96C1FB3636700975FB0 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
 		FA17B96E1FB3638100975FB0 /* Request+Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17B96D1FB3638100975FB0 /* Request+Policy.swift */; };
 		FA17B96F1FB3638100975FB0 /* Request+Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17B96D1FB3638100975FB0 /* Request+Policy.swift */; };
@@ -92,23 +97,65 @@
 		FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */ = {isa = PBXBuildFile; fileRef = FA2977981D7736A8003EB1F7 /* ImageLicenses */; };
 		FA29779B1D773F46003EB1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8141401D70B0F4004FE58C /* Assets.xcassets */; };
 		FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
+		FA2A500620115C85002748C2 /* TeamService+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A500520115C85002748C2 /* TeamService+Logs.swift */; };
+		FA2A500720115C85002748C2 /* TeamService+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A500520115C85002748C2 /* TeamService+Logs.swift */; };
+		FA2A501B20115CBB002748C2 /* TeamService+EmailChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A501A20115CBB002748C2 /* TeamService+EmailChallenge.swift */; };
+		FA2A501C20115CBB002748C2 /* TeamService+EmailChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A501A20115CBB002748C2 /* TeamService+EmailChallenge.swift */; };
+		FA2A502120115D09002748C2 /* TeamService+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A502020115D09002748C2 /* TeamService+Push.swift */; };
+		FA2A502220115D09002748C2 /* TeamService+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A502020115D09002748C2 /* TeamService+Push.swift */; };
+		FA2A502420115DE4002748C2 /* TeamService+MainRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A502320115DE4002748C2 /* TeamService+MainRead.swift */; };
+		FA2A502520115DE4002748C2 /* TeamService+MainRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A502320115DE4002748C2 /* TeamService+MainRead.swift */; };
 		FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F22A11DC3C3CA0094076E /* Onboarding.swift */; };
+		FA2F4172200D51640024507A /* TeamCustomDomainInviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F4171200D51640024507A /* TeamCustomDomainInviteController.swift */; };
+		FA2F4174200D59CD0024507A /* TeamInviteByEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F4173200D59CD0024507A /* TeamInviteByEmailController.swift */; };
 		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
+		FA33F2A3200E634B0046922D /* teams_invite_email_template.html in Resources */ = {isa = PBXBuildFile; fileRef = FA33F2A2200E634B0046922D /* teams_invite_email_template.html */; };
+		FA33F2B4200E89340046922D /* TeamInviteModalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2B3200E89340046922D /* TeamInviteModalController.swift */; };
+		FA33F2B6200FA41C0046922D /* TeamAdminInPersonQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2B5200FA41C0046922D /* TeamAdminInPersonQRController.swift */; };
+		FA33F2B8200FA7160046922D /* TeamAdminInPersonScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2B7200FA7160046922D /* TeamAdminInPersonScanController.swift */; };
+		FA33F2BA200FE4840046922D /* TeamAdminConfirmInPersonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2B9200FE4840046922D /* TeamAdminConfirmInPersonController.swift */; };
+		FA33F2BC200FE6010046922D /* TeamInvitations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA33F2BB200FE6010046922D /* TeamInvitations.storyboard */; };
+		FA33F2C0200FECF60046922D /* TeamMemberInPersonEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2BF200FECF60046922D /* TeamMemberInPersonEmailController.swift */; };
+		FA33F2C2200FF3170046922D /* TeamMemberInPersonScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2C1200FF3170046922D /* TeamMemberInPersonScanController.swift */; };
+		FA33F2C4200FF3240046922D /* TeamMemberInPersonQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2C3200FF3240046922D /* TeamMemberInPersonQRController.swift */; };
+		FA33F2C8200FF37A0046922D /* InPersonAdminQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2C7200FF37A0046922D /* InPersonAdminQR.swift */; };
+		FA33F2CA200FF3970046922D /* InPersonMemberQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2C9200FF3970046922D /* InPersonMemberQR.swift */; };
+		FA349C581FA521F5002F968F /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA349C571FA521F5002F968F /* String+Validations.swift */; };
+		FA349C591FA521F5002F968F /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA349C571FA521F5002F968F /* String+Validations.swift */; };
+		FA349C5A1FA521F5002F968F /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA349C571FA521F5002F968F /* String+Validations.swift */; };
+		FA349C5B1FA521F5002F968F /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA349C571FA521F5002F968F /* String+Validations.swift */; };
+		FA38F9221F79A26F00668F73 /* TeamIdentity+LogChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38F9211F79A26F00668F73 /* TeamIdentity+LogChain.swift */; };
+		FA38F9231F79A26F00668F73 /* TeamIdentity+LogChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38F9211F79A26F00668F73 /* TeamIdentity+LogChain.swift */; };
+		FA3A5F481F914968004A8007 /* Response+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A5F471F914968004A8007 /* Response+Team.swift */; };
+		FA3A5F491F914968004A8007 /* Response+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A5F471F914968004A8007 /* Response+Team.swift */; };
+		FA3A5F4A1F914968004A8007 /* Response+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A5F471F914968004A8007 /* Response+Team.swift */; };
 		FA3BFC681FC0F9D00053A762 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFC671FC0F9D00053A762 /* ASN1.swift */; };
 		FA3BFC781FC0FEC20053A762 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFC671FC0F9D00053A762 /* ASN1.swift */; };
 		FA3BFC791FC0FEC20053A762 /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFC671FC0F9D00053A762 /* ASN1.swift */; };
-		FA3BFCA81FC282DA0053A762 /* KryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */; };
-		FA3BFCA91FC282DA0053A762 /* CodeSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */; };
-		FA3BFCAA1FC282DA0053A762 /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
-		FA3BFCAB1FC282DA0053A762 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
-		FA3BFCAC1FC282DA0053A762 /* SSHHostVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */; };
-		FA3BFCAD1FC282DA0053A762 /* SiloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB60231E9442F300E1B924 /* SiloTests.swift */; };
-		FA3BFCAE1FC282DA0053A762 /* DigestAlgorithmParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */; };
-		FA3BFCAF1FC282DA0053A762 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0B0971F04500400F65E04 /* UtilTests.swift */; };
-		FA3BFCB01FC282DA0053A762 /* AnalyticsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */; };
 		FA3BFCBC1FC28C610053A762 /* Pair.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3BFCBA1FC28C610053A762 /* Pair.storyboard */; };
 		FA3BFCBF1FC28C6C0053A762 /* Sessions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3BFCBD1FC28C6C0053A762 /* Sessions.storyboard */; };
 		FA3BFCC21FC28C780053A762 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3BFCC01FC28C780053A762 /* Settings.storyboard */; };
+		FA3BFD861FC3F1A40053A762 /* TeamOpRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFD851FC3F1A40053A762 /* TeamOpRequestController.swift */; };
+		FA3BFD871FC3F1AB0053A762 /* TeamOpRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BFD851FC3F1A40053A762 /* TeamOpRequestController.swift */; };
+		FA3BFD881FC3F5030053A762 /* TeamIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* TeamIdentity.swift */; };
+		FA3BFD891FC3F50B0053A762 /* TeamDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */; };
+		FA3BFD8A1FC3F6550053A762 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
+		FA3BFD8D1FC3F82F0053A762 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
+		FA3BFDE81FC48FE40053A762 /* KryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */; };
+		FA3BFDE91FC48FE40053A762 /* CodeSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */; };
+		FA3BFDEA1FC48FE40053A762 /* PairingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC873F51E6A4D32003D112E /* PairingTests.swift */; };
+		FA3BFDEB1FC48FE40053A762 /* SodiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF41D90EECE0085ED21 /* SodiumTests.swift */; };
+		FA3BFDEC1FC48FE40053A762 /* SSHHostVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */; };
+		FA3BFDED1FC48FE40053A762 /* SiloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB60231E9442F300E1B924 /* SiloTests.swift */; };
+		FA3BFDF01FC48FE40053A762 /* TeamDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724F41F57100400386436 /* TeamDataManagerTests.swift */; };
+		FA3BFDF11FC48FE40053A762 /* DigestAlgorithmParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */; };
+		FA3BFDF21FC48FE40053A762 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0B0971F04500400F65E04 /* UtilTests.swift */; };
+		FA3BFDF31FC48FE40053A762 /* AnalyticsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */; };
+		FA42B6EC1F9FB934006A89DD /* TeamsMarketingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA42B6EB1F9FB934006A89DD /* TeamsMarketingController.swift */; };
+		FA42B6FD1FA0D7BC006A89DD /* TeamActvitiyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA42B6FC1FA0D7BC006A89DD /* TeamActvitiyController.swift */; };
+		FA42B6FF1FA0D7E7006A89DD /* TeamMembersListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA42B6FE1FA0D7E7006A89DD /* TeamMembersListController.swift */; };
+		FA42B7011FA0D7FA006A89DD /* TeamKnownHostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA42B7001FA0D7FA006A89DD /* TeamKnownHostsController.swift */; };
+		FA42B7051FA0D8BC006A89DD /* KRTeamDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA42B7041FA0D8BC006A89DD /* KRTeamDataController.swift */; };
 		FA443DAC1FB6245B00EB452A /* SSHRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */; };
 		FA443DAE1FB624F400EB452A /* GitCommitRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */; };
 		FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */; };
@@ -128,8 +175,8 @@
 		FA443DE71FB95CB300EB452A /* Policy+Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE61FB95CB300EB452A /* Policy+Pending.swift */; };
 		FA443DE81FB95CB300EB452A /* Policy+Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE61FB95CB300EB452A /* Policy+Pending.swift */; };
 		FA443DE91FB9630900EB452A /* Policy+UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */; };
-		FA443E061FBA924000EB452A /* Caches.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* Caches.swift */; };
-		FA443E071FBA924000EB452A /* Caches.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* Caches.swift */; };
+		FA443E061FBA924000EB452A /* SecureLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* SecureLocalStorage.swift */; };
+		FA443E071FBA924000EB452A /* SecureLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* SecureLocalStorage.swift */; };
 		FA49F7511D9AEF9600372556 /* PairingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */; };
 		FA49F7681D9AF32800372556 /* PairedUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49F7671D9AF32800372556 /* PairedUploadController.swift */; };
 		FA49F7871D9B6B3300372556 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA49F7861D9B6B3300372556 /* NotificationCenter.framework */; };
@@ -140,7 +187,15 @@
 		FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		FA4A84E01E8DA7330082274A /* TransportControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DE1E8D77910082274A /* TransportControl.swift */; };
 		FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A84DC1E8D76800082274A /* SQS.swift */; };
+		FA546CBC2033F2180024F94F /* generated_test_cases.json in Resources */ = {isa = PBXBuildFile; fileRef = FA546CBB2033F2180024F94F /* generated_test_cases.json */; };
+		FA546CBF2034D3780024F94F /* TeamIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA546CBE2034D3780024F94F /* TeamIdentityTests.swift */; };
+		FA571B1E1F460B76007FD7F3 /* TeamUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAC14821F38D39D00DDFAA3 /* TeamUpdater.swift */; };
+		FA5A73691F22A2F80087D3CF /* TeamInvitationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */; };
+		FA5A73811F22C41A0087D3CF /* TeamJoinCompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */; };
+		FA5A73881F23F8610087D3CF /* TeamDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A73871F23F8610087D3CF /* TeamDetailController.swift */; };
 		FA5A9E741F9BC75300954872 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A9E731F9BC75300954872 /* AppDelegate+Notifications.swift */; };
+		FA5A9FEB1F9E8CF800954872 /* Audit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A9FEA1F9E8CF800954872 /* Audit.swift */; };
+		FA5A9FEC1F9E8CF800954872 /* Audit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A9FEA1F9E8CF800954872 /* Audit.swift */; };
 		FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF421D81D150009FD899 /* SessionManager.swift */; };
 		FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF451D8319ED009FD899 /* Mutex.swift */; };
 		FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61EF481D835EEB009FD899 /* LogCell.swift */; };
@@ -151,7 +206,16 @@
 		FA632E471DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
 		FA6491121ED38314008C04A7 /* AutoApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6491111ED38314008C04A7 /* AutoApproveController.swift */; };
 		FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */; };
+		FA6BCBEE1F211807006F716F /* TeamIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* TeamIdentity.swift */; };
+		FA6BCBEF1F211807006F716F /* TeamIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BCBED1F211807006F716F /* TeamIdentity.swift */; };
+		FA6BCBF21F213C9B006F716F /* Team.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6BCBF11F213C9B006F716F /* Team.storyboard */; };
 		FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C5CF71D772B0D00CE2323 /* Log.swift */; };
+		FA80D7421FCE28ED008391EF /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7411FCE28ED008391EF /* Errors.swift */; };
+		FA80D7441FCE29BD008391EF /* Serialize+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7431FCE29BD008391EF /* Serialize+JSON.swift */; };
+		FA80D7451FCE29BD008391EF /* Serialize+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7431FCE29BD008391EF /* Serialize+JSON.swift */; };
+		FA80D7461FCE29BD008391EF /* Serialize+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7431FCE29BD008391EF /* Serialize+JSON.swift */; };
+		FA80D75A1FCE6654008391EF /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7411FCE28ED008391EF /* Errors.swift */; };
+		FA80D76A1FCE6655008391EF /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D7411FCE28ED008391EF /* Errors.swift */; };
 		FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8141391D70B0F4004FE58C /* AppDelegate.swift */; };
 		FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81413B1D70B0F4004FE58C /* MainController.swift */; };
 		FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA81413D1D70B0F4004FE58C /* Main.storyboard */; };
@@ -196,10 +260,17 @@
 		FA8B543F1ED7887800891161 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29779E1D7746CC003EB1F7 /* Resources.swift */; };
 		FA8B54401ED7BD0900891161 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
 		FA8B54411ED7BD1200891161 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
+		FA8F8AB11F34EFA600D0D4BE /* TeamLoadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */; };
+		FA8F8AB41F3540EA00D0D4BE /* TeamIdentity+SigChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB31F3540EA00D0D4BE /* TeamIdentity+SigChain.swift */; };
+		FA8F8AB51F3540EA00D0D4BE /* TeamIdentity+SigChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB31F3540EA00D0D4BE /* TeamIdentity+SigChain.swift */; };
+		FA8F8AB81F37BF0F00D0D4BE /* Policy+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */; };
+		FA8F8AB91F37BF0F00D0D4BE /* Policy+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */; };
 		FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9231D77AA3E006372B4 /* KeyManager.swift */; };
 		FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */; };
 		FA9520681FBB957A00E59884 /* NotifyShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9520671FBB957A00E59884 /* NotifyShared.swift */; };
 		FA9520691FBB957A00E59884 /* NotifyShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9520671FBB957A00E59884 /* NotifyShared.swift */; };
+		FA9BA5D31F9A4897007B4C0D /* TeamIdentity+MainChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BA5D21F9A4897007B4C0D /* TeamIdentity+MainChain.swift */; };
+		FA9BA5D41F9A4898007B4C0D /* TeamIdentity+MainChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BA5D21F9A4897007B4C0D /* TeamIdentity+MainChain.swift */; };
 		FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA1B9211D81AEA000FF37CC /* Silo.swift */; };
 		FAA536271D8F2EA800549710 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA536261D8F2EA800549710 /* AboutController.swift */; };
 		FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5362C1D8F3FCA00549710 /* Sharing.swift */; };
@@ -215,6 +286,7 @@
 		FAA6E1FE1D7A028F007D1B3A /* Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */; };
 		FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
 		FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA97C061D71447C00DDB725 /* KeyPair.swift */; };
+		FAAC14831F38D39D00DDFAA3 /* TeamUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAC14821F38D39D00DDFAA3 /* TeamUpdater.swift */; };
 		FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD091C1D78BA0000EAB665 /* Hash.swift */; };
 		FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7941671D98732600F6E32E /* NetworkProtocol.swift */; };
 		FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D003DF11D90EDE30085ED21 /* Sodium.swift */; };
@@ -265,11 +337,19 @@
 		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
 		FAC535D22001604F007C21E4 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FAC535D32001604F007C21E4 /* KnownHosts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA1682891EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld */; };
+		FAC5360F2001932C007C21E4 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC5360D2001932C007C21E4 /* Teams.xcdatamodeld */; };
+		FAC536102001932C007C21E4 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC5360D2001932C007C21E4 /* Teams.xcdatamodeld */; };
+		FAC536112001932C007C21E4 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC5360D2001932C007C21E4 /* Teams.xcdatamodeld */; };
 		FAC536722002D9AE007C21E4 /* LocalNotificationAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC536712002D9AE007C21E4 /* LocalNotificationAuthority.swift */; };
 		FAC536732002D9AE007C21E4 /* LocalNotificationAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC536712002D9AE007C21E4 /* LocalNotificationAuthority.swift */; };
 		FAC536742002EB92007C21E4 /* LocalNotificationAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC536712002D9AE007C21E4 /* LocalNotificationAuthority.swift */; };
 		FAC5613E1E6F678500150FB2 /* AwesomeCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; };
 		FAC5613F1E6F678500150FB2 /* AwesomeCache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAC561371E6F677000150FB2 /* AwesomeCache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAC724D21F4F813800386436 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
+		FAC724D31F4F813800386436 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D11F4F813800386436 /* IdentityManager.swift */; };
+		FAC724D61F546BC500386436 /* TeamServerHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServerHTTP.swift */; };
+		FAC724D71F546BC500386436 /* TeamServerHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC724D51F546BC500386436 /* TeamServerHTTP.swift */; };
+		FAC874051E6F0E17003D112E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAA4AD1D87C44D000B9A01 /* MapKit.framework */; };
 		FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B01D887904000B9A01 /* SignatureLog.swift */; };
 		FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACAA4B71D887C19000B9A01 /* LogManager.swift */; };
@@ -282,7 +362,47 @@
 		FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */; };
 		FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33541EC186DC003EC6C0 /* SSHUtil.swift */; };
 		FACE33661EC186E8003EC6C0 /* SSHUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33541EC186DC003EC6C0 /* SSHUtil.swift */; };
+		FACE336E1FD5F7AC00AF2E05 /* TeamCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE336D1FD5F7AC00AF2E05 /* TeamCreateController.swift */; };
+		FACE33721FD632ED00AF2E05 /* TeamOBAuditLogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33711FD632ED00AF2E05 /* TeamOBAuditLogsController.swift */; };
+		FACE33741FD6330900AF2E05 /* TeamOBApprovalIntervalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33731FD6330900AF2E05 /* TeamOBApprovalIntervalController.swift */; };
+		FACE33761FD6332800AF2E05 /* TeamOBPinHostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE33751FD6332800AF2E05 /* TeamOBPinHostsController.swift */; };
+		FACFDE662040CB00003B2EB5 /* PrintSigchains.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACFDE652040CB00003B2EB5 /* PrintSigchains.swift */; };
+		FACFDE812045E7B6003B2EB5 /* ServerEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACFDE802045E7B6003B2EB5 /* ServerEndpoints.swift */; };
+		FACFDE822045E7B6003B2EB5 /* ServerEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACFDE802045E7B6003B2EB5 /* ServerEndpoints.swift */; };
+		FACFDE922045EA15003B2EB5 /* ServerEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACFDE802045E7B6003B2EB5 /* ServerEndpoints.swift */; };
+		FAD279F01FCF61E000F7EFAE /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279EF1FCF61E000F7EFAE /* Init.swift */; };
+		FAD279F11FCF61E000F7EFAE /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279EF1FCF61E000F7EFAE /* Init.swift */; };
+		FAD279F21FCF61E000F7EFAE /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279EF1FCF61E000F7EFAE /* Init.swift */; };
+		FAD279F81FCF62BE00F7EFAE /* TeamJoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279F71FCF62BE00F7EFAE /* TeamJoinType.swift */; };
+		FAD279F91FCF62BE00F7EFAE /* TeamJoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279F71FCF62BE00F7EFAE /* TeamJoinType.swift */; };
+		FAD279FA1FCF62BE00F7EFAE /* TeamJoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279F71FCF62BE00F7EFAE /* TeamJoinType.swift */; };
+		FAD279FC1FCF62E500F7EFAE /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279FB1FCF62E500F7EFAE /* Link.swift */; };
+		FAD279FD1FCF62E500F7EFAE /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279FB1FCF62E500F7EFAE /* Link.swift */; };
+		FAD279FE1FCF62E500F7EFAE /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD279FB1FCF62E500F7EFAE /* Link.swift */; };
+		FAD27A191FD0C11400F7EFAE /* Describe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD27A181FD0C11400F7EFAE /* Describe.swift */; };
+		FAD27A1A1FD0C11400F7EFAE /* Describe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD27A181FD0C11400F7EFAE /* Describe.swift */; };
+		FAD27A1B1FD0C11400F7EFAE /* Describe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD27A181FD0C11400F7EFAE /* Describe.swift */; };
+		FAD27A1D1FD1C2B400F7EFAE /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD27A1C1FD1C2B400F7EFAE /* Loading.storyboard */; };
+		FAD27A1F1FD1C46400F7EFAE /* LoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD27A1E1FD1C46400F7EFAE /* LoadingController.swift */; };
+		FAD2E3B3205B000C008FFCB0 /* TeamDataDBType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2E3B2205B000C008FFCB0 /* TeamDataDBType.swift */; };
+		FAD2E3B4205B000C008FFCB0 /* TeamDataDBType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2E3B2205B000C008FFCB0 /* TeamDataDBType.swift */; };
+		FAD2E3C5205B0040008FFCB0 /* TeamDataDBType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2E3C4205B0040008FFCB0 /* TeamDataDBType.swift */; };
+		FAD2E3C7205B03B9008FFCB0 /* TeamDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2E3C6205B03B9008FFCB0 /* TeamDataSync.swift */; };
+		FAD2E3C8205C229B008FFCB0 /* SecureLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA443E051FBA924000EB452A /* SecureLocalStorage.swift */; };
 		FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD361F61DF08F9E00D17BAB /* Connectivity.swift */; };
+		FADA1A5C1F2D2F32004AE6B0 /* SigChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A5B1F2D2F32004AE6B0 /* SigChain.swift */; };
+		FADA1A5D1F2D2F32004AE6B0 /* SigChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A5B1F2D2F32004AE6B0 /* SigChain.swift */; };
+		FADA1A5E1F2D2F32004AE6B0 /* SigChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A5B1F2D2F32004AE6B0 /* SigChain.swift */; };
+		FADA1A6D1F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
+		FADA1A6E1F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
+		FADA1A6F1F2EAC3E004AE6B0 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */; };
+		FADA1A731F2EDF97004AE6B0 /* TeamDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */; };
+		FADA1A751F2EDF97004AE6B0 /* TeamDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */; };
+		FADA1A791F2EE100004AE6B0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		FADA1A7A1F2EE100004AE6B0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		FADA1A7B1F2EE100004AE6B0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		FADA1A841F30E0E2004AE6B0 /* TeamService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A831F30E0E2004AE6B0 /* TeamService.swift */; };
+		FADA1A851F30E0E2004AE6B0 /* TeamService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA1A831F30E0E2004AE6B0 /* TeamService.swift */; };
 		FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD71491D772F8200DA5112 /* Date+KR.swift */; };
 		FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
 		FADDE2841EFD6B8F0049AA67 /* Request+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */; };
@@ -310,6 +430,11 @@
 		FAE495971DBD89F100A97708 /* M13CheckboxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495851DBD89F000A97708 /* M13CheckboxPathGenerator.swift */; };
 		FAE495981DBD89F100A97708 /* M13CheckboxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495861DBD89F000A97708 /* M13CheckboxRadioPathGenerator.swift */; };
 		FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE495991DBD98C400A97708 /* Approval.storyboard */; };
+		FAE6F81E1FDB532600A4A626 /* Notify+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6F81D1FDB532600A4A626 /* Notify+Team.swift */; };
+		FAE6F8201FDB5B4C00A4A626 /* TeamUpdater+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6F81F1FDB5B4C00A4A626 /* TeamUpdater+Notify.swift */; };
+		FAE6F8221FDC73B200A4A626 /* TeamDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6F8211FDC73B200A4A626 /* TeamDataTypes.swift */; };
+		FAE6F8231FDC73C500A4A626 /* TeamDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6F8211FDC73B200A4A626 /* TeamDataTypes.swift */; };
+		FAE6F8241FDC73C500A4A626 /* TeamDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6F8211FDC73B200A4A626 /* TeamDataTypes.swift */; };
 		FAEE048C1D7369C3002A7AFD /* Keypair+SSHFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE048B1D7369C3002A7AFD /* Keypair+SSHFormat.swift */; };
 		FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */ = {isa = PBXBuildFile; fileRef = FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */; };
 		FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEE04921D73CDD2002A7AFD /* CryptoError.swift */; };
@@ -317,6 +442,9 @@
 		FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */; };
 		FAF1E6261E031BB9003CBEA2 /* Notify.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FAF1E61F1E031BB9003CBEA2 /* Notify.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */; };
+		FAFA115B1F91359F007C3A98 /* Request+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFA115A1F91359F007C3A98 /* Request+Team.swift */; };
+		FAFA115C1F91359F007C3A98 /* Request+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFA115A1F91359F007C3A98 /* Request+Team.swift */; };
+		FAFA115D1F91359F007C3A98 /* Request+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFA115A1F91359F007C3A98 /* Request+Team.swift */; };
 		FAFDE8E91DD1003100C87C86 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; };
 		FAFDE8EA1DD1003100C87C86 /* JSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFDE8D81DD1000F00C87C86 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAFE546F1D7B9C1400391FDD /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE546E1D7B9C1400391FDD /* Wrap.swift */; };
@@ -389,6 +517,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 6BFD902119C8D8B500DD99B6;
 			remoteInfo = SwiftHTTPTests;
+		};
+		FA11A5722031F4A8000E46B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA81412E1D70B0F4004FE58C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA8141351D70B0F4004FE58C;
+			remoteInfo = Krypton;
 		};
 		FA12EAA31ECFA917001603BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -537,8 +672,15 @@
 		FA03C5841E749A520019649E /* RePairWarningController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RePairWarningController.swift; sourceTree = "<group>"; };
 		FA03C5971E760CD50019649E /* BUILD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD; sourceTree = "<group>"; };
 		FA03C5981E760CD50019649E /* COMMIT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMMIT; sourceTree = "<group>"; };
+		FA0609D5203C827E00068B52 /* Billing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Billing.swift; sourceTree = "<group>"; };
+		FA0609D9203C8F6C00068B52 /* TeamService+Billing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamService+Billing.swift"; sourceTree = "<group>"; };
 		FA064FEC1FBD2D8D00A62A3F /* NISTP256KeyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NISTP256KeyPair.swift; sourceTree = "<group>"; };
 		FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallMethod.swift; sourceTree = "<group>"; };
+		FA11A56D2031F4A8000E46B1 /* SigchainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SigchainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA11A56F2031F4A8000E46B1 /* SigchainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigchainTests.swift; sourceTree = "<group>"; };
+		FA11A5712031F4A8000E46B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA11A5772031F517000E46B1 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		FA11A5792031F58D000E46B1 /* TestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocol.swift; sourceTree = "<group>"; };
 		FA12EA9A1ECFA917001603BF /* PGPFormat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PGPFormat.xcodeproj; path = "swift-pgp/PGPFormat.xcodeproj"; sourceTree = "<group>"; };
 		FA12EAB31ECFA942001603BF /* CodeSigningTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSigningTests.swift; sourceTree = "<group>"; };
 		FA12EABE1ED0E34B001603BF /* Keypair+PGPFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Keypair+PGPFormat.swift"; sourceTree = "<group>"; };
@@ -571,6 +713,7 @@
 		FA16829E1EB2B2B200D9CE40 /* KnownHostManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHostManager.swift; sourceTree = "<group>"; };
 		FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHost.swift; sourceTree = "<group>"; };
 		FA1682A91EB3856600D9CE40 /* KnownHostsEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownHostsEditController.swift; sourceTree = "<group>"; };
+		FA171EEA205A4512003CD9CC /* TeamDataTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDataTransaction.swift; sourceTree = "<group>"; };
 		FA17B96D1FB3638100975FB0 /* Request+Policy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Policy.swift"; sourceTree = "<group>"; };
 		FA1E706D1D9AC22900A14650 /* FirstPairController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPairController.swift; sourceTree = "<group>"; };
 		FA26972F1D99AF5700FE44D3 /* KRBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KRBaseController.swift; sourceTree = "<group>"; };
@@ -580,13 +723,39 @@
 		FA2949E21EDE379900A5C70B /* UserIDList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserIDList.swift; sourceTree = "<group>"; };
 		FA2977981D7736A8003EB1F7 /* ImageLicenses */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageLicenses; sourceTree = "<group>"; };
 		FA29779E1D7746CC003EB1F7 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		FA2A500520115C85002748C2 /* TeamService+Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamService+Logs.swift"; sourceTree = "<group>"; };
+		FA2A501A20115CBB002748C2 /* TeamService+EmailChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamService+EmailChallenge.swift"; sourceTree = "<group>"; };
+		FA2A502020115D09002748C2 /* TeamService+Push.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamService+Push.swift"; sourceTree = "<group>"; };
+		FA2A502320115DE4002748C2 /* TeamService+MainRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamService+MainRead.swift"; sourceTree = "<group>"; };
 		FA2F22A11DC3C3CA0094076E /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		FA2F4171200D51640024507A /* TeamCustomDomainInviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCustomDomainInviteController.swift; sourceTree = "<group>"; };
+		FA2F4173200D59CD0024507A /* TeamInviteByEmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteByEmailController.swift; sourceTree = "<group>"; };
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
+		FA33F2A2200E634B0046922D /* teams_invite_email_template.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = teams_invite_email_template.html; sourceTree = "<group>"; };
+		FA33F2B3200E89340046922D /* TeamInviteModalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteModalController.swift; sourceTree = "<group>"; };
+		FA33F2B5200FA41C0046922D /* TeamAdminInPersonQRController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamAdminInPersonQRController.swift; sourceTree = "<group>"; };
+		FA33F2B7200FA7160046922D /* TeamAdminInPersonScanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamAdminInPersonScanController.swift; sourceTree = "<group>"; };
+		FA33F2B9200FE4840046922D /* TeamAdminConfirmInPersonController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamAdminConfirmInPersonController.swift; sourceTree = "<group>"; };
+		FA33F2BB200FE6010046922D /* TeamInvitations.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TeamInvitations.storyboard; sourceTree = "<group>"; };
+		FA33F2BF200FECF60046922D /* TeamMemberInPersonEmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInPersonEmailController.swift; sourceTree = "<group>"; };
+		FA33F2C1200FF3170046922D /* TeamMemberInPersonScanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInPersonScanController.swift; sourceTree = "<group>"; };
+		FA33F2C3200FF3240046922D /* TeamMemberInPersonQRController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInPersonQRController.swift; sourceTree = "<group>"; };
+		FA33F2C7200FF37A0046922D /* InPersonAdminQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InPersonAdminQR.swift; sourceTree = "<group>"; };
+		FA33F2C9200FF3970046922D /* InPersonMemberQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InPersonMemberQR.swift; sourceTree = "<group>"; };
+		FA349C571FA521F5002F968F /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
+		FA38F9211F79A26F00668F73 /* TeamIdentity+LogChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamIdentity+LogChain.swift"; sourceTree = "<group>"; };
+		FA3A5F471F914968004A8007 /* Response+Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+Team.swift"; sourceTree = "<group>"; };
 		FA3BFC671FC0F9D00053A762 /* ASN1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
 		FA3BFCB11FC285B10053A762 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FA3BFCBB1FC28C610053A762 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Pair.storyboard; sourceTree = "<group>"; };
 		FA3BFCBE1FC28C6C0053A762 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Sessions.storyboard; sourceTree = "<group>"; };
 		FA3BFCC11FC28C780053A762 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		FA3BFD851FC3F1A40053A762 /* TeamOpRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamOpRequestController.swift; sourceTree = "<group>"; };
+		FA42B6EB1F9FB934006A89DD /* TeamsMarketingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsMarketingController.swift; sourceTree = "<group>"; };
+		FA42B6FC1FA0D7BC006A89DD /* TeamActvitiyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamActvitiyController.swift; sourceTree = "<group>"; };
+		FA42B6FE1FA0D7E7006A89DD /* TeamMembersListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMembersListController.swift; sourceTree = "<group>"; };
+		FA42B7001FA0D7FA006A89DD /* TeamKnownHostsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamKnownHostsController.swift; sourceTree = "<group>"; };
+		FA42B7041FA0D8BC006A89DD /* KRTeamDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRTeamDataController.swift; sourceTree = "<group>"; };
 		FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHRequestController.swift; sourceTree = "<group>"; };
 		FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitCommitRequestController.swift; sourceTree = "<group>"; };
 		FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitTagRequestController.swift; sourceTree = "<group>"; };
@@ -597,7 +766,7 @@
 		FA443DD31FB66D7200EB452A /* TemporaryApprovalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryApprovalController.swift; sourceTree = "<group>"; };
 		FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Policy+UserNotifications.swift"; sourceTree = "<group>"; };
 		FA443DE61FB95CB300EB452A /* Policy+Pending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Policy+Pending.swift"; sourceTree = "<group>"; };
-		FA443E051FBA924000EB452A /* Caches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caches.swift; sourceTree = "<group>"; };
+		FA443E051FBA924000EB452A /* SecureLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureLocalStorage.swift; sourceTree = "<group>"; };
 		FA49F7501D9AEF9600372556 /* PairingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingAnimationController.swift; sourceTree = "<group>"; };
 		FA49F7671D9AF32800372556 /* PairedUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedUploadController.swift; sourceTree = "<group>"; };
 		FA49F7851D9B6B3200372556 /* LastCommand.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastCommand.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -608,7 +777,15 @@
 		FA49F7961D9B6B6600372556 /* LastCommand.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastCommand.entitlements; sourceTree = "<group>"; };
 		FA4A84DC1E8D76800082274A /* SQS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQS.swift; sourceTree = "<group>"; };
 		FA4A84DE1E8D77910082274A /* TransportControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportControl.swift; sourceTree = "<group>"; };
+		FA546CBA2033F1FC0024F94F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		FA546CBB2033F2180024F94F /* generated_test_cases.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = generated_test_cases.json; sourceTree = "<group>"; };
+		FA546CBD2033F2B90024F94F /* generate_tests.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_tests.sh; sourceTree = "<group>"; };
+		FA546CBE2034D3780024F94F /* TeamIdentityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamIdentityTests.swift; sourceTree = "<group>"; };
+		FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInvitationController.swift; sourceTree = "<group>"; };
+		FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamJoinCompleteController.swift; sourceTree = "<group>"; };
+		FA5A73871F23F8610087D3CF /* TeamDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDetailController.swift; sourceTree = "<group>"; };
 		FA5A9E731F9BC75300954872 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
+		FA5A9FEA1F9E8CF800954872 /* Audit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audit.swift; sourceTree = "<group>"; };
 		FA61EF421D81D150009FD899 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		FA61EF451D8319ED009FD899 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		FA61EF481D835EEB009FD899 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
@@ -617,7 +794,11 @@
 		FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceCodePro-Regular.ttf"; sourceTree = "<group>"; };
 		FA6491111ED38314008C04A7 /* AutoApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoApproveController.swift; sourceTree = "<group>"; };
 		FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
+		FA6BCBED1F211807006F716F /* TeamIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamIdentity.swift; sourceTree = "<group>"; };
+		FA6BCBF11F213C9B006F716F /* Team.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Team.storyboard; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FA80D7411FCE28ED008391EF /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		FA80D7431FCE29BD008391EF /* Serialize+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Serialize+JSON.swift"; sourceTree = "<group>"; };
 		FA8141361D70B0F4004FE58C /* Krypton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Krypton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8141391D70B0F4004FE58C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA81413B1D70B0F4004FE58C /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -628,9 +809,13 @@
 		FA8523C91DBFDA5200D465D2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		FA8B543B1ED775FF00891161 /* NotifyUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotifyUI-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA8B543D1ED7780500891161 /* NotifyUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifyUI.entitlements; sourceTree = "<group>"; };
+		FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamLoadController.swift; sourceTree = "<group>"; };
+		FA8F8AB31F3540EA00D0D4BE /* TeamIdentity+SigChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TeamIdentity+SigChain.swift"; sourceTree = "<group>"; };
+		FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+Team.swift"; sourceTree = "<group>"; };
 		FA92E9231D77AA3E006372B4 /* KeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KR.swift"; sourceTree = "<group>"; };
 		FA9520671FBB957A00E59884 /* NotifyShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyShared.swift; sourceTree = "<group>"; };
+		FA9BA5D21F9A4897007B4C0D /* TeamIdentity+MainChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamIdentity+MainChain.swift"; sourceTree = "<group>"; };
 		FAA1B9211D81AEA000FF37CC /* Silo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silo.swift; sourceTree = "<group>"; };
 		FAA536261D8F2EA800549710 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		FAA5362C1D8F3FCA00549710 /* Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharing.swift; sourceTree = "<group>"; };
@@ -643,6 +828,7 @@
 		FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pairing.swift; sourceTree = "<group>"; };
 		FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Request.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAA97C061D71447C00DDB725 /* KeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KeyPair.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FAAC14821F38D39D00DDFAA3 /* TeamUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamUpdater.swift; sourceTree = "<group>"; };
 		FAAD091C1D78BA0000EAB665 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		FAAE818E1E576DB8002A9AE6 /* Authorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorize.swift; sourceTree = "<group>"; };
 		FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Policy+UI.swift"; sourceTree = "<group>"; };
@@ -660,9 +846,13 @@
 		FAC535D6200162F6007C21E4 /* Krypton-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Krypton-Bridging-Header.h"; path = "Krypton/Krypton-Bridging-Header.h"; sourceTree = "<group>"; };
 		FAC535D7200162F6007C21E4 /* Krypton.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Krypton.entitlements; path = Krypton/Krypton.entitlements; sourceTree = "<group>"; };
 		FAC535D820016308007C21E4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Krypton/Info.plist; sourceTree = "<group>"; };
+		FAC5360E2001932C007C21E4 /* Teams.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Teams.xcdatamodel; sourceTree = "<group>"; };
 		FAC536712002D9AE007C21E4 /* LocalNotificationAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationAuthority.swift; sourceTree = "<group>"; };
 		FAC536C0200553F4007C21E4 /* buildbump.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = buildbump.sh; sourceTree = "<group>"; };
 		FAC5612F1E6F676F00150FB2 /* AwesomeCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AwesomeCache.xcodeproj; path = AwesomeCache/AwesomeCache.xcodeproj; sourceTree = "<group>"; };
+		FAC724D11F4F813800386436 /* IdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityManager.swift; sourceTree = "<group>"; };
+		FAC724D51F546BC500386436 /* TeamServerHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamServerHTTP.swift; sourceTree = "<group>"; };
+		FAC724F41F57100400386436 /* TeamDataManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDataManagerTests.swift; sourceTree = "<group>"; };
 		FAC873F51E6A4D32003D112E /* PairingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingTests.swift; sourceTree = "<group>"; };
 		FACAA4AD1D87C44D000B9A01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FACAA4B01D887904000B9A01 /* SignatureLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureLog.swift; sourceTree = "<group>"; };
@@ -676,7 +866,26 @@
 		FACDE4361DA036FD0065E1E1 /* SessionsEmptyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsEmptyController.swift; sourceTree = "<group>"; };
 		FACE33541EC186DC003EC6C0 /* SSHUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHUtil.swift; sourceTree = "<group>"; };
 		FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigestAlgorithmParsingTests.swift; sourceTree = "<group>"; };
+		FACE336D1FD5F7AC00AF2E05 /* TeamCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCreateController.swift; sourceTree = "<group>"; };
+		FACE33711FD632ED00AF2E05 /* TeamOBAuditLogsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamOBAuditLogsController.swift; sourceTree = "<group>"; };
+		FACE33731FD6330900AF2E05 /* TeamOBApprovalIntervalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamOBApprovalIntervalController.swift; sourceTree = "<group>"; };
+		FACE33751FD6332800AF2E05 /* TeamOBPinHostsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamOBPinHostsController.swift; sourceTree = "<group>"; };
+		FACFDE652040CB00003B2EB5 /* PrintSigchains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintSigchains.swift; sourceTree = "<group>"; };
+		FACFDE802045E7B6003B2EB5 /* ServerEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerEndpoints.swift; sourceTree = "<group>"; };
+		FAD279EF1FCF61E000F7EFAE /* Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Init.swift; sourceTree = "<group>"; };
+		FAD279F71FCF62BE00F7EFAE /* TeamJoinType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamJoinType.swift; sourceTree = "<group>"; };
+		FAD279FB1FCF62E500F7EFAE /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		FAD27A181FD0C11400F7EFAE /* Describe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Describe.swift; sourceTree = "<group>"; };
+		FAD27A1C1FD1C2B400F7EFAE /* Loading.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
+		FAD27A1E1FD1C46400F7EFAE /* LoadingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingController.swift; sourceTree = "<group>"; };
+		FAD2E3B2205B000C008FFCB0 /* TeamDataDBType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDataDBType.swift; sourceTree = "<group>"; };
+		FAD2E3C4205B0040008FFCB0 /* TeamDataDBType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDataDBType.swift; sourceTree = "<group>"; };
+		FAD2E3C6205B03B9008FFCB0 /* TeamDataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDataSync.swift; sourceTree = "<group>"; };
 		FAD361F61DF08F9E00D17BAB /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		FADA1A5B1F2D2F32004AE6B0 /* SigChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SigChain.swift; sourceTree = "<group>"; };
+		FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDataManager.swift; sourceTree = "<group>"; };
+		FADA1A831F30E0E2004AE6B0 /* TeamService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamService.swift; sourceTree = "<group>"; };
 		FADD71491D772F8200DA5112 /* Date+KR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Date+KR.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Request+Notify.swift"; sourceTree = "<group>"; };
 		FAE45B981E64750E00A583AB /* RSAKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
@@ -701,11 +910,14 @@
 		FAE495851DBD89F000A97708 /* M13CheckboxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxPathGenerator.swift; sourceTree = "<group>"; };
 		FAE495861DBD89F000A97708 /* M13CheckboxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxRadioPathGenerator.swift; sourceTree = "<group>"; };
 		FAE4959A1DBD98C400A97708 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Approval.storyboard; sourceTree = "<group>"; };
+		FAE6F81D1FDB532600A4A626 /* Notify+Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notify+Team.swift"; sourceTree = "<group>"; };
+		FAE6F81F1FDB5B4C00A4A626 /* TeamUpdater+Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamUpdater+Notify.swift"; sourceTree = "<group>"; };
+		FAE6F8211FDC73B200A4A626 /* TeamDataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDataTypes.swift; sourceTree = "<group>"; };
 		FAEE048B1D7369C3002A7AFD /* Keypair+SSHFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Keypair+SSHFormat.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SoftwareLibraries; sourceTree = "<group>"; };
 		FAEE04921D73CDD2002A7AFD /* CryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CryptoError.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE04941D73ECE2002A7AFD /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Util.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAEE049A1D74BCC3002A7AFD /* KryptonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KryptoTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FAEE049E1D74BCC3002A7AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAF0B0971F04500400F65E04 /* UtilTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
@@ -713,6 +925,7 @@
 		FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		FAF1E6231E031BB9003CBEA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Seal.swift"; sourceTree = "<group>"; };
+		FAFA115A1F91359F007C3A98 /* Request+Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Team.swift"; sourceTree = "<group>"; };
 		FAFDE8D21DD1000F00C87C86 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = JSON/JSON.xcodeproj; sourceTree = "<group>"; };
 		FAFE546E1D7B9C1400391FDD /* Wrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wrap.swift; sourceTree = "<group>"; };
 		FAFF1E811ED67FB80063C44C /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -724,6 +937,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FA11A56A2031F4A8000E46B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA49F7821D9B6B3200372556 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -748,17 +968,6 @@
 				FACAA4AE1D87C44D000B9A01 /* MapKit.framework in Frameworks */,
 				8DB2EE531DBC55AC0079E468 /* SwiftHTTP.framework in Frameworks */,
 				FA8141511D714203004FE58C /* Security.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FAEE04971D74BCC3002A7AFD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8D45B00A1E8D7DBB00E84A57 /* libsshwire.a in Frameworks */,
-				8DCB60541E94470A00E1B924 /* AWSCore.framework in Frameworks */,
-				8DCB60551E94470A00E1B924 /* AWSSNS.framework in Frameworks */,
-				8DCB60561E94470A00E1B924 /* AWSSQS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +1035,21 @@
 			name = sshwire;
 			sourceTree = "<group>";
 		};
+		FA11A56E2031F4A8000E46B1 /* SigchainTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA546CBD2033F2B90024F94F /* generate_tests.sh */,
+				FA546CBA2033F1FC0024F94F /* .gitignore */,
+				FA546CBB2033F2180024F94F /* generated_test_cases.json */,
+				FA11A5772031F517000E46B1 /* Bridging-Header.h */,
+				FA11A56F2031F4A8000E46B1 /* SigchainTests.swift */,
+				FACFDE652040CB00003B2EB5 /* PrintSigchains.swift */,
+				FA11A5792031F58D000E46B1 /* TestProtocol.swift */,
+				FA11A5712031F4A8000E46B1 /* Info.plist */,
+			);
+			path = SigchainTests;
+			sourceTree = "<group>";
+		};
 		FA12EA9B1ECFA917001603BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -838,12 +1062,14 @@
 		FA15EB471DA5C5BB00BED16C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				FAC724D11F4F813800386436 /* IdentityManager.swift */,
 				FA92E9231D77AA3E006372B4 /* KeyManager.swift */,
 				FA61EF421D81D150009FD899 /* SessionManager.swift */,
 				FACAA4B71D887C19000B9A01 /* LogManager.swift */,
 				FA16829E1EB2B2B200D9CE40 /* KnownHostManager.swift */,
 				FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */,
 				FA1682891EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld */,
+				FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -915,26 +1141,106 @@
 				FA309F411DA42C69006D8D81 /* HelpController.swift */,
 				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
 				FAAE818E1E576DB8002A9AE6 /* Authorize.swift */,
+				FA6491111ED38314008C04A7 /* AutoApproveController.swift */,
+				FAE495701DBD741800A97708 /* ApproveController.swift */,
 				FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */,
+				FAD27A1E1FD1C46400F7EFAE /* LoadingController.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
 				FA16827E1D77666800A7ED53 /* Me */,
 				FA16824F1D774C2700A7ED53 /* Pair */,
 				FA61EF501D85DB19009FD899 /* Devices */,
 				FA443D9B1FB6240F00EB452A /* ApproveControllers */,
+				FA6BCBF31F2145EE006F716F /* Team */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FA2A501D20115CD6002748C2 /* TeamService */ = {
+			isa = PBXGroup;
+			children = (
+				FADA1A831F30E0E2004AE6B0 /* TeamService.swift */,
+				FA2A502320115DE4002748C2 /* TeamService+MainRead.swift */,
+				FA2A500520115C85002748C2 /* TeamService+Logs.swift */,
+				FA2A501A20115CBB002748C2 /* TeamService+EmailChallenge.swift */,
+				FA0609D9203C8F6C00068B52 /* TeamService+Billing.swift */,
+				FA2A502020115D09002748C2 /* TeamService+Push.swift */,
+				FAC724D51F546BC500386436 /* TeamServerHTTP.swift */,
+			);
+			path = TeamService;
+			sourceTree = "<group>";
+		};
+		FA2A501E20115CE9002748C2 /* Updater */ = {
+			isa = PBXGroup;
+			children = (
+				FAAC14821F38D39D00DDFAA3 /* TeamUpdater.swift */,
+				FAE6F81F1FDB5B4C00A4A626 /* TeamUpdater+Notify.swift */,
+			);
+			path = Updater;
+			sourceTree = "<group>";
+		};
+		FA2A501F20115CF1002748C2 /* TeamData */ = {
+			isa = PBXGroup;
+			children = (
+				FADA1A721F2EDF97004AE6B0 /* TeamDataManager.swift */,
+				FAC5360D2001932C007C21E4 /* Teams.xcdatamodeld */,
+				FAE6F8211FDC73B200A4A626 /* TeamDataTypes.swift */,
+				FA171EEA205A4512003CD9CC /* TeamDataTransaction.swift */,
+				FAD2E3B2205B000C008FFCB0 /* TeamDataDBType.swift */,
+			);
+			path = TeamData;
+			sourceTree = "<group>";
+		};
+		FA2F4170200D512B0024507A /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				FA2F4171200D51640024507A /* TeamCustomDomainInviteController.swift */,
+				FA2F4173200D59CD0024507A /* TeamInviteByEmailController.swift */,
+				FA33F2B3200E89340046922D /* TeamInviteModalController.swift */,
+				FA33F2C6200FF34F0046922D /* InPerson */,
+			);
+			name = Invite;
+			sourceTree = "<group>";
+		};
+		FA33F2BD200FEAAE0046922D /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				FA33F2B5200FA41C0046922D /* TeamAdminInPersonQRController.swift */,
+				FA33F2B7200FA7160046922D /* TeamAdminInPersonScanController.swift */,
+				FA33F2B9200FE4840046922D /* TeamAdminConfirmInPersonController.swift */,
+			);
+			name = Admin;
+			sourceTree = "<group>";
+		};
+		FA33F2BE200FECD60046922D /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				FA33F2C1200FF3170046922D /* TeamMemberInPersonScanController.swift */,
+				FA33F2BF200FECF60046922D /* TeamMemberInPersonEmailController.swift */,
+				FA33F2C3200FF3240046922D /* TeamMemberInPersonQRController.swift */,
+			);
+			name = Member;
+			sourceTree = "<group>";
+		};
+		FA33F2C6200FF34F0046922D /* InPerson */ = {
+			isa = PBXGroup;
+			children = (
+				FA33F2C7200FF37A0046922D /* InPersonAdminQR.swift */,
+				FA33F2C9200FF3970046922D /* InPersonMemberQR.swift */,
+				FA33F2BE200FECD60046922D /* Member */,
+				FA33F2BD200FEAAE0046922D /* Admin */,
+			);
+			name = InPerson;
 			sourceTree = "<group>";
 		};
 		FA443D9B1FB6240F00EB452A /* ApproveControllers */ = {
 			isa = PBXGroup;
 			children = (
 				FA443DB11FB6267000EB452A /* ApproveOptions.swift */,
-				FA6491111ED38314008C04A7 /* AutoApproveController.swift */,
-				FAE495701DBD741800A97708 /* ApproveController.swift */,
 				FA443DBA1FB6441200EB452A /* ApproveDetailController.swift */,
 				FA443DAB1FB6245B00EB452A /* SSHRequestController.swift */,
 				FA443DAD1FB624F400EB452A /* GitCommitRequestController.swift */,
 				FA443DAF1FB6254A00EB452A /* GitTagRequestController.swift */,
+				FA3BFD851FC3F1A40053A762 /* TeamOpRequestController.swift */,
 				FA443DBC1FB6458600EB452A /* ErrorRequestController.swift */,
 			);
 			name = ApproveControllers;
@@ -959,25 +1265,31 @@
 				FA443DE41FB9123400EB452A /* Policy+UserNotifications.swift */,
 				FA443DE61FB95CB300EB452A /* Policy+Pending.swift */,
 				FAAE81901E576FC2002A9AE6 /* Policy+UI.swift */,
+				FA8F8AB71F37BF0F00D0D4BE /* Policy+Team.swift */,
 				FAC07FCB1E42F5D100FEF117 /* Notify.swift */,
+				FAE6F81D1FDB532600A4A626 /* Notify+Team.swift */,
 				FA9520671FBB957A00E59884 /* NotifyShared.swift */,
 				FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */,
 				FADDE2801EFD6B8F0049AA67 /* Request+Notify.swift */,
 				FA17B96D1FB3638100975FB0 /* Request+Policy.swift */,
+				FAFA115A1F91359F007C3A98 /* Request+Team.swift */,
 				8D05CB341ED3E25E00CCCC38 /* GitInfo.swift */,
 				8DC2639D1ED2459300BF2E17 /* CommitInfo.swift */,
 				8D05CB1E1ED3DCC000CCCC38 /* TagInfo.swift */,
 				8D83990B1E56063A0051C6BA /* HostAuth.swift */,
 				FAA6E1F21D79E413007D1B3A /* Response.swift */,
+				FA3A5F471F914968004A8007 /* Response+Team.swift */,
 				8D7941671D98732600F6E32E /* NetworkProtocol.swift */,
 				FAA6E1FD1D7A028F007D1B3A /* Pairing.swift */,
 				FA0322CD1D7A72E800CD7622 /* Session.swift */,
 				FACAA4B01D887904000B9A01 /* SignatureLog.swift */,
+				FA5A9FEA1F9E8CF800954872 /* Audit.swift */,
 				FA1682A21EB2B2D500D9CE40 /* KnownHost.swift */,
 				FA8523C91DBFDA5200D465D2 /* Version.swift */,
 				FA2949E21EDE379900A5C70B /* UserIDList.swift */,
 				FAC536712002D9AE007C21E4 /* LocalNotificationAuthority.swift */,
-				FAEE048A1D736972002A7AFD /* Krypto */,
+				FACFDE802045E7B6003B2EB5 /* ServerEndpoints.swift */,
+				FAEE048A1D736972002A7AFD /* Crypto */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -996,15 +1308,61 @@
 			name = Devices;
 			sourceTree = "<group>";
 		};
+		FA6BCBF31F2145EE006F716F /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				FACE335D1FD5F78D00AF2E05 /* Create */,
+				FA8F8AB21F34EFD400D0D4BE /* Join */,
+				FA2F4170200D512B0024507A /* Invite */,
+				FA42B7041FA0D8BC006A89DD /* KRTeamDataController.swift */,
+				FA5A73871F23F8610087D3CF /* TeamDetailController.swift */,
+				FA42B6FC1FA0D7BC006A89DD /* TeamActvitiyController.swift */,
+				FA42B6FE1FA0D7E7006A89DD /* TeamMembersListController.swift */,
+				FA42B7001FA0D7FA006A89DD /* TeamKnownHostsController.swift */,
+			);
+			name = Team;
+			sourceTree = "<group>";
+		};
+		FA80D7511FCE64BC008391EF /* SigChain */ = {
+			isa = PBXGroup;
+			children = (
+				FADA1A5B1F2D2F32004AE6B0 /* SigChain.swift */,
+				FA0609D5203C827E00068B52 /* Billing.swift */,
+				FAD279EF1FCF61E000F7EFAE /* Init.swift */,
+				FAD279FB1FCF62E500F7EFAE /* Link.swift */,
+				FAD27A181FD0C11400F7EFAE /* Describe.swift */,
+				FA80D7411FCE28ED008391EF /* Errors.swift */,
+				FA80D7431FCE29BD008391EF /* Serialize+JSON.swift */,
+			);
+			path = SigChain;
+			sourceTree = "<group>";
+		};
+		FA80D7541FCE654D008391EF /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				FA6BCBED1F211807006F716F /* TeamIdentity.swift */,
+				FA8F8AB31F3540EA00D0D4BE /* TeamIdentity+SigChain.swift */,
+				FA9BA5D21F9A4897007B4C0D /* TeamIdentity+MainChain.swift */,
+				FA38F9211F79A26F00668F73 /* TeamIdentity+LogChain.swift */,
+				FADA1A6C1F2EAC3D004AE6B0 /* Team.swift */,
+				FA2A501F20115CF1002748C2 /* TeamData */,
+				FA2A501D20115CD6002748C2 /* TeamService */,
+				FA2A501E20115CE9002748C2 /* Updater */,
+				FA80D7511FCE64BC008391EF /* SigChain */,
+			);
+			path = Team;
+			sourceTree = "<group>";
+		};
 		FA81412D1D70B0F4004FE58C = {
 			isa = PBXGroup;
 			children = (
 				FA8141381D70B0F4004FE58C /* Krypton */,
-				FAEE049B1D74BCC3002A7AFD /* KryptoTests */,
 				FA1682521D774C8000A7ED53 /* Lib */,
 				FA49F7881D9B6B3300372556 /* LastCommand */,
 				FAF1E6201E031BB9003CBEA2 /* Notify */,
 				FAFF1E8B1ED6816B0063C44C /* NotifyUI */,
+				FAEE049B1D74BCC3002A7AFD /* KryptonTests */,
+				FA11A56E2031F4A8000E46B1 /* SigchainTests */,
 				FAEE04871D7368C1002A7AFD /* Frameworks */,
 				FAEE048F1D736AE3002A7AFD /* Other */,
 				FA8141371D70B0F4004FE58C /* Products */,
@@ -1015,10 +1373,11 @@
 			isa = PBXGroup;
 			children = (
 				FA8141361D70B0F4004FE58C /* Krypton.app */,
-				FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */,
+				FAEE049A1D74BCC3002A7AFD /* KryptonTests.xctest */,
 				FA49F7851D9B6B3200372556 /* LastCommand.appex */,
 				FAF1E61F1E031BB9003CBEA2 /* Notify.appex */,
 				FAFF1E871ED6816B0063C44C /* NotifyUI.appex */,
+				FA11A56D2031F4A8000E46B1 /* SigchainTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1028,6 +1387,7 @@
 			children = (
 				FAA1B9231D81AF7C00FF37CC /* App */,
 				FA61EF471D831A77009FD899 /* Core */,
+				FA80D7541FCE654D008391EF /* Team */,
 				FA15EB471DA5C5BB00BED16C /* Data */,
 				FAA6E1EF1D79E3E3007D1B3A /* Transport */,
 				FA29779A1D773A2F003EB1F7 /* Controllers */,
@@ -1046,10 +1406,24 @@
 				FA3BFCBD1FC28C6C0053A762 /* Sessions.storyboard */,
 				FAE495991DBD98C400A97708 /* Approval.storyboard */,
 				FA443DCA1FB65DEE00EB452A /* ApprovalDetail.storyboard */,
+				FAD27A1C1FD1C2B400F7EFAE /* Loading.storyboard */,
+				FA6BCBF11F213C9B006F716F /* Team.storyboard */,
+				FA33F2BB200FE6010046922D /* TeamInvitations.storyboard */,
 				FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */,
 				FA8141401D70B0F4004FE58C /* Assets.xcassets */,
 			);
 			name = UX;
+			sourceTree = "<group>";
+		};
+		FA8F8AB21F34EFD400D0D4BE /* Join */ = {
+			isa = PBXGroup;
+			children = (
+				FAD279F71FCF62BE00F7EFAE /* TeamJoinType.swift */,
+				FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */,
+				FA5A73681F22A2F80087D3CF /* TeamInvitationController.swift */,
+				FA5A73801F22C41A0087D3CF /* TeamJoinCompleteController.swift */,
+			);
+			name = Join;
 			sourceTree = "<group>";
 		};
 		FAA1B9231D81AF7C00FF37CC /* App */ = {
@@ -1065,8 +1439,7 @@
 				FAAE81AA1E577544002A9AE6 /* Analytics+UI.swift */,
 				FAB664EE1DBFF18C0094896F /* Updater.swift */,
 				FAD361F61DF08F9E00D17BAB /* Connectivity.swift */,
-				FA443E051FBA924000EB452A /* Caches.swift */,
-				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
+				FA443E051FBA924000EB452A /* SecureLocalStorage.swift */,
 				FA81414B1D70B10F004FE58C /* UX */,
 			);
 			name = App;
@@ -1112,12 +1485,25 @@
 			name = Onboard;
 			sourceTree = "<group>";
 		};
+		FACE335D1FD5F78D00AF2E05 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				FA42B6EB1F9FB934006A89DD /* TeamsMarketingController.swift */,
+				FACE336D1FD5F7AC00AF2E05 /* TeamCreateController.swift */,
+				FACE33711FD632ED00AF2E05 /* TeamOBAuditLogsController.swift */,
+				FACE33731FD6330900AF2E05 /* TeamOBApprovalIntervalController.swift */,
+				FACE33751FD6332800AF2E05 /* TeamOBPinHostsController.swift */,
+			);
+			name = Create;
+			sourceTree = "<group>";
+		};
 		FADD71481D772F6E00DA5112 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				FA92E9251D77B5A4006372B4 /* UIViewController+KR.swift */,
 				FADD71491D772F8200DA5112 /* Date+KR.swift */,
 				FABA4B171D9C21BE0057A666 /* String+User.swift */,
+				FA349C571FA521F5002F968F /* String+Validations.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1188,7 +1574,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FAEE048A1D736972002A7AFD /* Krypto */ = {
+		FAEE048A1D736972002A7AFD /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
 				FAA97C061D71447C00DDB725 /* KeyPair.swift */,
@@ -1202,11 +1588,11 @@
 				FAEE04921D73CDD2002A7AFD /* CryptoError.swift */,
 				FA3BFC671FC0F9D00053A762 /* ASN1.swift */,
 				FAEE04941D73ECE2002A7AFD /* Util.swift */,
-				FA69729C1D78DE15002F34D6 /* KeychainStorage.swift */,
 				8D003DF11D90EDE30085ED21 /* Sodium.swift */,
+				FAF4DD101D7A818B008F1B1C /* JSON+Seal.swift */,
 				FACE33541EC186DC003EC6C0 /* SSHUtil.swift */,
 			);
-			name = Krypto;
+			name = Crypto;
 			sourceTree = "<group>";
 		};
 		FAEE048F1D736AE3002A7AFD /* Other */ = {
@@ -1223,11 +1609,12 @@
 				FA2977981D7736A8003EB1F7 /* ImageLicenses */,
 				FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */,
 				FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */,
+				FA33F2A2200E634B0046922D /* teams_invite_email_template.html */,
 			);
 			name = Other;
 			sourceTree = "<group>";
 		};
-		FAEE049B1D74BCC3002A7AFD /* KryptoTests */ = {
+		FAEE049B1D74BCC3002A7AFD /* KryptonTests */ = {
 			isa = PBXGroup;
 			children = (
 				FAEE049C1D74BCC3002A7AFD /* KryptoTests.swift */,
@@ -1238,11 +1625,13 @@
 				8D45AFF51E8D739500E84A57 /* SSHHostVerificationTests.swift */,
 				8D45B0091E8D7D6F00E84A57 /* Bridging-Header.h */,
 				8DCB60231E9442F300E1B924 /* SiloTests.swift */,
+				FAC724F41F57100400386436 /* TeamDataManagerTests.swift */,
+				FA546CBE2034D3780024F94F /* TeamIdentityTests.swift */,
 				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
 				FAF0B0971F04500400F65E04 /* UtilTests.swift */,
 				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
 			);
-			path = KryptoTests;
+			path = KryptonTests;
 			sourceTree = "<group>";
 		};
 		FAF1E6201E031BB9003CBEA2 /* Notify */ = {
@@ -1250,9 +1639,11 @@
 			children = (
 				FAB517921E54D40A0032DD47 /* Notify.entitlements */,
 				FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */,
+				FAD2E3C6205B03B9008FFCB0 /* TeamDataSync.swift */,
 				FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */,
 				FAF1E6231E031BB9003CBEA2 /* Info.plist */,
 				FAAE819E1E577264002A9AE6 /* Notify-Bridging-Header.h */,
+				FAD2E3C4205B0040008FFCB0 /* TeamDataDBType.swift */,
 			);
 			path = Notify;
 			sourceTree = "<group>";
@@ -1281,6 +1672,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FA11A56C2031F4A8000E46B1 /* SigchainTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA11A5742031F4A8000E46B1 /* Build configuration list for PBXNativeTarget "SigchainTests" */;
+			buildPhases = (
+				FA546CAA2033F0E90024F94F /* Generate Tests */,
+				FA11A5782031F559000E46B1 /* CommonCrypto */,
+				FA11A5692031F4A8000E46B1 /* Sources */,
+				FA11A56A2031F4A8000E46B1 /* Frameworks */,
+				FA11A56B2031F4A8000E46B1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA11A5732031F4A8000E46B1 /* PBXTargetDependency */,
+			);
+			name = SigchainTests;
+			productName = SigchainTests;
+			productReference = FA11A56D2031F4A8000E46B1 /* SigchainTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FA49F7841D9B6B3200372556 /* LastCommand */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA49F7921D9B6B3300372556 /* Build configuration list for PBXNativeTarget "LastCommand" */;
@@ -1325,25 +1736,22 @@
 			productReference = FA8141361D70B0F4004FE58C /* Krypton.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FAEE04991D74BCC3002A7AFD /* KryptoTests */ = {
+		FAEE04991D74BCC3002A7AFD /* KryptonTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FAEE04A11D74BCC3002A7AFD /* Build configuration list for PBXNativeTarget "KryptoTests" */;
+			buildConfigurationList = FAEE04A11D74BCC3002A7AFD /* Build configuration list for PBXNativeTarget "KryptonTests" */;
 			buildPhases = (
-				FAEE04A41D74BCCF002A7AFD /* CommonCrypto */,
+				FA3BFDF41FC4917E0053A762 /* CommonCrypto */,
 				FAEE04961D74BCC3002A7AFD /* Sources */,
-				FAEE04971D74BCC3002A7AFD /* Frameworks */,
 				FAEE04981D74BCC3002A7AFD /* Resources */,
-				8D45AFF01E8D71BE00E84A57 /* Compile ssh-wire */,
-				FA1951121E96D00E0036B425 /* Compile AWS Core, SQS, SNS */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				FAEE04A01D74BCC3002A7AFD /* PBXTargetDependency */,
 			);
-			name = KryptoTests;
+			name = KryptonTests;
 			productName = KryptoTests;
-			productReference = FAEE049A1D74BCC3002A7AFD /* KryptoTests.xctest */;
+			productReference = FAEE049A1D74BCC3002A7AFD /* KryptonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		FAF1E61E1E031BB9003CBEA2 /* Notify */ = {
@@ -1391,10 +1799,16 @@
 		FA81412E1D70B0F4004FE58C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = KryptCo;
 				TargetAttributes = {
+					FA11A56C2031F4A8000E46B1 = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = W7AMYM5LPN;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FA8141351D70B0F4004FE58C;
+					};
 					FA49F7841D9B6B3200372556 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = W7AMYM5LPN;
@@ -1402,6 +1816,9 @@
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 0;
 							};
 							com.apple.iCloud = {
 								enabled = 0;
@@ -1431,6 +1848,9 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 							com.apple.iCloud = {
 								enabled = 0;
 							};
@@ -1449,6 +1869,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -1463,7 +1886,13 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
 								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
 							};
 						};
 					};
@@ -1508,7 +1937,8 @@
 				FA49F7841D9B6B3200372556 /* LastCommand */,
 				FAFF1E861ED6816B0063C44C /* NotifyUI */,
 				FAF1E61E1E031BB9003CBEA2 /* Notify */,
-				FAEE04991D74BCC3002A7AFD /* KryptoTests */,
+				FAEE04991D74BCC3002A7AFD /* KryptonTests */,
+				FA11A56C2031F4A8000E46B1 /* SigchainTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1622,6 +2052,14 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FA11A56B2031F4A8000E46B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA546CBC2033F2180024F94F /* generated_test_cases.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA49F7831D9B6B3200372556 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1640,16 +2078,19 @@
 				FA632E461DB563E0003F3A3B /* SourceCodePro-Regular.ttf in Resources */,
 				FA3BFCBC1FC28C610053A762 /* Pair.storyboard in Resources */,
 				FA3BFCBF1FC28C6C0053A762 /* Sessions.storyboard in Resources */,
+				FA33F2A3200E634B0046922D /* teams_invite_email_template.html in Resources */,
 				FA2977991D7736A8003EB1F7 /* ImageLicenses in Resources */,
 				FAE4959B1DBD98C400A97708 /* Approval.storyboard in Resources */,
 				FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */,
-				FA1682681D774D6000A7ED53 /* Info.plist in Resources */,
 				FA03C59A1E760CD50019649E /* COMMIT in Resources */,
 				FA3BFCC21FC28C780053A762 /* Settings.storyboard in Resources */,
 				FA8141411D70B0F4004FE58C /* Assets.xcassets in Resources */,
 				FA443DCC1FB65DEF00EB452A /* ApprovalDetail.storyboard in Resources */,
 				FAEE048E1D736AD3002A7AFD /* SoftwareLibraries in Resources */,
+				FAD27A1D1FD1C2B400F7EFAE /* Loading.storyboard in Resources */,
+				FA6BCBF21F213C9B006F716F /* Team.storyboard in Resources */,
 				FA81413F1D70B0F4004FE58C /* Main.storyboard in Resources */,
+				FA33F2BC200FE6010046922D /* TeamInvitations.storyboard in Resources */,
 				FA632E441DB563E0003F3A3B /* SourceCodePro-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1712,19 +2153,19 @@
 			shellPath = /bin/bash;
 			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
-		8D45AFF01E8D71BE00E84A57 /* Compile ssh-wire */ = {
+		FA11A5782031F559000E46B1 /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Compile ssh-wire";
+			name = CommonCrypto;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
+			shellPath = /bin/sh;
+			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
 		};
 		FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1754,19 +2195,33 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${PROJECT_DIR}/aws-sdk-ios\"\ncurrentCommit=$(git rev-parse HEAD)\n\nfunction compile {\n    sh Scripts/SdkPackage.sh AWSCore\n    sh Scripts/SdkPackage.sh AWSSQS\n    sh Scripts/SdkPackage.sh AWSSNS\n    \n    echo \"${currentCommit}\" > \"${PROJECT_DIR}/AWS_COMMIT\"\n}\n\nif [ ! -f \"${PROJECT_DIR}/AWS_COMMIT\" ]; then\n    echo \"AWS_COMMIT not recorded. Compile AWS.\"\n    compile\n\nelif [ $(cat \"${PROJECT_DIR}/AWS_COMMIT\") != \"${currentCommit}\" ]; then\n    echo \"AWS_COMMIT is out dated. Compile AWS.\"\n    compile\n\nelif ls \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSCore.framework\" \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSSQS.framework\" \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSSNS.framework\" 2>/dev/null; then\n    echo \"AWS Frameworks up to date, skipping re compilation.\"\nelse\n    echo \"Missing AWS Framework. Compiling\"\n    compile\nfi\n";
 		};
-		FA1951121E96D00E0036B425 /* Compile AWS Core, SQS, SNS */ = {
+		FA3BFDF41FC4917E0053A762 /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Compile AWS Core, SQS, SNS";
+			name = CommonCrypto;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
+		};
+		FA546CAA2033F0E90024F94F /* Generate Tests */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Tests";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${PROJECT_DIR}/SigchainTests\n\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./generate_tests.sh\"\n";
 		};
 		FA8141521D714250004FE58C /* CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1838,28 +2293,25 @@
 			shellPath = /bin/sh;
 			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
 		};
-		FAEE04A41D74BCCF002A7AFD /* CommonCrypto */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = CommonCrypto;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FA11A5692031F4A8000E46B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FACFDE662040CB00003B2EB5 /* PrintSigchains.swift in Sources */,
+				FA11A5702031F4A8000E46B1 /* SigchainTests.swift in Sources */,
+				FA11A57A2031F58D000E46B1 /* TestProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA49F7811D9B6B3200372556 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FA49F78A1D9B6B3300372556 /* TodayViewController.swift in Sources */,
+				FA349C591FA521F5002F968F /* String+Validations.swift in Sources */,
 				FABA4B191D9C21C40057A666 /* String+User.swift in Sources */,
 				FA15EB441DA5B4F100BED16C /* Log.swift in Sources */,
 				FA15EB3B1DA5B4E600BED16C /* Globals.swift in Sources */,
@@ -1870,29 +2322,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8F8AB11F34EFA600D0D4BE /* TeamLoadController.swift in Sources */,
 				FAE4958A1DBD89F100A97708 /* M13CheckboxController.swift in Sources */,
 				FAA6E1F31D79E413007D1B3A /* Response.swift in Sources */,
 				FA443DAE1FB624F400EB452A /* GitCommitRequestController.swift in Sources */,
 				FA1682711D774D6000A7ED53 /* RSCornersLayer.swift in Sources */,
 				FAE495961DBD89F100A97708 /* M13CheckboxDisclosurePathGenerator.swift in Sources */,
 				8D05CB1F1ED3DCC000CCCC38 /* TagInfo.swift in Sources */,
+				FA33F2B6200FA41C0046922D /* TeamAdminInPersonQRController.swift in Sources */,
 				FA443DBD1FB6458600EB452A /* ErrorRequestController.swift in Sources */,
 				FA4A84DF1E8D77910082274A /* TransportControl.swift in Sources */,
 				FACBEFEB1D779D6E005D71B9 /* CreateController.swift in Sources */,
 				FA17B96E1FB3638100975FB0 /* Request+Policy.swift in Sources */,
 				FAEE048C1D7369C3002A7AFD /* Keypair+SSHFormat.swift in Sources */,
+				FA0609D6203C827E00068B52 /* Billing.swift in Sources */,
+				FA2F4172200D51640024507A /* TeamCustomDomainInviteController.swift in Sources */,
 				FAE4958D1DBD89F100A97708 /* M13CheckboxDotController.swift in Sources */,
 				FA16827A1D774D6000A7ED53 /* StringExtension.swift in Sources */,
+				FA2A502120115D09002748C2 /* TeamService+Push.swift in Sources */,
+				FAD27A191FD0C11400F7EFAE /* Describe.swift in Sources */,
 				FA16828B1EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld in Sources */,
 				8DB2EE391DBC18170079E468 /* Analytics.swift in Sources */,
 				FA61EF461D8319ED009FD899 /* Mutex.swift in Sources */,
 				FAE495921DBD89F100A97708 /* M13CheckboxSpiralController.swift in Sources */,
 				FA12EABF1ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				FA2949CB1EDCB77800A5C70B /* LogDetailController.swift in Sources */,
+				FA349C581FA521F5002F968F /* String+Validations.swift in Sources */,
 				FA1682811D77682C00A7ED53 /* SessionsController.swift in Sources */,
 				8DD436A41DF3719000201106 /* CommunicationActivity.swift in Sources */,
 				FA16826F1D774D6000A7ED53 /* RSCodeLayer.swift in Sources */,
 				FAE495971DBD89F100A97708 /* M13CheckboxPathGenerator.swift in Sources */,
+				FA2F4174200D59CD0024507A /* TeamInviteByEmailController.swift in Sources */,
 				FAE4958B1DBD89F100A97708 /* M13CheckboxGestureRecognizer.swift in Sources */,
 				FAA97C071D71447C00DDB725 /* KeyPair.swift in Sources */,
 				FACAA4C61D89FEB5000B9A01 /* Policy.swift in Sources */,
@@ -1901,6 +2361,7 @@
 				FA16826B1D774D6000A7ED53 /* RSCode39Mod43Generator.swift in Sources */,
 				8D0CDC951D8789FB00CDBC3C /* Bluetooth.swift in Sources */,
 				FA16826A1D774D6000A7ED53 /* RSCode39Generator.swift in Sources */,
+				FA2A500620115C85002748C2 /* TeamService+Logs.swift in Sources */,
 				FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */,
 				FAE495881DBD89F100A97708 /* M13Checkbox.swift in Sources */,
 				FA1682AA1EB3856600D9CE40 /* KnownHostsEditController.swift in Sources */,
@@ -1908,13 +2369,18 @@
 				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
 				FAE4958C1DBD89F100A97708 /* M13CheckboxBounceController.swift in Sources */,
+				FA33F2B8200FA7160046922D /* TeamAdminInPersonScanController.swift in Sources */,
 				FAE495931DBD89F100A97708 /* M13CheckboxStrokeController.swift in Sources */,
 				FAE495951DBD89F100A97708 /* M13CheckboxCheckPathGenerator.swift in Sources */,
+				FADA1A6D1F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				FAE495711DBD741800A97708 /* ApproveController.swift in Sources */,
 				FA0C13B11DC2A63300C5FE34 /* InstallMethod.swift in Sources */,
 				FAE495981DBD89F100A97708 /* M13CheckboxRadioPathGenerator.swift in Sources */,
 				FA2697321D99CA1100FE44D3 /* GenerateController.swift in Sources */,
+				FACE33721FD632ED00AF2E05 /* TeamOBAuditLogsController.swift in Sources */,
+				FACE33741FD6330900AF2E05 /* TeamOBApprovalIntervalController.swift in Sources */,
 				FA61EF491D835EEB009FD899 /* LogCell.swift in Sources */,
+				FA33F2C2200FF3170046922D /* TeamMemberInPersonScanController.swift in Sources */,
 				FA1682771D774D6000A7ED53 /* RSUnifiedCodeGenerator.swift in Sources */,
 				8DB64E3C1FB4D6330083DA5D /* TransportControl+Krypton.swift in Sources */,
 				8D83990C1E56063A0051C6BA /* HostAuth.swift in Sources */,
@@ -1923,28 +2389,45 @@
 				FA2949E31EDE379900A5C70B /* UserIDList.swift in Sources */,
 				FABA4B181D9C21BE0057A666 /* String+User.swift in Sources */,
 				8DC2639E1ED2459300BF2E17 /* CommitInfo.swift in Sources */,
+				FAD279FC1FCF62E500F7EFAE /* Link.swift in Sources */,
+				FAE6F8221FDC73B200A4A626 /* TeamDataTypes.swift in Sources */,
 				FA1682731D774D6000A7ED53 /* RSExtendedCode39Generator.swift in Sources */,
+				FADA1A731F2EDF97004AE6B0 /* TeamDataManager.swift in Sources */,
 				FA16826C1D774D6000A7ED53 /* RSCode93Generator.swift in Sources */,
+				FA8F8AB41F3540EA00D0D4BE /* TeamIdentity+SigChain.swift in Sources */,
 				FA1682721D774D6000A7ED53 /* RSEANGenerator.swift in Sources */,
 				FAE495941DBD89F100A97708 /* M13CheckboxAddRemovePathGenerator.swift in Sources */,
+				FAD27A1F1FD1C46400F7EFAE /* LoadingController.swift in Sources */,
 				FA443DAC1FB6245B00EB452A /* SSHRequestController.swift in Sources */,
+				FA171EEB205A4512003CD9CC /* TeamDataTransaction.swift in Sources */,
 				FA443DB21FB6267000EB452A /* ApproveOptions.swift in Sources */,
 				FAAE81AB1E577544002A9AE6 /* Analytics+UI.swift in Sources */,
+				FAD2E3B3205B000C008FFCB0 /* TeamDataDBType.swift in Sources */,
 				FA2697301D99AF5700FE44D3 /* KRBaseController.swift in Sources */,
 				8D05CB351ED3E25E00CCCC38 /* GitInfo.swift in Sources */,
+				FA33F2C8200FF37A0046922D /* InPersonAdminQR.swift in Sources */,
 				FA0322CE1D7A72E800CD7622 /* Session.swift in Sources */,
 				FA81413C1D70B0F4004FE58C /* MainController.swift in Sources */,
+				FAAC14831F38D39D00DDFAA3 /* TeamUpdater.swift in Sources */,
 				FA1682781D774D6000A7ED53 /* RSUnifiedCodeValidator.swift in Sources */,
+				FA33F2CA200FF3970046922D /* InPersonMemberQR.swift in Sources */,
+				FA5A9FEB1F9E8CF800954872 /* Audit.swift in Sources */,
 				FA16829F1EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAFE546F1D7B9C1400391FDD /* Wrap.swift in Sources */,
 				FACAA4B11D887904000B9A01 /* SignatureLog.swift in Sources */,
+				FA42B6FF1FA0D7E7006A89DD /* TeamMembersListController.swift in Sources */,
+				FAE6F8201FDB5B4C00A4A626 /* TeamUpdater+Notify.swift in Sources */,
 				FA92E9261D77B5A4006372B4 /* UIViewController+KR.swift in Sources */,
+				FA3A5F481F914968004A8007 /* Response+Team.swift in Sources */,
+				FA5A73811F22C41A0087D3CF /* TeamJoinCompleteController.swift in Sources */,
 				FA16826D1D774D6000A7ED53 /* RSCodeDataMatrixGenerator.swift in Sources */,
 				FAE4958F1DBD89F100A97708 /* M13CheckboxFadeController.swift in Sources */,
 				FAAE81911E576FC2002A9AE6 /* Policy+UI.swift in Sources */,
+				FA33F2C4200FF3240046922D /* TeamMemberInPersonQRController.swift in Sources */,
 				FA064FED1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */,
 				FAF4DD111D7A818B008F1B1C /* JSON+Seal.swift in Sources */,
 				FACAA4B81D887C19000B9A01 /* LogManager.swift in Sources */,
+				FA42B6EC1F9FB934006A89DD /* TeamsMarketingController.swift in Sources */,
 				FAD361F71DF08F9E00D17BAB /* Connectivity.swift in Sources */,
 				FAEE04931D73CDD2002A7AFD /* CryptoError.swift in Sources */,
 				FA443DE51FB9123400EB452A /* Policy+UserNotifications.swift in Sources */,
@@ -1957,59 +2440,90 @@
 				FAA6E1FE1D7A028F007D1B3A /* Pairing.swift in Sources */,
 				FAA536271D8F2EA800549710 /* AboutController.swift in Sources */,
 				FA4A84DD1E8D76800082274A /* SQS.swift in Sources */,
+				FA33F2C0200FECF60046922D /* TeamMemberInPersonEmailController.swift in Sources */,
+				FA2A501B20115CBB002748C2 /* TeamService+EmailChallenge.swift in Sources */,
 				FA1682741D774D6000A7ED53 /* RSFocusMarkLayer.swift in Sources */,
 				FAC536722002D9AE007C21E4 /* LocalNotificationAuthority.swift in Sources */,
+				FADA1A5C1F2D2F32004AE6B0 /* SigChain.swift in Sources */,
 				FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */,
+				FAE6F81E1FDB532600A4A626 /* Notify+Team.swift in Sources */,
 				FA1682791D774D6000A7ED53 /* RSUPCEGenerator.swift in Sources */,
 				8D65116A1FABAA3D00873320 /* BluetoothPeripheral.swift in Sources */,
+				FA80D7421FCE28ED008391EF /* Errors.swift in Sources */,
 				FAB664EF1DBFF18C0094896F /* Updater.swift in Sources */,
 				FACE33551EC186DC003EC6C0 /* SSHUtil.swift in Sources */,
 				FA61EF431D81D150009FD899 /* SessionManager.swift in Sources */,
+				FA8F8AB81F37BF0F00D0D4BE /* Policy+Team.swift in Sources */,
+				FA38F9221F79A26F00668F73 /* TeamIdentity+LogChain.swift in Sources */,
 				FAE45B9D1E64AA3E00A583AB /* Ed25519.swift in Sources */,
 				FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */,
+				FA2A502420115DE4002748C2 /* TeamService+MainRead.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
+				FA42B7051FA0D8BC006A89DD /* KRTeamDataController.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,
+				FA6BCBEE1F211807006F716F /* TeamIdentity.swift in Sources */,
 				FAAE818F1E576DB8002A9AE6 /* Authorize.swift in Sources */,
 				FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */,
+				FA33F2B4200E89340046922D /* TeamInviteModalController.swift in Sources */,
 				FA443DE71FB95CB300EB452A /* Policy+Pending.swift in Sources */,
 				8D003DF21D90EDE30085ED21 /* Sodium.swift in Sources */,
 				FA0322731D74D39100CD7622 /* Globals.swift in Sources */,
 				FA443DB01FB6254A00EB452A /* GitTagRequestController.swift in Sources */,
 				FA443DD41FB66D7200EB452A /* TemporaryApprovalController.swift in Sources */,
+				FAD279F81FCF62BE00F7EFAE /* TeamJoinType.swift in Sources */,
 				FA1682A31EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
 				FAAD091D1D78BA0000EAB665 /* Hash.swift in Sources */,
 				FAE495891DBD89F100A97708 /* M13CheckboxAnimationGenerator.swift in Sources */,
 				FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */,
+				FA0609DA203C8F6C00068B52 /* TeamService+Billing.swift in Sources */,
+				FA80D7441FCE29BD008391EF /* Serialize+JSON.swift in Sources */,
+				FAFA115B1F91359F007C3A98 /* Request+Team.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
-				FA443E061FBA924000EB452A /* Caches.swift in Sources */,
+				FA443E061FBA924000EB452A /* SecureLocalStorage.swift in Sources */,
+				FA42B6FD1FA0D7BC006A89DD /* TeamActvitiyController.swift in Sources */,
 				FAE495901DBD89F100A97708 /* M13CheckboxFillController.swift in Sources */,
+				FADA1A791F2EE100004AE6B0 /* (null) in Sources */,
+				FAC724D21F4F813800386436 /* IdentityManager.swift in Sources */,
 				FA1682691D774D6000A7ED53 /* RSCode128Generator.swift in Sources */,
+				FACFDE812045E7B6003B2EB5 /* ServerEndpoints.swift in Sources */,
 				FA3BFC681FC0F9D00053A762 /* ASN1.swift in Sources */,
 				FA29779F1D7746CC003EB1F7 /* Resources.swift in Sources */,
 				FAE495871DBD89F100A97708 /* M13Checkbox+IB.swift in Sources */,
+				FA5A73691F22A2F80087D3CF /* TeamInvitationController.swift in Sources */,
+				FA3BFD861FC3F1A40053A762 /* TeamOpRequestController.swift in Sources */,
 				FAA1B9221D81AEA000FF37CC /* Silo.swift in Sources */,
+				FACE336E1FD5F7AC00AF2E05 /* TeamCreateController.swift in Sources */,
 				FAE495911DBD89F100A97708 /* M13CheckboxFlatController.swift in Sources */,
 				FAA6E2001D7A0AF9007D1B3A /* Request.swift in Sources */,
+				FADA1A841F30E0E2004AE6B0 /* TeamService.swift in Sources */,
+				FAD279F01FCF61E000F7EFAE /* Init.swift in Sources */,
 				FA81413A1D70B0F4004FE58C /* AppDelegate.swift in Sources */,
+				FACE33761FD6332800AF2E05 /* TeamOBPinHostsController.swift in Sources */,
 				FA5A9E741F9BC75300954872 /* AppDelegate+Notifications.swift in Sources */,
 				FAA5362D1D8F3FCA00549710 /* Sharing.swift in Sources */,
+				FAC724D61F546BC500386436 /* TeamServerHTTP.swift in Sources */,
 				FA03C5851E749A520019649E /* RePairWarningController.swift in Sources */,
 				FA9520681FBB957A00E59884 /* NotifyShared.swift in Sources */,
 				FA92E9241D77AA3E006372B4 /* KeyManager.swift in Sources */,
 				FA1682701D774D6000A7ED53 /* RSCodeReaderViewController.swift in Sources */,
 				FADDE2811EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
+				FA9BA5D31F9A4897007B4C0D /* TeamIdentity+MainChain.swift in Sources */,
 				FACBEFE91D77968D005D71B9 /* SessionCell.swift in Sources */,
 				FAB43B971DFF1F9200496114 /* Kryptonite.xcdatamodeld in Sources */,
 				FADD714A1D772F8200DA5112 /* Date+KR.swift in Sources */,
+				FAC5360F2001932C007C21E4 /* Teams.xcdatamodeld in Sources */,
 				FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */,
+				FA42B7011FA0D7FA006A89DD /* TeamKnownHostsController.swift in Sources */,
 				FAE45B991E64750E00A583AB /* RSAKeyPair.swift in Sources */,
 				FA69729D1D78DE15002F34D6 /* KeychainStorage.swift in Sources */,
+				FA5A73881F23F8610087D3CF /* TeamDetailController.swift in Sources */,
 				8D7941681D98732600F6E32E /* NetworkProtocol.swift in Sources */,
 				FA61EF4D1D8492D5009FD899 /* MeController.swift in Sources */,
 				FAA6E1F11D79E3ED007D1B3A /* AWS.swift in Sources */,
 				FA443DBB1FB6441200EB452A /* ApproveDetailController.swift in Sources */,
 				FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */,
+				FA33F2BA200FE4840046922D /* TeamAdminConfirmInPersonController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2017,15 +2531,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA3BFCAB1FC282DA0053A762 /* SodiumTests.swift in Sources */,
-				FA3BFCAA1FC282DA0053A762 /* PairingTests.swift in Sources */,
-				FA3BFCAD1FC282DA0053A762 /* SiloTests.swift in Sources */,
-				FA3BFCAF1FC282DA0053A762 /* UtilTests.swift in Sources */,
-				FA3BFCA91FC282DA0053A762 /* CodeSigningTests.swift in Sources */,
-				FA3BFCAC1FC282DA0053A762 /* SSHHostVerificationTests.swift in Sources */,
-				FA3BFCB01FC282DA0053A762 /* AnalyticsStub.swift in Sources */,
-				FA3BFCAE1FC282DA0053A762 /* DigestAlgorithmParsingTests.swift in Sources */,
-				FA3BFCA81FC282DA0053A762 /* KryptoTests.swift in Sources */,
+				FA3BFDF31FC48FE40053A762 /* AnalyticsStub.swift in Sources */,
+				FA3BFDEB1FC48FE40053A762 /* SodiumTests.swift in Sources */,
+				FA546CBF2034D3780024F94F /* TeamIdentityTests.swift in Sources */,
+				FA3BFDEA1FC48FE40053A762 /* PairingTests.swift in Sources */,
+				FA3BFDED1FC48FE40053A762 /* SiloTests.swift in Sources */,
+				FA3BFDF01FC48FE40053A762 /* TeamDataManagerTests.swift in Sources */,
+				FA3BFDE91FC48FE40053A762 /* CodeSigningTests.swift in Sources */,
+				FA3BFDEC1FC48FE40053A762 /* SSHHostVerificationTests.swift in Sources */,
+				FA3BFDF21FC48FE40053A762 /* UtilTests.swift in Sources */,
+				FA3BFDF11FC48FE40053A762 /* DigestAlgorithmParsingTests.swift in Sources */,
+				FA3BFDE81FC48FE40053A762 /* KryptoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2034,20 +2550,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB517981E54D52F0032DD47 /* Session.swift in Sources */,
+				FAC874051E6F0E17003D112E /* (null) in Sources */,
+				FA38F9231F79A26F00668F73 /* TeamIdentity+LogChain.swift in Sources */,
+				FAFA115D1F91359F007C3A98 /* Request+Team.swift in Sources */,
 				FA12EAC01ED0E34B001603BF /* Keypair+PGPFormat.swift in Sources */,
 				FAB5179D1E54D54F0032DD47 /* Hash.swift in Sources */,
 				FACE33661EC186E8003EC6C0 /* SSHUtil.swift in Sources */,
 				FAAE81951E57706E002A9AE6 /* Silo.swift in Sources */,
 				FAB517BF1E54D7220032DD47 /* Mutex.swift in Sources */,
 				FA4A84E11E8DA75B0082274A /* SQS.swift in Sources */,
+				FAC724D31F4F813800386436 /* IdentityManager.swift in Sources */,
 				FADDE2841EFD6B8F0049AA67 /* Request+Notify.swift in Sources */,
 				FAB517A61E54D5570032DD47 /* LogManager.swift in Sources */,
 				FAB517A11E54D54F0032DD47 /* Util.swift in Sources */,
+				FAC724D71F546BC500386436 /* TeamServerHTTP.swift in Sources */,
 				FAB517A21E54D54F0032DD47 /* KeychainStorage.swift in Sources */,
 				FAB5179C1E54D54F0032DD47 /* Wrap.swift in Sources */,
 				FA443DE91FB9630900EB452A /* Policy+UserNotifications.swift in Sources */,
+				FA2A502220115D09002748C2 /* TeamService+Push.swift in Sources */,
 				FAB517A81E54D5780032DD47 /* String+User.swift in Sources */,
+				FAE6F8241FDC73C500A4A626 /* TeamDataTypes.swift in Sources */,
 				FAB517931E54D46A0032DD47 /* Globals.swift in Sources */,
+				FADA1A7B1F2EE100004AE6B0 /* (null) in Sources */,
+				FADA1A751F2EDF97004AE6B0 /* TeamDataManager.swift in Sources */,
 				8D05CB321ED3E08500CCCC38 /* TagInfo.swift in Sources */,
 				FAE45B9A1E64751700A583AB /* RSAKeyPair.swift in Sources */,
 				8DB64E4E1FB4D6410083DA5D /* TransportControl+Notify.swift in Sources */,
@@ -2055,40 +2580,67 @@
 				FAB517951E54D52F0032DD47 /* Request.swift in Sources */,
 				FA17B96F1FB3638100975FB0 /* Request+Policy.swift in Sources */,
 				FAC535D32001604F007C21E4 /* KnownHosts.xcdatamodeld in Sources */,
-				FA443E071FBA924000EB452A /* Caches.swift in Sources */,
+				FA443E071FBA924000EB452A /* SecureLocalStorage.swift in Sources */,
+				FAD279FE1FCF62E500F7EFAE /* Link.swift in Sources */,
+				FA0609D8203C827E00068B52 /* Billing.swift in Sources */,
+				FA9BA5D41F9A4898007B4C0D /* TeamIdentity+MainChain.swift in Sources */,
+				FA6BCBEF1F211807006F716F /* TeamIdentity.swift in Sources */,
 				FA1682A01EB2B2B200D9CE40 /* KnownHostManager.swift in Sources */,
 				FAB5179E1E54D54F0032DD47 /* Keypair+SSHFormat.swift in Sources */,
 				FAB517A71E54D5780032DD47 /* Date+KR.swift in Sources */,
+				FA80D76A1FCE6655008391EF /* Errors.swift in Sources */,
+				FADA1A5E1F2D2F32004AE6B0 /* SigChain.swift in Sources */,
 				FAB5179F1E54D54F0032DD47 /* CryptoError.swift in Sources */,
 				8DC860B31E57822A008CC974 /* HostAuth.swift in Sources */,
+				FAD279F21FCF61E000F7EFAE /* Init.swift in Sources */,
 				FAB517C41E54DE0C0032DD47 /* Properties.swift in Sources */,
 				FAB517971E54D52F0032DD47 /* Pairing.swift in Sources */,
 				FAAE819A1E5770EF002A9AE6 /* AWS.swift in Sources */,
 				FA3BFC791FC0FEC20053A762 /* ASN1.swift in Sources */,
 				FAAE818D1E561AD3002A9AE6 /* Sodium.swift in Sources */,
+				FA2A502520115DE4002748C2 /* TeamService+MainRead.swift in Sources */,
 				FAB517C01E54D7330032DD47 /* Version.swift in Sources */,
+				FA8F8AB51F3540EA00D0D4BE /* TeamIdentity+SigChain.swift in Sources */,
+				FAD2E3C5205B0040008FFCB0 /* TeamDataDBType.swift in Sources */,
 				FA1682A41EB2B2D500D9CE40 /* KnownHost.swift in Sources */,
 				FAB5179A1E54D5370032DD47 /* JSON+Seal.swift in Sources */,
 				FAF1E6221E031BB9003CBEA2 /* NotificationService.swift in Sources */,
 				FAB517B11E54D6220032DD47 /* SignatureLog.swift in Sources */,
 				FAAE81A91E57742E002A9AE6 /* Analytics.swift in Sources */,
 				FA9520691FBB957A00E59884 /* NotifyShared.swift in Sources */,
+				FA5A9FEC1F9E8CF800954872 /* Audit.swift in Sources */,
+				FA80D7461FCE29BD008391EF /* Serialize+JSON.swift in Sources */,
+				FA571B1E1F460B76007FD7F3 /* TeamUpdater.swift in Sources */,
+				FA3A5F4A1F914968004A8007 /* Response+Team.swift in Sources */,
+				FA349C5B1FA521F5002F968F /* String+Validations.swift in Sources */,
 				FA2949E51EDE379900A5C70B /* UserIDList.swift in Sources */,
 				8D05CB361ED3E4BC00CCCC38 /* GitInfo.swift in Sources */,
 				FAB5179B1E54D54F0032DD47 /* KeyPair.swift in Sources */,
 				FAAE81991E5770E4002A9AE6 /* CommunicationActivity.swift in Sources */,
+				FACFDE822045E7B6003B2EB5 /* ServerEndpoints.swift in Sources */,
 				FAC536732002D9AE007C21E4 /* LocalNotificationAuthority.swift in Sources */,
+				FA2A501C20115CBB002748C2 /* TeamService+EmailChallenge.swift in Sources */,
+				FA2A500720115C85002748C2 /* TeamService+Logs.swift in Sources */,
 				FAAE81931E576FFB002A9AE6 /* Policy+UI.swift in Sources */,
+				FAD2E3C7205B03B9008FFCB0 /* TeamDataSync.swift in Sources */,
 				FAE45B9E1E64AA4400A583AB /* Ed25519.swift in Sources */,
 				FAAE81941E577063002A9AE6 /* Policy.swift in Sources */,
 				FAC535D22001604F007C21E4 /* Kryptonite.xcdatamodeld in Sources */,
 				FAAE81AC1E577582002A9AE6 /* KeyManager.swift in Sources */,
+				FADA1A851F30E0E2004AE6B0 /* TeamService.swift in Sources */,
 				8DC2639F1ED246B700BF2E17 /* CommitInfo.swift in Sources */,
 				FA443DE81FB95CB300EB452A /* Policy+Pending.swift in Sources */,
 				FAB517941E54D4750032DD47 /* Log.swift in Sources */,
 				FA064FEE1FBD2D8D00A62A3F /* NISTP256KeyPair.swift in Sources */,
+				FA171EED205A4512003CD9CC /* TeamDataTransaction.swift in Sources */,
+				FA0609DC203C8F6C00068B52 /* TeamService+Billing.swift in Sources */,
+				FAD27A1B1FD0C11400F7EFAE /* Describe.swift in Sources */,
 				FAAE817F1E5618AC002A9AE6 /* NetworkProtocol.swift in Sources */,
+				FADA1A6F1F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				FAB517A51E54D5570032DD47 /* SessionManager.swift in Sources */,
+				FAC536112001932C007C21E4 /* Teams.xcdatamodeld in Sources */,
+				FA8F8AB91F37BF0F00D0D4BE /* Policy+Team.swift in Sources */,
+				FAD279FA1FCF62BE00F7EFAE /* TeamJoinType.swift in Sources */,
 				FAB517961E54D52F0032DD47 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2098,23 +2650,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA3BFC781FC0FEC20053A762 /* ASN1.swift in Sources */,
+				FA3BFD8D1FC3F82F0053A762 /* KeyManager.swift in Sources */,
 				FA8B54101ED773EE00891161 /* CommitInfo.swift in Sources */,
+				FAD279F11FCF61E000F7EFAE /* Init.swift in Sources */,
 				FAFF1E8D1ED6816B0063C44C /* NotificationViewController.swift in Sources */,
 				FA17B96C1FB3636700975FB0 /* Request+Notify.swift in Sources */,
 				FA8B54381ED7755000891161 /* Log.swift in Sources */,
+				FA171EEC205A4512003CD9CC /* TeamDataTransaction.swift in Sources */,
 				FA8B543F1ED7887800891161 /* Resources.swift in Sources */,
 				FA443DC01FB6523700EB452A /* GitCommitRequestController.swift in Sources */,
 				FA8B542C1ED774C100891161 /* Keypair+PGPFormat.swift in Sources */,
+				FAE6F8231FDC73C500A4A626 /* TeamDataTypes.swift in Sources */,
+				FAD27A1A1FD0C11400F7EFAE /* Describe.swift in Sources */,
 				FA8B54141ED773EE00891161 /* Pairing.swift in Sources */,
 				FA443DBE1FB6523700EB452A /* ApproveDetailController.swift in Sources */,
 				FA8B543E1ED7794D00891161 /* Mutex.swift in Sources */,
+				FAD2E3B4205B000C008FFCB0 /* TeamDataDBType.swift in Sources */,
 				FA8B54161ED773EE00891161 /* KnownHost.swift in Sources */,
 				FA8B540F1ED773EE00891161 /* GitInfo.swift in Sources */,
 				FA8B54341ED774F700891161 /* Date+KR.swift in Sources */,
 				FA8B54121ED773EE00891161 /* HostAuth.swift in Sources */,
+				FADA1A7A1F2EE100004AE6B0 /* (null) in Sources */,
 				FA8B54301ED774C100891161 /* Util.swift in Sources */,
+				FA80D75A1FCE6654008391EF /* Errors.swift in Sources */,
 				FA8B542E1ED774C100891161 /* Hash.swift in Sources */,
+				FAD279F91FCF62BE00F7EFAE /* TeamJoinType.swift in Sources */,
+				FAD2E3C8205C229B008FFCB0 /* SecureLocalStorage.swift in Sources */,
 				FA8B54111ED773EE00891161 /* TagInfo.swift in Sources */,
+				FA0609D7203C827E00068B52 /* Billing.swift in Sources */,
+				FA80D7451FCE29BD008391EF /* Serialize+JSON.swift in Sources */,
 				FA8B54391ED7756200891161 /* Globals.swift in Sources */,
 				FA8B54291ED774C100891161 /* RSAKeyPair.swift in Sources */,
 				FA8B54331ED774C100891161 /* SSHUtil.swift in Sources */,
@@ -2123,26 +2687,43 @@
 				FA8B542A1ED774C100891161 /* Ed25519.swift in Sources */,
 				FA8B54131ED773EE00891161 /* Response.swift in Sources */,
 				FA0650041FBE090200A62A3F /* NISTP256KeyPair.swift in Sources */,
+				FA3BFD891FC3F50B0053A762 /* TeamDataManager.swift in Sources */,
 				FA443DC21FB6523700EB452A /* ErrorRequestController.swift in Sources */,
+				FA3BFD871FC3F1AB0053A762 /* TeamOpRequestController.swift in Sources */,
 				FA8B54351ED774F700891161 /* String+User.swift in Sources */,
 				FAC536742002EB92007C21E4 /* LocalNotificationAuthority.swift in Sources */,
 				FA443DC11FB6523700EB452A /* GitTagRequestController.swift in Sources */,
+				FA3BFD8A1FC3F6550053A762 /* IdentityManager.swift in Sources */,
+				FAFA115C1F91359F007C3A98 /* Request+Team.swift in Sources */,
+				FAD279FD1FCF62E500F7EFAE /* Link.swift in Sources */,
 				FA8B54281ED774C100891161 /* KeyPair.swift in Sources */,
+				FADA1A6E1F2EAC3E004AE6B0 /* Team.swift in Sources */,
 				FA8B54151ED773EE00891161 /* Session.swift in Sources */,
 				FA8B54361ED7750B00891161 /* Properties.swift in Sources */,
+				FA3BFD881FC3F5030053A762 /* TeamIdentity.swift in Sources */,
+				FA3A5F491F914968004A8007 /* Response+Team.swift in Sources */,
 				FA8B542F1ED774C100891161 /* CryptoError.swift in Sources */,
 				FA443DBF1FB6523700EB452A /* SSHRequestController.swift in Sources */,
+				FAC536102001932C007C21E4 /* Teams.xcdatamodeld in Sources */,
 				FA8B542B1ED774C100891161 /* Keypair+SSHFormat.swift in Sources */,
 				FA8B54171ED773EE00891161 /* Version.swift in Sources */,
+				FACFDE922045EA15003B2EB5 /* ServerEndpoints.swift in Sources */,
+				FADA1A5D1F2D2F32004AE6B0 /* SigChain.swift in Sources */,
 				FA2949E41EDE379900A5C70B /* UserIDList.swift in Sources */,
 				FA8B54321ED774C100891161 /* Sodium.swift in Sources */,
 				FA8B542D1ED774C100891161 /* Wrap.swift in Sources */,
+				FA349C5A1FA521F5002F968F /* String+Validations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FA11A5732031F4A8000E46B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA8141351D70B0F4004FE58C /* Krypton */;
+			targetProxy = FA11A5722031F4A8000E46B1 /* PBXContainerItemProxy */;
+		};
 		FA49F7901D9B6B3300372556 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FA49F7841D9B6B3200372556 /* LastCommand */;
@@ -2241,6 +2822,59 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FA11A5752031F4A8000E46B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SigchainTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/ssh-wire/target/universal/release";
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.SigchainTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "SigchainTests/Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Krypton.app/Krypton";
+			};
+			name = Debug;
+		};
+		FA11A5762031F4A8000E46B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W7AMYM5LPN;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SigchainTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/ssh-wire/target/universal/release";
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.kryptonite.SigchainTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SigchainTests/Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Krypton.app/Krypton";
+			};
+			name = Release;
+		};
 		FA49F7931D9B6B3300372556 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2469,7 +3103,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
-				INFOPLIST_FILE = KryptoTests/Info.plist;
+				INFOPLIST_FILE = KryptonTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2477,9 +3111,9 @@
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptonTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "KryptoTests/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "KryptonTests/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Krypton.app/Krypton";
 			};
@@ -2494,7 +3128,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/aws-sdk-ios/builtFramework/framework/",
 				);
-				INFOPLIST_FILE = KryptoTests/Info.plist;
+				INFOPLIST_FILE = KryptonTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2502,9 +3136,9 @@
 					"$(PROJECT_DIR)/ssh-wire/target/universal/release",
 				);
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = co.krypt.KryptonTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "KryptoTests/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "KryptonTests/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Krypton.app/Krypton";
 			};
@@ -2576,6 +3210,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = NotifyUI/NotifyUI.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
@@ -2601,6 +3236,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = NotifyUI/NotifyUI.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = W7AMYM5LPN;
@@ -2623,6 +3259,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FA11A5742031F4A8000E46B1 /* Build configuration list for PBXNativeTarget "SigchainTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA11A5752031F4A8000E46B1 /* Debug */,
+				FA11A5762031F4A8000E46B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FA49F7921D9B6B3300372556 /* Build configuration list for PBXNativeTarget "LastCommand" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2650,7 +3295,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FAEE04A11D74BCC3002A7AFD /* Build configuration list for PBXNativeTarget "KryptoTests" */ = {
+		FAEE04A11D74BCC3002A7AFD /* Build configuration list for PBXNativeTarget "KryptonTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FAEE04A21D74BCC3002A7AFD /* Debug */,
@@ -2697,6 +3342,16 @@
 			);
 			currentVersion = FAB43B961DFF1F9200496114 /* krSSH.xcdatamodel */;
 			path = Kryptonite.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		FAC5360D2001932C007C21E4 /* Teams.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FAC5360E2001932C007C21E4 /* Teams.xcdatamodel */,
+			);
+			currentVersion = FAC5360E2001932C007C21E4 /* Teams.xcdatamodel */;
+			path = Teams.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

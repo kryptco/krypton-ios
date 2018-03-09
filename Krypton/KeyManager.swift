@@ -14,20 +14,18 @@ enum KeyTag:String {
     case peer = "peer"
 }
 
-private let KrMeDataKey = "kr_me_email"
-
-enum KeyManagerError:Error {
-    case keyDoesNotExist
-}
-
 class KeyManager {
     
-    var keyPair:KeyPair
+    internal var keyPair:KeyPair
     
     init(_ keyPair:KeyPair) {
         self.keyPair = keyPair
     }
     
+    enum Errors:Error {
+        case keyDoesNotExist
+    }
+
     class func sharedInstance() throws -> KeyManager {
         do {
             if let rsaKP = try RSAKeyPair.load(KeyTag.me.rawValue) {
@@ -40,7 +38,7 @@ class KeyManager {
                 return KeyManager(p256KP)
             }
             else {
-                throw KeyManagerError.keyDoesNotExist
+                throw Errors.keyDoesNotExist
             }
             
 
@@ -126,28 +124,6 @@ class KeyManager {
         } catch {}
 
         return false
-    }
-    
-    func getMe() throws -> String {
-        return try KeychainStorage().get(key: KrMeDataKey)
-    }
-    
-    class func setMe(email:String) {
-        do {
-            try KeychainStorage().set(key: KrMeDataKey, value: email)
-        } catch {
-            log("failed to store `me` email: \(error)", .error)
-        }
-        
-        dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
-    }
-    
-    class func clearMe() {
-        do {
-            try KeychainStorage().delete(key: KrMeDataKey)
-        } catch {
-            log("failed to delete `me` email: \(error)", .error)
-        }
     }
     
 }

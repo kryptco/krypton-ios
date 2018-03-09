@@ -27,7 +27,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var awsButton:UIButton!
     @IBOutlet var awsLine:UIView!
 
-    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
+    var inactiveUploadMethodColor:UIColor = UIColor.lightGray
     
     
     override func viewDidLoad() {
@@ -44,6 +44,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
         setGitHubState()
 
         NotificationCenter.default.addObserver(self, selector: #selector(MeController.redrawMe), name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,9 +62,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     
     @objc func redrawMe() {
         do {
-            let keyManager = try KeyManager.sharedInstance()
-            let email = try keyManager.getMe()
-            tagTextField.text = email
+            tagTextField.text = try IdentityManager.getMe()
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
             showWarning(title: "Error", body: "Could not get user data. \(e)")
@@ -128,7 +127,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     
     //MARK: Sharing
     @IBAction func shareOtherTapped() {
-        guard   let email = try? KeyManager.sharedInstance().getMe(),
+        guard   let email = try? IdentityManager.getMe(),
                 let publicKeyAuthorized = try? KeyManager.sharedInstance().keyPair.publicKey.authorizedFormat()
         else {
             return
@@ -161,9 +160,10 @@ class MeController:KRBaseController, UITextFieldDelegate {
         }
         
         if email.isEmpty {
-            tagTextField.text = (try? KeyManager.sharedInstance().getMe()) ?? ""
+            tagTextField.text = (try? IdentityManager.getMe()) ?? ""
         } else {
-           KeyManager.setMe(email: email)
+            IdentityManager.setMe(email: email)
+            dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
         }
         
         textField.resignFirstResponder()

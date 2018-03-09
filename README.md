@@ -13,6 +13,8 @@ For more information, check out [krypt.co](https://krypt.co).
 
 # Build Instructions
 - Install dependencies (OSX)
+
+1. rust
 ```sh
 curl https://sh.rustup.rs -sSf | sh
 rustup target add aarch64-apple-ios
@@ -22,9 +24,13 @@ rustup target add x86_64-apple-ios
 rustup target add i386-apple-ios
 rustup update
 cargo install cargo-lipo
+```
 
-cd ssh-wire
-./build.sh
+2. libtool, autoconf, automake:
+```sh
+brew install libtool
+brew install autoconf
+brew install automake
 ```
 
 # Have an Android phone?

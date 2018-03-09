@@ -17,6 +17,7 @@ protocol SSHPublicKey {
 }
 
 struct UnknownSSHKeyWireFormat:Error {}
+struct BadSSHKeyWireFormat:Error {}
 
 extension PublicKey {
     func wireFormat() throws -> Data {
@@ -84,6 +85,25 @@ extension SSHAuthorizedFormat {
 
 
 extension SSHWireFormat {
+    func toAuthorized() throws -> SSHAuthorizedFormat {
+        let dataBytes = self.bytes
+        
+        guard dataBytes.count >= 4 else {
+            throw BadSSHKeyWireFormat()
+        }
+        
+        
+        let headerLength = Int(UInt32(bigEndianBytes: [UInt8](dataBytes[0 ..< 4])))
+        
+        guard dataBytes.count >= 4 + headerLength else {
+            throw BadSSHKeyWireFormat()
+        }
+        
+        let header = try Data(bytes: [UInt8](dataBytes[4 ..< 4 + headerLength])).utf8String()
+        
+        return "\(header) \(self.toBase64())"
+    }
+    
     func fingerprint() -> Data {
         return self.SHA256
     }
@@ -218,7 +238,7 @@ extension DigestType {
 
 // MARK: SSH Signature Format
 extension KeyPair {
-    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> String {
+    func signAppendingSSHWirePubkeyToPayload(data:Data, digestType:DigestType) throws -> Data {
         
         var dataClone = Data(data)
         let pubkeyWire = try publicKey.wireFormat()
@@ -229,7 +249,7 @@ extension KeyPair {
 
         switch self.publicKey.type {
         case .RSA, .Ed25519:
-            return signature.toBase64()
+            return signature
 
         case .nistP256:
             let (sigR, sigS) = try NISTP256X962Signature(asn1Encoding: signature).splitIntoComponents()
@@ -245,7 +265,7 @@ extension KeyPair {
             encodedSignature.append(contentsOf: sigS.bigEndianByteSize())
             encodedSignature.append(sigS)
             
-            return encodedSignature.toBase64()
+            return encodedSignature
         }
     }
 }

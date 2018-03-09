@@ -17,28 +17,37 @@ struct Resources {
         static let Approval = UIStoryboard(name: "Approval", bundle: Bundle.main)
         static let Sessions = UIStoryboard(name: "Sessions", bundle: Bundle.main)
         static let Pair = UIStoryboard(name: "Pair", bundle: Bundle.main)
-        static let Settings = UIStoryboard(name: "Pair", bundle: Bundle.main)
+        static let Settings = UIStoryboard(name: "Settings", bundle: Bundle.main)
+        static let Team = UIStoryboard(name: "Team", bundle: Bundle.main)
+        static let TeamInvitations = UIStoryboard(name: "TeamInvitations", bundle: Bundle.main)
+        static let Loading = UIStoryboard(name: "Loading", bundle: Bundle.main)
     }
     
+    enum AppFontStyle:String {
+        case bold = "-Bold"
+        case regular = ""
+        case medium = "-Medium"
+        case demi = "-DemiBold"
+    }
+    static func appFont(size: CGFloat, style:AppFontStyle = .bold) -> UIFont? {
+        return UIFont(name: "AvenirNext\(style.rawValue)", size: size)
+    }
     static func makeAppearences() {
         UINavigationBar.appearance().barTintColor = nil
         UINavigationBar.appearance().tintColor = UIColor.app
         
         
         
-        if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
+        if let font = appFont(size: 18.0) {
             UINavigationBar.appearance().titleTextAttributes = [
                 NSAttributedStringKey.foregroundColor: UIColor.appBlack,
                 NSAttributedStringKey.font: font,
             ]
         }
-
-
-       // UIButton.appearance().tintColor = UIColor.app
+        
         UISwitch.appearance().tintColor = UIColor.app
         UISegmentedControl.appearance().tintColor = UIColor.app
         
-
         // Custom Classes
         StyleFilledButton.appearance().backgroundColor = UIColor.app
         StyleFilledView.appearance().backgroundColor = UIColor.app
@@ -74,6 +83,11 @@ extension UIColor {
     static var appBlack:UIColor {
         return UIColor(hex: 0x272727)
     }
+    
+    static var appGray:UIColor {
+        return UIColor(hex: 0x272727).withAlphaComponent(0.5)
+    }
+
 }
 
 
@@ -108,7 +122,7 @@ extension UIColor {
         let b: Int = (hash & 0x0000FF)
         return RGB(CGFloat(r), CGFloat(g), CGFloat(b), 1.0)
     }
-
+    
 }
 
 //MARK: Navigation Bar
@@ -118,16 +132,28 @@ extension UINavigationItem {
         
         let logo = UIImageView(image: UIImage(named: "app-icon-nav-green"))
         
-        //logo.tintColor = UIColor.black.withAlphaComponent(0.2)
         logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 30, height: 34))
-
+        
+        
+        let title = UIView()
+        title.addSubview(logo)
+        self.titleView = title
+        logo.center = title.center
+    }
     
+    func setKrTeamsLogo() {        
+        let logo = UIImageView(image: UIImage(named: "kryptonite_teams_logo"))
+        
+        logo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: 30, height: 34))
+        
+        
         let title = UIView()
         title.addSubview(logo)
         self.titleView = title
         logo.center = title.center
     }
 
+    
 }
 
 
@@ -141,7 +167,7 @@ class KRButton:UIButton {
             layer.masksToBounds = cornerRadius > 0
         }
     }
-
+    
     @IBInspectable var defaultColor:UIColor = UIColor.app {
         didSet {
             setTitleColor(defaultColor, for: UIControlState.normal)
@@ -163,9 +189,9 @@ class KRButton:UIButton {
             layer.borderWidth = borderWidth
         }
     }
-
     
-
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -177,7 +203,7 @@ class KRButton:UIButton {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         backgroundColor = defaultColor
-
+        
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
@@ -234,7 +260,7 @@ class KRSimpleButton:UIButton {
             backgroundColor = highlightedColor
             highlightedColor = highlight
         }
-
+        
     }
 }
 
@@ -300,7 +326,7 @@ extension UIView {
     func setBorder(color:UIColor = UIColor.app, cornerRadius:CGFloat = 0.0, borderWidth:CGFloat = 0.0) {
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = cornerRadius > 0
-
+        
         layer.borderWidth = borderWidth
         layer.borderColor = color.cgColor
     }
@@ -368,16 +394,45 @@ extension UIView {
     
 }
 
+class RoundedLabel:UILabel {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+        }
+    }
+    
+    @IBInspectable var borderWidth: CGFloat = 1.0 {
+        didSet {
+            layer.borderWidth = borderWidth
+        }
+    }
+    
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
+
 
 class RoundedView:UIView {
     
     @IBInspectable var cornerRadius:CGFloat = 0
-
+    
     @IBInspectable var topLeft:Bool = false
     @IBInspectable var topRight:Bool = false
     @IBInspectable var bottomLeft:Bool = false
     @IBInspectable var bottomRight:Bool = false
-
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -414,6 +469,6 @@ class RoundedView:UIView {
         mask.path = path.cgPath
         self.layer.mask = mask
     }
-
+    
     
 }

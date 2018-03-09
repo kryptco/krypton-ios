@@ -10,7 +10,7 @@ import Foundation
 import CommonCrypto
 import Sodium
 
-extension Box.PublicKey {
+extension Data {
     func wrap(to pk: Box.PublicKey) throws -> Data {
         guard let wrappedPublicKey = KRSodium.instance().box.seal(message: self, recipientPublicKey: pk)
         else {
@@ -19,4 +19,3 @@ extension Box.PublicKey {
         return wrappedPublicKey
     }
 }
-

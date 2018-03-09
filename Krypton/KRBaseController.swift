@@ -36,7 +36,127 @@ protocol KRBase {
     func approveControllerDismissed(allowed:Bool)
 }
 
+class KRBaseController: UIViewController, KRBase {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    var connectivity:Connectivity?
+    var linkListener:LinkListener?
+    
+    func run(syncOperation:@escaping (() throws ->Void), title:String, onSuccess:(()->Void)? = nil, onError:(()->Void)? = nil) {
+        self.run(viewController: self, syncOperation: syncOperation, title: title, onSuccess: onSuccess, onError: onError)
+    }
+
+    //MARK: Policy
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Current.viewController = self
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
+        
+        checkIfPushEnabled(viewController: self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        checkForUpdatesIfNeeded(viewController: self)
+        connectivity = Connectivity(presenter: self)
+        linkListener = LinkListener({ (link) in
+            self.onListen(viewController: self, link: link)
+        })
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        connectivity = nil
+        linkListener = nil
+    }
+
+    func shouldPostAnalytics() -> Bool {
+        return true
+    }
+    
+    func approveControllerDismissed(allowed:Bool) {
+        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
+    }
+}
+
+
+
+class KRBaseTableController: UITableViewController, KRBase {
+    
+    var connectivity:Connectivity?
+    var linkListener:LinkListener?
+
+    
+    //MARK: Policy
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Current.viewController = self
+
+        if shouldPostAnalytics() {
+            Analytics.postControllerView(clazz: String(describing: type(of: self)))
+        }
+        
+        checkIfPushEnabled(viewController: self)
+    }
+    
+    func run(syncOperation:@escaping (() throws ->Void), title:String, onSuccess:(()->Void)? = nil, onError:(()->Void)? = nil) {
+        self.run(viewController: self, syncOperation: syncOperation, title: title, onSuccess: onSuccess, onError: onError)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        checkForUpdatesIfNeeded(viewController: self)
+        connectivity = Connectivity(presenter: self)
+        linkListener = LinkListener({ (link) in
+            self.onListen(viewController: self, link: link)
+        })
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        connectivity = nil
+        linkListener = nil
+    }
+
+    func shouldPostAnalytics() -> Bool {
+        return true
+    }
+
+    func approveControllerDismissed(allowed:Bool) {
+        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
+    }
+}
+
+extension UINavigationController: KRBase {
+    func approveControllerDismissed(allowed: Bool) {
+        if let root = self.viewControllers.first {
+            self.defaultApproveControllerDismissed(viewController: root, allowed: allowed)
+        }
+    }
+}
+
 extension KRBase {
+    
+    func run(viewController:UIViewController, syncOperation:@escaping (() throws ->Void), title:String, onSuccess:(()->Void)? = nil, onError:(()->Void)? = nil) {
+        let loading = LoadingController.present(from: viewController)
+        dispatchAsync {
+            do {
+                try syncOperation()
+                loading?.showSuccess(hideAfter: 0.75, then: onSuccess)
+            } catch {
+                loading?.showError(hideAfter: 0.5, title: "\(title) Error", error: "\(error)", then: onError)
+            }
+        }
+    }
+
+    
     func defaultApproveControllerDismissed(viewController:UIViewController, allowed:Bool) {
         let result = allowed ? "allowed" : "rejected"
         log("approve modal finished with result: \(result)")
@@ -56,91 +176,10 @@ extension KRBase {
             viewController.requestUserAuthorization(session: pending.session, request: pending.request)
         }
     }
-}
 
-class KRBaseController: UIViewController, KRBase {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    var connectivity:Connectivity?
-    
-    //MARK: Policy
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Current.viewController = self
-        if shouldPostAnalytics() {
-            Analytics.postControllerView(clazz: String(describing: type(of: self)))
-        }
-        
-        checkIfPushEnabled()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        checkForUpdatesIfNeeded()
-        connectivity = Connectivity(presenter: self)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        connectivity = nil
-    }
-
-    func shouldPostAnalytics() -> Bool {
-        return true
-    }
-    
-    func approveControllerDismissed(allowed:Bool) {
-        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
-    }
-}
-
-
-
-class KRBaseTableController: UITableViewController, KRBase {
-    
-    //MARK: Policy
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Current.viewController = self
-
-        if shouldPostAnalytics() {
-            Analytics.postControllerView(clazz: String(describing: type(of: self)))
-        }
-        
-        checkIfPushEnabled()
-    }
-    
-    var connectivity:Connectivity?
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        checkForUpdatesIfNeeded()
-        connectivity = Connectivity(presenter: self)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        connectivity = nil
-    }
-
-    func shouldPostAnalytics() -> Bool {
-        return true
-    }
-
-    func approveControllerDismissed(allowed:Bool) {
-        self.defaultApproveControllerDismissed(viewController: self, allowed: allowed)
-    }
-}
-
-extension UIViewController {
     
     //MARK: Check For push notifications
-    func checkIfPushEnabled() {
+    func checkIfPushEnabled(viewController:UIViewController) {
         if Platform.isSimulator {
             return
         }
@@ -161,7 +200,7 @@ extension UIViewController {
             }
             
             if settings.alertSetting == .disabled || settings.authorizationStatus == .denied {
-                self.showSettings(with: "Push Notifications",
+                viewController.showSettings(with: "Push Notifications",
                                   message: "Enable push notifications to receive SSH Login and Git Commit/Tag Signing requests when your phone is locked or the app is in the background. Tap \"Settings\" to continue.",
                                   dnd: "push_dnd")
             }
@@ -169,7 +208,8 @@ extension UIViewController {
     }
 
     //MARK: Updates
-    func checkForUpdatesIfNeeded() {
+    func checkForUpdatesIfNeeded(viewController:UIViewController) {
+        // app updates
         Updater.checkForUpdateIfNeeded { (version) in
             guard let newVersion = version else {
                 return
@@ -190,9 +230,77 @@ extension UIViewController {
             let cancelAction = UIAlertAction(title: "Later", style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
-            self.present(alertController, animated: true, completion: nil)
+            viewController.present(alertController, animated: true, completion: nil)
+        }
+        
+        // team updates
+        if case .some(let hasTeam) = try? IdentityManager.hasTeam(),
+                hasTeam,
+                TeamUpdater.shouldCheck
+        {
+            dispatchAsync {
+                TeamUpdater.checkForUpdate { result in
+                    log("did update team: \(result)")
+                }
+            }
         }
     }
     
+    //MARK: React to links
+    func onListen(viewController:UIViewController, link:Link) {
+        guard case .app = link.type, case .joinTeam = link.command.host
+        else {
+            log("invalid link type presented: \(link.url)")
+            return
+        }
+        
+        do {
+            if let team = try IdentityManager.getTeamIdentity()?.dataManager.withTransaction { return try $0.fetchTeam() } {
+                viewController.showWarning(title: "Already on team \(team.info.name)", body: "\(Properties.appName) only supports being on one team. Multi-team support is coming soon!")
+                return
+            }
+            
+        } catch {
+            viewController.showWarning(title: "Error", body: "Couldn't get team information. Error: \(error).")
+            return
+        }
+        
+        var teamInvite:SigChain.JoinTeamInvite
+        do {
+            teamInvite = try SigChain.JoinTeamInvite(path: link.path)
+        } catch {
+            viewController.showWarning(title: "Error", body: "Invalid team invitation encoding.")
+            return
+        }
+        
+        let loading = LoadingController.present(from: viewController)
+        
+        TeamService.fetchFullTeamInvite(for: teamInvite, { (result) in
+            switch result {
+            case .error(let e):
+                loading?.showError(hideAfter: 0.5, title: "Error", error: "\(e)")
+                
+            case .result(let invite):
+                loading?.showSuccess(hideAfter: 0.75, then: {
+                    guard let teamLoadController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamLoadController") as? TeamLoadController
+                        else {
+                            log("unknown team invitiation controller")
+                            return
+                    }
+                    
+                    teamLoadController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+                    teamLoadController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+                    
+                    teamLoadController.joinType = .indirectInvite(invite)
+                    
+                    dispatchMain {
+                        viewController.present(teamLoadController, animated: true, completion: nil)
+                    }
+                })
+            }
+        })
+
+    }
+
    
 }

@@ -9,6 +9,25 @@
 import Foundation
 import JSON
 
+struct HostMistmatchError:Error, CustomDebugStringConvertible {
+    var hostName:String
+    var expectedPublicKeys:[Data]
+    
+    static let prefix = "host public key mismatched for"
+    
+    var debugDescription:String {
+        return "\(HostMistmatchError.prefix) \(hostName)"
+    }
+    
+    // check if an error message is a host mismatch
+    // used to indicate what kind of error occured to analytics
+    // without exposing the hostName to the analytics service
+    static func isMismatchErrorString(err:String) -> Bool {
+        return err.contains(HostMistmatchError.prefix)
+    }
+}
+
+
 struct HostAuthHasNoHostnames:Error, CustomDebugStringConvertible {
     var debugDescription:String {
         return "No hostnames provided"
@@ -44,11 +63,11 @@ struct VerifiedHostAuth:JsonWritable {
     private let hostAuth:HostAuth
     let hostname:String
     
-    var hostKey:String {
+    var hostKey:Data {
         return hostAuth.hostKey
     }
     
-    var signature:String {
+    var signature:Data {
         return hostAuth.signature
     }
     
@@ -56,52 +75,58 @@ struct VerifiedHostAuth:JsonWritable {
         return hostAuth.object
     }
     
+    enum Errors:Error {
+        case invalidSignature
+        case missingHostName
+    }
     struct InvalidSignature:Error{}
+    struct MissingHostName:Error{}
 
     init(session:Data, hostAuth:HostAuth) throws {
         guard try hostAuth.verify(session: session) else {
-            throw InvalidSignature()
+            throw Errors.invalidSignature
         }
         
-        guard let hostname = hostAuth.hostNames.first else {
-            throw HostAuthHasNoHostnames()
+        guard let hostName = hostAuth.hostNames.first else {
+            throw Errors.missingHostName
         }
         
-        self.hostname = hostname
+        self.hostname = hostName
         self.hostAuth = hostAuth
     }
 }
 
 struct HostAuth:Jsonable{
-    let hostKey: String
-    let signature: String
+    let hostKey: Data
+    let signature: Data
     let hostNames: [String]
     
-    init(hostKey: String, signature: String, hostNames: [String]) throws {
+    init(hostKey: Data, signature: Data, hostNames: [String]) {
         self.hostKey = hostKey
         self.signature = signature
         self.hostNames = hostNames
     }
     
     public init(json: Object) throws {
-        hostKey = try json ~> "host_key"
-        signature = try json ~> "signature"
+        hostKey = try ((json ~> "host_key") as String).fromBase64()
+        signature = try ((json ~> "signature") as String).fromBase64()
         hostNames = try json ~> "host_names"
     }
     public var object: Object {
         var json:[String:Any] = [:]
-        json["host_key"] = hostKey
-        json["signature"] = signature
+        json["host_key"] = hostKey.toBase64()
+        json["signature"] = signature.toBase64()
         json["host_names"] = hostNames
         return json
     }
     
     func verify(session: Data) throws -> Bool {
-        var keyData = try hostKey.fromBase64()
-        let keyBytes = keyData.withUnsafeMutableBytes{ (bytes: UnsafeMutablePointer<UInt8>) in
+        var hostKeyData = Data(hostKey)
+        let keyBytes = hostKeyData.withUnsafeMutableBytes{ (bytes: UnsafeMutablePointer<UInt8>) in
             return bytes
         }
-        var sigData = try signature.fromBase64()
+        
+        var sigData = Data(signature)
         let sigBytes = sigData.withUnsafeMutableBytes{ (bytes: UnsafeMutablePointer<UInt8>) in
             return bytes
         }
@@ -109,7 +134,7 @@ struct HostAuth:Jsonable{
         let signDataBytes = sessionClone.withUnsafeMutableBytes({ (bytes: UnsafeMutablePointer<UInt8>) in
             return bytes
         })
-        let result = kr_verify_signature(keyBytes, keyData.count, sigBytes, sigData.count, signDataBytes, sessionClone.count)
+        let result = kr_verify_signature(keyBytes, hostKeyData.count, sigBytes, sigData.count, signDataBytes, sessionClone.count)
         if result == 1 {
             return true
         }

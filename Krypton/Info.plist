@@ -17,9 +17,24 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.3.2</string>
+	<string>2.4.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string>app-icon-nav-green</string>
+			<key>CFBundleURLName</key>
+			<string>co.krypt.kryptonite.appurl</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>krypton</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>634</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -28,6 +43,8 @@
 	<string>Krypton uses bluetooth to communicate to paired devices.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan QR codes to pair Krypton with your computer.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Krypton uses the contact list to help you find team members to invite. Contacts are NEVER sent anywhere.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Krypton uses FaceID to authenticate you before pairing with a new computer.</string>
 	<key>UIAppFonts</key>

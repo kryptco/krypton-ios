@@ -10,7 +10,7 @@ import Foundation
 import JSON
 
 /** Log Statement for various types of signature logs **/
-protocol LogStatement {
+protocol LogStatement:JsonWritable {
     static var entityName:String { get }
     
     var session:String { get }
@@ -20,6 +20,8 @@ protocol LogStatement {
     
     init(object:NSManagedObject) throws
     var managedObject:[String:Any] { get }
+    
+    var object:Object { get }
 }
 
 struct LogStatementParsingError:Error {}
@@ -49,7 +51,7 @@ struct SSHSignatureLog:LogStatement {
         self.init(session: session, hostAuth: hostAuth, signature: signature, displayName: displayName, date: date)
     }
     
-    init(session:String, hostAuth:VerifiedHostAuth?, signature:String, displayName:String, date:Date = Date()) {
+    init(session:String, hostAuth:HostAuth?, signature:String, displayName:String, date:Date = Date()) {
         var theHostAuth:String
         if let host = hostAuth, let hostJson = try? host.jsonString() {
             theHostAuth = hostJson
@@ -91,6 +93,14 @@ struct SSHSignatureLog:LogStatement {
         return ["session": session,
                 "signature": signature,
                 "date": date,
+                "host_auth": hostAuth,
+                "displayName": displayName]
+    }
+    
+    var object: Object {
+        return ["session": session,
+                "signature": signature,
+                "date": date.timeIntervalSince1970,
                 "host_auth": hostAuth,
                 "displayName": displayName]
     }
@@ -159,6 +169,16 @@ struct CommitSignatureLog:LogStatement {
         object["commit_hash"] = commitHash
         return object
     }
+    
+    var object: Object {
+        var object:[String:Any] =  commit.object
+        object["session"] = session
+        object["date"] = date.timeIntervalSince1970
+        object["signature"] = signature
+        object["commit_hash"] = commitHash
+        return object
+    }
+
 }
 
 /** Git Tag */
@@ -211,6 +231,14 @@ struct TagSignatureLog:LogStatement {
         var object:[String:Any] =  tag.object
         object["session"] = session
         object["date"] = date
+        object["signature"] = signature
+        return object
+    }
+    
+    var object: Object {
+        var object:[String:Any] =  tag.object
+        object["session"] = session
+        object["date"] = date.timeIntervalSince1970
         object["signature"] = signature
         return object
     }

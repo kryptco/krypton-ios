@@ -214,11 +214,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
         }
         
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-
+        
         switch approvalControlType {
         case .on:
             Analytics.postEvent(category: "manual approval", action: String(true))
-            
             Policy.SessionSettings(for: session).setAlwaysAsk()
 
         case .off:

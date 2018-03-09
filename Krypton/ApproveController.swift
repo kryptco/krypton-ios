@@ -9,9 +9,6 @@
 import UIKit
 import AVFoundation
 
-
-
-
 class ApproveController:UIViewController {
     
     @IBOutlet weak var contentView:UIView!
@@ -109,9 +106,12 @@ class ApproveController:UIViewController {
                     responseOptions = [.allow]
                 }
             }
-        case .git:
+        case .git, .decryptLog:
             responseOptions = [.allowOnce, .allowAll]
         
+        case .readTeam, .teamOperation:
+            responseOptions = [.allow]
+            
         case .hosts, .me, .unpair, .noOp:
             break
         }
@@ -164,87 +164,115 @@ class ApproveController:UIViewController {
         // set policy + post analytics
         switch option {
         case .allow, .allowOnce:
-            let success = approve(option: option, request: request, session: session)
-            
-            guard success else {
-                isEnabled = true
-                return
+            approve(option: option, request: request, session: session) { success in
+                guard success else {
+                    self.isEnabled = true
+                    return
+                }
+                
+                policySession.allow(request: request)
+                Analytics.postEvent(category: self.category, action: "foreground approve", label: "once")
             }
-
-            Analytics.postEvent(category: category, action: "foreground approve", label: "once")
             
         case .allowThis:
-            let success = approve(option: option, request: request, session: session)
-            
-            guard success else {
-                isEnabled = true
-                return
+            approve(option: option, request: request, session: session) { success in
+                guard success else {
+                    self.isEnabled = true
+                    return
+                }
+                
+                Analytics.postEvent(category: self.category, action: "foreground approve", label: "host-and-time", value: UInt(Policy.temporaryApprovalInterval.value))
+                
+                if case .ssh(let signRequest) = request.body, let userAndHost = signRequest.verifiedUserAndHostAuth {
+                    policySession.allowThis(userAndHost: userAndHost, for: Policy.temporaryApprovalInterval.value)
+                }
             }
-
-            Analytics.postEvent(category: category, action: "foreground approve", label: "host-and-time", value: UInt(Policy.Interval.threeHours.rawValue))
-
-            if case .ssh(let signRequest) = request.body, let userAndHost = signRequest.verifiedUserAndHostAuth {
-                policySession.allowThis(userAndHost: userAndHost, for: Policy.Interval.threeHours.seconds)
-            }
-
 
         case .allowAll:
-            let success = approve(option: option, request: request, session: session)
-            
-            guard success else {
-                isEnabled = true
-                return
+            approve(option: option, request: request, session: session) { success in
+                guard success else {
+                    self.isEnabled = true
+                    return
+                }
+                
+                policySession.allowAll(request: request, for: Policy.temporaryApprovalInterval.value)
+                
+                Analytics.postEvent(category: self.category, action: "foreground approve", label: "time", value: UInt(Policy.temporaryApprovalInterval.value))
             }
             
-            policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
-
-            Analytics.postEvent(category: category, action: "foreground approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
-
-
         case .reject:
             self.dismissReject()
         }
     }
     
     //MARK: Response
-    func approve(option:Option, request:Request, session:Session) -> Bool {
-        do {
-            let resp = try Silo.shared().lockResponseFor(request: request, session: session, allowed: true)
-            try TransportControl.shared.send(resp, for: session)
+    func approve(option:Option, request:Request, session:Session, onResult:@escaping ((Bool) -> Void)) {
+        
+        // show selected option
+        dispatchMain {
+            self.swipeDownRejectGesture.isEnabled = false
+            self.resultLabel.text = option.text.uppercased()
             
-            if let errorMessage = resp.body.error {
-                self.dismissResponseFailed(errorMessage: errorMessage)
-                return false
-            }
-            
-        } catch (let e) {
-            log("send error \(e)", .error)
-            self.showWarning(title: "Error", body: "Could not approve request. \(e)")
-            return false
+            UIView.animate(withDuration: 0.3, animations: {
+                self.resultLabel.alpha = 1.0
+                self.resultViewHeight.constant = self.optionsHeight.constant + 2
+                self.view.layoutIfNeeded()
+                self.optionsController?.update()
+            })
         }
         
-        swipeDownRejectGesture.isEnabled = false
+        // response may take a while, do this async
+        dispatchAsync {
+            do {
+                let response = try Silo.shared().lockResponseFor(request: request, session: session, allowed: true)
+                try TransportControl.shared.send(response, for: session)
+                
+                // if the response failed, show the error and return
+                if let errorMessage = response.body.error {
+                    dispatchMain {
+                        self.dismissResponseFailed(errorMessage: errorMessage)
+                        onResult(false)
+                    }
+                    return
+                }
 
-        self.resultLabel.text = option.text.uppercased()
-        
-        UIView.animate(withDuration: 0.3, animations: {
+            } catch {
+                log("response error \(error)", .error)
+                
+                // hide the selected option and show error
+                self.showWarning(title: "Error", body: "Could not approve request. \(error)") {
+                    dispatchMain {
+                        UIView.animate(withDuration: 0.5, animations: {
+                            self.resultLabel.text = ""
+                            self.resultLabel.alpha = 0
+                            self.resultViewHeight.constant = 0
+                            self.view.layoutIfNeeded()
+                            self.optionsController?.update()
+                            
+                        }, completion: { (_) in
+                            onResult(false)
+                        })
+                    }
+                }
+                
+                return
+            }
             
-            self.resultLabel.alpha = 1.0
-            self.arcView.alpha = 0
-            self.resultViewHeight.constant = self.optionsHeight.constant + 2
-            self.view.layoutIfNeeded()
-            self.optionsController?.update()
-    
-            
-        }) { (_) in
-            
-            self.checkBox.toggleCheckState(true)
+            // call result handler
+            dispatchMain { onResult(true) }
+
+            // show check mark success
+            dispatchMain {
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.arcView.alpha = 0
+                })
+                self.checkBox.toggleCheckState(true)
                 dispatchAfter(delay: 2.0) {
                     self.animateDismiss(allowed: true)
                 }
+            }
         }
         
-        return true
     }
     
     @IBAction func dismissReject() {

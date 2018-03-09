@@ -65,7 +65,20 @@ class PairController: KRBaseController, KRScanDelegate {
     
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
-        
+        // first try to see if it's a team QR code
+        if case .some(let hasTeam) = try? IdentityManager.hasTeam(), hasTeam,
+            let adminQRPayload = try? AdminQRPayload(jsonString: data)
+        {
+            let controller = Resources.Storyboard.TeamInvitations.instantiateViewController(withIdentifier: "TeamMemberInPersonEmailController") as! TeamMemberInPersonEmailController
+            controller.payload = adminQRPayload
+            controller.didSkipScan = true
+            
+            dispatchMain { self.present(controller, animated: true, completion: nil) }
+            
+            return true
+        }
+
+        // otherwise must be a pairing
         guard let pairing = try? Pairing(jsonString: data) else {
             dispatchMain { self.showInvalidPairingQR() }
             return false

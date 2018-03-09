@@ -22,12 +22,12 @@ public class M13Checkbox: UIControl {
     //----------------------------
     
     /**
-    The possible states the check can be in.
-    
-    - Unchecked: No check is shown.
-    - Checked: A checkmark is shown.
-    - Mixed: A dash is shown.
-    */
+     The possible states the check can be in.
+     
+     - Unchecked: No check is shown.
+     - Checked: A checkmark is shown.
+     - Mixed: A dash is shown.
+     */
     public enum CheckState: String, RawRepresentable {
         /// No check is shown.
         case unchecked = "Unchecked"
@@ -317,7 +317,7 @@ public class M13Checkbox: UIControl {
                 controller.animate(checkState, toState: nil, completion: { [weak self] in
                     self?.controller.resetLayersForState(newState)
                     self?.controller.animate(nil, toState: newState)
-                    })
+                })
             }
         } else {
             controller.resetLayersForState(newState)
@@ -390,7 +390,7 @@ public class M13Checkbox: UIControl {
             // Layout and reset
             newManager.resetLayersForState(checkState)
             controller = newManager
-
+            
         }
     }
     

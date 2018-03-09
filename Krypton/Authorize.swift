@@ -13,7 +13,7 @@ extension Request {
     func approveController(for session:Session, from presenter:UIViewController) -> UIViewController? {
         
         switch self.body {
-        case .ssh, .git:
+        case .ssh, .git, .decryptLog, .teamOperation, .readTeam:
             let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController") as? ApproveController
             controller?.session = session
             controller?.request = self
@@ -43,7 +43,8 @@ extension Request {
             }))
             
             return controller
-        default:
+                
+        case .me, .unpair, .noOp:
             return nil
         }
     }
@@ -54,7 +55,7 @@ extension Request {
             return sshRequest.display
         case .git(let gitSign):
             return gitSign.git.shortDisplay
-
+            
         default:
             return nil
         }

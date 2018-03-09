@@ -22,7 +22,7 @@ extension Policy {
         defer { pendingCacheMutex.unlock() }
         
         guard let pending  = _pendingCache else {
-            _pendingCache = try? Cache<NSData>(name: pendingCacheName, directory: Caches.directory(for: pendingCacheName))
+            _pendingCache = try? Cache<NSData>(name: pendingCacheName, directory: SecureLocalStorage.directory(for: pendingCacheName))
             return _pendingCache
         }
         

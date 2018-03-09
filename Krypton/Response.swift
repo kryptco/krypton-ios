@@ -63,7 +63,12 @@ enum ResponseBody {
     case ack(ResponseResult<AckResponse>)
     case unpair(ResponseResult<UnpairResponse>)
     case hosts(ResponseResult<HostsResponse>)
-    
+
+    // team
+    case readTeam(ResponseResult<SigChain.SignedMessage>)
+    case teamOperation(ResponseResult<TeamOperationResponse>)
+    case decryptLog(ResponseResult<LogDecryptionResponse>)
+
     init(json:Object) throws {
         
         var responses:[ResponseBody] = []
@@ -93,7 +98,19 @@ enum ResponseBody {
             responses.append(.ack(try ResponseResult<AckResponse>(json: json)))
         }
         
-        // if more than one request, it's an error
+        if let json:Object = try? json ~> "read_team_response" {
+            responses.append(.readTeam(try ResponseResult<SigChain.SignedMessage>(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "team_operation_response" {
+            responses.append(.teamOperation(try ResponseResult<TeamOperationResponse>(json: json)))
+        }
+
+        if let json:Object = try? json ~> "log_decryption_response" {
+            responses.append(.decryptLog(try ResponseResult<LogDecryptionResponse>(json: json)))
+        }
+
+        // if more than one response, it's an error
         if responses.count > 1 {
             throw MultipleResponsesError()
         }
@@ -118,6 +135,12 @@ enum ResponseBody {
             json["unpair_response"] = u.object
         case .hosts(let h):
             json["hosts_response"] = h.object
+        case .readTeam(let r):
+            json["read_team_response"] = r.object
+        case .teamOperation(let op):
+            json["team_operation_response"] = op.object
+        case .decryptLog(let dl):
+            json["log_decryption_response"] = dl.object
         }
         
         return json
@@ -133,7 +156,16 @@ enum ResponseBody {
             
         case .hosts(let hosts):
             return hosts.error
+                
+        case .readTeam(let read):
+            return read.error
             
+        case .teamOperation(let teamOp):
+            return teamOp.error
+        
+        case .decryptLog(let decryptLog):
+            return decryptLog.error
+        
         case .me, .unpair, .ack:
             return nil
         }
@@ -176,7 +208,7 @@ enum ResponseResult<T:Jsonable>:Jsonable {
 
 struct SignatureResponse:Jsonable {
     let signature:String
-    
+
     init(signature:String) {
         self.signature = signature
     }
@@ -208,23 +240,29 @@ struct MeResponse:Jsonable {
         var email:String
         var publicKeyWire:Data
         var pgpPublicKey:Data?
+        var teamCheckpoint:TeamCheckpoint?
         
-        init(email:String, publicKeyWire:Data, pgpPublicKey: Data? = nil) {
+        init(email:String, publicKeyWire:Data, pgpPublicKey: Data? = nil, teamCheckpoint: TeamCheckpoint? = nil) {
             self.email = email
             self.publicKeyWire = publicKeyWire
             self.pgpPublicKey = pgpPublicKey
+            self.teamCheckpoint = teamCheckpoint
         }
         
         init(json: Object) throws {
             self.email = try json ~> "email"
             self.publicKeyWire = try ((json ~> "public_key_wire") as String).fromBase64()
-            self.pgpPublicKey = try ((json ~> "pgp_pk") as String).fromBase64()
+            self.pgpPublicKey = try? ((json ~> "pgp_pk") as String).fromBase64()
+            self.teamCheckpoint = try? TeamCheckpoint(json: json ~> "team_checkpoint")
         }
         
         var object: Object {
-            var json = ["email": email, "public_key_wire": publicKeyWire.toBase64()]
+            var json : Object = ["email": email, "public_key_wire": publicKeyWire.toBase64()]
             if let pgpPublicKey = pgpPublicKey {
                 json["pgp_pk"] = pgpPublicKey.toBase64()
+            }
+            if let teamCheckpoint = teamCheckpoint {
+                json["team_checkpoint"] = teamCheckpoint.object
             }
             return json
         }
@@ -237,7 +275,6 @@ struct MeResponse:Jsonable {
     }
     init(json: Object) throws {
         self.me = try Me(json: json ~> "me")
-        
     }
     var object: Object {
         return ["me": me.object]
@@ -249,28 +286,29 @@ typealias AckResponse = EmptyResponse
 
 //HostsResponse
 struct HostsResponse:Jsonable {
+    
     struct UserAndHost:Jsonable, Equatable, Hashable {
         let host:String
         let user:String
-        
+
         init(host:String, user:String) {
             self.host = host
             self.user = user
         }
-        
+
         init(json: Object) throws {
             try self.init(host: json ~> "host",
                           user: json ~> "user")
         }
-        
+
         var object: Object {
             return ["host": host, "user": user]
         }
-        
+
         static func ==(l:UserAndHost, r:UserAndHost) -> Bool {
             return l.user == r.user && l.host == r.host
         }
-        
+
         var hashValue: Int {
             return "\(user)@\(host)".hashValue
         }
@@ -301,11 +339,11 @@ struct HostsResponse:Jsonable {
     init(pgpUserIDs:[String], hosts:[UserAndHost]) {
         self.hostInfo = HostInfo(pgpUserIDs: pgpUserIDs, hosts: hosts)
     }
-    
+
     init(json: Object) throws {
         self.hostInfo = try HostInfo(json: json ~> "host_info")
     }
-    
+
     var object: Object {
         return ["host_info": hostInfo.object]
     }

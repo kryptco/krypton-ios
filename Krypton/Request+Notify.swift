@@ -25,11 +25,66 @@ extension Request {
         case .unpair:
             return ("Unpair", "Device has been unpaired")
         case .hosts:
-            return ("Host list", "Send 'user@hostname' from access logs?")
+            return ("Host List Request", "Send 'user@hostname' from access logs")
         case .noOp:
-            return ("Ping", "")
+            return ("", "Ping")
+        case .readTeam:
+            return ("Team Request", "Trust this computer to load team data")
+        case .teamOperation(let op):
+            return ("Team Request", op.operation.summary)
+        case .decryptLog:
+            return ("Team Request", "Read member audit logs")
         }
     }
     
 
+}
+
+extension RequestableTeamOperation {
+    var summary:String {
+        switch self {
+        case .directInvite(let direct):
+            return "Add \(direct.email)"
+        case .indirectInvite(let restriction):
+            switch restriction {
+            case .domain(let domain):
+                return "Create a @\(domain)-only invitation link"
+            case .emails(let emails):
+                return "Create an invitation link for: \(emails.joined(separator: ", "))"
+            }            
+        case .closeInvitations:
+            return "Closes all open invitations"
+        
+        case .leave:
+            return "Leave team"
+            
+        case .remove:
+            return "Remove team member"
+            
+        case .setPolicy(let policy):
+            return "Change auto-approval window to \(policy.description)"
+            
+        case .setTeamInfo(let info):
+            return "Change team name to \(info.name)"
+            
+        case .pinHostKey(let host):
+            return "Add shared host \"\(host.host)\""
+            
+        case .unpinHostKey(let host):
+            return "Remove shared host \"\(host.host)\""
+            
+        case .addLoggingEndpoint(let endpoint):
+            return "Enable \(endpoint.displayDescription) audit-logging"
+            
+        case .removeLoggingEndpoint(let endpoint):
+            return "Disable \(endpoint.displayDescription) audit-logging. Future audit logs will NO longer be created."
+            
+        case .promote:
+            return "Promote member"
+            
+        case .demote:
+            return "Demote member"
+        }
+
+    }
 }

@@ -88,8 +88,31 @@ class AboutController: KRBaseController {
             Analytics.postEvent(category: "keypair", action: "destroy")
             
             let _ = KeyManager.destroyKeyPair()
-            KeyManager.clearMe()
+            IdentityManager.clearMe()
             SessionManager.shared.destroy()
+            
+            // delete team identity if it exists (and leave team)
+            if case .some(let hasTeam) = try? IdentityManager.hasTeam(), hasTeam {
+                self.run(syncOperation: {
+                    // remove yourself from the team
+                    let _ = try TeamService.shared().appendToMainChainSync(for: .leave)
+                    try IdentityManager.removeTeamIdentity()
+                    
+                }, title: "Leave Team", onSuccess: {
+                    dispatchMain {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    
+                }, onError: {
+                    try? IdentityManager.removeTeamIdentity()
+                    dispatchMain {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+
+                })
+                
+                return
+            }
             
             dispatchMain {
                 self.dismiss(animated: true, completion: nil)
@@ -142,7 +165,7 @@ class AboutController: KRBaseController {
         deviceInfo += "Model: \(UIDevice.current.model)\n"
         deviceInfo += "SystemVersion: \(UIDevice.current.systemVersion)\n"
         deviceInfo += "SystemName: \(UIDevice.current.systemName)\n"
-        deviceInfo += "Identifier: \((try? KeychainStorage().get(key: Constants.arnEndpointKey)) ?? "unknown")\n"
+        deviceInfo += "Identifier: \(API.endpointARN ?? "unknown")\n"
         deviceInfo += "-----------"
         //
         mailDialogue.setMessageBody(deviceInfo, isHTML: false)

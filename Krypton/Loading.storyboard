@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jGN-MZ-ZgE">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Loading Controller-->
+        <scene sceneID="XIH-Gx-ZK3">
+            <objects>
+                <viewController storyboardIdentifier="LoadingController" id="jGN-MZ-ZgE" customClass="LoadingController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="gWa-QD-8KO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RKV-C9-3Ew" customClass="UView">
+                                <rect key="frame" x="107.5" y="253.5" width="160" height="160"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJw-aL-69Q">
+                                        <rect key="frame" x="-0.5" y="-0.5" width="160" height="160"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="4ro-Pf-3eE">
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-E0-Pad" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
+                                                    <rect key="frame" x="30" y="30" width="100" height="100"/>
+                                                    <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="4tq-g1-u6O"/>
+                                                        <constraint firstAttribute="height" constant="100" id="Y56-8P-ijz"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="checkmarkLineWidth">
+                                                            <real key="value" value="3"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="secondaryCheckmarkTintColor">
+                                                            <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="secondaryTintColor">
+                                                            <color key="value" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="_IBStateChangeAnimation" value="Spiral"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCu-rC-G5T" userLabel="ArcView">
+                                                    <rect key="frame" x="30" y="30" width="100" height="100"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cyd-EN-ntT" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                                            <rect key="frame" x="38" y="38" width="24" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="24" id="jrf-i9-32B"/>
+                                                                <constraint firstAttribute="width" constant="24" id="th7-BD-B8Z"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <real key="value" value="12"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="5TS-Qy-DGb"/>
+                                                        <constraint firstAttribute="height" constant="100" id="Cnp-RW-I4c"/>
+                                                        <constraint firstItem="cyd-EN-ntT" firstAttribute="centerX" secondItem="jCu-rC-G5T" secondAttribute="centerX" id="qxo-h6-RnR"/>
+                                                        <constraint firstItem="cyd-EN-ntT" firstAttribute="centerY" secondItem="jCu-rC-G5T" secondAttribute="centerY" id="xM2-6P-F0d"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JY5-E0-Pad" firstAttribute="centerY" secondItem="4ro-Pf-3eE" secondAttribute="centerY" id="DQ6-bg-ZIQ"/>
+                                                <constraint firstItem="jCu-rC-G5T" firstAttribute="centerY" secondItem="JY5-E0-Pad" secondAttribute="centerY" id="KjI-9k-5c5"/>
+                                                <constraint firstItem="JY5-E0-Pad" firstAttribute="centerX" secondItem="4ro-Pf-3eE" secondAttribute="centerX" id="Plz-Bt-VTc"/>
+                                                <constraint firstItem="jCu-rC-G5T" firstAttribute="centerX" secondItem="JY5-E0-Pad" secondAttribute="centerX" id="ysg-QT-TjB"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="prominent"/>
+                                    </visualEffectView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="XJw-aL-69Q" firstAttribute="centerX" secondItem="RKV-C9-3Ew" secondAttribute="centerX" id="7Dd-40-SOf"/>
+                                    <constraint firstAttribute="height" constant="160" id="JOu-VX-q4c"/>
+                                    <constraint firstItem="XJw-aL-69Q" firstAttribute="centerY" secondItem="RKV-C9-3Ew" secondAttribute="centerY" id="NhM-aq-8LG"/>
+                                    <constraint firstItem="XJw-aL-69Q" firstAttribute="width" secondItem="RKV-C9-3Ew" secondAttribute="width" id="adz-tf-ESD"/>
+                                    <constraint firstAttribute="width" constant="160" id="hHK-Mv-sls"/>
+                                    <constraint firstItem="XJw-aL-69Q" firstAttribute="height" secondItem="RKV-C9-3Ew" secondAttribute="height" id="hUO-L5-N8n"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="RKV-C9-3Ew" firstAttribute="centerY" secondItem="gWa-QD-8KO" secondAttribute="centerY" id="bxP-hi-agU"/>
+                            <constraint firstItem="RKV-C9-3Ew" firstAttribute="centerX" secondItem="gWa-QD-8KO" secondAttribute="centerX" id="zvc-sd-k9H"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2MT-Cx-Yw8"/>
+                    </view>
+                    <connections>
+                        <outlet property="arcView" destination="jCu-rC-G5T" id="paM-HZ-Ouf"/>
+                        <outlet property="blurBackgroundView" destination="RKV-C9-3Ew" id="YJc-cj-J24"/>
+                        <outlet property="blurView" destination="XJw-aL-69Q" id="q7o-Zb-g51"/>
+                        <outlet property="checkBox" destination="JY5-E0-Pad" id="1Ss-rd-bGE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pZd-zr-WWm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-212" y="-273"/>
+        </scene>
+    </scenes>
+</document>

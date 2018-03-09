@@ -10,7 +10,7 @@
 
 import UIKit
 import UserNotifications
-
+import SwiftHTTP
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
-            let link = Link(url: url)
+            let link = try? Link(url: url)
         {
             pendingLink = link
         }
@@ -80,7 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         DispatchQueue.main.async {
             UNUserNotificationCenter.current().setNotificationCategories([Policy.authorizeCategory,
                                                                           Policy.authorizeTemporalCategory,
-                                                                          Policy.authorizeTemporalThisCategory])
+                                                                          Policy.authorizeTemporalThisCategory,
+                                                                          Policy.teamsAlertCategory])
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (success, error) in
                 if let err = error {
                     log("got error requesting push notifications: \(err)", .error)
@@ -107,6 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         log("Got token: \(token)")
+        UserDefaults.group?.set(token, forKey: Constants.pushTokenKey)
         
         API().updateSNS(token: token) { (endpoint, err) in
             guard let arn = endpoint else {
@@ -127,6 +129,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             })
         }
+        
+        if case .some(let hasTeam) = try? IdentityManager.hasTeam(), hasTeam {
+            dispatchAsync {
+                do {
+                    try TeamService.shared().subscribeToPushSync(with: token)
+                }
+                catch {
+                    log("team push subscription failed: \(error)", .error)
+                }
+            }
+        }
+
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -134,19 +148,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         log("Push registration failed!", .error)
     }
     
-    
     //MARK: Links
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        
-        guard let link = Link(url: url) else {
-            log("invalid kr url: \(url)", .error)
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        guard   userActivity.activityType ==  NSUserActivityTypeBrowsingWeb,
+                let url = userActivity.webpageURL
+        else {
+            log("invalid user activity incoming: \(userActivity)", .error)
             return false
         }
         
-        self.pendingLink = link
-        NotificationCenter.default.post(name: Link.notificationName, object: link, userInfo: nil)
-        return true
+        do {
+            self.pendingLink = try Link(url: url)
+            NotificationCenter.default.post(name: Link.notificationName, object: self.pendingLink, userInfo: nil)
+            return true
+        } catch {
+            log("invalid link: \(url.absoluteString)", .error)
+            return false
+        }
+
+    }
+
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        do {
+            self.pendingLink = try Link(url: url)
+            NotificationCenter.default.post(name: Link.notificationName, object: self.pendingLink, userInfo: nil)
+            return true
+        } catch {
+            log("invalid link: \(url.absoluteString)", .error)
+            return false
+        }
     }
     
     //MARK: Update Checking in the Background
@@ -174,8 +207,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        
-        LogManager.shared.saveContext()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -205,17 +236,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Policy.requestUserAuthorization(session: pending.session, request: pending.request)
         }
 
+        // if team policy set: refresh approval category on notifications
+        if  let team = (try? IdentityManager.getTeamIdentity()?.dataManager.withTransaction { return try $0.fetchTeam() }) as? Team,
+            let _ = team.policy.temporaryApprovalSeconds
+        {
+            self.registerPushNotifications()
+        }
+ 
         
         //  Send email again if not sent succesfully
-        if let email = try? KeyManager.sharedInstance().getMe() {
+        if let email = try? IdentityManager.getMe() {
             dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
         }
+        
+        // look for possible copy tokens
+        dispatchAsync {
+            if let string = UIPasteboard.general.string {
+                for item in string.components(separatedBy: CharacterSet.whitespacesAndNewlines) {
+                    
+                    guard let inviteURL = URL(string: item), let link = try? Link(url: inviteURL) // match for a krypton link
+                        else {
+                            continue
+                    }
+                    
+                    self.pendingLink = link
+                    NotificationCenter.default.post(name: Link.notificationName, object: self.pendingLink, userInfo: nil)
+                    UIPasteboard.general.string = ""
+                    
+                }
+            }
+        }
+        
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         TransportControl.shared.willEnterBackground()
-        LogManager.shared.saveContext()
     }
 
 

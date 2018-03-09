@@ -34,11 +34,10 @@ class Updater {
         
         switch UIApplication.shared.applicationState {
         case .active:
-            return abs(last.timeIntervalSinceNow) > Properties.updateCheckIntervalForeground
+            return abs(last.timeIntervalSinceNow) > Properties.AppUpdateCheckInterval.foreground
         default:
-            return abs(last.timeIntervalSinceNow) > Properties.updateCheckIntervalBackground
-        }
-        
+            return abs(last.timeIntervalSinceNow) > Properties.AppUpdateCheckInterval.background
+        }        
     }
     
     class func checkForUpdateIfNeeded(completionHandler:@escaping ((Version?)->Void)) {

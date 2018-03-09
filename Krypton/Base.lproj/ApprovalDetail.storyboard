@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WWP-fk-c9G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WWP-fk-c9G">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="AvenirNext.ttc">
             <string>AvenirNext-Bold</string>
+            <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-Medium</string>
             <string>AvenirNext-Regular</string>
         </array>
@@ -23,7 +24,7 @@
         <!--Request Controller-->
         <scene sceneID="uVx-3A-fMx">
             <objects>
-                <viewController storyboardIdentifier="SSHRequestController" id="vgd-Zi-48j" customClass="SSHRequestController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SSHRequestController" id="vgd-Zi-48j" customClass="SSHRequestController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Psf-fl-ZFi"/>
                         <viewControllerLayoutGuide type="bottom" id="DS9-bu-vCp"/>
@@ -32,7 +33,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sqs-HQ-EKH" userLabel="command" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sqs-HQ-EKH" userLabel="command" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="96.5" y="10" width="182.5" height="80"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="root@server.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="KSv-Gb-lsj">
@@ -86,7 +87,7 @@
         <!--Git Tag Request Controller-->
         <scene sceneID="sPN-1w-M08">
             <objects>
-                <viewController id="9NR-3F-Hcq" customClass="GitTagRequestController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9NR-3F-Hcq" customClass="GitTagRequestController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EpH-58-cE0"/>
                         <viewControllerLayoutGuide type="bottom" id="ZPo-cl-vTN"/>
@@ -95,7 +96,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gle-eU-j8i" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gle-eU-j8i" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="38" y="41.5" width="317" height="79"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="some release info" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWj-Lx-DWH">
@@ -143,7 +144,7 @@
                                     <constraint firstAttribute="width" constant="8" id="hhE-Hx-oYR"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cHZ-0y-cCy" userLabel="dot_inner" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cHZ-0y-cCy" userLabel="dot_inner" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="15" y="12.5" width="18" height="18"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -159,7 +160,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugt-1t-1py" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugt-1t-1py" userLabel="dot" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="14" y="11.5" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="fHS-Xc-eOI"/>
@@ -183,7 +184,7 @@
                                 <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="bjh-L4-pgS" userLabel="objHashView" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="bjh-L4-pgS" userLabel="objHashView" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="38" y="10" width="59" height="23.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="9ac9e27" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="B6P-Po-Vb4">
@@ -260,7 +261,7 @@
         <!--Git Commit Request Controller-->
         <scene sceneID="sAF-bG-Ppd">
             <objects>
-                <viewController storyboardIdentifier="GitCommitRequestController" id="dvB-gu-jjZ" customClass="GitCommitRequestController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GitCommitRequestController" id="dvB-gu-jjZ" customClass="GitCommitRequestController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IRy-SS-4DA"/>
                         <viewControllerLayoutGuide type="bottom" id="uXr-62-RWe"/>
@@ -269,7 +270,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="R2D-pI-wFb" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="R2D-pI-wFb" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="38" y="10" width="317" height="101.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="some really interesting commit message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UF9-k3-oG2">
@@ -317,7 +318,7 @@
                                     <constraint firstAttribute="width" constant="8" id="Byq-6h-hnD"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f2b-2s-MoZ" userLabel="dot" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f2b-2s-MoZ" userLabel="dot" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="14" y="51" width="20" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -384,7 +385,7 @@
         <!--Approve Detail Controller-->
         <scene sceneID="0Bd-sv-wso">
             <objects>
-                <viewController storyboardIdentifier="UIViewController-WWP-fk-c9G" id="WWP-fk-c9G" customClass="ApproveDetailController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UIViewController-WWP-fk-c9G" id="WWP-fk-c9G" customClass="ApproveDetailController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="C0s-un-wlc"/>
                         <viewControllerLayoutGuide type="bottom" id="51L-2Z-ZAT"/>
@@ -411,6 +412,12 @@
                                     <segue destination="9NR-3F-Hcq" kind="embed" id="ROS-3G-Ir7"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="pkN-Wd-EJV" userLabel="team_op">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                <connections>
+                                    <segue destination="e2t-Aq-wzP" kind="embed" id="wx0-Ed-pxf"/>
+                                </connections>
+                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="U7A-aA-B5q" userLabel="error">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                 <connections>
@@ -423,10 +430,12 @@
                             <constraint firstItem="51L-2Z-ZAT" firstAttribute="top" secondItem="xv8-HB-Huo" secondAttribute="bottom" id="0eU-FK-Z0W"/>
                             <constraint firstItem="fcy-q1-mKC" firstAttribute="top" secondItem="C0s-un-wlc" secondAttribute="bottom" id="44J-ru-qet"/>
                             <constraint firstAttribute="trailing" secondItem="U7A-aA-B5q" secondAttribute="trailing" id="Bqo-Qm-qBQ"/>
+                            <constraint firstItem="pkN-Wd-EJV" firstAttribute="width" secondItem="9Gu-DC-AqX" secondAttribute="width" id="MNo-Qx-ehf"/>
                             <constraint firstAttribute="trailing" secondItem="fcy-q1-mKC" secondAttribute="trailing" id="RwN-5B-2oE"/>
                             <constraint firstItem="51L-2Z-ZAT" firstAttribute="top" secondItem="S3p-N5-RgV" secondAttribute="bottom" id="U7v-QM-mMc"/>
                             <constraint firstItem="xv8-HB-Huo" firstAttribute="top" secondItem="C0s-un-wlc" secondAttribute="bottom" id="Vi4-7L-lPa"/>
                             <constraint firstItem="S3p-N5-RgV" firstAttribute="top" secondItem="C0s-un-wlc" secondAttribute="bottom" id="YbD-SA-Mj9"/>
+                            <constraint firstItem="pkN-Wd-EJV" firstAttribute="centerX" secondItem="9Gu-DC-AqX" secondAttribute="centerX" id="bJr-YQ-pDj"/>
                             <constraint firstItem="xv8-HB-Huo" firstAttribute="leading" secondItem="9Gu-DC-AqX" secondAttribute="leading" id="cRh-Pu-0F5"/>
                             <constraint firstItem="fcy-q1-mKC" firstAttribute="leading" secondItem="9Gu-DC-AqX" secondAttribute="leading" id="gCu-0T-yjs"/>
                             <constraint firstItem="51L-2Z-ZAT" firstAttribute="top" secondItem="U7A-aA-B5q" secondAttribute="bottom" id="l1N-aT-GTU"/>
@@ -435,6 +444,8 @@
                             <constraint firstItem="51L-2Z-ZAT" firstAttribute="top" secondItem="fcy-q1-mKC" secondAttribute="bottom" id="qdx-tV-0kt"/>
                             <constraint firstItem="U7A-aA-B5q" firstAttribute="top" secondItem="C0s-un-wlc" secondAttribute="bottom" id="tOV-0l-aKq"/>
                             <constraint firstItem="S3p-N5-RgV" firstAttribute="leading" secondItem="9Gu-DC-AqX" secondAttribute="leading" id="tgb-eG-Rb1"/>
+                            <constraint firstItem="pkN-Wd-EJV" firstAttribute="centerY" secondItem="9Gu-DC-AqX" secondAttribute="centerY" id="vD5-7a-Tym"/>
+                            <constraint firstItem="pkN-Wd-EJV" firstAttribute="height" secondItem="9Gu-DC-AqX" secondAttribute="height" id="wGf-J6-hzU"/>
                             <constraint firstItem="U7A-aA-B5q" firstAttribute="leading" secondItem="9Gu-DC-AqX" secondAttribute="leading" id="xBG-cP-Foe"/>
                         </constraints>
                     </view>
@@ -446,6 +457,7 @@
                         <outlet property="errorContainerView" destination="U7A-aA-B5q" id="SEg-Xy-IFJ"/>
                         <outlet property="sshContainerView" destination="S3p-N5-RgV" id="AE2-PY-MhY"/>
                         <outlet property="tagContainerView" destination="fcy-q1-mKC" id="OOK-ht-EDi"/>
+                        <outlet property="teamOpContainerView" destination="pkN-Wd-EJV" id="cXw-iV-g8D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u4-cO-s1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -455,7 +467,7 @@
         <!--ErrorRequestController-->
         <scene sceneID="g61-sD-Rvs">
             <objects>
-                <viewController storyboardIdentifier="ErrorRequestController" id="gZZ-Ry-3yz" userLabel="ErrorRequestController" customClass="ErrorRequestController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ErrorRequestController" id="gZZ-Ry-3yz" userLabel="ErrorRequestController" customClass="ErrorRequestController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qbe-2U-anT"/>
                         <viewControllerLayoutGuide type="bottom" id="mhI-q9-KJp"/>
@@ -499,7 +511,126 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZM-0q-hYK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5542" y="705"/>
+            <point key="canvasLocation" x="2686" y="1386"/>
+        </scene>
+        <!--TeamOpRequestController-->
+        <scene sceneID="CW2-AS-oC6">
+            <objects>
+                <viewController storyboardIdentifier="TeamOpRequestController" id="e2t-Aq-wzP" userLabel="TeamOpRequestController" customClass="TeamOpRequestController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RSx-cQ-7rH"/>
+                        <viewControllerLayoutGuide type="bottom" id="24k-wt-aii"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="d9y-uK-RaC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="50" text="Remove team member from team &quot;/dev&quot;?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rE-Ot-6qt">
+                                <rect key="frame" x="20" y="115.5" width="280" height="50"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="27.333333333333336" text="Remove alice@acme.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yej-UZ-AaW">
+                                <rect key="frame" x="20" y="59.5" width="280" height="27.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="ACTION" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="u9f-Vc-glb">
+                                <rect key="frame" x="20" y="43.5" width="39" height="14"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
+                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="DETAILS" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="4Mq-sy-DvT">
+                                <rect key="frame" x="20" y="101.5" width="40" height="14"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
+                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyf-PJ-pTR">
+                                <rect key="frame" x="8" y="43.5" width="4" height="121.5"/>
+                                <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="4" id="XWm-hR-leR"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YHa-uX-iCK" customClass="KRView" customModule="Krypton" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="125.5" height="27.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Team" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="9kO-V8-cbd">
+                                        <rect key="frame" x="0.0" y="4" width="29.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                        <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="krypt.co/dev" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="dP3-w6-Rkk">
+                                        <rect key="frame" x="33.5" y="4" width="88" height="19.5"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                        <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="dP3-w6-Rkk" firstAttribute="leading" secondItem="9kO-V8-cbd" secondAttribute="trailing" constant="4" id="1Sv-B6-E7o"/>
+                                    <constraint firstItem="9kO-V8-cbd" firstAttribute="leading" secondItem="YHa-uX-iCK" secondAttribute="leading" id="6mT-O9-lbF"/>
+                                    <constraint firstItem="9kO-V8-cbd" firstAttribute="bottom" secondItem="dP3-w6-Rkk" secondAttribute="bottom" id="deo-JA-Yhz"/>
+                                    <constraint firstItem="dP3-w6-Rkk" firstAttribute="top" secondItem="YHa-uX-iCK" secondAttribute="top" constant="4" id="oi6-6f-wgW"/>
+                                    <constraint firstItem="9kO-V8-cbd" firstAttribute="top" secondItem="dP3-w6-Rkk" secondAttribute="top" id="pub-x1-Vxe"/>
+                                    <constraint firstAttribute="bottom" secondItem="dP3-w6-Rkk" secondAttribute="bottom" constant="4" id="vrX-GC-h5D"/>
+                                    <constraint firstAttribute="trailing" secondItem="dP3-w6-Rkk" secondAttribute="trailing" constant="4" id="yRi-vW-bmu"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="nyf-PJ-pTR" firstAttribute="bottom" secondItem="6rE-Ot-6qt" secondAttribute="bottom" id="0mM-xH-p3k"/>
+                            <constraint firstItem="YHa-uX-iCK" firstAttribute="leading" secondItem="nyf-PJ-pTR" secondAttribute="leading" id="3hI-kb-dwz"/>
+                            <constraint firstItem="6rE-Ot-6qt" firstAttribute="leading" secondItem="4Mq-sy-DvT" secondAttribute="leading" id="4rs-QH-GY3"/>
+                            <constraint firstItem="4Mq-sy-DvT" firstAttribute="leading" secondItem="Yej-UZ-AaW" secondAttribute="leading" id="6ve-ti-cbb"/>
+                            <constraint firstItem="u9f-Vc-glb" firstAttribute="leading" secondItem="d9y-uK-RaC" secondAttribute="leading" constant="20" id="CUZ-ud-RwG"/>
+                            <constraint firstItem="nyf-PJ-pTR" firstAttribute="top" secondItem="u9f-Vc-glb" secondAttribute="top" id="J7t-TL-I2x"/>
+                            <constraint firstItem="u9f-Vc-glb" firstAttribute="top" secondItem="YHa-uX-iCK" secondAttribute="bottom" constant="8" id="Jre-uE-FHr"/>
+                            <constraint firstItem="24k-wt-aii" firstAttribute="top" secondItem="6rE-Ot-6qt" secondAttribute="bottom" priority="99" constant="10" id="Whf-Jq-HFD"/>
+                            <constraint firstItem="4Mq-sy-DvT" firstAttribute="top" secondItem="Yej-UZ-AaW" secondAttribute="bottom" constant="14.5" id="Wlt-sJ-Gbd"/>
+                            <constraint firstAttribute="trailing" secondItem="Yej-UZ-AaW" secondAttribute="trailing" constant="20" id="Ykq-8F-VUj"/>
+                            <constraint firstItem="6rE-Ot-6qt" firstAttribute="top" secondItem="4Mq-sy-DvT" secondAttribute="bottom" id="cQ0-nw-68a"/>
+                            <constraint firstItem="YHa-uX-iCK" firstAttribute="top" secondItem="RSx-cQ-7rH" secondAttribute="bottom" constant="8" id="iBd-dT-8IA"/>
+                            <constraint firstItem="u9f-Vc-glb" firstAttribute="leading" secondItem="nyf-PJ-pTR" secondAttribute="trailing" constant="8" id="jfr-Ir-eiS"/>
+                            <constraint firstItem="Yej-UZ-AaW" firstAttribute="top" secondItem="u9f-Vc-glb" secondAttribute="bottom" constant="2" id="kRb-T5-r3m"/>
+                            <constraint firstItem="Yej-UZ-AaW" firstAttribute="leading" secondItem="u9f-Vc-glb" secondAttribute="leading" id="oEy-Py-gEs"/>
+                            <constraint firstAttribute="trailing" secondItem="6rE-Ot-6qt" secondAttribute="trailing" constant="20" id="x9P-w0-N4I"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="200"/>
+                    <connections>
+                        <outlet property="actionLabel" destination="Yej-UZ-AaW" id="14n-uD-OIj"/>
+                        <outlet property="descriptionLabel" destination="6rE-Ot-6qt" id="1cE-fp-0DJ"/>
+                        <outlet property="indicatorView" destination="nyf-PJ-pTR" id="SaU-ev-EHK"/>
+                        <outlet property="teamLabel" destination="dP3-w6-Rkk" id="seS-q5-Yh3"/>
+                        <outlet property="teamView" destination="YHa-uX-iCK" id="eEz-yf-dlA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DIe-EO-qYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5568" y="704.34782608695662"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -26,6 +26,10 @@ struct Pairing:JsonReadable {
         return name.removeDotLocal()
     }
     
+    var workstationPublicKeyDoubleHash:Data {
+        return workstationPublicKey.SHA256.SHA256
+    }
+    
     var version:Version?
 
     

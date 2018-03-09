@@ -48,7 +48,7 @@ extension Policy {
                                           actions: [Policy.approveAction, Policy.rejectAction],
                                           intentIdentifiers: [],
                                           hiddenPreviewsBodyPlaceholder: "New \(Properties.appName) request",
-                                          options: .customDismissAction)
+                options: .customDismissAction)
         } else {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorize.identifier,
                                           actions: [Policy.approveAction, Policy.rejectAction],
@@ -56,7 +56,21 @@ extension Policy {
                                           options: .customDismissAction)
         }
     }()
-    
+
+    static var teamsAlertCategory:UNNotificationCategory = {
+        if #available(iOS 11.0, *) {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.newTeamDataAlert.identifier,
+                                          actions: [],
+                                          intentIdentifiers: [],
+                                          hiddenPreviewsBodyPlaceholder: "New team event",
+                                          options: [])
+        } else {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.newTeamDataAlert.identifier,
+                                          actions: [],
+                                          intentIdentifiers: [],
+                                          options: [])
+        }
+    }()
     
     static var approveAction:UNNotificationAction = {
         return UNNotificationAction(identifier: Action.approve.identifier,
@@ -74,13 +88,13 @@ extension Policy {
     
     static var approveTemporaryThisAction:UNNotificationAction = {
         return UNNotificationAction(identifier: Action.temporaryThis.identifier,
-                                    title: "Allow this host for 3 hours",
+                                    title: "Allow this host for " + Policy.temporaryApprovalInterval.description,
                                     options: .authenticationRequired)
     }()
     
     static var approveTemporaryAllAction:UNNotificationAction = {
         return UNNotificationAction(identifier: Action.temporaryAll.identifier,
-                                    title: "Allow all for 3 hours",
+                                    title: "Allow all for " + Policy.temporaryApprovalInterval.description,
                                     options: .authenticationRequired)
     }()
     
@@ -97,7 +111,7 @@ extension Policy {
             switch UIApplication.shared.applicationState {
                 
             case .background: // Background: then present local notification
-                Notify.shared.present(request: request, for: session)
+                Notify.present(request: request, for: session)
                 
             case .inactive: // Inactive: wait and try again
                 dispatchAfter(delay: 1.0, task: {
@@ -163,7 +177,7 @@ extension Policy {
             switch UIApplication.shared.applicationState {
                 
             case .background: // Background: then present local notification
-                Notify.shared.presentError(message: errorMessage, session: session)
+                Notify.presentError(message: errorMessage, session: session)
                 
             case .inactive: // Inactive: wait and try again
                 dispatchAfter(delay: 1.0, task: {

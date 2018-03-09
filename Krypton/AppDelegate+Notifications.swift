@@ -26,6 +26,12 @@ extension AppDelegate {
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Swift.Void) {
         
         log("willPresentNotifcation - Foreground", .warning)
+        
+        if Notify.shouldPresentInAppNotification(userInfo: notification.request.content.userInfo) {
+            completionHandler([.alert, .sound])
+            return
+        }
+        
         completionHandler(.sound)
     }
     
@@ -34,6 +40,18 @@ extension AppDelegate {
     // silent notification
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Swift.Void) {
         log("didReceieveRemoteNotification")
+
+        // new team data
+        if  let noteCategory = (userInfo["aps"] as? [String:Any])?["category"] as? String,
+            noteCategory == Policy.NotificationCategory.newTeamData.identifier
+        {
+            TeamUpdater.checkForUpdatesAndNotifyUserIfNeeded { (success) in
+                completionHandler( success ? .newData : .noData )
+                NotificationCenter.default.post(name: Constants.NotificationType.newTeamsData.name, object: nil)
+            }
+            
+            return
+        }
         
         // silent notification (untrusted)
         do {
@@ -52,8 +70,11 @@ extension AppDelegate {
             let sealed = try NetworkMessage(networkData: ciphertext).data
             let request = try Request(from: session.pairing, sealed: sealed)
             
-            try TransportControl.shared.handle(medium: .silentNotification, with: request, for: session, completionHandler: {
+            TransportControl.shared.handle(medium: .silentNotification, with: request, for: session, completionHandler: {
                 completionHandler(.newData)
+            }, errorHandler: { error in
+                log("silent notification, transport error: \(error)", .error)
+                completionHandler(.noData)
             })
             
         } catch {
@@ -61,7 +82,6 @@ extension AppDelegate {
             completionHandler(.noData)
         }
     }
-
     
     // MARK: REMOTE NOTIFICATION ACTION OR OPENED
     // The method will be called on the delegate when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction. The delegate must be set before the application returns from application:didFinishLaunchingWithOptions:.
@@ -90,7 +110,9 @@ extension AppDelegate {
                 return
 
             case UNNotificationDefaultActionIdentifier:
-                try TransportControl.shared.handle(medium: .remoteNotification, with: verifiedLocalNotification.request, for: session, completionHandler: completionHandler)
+                TransportControl.shared.handle(medium: .remoteNotification, with: verifiedLocalNotification.request, for: session, completionHandler: completionHandler, errorHandler: {_ in
+                    completionHandler()
+                })
                 return
 
             default:
@@ -127,6 +149,7 @@ extension AppDelegate {
         
         switch action {
         case .approve:
+            policySession.allow(request: request)
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "once")
         
         case .temporaryThis:
@@ -135,11 +158,11 @@ extension AppDelegate {
                 log("cannot temporarily approve request: \(request)", .error)
                 break
             }
-            policySession.allowThis(userAndHost: userAndHost, for: Policy.Interval.threeHours.seconds)
+            policySession.allowThis(userAndHost: userAndHost, for: Policy.temporaryApprovalInterval.value)
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve this", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
         case .temporaryAll:
-            policySession.allowAll(request: request, for: Policy.Interval.threeHours.seconds)
+            policySession.allowAll(request: request, for: Policy.temporaryApprovalInterval.value)
             
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
             
@@ -153,7 +176,7 @@ extension AppDelegate {
             try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)
             
             if let errorMessage = resp.body.error {
-                Notify.shared.presentError(message: errorMessage, session: session)
+                Notify.presentError(message: errorMessage, session: session)
             }
             
         } catch (let e) {

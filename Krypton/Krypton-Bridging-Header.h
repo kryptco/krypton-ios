@@ -1,6 +1,6 @@
 //
-//  Kryptonite-Bridging-Header.h
-//  Kryptonite
+//  Krypton-Bridging-Header.h
+//  Krypton
 //
 //  Created by Alex Grinman on 8/31/16.
 //  Copyright © 2016 KryptCo, Inc. All rights reserved.

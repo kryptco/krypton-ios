@@ -26,7 +26,7 @@ class HelpInstallController:KRBaseController {
 
     @IBOutlet weak var commandView:UIView!
 
-    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
+    var inactiveUploadMethodColor:UIColor = UIColor.lightGray
     
     override func viewDidLoad() {
         super.viewDidLoad()

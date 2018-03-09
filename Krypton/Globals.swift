@@ -12,6 +12,20 @@ import Foundation
 struct Constants {
     static let arnEndpointKey = "aws_endpoint_arn_key"
     static let appGroupSecurityID = "group.co.krypt.kryptonite"
+    static let defaultKeyChainService = "kr_keychain_service"
+    static let teamKeyChainService = "kr_team_keychain_service"
+    static let keychainAccessGroup = Constants.appGroupSecurityID
+    static let pushTokenKey = "device_push_token_key"
+        
+    static let appURLScheme = "krypton://"
+    
+    enum NotificationType:String {
+        case newTeamsData = "notification_new_teams_data"
+        
+        var name:Notification.Name {
+            return Notification.Name(rawValue: self.rawValue)
+        }
+    }
 }
 
 //MARK: Platform Detection

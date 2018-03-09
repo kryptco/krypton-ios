@@ -31,7 +31,7 @@ class FirstPairController:UIViewController, KRScanDelegate {
     @IBOutlet weak var commandView:UIView!
 
     
-    @IBInspectable var inactiveUploadMethodColor:UIColor = UIColor.lightGray
+    var inactiveUploadMethodColor:UIColor = UIColor.lightGray
 
     @IBOutlet weak var scanView:UIView!
     @IBOutlet weak var permissionView:UIView!

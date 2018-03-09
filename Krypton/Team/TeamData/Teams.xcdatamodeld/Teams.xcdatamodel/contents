@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17D47" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DataDirectMemberInvitation" representedClassName="DataDirectMemberInvitation" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byEmailIndex">
+            <fetchIndexElement property="email" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataDomainMemberInvitation" representedClassName="DataDomainMemberInvitation" syncable="YES" codeGenerationType="class">
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inviteCiphertext" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="inviteSymmetricKeyHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="noncePublicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="noncePublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byDomainIndex">
+            <fetchIndexElement property="domain" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataIndividualMemberInvitation" representedClassName="DataIndividualMemberInvitation" syncable="YES" codeGenerationType="class">
+        <attribute name="emails" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inviteCiphertext" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="inviteSymmetricKeyHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="noncePublicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <fetchIndex name="byEmailIndex">
+            <fetchIndexElement property="emails" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="noncePublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataLogBlock" representedClassName="DataLogBlock" syncable="YES" codeGenerationType="class">
+        <attribute name="blockHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="signature" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="next" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataLogBlock" inverseName="previous" inverseEntity="DataLogBlock" syncable="YES"/>
+        <relationship name="previous" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataLogBlock" inverseName="next" inverseEntity="DataLogBlock" syncable="YES"/>
+        <relationship name="teamHead" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="headLog" inverseEntity="DataTeam" syncable="YES"/>
+        <fetchIndex name="byBlockHashIndex">
+            <fetchIndexElement property="blockHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataMember" representedClassName="DataMember" syncable="YES" codeGenerationType="class">
+        <attribute name="email" attributeType="String" syncable="YES"/>
+        <attribute name="encryptionPublicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="isAdmin" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pgpPublicKey" attributeType="Binary" syncable="YES"/>
+        <attribute name="publicKey" attributeType="Binary" syncable="YES"/>
+        <attribute name="sshPublicKey" attributeType="Binary" syncable="YES"/>
+        <fetchIndex name="byEmailIndex">
+            <fetchIndexElement property="email" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byEncryptionPublicKeyIndex">
+            <fetchIndexElement property="encryptionPublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byIsAdminIndex">
+            <fetchIndexElement property="isAdmin" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPgpPublicKeyIndex">
+            <fetchIndexElement property="pgpPublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="bySshPublicKeyIndex">
+            <fetchIndexElement property="sshPublicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="publicKey"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="DataPublicKeyWrappedLogEncryptionTo" representedClassName="DataPublicKeyWrappedLogEncryptionTo" syncable="YES" codeGenerationType="class">
+        <attribute name="publicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <fetchIndex name="byPropertyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataRemovedMember" representedClassName="DataRemovedMember" syncable="YES" codeGenerationType="class">
+        <attribute name="email" attributeType="String" syncable="YES"/>
+        <attribute name="encryptionPublicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="pgpPublicKey" attributeType="Binary" syncable="YES"/>
+        <attribute name="publicKey" attributeType="Binary" syncable="YES"/>
+        <attribute name="sshPublicKey" attributeType="Binary" syncable="YES"/>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataSignedMessage" representedClassName="DataSignedMessage" syncable="YES" codeGenerationType="class">
+        <attribute name="blockHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="message" attributeType="String" syncable="YES"/>
+        <attribute name="publicKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="signature" attributeType="Binary" syncable="YES"/>
+        <relationship name="next" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataSignedMessage" inverseName="previous" inverseEntity="DataSignedMessage" syncable="YES"/>
+        <relationship name="previous" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataSignedMessage" inverseName="next" inverseEntity="DataSignedMessage" syncable="YES"/>
+        <relationship name="teamHead" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataTeam" inverseName="head" inverseEntity="DataTeam" syncable="YES"/>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byBlockHashIndex">
+            <fetchIndexElement property="blockHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataSSHHostKey" representedClassName="DataSSHHostKey" syncable="YES" codeGenerationType="class">
+        <attribute name="host" attributeType="String" syncable="YES"/>
+        <attribute name="publicKey" attributeType="Binary" syncable="YES"/>
+        <fetchIndex name="byHostIndex">
+            <fetchIndexElement property="host" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPublicKeyIndex">
+            <fetchIndexElement property="publicKey" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataTeam" representedClassName="DataTeam" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="json" attributeType="Binary" syncable="YES"/>
+        <attribute name="lastBlockHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="logEncryptionKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="head" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataSignedMessage" inverseName="teamHead" inverseEntity="DataSignedMessage" syncable="YES"/>
+        <relationship name="headLog" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataLogBlock" inverseName="teamHead" inverseEntity="DataLogBlock" syncable="YES"/>
+        <fetchIndex name="byIdIndex">
+            <fetchIndexElement property="id" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DataUnsentAuditLog" representedClassName="DataUnsentAuditLog" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="dataHash" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byDataHashIndex">
+            <fetchIndexElement property="dataHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <elements>
+        <element name="DataDirectMemberInvitation" positionX="-720" positionY="-216" width="128" height="75"/>
+        <element name="DataDomainMemberInvitation" positionX="-702" positionY="-198" width="128" height="105"/>
+        <element name="DataIndividualMemberInvitation" positionX="-684" positionY="-180" width="128" height="105"/>
+        <element name="DataLogBlock" positionX="-720" positionY="-216" width="128" height="150"/>
+        <element name="DataMember" positionX="-927" positionY="-36" width="128" height="135"/>
+        <element name="DataPublicKeyWrappedLogEncryptionTo" positionX="-720" positionY="-216" width="128" height="60"/>
+        <element name="DataRemovedMember" positionX="-720" positionY="-216" width="128" height="120"/>
+        <element name="DataSignedMessage" positionX="-828" positionY="-369" width="128" height="150"/>
+        <element name="DataSSHHostKey" positionX="-785" positionY="279" width="128" height="75"/>
+        <element name="DataTeam" positionX="-263" positionY="-255" width="128" height="135"/>
+        <element name="DataUnsentAuditLog" positionX="-720" positionY="-216" width="128" height="90"/>
+    </elements>
+</model>

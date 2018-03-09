@@ -12,25 +12,6 @@ import Foundation
 import CoreData
 import JSON
 
-struct HostMistmatchError:Error, CustomDebugStringConvertible {
-    var hostName:String
-    var expectedPublicKey:String
-    
-    static let prefix = "host public key mismatched for"
-    
-    var debugDescription:String {
-        return "\(HostMistmatchError.prefix) \(hostName)"
-    }
-    
-    // check if an error message is a host mismatch
-    // used to indicate what kind of error occured to analytics
-    // without exposing the hostName to the analytics service
-    static func isMismatchErrorString(err:String) -> Bool {
-        return err.contains(HostMistmatchError.prefix)
-    }
-}
-
-
 class KnownHostManager {
     
     private var mutex = Mutex()
@@ -107,13 +88,9 @@ class KnownHostManager {
      - if known host and does match: return true
      - if not known host or public key does not match: return false
      */
-    func entryExists(for hostName:String) -> Bool {
-        do {
-            if let _ = try self.fetch(for: hostName) {
-                return true
-            }
-        } catch {
-            log("error fetching known host for: \(hostName)")
+    func entryExists(for hostName:String) throws -> Bool {
+        if let _ = try self.fetch(for: hostName) {
+            return true
         }
         
         return false
@@ -141,7 +118,7 @@ class KnownHostManager {
         
         guard existingKnownHost.publicKey == hostPublicKey
         else {
-            throw HostMistmatchError(hostName: hostName, expectedPublicKey: existingKnownHost.publicKey)
+            throw HostMistmatchError(hostName: hostName, expectedPublicKeys: [existingKnownHost.publicKey])
         }
     }
     
@@ -184,7 +161,8 @@ class KnownHostManager {
                 
                 for object in (objects ?? []) {
                     guard
-                        let publicKey = object.value(forKey: "public_key") as? String,
+                        let publicKeyString = (object.value(forKey: "public_key") as? String),
+                        let publicKey = try? publicKeyString.fromBase64(),
                         let dateAdded = object.value(forKey: "date_added") as? Date,
                         let hostName = object.value(forKey: "host_name") as? String
                         else {
@@ -219,7 +197,8 @@ class KnownHostManager {
             fetchRequest.fetchLimit = 1
             
             guard   let object = ((try? self.managedObjectContext.fetch(fetchRequest)) as? [NSManagedObject])?.first,
-                let publicKey = object.value(forKey: "public_key") as? String,
+                let publicKeyString = object.value(forKey: "public_key") as? String,
+                let publicKey = try? publicKeyString.fromBase64(),
                 let hostName = object.value(forKey: "host_name") as? String,
                 hostName == knownHost.hostName,
                 publicKey == knownHost.publicKey
@@ -254,7 +233,7 @@ class KnownHostManager {
             
             // set attirbutes
             hostEntry.setValue(knownHost.hostName, forKey: "host_name")
-            hostEntry.setValue(knownHost.publicKey, forKey: "public_key")
+            hostEntry.setValue(knownHost.publicKey.toBase64(), forKey: "public_key")
             hostEntry.setValue(knownHost.dateAdded, forKey: "date_added")
             
             do {
