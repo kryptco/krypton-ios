@@ -749,7 +749,8 @@ class TeamDataManager {
         - returns false if host name is not pinned
         - throws HostMistmatchError if host name is pinned but public key is mismatched
     */
-    func check(verifiedHost:VerifiedHostAuth) throws {
+    typealias HostIsPinned = Bool
+    func check(verifiedHost:VerifiedHostAuth) throws -> HostIsPinned {
         let hostName = verifiedHost.hostname
         let hostPublicKey = verifiedHost.hostKey
         
@@ -776,7 +777,7 @@ class TeamDataManager {
         
         // if unknown, then it's not pinned
         guard !sshHostKeys.isEmpty else {
-            return
+            return false
         }
         
         let matchingHosts = sshHostKeys.filter { $0.publicKey == hostPublicKey}
@@ -786,6 +787,8 @@ class TeamDataManager {
             let pinnedPublicKeys = sshHostKeys.map({ $0.publicKey })
             throw HostMistmatchError(hostName: hostName, expectedPublicKeys: pinnedPublicKeys)
         }
+        
+        return true
     }
 
     func unpin(sshHostKey:SSHHostKey, block:SigChain.SignedMessage) throws {

@@ -270,20 +270,27 @@ class Silo {
                 guard allowed else {
                     throw UserRejectedError()
                 }
-                        
+                
+                
+                var hostIsPinnedByTeam = false
+                
                 // team known hosts
                 // if team exists then check for pinned known hosts
                 if  let verifiedHostAuth = signRequest.verifiedHostAuth,
                     let teamIdentity = (try? IdentityManager.getTeamIdentity()) as? TeamIdentity
                 {
-                    try teamIdentity.dataManager.withTransaction { try $0.check(verifiedHost: verifiedHostAuth) }
+                    hostIsPinnedByTeam = try teamIdentity.dataManager.withTransaction {
+                        try $0.check(verifiedHost: verifiedHostAuth) // this throws if mismatched
+                    }
                 }
                 
-                // local known hosts
-                // if host auth provided, check known hosts
-                // fails in invalid signature -or- hostname not provided
-                if let verifiedHostAuth = signRequest.verifiedHostAuth {
-                    try KnownHostManager.shared.checkOrAdd(verifiedHostAuth: verifiedHostAuth)
+                if !hostIsPinnedByTeam { // check local known hosts if no team information
+                    // local known hosts
+                    // if host auth provided, check known hosts
+                    // fails in invalid signature -or- hostname not provided
+                    if let verifiedHostAuth = signRequest.verifiedHostAuth {
+                        try KnownHostManager.shared.checkOrAdd(verifiedHostAuth: verifiedHostAuth)
+                    }
                 }
                 
                 // only place where signature should occur
