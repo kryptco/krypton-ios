@@ -10,6 +10,7 @@ import Foundation
 
 import JSON
 @testable import Krypton
+import Sodium
 
 struct BlockValidationTest {
     let testBlocks:[TestBlock]
