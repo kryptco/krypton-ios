@@ -73,7 +73,7 @@ class TransportControl {
         }
         
         // update teams if we need to
-        if hasTeam && TeamUpdater.shouldCheck {
+        if hasTeam && TeamUpdater.shouldCheck(for: request) {
             TeamUpdater.checkForUpdate {_ in
                 dispatchAsync { self.handleNoTeamChecks(medium: medium, with: request, for: session, completionHandler: completionHandler, errorHandler: errorHandler) }
             }

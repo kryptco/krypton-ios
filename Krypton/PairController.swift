@@ -66,7 +66,7 @@ class PairController: KRBaseController, KRScanDelegate {
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
         // first try to see if it's a team QR code
-        if case .some(let hasTeam) = try? IdentityManager.hasTeam(), hasTeam,
+        if case .some(let hasTeam) = try? IdentityManager.hasTeam(), !hasTeam,
             let adminQRPayload = try? AdminQRPayload(jsonString: data)
         {
             let controller = Resources.Storyboard.TeamInvitations.instantiateViewController(withIdentifier: "TeamMemberInPersonEmailController") as! TeamMemberInPersonEmailController

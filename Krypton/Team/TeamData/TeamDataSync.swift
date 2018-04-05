@@ -10,18 +10,18 @@ import Foundation
 
 
 extension TeamIdentity {
-    mutating func syncTeamDatabaseData() throws {
-        try self.dataManager.withReadOnlyTransaction(dbType: .mainApp) { mainApp in
-            try self.dataManager.withTransaction { notifyApp in
+    mutating func syncTeamDatabaseData(from: TeamDataTransaction.DBType, to: TeamDataTransaction.DBType) throws {
+        try self.dataManager.withReadOnlyTransaction(dbType: from) { fromApp in
+            try self.dataManager.withTransaction(dbType: to) { toApp in
                 
                 // main chain blocks
                 while true {
                     var newBlocks:[SigChain.SignedMessage]
-                    if let lastBlockHash = try notifyApp.lastBlockHash() {
-                        newBlocks = try mainApp.fetchBlocks(after: lastBlockHash, limit: 1)
+                    if let lastBlockHash = try toApp.lastBlockHash() {
+                        newBlocks = try fromApp.fetchBlocks(after: lastBlockHash, limit: 1)
                     } else {
                         do {
-                            newBlocks = [try mainApp.fetchMainChainGenesisBlock()]
+                            newBlocks = [try fromApp.fetchMainChainGenesisBlock()]
                         } catch TeamDataManager.Errors.noGenesisBlock { // we don't have a main chain yet
                             break
                         } catch {
@@ -33,18 +33,18 @@ extension TeamIdentity {
                         break
                     }
                     
-                    try self.verifyAndProcessBlocks(blocks: newBlocks, dataManager: notifyApp)
+                    try self.verifyAndProcessBlocks(blocks: newBlocks, dataManager: toApp)
                 }
                 
                 
                 // log chain blocks
                 while true {
                     var newLogBlocks:[SigChain.SignedMessage]
-                    if let lastLogBlockHash = try notifyApp.lastLogBlockHash() {
-                        newLogBlocks = try mainApp.fetchLogBlocks(after: lastLogBlockHash, limit: 1)
+                    if let lastLogBlockHash = try toApp.lastLogBlockHash() {
+                        newLogBlocks = try fromApp.fetchLogBlocks(after: lastLogBlockHash, limit: 1)
                     } else {
                         do {
-                            newLogBlocks = [try mainApp.fetchLogChainGenesisBlock()]
+                            newLogBlocks = [try fromApp.fetchLogChainGenesisBlock()]
                         } catch TeamDataManager.Errors.noLogGenesisBlock { // we don't have a log chain yet
                             break
                         } catch {
@@ -57,7 +57,7 @@ extension TeamIdentity {
                     }
 
                     try newLogBlocks.forEach {
-                        try self.verifyAndProcessNewLogBlock(block: $0, dataManager: notifyApp)
+                        try self.verifyAndProcessNewLogBlock(block: $0, dataManager: toApp)
                     }
                 }
             }

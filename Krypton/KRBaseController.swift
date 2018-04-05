@@ -236,7 +236,7 @@ extension KRBase {
         // team updates
         if case .some(let hasTeam) = try? IdentityManager.hasTeam(),
                 hasTeam,
-                TeamUpdater.shouldCheck
+                TeamUpdater.shouldCheckTimed()
         {
             dispatchAsync {
                 TeamUpdater.checkForUpdate { result in

@@ -170,7 +170,16 @@ extension AppDelegate {
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background reject")
         }
         
-        
+
+        /// attempt to get new blocks from the notification extension
+        /// if they exist
+        do {
+            var teamIdentity = try IdentityManager.getTeamIdentity()
+            try teamIdentity?.syncTeamDatabaseData(from: .notifyExt, to: .mainApp)
+        } catch {
+            log("error updating from notify extension \(error)", .error)
+        }
+
         do {
             let resp = try Silo.shared().lockResponseFor(request: request, session: session, allowed: allowed)
             try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)

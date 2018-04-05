@@ -15,7 +15,7 @@ class TeamDataTransaction {
     enum DBType {
         case mainApp
         case notifyExt
-        
+                
         func name(for identity:Data) -> String {
             switch self {
             case .mainApp:

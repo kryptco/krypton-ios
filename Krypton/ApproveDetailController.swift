@@ -9,6 +9,26 @@
 import Foundation
 import UIKit
 
+
+/// Work around to pick the most up to date TeamDataManager db without doing network requests
+extension TeamIdentity {
+    func pickMoreUpdated(first:TeamDataTransaction.DBType, second:TeamDataTransaction.DBType) throws -> TeamDataTransaction.DBType {
+        return try self.dataManager.withReadOnlyTransaction(dbType: first) { firstApp in
+            try self.dataManager.withReadOnlyTransaction(dbType: second)  { secondApp in
+                
+                if  let firstLastBlockHash = try firstApp.lastBlockHash(),
+                    try secondApp.fetchBlocks(after: firstLastBlockHash, limit: 1).count > 0
+                {
+                    return second
+                }
+                
+                return first
+            }
+        }
+    }
+}
+
+    
 class ApproveDetailController: UIViewController {
     @IBOutlet weak var sshContainerView:UIView!
     @IBOutlet weak var commitContainerView:UIView!
@@ -70,7 +90,9 @@ class ApproveDetailController: UIViewController {
                 
                 
                 do {
-                    try identity.dataManager.withTransaction {
+                    let dbType = try identity.pickMoreUpdated(first: .mainApp, second: .notifyExt)
+                    
+                    try identity.dataManager.withReadOnlyTransaction(dbType: dbType) {
                         try teamOpController?.set(identity: identity, teamOperationRequest: teamOpRequest, dataManager: $0)
                     }
 

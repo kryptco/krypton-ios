@@ -30,7 +30,7 @@ class TeamUpdater {
         }
     }
     
-    class var shouldCheck:Bool {
+    class func shouldCheckTimed() -> Bool {
         defer { mutex.unlock() }
         mutex.lock()
 
@@ -39,6 +39,17 @@ class TeamUpdater {
         }
         
         return abs(last.timeIntervalSinceNow) > TeamUpdater.checkInterval
+
+    }
+    class func shouldCheck(for request:Request) -> Bool{
+        switch request.body {
+        case .teamOperation:
+            // force a check
+            return true
+            
+        case .ssh, .git, .hosts, .me, .noOp, .unpair, .decryptLog, .readTeam:
+            return shouldCheckTimed()
+        }
     }
     
     class func checkForUpdate(completionHandler:@escaping ((_ didUpdate:Bool) ->Void)) {

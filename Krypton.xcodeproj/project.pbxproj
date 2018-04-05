@@ -223,6 +223,7 @@
 		FA8141441D70B0F4004FE58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8141421D70B0F4004FE58C /* LaunchScreen.storyboard */; };
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
 		FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
+		FA85486720757702007A4BEA /* TeamDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2E3C6205B03B9008FFCB0 /* TeamDataSync.swift */; };
 		FA8B540C1ED73C7E00891161 /* SourceCodePro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */; };
 		FA8B540D1ED73C7E00891161 /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
 		FA8B540E1ED773EE00891161 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
@@ -1186,6 +1187,7 @@
 				FAE6F8211FDC73B200A4A626 /* TeamDataTypes.swift */,
 				FA171EEA205A4512003CD9CC /* TeamDataTransaction.swift */,
 				FAD2E3B2205B000C008FFCB0 /* TeamDataDBType.swift */,
+				FAD2E3C6205B03B9008FFCB0 /* TeamDataSync.swift */,
 			);
 			path = TeamData;
 			sourceTree = "<group>";
@@ -1639,7 +1641,6 @@
 			children = (
 				FAB517921E54D40A0032DD47 /* Notify.entitlements */,
 				FAF1E6211E031BB9003CBEA2 /* NotificationService.swift */,
-				FAD2E3C6205B03B9008FFCB0 /* TeamDataSync.swift */,
 				FAAE81921E576FFB002A9AE6 /* Policy+UI.swift */,
 				FAF1E6231E031BB9003CBEA2 /* Info.plist */,
 				FAAE819E1E577264002A9AE6 /* Notify-Bridging-Header.h */,
@@ -2523,6 +2524,7 @@
 				FAA6E1F11D79E3ED007D1B3A /* AWS.swift in Sources */,
 				FA443DBB1FB6441200EB452A /* ApproveDetailController.swift in Sources */,
 				FA1E706E1D9AC22900A14650 /* FirstPairController.swift in Sources */,
+				FA85486720757702007A4BEA /* TeamDataSync.swift in Sources */,
 				FA33F2BA200FE4840046922D /* TeamAdminConfirmInPersonController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

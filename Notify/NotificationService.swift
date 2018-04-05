@@ -69,10 +69,10 @@ class NotificationService: UNNotificationServiceExtension {
             let silo = try Silo()
             
             var teamIdentity = try IdentityManager.getTeamIdentity()
-            try teamIdentity?.syncTeamDatabaseData()
+            try teamIdentity?.syncTeamDatabaseData(from: .mainApp, to: .notifyExt)
             
             // update teams if we need to
-            if teamIdentity != nil && TeamUpdater.shouldCheck {
+            if teamIdentity != nil && TeamUpdater.shouldCheck(for: unsealedRequest) {
                 TeamUpdater.checkForUpdate {_ in
                     dispatchAsync {
                         self.handleNoChecks(silo: silo, unsealedRequest: unsealedRequest, session: session, contentHandler: contentHandler)
