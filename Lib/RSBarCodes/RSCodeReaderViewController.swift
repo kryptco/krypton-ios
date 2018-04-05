@@ -295,7 +295,7 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
     public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         var barcodeObjects : Array<AVMetadataMachineReadableCodeObject> = []
         var cornersArray : Array<[AnyObject]> = []
-        for metadataObject : AnyObject in metadataObjects as [AnyObject]! {
+        for metadataObject : AnyObject in metadataObjects as [AnyObject] {
             if let videoPreviewLayer = self.videoPreviewLayer {
                 let transformedMetadataObject = videoPreviewLayer.transformedMetadataObject(for: metadataObject as! AVMetadataObject)
                 if ((transformedMetadataObject?.isKind(of: AVMetadataMachineReadableCodeObject.self)) != nil) {

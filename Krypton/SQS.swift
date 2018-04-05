@@ -181,9 +181,7 @@ class SQSManager:TransportMedium {
                 log("error recieving: \(e)", LogType.error)
                 completion?(false, e)
                 return
-            }
-            
-            completion?(true, NoMessageError())
+            }            
         }
         
     }
