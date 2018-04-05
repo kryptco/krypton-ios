@@ -224,6 +224,7 @@
 		FA8141511D714203004FE58C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8141501D714203004FE58C /* Security.framework */; };
 		FA8523CA1DBFDA5200D465D2 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8523C91DBFDA5200D465D2 /* Version.swift */; };
 		FA85486720757702007A4BEA /* TeamDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2E3C6205B03B9008FFCB0 /* TeamDataSync.swift */; };
+		FA8548732076B43D007A4BEA /* VersionMatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8548722076B43D007A4BEA /* VersionMatchTests.swift */; };
 		FA8B540C1ED73C7E00891161 /* SourceCodePro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */; };
 		FA8B540D1ED73C7E00891161 /* SourceCodePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */; };
 		FA8B540E1ED773EE00891161 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E1FF1D7A0AF9007D1B3A /* Request.swift */; };
@@ -808,6 +809,7 @@
 		FA8141431D70B0F4004FE58C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FA8523C91DBFDA5200D465D2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		FA8548722076B43D007A4BEA /* VersionMatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionMatchTests.swift; sourceTree = "<group>"; };
 		FA8B543B1ED775FF00891161 /* NotifyUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotifyUI-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA8B543D1ED7780500891161 /* NotifyUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifyUI.entitlements; sourceTree = "<group>"; };
 		FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamLoadController.swift; sourceTree = "<group>"; };
@@ -1632,6 +1634,7 @@
 				FACE33681EC257F9003EC6C0 /* DigestAlgorithmParsingTests.swift */,
 				FAF0B0971F04500400F65E04 /* UtilTests.swift */,
 				8DCB603A1E94458000E1B924 /* AnalyticsStub.swift */,
+				FA8548722076B43D007A4BEA /* VersionMatchTests.swift */,
 			);
 			path = KryptonTests;
 			sourceTree = "<group>";
@@ -2537,6 +2540,7 @@
 				FA3BFDEB1FC48FE40053A762 /* SodiumTests.swift in Sources */,
 				FA546CBF2034D3780024F94F /* TeamIdentityTests.swift in Sources */,
 				FA3BFDEA1FC48FE40053A762 /* PairingTests.swift in Sources */,
+				FA8548732076B43D007A4BEA /* VersionMatchTests.swift in Sources */,
 				FA3BFDED1FC48FE40053A762 /* SiloTests.swift in Sources */,
 				FA3BFDF01FC48FE40053A762 /* TeamDataManagerTests.swift in Sources */,
 				FA3BFDE91FC48FE40053A762 /* CodeSigningTests.swift in Sources */,
