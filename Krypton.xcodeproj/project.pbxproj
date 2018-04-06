@@ -810,6 +810,8 @@
 		FA8141501D714203004FE58C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FA8523C91DBFDA5200D465D2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		FA8548722076B43D007A4BEA /* VersionMatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionMatchTests.swift; sourceTree = "<group>"; };
+		FA8548832076C08F007A4BEA /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		FA8548842076C2EC007A4BEA /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		FA8B543B1ED775FF00891161 /* NotifyUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotifyUI-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA8B543D1ED7780500891161 /* NotifyUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifyUI.entitlements; sourceTree = "<group>"; };
 		FA8F8AB01F34EFA600D0D4BE /* TeamLoadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamLoadController.swift; sourceTree = "<group>"; };
@@ -1611,6 +1613,8 @@
 				FAC535D820016308007C21E4 /* Info.plist */,
 				FAEE048D1D736AD3002A7AFD /* SoftwareLibraries */,
 				FA2977981D7736A8003EB1F7 /* ImageLicenses */,
+				FA8548832076C08F007A4BEA /* .travis.yml */,
+				FA8548842076C2EC007A4BEA /* Makefile */,
 				FA632E421DB563E0003F3A3B /* SourceCodePro-Bold.ttf */,
 				FA632E431DB563E0003F3A3B /* SourceCodePro-Regular.ttf */,
 				FA33F2A2200E634B0046922D /* teams_invite_email_template.html */,
