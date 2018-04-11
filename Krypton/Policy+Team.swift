@@ -33,5 +33,20 @@ extension Policy {
         let short = approvalSeconds.timeAgo(suffix: "")
         
         return TemporaryApprovalTime(description: description, short: short, value: approvalSeconds)
-    }    
+    }
+    
+    static func isNeverAskAvailable() throws -> Bool {
+        guard let teamIdentity = try IdentityManager.getTeamIdentity() else {
+            return true
+        }
+        
+        // if the team has a policy set, we must not allow never ask
+        let policy = try teamIdentity.dataManager.withReadOnlyTransaction(){ try $0.fetchTeam().policy.temporaryApprovalSeconds }
+        guard policy == nil
+        else {
+            return false
+        }
+        
+        return true
+    }
 }

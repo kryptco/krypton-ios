@@ -292,6 +292,16 @@ class Policy {
             // if never ask is on, all requests should go through automatically
             guard settings.shouldNeverAsk == false
             else {
+                // ensure the team allows this policy
+                do {
+                    guard try Policy.isNeverAskAvailable() else {
+                        return false
+                    }
+                } catch {
+                    log("error checking never ask policy: \(error)", .error)
+                    return false
+                }
+                
                 return true
             }
             

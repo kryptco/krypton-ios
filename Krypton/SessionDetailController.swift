@@ -221,8 +221,21 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
             Policy.SessionSettings(for: session).setAlwaysAsk()
 
         case .off:
-            Analytics.postEvent(category: "manual approval", action: String(false))
+            do {
+                guard try Policy.isNeverAskAvailable() else {
+                    sender.selectedSegmentIndex = ApprovalControl.on.rawValue
+                    self.showWarning(title: "Not Available", body: "Your team has enabled a custom auto-approval window.")
+                    return
+                }
+
+            } catch {
+                sender.selectedSegmentIndex = ApprovalControl.on.rawValue
+                self.showWarning(title: "Error", body: "Could not read team data: \(error).")
+                return
+            }
             
+            Analytics.postEvent(category: "manual approval", action: String(false))
+                        
             self.askConfirmationIn(title: "Never Ask?",
                                    text: "Are you sure you want to disable manually approving requests? This means every incoming SSH login, Git commit or tag signature, or other request will be automatically approved without your direct approval.",
                                    accept: "Yes, never ask",
@@ -276,7 +289,10 @@ class SessionDetailController: KRBaseTableController, UITextFieldDelegate {
     func updateApprovalControl(session:Session) {
         let policySession = Policy.SessionSettings(for: session)
         
-        if policySession.settings.shouldNeverAsk  {
+        // It's ok to try? here because this only for display purposes
+        let isNeverAskAvailable = (try? Policy.isNeverAskAvailable()) ?? false
+        
+        if policySession.settings.shouldNeverAsk && isNeverAskAvailable {
             approvalSegmentedControl.selectedSegmentIndex = ApprovalControl.off.rawValue
             self.temporarilyApprovedHostsWarningLabel.isHidden = true
             self.viewTemporarilyApprovedHosts.isHidden = true
