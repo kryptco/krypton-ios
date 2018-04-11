@@ -90,8 +90,10 @@ class ApproveDetailController: UIViewController {
                 
                 
                 do {
-                    let dbType = try identity.pickMoreUpdated(first: .mainApp, second: .notifyExt)
-                    
+                    // It is ok to not handle this error and default to the .mainApp db because:
+                    // it's a read-only transaction + this is code is only run by the main app or the NotificationContent ext (which doesn't have it's own db).
+                    let dbType = (try? identity.pickMoreUpdated(first: .mainApp, second: .notifyExt)) ?? .mainApp
+
                     try identity.dataManager.withReadOnlyTransaction(dbType: dbType) {
                         try teamOpController?.set(identity: identity, teamOperationRequest: teamOpRequest, dataManager: $0)
                     }
