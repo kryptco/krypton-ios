@@ -72,8 +72,7 @@ class TeamService {
     
     enum ServerError:Error, CustomDebugStringConvertible {
         
-        case notAppendingToMainChain
-        case unspecified
+        case known(KnownServerErrorMessage)
         case unknown(String)
         case connection(String)
         
@@ -81,6 +80,18 @@ class TeamService {
             case unspecifiedError = "unspecified error"
             case notAppendingToMainChain = "NotAppendingToMainChain"
             case databaseTransactionRollback = "DatabaseTransactionRollback"
+            case freeTierLimitReached = "FreeTierLimitReached"
+            
+            var humanReadableError:String {
+                switch self {
+                case .notAppendingToMainChain, .databaseTransactionRollback:
+                    return "Not appending to the main chain, need to fetch new blocks"
+                case .unspecifiedError:
+                    return "Server error not specified"
+                case .freeTierLimitReached:
+                    return "You have reached the limit of the free tier. Please upgrade to Krypton Teams Pro for unlimited team members, real-time audit logs, and pinned server hosts. Please contact your team admin to upgrade."
+                }
+            }
         }
         
         init(message:String) {
@@ -89,20 +100,29 @@ class TeamService {
                 return
             }
             
-            switch knownError {
-            case .unspecifiedError:
-                self = .unspecified
-            case .notAppendingToMainChain, .databaseTransactionRollback: // handle these the same way for now
-                self = .notAppendingToMainChain
+            self = .known(knownError)
+        }
+        
+        var isNotAppendingToMainChain:Bool {
+            switch self {
+            case .known(let knownError):
+                switch knownError {
+                case .notAppendingToMainChain, .databaseTransactionRollback:
+                    return true
+                default:
+                    break
+                }
+            default:
+                break
             }
+            
+            return false
         }
         
         var debugDescription: String {
             switch self {
-            case .notAppendingToMainChain:
-                return "Not appending to the main chain, need to fetch new blocks"
-            case .unspecified:
-                return "Server error not specified"
+            case .known(let knownError):
+                return knownError.humanReadableError
             case .unknown(let message):
                 return "Unknown error from server: \(message)"
             case .connection(let message):
@@ -237,7 +257,7 @@ class TeamService {
         
         switch serverResponse {
         case .error(let error):
-            if case .notAppendingToMainChain = error, retry > 0 {
+            if error.isNotAppendingToMainChain, retry > 0 {
                 switch try self.getTeamSyncUnlocked(using: invite, dataManager: dataManager) {
                 case .error(let e):
                     return .error(e)
@@ -287,7 +307,7 @@ class TeamService {
         switch serverResponse {
             
         case .error(let error):
-            if case .notAppendingToMainChain = error, retry > 0 {
+            if error.isNotAppendingToMainChain, retry > 0 {
                 switch try self.getVerifiedTeamUpdatesSyncUnlocked(dataManager: dataManager){
                 case .error(let e):
                     return .error(e)
@@ -327,7 +347,7 @@ class TeamService {
         case .error(let error):
             teamIdentity.mutableData = originalMutableData
             
-            if case .notAppendingToMainChain = error, retryCount > 0 {
+            if error.isNotAppendingToMainChain, retryCount > 0 {
                 
                 switch try self.getVerifiedTeamUpdatesSyncUnlocked(dataManager: dataManager) {
                 case .error(let fetchError):

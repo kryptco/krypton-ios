@@ -37,7 +37,7 @@ class TeamJoinCompleteController:KRBaseController {
             self.action = action
         }
         var debugDescription: String {
-            return "\(action). Internal message: \(error)"
+            return "\(action) Internal message: \(error)"
         }
     }
     
@@ -231,7 +231,7 @@ class TeamJoinCompleteController:KRBaseController {
         }
     }
     
-    func showFailure(by error:Error) {
+    func showFailure(by error:JoinWorkflowError) {
         dispatchMain  {
             self.checkBox.secondaryCheckmarkTintColor = UIColor.reject
             self.checkBox.tintColor = UIColor.reject
@@ -242,7 +242,17 @@ class TeamJoinCompleteController:KRBaseController {
                 
             }) { (_) in
                 self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
-                self.showWarning(title: "Error", body: "Could not accept team invitation. \(error).", then: {
+                
+                if  case TeamService.ServerError.known(let knownError) = error.error,
+                    case TeamService.ServerError.KnownServerErrorMessage.freeTierLimitReached = knownError
+                {
+                    self.showWarning(title: "Free Tier Limit Reached", body: "\(knownError.humanReadableError)", then: {
+                        self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)
+                    })
+                    return
+                }
+                
+                self.showWarning(title: "Error", body: "Could not accept team invitation. \(error)", then: {
                     self.performSegue(withIdentifier: "dismissRedoInvitation", sender: nil)
                 })
             }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="f8Q-Ha-EzC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="f8Q-Ha-EzC">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -13,13 +13,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Bold</string>
-            <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-Medium</string>
-            <string>AvenirNext-Regular</string>
-            <string>AvenirNext-UltraLight</string>
-        </array>
         <array key="SourceCodePro-Bold.ttf">
             <string>SourceCodePro-Bold</string>
         </array>
@@ -41,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAb-fj-Gvz" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="127.66666666666669" y="239" width="120" height="120"/>
+                                <rect key="frame" x="127.66666666666669" y="239.33333333333337" width="120" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -65,10 +58,10 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Syu-3W-S0g">
-                                <rect key="frame" x="127.66666666666669" y="239" width="120" height="120"/>
+                                <rect key="frame" x="127.66666666666669" y="239.33333333333337" width="120" height="120"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIT-u0-kge" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="44.999999999999986" y="45" width="30" height="30"/>
+                                        <rect key="frame" x="44.999999999999986" y="44.999999999999972" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="3dK-4Z-Mua"/>
@@ -90,7 +83,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="LOADING TEAM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvw-kJ-dA7">
-                                <rect key="frame" x="140.66666666666666" y="369" width="94" height="17"/>
+                                <rect key="frame" x="140.66666666666666" y="369.33333333333331" width="94" height="16.666666666666686"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -169,7 +162,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="ACME Co." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="Kmz-vR-c43">
-                                <rect key="frame" x="16" y="70" width="343" height="27.666666666666671"/>
+                                <rect key="frame" x="16" y="70" width="343" height="27.333333333333329"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -199,7 +192,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Aw-Pm-Nlc" customClass="KRButton" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="40" y="462.66666666666669" width="137.66666666666666" height="34"/>
+                                <rect key="frame" x="40" y="462" width="137.66666666666666" height="34"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                 <state key="normal" title="Change">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -223,7 +216,7 @@
                                 </connections>
                             </button>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Kt-dz-VeA" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="157.66666666666666" y="103.66666666666669" width="60" height="60"/>
+                                <rect key="frame" x="157.66666666666666" y="103.33333333333331" width="60" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -247,7 +240,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFT-Oe-swp" userLabel="ArcView">
-                                <rect key="frame" x="157.66666666666666" y="103.66666666666669" width="60" height="60"/>
+                                <rect key="frame" x="157.66666666666666" y="103.33333333333331" width="60" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qp6-wo-kzN" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                         <rect key="frame" x="22" y="22" width="16" height="16"/>
@@ -272,7 +265,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wvb-ED-Uma" customClass="KRButton" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="198" y="462.66666666666669" width="137" height="34"/>
+                                <rect key="frame" x="198" y="462" width="137" height="34"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                 <state key="normal" title="Resend">
                                     <color key="titleColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -296,25 +289,25 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S1G-jy-Z4E" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="20" y="173.66666666666663" width="335" height="226.33333333333337"/>
+                                <rect key="frame" x="20" y="173.33333333333331" width="335" height="226.33333333333331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last step" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sc-kb-eqJ">
-                                        <rect key="frame" x="9.9999999999999964" y="11" width="56.666666666666657" height="19"/>
+                                        <rect key="frame" x="10.000000000000004" y="10.999999999999998" width="56.333333333333343" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify your email" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrS-GU-zLK">
-                                        <rect key="frame" x="10" y="30" width="315" height="30.333333333333329"/>
+                                        <rect key="frame" x="10" y="30.333333333333314" width="315" height="30.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fAi-gU-ug5" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="120.33333333333334" width="315" height="96"/>
+                                        <rect key="frame" x="10" y="120.66666666666666" width="315" height="95.666666666666657"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="255" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="alice@acme.co" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zgy-GI-Bsa">
-                                                <rect key="frame" x="10" y="26" width="160" height="40"/>
+                                                <rect key="frame" x="10" y="25.666666666666686" width="160" height="40"/>
                                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="70b-Tg-nCX"/>
@@ -327,13 +320,13 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EMAIL ADDRESS" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mI7-cN-fV1">
-                                                <rect key="frame" x="10" y="4" width="295" height="14"/>
+                                                <rect key="frame" x="10" y="3.9999999999999991" width="295" height="13.666666666666664"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
                                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="@krypt.co" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CX8-ym-C2l">
-                                                <rect key="frame" x="168" y="26" width="147" height="40"/>
+                                                <rect key="frame" x="168" y="25.666666666666686" width="147" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                                 <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -369,7 +362,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your company or team email." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulc-ul-IFJ">
-                                        <rect key="frame" x="10" y="60.333333333333336" width="315" height="20.666666666666664"/>
+                                        <rect key="frame" x="10" y="60.66666666666665" width="315" height="20.666666666666664"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -400,13 +393,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="TEAM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="hcL-Mq-AD0">
-                                <rect key="frame" x="168.66666666666666" y="52" width="38" height="18"/>
+                                <rect key="frame" x="169" y="52" width="37.666666666666657" height="18"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="13"/>
                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHr-r0-oia">
-                                <rect key="frame" x="20" y="414" width="335" height="38.666666666666686"/>
+                                <rect key="frame" x="20" y="413.66666666666669" width="335" height="38.333333333333314"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Check your email! 
@@ -492,7 +485,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R2R-cu-l70" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="127.66666666666669" y="190" width="120" height="120"/>
+                                <rect key="frame" x="127.66666666666669" y="191" width="120" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -516,7 +509,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EvJ-cF-WWW">
-                                <rect key="frame" x="127.66666666666669" y="190" width="120" height="120"/>
+                                <rect key="frame" x="127.66666666666669" y="191" width="120" height="120"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQy-Dp-fT3" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                         <rect key="frame" x="44.999999999999986" y="45" width="30" height="30"/>
@@ -541,13 +534,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="JOINING" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bYo-RZ-ocM">
-                                <rect key="frame" x="160.66666666666666" y="330" width="53" height="17"/>
+                                <rect key="frame" x="161" y="331" width="52.666666666666657" height="16.666666666666686"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="ACME Co." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="Sc6-oh-tAF">
-                                <rect key="frame" x="10" y="347" width="355" height="39"/>
+                                <rect key="frame" x="10" y="347.66666666666669" width="355" height="38.333333333333314"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="28"/>
                                 <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -556,13 +549,13 @@
                                 <rect key="frame" x="0.0" y="406" width="375" height="406"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="SUCCESS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsU-jY-gKK">
-                                        <rect key="frame" x="10" y="20" width="355" height="14"/>
+                                        <rect key="frame" x="10" y="20" width="355" height="13.666666666666664"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Welcome to the team" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xqb-Pl-rJW">
-                                        <rect key="frame" x="10" y="34" width="355" height="39"/>
+                                        <rect key="frame" x="10" y="33.666666666666686" width="355" height="38.333333333333343"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="28"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -666,7 +659,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="79A-yn-LrW" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                    <rect key="frame" x="20" y="20" width="335" height="233"/>
+                                    <rect key="frame" x="20" y="20.000000000000014" width="335" height="232.33333333333337"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Id8-i4-fNp">
                                             <rect key="frame" x="20" y="55" width="110" height="3"/>
@@ -676,7 +669,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="alex@acme.co" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="3gr-9V-bfx">
-                                            <rect key="frame" x="20" y="92" width="151" height="31"/>
+                                            <rect key="frame" x="20" y="92" width="151" height="30.333333333333329"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                             <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -712,7 +705,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1o-8o-sHK" customClass="KRSimpleButton" customModule="Krypton" customModuleProvider="target">
-                                            <rect key="frame" x="277" y="95.333333333333329" width="48" height="24"/>
+                                            <rect key="frame" x="277" y="95" width="48" height="24"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="48" id="aVy-S2-2pr"/>
@@ -735,7 +728,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KCv-1V-P9y" customClass="KRSimpleButton" customModule="Krypton" customModuleProvider="target">
-                                            <rect key="frame" x="75.333333333333314" y="163" width="185" height="50"/>
+                                            <rect key="frame" x="75.333333333333314" y="162.33333333333334" width="185" height="50"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="T0T-ls-mEN"/>
@@ -1047,11 +1040,11 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlT-lW-JKe" customClass="KRSimpleButton" customModule="Krypton" customModuleProvider="target">
-                                                            <rect key="frame" x="258" y="9.3333333333333321" width="67" height="25.999999999999996"/>
+                                                            <rect key="frame" x="283" y="9.3333333333333321" width="42" height="25.999999999999996"/>
                                                             <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="14"/>
                                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                                            <state key="normal" title="STARTER">
+                                                            <state key="normal" title="FREE">
                                                                 <color key="titleColor" red="0.97254901959999995" green="0.6588235294" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <state key="selected">
@@ -1253,7 +1246,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Cd-g2-zyp" customClass="KRSimpleButton" customModule="Krypton" customModuleProvider="target">
-                                                    <rect key="frame" x="30" y="10" width="315" height="38"/>
+                                                    <rect key="frame" x="30" y="10" width="315" height="37.666666666666664"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
@@ -1363,7 +1356,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Admin" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yug-n1-sUC">
-                                            <rect key="frame" x="19.999999999999996" y="100.66666666666667" width="58.666666666666657" height="24.666666666666671"/>
+                                            <rect key="frame" x="20.000000000000004" y="100.66666666666667" width="58.333333333333343" height="24.666666666666671"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                             <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1489,7 +1482,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5j-7c-X1I">
-                                                    <rect key="frame" x="20" y="10" width="113" height="22"/>
+                                                    <rect key="frame" x="20.000000000000007" y="10" width="112.66666666666669" height="22"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="PGP ">
                                                             <attributes>
@@ -1879,14 +1872,14 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="SSHHostKeyCell" rowHeight="242" id="Qgo-s1-DAM" customClass="SSHHostKeyCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="205.33333333333334" width="375" height="242"/>
+                                <rect key="frame" x="0.0" y="205.33333333333337" width="375" height="242"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qgo-s1-DAM" id="aiA-DN-It6">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="242"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" text="github.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xii-g2-Hai">
-                                            <rect key="frame" x="20.000000000000007" y="10" width="111.66666666666669" height="19"/>
+                                            <rect key="frame" x="19.999999999999993" y="10" width="111.33333333333331" height="19"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -2052,14 +2045,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="SSHUnpinnedHostKeyCell" rowHeight="210" id="aiB-Hu-E5P" customClass="SSHUnpinnedHostKeyCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="447.33333333333331" width="375" height="210"/>
+                                <rect key="frame" x="0.0" y="447.33333333333326" width="375" height="210"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aiB-Hu-E5P" id="7Ak-YR-dOC">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="github.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSh-g6-D5f">
-                                            <rect key="frame" x="20.000000000000007" y="9.9999999999999982" width="111.66666666666669" height="24.333333333333329"/>
+                                            <rect key="frame" x="19.999999999999993" y="9.9999999999999982" width="111.33333333333331" height="24.333333333333329"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <color key="textColor" red="0.97254901960784312" green="0.6588235294117647" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -2390,10 +2383,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Do3-83-zU0">
-                                <rect key="frame" x="0.0" y="94.666666666666657" width="375" height="442.33333333333337"/>
+                                <rect key="frame" x="0.0" y="94.333333333333343" width="375" height="442.66666666666663"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IR6-Yt-HkR">
-                                        <rect key="frame" x="30" y="197" width="315" height="25"/>
+                                        <rect key="frame" x="30" y="196.33333333333337" width="315" height="24.666666666666657"/>
                                         <attributedString key="attributedText">
                                             <fragment content="•">
                                                 <attributes>
@@ -2413,21 +2406,21 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2S-ju-9ix">
-                                        <rect key="frame" x="42" y="296.33333333333331" width="303" height="65.666666666666686"/>
+                                        <rect key="frame" x="42" y="295" width="303" height="65.666666666666686"/>
                                         <string key="text">Protect your team from man-in-the-middle (MITM) attacks. Pin public keys of known servers and securely and seamlessly distribute them to your team members in real-time.</string>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USG-uk-cQm">
-                                        <rect key="frame" x="42" y="25.000000000000004" width="303" height="49.333333333333343"/>
+                                        <rect key="frame" x="42" y="24.666666666666675" width="303" height="49.333333333333343"/>
                                         <string key="text">View all of your team members' audit logs in real-time. Every SSH login or Git commit and tag signature is securely recorded so only team owners can see it.</string>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SyT-cI-I4c">
-                                        <rect key="frame" x="30" y="0.0" width="315" height="25"/>
+                                        <rect key="frame" x="30" y="0.0" width="315" height="24.666666666666668"/>
                                         <attributedString key="attributedText">
                                             <fragment content="•">
                                                 <attributes>
@@ -2447,7 +2440,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8H-K2-YgS">
-                                        <rect key="frame" x="30" y="271.33333333333331" width="315" height="25"/>
+                                        <rect key="frame" x="30" y="270.33333333333337" width="315" height="24.666666666666686"/>
                                         <attributedString key="attributedText">
                                             <fragment content="• ">
                                                 <attributes>
@@ -2467,7 +2460,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9U-FL-kyx">
-                                        <rect key="frame" x="30" y="90.333333333333329" width="315" height="25"/>
+                                        <rect key="frame" x="30" y="90.000000000000014" width="315" height="24.666666666666671"/>
                                         <attributedString key="attributedText">
                                             <fragment content="•">
                                                 <attributes>
@@ -2487,14 +2480,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfH-Tc-fw4">
-                                        <rect key="frame" x="42" y="115.33333333333331" width="303" height="65.666666666666686"/>
+                                        <rect key="frame" x="42" y="114.66666666666666" width="303" height="65.666666666666657"/>
                                         <string key="text">The one place to manage your team's SSH and PGP public-keys. Easily onboard new team members by granting access to the resources they need to do their work.</string>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Create custom temporary approval rules and server policies." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DsE-rZ-qzR">
-                                        <rect key="frame" x="42" y="222.33333333333331" width="303" height="33"/>
+                                        <rect key="frame" x="42" y="221.33333333333337" width="303" height="33"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2591,20 +2584,20 @@ Cg
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Teams" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agi-gO-5tH">
-                                <rect key="frame" x="68" y="53.999999999999993" width="61" height="27.666666666666664"/>
+                                <rect key="frame" x="68" y="54.000000000000007" width="61" height="27.333333333333336"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="big-s0-abB">
-                                <rect key="frame" x="30" y="81.666666666666671" width="99" height="3"/>
+                                <rect key="frame" x="30" y="81.333333333333329" width="99" height="3"/>
                                 <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="gkt-VU-sdh"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="For" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZh-3d-jom">
-                                <rect key="frame" x="30" y="53.999999999999993" width="30" height="27.666666666666664"/>
+                                <rect key="frame" x="30" y="54.000000000000007" width="30" height="27.333333333333336"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2688,7 +2681,7 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxg-UI-XTh" customClass="KRSimpleButton" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="87.666666666666686" y="329.66666666666669" width="200" height="60"/>
+                                <rect key="frame" x="87.666666666666686" y="328.33333333333331" width="200" height="60"/>
                                 <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0lo-PX-RZU"/>
@@ -2712,31 +2705,31 @@ Cg
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tk1-ap-uGV" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="20" y="63.999999999999986" width="335" height="225.66666666666663"/>
+                                <rect key="frame" x="20" y="64.000000000000014" width="335" height="224.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvz-LQ-VH1">
-                                        <rect key="frame" x="10" y="11.000000000000002" width="41" height="19.666666666666671"/>
+                                        <rect key="frame" x="10" y="10.999999999999998" width="41" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your team name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzv-BC-Fqa">
-                                        <rect key="frame" x="10" y="30.666666666666671" width="249" height="31"/>
+                                        <rect key="frame" x="9.9999999999999858" y="30.333333333333329" width="248.66666666666663" height="30.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's get started by picking a name for your team." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEw-Ie-LiC">
-                                        <rect key="frame" x="10" y="61.666666666666679" width="315" height="19.333333333333336"/>
+                                        <rect key="frame" x="10" y="60.666666666666679" width="315" height="19.333333333333336"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wrr-Mx-HJU" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="121.66666666666666" width="315" height="74"/>
+                                        <rect key="frame" x="10" y="120.66666666666666" width="315" height="73.666666666666657"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" placeholder="acme-dev" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GJP-Sj-7xU">
-                                                <rect key="frame" x="10" y="26" width="295" height="40"/>
+                                                <rect key="frame" x="10" y="25.666666666666686" width="295" height="40"/>
                                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="8jD-ur-pCv"/>
@@ -2749,7 +2742,7 @@ Cg
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEAM NAME" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uF-ej-XaA">
-                                                <rect key="frame" x="10" y="4" width="61" height="14"/>
+                                                <rect key="frame" x="10" y="3.9999999999999991" width="61" height="13.666666666666664"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
                                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2771,7 +2764,7 @@ Cg
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kRK-Vv-HkF">
-                                        <rect key="frame" x="20" y="187.66666666666666" width="295" height="4"/>
+                                        <rect key="frame" x="20" y="186.33333333333334" width="295" height="4"/>
                                         <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="4" id="un2-zp-oQJ"/>
@@ -2834,22 +2827,22 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YSe-Te-Dvy" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="20" y="63.999999999999986" width="335" height="219.66666666666663"/>
+                                <rect key="frame" x="20" y="64.000000000000014" width="335" height="219.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 2" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGu-2Z-QaN">
-                                        <rect key="frame" x="10" y="11" width="41" height="20"/>
+                                        <rect key="frame" x="10" y="10.999999999999998" width="41" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable audit logs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-Rl-oyu">
-                                        <rect key="frame" x="10" y="30.666666666666671" width="185" height="30"/>
+                                        <rect key="frame" x="10" y="30" width="185" height="30.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vc-zF-hbe">
-                                        <rect key="frame" x="10" y="61" width="315" height="57.666666666666657"/>
+                                        <rect key="frame" x="10" y="60.666666666666671" width="315" height="57.666666666666671"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Real-time SSH and Git Commit access logs for your team members. ">
                                                 <attributes>
@@ -2869,20 +2862,20 @@ Cg
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="37N-hT-qSq">
-                                        <rect key="frame" x="10" y="158.66666666666666" width="51" height="31"/>
+                                        <rect key="frame" x="10" y="158.33333333333334" width="51" height="31"/>
                                         <color key="onTintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="valueChanged" destination="pbG-z5-w3P" eventType="valueChanged" id="78t-0g-cBt"/>
                                         </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audit logs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOC-ao-QRc">
-                                        <rect key="frame" x="79" y="163.33333333333334" width="75.666666666666686" height="22"/>
+                                        <rect key="frame" x="79" y="163" width="75.666666666666686" height="22"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="enabled" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pC7-Dr-ePb">
-                                        <rect key="frame" x="158.66666666666666" y="163.33333333333334" width="61.333333333333343" height="22"/>
+                                        <rect key="frame" x="158.66666666666666" y="163" width="61.333333333333343" height="22"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2912,7 +2905,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cc6-BE-HK5" customClass="KRSimpleButton" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="87.666666666666686" y="323.66666666666669" width="200" height="60"/>
+                                <rect key="frame" x="87.666666666666686" y="323.33333333333331" width="200" height="60"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Dey-wn-aqO"/>
@@ -2970,22 +2963,22 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osc-WT-Le7" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="20" y="63.999999999999986" width="335" height="246.66666666666663"/>
+                                <rect key="frame" x="20" y="64.000000000000014" width="335" height="246.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 3" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoJ-6X-U6J">
-                                        <rect key="frame" x="10" y="11" width="41" height="20"/>
+                                        <rect key="frame" x="10" y="10.999999999999998" width="41" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Approval Window" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LoT-3F-W23">
-                                        <rect key="frame" x="10" y="30.666666666666671" width="264.66666666666669" height="30"/>
+                                        <rect key="frame" x="10" y="30" width="264.33333333333331" height="30.333333333333329"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcn-j6-pMz">
-                                        <rect key="frame" x="10" y="61" width="315" height="57.666666666666657"/>
+                                        <rect key="frame" x="10" y="60.666666666666671" width="315" height="57.666666666666671"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Auto-approve intervals determine how often team members will need to approve SSH login or Git code signing requests.">
                                                 <attributes>
@@ -2998,7 +2991,7 @@ Cg
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zNm-Sk-imL" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="33.666666666666664" y="159.33333333333334" width="20" height="20"/>
+                                        <rect key="frame" x="33.666666666666664" y="159" width="20" height="20"/>
                                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="ChD-VQ-ta4"/>
@@ -3011,7 +3004,7 @@ Cg
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dE1-dN-VTK" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="161" y="159.33333333333334" width="20" height="20"/>
+                                        <rect key="frame" x="161" y="159" width="20" height="20"/>
                                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="O6F-Hs-gzj"/>
@@ -3024,7 +3017,7 @@ Cg
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="95Q-z3-SWf" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="288.66666666666669" y="159.33333333333334" width="20" height="20"/>
+                                        <rect key="frame" x="289" y="159" width="20" height="20"/>
                                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="M2B-Xx-clr"/>
@@ -3037,7 +3030,7 @@ Cg
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh5-QU-FJ3">
-                                        <rect key="frame" x="31.666666666666657" y="159.33333333333334" width="279" height="21"/>
+                                        <rect key="frame" x="31.666666666666657" y="159" width="279.33333333333337" height="21"/>
                                         <color key="tintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="minimumTrackTintColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="maximumTrackTintColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
@@ -3047,55 +3040,55 @@ Cg
                                         </connections>
                                     </slider>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YoE-tJ-cbr">
-                                        <rect key="frame" x="33" y="159.33333333333334" width="20" height="20"/>
+                                        <rect key="frame" x="33" y="159" width="20" height="20"/>
                                         <connections>
                                             <action selector="snapToAlwaysAsk" destination="RPI-Yo-3rk" eventType="touchUpInside" id="YrC-jJ-lJt"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UOq-Q1-whK">
-                                        <rect key="frame" x="161" y="159.33333333333334" width="20" height="20"/>
+                                        <rect key="frame" x="161" y="159" width="20" height="20"/>
                                         <connections>
                                             <action selector="snapToOneHour" destination="RPI-Yo-3rk" eventType="touchUpInside" id="MPd-fa-74e"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQl-Q6-bYZ">
-                                        <rect key="frame" x="288" y="159.33333333333334" width="20" height="20"/>
+                                        <rect key="frame" x="288.33333333333331" y="159" width="20" height="20"/>
                                         <connections>
                                             <action selector="snapToThreeHours" destination="RPI-Yo-3rk" eventType="touchUpInside" id="v3V-D8-qM0"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Always Ask" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPw-ZT-7hk">
-                                        <rect key="frame" x="10" y="186.33333333333334" width="66.666666666666671" height="16.333333333333343"/>
+                                        <rect key="frame" x="10" y="186" width="66.666666666666671" height="16.666666666666657"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                                         <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Very Secure" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qls-mY-Pho">
-                                        <rect key="frame" x="16" y="202.66666666666669" width="55" height="14"/>
+                                        <rect key="frame" x="16.333333333333339" y="202.66666666666669" width="54.666666666666657" height="13.666666666666657"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 hour" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V16-8w-JeE">
-                                        <rect key="frame" x="152" y="186.33333333333334" width="38" height="16.333333333333343"/>
+                                        <rect key="frame" x="152" y="186" width="38" height="16.666666666666657"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strong" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDI-1Z-yzl">
-                                        <rect key="frame" x="155.66666666666666" y="202.33333333333331" width="31" height="14"/>
+                                        <rect key="frame" x="155.66666666666666" y="202.33333333333331" width="31" height="13.666666666666657"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 hours" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xMc-mO-n4C">
-                                        <rect key="frame" x="276.66666666666669" y="186.33333333333334" width="44" height="16.333333333333343"/>
+                                        <rect key="frame" x="277" y="186" width="43.666666666666686" height="16.666666666666657"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Acceptable" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vme-LG-1Ng">
-                                        <rect key="frame" x="272" y="202.66666666666669" width="53" height="14"/>
+                                        <rect key="frame" x="272.33333333333331" y="202.66666666666669" width="52.666666666666686" height="13.666666666666657"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="10"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3153,7 +3146,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTK-pG-nYc" customClass="KRSimpleButton" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="87.666666666666686" y="350.66666666666669" width="200" height="60"/>
+                                <rect key="frame" x="87.666666666666686" y="350.33333333333331" width="200" height="60"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="SCn-fJ-plz"/>
@@ -3220,19 +3213,19 @@ Cg
                                     <rect key="frame" x="20" y="20" width="335" height="303"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 4" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzG-eK-4LR">
-                                            <rect key="frame" x="10" y="11" width="41" height="20"/>
+                                            <rect key="frame" x="10" y="10.999999999999998" width="41" height="19.333333333333329"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                             <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="0.5" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SSH Known Hosts" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQg-qV-j54">
-                                            <rect key="frame" x="10" y="30.666666666666664" width="189.33333333333334" height="30"/>
+                                            <rect key="frame" x="10" y="30" width="189.33333333333334" height="30.333333333333329"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                             <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Nc-Xd-3O8">
-                                            <rect key="frame" x="10" y="61" width="315" height="57.666666666666657"/>
+                                            <rect key="frame" x="10" y="60.666666666666671" width="315" height="57.666666666666671"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Below are your known hosts used with Krypton.">
                                                     <attributes>
@@ -3358,7 +3351,7 @@ Cg
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="github.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ZX-Cj-aSa">
-                                            <rect key="frame" x="20.000000000000007" y="19" width="100.66666666666669" height="42"/>
+                                            <rect key="frame" x="19.999999999999993" y="19" width="100.33333333333331" height="42"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                             <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>

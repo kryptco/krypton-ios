@@ -9,7 +9,7 @@
 import Foundation
 import JSON
 
-struct SSHHostKey:Jsonable,Equatable  {
+struct SSHHostKey:Jsonable,Equatable, Hashable  {
     let host:String
     let publicKey:SSHWireFormat
     
@@ -34,6 +34,10 @@ struct SSHHostKey:Jsonable,Equatable  {
     
     static func ==(l:SSHHostKey, r:SSHHostKey) -> Bool {
         return l.host == r.host && l.publicKey == r.publicKey
+    }
+    
+    var hashValue: Int {
+        return host.hashValue ^ publicKey.hashValue &* 16777619
     }
 }
 

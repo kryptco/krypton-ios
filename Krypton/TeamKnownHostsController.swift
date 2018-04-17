@@ -56,14 +56,14 @@ class TeamKnownHostsController: KRBaseTableController {
 
         let knownHostsSystem:[SSHHostKey] = (try? KnownHostManager.shared.fetchAll().map({ $0.sshHostKey() })) ?? []
 
-        var pinnedMapIndex:[String:SSHHostKey] = [:]
+        var pinnedHostSet = Set<SSHHostKey>()
         hosts.forEach {
-            pinnedMapIndex[$0.host] = $0
+            pinnedHostSet.insert($0)
         }
         
         var unpinnedHosts:[SSHHostKey] = []
         for host in knownHostsSystem {
-            if let pinned = pinnedMapIndex[host.host], pinned == host {
+            if pinnedHostSet.contains(host) {
                 continue
             }
             

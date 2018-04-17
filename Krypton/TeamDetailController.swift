@@ -8,6 +8,7 @@
 
 import UIKit
 import LocalAuthentication
+import SafariServices
 
 class TeamDetailController: KRBaseTableController, KRTeamDataControllerDelegate, UITextFieldDelegate, TeamInviteModalDelegate {
     
@@ -271,7 +272,7 @@ class TeamDetailController: KRBaseTableController, KRTeamDataControllerDelegate,
     // MARK: Billing Helpers
     func updateViewForCurrentBillingInfo() {
         guard let currentBillingInfo = self.currentBillingInfo else {
-            tierLabel.setTitle("STARTER", for: .normal)
+            tierLabel.setTitle("FREE", for: .normal)
             tierLabel.setBorder(color: UIColor.black, cornerRadius: tierLabel.layer.cornerRadius, borderWidth: tierLabel.layer.borderWidth)
             upgradeButton.setTitle("Upgrade", for: .normal)
 
@@ -289,35 +290,43 @@ class TeamDetailController: KRBaseTableController, KRTeamDataControllerDelegate,
         
         tierLabel.setTitle(currentBillingInfo.currentTier.name.uppercased(), for: .normal)
         
-        usageMembers.text = "\(currentBillingInfo.usage.members)"
-        usageHosts.text = "\(currentBillingInfo.usage.hosts)"
-        usageLogs.text = "\(currentBillingInfo.usage.logsLastThirtyDays)"
+        // usage
+        let toUsageText = { (usage:UInt64) -> String in
+            if usage > 1000 {
+                return "\(usage/1000)k"
+            }
+            
+            return "\(usage)"
+        }
         
-        limitMembers.text = "\(currentBillingInfo.currentTier.limit.members)"
-        limitHosts.text = "\(currentBillingInfo.currentTier.limit.hosts)"
-        limitLogs.text = "\(currentBillingInfo.currentTier.limit.logsLastThirtyDays/1000)k"
+        usageMembers.text = toUsageText(currentBillingInfo.usage.members)
+        usageHosts.text = toUsageText(currentBillingInfo.usage.hosts)
+        usageLogs.text = toUsageText(currentBillingInfo.usage.logsLastThirtyDays)
+
+        
+        // limits
+        let toLimitText = { (limit:UInt64?) -> String in
+            if let limit = limit{
+                if limit > 1000 {
+                    return "\(limit/1000)k"
+                }
+                return "\(limit)"
+            }
+            
+            return "∞"
+        }
+
+        limitMembers.text = toLimitText(currentBillingInfo.currentTier.limit?.members)
+        limitHosts.text = toLimitText(currentBillingInfo.currentTier.limit?.hosts)
+        limitLogs.text = toLimitText(currentBillingInfo.currentTier.limit?.logsLastThirtyDays)
 
         limitMembers.textColor = UIColor.black
         limitHosts.textColor = UIColor.black
         limitLogs.textColor = UIColor.black
 
-        if currentBillingInfo.usage.members > currentBillingInfo.currentTier.limit.members/2 {
-            usageMembers.textColor = warningColor
-        } else {
-            usageMembers.textColor = UIColor.black
-        }
-        
-        if currentBillingInfo.usage.hosts > currentBillingInfo.currentTier.limit.hosts/2 {
-            usageHosts.textColor = warningColor
-        } else {
-            usageHosts.textColor = UIColor.black
-        }
-        
-        if currentBillingInfo.usage.logsLastThirtyDays > currentBillingInfo.currentTier.limit.logsLastThirtyDays/2 {
-            limitLogs.textColor = warningColor
-        } else {
-            limitLogs.textColor = UIColor.black
-        }
+        usageMembers.textColor = currentBillingInfo.isWarningMembers() ? warningColor : UIColor.black;
+        usageHosts.textColor = currentBillingInfo.isWarningHosts() ? warningColor : UIColor.black;
+        usageLogs.textColor = currentBillingInfo.isWarningLogs() ? warningColor : UIColor.black;
         
         if currentBillingInfo.currentTier.price > 0 {
             tierLabel.setBorder(color: UIColor.app, cornerRadius: tierLabel.layer.cornerRadius, borderWidth: tierLabel.layer.borderWidth)
@@ -353,7 +362,7 @@ class TeamDetailController: KRBaseTableController, KRTeamDataControllerDelegate,
                                                                                  adminPublicKey: _teamIdentity.publicKey,
                                                                                  adminEmail: _teamIdentity.email))
             {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                self.present(SFSafariViewController(url: url), animated: true, completion: nil)
             }
 
         } else {
@@ -864,5 +873,40 @@ class TeamInviteOBController:KRBaseController {
             self.tipHeight.constant = 100.0
             self.view.layoutIfNeeded()
         }
+    }
+}
+
+extension SigChainBilling.BillingInfo {
+    
+    func isWarningMembers() -> Bool {
+        guard let limit = self.currentTier.limit?.members
+        else {
+            return false
+        }
+        
+        return SigChainBilling.BillingInfo.nearLimit(usage: usage.members, limit: limit)
+    }
+    
+    func isWarningHosts() -> Bool {
+        guard let limit = self.currentTier.limit?.hosts
+        else {
+            return false
+        }
+        
+        return SigChainBilling.BillingInfo.nearLimit(usage: usage.hosts, limit: limit)
+    }
+    
+    func isWarningLogs() -> Bool {
+        guard let limit = self.currentTier.limit?.logsLastThirtyDays
+        else {
+            return false
+        }
+        
+        return SigChainBilling.BillingInfo.nearLimit(usage: usage.logsLastThirtyDays, limit: limit)
+    }
+
+
+    static func nearLimit(usage:UInt64, limit:UInt64) -> Bool {
+        return usage > limit/2
     }
 }
