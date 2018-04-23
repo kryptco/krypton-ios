@@ -24,16 +24,16 @@ extension LoadingController {
 
 class LoadingController:UIViewController {
     
-    @IBOutlet weak var checkBox:M13Checkbox!
-    @IBOutlet weak var arcView:UIView!
-    @IBOutlet weak var blurView:UIVisualEffectView!
-    @IBOutlet weak var blurBackgroundView:UIVisualEffectView!
+    @IBOutlet weak var checkBox:M13Checkbox?
+    @IBOutlet weak var arcView:UIView?
+    @IBOutlet weak var blurView:UIVisualEffectView?
+    @IBOutlet weak var blurBackgroundView:UIVisualEffectView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        blurBackgroundView.setBorder(color: UIColor.clear, cornerRadius: 8.0, borderWidth: 0.0)
-        blurView.setBorder(color: UIColor.clear, cornerRadius: 8.0, borderWidth: 0.0)
+        blurBackgroundView?.setBorder(color: UIColor.clear, cornerRadius: 8.0, borderWidth: 0.0)
+        blurView?.setBorder(color: UIColor.clear, cornerRadius: 8.0, borderWidth: 0.0)
 
         for v in [blurBackgroundView] {
             v?.layer.shadowColor = UIColor.black.cgColor
@@ -47,15 +47,15 @@ class LoadingController:UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        arcView.spinningArc(lineWidth: checkBox.checkmarkLineWidth, ratio: 0.5)
+        arcView?.spinningArc(lineWidth: checkBox?.checkmarkLineWidth ?? 1.0, ratio: 0.5)
     }
     
     func showSuccess(hideAfter interval:TimeInterval, then:(()->())? = nil) {
         dispatchMain {
             UIView.animate(withDuration: 0.3, animations: {
-                self.arcView.alpha = 0
+                self.arcView?.alpha = 0
             }) { (_) in
-                self.checkBox.toggleCheckState(true)
+                self.checkBox?.toggleCheckState(true)
                 dispatchAfter(delay: interval) {
                     self.dismiss(animated: true, completion: then)
                 }
@@ -65,13 +65,13 @@ class LoadingController:UIViewController {
     
     func showError(hideAfter interval:TimeInterval, title:String, error:String, then:(()->())? = nil) {
         dispatchMain {
-            self.checkBox.secondaryCheckmarkTintColor = UIColor.reject
-            self.checkBox.tintColor = UIColor.reject
+            self.checkBox?.secondaryCheckmarkTintColor = UIColor.reject
+            self.checkBox?.tintColor = UIColor.reject
             
             UIView.animate(withDuration: 0.3, animations: {
-                self.arcView.alpha = 0
+                self.arcView?.alpha = 0
             }) { (_) in
-                self.checkBox.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
+                self.checkBox?.setCheckState(M13Checkbox.CheckState.mixed, animated: true)
 
                 dispatchAfter(delay: interval, task: {
                     self.showWarning(title: title, body: error) {

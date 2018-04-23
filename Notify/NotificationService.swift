@@ -143,6 +143,11 @@ class NotificationService: UNNotificationServiceExtension {
                     } else {
                         content.title = "Approved request from \(session.pairing.displayName)."
                         content.categoryIdentifier = unsealedRequest.autoNotificationCategory.identifier
+                        
+                        if !Policy.SessionSettings(for: session).settings.shouldShowApprovedNotifications {
+                            self.handleApprovedSilent(contentHandler: contentHandler)
+                            return
+                        }
                     }
                 }
                     // pending response
@@ -235,6 +240,17 @@ class NotificationService: UNNotificationServiceExtension {
         })
     }
     
+    func handleApprovedSilent(contentHandler:((UNNotificationContent) -> Void)) {
+        UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
+            for note in notes {
+                if note.request.content.body == "Krypton Request" {
+                    UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [note.request.identifier])
+                }
+            }
+        })
+
+        contentHandler(UNMutableNotificationContent())
+    }
     
     func failUnknown(with error:Error?, contentHandler:((UNNotificationContent) -> Void)) {
         
