@@ -13,6 +13,10 @@ import SwiftHTTP
 enum AWSConfKey:String {
     case sns = "kr-sns"
     case sqs = "kr-sqs"
+    
+    func id(for client:String) -> String {
+        return "\(self.rawValue).\(client)"
+    }
 }
 
 
@@ -46,8 +50,9 @@ class API {
         return try? KeychainStorage().get(key: Constants.arnEndpointKey)
     }
     
-    class func provision() -> Bool {
-        
+    let client:String
+    
+    private static func getCredentials() -> (snsConf:AWSServiceConfiguration, sqsConf:AWSServiceConfiguration)? {
         let accessKey = Properties.awsAccessKey
         let secretKey = Properties.awsSecretKey
         
@@ -56,21 +61,36 @@ class API {
         
         let sqsCreds = AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
         let sqsConf = AWSServiceConfiguration(region: AWSRegionType.USEast1, credentialsProvider: sqsCreds)
-
-        guard let sns = snsConf, let sqs = sqsConf else {
-            return false
-        }
-
-        AWSSNS.register(with: sns, forKey: AWSConfKey.sns.rawValue)
-        AWSSQS.register(with: sqs, forKey: AWSConfKey.sqs.rawValue)
         
-        return true
+        guard let sns = snsConf, let sqs = sqsConf else {
+            return nil
+        }
+        
+        return (sns, sqs)
+    }
+    
+    class func provision() -> Bool {
+        return API.getCredentials() != nil
     }
     
     init() {
-    
+        client = (try? Data.random(size: 8).toBase64(true)) ?? "default_client"
+        
+        let creds = API.getCredentials()
+        
+        if let sns = creds?.snsConf, let sqs = creds?.sqsConf {
+            AWSSNS.register(with: sns, forKey: AWSConfKey.sns.id(for: client))
+            AWSSQS.register(with: sqs, forKey: AWSConfKey.sqs.id(for: client))
+        }
+        
+        snsClient = AWSSNS(forKey: AWSConfKey.sns.id(for: client))
+        sqsClient = AWSSQS(forKey: AWSConfKey.sqs.id(for: client))
     }
     
+    deinit {
+        AWSSNS.remove(forKey: AWSConfKey.sns.id(for: client))
+        AWSSQS.remove(forKey: AWSConfKey.sqs.id(for: client))
+    }
         
     //MARK: Version
     func getNewestAppVersion(completionHandler:@escaping ((Version?, Error?)->Void)) {

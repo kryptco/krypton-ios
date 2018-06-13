@@ -799,6 +799,7 @@
 		FA6BCBED1F211807006F716F /* TeamIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamIdentity.swift; sourceTree = "<group>"; };
 		FA6BCBF11F213C9B006F716F /* Team.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Team.storyboard; sourceTree = "<group>"; };
 		FA6C5CF71D772B0D00CE2323 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FA7A847620D1B8B90076390E /* pre_compile_sources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile_sources.sh; sourceTree = "<group>"; };
 		FA80D7411FCE28ED008391EF /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		FA80D7431FCE29BD008391EF /* Serialize+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Serialize+JSON.swift"; sourceTree = "<group>"; };
 		FA8141361D70B0F4004FE58C /* Krypton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Krypton.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1606,6 +1607,7 @@
 			children = (
 				FA3BFCB11FC285B10053A762 /* README.md */,
 				FAC536C0200553F4007C21E4 /* buildbump.sh */,
+				FA7A847620D1B8B90076390E /* pre_compile_sources.sh */,
 				FA03C5971E760CD50019649E /* BUILD */,
 				FAC535D6200162F6007C21E4 /* Krypton-Bridging-Header.h */,
 				FAC535D7200162F6007C21E4 /* Krypton.entitlements */,
@@ -1685,7 +1687,6 @@
 			buildConfigurationList = FA11A5742031F4A8000E46B1 /* Build configuration list for PBXNativeTarget "SigchainTests" */;
 			buildPhases = (
 				FA546CAA2033F0E90024F94F /* Generate Tests */,
-				FA11A5782031F559000E46B1 /* CommonCrypto */,
 				FA11A5692031F4A8000E46B1 /* Sources */,
 				FA11A56A2031F4A8000E46B1 /* Frameworks */,
 				FA11A56B2031F4A8000E46B1 /* Resources */,
@@ -1723,9 +1724,9 @@
 			buildPhases = (
 				8D45AFEF1E8D718200E84A57 /* Compile ssh-wire */,
 				FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */,
-				FA8141521D714250004FE58C /* CommonCrypto */,
 				FAB28E8B1D93122400B61E6B /* Set Hash and Build */,
 				FA8141331D70B0F4004FE58C /* Frameworks */,
+				FA7A847720D1B8FC0076390E /* Pre Compile Sources */,
 				FA8141321D70B0F4004FE58C /* Sources */,
 				FA8141341D70B0F4004FE58C /* Resources */,
 				FAA6E1F91D79FBB6007D1B3A /* Embed Frameworks */,
@@ -1748,7 +1749,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAEE04A11D74BCC3002A7AFD /* Build configuration list for PBXNativeTarget "KryptonTests" */;
 			buildPhases = (
-				FA3BFDF41FC4917E0053A762 /* CommonCrypto */,
 				FAEE04961D74BCC3002A7AFD /* Sources */,
 				FAEE04981D74BCC3002A7AFD /* Resources */,
 			);
@@ -1766,7 +1766,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAF1E6381E031BB9003CBEA2 /* Build configuration list for PBXNativeTarget "Notify" */;
 			buildPhases = (
-				FAB517AD1E54D5AB0032DD47 /* Common Crypto */,
+				FAB517AD1E54D5AB0032DD47 /* Pre Compile Sources */,
 				8D45AFDE1E8D59CB00E84A57 /* Compile ssh-wire */,
 				FA1951111E96CFF70036B425 /* Compile AWS Core,SQS,SNS */,
 				FAF1E61B1E031BB9003CBEA2 /* Sources */,
@@ -1786,7 +1786,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAFF1E951ED6816B0063C44C /* Build configuration list for PBXNativeTarget "NotifyUI" */;
 			buildPhases = (
-				FA8B54471ED7F89200891161 /* Common Crypto */,
+				FA7A847520D1B8540076390E /* Pre Compile Sources */,
 				FAFF1E831ED6816B0063C44C /* Sources */,
 				FAFF1E841ED6816B0063C44C /* Frameworks */,
 				FAFF1E851ED6816B0063C44C /* Resources */,
@@ -2161,20 +2161,6 @@
 			shellPath = /bin/bash;
 			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
-		FA11A5782031F559000E46B1 /* CommonCrypto */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = CommonCrypto;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
-		};
 		FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2203,20 +2189,6 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${PROJECT_DIR}/aws-sdk-ios\"\ncurrentCommit=$(git rev-parse HEAD)\n\nfunction compile {\n    sh Scripts/SdkPackage.sh AWSCore\n    sh Scripts/SdkPackage.sh AWSSQS\n    sh Scripts/SdkPackage.sh AWSSNS\n    \n    echo \"${currentCommit}\" > \"${PROJECT_DIR}/AWS_COMMIT\"\n}\n\nif [ ! -f \"${PROJECT_DIR}/AWS_COMMIT\" ]; then\n    echo \"AWS_COMMIT not recorded. Compile AWS.\"\n    compile\n\nelif [ $(cat \"${PROJECT_DIR}/AWS_COMMIT\") != \"${currentCommit}\" ]; then\n    echo \"AWS_COMMIT is out dated. Compile AWS.\"\n    compile\n\nelif ls \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSCore.framework\" \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSSQS.framework\" \"${PROJECT_DIR}/aws-sdk-ios/builtFramework/framework/AWSSNS.framework\" 2>/dev/null; then\n    echo \"AWS Frameworks up to date, skipping re compilation.\"\nelse\n    echo \"Missing AWS Framework. Compiling\"\n    compile\nfi\n";
 		};
-		FA3BFDF41FC4917E0053A762 /* CommonCrypto */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = CommonCrypto;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
-		};
 		FA546CAA2033F0E90024F94F /* Generate Tests */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2231,19 +2203,33 @@
 			shellPath = /bin/sh;
 			shellScript = "cd ${PROJECT_DIR}/SigchainTests\n\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./generate_tests.sh\"\n";
 		};
-		FA8141521D714250004FE58C /* CommonCrypto */ = {
+		FA7A847520D1B8540076390E /* Pre Compile Sources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = CommonCrypto;
+			name = "Pre Compile Sources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
+			shellScript = "/Users/Alex/Documents/projects/krypt.co/krypton-ios/pre_compile_sources.sh";
+		};
+		FA7A847720D1B8FC0076390E /* Pre Compile Sources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Compile Sources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/Users/Alex/Documents/projects/krypt.co/krypton-ios/pre_compile_sources.sh";
 		};
 		FA8750601DA2F4B20066C0BE /* StripArch */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2259,20 +2245,6 @@
 			shellPath = /bin/sh;
 			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"\n";
 		};
-		FA8B54471ED7F89200891161 /* Common Crypto */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Common Crypto";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
-		};
 		FAB28E8B1D93122400B61E6B /* Set Hash and Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -2287,19 +2259,19 @@
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(git rev-list --count HEAD)\ngitHash=$(git rev-parse HEAD)\n\necho \"$buildNumber\" > \"${PROJECT_DIR}/BUILD\"\necho \"$gitHash\" > \"${PROJECT_DIR}/COMMIT\"\n";
 		};
-		FAB517AD1E54D5AB0032DD47 /* Common Crypto */ = {
+		FAB517AD1E54D5AB0032DD47 /* Pre Compile Sources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Common Crypto";
+			name = "Pre Compile Sources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "modulesDirectory=$DERIVED_FILES_DIR/modules\nmodulesMap=$modulesDirectory/module.modulemap\nmodulesMapTemp=$modulesDirectory/module.modulemap.tmp\n\nmkdir -p \"$modulesDirectory\"\n\ncat > \"$modulesMapTemp\" << MAP\nmodule CommonCrypto [system] {\n    header \"$SDKROOT/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nMAP\n\ndiff \"$modulesMapTemp\" \"$modulesMap\" >/dev/null 2>/dev/null\nif [[ $? != 0 ]] ; then\nmv \"$modulesMapTemp\" \"$modulesMap\"\nelse\nrm \"$modulesMapTemp\"\nfi";
+			shellScript = "/Users/Alex/Documents/projects/krypt.co/krypton-ios/pre_compile_sources.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
