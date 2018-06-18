@@ -2229,7 +2229,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Users/Alex/Documents/projects/krypt.co/krypton-ios/pre_compile_sources.sh";
+			shellScript = "/Users/Alex/Documents/projects/krypt.co/krypton-ios/pre_compile_sources.sh\n";
 		};
 		FA8750601DA2F4B20066C0BE /* StripArch */ = {
 			isa = PBXShellScriptBuildPhase;
