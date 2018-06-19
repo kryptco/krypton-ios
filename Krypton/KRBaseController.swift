@@ -68,6 +68,8 @@ class KRBaseController: UIViewController, KRBase {
         linkListener = LinkListener({ (link) in
             self.onListen(viewController: self, link: link)
         })
+        
+        self.initExpertSwitch(viewController: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -117,6 +119,8 @@ class KRBaseTableController: UITableViewController, KRBase {
         linkListener = LinkListener({ (link) in
             self.onListen(viewController: self, link: link)
         })
+        
+        self.initExpertSwitch(viewController: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -143,6 +147,9 @@ extension UINavigationController: KRBase {
 }
 
 extension KRBase {
+    
+    func initExpertSwitch(viewController:UIViewController) {
+    }
     
     func run(viewController:UIViewController, syncOperation:@escaping (() throws ->Void), title:String, onSuccess:(()->Void)? = nil, onError:(()->Void)? = nil) {
         let loading = LoadingController.present(from: viewController)

@@ -25,7 +25,7 @@ struct Resources {
     
     enum AppFontStyle:String {
         case bold = "-Bold"
-        case regular = ""
+        case regular = "-Regular"
         case medium = "-Medium"
         case demi = "-DemiBold"
     }
@@ -88,6 +88,13 @@ extension UIColor {
         return UIColor(hex: 0x272727).withAlphaComponent(0.5)
     }
 
+    static var appPurple:UIColor {
+        return UIColor(hex: 0x666EE8)
+    }
+    
+    static var appBlueGray:UIColor {
+        return UIColor(hex: 0x6D7D92)
+    }
 }
 
 
@@ -274,6 +281,18 @@ class KRImageView:UIImageView {
         }
     }
     
+    @IBInspectable var borderWidth: CGFloat = 0.0 {
+        didSet {
+            layer.borderWidth = borderWidth
+        }
+    }
+    
+    @IBInspectable var borderColor:UIColor = UIColor.clear {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -306,6 +325,7 @@ class KRView:UIView {
         }
     }
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -329,6 +349,14 @@ extension UIView {
         
         layer.borderWidth = borderWidth
         layer.borderColor = color.cgColor
+    }
+    
+    func setBoxShadow() {
+        layer.shadowColor = UIColor(hex: 0x32325d).cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 4
+        layer.masksToBounds = false
     }
 }
 

@@ -22,3 +22,6 @@
 [submodule "SigchainTests/sigchain"]
 	path = SigchainTests/sigchain
 	url = git@github.com:kryptco/sigchain.git
+[submodule "openssl-ios/openssl"]
+	path = openssl-ios/openssl
+	url = git@github.com:openssl/openssl.git

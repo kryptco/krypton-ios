@@ -16,7 +16,8 @@ struct Constants {
     static let teamKeyChainService = "kr_team_keychain_service"
     static let keychainAccessGroup = Constants.appGroupSecurityID
     static let pushTokenKey = "device_push_token_key"
-        
+    static let u2fRequiresApproval = "u2f_requires_approval_key"
+
     static let appURLScheme = "krypton://"
     
     enum NotificationType:String {

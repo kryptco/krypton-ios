@@ -13,5 +13,6 @@
 #import <AWSSQS/AWSSQS.h>
 
 #import "sshwire.h"
+#import "openssl-bridging.h"
 
 #endif /* Kryptonite_Bridging_Header_h */

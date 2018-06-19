@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WWP-fk-c9G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WWP-fk-c9G">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Bold</string>
-            <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-Medium</string>
-            <string>AvenirNext-Regular</string>
-        </array>
         <array key="SourceCodePro-Bold.ttf">
             <string>SourceCodePro-Bold</string>
         </array>
@@ -418,6 +412,12 @@
                                     <segue destination="e2t-Aq-wzP" kind="embed" id="wx0-Ed-pxf"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="JGj-xf-OQT" userLabel="u2f">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                <connections>
+                                    <segue destination="sR2-3M-32f" kind="embed" id="f0W-oR-T1q"/>
+                                </connections>
+                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="U7A-aA-B5q" userLabel="error">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                 <connections>
@@ -429,6 +429,8 @@
                         <constraints>
                             <constraint firstItem="51L-2Z-ZAT" firstAttribute="top" secondItem="xv8-HB-Huo" secondAttribute="bottom" id="0eU-FK-Z0W"/>
                             <constraint firstItem="fcy-q1-mKC" firstAttribute="top" secondItem="C0s-un-wlc" secondAttribute="bottom" id="44J-ru-qet"/>
+                            <constraint firstItem="JGj-xf-OQT" firstAttribute="height" secondItem="9Gu-DC-AqX" secondAttribute="height" id="6AJ-NR-31D"/>
+                            <constraint firstItem="JGj-xf-OQT" firstAttribute="width" secondItem="9Gu-DC-AqX" secondAttribute="width" id="8aS-EL-Kfu"/>
                             <constraint firstAttribute="trailing" secondItem="U7A-aA-B5q" secondAttribute="trailing" id="Bqo-Qm-qBQ"/>
                             <constraint firstItem="pkN-Wd-EJV" firstAttribute="width" secondItem="9Gu-DC-AqX" secondAttribute="width" id="MNo-Qx-ehf"/>
                             <constraint firstAttribute="trailing" secondItem="fcy-q1-mKC" secondAttribute="trailing" id="RwN-5B-2oE"/>
@@ -438,6 +440,7 @@
                             <constraint firstItem="pkN-Wd-EJV" firstAttribute="centerX" secondItem="9Gu-DC-AqX" secondAttribute="centerX" id="bJr-YQ-pDj"/>
                             <constraint firstItem="xv8-HB-Huo" firstAttribute="leading" secondItem="9Gu-DC-AqX" secondAttribute="leading" id="cRh-Pu-0F5"/>
                             <constraint firstItem="fcy-q1-mKC" firstAttribute="leading" secondItem="9Gu-DC-AqX" secondAttribute="leading" id="gCu-0T-yjs"/>
+                            <constraint firstItem="JGj-xf-OQT" firstAttribute="centerY" secondItem="9Gu-DC-AqX" secondAttribute="centerY" id="gfw-Hq-2zp"/>
                             <constraint firstItem="51L-2Z-ZAT" firstAttribute="top" secondItem="U7A-aA-B5q" secondAttribute="bottom" id="l1N-aT-GTU"/>
                             <constraint firstAttribute="trailing" secondItem="S3p-N5-RgV" secondAttribute="trailing" id="lY0-CI-Mlh"/>
                             <constraint firstAttribute="trailing" secondItem="xv8-HB-Huo" secondAttribute="trailing" id="nyA-wP-lZM"/>
@@ -447,6 +450,7 @@
                             <constraint firstItem="pkN-Wd-EJV" firstAttribute="centerY" secondItem="9Gu-DC-AqX" secondAttribute="centerY" id="vD5-7a-Tym"/>
                             <constraint firstItem="pkN-Wd-EJV" firstAttribute="height" secondItem="9Gu-DC-AqX" secondAttribute="height" id="wGf-J6-hzU"/>
                             <constraint firstItem="U7A-aA-B5q" firstAttribute="leading" secondItem="9Gu-DC-AqX" secondAttribute="leading" id="xBG-cP-Foe"/>
+                            <constraint firstItem="JGj-xf-OQT" firstAttribute="centerX" secondItem="9Gu-DC-AqX" secondAttribute="centerX" id="ylJ-4p-9fD"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -458,6 +462,7 @@
                         <outlet property="sshContainerView" destination="S3p-N5-RgV" id="AE2-PY-MhY"/>
                         <outlet property="tagContainerView" destination="fcy-q1-mKC" id="OOK-ht-EDi"/>
                         <outlet property="teamOpContainerView" destination="pkN-Wd-EJV" id="cXw-iV-g8D"/>
+                        <outlet property="u2fContainerView" destination="JGj-xf-OQT" id="vsU-6N-cYC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u4-cO-s1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -630,8 +635,81 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DIe-EO-qYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5568" y="704.34782608695662"/>
+            <point key="canvasLocation" x="5518" y="718"/>
+        </scene>
+        <!--U2FRequestController-->
+        <scene sceneID="Bun-CG-uUr">
+            <objects>
+                <viewController storyboardIdentifier="U2FRequestController" id="sR2-3M-32f" userLabel="U2FRequestController" customClass="U2FRequestController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nu5-vc-adF"/>
+                        <viewControllerLayoutGuide type="bottom" id="Lxj-16-dzS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="vjq-cX-Sl8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="254" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="755" text="Login" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdM-3j-8ir">
+                                <rect key="frame" x="16" y="20" width="60" height="30.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
+                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUR-Jk-5bD">
+                                <rect key="frame" x="80" y="20.5" width="164" height="30.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="22"/>
+                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="google.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSS-ND-VQH">
+                                <rect key="frame" x="16" y="50" width="228" height="29.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
+                                <color key="textColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="google" translatesAutoresizingMaskIntoConstraints="NO" id="H9R-oC-55j">
+                                <rect key="frame" x="254" y="26" width="50" height="50"/>
+                                <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="I2U-TZ-Wu2"/>
+                                    <constraint firstAttribute="width" constant="50" id="bvK-zu-cNi"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="sdM-3j-8ir" firstAttribute="top" secondItem="nu5-vc-adF" secondAttribute="bottom" constant="20" id="3o2-w9-7Fv"/>
+                            <constraint firstItem="uSS-ND-VQH" firstAttribute="top" secondItem="sdM-3j-8ir" secondAttribute="bottom" id="7FC-PD-xiG"/>
+                            <constraint firstItem="H9R-oC-55j" firstAttribute="leading" secondItem="fUR-Jk-5bD" secondAttribute="trailing" constant="10" id="7gk-h9-kpy"/>
+                            <constraint firstItem="fUR-Jk-5bD" firstAttribute="centerY" secondItem="sdM-3j-8ir" secondAttribute="centerY" id="9A1-h0-bSh"/>
+                            <constraint firstItem="Lxj-16-dzS" firstAttribute="top" secondItem="uSS-ND-VQH" secondAttribute="bottom" priority="999" constant="20" id="DBn-Pb-1jf"/>
+                            <constraint firstItem="H9R-oC-55j" firstAttribute="centerY" secondItem="fUR-Jk-5bD" secondAttribute="bottom" id="FVz-zr-EOf"/>
+                            <constraint firstItem="uSS-ND-VQH" firstAttribute="leading" secondItem="sdM-3j-8ir" secondAttribute="leading" id="Qgo-4N-zQy"/>
+                            <constraint firstItem="fUR-Jk-5bD" firstAttribute="leading" secondItem="sdM-3j-8ir" secondAttribute="trailing" constant="4" id="SlS-sH-NEq"/>
+                            <constraint firstItem="sdM-3j-8ir" firstAttribute="leading" secondItem="vjq-cX-Sl8" secondAttribute="leading" constant="16" id="ZTJ-PZ-ILf"/>
+                            <constraint firstItem="H9R-oC-55j" firstAttribute="leading" secondItem="uSS-ND-VQH" secondAttribute="trailing" constant="10" id="wBo-hC-imk"/>
+                            <constraint firstAttribute="trailing" secondItem="H9R-oC-55j" secondAttribute="trailing" constant="16" id="yl7-ig-pjb"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="100"/>
+                    <connections>
+                        <outlet property="action" destination="sdM-3j-8ir" id="NkH-8m-Are"/>
+                        <outlet property="display" destination="uSS-ND-VQH" id="PyU-yB-fqo"/>
+                        <outlet property="logo" destination="H9R-oC-55j" id="NmY-8J-0F3"/>
+                        <outlet property="suffix" destination="fUR-Jk-5bD" id="IHk-FN-oFw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PJZ-6q-ctn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6216" y="757.42128935532241"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="google" width="342" height="342"/>
+    </resources>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -11,6 +11,7 @@ import UIKit
 
 import UserNotifications
 import JSON
+import AwesomeCache
 
 struct NonPresentableRequestError:Error {}
 
@@ -62,6 +63,49 @@ class Notify {
         return _shared!
     }
     
+    
+    static let shouldPresentInAppUserInfoKey:String = "present_in_app"
+
+    // to avoid showing double notifications for auto-approve, app open notifications
+    private static let inAppNoteCacheName = "in_app_note_cache"
+
+    func shouldPresentInAppNotification(notification:UNNotification) -> Bool {
+        if  let present = notification.request.content.userInfo[Notify.shouldPresentInAppUserInfoKey] as? Bool,
+            present
+        {
+            return true
+        }
+        
+        guard notification.request.content.categoryIdentifier == Policy.NotificationCategory.autoAuthorized.identifier
+            else {
+                return false
+        }
+        
+        do {
+            guard let payload = notification.request.content.userInfo as? JSON.Object else {
+                throw LocalNotificationProcessError.invalidUserInfoPayload
+            }
+            
+            let verifiedLocalNotification = try LocalNotificationAuthority.verifyLocalNotification(with: payload)
+            let cache = try? Cache<NSData>(name: Notify.inAppNoteCacheName, directory: SecureLocalStorage.directory(for: Notify.inAppNoteCacheName))
+            
+            guard cache?.object(forKey: verifiedLocalNotification.request.id) == nil else {
+                cache?.removeExpiredObjects()
+                return false
+            }
+            
+            cache?.setObject(Data() as NSData, forKey: verifiedLocalNotification.request.id, expires: .seconds(30))
+            
+            return true
+
+        } catch {
+            log("error checking to present in app notification: \(error)")
+        }
+        
+        return false
+    }
+
+
     init() {}
     
     var pushedNotifications:[String:Int] = [:]
@@ -74,8 +118,8 @@ class Notify {
             return
         }
         
-        let noteTitle = "Request from \(session.pairing.displayName)"
-        let (noteSubtitle, noteBody) = request.notificationDetails()
+        let noteSubtitle = request.notificationSubtitle(for: session.pairing.displayName)
+        let (noteTitle, noteBody) = request.notificationDetails()
         
         // check if request exists in delivered notifications
         UNUserNotificationCenter.current().getDeliveredNotifications(completionHandler: { (notes) in
@@ -106,7 +150,7 @@ class Notify {
             do {
                 content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
             } catch {
-                Notify.presentError(message: "Cannot display request: \(error)", session: session)
+                Notify.presentError(message: "Cannot display request: \(error)", request: request, session: session)
                 return
             }
             
@@ -132,8 +176,8 @@ class Notify {
             return
         }
         
-        let noteTitle = "Approved request from \(session.pairing.displayName)"
-        let (noteSubtitle, noteBody) = request.notificationDetails()
+        let noteSubtitle = request.notificationSubtitle(for: session.pairing.displayName, autoResponse: true, isError: false)
+        let (noteTitle, noteBody) = request.notificationDetails(autoResponse: true)
 
         let noteId = GroupableRequestNotificationIdentifier(request: request, session:session)
         
@@ -181,7 +225,7 @@ class Notify {
             do {
                 content.userInfo = try LocalNotificationAuthority.createSignedPayload(for: localRequest)
             } catch {
-                Notify.presentError(message: "Cannot display request: \(error)", session: session)
+                Notify.presentError(message: "Cannot display request: \(error)", request: request, session: session)
                 return
             }
 
@@ -200,17 +244,20 @@ class Notify {
     /**
         Show "error" local notification
     */
-    static func presentError(message:String, session:Session) {
+    static func presentError(message:String, request:Request, session:Session) {
         
         if UserRejectedError.isRejected(errorString: message) {
             return
         }
         
-        let noteTitle = "Failed approval for \(session.pairing.displayName)"
+        let noteSubtitle = request.notificationSubtitle(for: session.pairing.displayName, autoResponse: true, isError: true)
+        let (noteTitle, _) = request.notificationDetails(autoResponse: true)
+
         let noteBody = message
         
         let content = UNMutableNotificationContent()
         content.title = noteTitle
+        content.subtitle = noteSubtitle
         content.body = noteBody
         content.sound = UNNotificationSound.default()
         

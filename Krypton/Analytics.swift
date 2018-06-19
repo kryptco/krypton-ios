@@ -99,37 +99,6 @@ class Analytics {
         }
     }
 
-    class func sendEmailToTeamsIfNeeded(email:String) {
-        guard enabled else {
-            return
-        }
-        guard Analytics.publishedEmail != email else {
-            return
-        }
-        
-        HTTP.PUT("https://teams.krypt.co", parameters: ["id": userID, "email": email]) { response in
-            
-            if let error = response.error {
-                log("put email error: \(error)", .error)
-                return
-            }
-            
-            guard let status = response.statusCode
-            else {
-                log("put email no status code", .error)
-                return
-            }
-            
-            guard (200..<300).contains(status) else {
-                log("bad status code: \(status)", .error)
-                return
-            }
-            
-            log("email published success")
-            Analytics.publishedEmail = email
-        }
-    }
-
     private class func post(params: [String:String], forceEnable:Bool = false) {
         guard forceEnable || enabled else {
             return
@@ -143,6 +112,7 @@ class Analytics {
             "cd5": "iOS \(UIDevice.current.systemVersion)",
             "cd7": userID,
             "cd9": Properties.currentVersion.string,
+            "aip": "1",
             ]
         if let phoneModel = phoneModel {
             analyticsParams["cd6"] = phoneModel

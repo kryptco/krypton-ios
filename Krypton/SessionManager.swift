@@ -70,8 +70,16 @@ class SessionManager {
         return all.filter({$0.pairing.queue == queue}).first
     }
     
-    func get(deviceName:String) -> Session? {
-        return all.filter({ $0.pairing.name == deviceName }).first
+    func getDuplicate(pairing:Pairing) -> Session? {
+        if let browser = pairing.browser {
+            return all.filter({$0.pairing.browser?.deviceIdentifier == browser.deviceIdentifier }).first
+        }
+        
+        return all.filter({ $0.pairing.name == pairing.name }).first
+    }
+    
+    func hasNonU2FSession() -> Bool {
+        return !all.filter({$0.pairing.browser == nil}).isEmpty
     }
     
     func get(id:String) -> Session? {
@@ -109,7 +117,7 @@ class SessionManager {
         }
     }
     
-    func remove(session:Session) {
+    func remove(session:Session, keepSeedCache:Bool = false) {
         defer { mutex.unlock() }
         mutex.lock()
 
@@ -124,7 +132,11 @@ class SessionManager {
         } catch {
             log("could not remove session public key: \(error).")
         }
-
+        
+        if !keepSeedCache {
+            try? session.pairing.removeCachedSeed()
+        }
+        
         sessions.removeValue(forKey: session.id)
         temporarySessions.removeValue(forKey: session.id)
         
@@ -139,6 +151,8 @@ class SessionManager {
             try? KeychainStorage().delete(key: Session.KeychainKey.pub.tag(for: $0.id))
             try? KeychainStorage().delete(key: Session.KeychainKey.priv.tag(for: $0.id))
             try? KeychainStorage().delete(key: Session.KeychainKey.workstationPub.tag(for: $0.id))
+            
+            try? $0.pairing.removeCachedSeed()
         })
         
         temporarySessions.values.forEach({

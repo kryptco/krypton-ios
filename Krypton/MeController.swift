@@ -9,9 +9,7 @@
 import Foundation
 import UIKit
 
-class MeController:KRBaseController, UITextFieldDelegate {
-    @IBOutlet var tagTextField:UITextField!
-    
+class MeController:KRBaseController, UITextFieldDelegate {    
     @IBOutlet var meCommandWindow:UIView!
     @IBOutlet var otherCommandWindow:UIView!
     @IBOutlet var codeSigningWindow:UIView!
@@ -34,17 +32,10 @@ class MeController:KRBaseController, UITextFieldDelegate {
         super.viewDidLoad()
         
         for v in [meCommandWindow, otherCommandWindow, codeSigningWindow] {
-            v?.layer.shadowColor = UIColor.black.cgColor
-            v?.layer.shadowOffset = CGSize(width: 0, height: 0)
-            v?.layer.shadowOpacity = 0.175
-            v?.layer.shadowRadius = 3
-            v?.layer.masksToBounds = false
+            v?.setBoxShadow()
         }
         
         setGitHubState()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(MeController.redrawMe), name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +43,6 @@ class MeController:KRBaseController, UITextFieldDelegate {
         
         //shareButton.setBorder(color: UIColor.clear, cornerRadius: 20, borderWidth: 0.0)
 
-        redrawMe()
         Current.viewController = self
     }
     
@@ -60,14 +50,6 @@ class MeController:KRBaseController, UITextFieldDelegate {
         super.viewDidAppear(animated)
     }
     
-    @objc func redrawMe() {
-        do {
-            tagTextField.text = try IdentityManager.getMe()
-        } catch (let e) {
-            log("error getting keypair: \(e)", LogType.error)
-            showWarning(title: "Error", body: "Could not get user data. \(e)")
-        }
-    }
    
     //MARK: Add Public Key Helper
     
@@ -82,8 +64,8 @@ class MeController:KRBaseController, UITextFieldDelegate {
     func setGitHubState() {
         disableAllUploadMethods()
         
-        githubButton.setTitleColor(UIColor.app, for: UIControlState.normal)
-        githubLine.backgroundColor = UIColor.app
+        githubButton.setTitleColor(UIColor.appBlueGray, for: UIControlState.normal)
+        githubLine.backgroundColor = UIColor.appBlueGray
         addCommandLabel.text = UploadMethod.github.rawValue
     }
     
@@ -96,8 +78,8 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @IBAction func doTapped() {
         disableAllUploadMethods()
         
-        doButton.setTitleColor(UIColor.app, for: UIControlState.normal)
-        doLine.backgroundColor = UIColor.app
+        doButton.setTitleColor(UIColor.appBlueGray, for: UIControlState.normal)
+        doLine.backgroundColor = UIColor.appBlueGray
         addCommandLabel.text = UploadMethod.digitalOcean.rawValue
      
         Analytics.postEvent(category: "add key", action: "DigitalOcean")
@@ -106,8 +88,8 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @IBAction func awsTapped() {
         disableAllUploadMethods()
         
-        awsButton.setTitleColor(UIColor.app, for: UIControlState.normal)
-        awsLine.backgroundColor = UIColor.app
+        awsButton.setTitleColor(UIColor.appBlueGray, for: UIControlState.normal)
+        awsLine.backgroundColor = UIColor.appBlueGray
         addCommandLabel.text = UploadMethod.aws.rawValue
         
         Analytics.postEvent(category: "add key", action: "AWS")
@@ -148,25 +130,10 @@ class MeController:KRBaseController, UITextFieldDelegate {
         
 //        let text = textField.text ?? ""
 //        let txtAfterUpdate = (text as NSString).replacingCharacters(in: range, with: string)
-        
-        
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        guard let email = textField.text else {
-            return false
-        }
-        
-        if email.isEmpty {
-            tagTextField.text = (try? IdentityManager.getMe()) ?? ""
-        } else {
-            IdentityManager.setMe(email: email)
-            dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
-        }
-        
-        textField.resignFirstResponder()
         return true
     }
     

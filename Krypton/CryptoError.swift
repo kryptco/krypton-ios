@@ -29,6 +29,7 @@ enum CryptoError : Error {
     case keyNotFound
     case badAccess
     case verify(KeyType)
+    case unsupportedMethodForKeyType
 }
 
 

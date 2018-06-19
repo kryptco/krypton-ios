@@ -16,11 +16,14 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var emptyView:UIView!
+    
+    @IBOutlet weak var titleLabel:UILabel!
+    @IBOutlet weak var detailLabel:UILabel!
+    @IBOutlet weak var pairNewButton:UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.tableFooterView = UIView()
-        
+        //tableView.tableFooterView = UIView()        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -80,9 +83,17 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
         return sessions.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell") as! SessionCell
-        cell.set(session: sessions[indexPath.row])
-        return cell
+        let session = sessions[indexPath.row]
+        
+        if session.pairing.browser != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BrowserSessionCell") as! BrowserSessionCell
+            cell.set(session: sessions[indexPath.row])
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell") as! SessionCell
+            cell.set(session: sessions[indexPath.row])
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -91,7 +102,13 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "showSignatureLogs", sender: sessions[indexPath.row])
+        let session = sessions[indexPath.row]
+        
+        if session.pairing.browser != nil {
+            self.performSegue(withIdentifier: "showU2FLogs", sender: session)
+        } else {
+            self.performSegue(withIdentifier: "showSignatureLogs", sender: session)
+        }
     }
     
     
@@ -129,6 +146,9 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if  let detailController = segue.destination as? SessionDetailController,
+            let session = sender as? Session  {
+            detailController.session = session
+        } else if let detailController = segue.destination as? U2FSessionDetailController,
             let session = sender as? Session  {
             detailController.session = session
         }

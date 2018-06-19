@@ -26,6 +26,8 @@ class ApproveOptionsCell:UITableViewCell {
 class ApproveOptionsController:UITableViewController {
     
     enum Option:String {
+        case yes = "Yes"
+        case no = "No"
         case allow = "Allow"
         case allowOnce = "AllowOnce"
         case allowThis = "AllowThis"
@@ -38,6 +40,8 @@ class ApproveOptionsController:UITableViewController {
         
         var text:String {
             switch self {
+            case .yes, .no:
+                return self.rawValue
             case .allow:
                 return "Allow"
             case .allowOnce:

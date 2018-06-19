@@ -27,12 +27,12 @@ extension AppDelegate {
         
         log("willPresentNotifcation - Foreground", .warning)
         
-        if Notify.shouldPresentInAppNotification(userInfo: notification.request.content.userInfo) {
+        if Notify.shared.shouldPresentInAppNotification(notification: notification) {
             completionHandler([.alert, .sound])
             return
         }
         
-        completionHandler(.sound)
+        completionHandler([])
     }
     
     
@@ -185,7 +185,7 @@ extension AppDelegate {
             try TransportControl.shared.send(resp, for: session, completionHandler: completionHandler)
             
             if let errorMessage = resp.body.error {
-                Notify.presentError(message: errorMessage, session: session)
+                Notify.presentError(message: errorMessage, request: request, session: session)
             }
             
         } catch (let e) {

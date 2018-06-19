@@ -40,7 +40,8 @@ extension Policy {
         case authorizeWithTemporal = "authorize_temporal_identifier"
         case authorizeWithTemporalThis = "authorize_temporal_this_identifier"
         case authorize = "authorize_identifier"
-        
+        case authorizeSimple = "authorize_simple_identifier"
+
         case newTeamData = "new_team_data"
         case newTeamDataAlert = "new_team_data_alert"
 

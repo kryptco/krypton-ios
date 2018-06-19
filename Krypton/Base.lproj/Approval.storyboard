@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="msB-gB-cZy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Bold</string>
-            <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-Medium</string>
-            <string>AvenirNext-Regular</string>
-        </array>
-        <array key="SourceCodePro-Bold.ttf">
-            <string>SourceCodePro-Bold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Approve Controller-->
         <scene sceneID="Lko-ba-iqD">
@@ -42,13 +31,13 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REQUEST FROM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AtN-i3-krO">
                                                 <rect key="frame" x="157" y="108" width="62" height="11"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="8"/>
-                                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" red="0.42745098040000001" green="0.49019607840000001" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPINNY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0W-7f-ATi">
                                                 <rect key="frame" x="20" y="116" width="335" height="25"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                                <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" red="0.42745098040000001" green="0.49019607840000001" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCZ-cb-ijv" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
@@ -275,8 +264,38 @@
                                     <outlet property="button" destination="JtY-Mg-Bdy" id="U3z-sG-dlO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowOnce" focusStyle="custom" rowHeight="70" id="XwT-H8-uZB" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Yes" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Yes" focusStyle="custom" rowHeight="70" id="T3o-Qs-KID" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="98" width="375" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T3o-Qs-KID" id="zsh-9O-plu">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frC-LV-mCC">
+                                            <rect key="frame" x="20" y="10" width="335" height="49.5"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
+                                            <state key="normal" title="Yes">
+                                                <color key="titleColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="optionTapped" destination="T3o-Qs-KID" eventType="touchUpInside" id="TBI-Gv-wsr"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="frC-LV-mCC" secondAttribute="trailing" constant="20" id="G0J-bK-VDm"/>
+                                        <constraint firstItem="frC-LV-mCC" firstAttribute="leading" secondItem="zsh-9O-plu" secondAttribute="leading" constant="20" id="OtM-jJ-JcI"/>
+                                        <constraint firstAttribute="bottom" secondItem="frC-LV-mCC" secondAttribute="bottom" constant="10" id="ohE-w7-Hv8"/>
+                                        <constraint firstItem="frC-LV-mCC" firstAttribute="top" secondItem="zsh-9O-plu" secondAttribute="top" constant="10" id="zTF-EV-2zT"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="button" destination="frC-LV-mCC" id="Oqx-su-Lek"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowOnce" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowOnce" focusStyle="custom" rowHeight="70" id="XwT-H8-uZB" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="168" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XwT-H8-uZB" id="orB-jL-Mfv">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
@@ -306,7 +325,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowThis" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowThis" focusStyle="custom" rowHeight="70" id="l1N-9R-bUD" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="168" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="238" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="l1N-9R-bUD" id="Qo9-ym-75l">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
@@ -336,7 +355,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowAll" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowAll" focusStyle="custom" rowHeight="70" id="Q5w-Zl-sTN" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="238" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="308" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q5w-Zl-sTN" id="Cel-Dt-Pa0">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
@@ -365,14 +384,14 @@
                                     <outlet property="button" destination="ML2-ac-Un7" id="5am-Tg-H2A"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Reject" focusStyle="custom" rowHeight="70" id="ZeD-kq-8Yp" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="308" width="375" height="70"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Reject" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Reject" focusStyle="custom" rowHeight="70" id="ZeD-kq-8Yp" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="378" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZeD-kq-8Yp" id="PFc-hR-pWB">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="Reject" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3j-fG-Tla">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3j-fG-Tla">
                                             <rect key="frame" x="20" y="10" width="335" height="49"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="Reject">
@@ -395,6 +414,36 @@
                                     <outlet property="button" destination="R3j-fG-Tla" id="a6O-G9-rir"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="No" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="No" focusStyle="custom" rowHeight="70" id="Ipu-9L-Xtc" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="448" width="375" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ipu-9L-Xtc" id="11k-qL-UEV">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoU-mv-cfb">
+                                            <rect key="frame" x="20" y="10" width="335" height="49"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
+                                            <state key="normal" title="No">
+                                                <color key="titleColor" red="1" green="0.38823529410000002" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="optionTapped" destination="Ipu-9L-Xtc" eventType="touchUpInside" id="yBw-QS-Ibh"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="aoU-mv-cfb" secondAttribute="trailing" constant="20" id="PHU-Db-2tY"/>
+                                        <constraint firstItem="aoU-mv-cfb" firstAttribute="top" secondItem="11k-qL-UEV" secondAttribute="top" constant="10" id="RGj-Zm-f4X"/>
+                                        <constraint firstAttribute="bottom" secondItem="aoU-mv-cfb" secondAttribute="bottom" constant="10" id="V68-eL-op1"/>
+                                        <constraint firstItem="aoU-mv-cfb" firstAttribute="leading" secondItem="11k-qL-UEV" secondAttribute="leading" constant="20" id="t92-rm-cBk"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="button" destination="aoU-mv-cfb" id="9Fp-J0-NjC"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="nvc-AL-bD0" id="abC-Zx-wFp"/>
@@ -408,150 +457,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4wl-Bb-KZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1980" y="942"/>
-        </scene>
-        <!--Auto Approve Controller-->
-        <scene sceneID="Bq2-fw-abj">
-            <objects>
-                <viewController storyboardIdentifier="AutoApproveController" id="Qit-Yq-gLb" customClass="AutoApproveController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Snd-f0-JV1"/>
-                        <viewControllerLayoutGuide type="bottom" id="dA1-6U-hNs"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Flv-tQ-rMU">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9Y-aM-j36" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="10" y="509.5" width="355" height="93.5"/>
-                                <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-Mk-LFw" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="93.5"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32U-6O-1By">
-                                                <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
-                                                <subviews>
-                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIV-jc-ntL" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
-                                                        <rect key="frame" x="323" y="8" width="24" height="24"/>
-                                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="24" id="IK1-wY-S4z"/>
-                                                            <constraint firstAttribute="height" constant="24" id="zrb-LX-IbO"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="checkmarkLineWidth">
-                                                                <real key="value" value="2"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="secondaryCheckmarkTintColor">
-                                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="secondaryTintColor">
-                                                                <color key="value" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
-                                                                <real key="value" value="2"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="_IBStateChangeAnimation" value="Spiral"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPINNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="E5I-Q2-AML">
-                                                        <rect key="frame" x="12" y="9" width="303" height="22"/>
-                                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstItem="qIV-jc-ntL" firstAttribute="top" secondItem="32U-6O-1By" secondAttribute="top" constant="8" id="08H-Sg-haI"/>
-                                                    <constraint firstAttribute="trailing" secondItem="qIV-jc-ntL" secondAttribute="trailing" constant="8" id="2Qx-j3-e0C"/>
-                                                    <constraint firstItem="qIV-jc-ntL" firstAttribute="leading" secondItem="E5I-Q2-AML" secondAttribute="trailing" constant="8" id="61e-ul-nSe"/>
-                                                    <constraint firstItem="E5I-Q2-AML" firstAttribute="leading" secondItem="32U-6O-1By" secondAttribute="leading" constant="12" id="9VM-Pl-bfV"/>
-                                                    <constraint firstItem="E5I-Q2-AML" firstAttribute="centerY" secondItem="qIV-jc-ntL" secondAttribute="centerY" id="azG-HO-1lA"/>
-                                                    <constraint firstAttribute="bottom" secondItem="qIV-jc-ntL" secondAttribute="bottom" constant="8" id="zBY-y6-h7b"/>
-                                                </constraints>
-                                            </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXN-QP-z1c" userLabel="command" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="41" width="355" height="52.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalCompressionResistancePriority="751" text="$ ssh git@github.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" minimumFontSize="10" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-sF-Z2B">
-                                                        <rect key="frame" x="10" y="16" width="335" height="20.5"/>
-                                                        <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="16"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstItem="qkt-sF-Z2B" firstAttribute="top" secondItem="HXN-QP-z1c" secondAttribute="top" constant="16" id="AoJ-mN-cOy"/>
-                                                    <constraint firstItem="qkt-sF-Z2B" firstAttribute="leading" secondItem="HXN-QP-z1c" secondAttribute="leading" constant="10" id="DI7-S0-BMM"/>
-                                                    <constraint firstAttribute="trailing" secondItem="qkt-sF-Z2B" secondAttribute="trailing" constant="10" id="Kmh-lo-Eiv"/>
-                                                    <constraint firstAttribute="bottom" secondItem="qkt-sF-Z2B" secondAttribute="bottom" constant="16" id="QZp-DE-p9W"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="0.0"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </view>
-                                        </subviews>
-                                        <gestureRecognizers/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="HXN-QP-z1c" secondAttribute="bottom" id="0o0-O3-WLv"/>
-                                            <constraint firstItem="32U-6O-1By" firstAttribute="leading" secondItem="Rxp-Mk-LFw" secondAttribute="leading" id="FL0-hr-lTg"/>
-                                            <constraint firstAttribute="trailing" secondItem="32U-6O-1By" secondAttribute="trailing" id="KwP-Ds-DKC"/>
-                                            <constraint firstItem="HXN-QP-z1c" firstAttribute="leading" secondItem="Rxp-Mk-LFw" secondAttribute="leading" id="emW-oU-Nxl"/>
-                                            <constraint firstAttribute="trailing" secondItem="HXN-QP-z1c" secondAttribute="trailing" id="lgS-lh-Wjh"/>
-                                            <constraint firstItem="32U-6O-1By" firstAttribute="top" secondItem="Rxp-Mk-LFw" secondAttribute="top" id="utv-bu-rzO"/>
-                                            <constraint firstItem="HXN-QP-z1c" firstAttribute="top" secondItem="32U-6O-1By" secondAttribute="bottom" constant="1" id="wp2-xT-ezE"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="jWZ-R6-mFh" appends="YES" id="3tZ-J1-iMl"/>
-                                        </connections>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="Rxp-Mk-LFw" firstAttribute="top" secondItem="f9Y-aM-j36" secondAttribute="top" id="9xB-ex-5tn"/>
-                                    <constraint firstAttribute="trailing" secondItem="Rxp-Mk-LFw" secondAttribute="trailing" id="AUM-pA-Fr2"/>
-                                    <constraint firstAttribute="bottom" secondItem="Rxp-Mk-LFw" secondAttribute="bottom" id="VVQ-VS-0po"/>
-                                    <constraint firstItem="Rxp-Mk-LFw" firstAttribute="leading" secondItem="f9Y-aM-j36" secondAttribute="leading" id="jCt-zq-NVm"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="f9Y-aM-j36" secondAttribute="trailing" constant="10" id="1od-FG-bCJ"/>
-                            <constraint firstItem="dA1-6U-hNs" firstAttribute="top" secondItem="f9Y-aM-j36" secondAttribute="bottom" constant="64" id="8YO-Mu-AkL"/>
-                            <constraint firstItem="f9Y-aM-j36" firstAttribute="leading" secondItem="Flv-tQ-rMU" secondAttribute="leading" constant="10" id="RQ6-5Y-iQI"/>
-                        </constraints>
-                    </view>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <connections>
-                        <outlet property="checkBox" destination="qIV-jc-ntL" id="m4g-lc-Caa"/>
-                        <outlet property="commandLabel" destination="qkt-sF-Z2B" id="6nK-S8-vAD"/>
-                        <outlet property="commandView" destination="HXN-QP-z1c" id="WaO-qp-nhQ"/>
-                        <outlet property="contentView" destination="f9Y-aM-j36" id="OK1-H5-IDt"/>
-                        <outlet property="deviceLabel" destination="E5I-Q2-AML" id="ytV-60-mEd"/>
-                        <outlet property="deviceView" destination="32U-6O-1By" id="6RG-wN-EyO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WtT-kU-obP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="down" id="jWZ-R6-mFh">
-                    <connections>
-                        <action selector="dismiss" destination="Qit-Yq-gLb" id="u1u-nd-Fv8"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="2686" y="2303"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

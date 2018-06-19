@@ -13,7 +13,7 @@ extension Request {
     func approveController(for session:Session, from presenter:UIViewController) -> UIViewController? {
         
         switch self.body {
-        case .ssh, .git, .decryptLog, .teamOperation, .readTeam:
+        case .ssh, .git, .decryptLog, .teamOperation, .readTeam, .u2fAuthenticate, .u2fRegister:
             let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "ApproveController") as? ApproveController
             controller?.session = session
             controller?.request = self
@@ -48,18 +48,6 @@ extension Request {
             return nil
         }
     }
-    
-    var autoApproveDisplay:String? {
-        switch self.body {
-        case .ssh(let sshRequest):
-            return sshRequest.display
-        case .git(let gitSign):
-            return gitSign.git.shortDisplay
-            
-        default:
-            return nil
-        }
-    }
 }
 
 extension UIViewController {
@@ -80,71 +68,7 @@ extension UIViewController {
         approvalController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         
         dispatchMain {
-            if self.presentedViewController is AutoApproveController {
-                self.presentedViewController?.dismiss(animated: false, completion: {
-                    self.present(approvalController, animated: true, completion: nil)
-                })
-            } else {
-                self.present(approvalController, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func showApprovedRequest(session:Session, request:Request) {
-        
-        // don't show if user is asked to approve manual
-        guard self.presentedViewController is ApproveController == false
-            else {
-                return
-        }
-        
-        // remove pending
-        Policy.removePendingAuthorization(session: session, request: request)
-        
-        // proceed to show auto approval
-        let autoApproveController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "AutoApproveController")
-        autoApproveController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-        
-        (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
-        (autoApproveController as? AutoApproveController)?.command = request.autoApproveDisplay        
-        
-        dispatchMain {
-            if self.presentedViewController is AutoApproveController {
-                self.presentedViewController?.dismiss(animated: false, completion: {
-                    self.present(autoApproveController, animated: true, completion: nil)
-                })
-            } else {
-                self.present(autoApproveController, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func showFailedResponse(errorMessage:String, session:Session) {
-        
-        // don't show if user is asked to approve manual
-        guard self.presentedViewController is ApproveController == false
-            else {
-                return
-        }
-        
-        // proceed to show auto approval
-        let autoApproveController = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "AutoApproveController")
-        autoApproveController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        autoApproveController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-        
-        (autoApproveController as? AutoApproveController)?.deviceName = session.pairing.displayName.uppercased()
-        (autoApproveController as? AutoApproveController)?.errorMessage = errorMessage
-        
-        
-        dispatchMain {
-            if self.presentedViewController is AutoApproveController {
-                self.presentedViewController?.dismiss(animated: false, completion: {
-                    self.present(autoApproveController, animated: true, completion: nil)
-                })
-            } else {
-                self.present(autoApproveController, animated: true, completion: nil)
-            }
+            self.present(approvalController, animated: true, completion: nil)
         }
     }
 }

@@ -12,6 +12,18 @@ import AwesomeCache
 
 class Policy {
     
+    /// ask me every time for u2f
+    static var requireUserInteractionU2F:Bool {
+        get {
+            let setting = (try? KeychainStorage().getData(key: Constants.u2fRequiresApproval)) ?? Data(bytes: [0x01])
+            return setting.bytes == [0x01]
+        }
+        set(v) {
+            let byte:UInt8 = v ? 0x01 : 0x00;
+            try? KeychainStorage().setData(key: Constants.u2fRequiresApproval, data: Data(bytes: [byte]))
+        }
+    }
+    
     /// Interval Options
     enum Interval:TimeInterval {
         //case fifteenSeconds = 15
@@ -23,8 +35,6 @@ class Policy {
         }
     }
     
-    /// The policy cache directory
-    static var policyCacheURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)?.appendingPathComponent("policy_cache")
     
     
     /// Policy Storage Keys
@@ -57,6 +67,7 @@ class Policy {
             return ["user_and_host": userAndHost.object, "expires": expires.timeIntervalSince1970]
         }
     }
+    
     
     /// Policy Settings
     struct Settings:Jsonable {
@@ -202,7 +213,7 @@ class Policy {
         /// Set Allow
         func allow(request:Request) {
             switch request.body {
-            case .ssh, .git, .hosts, .me, .decryptLog, .noOp, .unpair, .teamOperation:
+            case .ssh, .git, .hosts, .me, .decryptLog, .noOp, .unpair, .teamOperation, .u2fAuthenticate, .u2fRegister:
                 return
             case .readTeam:
                 // special cases to allow logs for 6 hours when the readTeam request is allowed.
@@ -260,6 +271,9 @@ class Policy {
             switch request.body {
             case .me, .unpair, .noOp:
                 return true
+                
+            case .u2fRegister, .u2fAuthenticate:
+                return !Policy.requireUserInteractionU2F
                 
             case .hosts, .readTeam, .teamOperation:
                 return false
@@ -368,7 +382,7 @@ class Policy {
 extension Request {
     internal var allowAllUntilPolicyKey:Policy.Settings.AllowedUntilType? {
         switch body {
-        case .me, .unpair, .noOp, .hosts, .readTeam, .teamOperation:
+        case .me, .unpair, .noOp, .hosts, .readTeam, .teamOperation, .u2fAuthenticate, .u2fRegister:
             // not auto-allowable
             return nil
             

@@ -58,11 +58,16 @@ struct MultipleResponsesError:Error {}
 
 enum ResponseBody {
     case me(ResponseResult<MeResponse>)
+    
     case ssh(ResponseResult<SSHSignResponse>)
     case git(ResponseResult<GitSignResponse>)
     case ack(ResponseResult<AckResponse>)
     case unpair(ResponseResult<UnpairResponse>)
     case hosts(ResponseResult<HostsResponse>)
+    
+    // U2F
+    case u2fRegister(ResponseResult<U2FRegisterResponse>)
+    case u2fAuthenticate(ResponseResult<U2FAuthenticateResponse>)
 
     // team
     case readTeam(ResponseResult<SigChain.SignedMessage>)
@@ -109,6 +114,15 @@ enum ResponseBody {
         if let json:Object = try? json ~> "log_decryption_response" {
             responses.append(.decryptLog(try ResponseResult<LogDecryptionResponse>(json: json)))
         }
+        
+        if let json:Object = try? json ~> "u2f_register_response" {
+            responses.append(.u2fRegister(try ResponseResult<U2FRegisterResponse>(json: json)))
+        }
+
+        if let json:Object = try? json ~> "u2f_authenticate_response" {
+            responses.append(.u2fAuthenticate(try ResponseResult<U2FAuthenticateResponse>(json: json)))
+        }
+
 
         // if more than one response, it's an error
         if responses.count > 1 {
@@ -141,6 +155,10 @@ enum ResponseBody {
             json["team_operation_response"] = op.object
         case .decryptLog(let dl):
             json["log_decryption_response"] = dl.object
+        case .u2fRegister(let r):
+            json["u2f_register_response"] = r.object
+        case .u2fAuthenticate(let a):
+            json["u2f_authenticate_response"] = a.object
         }
         
         return json
@@ -165,6 +183,12 @@ enum ResponseBody {
         
         case .decryptLog(let decryptLog):
             return decryptLog.error
+            
+        case .u2fRegister(let u2fRegister):
+            return u2fRegister.error
+            
+        case .u2fAuthenticate(let u2fAuth):
+            return u2fAuth.error
         
         case .me, .unpair, .ack:
             return nil
@@ -235,37 +259,13 @@ typealias GitSignResponse = SignatureResponse
 
 // Me
 struct MeResponse:Jsonable {
-    
-    struct Me:Jsonable {
+    struct Me {
         var email:String
         var publicKeyWire:Data
+        var deviceIdentifier:U2FDeviceIdentifier
         var pgpPublicKey:Data?
         var teamCheckpoint:TeamCheckpoint?
-        
-        init(email:String, publicKeyWire:Data, pgpPublicKey: Data? = nil, teamCheckpoint: TeamCheckpoint? = nil) {
-            self.email = email
-            self.publicKeyWire = publicKeyWire
-            self.pgpPublicKey = pgpPublicKey
-            self.teamCheckpoint = teamCheckpoint
-        }
-        
-        init(json: Object) throws {
-            self.email = try json ~> "email"
-            self.publicKeyWire = try ((json ~> "public_key_wire") as String).fromBase64()
-            self.pgpPublicKey = try? ((json ~> "pgp_pk") as String).fromBase64()
-            self.teamCheckpoint = try? TeamCheckpoint(json: json ~> "team_checkpoint")
-        }
-        
-        var object: Object {
-            var json : Object = ["email": email, "public_key_wire": publicKeyWire.toBase64()]
-            if let pgpPublicKey = pgpPublicKey {
-                json["pgp_pk"] = pgpPublicKey.toBase64()
-            }
-            if let teamCheckpoint = teamCheckpoint {
-                json["team_checkpoint"] = teamCheckpoint.object
-            }
-            return json
-        }
+        var u2fAccounts:[String]?
     }
     
     var me:Me
@@ -278,6 +278,35 @@ struct MeResponse:Jsonable {
     }
     var object: Object {
         return ["me": me.object]
+    }
+}
+
+extension MeResponse.Me:Jsonable {
+    init(json: Object) throws {
+        self.email = try json ~> "email"
+        self.publicKeyWire = try ((json ~> "public_key_wire") as String).fromBase64()
+        self.deviceIdentifier = try ((json ~> "device_identifier") as String).fromBase64()
+        self.pgpPublicKey = try? ((json ~> "pgp_pk") as String).fromBase64()
+        self.teamCheckpoint = try? TeamCheckpoint(json: json ~> "team_checkpoint")
+        self.u2fAccounts = try? json ~> "u2f_accounts"
+    }
+    
+    var object: Object {
+        var json : Object = ["email": email,
+                             "public_key_wire": publicKeyWire.toBase64(),
+                             "device_identifier": deviceIdentifier.toBase64()]
+        
+        if let pgpPublicKey = pgpPublicKey {
+            json["pgp_pk"] = pgpPublicKey.toBase64()
+        }
+        if let teamCheckpoint = teamCheckpoint {
+            json["team_checkpoint"] = teamCheckpoint.object
+        }
+        if let u2fAccounts = u2fAccounts {
+            json["u2f_accounts"] = u2fAccounts
+        }
+        
+        return json
     }
 }
 
@@ -349,3 +378,45 @@ struct HostsResponse:Jsonable {
     }
 }
 
+// U2F
+struct U2FRegisterResponse {
+    let publicKey:Data
+    let keyHandle:Data
+    let attestationCertificate:Data
+    let signature:Data
+}
+
+extension U2FRegisterResponse:Jsonable {
+    init(json: Object) throws {
+        self.publicKey = try ((try json ~> "public_key") as String).fromBase64()
+        self.keyHandle = try ((try json ~> "key_handle") as String).fromBase64()
+        self.attestationCertificate = try ((try json ~> "attestation_certificate") as String).fromBase64()
+        self.signature = try ((try json ~> "signature") as String).fromBase64()
+    }
+    
+    var object: Object {
+        return [
+            "public_key": publicKey.toBase64(),
+            "key_handle": keyHandle.toBase64(),
+            "attestation_certificate": attestationCertificate.toBase64(),
+            "signature": signature.toBase64(),
+        ]
+    }
+}
+
+struct U2FAuthenticateResponse {
+    let counter:Int32
+    let signature:Data
+}
+
+extension U2FAuthenticateResponse:Jsonable {
+    init(json: Object) throws {
+        self.counter = try json ~> "counter"
+        self.signature = try ((try json ~> "signature") as String).fromBase64()
+    }
+    
+    var object: Object {
+        return [ "counter": counter,
+                 "signature": signature.toBase64()]
+    }
+}

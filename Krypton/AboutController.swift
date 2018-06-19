@@ -12,14 +12,18 @@ import MessageUI
 
 class AboutController: KRBaseController {
 
+    
     @IBOutlet weak var versionLabel:UILabel!
+    @IBOutlet weak var requireU2FApprovalSwitch:UISwitch!
     @IBOutlet weak var analyticsSwitch:UISwitch!
+    @IBOutlet weak var destroyButton:UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        requireU2FApprovalSwitch.isOn = Policy.requireUserInteractionU2F
         analyticsSwitch.isOn = !Analytics.enabled
-        
+
         if  let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
             let buildFilePath = Bundle.main.path(forResource: "BUILD", ofType: nil),
             let build = try? String(contentsOfFile: buildFilePath).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
@@ -27,11 +31,14 @@ class AboutController: KRBaseController {
             let commit = try? String(contentsOfFile: commitFilePath).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         {
             let hashShort = String(commit.prefix(min(6, commit.count)))
-            self.versionLabel.text = "v\(version).\(build) - \(hashShort)"
+            self.versionLabel.text = "\(version).\(build).\(hashShort)"
         } else {
             log("could not find version, build, and commit information", .error)
         }
         
+//        if !KeyManager.hasKey() {
+//            destroyButton.isHidden = true
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +55,10 @@ class AboutController: KRBaseController {
     }
 
     
+    @IBAction func requireU2FApprovalChanged(sender:UISwitch) {
+        Policy.requireUserInteractionU2F = sender.isOn
+    }
+
     @IBAction func analyticsEnabledChanged(sender:UISwitch) {
         Analytics.set(disabled: sender.isOn)
     }
@@ -64,9 +75,9 @@ class AboutController: KRBaseController {
     
     @IBAction func trashTapped() {
         
-        let sheet = UIAlertController(title: "Do you want to destroy your private and public key?", message: "Your private key will be gone forever and you will be asked to generate a new one. You will be unpaired from all devices.", preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "Do you want to destroy your private key and reset Krypton?", message: "Your private keys will be gone forever. You will be unpaired from all devices.", preferredStyle: .actionSheet)
         
-        sheet.addAction(UIAlertAction(title: "Delete key pair", style: UIAlertActionStyle.destructive, handler: { (action) in
+        sheet.addAction(UIAlertAction(title: "Destroy", style: UIAlertActionStyle.destructive, handler: { (action) in
             self.deleteKeyTapped()
         }))
         
@@ -90,6 +101,7 @@ class AboutController: KRBaseController {
             let _ = KeyManager.destroyKeyPair()
             IdentityManager.clearMe()
             SessionManager.shared.destroy()
+            Onboarding.isActive = true
             
             // delete team identity if it exists (and leave team)
             if case .some(let hasTeam) = try? IdentityManager.hasTeam(), hasTeam {
@@ -123,6 +135,7 @@ class AboutController: KRBaseController {
     func authenticate(completion:@escaping (Bool)->Void) {
         let context = LAContext()
         let policy = LAPolicy.deviceOwnerAuthentication
+        
         let reason = "\(Properties.appName) needs to authenticate you before deleting your key pair."
         
         var err:NSError?

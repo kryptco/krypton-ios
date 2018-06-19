@@ -13,6 +13,6 @@ import JSON
 extension Policy {
     class func requestUserAuthorization(session:Session, request:Request) {}
     class func notifyUser(session:Session, request:Request) {}
-    class func notifyUser(errorMessage:String, session:Session) {}
+    class func notifyUser(errorMessage:String, request:Request, session:Session) {}
     class func teamDidUpdate() {}
 }

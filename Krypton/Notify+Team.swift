@@ -10,19 +10,6 @@ import Foundation
 import UserNotifications
 
 extension Notify {
-    
-    static var getPresentUserInfoKey:String  {
-        return "present_in_app"
-    }
-    
-    static func shouldPresentInAppNotification(userInfo:[AnyHashable:Any]?) -> Bool {
-        if let present = userInfo?[getPresentUserInfoKey] as? Bool, present {
-            return true
-        }
-        
-        return false
-    }
-    
     /**
         Tell the team admin theres a new block
      */
@@ -35,7 +22,7 @@ extension Notify {
         content.subtitle = subtitle
         content.body = body
         content.sound = UNNotificationSound.default()
-        content.userInfo = [Notify.getPresentUserInfoKey: true]
+        content.userInfo = [Notify.shouldPresentInAppUserInfoKey : true]
         content.categoryIdentifier = Policy.NotificationCategory.newTeamDataAlert.identifier
         
         let request = UNNotificationRequest(identifier: signedMessage.hash().toBase64() , content: content, trigger: nil)

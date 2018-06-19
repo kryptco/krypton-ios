@@ -47,7 +47,7 @@ class TeamUpdater {
             // force a check
             return true
             
-        case .ssh, .git, .hosts, .me, .noOp, .unpair, .decryptLog, .readTeam:
+        case .ssh, .git, .hosts, .me, .noOp, .unpair, .decryptLog, .readTeam, .u2fRegister, .u2fAuthenticate:
             return shouldCheckTimed()
         }
     }

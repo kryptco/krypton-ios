@@ -13,7 +13,7 @@ class GenerateController:UIViewController {
     
     @IBOutlet weak var animationView:UIView!
 
-    var keyType:KeyType!
+    var keyType:KeyType = .RSA
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,7 @@ class GenerateController:UIViewController {
                 if elapsed >= 3.0 {
                     dispatchMain {
                         SwiftSpinner.hide()
-                        self.performSegue(withIdentifier: "showSetup", sender: nil)
+                        self.goToNextStage()
                     }
                     return
                 }
@@ -55,7 +55,7 @@ class GenerateController:UIViewController {
                 dispatchAfter(delay: 3.0 - elapsed, task: {
                     dispatchMain {
                         SwiftSpinner.hide()
-                        self.performSegue(withIdentifier: "showSetup", sender: nil)
+                        self.goToNextStage()
                     }
                 })
 
@@ -63,11 +63,16 @@ class GenerateController:UIViewController {
                 self.showWarning(title: "Error", body: "Cryptography: error generating key pair. \(e)", then: {
                     dispatchMain {
                         SwiftSpinner.hide()
-                        self.dismiss(animated: true, completion: nil)
+                        self.navigationController?.popViewController(animated: true)
                     }
                 })
             }
         }
+    }
+    
+    func goToNextStage() {
+        let installU2F = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "InstallU2FController") as! InstallU2FController
+        self.navigationController?.pushViewController(installU2F, animated: true)
     }
     
 }

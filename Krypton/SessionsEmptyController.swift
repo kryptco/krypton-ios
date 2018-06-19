@@ -11,6 +11,10 @@ import UIKit
 
 class SessionsEmptyController:KRBaseController {
     
+    @IBOutlet weak var titleLabel:UILabel!
+    @IBOutlet weak var detailLabel:UILabel!
+    @IBOutlet weak var pairNewButton:UIButton!
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

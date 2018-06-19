@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hqk-jW-f1I">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hqk-jW-f1I">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Bold</string>
-            <string>AvenirNext-Medium</string>
-            <string>AvenirNext-Regular</string>
-        </array>
         <array key="SourceCodePro-Bold.ttf">
             <string>SourceCodePro-Bold</string>
         </array>
@@ -23,7 +18,7 @@
         <!--Pair-->
         <scene sceneID="c7H-AU-rGh">
             <objects>
-                <viewController id="Hqk-jW-f1I" customClass="PairController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Hqk-jW-f1I" customClass="PairController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xu9-DM-CgO"/>
                         <viewControllerLayoutGuide type="bottom" id="utS-1f-tAc"/>
@@ -39,21 +34,21 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cag-d4-r3x" userLabel="paircommand">
-                                <rect key="frame" x="0.0" y="64" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="92.5"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZ6-5r-kzu" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="10" width="335" height="59"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZ6-5r-kzu" userLabel="kr" customClass="KRView" customModule="Krypton" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="10" width="172.5" height="61"/>
                                         <subviews>
                                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Scw-xl-NBM">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="59"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="172.5" height="61"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="22h-qn-rzQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="59"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="172.5" height="61"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </view>
                                                 <blurEffect style="dark"/>
                                             </visualEffectView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ci8-vd-B9D">
-                                                <rect key="frame" x="10" y="28" width="22" height="21"/>
+                                                <rect key="frame" x="10" y="28" width="22" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="22" id="Ixb-D8-KbO"/>
                                                 </constraints>
@@ -62,13 +57,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="kr pair" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWT-p8-xuP">
-                                                <rect key="frame" x="40" y="28" width="275" height="21"/>
+                                                <rect key="frame" x="40" y="28" width="112.5" height="23"/>
                                                 <fontDescription key="fontDescription" name="SourceCodePro-Bold" family="Source Code Pro" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="PAIR WITH A NEW DEVICE" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjK-T5-gxE">
-                                                <rect key="frame" x="10" y="4" width="315" height="14"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="PAIR WITH A COMPUTER" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjK-T5-gxE">
+                                                <rect key="frame" x="10" y="8" width="152.5" height="14"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -77,17 +72,70 @@
                                         <constraints>
                                             <constraint firstItem="Scw-xl-NBM" firstAttribute="top" secondItem="UZ6-5r-kzu" secondAttribute="top" id="2PJ-IY-Aig"/>
                                             <constraint firstAttribute="trailing" secondItem="Scw-xl-NBM" secondAttribute="trailing" id="7vJ-b7-wUg"/>
+                                            <constraint firstAttribute="trailing" secondItem="wWT-p8-xuP" secondAttribute="trailing" constant="20" id="CTM-s2-jnn"/>
                                             <constraint firstAttribute="trailing" secondItem="mjK-T5-gxE" secondAttribute="trailing" constant="10" id="Nq7-A8-JPN"/>
-                                            <constraint firstAttribute="trailing" secondItem="wWT-p8-xuP" secondAttribute="trailing" constant="20" id="W0r-Ve-YFy"/>
                                             <constraint firstItem="ci8-vd-B9D" firstAttribute="leading" secondItem="UZ6-5r-kzu" secondAttribute="leading" constant="10" id="XFK-dT-bHz"/>
                                             <constraint firstItem="Scw-xl-NBM" firstAttribute="leading" secondItem="UZ6-5r-kzu" secondAttribute="leading" id="Zms-pj-Qcs"/>
-                                            <constraint firstItem="wWT-p8-xuP" firstAttribute="top" secondItem="mjK-T5-gxE" secondAttribute="bottom" constant="10" id="a7c-FP-zDc"/>
-                                            <constraint firstItem="mjK-T5-gxE" firstAttribute="top" secondItem="UZ6-5r-kzu" secondAttribute="top" constant="4" id="fbt-Pt-aJm"/>
+                                            <constraint firstItem="wWT-p8-xuP" firstAttribute="top" secondItem="mjK-T5-gxE" secondAttribute="bottom" constant="6" id="a7c-FP-zDc"/>
+                                            <constraint firstItem="mjK-T5-gxE" firstAttribute="top" secondItem="UZ6-5r-kzu" secondAttribute="top" constant="8" id="fbt-Pt-aJm"/>
                                             <constraint firstItem="wWT-p8-xuP" firstAttribute="leading" secondItem="ci8-vd-B9D" secondAttribute="trailing" constant="8" id="lA0-iV-EIC"/>
                                             <constraint firstAttribute="bottom" secondItem="Scw-xl-NBM" secondAttribute="bottom" id="mqC-Nq-vZF"/>
                                             <constraint firstAttribute="bottom" secondItem="ci8-vd-B9D" secondAttribute="bottom" constant="10" id="p4c-Ne-hM6"/>
+                                            <constraint firstAttribute="bottom" secondItem="wWT-p8-xuP" secondAttribute="bottom" constant="10" id="qxK-2V-4vA"/>
                                             <constraint firstItem="mjK-T5-gxE" firstAttribute="leading" secondItem="UZ6-5r-kzu" secondAttribute="leading" constant="10" id="u7b-eK-V3C"/>
                                             <constraint firstItem="wWT-p8-xuP" firstAttribute="centerY" secondItem="ci8-vd-B9D" secondAttribute="centerY" id="zwv-L4-MYo"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-ce-pM1" userLabel="ext" customClass="KRView" customModule="Krypton" customModuleProvider="target">
+                                        <rect key="frame" x="192.5" y="9.5" width="172.5" height="63"/>
+                                        <subviews>
+                                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYj-vq-GXH">
+                                                <rect key="frame" x="0.0" y="0.0" width="172.5" height="63"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="HyG-eE-PBz">
+                                                    <rect key="frame" x="0.0" y="0.0" width="172.5" height="63"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </view>
+                                                <blurEffect style="dark"/>
+                                            </visualEffectView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="PAIR WITH A BROWSER" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnO-Nk-U20">
+                                                <rect key="frame" x="10" y="8" width="152.5" height="14"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="krypt.co/start" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIb-30-uoe">
+                                                <rect key="frame" x="40" y="28" width="122.5" height="25"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chrome" translatesAutoresizingMaskIntoConstraints="NO" id="nQv-e5-bRd">
+                                                <rect key="frame" x="10" y="30.5" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="49q-Bz-mKy"/>
+                                                    <constraint firstAttribute="height" constant="20" id="FK8-Nn-Kwq"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="mnO-Nk-U20" secondAttribute="trailing" constant="10" id="2Ra-St-s0M"/>
+                                            <constraint firstItem="dYj-vq-GXH" firstAttribute="leading" secondItem="5kh-ce-pM1" secondAttribute="leading" id="8wW-9c-yda"/>
+                                            <constraint firstItem="mnO-Nk-U20" firstAttribute="top" secondItem="5kh-ce-pM1" secondAttribute="top" constant="8" id="DPl-II-coO"/>
+                                            <constraint firstItem="TIb-30-uoe" firstAttribute="top" secondItem="mnO-Nk-U20" secondAttribute="bottom" constant="6" id="Fex-g1-4sg"/>
+                                            <constraint firstItem="TIb-30-uoe" firstAttribute="leading" secondItem="nQv-e5-bRd" secondAttribute="trailing" constant="10" id="Id6-DI-Jl0"/>
+                                            <constraint firstAttribute="bottom" secondItem="dYj-vq-GXH" secondAttribute="bottom" id="JIw-QI-is3"/>
+                                            <constraint firstItem="mnO-Nk-U20" firstAttribute="leading" secondItem="5kh-ce-pM1" secondAttribute="leading" constant="10" id="LiO-X7-DpG"/>
+                                            <constraint firstAttribute="trailing" secondItem="TIb-30-uoe" secondAttribute="trailing" constant="10" id="MxE-Ox-fJF"/>
+                                            <constraint firstItem="TIb-30-uoe" firstAttribute="centerY" secondItem="nQv-e5-bRd" secondAttribute="centerY" id="R0Q-jW-Vym"/>
+                                            <constraint firstItem="dYj-vq-GXH" firstAttribute="top" secondItem="5kh-ce-pM1" secondAttribute="top" id="bJ5-Pr-Q1r"/>
+                                            <constraint firstItem="nQv-e5-bRd" firstAttribute="leading" secondItem="mnO-Nk-U20" secondAttribute="leading" id="beF-Wo-a7U"/>
+                                            <constraint firstAttribute="trailing" secondItem="dYj-vq-GXH" secondAttribute="trailing" id="mJm-jI-6vb"/>
+                                            <constraint firstAttribute="bottom" secondItem="TIb-30-uoe" secondAttribute="bottom" constant="10" id="rki-DE-wyL"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -98,14 +146,17 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="UZ6-5r-kzu" secondAttribute="trailing" constant="20" id="EyK-pA-QoU"/>
+                                    <constraint firstItem="5kh-ce-pM1" firstAttribute="leading" secondItem="UZ6-5r-kzu" secondAttribute="trailing" constant="10" id="B4C-qE-dug"/>
+                                    <constraint firstItem="5kh-ce-pM1" firstAttribute="width" secondItem="UZ6-5r-kzu" secondAttribute="width" id="F2m-i9-RZ1"/>
+                                    <constraint firstAttribute="bottom" secondItem="5kh-ce-pM1" secondAttribute="bottom" constant="20" id="Js8-9T-R07"/>
+                                    <constraint firstItem="5kh-ce-pM1" firstAttribute="centerY" secondItem="UZ6-5r-kzu" secondAttribute="centerY" id="SJS-gd-EgX"/>
                                     <constraint firstItem="UZ6-5r-kzu" firstAttribute="top" secondItem="cag-d4-r3x" secondAttribute="top" constant="10" id="azQ-fQ-RfC"/>
-                                    <constraint firstItem="UZ6-5r-kzu" firstAttribute="leading" secondItem="cag-d4-r3x" secondAttribute="leading" constant="20" id="gom-6F-zIb"/>
-                                    <constraint firstAttribute="height" constant="80" id="yxh-qQ-Wll"/>
+                                    <constraint firstItem="UZ6-5r-kzu" firstAttribute="leading" secondItem="cag-d4-r3x" secondAttribute="leading" constant="10" id="gom-6F-zIb"/>
+                                    <constraint firstAttribute="trailing" secondItem="5kh-ce-pM1" secondAttribute="trailing" constant="10" id="ver-f8-gaX"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan_rails" translatesAutoresizingMaskIntoConstraints="NO" id="7nB-wh-gHQ">
-                                <rect key="frame" x="40" y="194" width="295" height="295"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan_rails" translatesAutoresizingMaskIntoConstraints="NO" id="7nB-wh-gHQ">
+                                <rect key="frame" x="60" y="213.5" width="255" height="255"/>
                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="7nB-wh-gHQ" secondAttribute="height" multiplier="1:1" id="gYN-wM-6WL"/>
@@ -115,16 +166,16 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Z1A-No-lCQ" firstAttribute="leading" secondItem="xtF-ha-jyi" secondAttribute="leading" id="9jo-kV-CRb"/>
+                            <constraint firstItem="7nB-wh-gHQ" firstAttribute="centerY" secondItem="Z1A-No-lCQ" secondAttribute="centerY" id="Bwy-ib-eVY"/>
                             <constraint firstItem="cag-d4-r3x" firstAttribute="top" secondItem="Xu9-DM-CgO" secondAttribute="bottom" id="FXw-qo-TqS"/>
-                            <constraint firstItem="7nB-wh-gHQ" firstAttribute="leading" secondItem="xtF-ha-jyi" secondAttribute="leading" constant="40" id="GlU-BN-Rzi"/>
+                            <constraint firstItem="7nB-wh-gHQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xtF-ha-jyi" secondAttribute="leading" constant="60" id="GlU-BN-Rzi"/>
                             <constraint firstItem="7nB-wh-gHQ" firstAttribute="centerX" secondItem="Z1A-No-lCQ" secondAttribute="centerX" id="Ip7-1a-jkA"/>
-                            <constraint firstItem="7nB-wh-gHQ" firstAttribute="centerY" secondItem="Z1A-No-lCQ" secondAttribute="centerY" id="KIb-YZ-89h"/>
                             <constraint firstAttribute="trailing" secondItem="cag-d4-r3x" secondAttribute="trailing" id="MDf-50-do1"/>
                             <constraint firstItem="Xu9-DM-CgO" firstAttribute="bottom" secondItem="Z1A-No-lCQ" secondAttribute="top" id="MqO-8a-Wmm"/>
                             <constraint firstItem="cag-d4-r3x" firstAttribute="leading" secondItem="xtF-ha-jyi" secondAttribute="leading" id="TMR-19-XFF"/>
                             <constraint firstAttribute="trailing" secondItem="Z1A-No-lCQ" secondAttribute="trailing" id="az1-gd-eUk"/>
-                            <constraint firstItem="cag-d4-r3x" firstAttribute="top" secondItem="Xu9-DM-CgO" secondAttribute="bottom" id="ck1-GS-2Je"/>
                             <constraint firstItem="utS-1f-tAc" firstAttribute="top" secondItem="Z1A-No-lCQ" secondAttribute="bottom" id="jkd-95-TUf"/>
+                            <constraint firstItem="utS-1f-tAc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7nB-wh-gHQ" secondAttribute="bottom" constant="20" id="rJZ-sx-KRz"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Pair" image="pair_icon_selected" selectedImage="pair_icon" id="ISJ-Dm-kd0"/>
@@ -143,12 +194,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2F5-g5-Ir9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3100" y="-151"/>
+            <point key="canvasLocation" x="3100" y="-151.57421289355324"/>
         </scene>
         <!--Scan Controller-->
         <scene sceneID="aiY-AW-sQa">
             <objects>
-                <viewController id="rlL-ey-ui2" customClass="KRScanController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rlL-ey-ui2" customClass="KRScanController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="r2k-oe-W9g"/>
                         <viewControllerLayoutGuide type="bottom" id="Uxw-jY-Pon"/>
@@ -166,7 +217,7 @@
         <!--Pair Approve Controller-->
         <scene sceneID="ZzL-Cb-R8G">
             <objects>
-                <viewController id="dqG-2W-teZ" customClass="PairApproveController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PairApproveController" id="dqG-2W-teZ" customClass="PairApproveController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iFu-4Y-Sp9"/>
                         <viewControllerLayoutGuide type="bottom" id="F3V-mN-gob"/>
@@ -181,10 +232,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BXv-2P-Jc2" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BXv-2P-Jc2" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                             <rect key="frame" x="40" y="164" width="295" height="339"/>
                                             <subviews>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahY-b7-HHQ" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahY-b7-HHQ" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="197" width="295" height="142"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DAZ-CZ-H4p" userLabel="line2">
@@ -259,7 +310,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGK-Eh-2Y4" customClass="M13Checkbox" customModule="Kryptonite" customModuleProvider="target">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGK-Eh-2Y4" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
                                                     <rect key="frame" x="108" y="10" width="80" height="80"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -286,7 +337,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9aF-HX-ExV">
                                                     <rect key="frame" x="108" y="10" width="80" height="80"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tfE-QC-sdt" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tfE-QC-sdt" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                                             <rect key="frame" x="30" y="30" width="20" height="20"/>
                                                             <color key="backgroundColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -314,7 +365,7 @@
                                                     <color key="textColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair with this device?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xjb-Qr-eq6">
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair with this computer?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xjb-Qr-eq6">
                                                     <rect key="frame" x="8" y="132" width="279" height="25"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
                                                     <color key="textColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
@@ -381,12 +432,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mU7-ni-dbS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4065" y="-135"/>
+            <point key="canvasLocation" x="4060" y="-179"/>
         </scene>
         <!--Pair Invalid Version Controller-->
         <scene sceneID="hAp-HY-Mr8">
             <objects>
-                <viewController id="pAM-2f-kE2" customClass="PairInvalidVersionController" customModule="Kryptonite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pAM-2f-kE2" customClass="PairInvalidVersionController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WaQ-sa-Eop"/>
                         <viewControllerLayoutGuide type="bottom" id="JzG-87-daa"/>
@@ -401,11 +452,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQK-hH-mi4" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="223.5" width="335" height="220"/>
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQK-hH-mi4" customClass="KRView" customModule="Krypton" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="224" width="335" height="219.5"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BJT-9W-bLH">
-                                                    <rect key="frame" x="16" y="166" width="303" height="50"/>
+                                                    <rect key="frame" x="16" y="165.5" width="303" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="3zT-If-XZ5"/>
                                                     </constraints>
@@ -422,14 +473,14 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="s17-Bd-H4O" userLabel="line1">
-                                                    <rect key="frame" x="0.0" y="161" width="335" height="1"/>
+                                                    <rect key="frame" x="0.0" y="160.5" width="335" height="1"/>
                                                     <color key="backgroundColor" red="0.80392156859999997" green="0.80392156859999997" blue="0.80392156859999997" alpha="0.60447421400000001" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="kUN-8a-Q2b"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSX-LA-7aD">
-                                                    <rect key="frame" x="10" y="20" width="315" height="28"/>
+                                                    <rect key="frame" x="10" y="20" width="315" height="27.5"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Out of date">
                                                             <attributes>
@@ -441,8 +492,8 @@
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XsZ-gD-p0Z" customClass="KRView" customModule="Kryptonite" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="70" width="295" height="61"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XsZ-gD-p0Z" customClass="KRView" customModule="Krypton" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="69.5" width="295" height="61"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OzS-px-QL4">
                                                             <rect key="frame" x="0.0" y="28" width="22" height="23"/>
@@ -542,6 +593,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chrome" width="1400" height="1400"/>
         <image name="pair_icon" width="25" height="25"/>
         <image name="pair_icon_selected" width="25" height="25"/>
         <image name="scan_rails" width="256" height="256"/>

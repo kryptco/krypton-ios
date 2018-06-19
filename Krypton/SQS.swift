@@ -30,6 +30,7 @@ class SQSManager:TransportMedium {
     //MARK: Transport
     func send(message:NetworkMessage, for session:Session, completionHandler: (()->Void)?) {
         let api = API()
+        log("sending: \(message.header)")
         api.send(to: session.pairing.queue, message: message, handler: { (sendResult) in
             switch sendResult {
             case .sent:

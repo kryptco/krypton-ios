@@ -56,6 +56,10 @@ enum RequestBody:Jsonable {
     case hosts(HostsRequest)
     case noOp
     
+    // u2f
+    case u2fRegister(U2FRegisterRequest)
+    case u2fAuthenticate(U2FAuthenticateRequest)
+    
     // team
     case readTeam(ReadTeamRequest)
     case teamOperation(TeamOperationRequest)
@@ -64,13 +68,12 @@ enum RequestBody:Jsonable {
     
     var isApprovable:Bool {
         switch self {
-        case .ssh, .git, .hosts, .readTeam, .teamOperation, .decryptLog:
+        case .ssh, .git, .hosts, .readTeam, .teamOperation, .decryptLog, .u2fRegister, .u2fAuthenticate:
             return true
         case .me, .unpair, .noOp:
             return false
         }
     }
-
     
     init(json:Object) throws {
         
@@ -97,6 +100,14 @@ enum RequestBody:Jsonable {
             requests.append(.hosts(try HostsRequest(json: json)))
         }
         
+        if let json:Object = try? json ~> "u2f_register_request" {
+            requests.append(.u2fRegister(try U2FRegisterRequest(json: json)))
+        }
+        
+        if let json:Object = try? json ~> "u2f_authenticate_request" {
+            requests.append(.u2fAuthenticate(try U2FAuthenticateRequest(json: json)))
+        }
+
         if let json:Object = try? json ~> "read_team_request" {
             requests.append(.readTeam(try ReadTeamRequest(json: json)))
         }
@@ -145,6 +156,10 @@ enum RequestBody:Jsonable {
             json["unpair_request"] = u.object
         case .hosts(let h):
             json["hosts_request"] = h.object
+        case .u2fRegister(let r):
+            json["u2f_register_request"] = r.object
+        case .u2fAuthenticate(let a):
+            json["u2f_authenticate_request"] = a.object
         case .noOp:
             break
         }
@@ -163,6 +178,10 @@ enum RequestBody:Jsonable {
             case .tag:
                 return "git-tag-signature"
             }
+        case .u2fRegister:
+            return "u2f-register"
+        case .u2fAuthenticate:
+            return "u2f-authenticate"
         case .hosts:
             return "hosts"
         case .readTeam:
@@ -315,17 +334,26 @@ struct GitSignRequest:Jsonable {
 // Me
 struct MeRequest:Jsonable {
     var pgpUserId: String?
-    init(pgpUserId: String? = nil) {
+    var u2fOnly:Bool?
+    
+    init(pgpUserId: String? = nil, u2fOnly: Bool? = false) {
         self.pgpUserId = pgpUserId
+        self.u2fOnly = u2fOnly
     }
     init(json: Object) throws {
         pgpUserId = try? json ~> "pgp_user_id"
+        u2fOnly = try? json ~> "u2f_only"
     }
     var object: Object {
         var json:Object = [:]
+        
         if let pgpUserId = pgpUserId {
             json["pgp_user_id"] = pgpUserId
         }
+        if let u2fOnly = u2fOnly {
+            json["u2f_only"] = u2fOnly
+        }
+        
         return json
     }
 }
@@ -342,4 +370,43 @@ struct HostsRequest:Jsonable {
     var object: Object {return [:]}
 }
 
+// U2F
+typealias U2FKeyHandle = Data
+typealias U2FDeviceIdentifier = Data
+
+typealias U2FAppID = String
+typealias U2FAppIDHash = Data
+
+struct U2FRegisterRequest:Jsonable {
+    let challenge:Data
+    let appID:U2FAppID
+    
+    init(json: Object) throws {
+        self.challenge = try ((json ~> "challenge") as String).fromBase64()
+        self.appID = try json ~> "app_id"
+    }
+    
+    var object: Object {
+        return [ "challenge": challenge.toBase64(),
+                 "app_id": appID]
+    }
+}
+
+struct U2FAuthenticateRequest:Jsonable {
+    let challenge:Data
+    let keyHandle:U2FKeyHandle
+    let appID:U2FAppID
+    
+    init(json: Object) throws {
+        self.challenge = try ((json ~> "challenge") as String).fromBase64()
+        self.keyHandle = try ((json ~> "key_handle") as String).fromBase64()
+        self.appID = try json ~> "app_id"
+    }
+    
+    var object: Object {
+        return ["challenge": challenge.toBase64(),
+                "key_handle": keyHandle.toBase64(),
+                "app_id": appID]
+    }
+}
 

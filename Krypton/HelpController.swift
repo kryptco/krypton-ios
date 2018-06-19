@@ -102,7 +102,5 @@ class HelpInstallController:KRBaseController {
     
     @IBAction func goToHelpInstall(segue: UIStoryboardSegue) {
     }
-
-
 }
 

@@ -111,7 +111,8 @@ class ApproveController:UIViewController {
         
         case .readTeam, .teamOperation:
             responseOptions = [.allow]
-            
+        case .u2fAuthenticate, .u2fRegister:
+            return [.yes, .no]
         case .hosts, .me, .unpair, .noOp:
             break
         }
@@ -163,7 +164,7 @@ class ApproveController:UIViewController {
     
         // set policy + post analytics
         switch option {
-        case .allow, .allowOnce:
+        case .allow, .allowOnce, .yes:
             approve(option: option, request: request, session: session) { success in
                 guard success else {
                     self.isEnabled = true
@@ -200,7 +201,7 @@ class ApproveController:UIViewController {
                 Analytics.postEvent(category: self.category, action: "foreground approve", label: "time", value: UInt(Policy.temporaryApprovalInterval.value))
             }
             
-        case .reject:
+        case .reject, .no:
             self.dismissReject()
         }
     }

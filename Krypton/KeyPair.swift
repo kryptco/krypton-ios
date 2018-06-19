@@ -32,6 +32,17 @@ enum KeyType:String {
     case RSA = "rsa"
     case Ed25519 = "ed25519"
     case nistP256 = "ecdsa-sha2-nistp256"
+    
+    var description:String {
+        switch self {
+        case .RSA:
+            return "RSA 4096"
+        case .Ed25519:
+            return "Ed25519"
+        case .nistP256:
+            return "SecP256"
+        }
+    }
 }
 
 enum DigestType {

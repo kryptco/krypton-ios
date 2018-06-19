@@ -13,6 +13,7 @@ class PairController: KRBaseController, KRScanDelegate {
     
     var scanViewController:KRScanController?
     @IBOutlet weak var scanRails:UIImageView!
+    @IBOutlet weak var pairCommandHeight:NSLayoutConstraint!
 
     
 
@@ -28,6 +29,7 @@ class PairController: KRBaseController, KRScanDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.scanViewController?.canScan = true
+        self.showInstructionForMode()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,14 +57,19 @@ class PairController: KRBaseController, KRScanDelegate {
         {
             pairingApproval.pairing = pairing
             pairingApproval.scanController = scanViewController
-            pairingApproval.tabController = tabBarController
+            
+            pairingApproval.didPairSuccessfully = {
+                self.tabBarController?.selectedIndex = MainController.TabIndex.devices.index
+            }
         }
         else if let pairingInvalid = segue.destination as? PairInvalidVersionController {
             pairingInvalid.scanController = scanViewController
         }
     }
     
-    
+    func showInstructionForMode() {
+
+    }
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
         // first try to see if it's a team QR code
@@ -79,7 +86,7 @@ class PairController: KRBaseController, KRScanDelegate {
         }
 
         // otherwise must be a pairing
-        guard let pairing = try? Pairing(jsonString: data) else {
+        guard let pairing = try? PairingQR(with: data).pairing else {
             dispatchMain { self.showInvalidPairingQR() }
             return false
         }

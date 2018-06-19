@@ -20,11 +20,12 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         return UIBarButtonItem(title: "Help", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainController.helpTapped))
     }()
     
-    enum TabIndex:Int {
-        case me = 0
+    enum TabIndex:Int  {
+        case sites = 0
         case pair = 1
         case devices = 2
-        case teams = 3
+        case developer = 3
+        case teams = 4
         
         var index:Int { return rawValue }
     }
@@ -54,29 +55,44 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
 
         if !KeyManager.hasKey() {
             self.blurView.isHidden = false
+        } else {
+            self.blurView.isHidden = true
         }
         
         // set the right 4th tab if needed
-        updateTeamTabIfNeeded()
+        updateTabsIfNeeded()
         
+    }
+    
+    static var current:MainController? {
+        let mainNav = UIApplication.shared.delegate?.window??.rootViewController as? UINavigationController
+        return mainNav?.viewControllers.first as? MainController
+    }
+    
+    func didDismissOnboarding() {
+        dispatchMain {
+            self.blurView.isHidden = true
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard KeyManager.hasKey() else {
-            self.performSegue(withIdentifier: "showOnboardGenerate", sender: nil)
+        // if we dont have a keypair but dev mode on
+        if !KeyManager.hasKey() {
+            self.performSegue(withIdentifier: "ShowOnboard", sender: nil)
             return
         }
         
         guard  let _ = try? IdentityManager.getMe()
         else {
-            self.performSegue(withIdentifier: "showOnboardEmail", sender: nil)
+            self.performSegue(withIdentifier: "showInstallU2F", sender: nil)
             return
         }
         
+        // resume onboarding if needed
         guard Onboarding.isActive == false else {
-            self.performSegue(withIdentifier: "showOnboardFirstPair", sender: nil)
+            self.performSegue(withIdentifier: "showInstallU2F", sender: nil)
             return
         }
         
@@ -113,13 +129,13 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     var shouldSwitchToTeams:Bool = false
     @IBAction func dismissJoinTeam(segue: UIStoryboardSegue) {
-        updateTeamTabIfNeeded()
+        updateTabsIfNeeded()
         self.selectedIndex = TabIndex.teams.index
     }
     
     @IBAction func didDeleteTeam(segue: UIStoryboardSegue) {
-        updateTeamTabIfNeeded()
-        self.selectedIndex = TabIndex.me.index
+        updateTabsIfNeeded()
+        self.selectedIndex = TabIndex.sites.index
     }
 
     
@@ -133,7 +149,11 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         self.performSegue(withIdentifier: "showInstall", sender: nil)
     }
     
-    //MARK: Teams tab
+    //MARK: Updating tabs
+    
+    func updateTabsIfNeeded() {
+        updateTeamTabIfNeeded()
+    }
     
     func updateTeamTabIfNeeded() {
         
@@ -147,15 +167,12 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             teamIdentity = nil
         }
         
-        
         do {
             team = try teamIdentity?.dataManager.withTransaction { return try $0.fetchTeam() }
         } catch {
             log("error loading team: \(error)", .error)
             team = nil
         }
-
-        
         
         switch teamIdentity {
         case .some(let identity): // team detail controller
@@ -228,7 +245,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
 
             
         case .none: // marketing controller
-            self.selectedIndex = TabIndex.me.index
+            self.selectedIndex = TabIndex.sites.index
             
             let marketingController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamsMarketingController") as! TeamsMarketingController
             let tabBarItem = UITabBarItem(title: "Teams", image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))

@@ -107,6 +107,10 @@ class LogManager {
             latestLogs.append(tagLog)
         }
         
+        if let u2fLog:U2FLog = self.fetchLatest(for: session) {
+            latestLogs.append(u2fLog)
+        }
+        
         return latestLogs.max(by: { $0.date < $1.date })
     }
     
@@ -224,7 +228,7 @@ class LogManager {
             let display =  "\(sshSig.user) @ \(host)"
             
             let logStatement = SSHSignatureLog(session: sessionID, hostAuth: sshSig.hostAuthorization?.toHostAuth(), signature: signature, displayName:display)
-            self.save(theLog: logStatement, deviceName: auditLog.session.deviceName)
+            self.saveGeneric(theLog: logStatement, deviceName: auditLog.session.deviceName)
 
         case .gitCommit(let commitSig):
             var signature:String
@@ -267,7 +271,7 @@ class LogManager {
 
 
             let logStatement = CommitSignatureLog(session: sessionID, signature: signature, commitHash: commitHash, commit: commitInfo)
-            self.save(theLog: logStatement, deviceName: auditLog.session.deviceName)
+            self.saveGeneric(theLog: logStatement, deviceName: auditLog.session.deviceName)
 
         case .gitTag(let tagSig):
             var signature:String
@@ -289,12 +293,13 @@ class LogManager {
             }
             
             let logStatement = TagSignatureLog(session: sessionID, signature: signature, tag: tagInfo)
-            self.save(theLog: logStatement, deviceName: auditLog.session.deviceName)
+            self.saveGeneric(theLog: logStatement, deviceName: auditLog.session.deviceName)
         }
         
         
     }
-    func save<L:LogStatement>(theLog:L, deviceName:String) {
+    
+    func saveGeneric<L:LogStatement>(theLog:L, deviceName:String) {
         mutex.lock()
         
         log("saving \(theLog)")

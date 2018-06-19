@@ -17,7 +17,9 @@ extension LoadingController {
         loading.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         loading.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
 
-        from.present(loading, animated: true, completion: nil)
+        dispatchMain {
+            from.present(loading, animated: true, completion: nil)
+        }
         return loading
     }
 }

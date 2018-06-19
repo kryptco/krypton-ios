@@ -244,6 +244,60 @@ struct TagSignatureLog:LogStatement {
     }
 }
 
+struct U2FLog:LogStatement {
+    var session:String
+    var signature:String
+    var date:Date
+    var displayName:String
+    var appID:U2FAppID
+    var isRegister:Bool
+    
+    static var entityName:String {
+        return "U2FLog"
+    }
+    
+    init(object:NSManagedObject) throws {
+        guard   let session = object.value(forKey: "session") as? String,
+            let signature = object.value(forKey: "signature") as? String,
+            let date = object.value(forKey: "date") as? Date,
+            let displayName = object.value(forKey: "displayName") as? String,
+            let isRegister = object.value(forKey: "register") as? Bool,
+            let appID = object.value(forKey: "app") as? String
+        else {
+                throw LogStatementParsingError()
+        }
+        
+        
+        self.init(session: session, appID: appID, isRegister: isRegister, signature: signature, displayName: displayName, date: date)
+    }
+    
+    init(session:String, appID: U2FAppID, isRegister:Bool, signature:String, displayName:String, date:Date = Date()) {
+        self.session = session
+        self.appID = appID
+        self.isRegister = isRegister
+        self.signature = signature
+        self.displayName = displayName
+        self.date = date
+    }
+    
+    var managedObject:[String:Any] {
+        var obj = self.object
+        obj["date"] = date
+        
+        return obj
+    }
+    
+    var object: Object {
+        return ["session": session,
+                "signature": signature,
+                "date": date.timeIntervalSince1970,
+                "app": appID,
+                "register": isRegister,
+                "displayName": displayName]
+    }
+
+}
+
 /** 
     Git Signature Logs, identify rejections 
  */

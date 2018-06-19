@@ -56,6 +56,21 @@ extension Policy {
                                           options: .customDismissAction)
         }
     }()
+    
+    static var authorizeSimpleCategory:UNNotificationCategory = {
+        if #available(iOS 11.0, *) {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeSimple.identifier,
+                                          actions: [Policy.yesAction, Policy.noAction],
+                                          intentIdentifiers: [],
+                                          hiddenPreviewsBodyPlaceholder: "New \(Properties.appName) request",
+                options: .customDismissAction)
+        } else {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeSimple.identifier,
+                                          actions: [Policy.yesAction, Policy.noAction],
+                                          intentIdentifiers: [],
+                                          options: .customDismissAction)
+        }
+    }()
 
     static var teamsAlertCategory:UNNotificationCategory = {
         if #available(iOS 11.0, *) {
@@ -75,6 +90,12 @@ extension Policy {
     static var approveAction:UNNotificationAction = {
         return UNNotificationAction(identifier: Action.approve.identifier,
                                     title: "Allow",
+                                    options: .authenticationRequired)
+    }()
+    
+    static var yesAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: Action.approve.identifier,
+                                    title: "Yes",
                                     options: .authenticationRequired)
     }()
     
@@ -103,8 +124,14 @@ extension Policy {
                                     title: "Reject",
                                     options: .destructive)
     }()
-
     
+    static var noAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: Action.reject.identifier,
+                                    title: "No",
+                                    options: .destructive)
+    }()
+
+
     class func requestUserAuthorization(session:Session, request:Request) {
         
         dispatchMain {
@@ -142,56 +169,20 @@ extension Policy {
     }
     
     class func notifyUser(session:Session, request:Request) {
-        dispatchMain {
-            switch UIApplication.shared.applicationState {
-                
-            case .background: // Background: then present local notification
-                guard Policy.SessionSettings(for: session).settings.shouldShowApprovedNotifications else {
-                    log("skip sending push notification on approved request due to policy setting")
-                    return
-                }
-                
-                Notify.shared.presentApproved(request: request, for: session)
-                
-            case .inactive: // Inactive: wait and try again
-                dispatchAfter(delay: 1.0, task: {
-                    Policy.notifyUser(session: session, request: request)
-                })
-                
-            case .active:
-                guard Current.viewController?.presentedViewController is AutoApproveController == false
-                    else {
-                        return
-                }
-                
-                Current.viewController?.showApprovedRequest(session: session, request: request)
-            }
-
+        guard Policy.SessionSettings(for: session).settings.shouldShowApprovedNotifications else {
+            log("skip sending push notification on approved request due to policy setting")
+            return
         }
-        
+    
+        dispatchMain {
+            Notify.shared.presentApproved(request: request, for: session)
+        }
     }
     
     
-    class func notifyUser(errorMessage:String, session:Session) {
+    class func notifyUser(errorMessage:String, request: Request, session:Session) {
         dispatchMain {
-            switch UIApplication.shared.applicationState {
-                
-            case .background: // Background: then present local notification
-                Notify.presentError(message: errorMessage, session: session)
-                
-            case .inactive: // Inactive: wait and try again
-                dispatchAfter(delay: 1.0, task: {
-                    Policy.notifyUser(errorMessage: errorMessage, session: session)
-                })
-                
-            case .active:
-                guard Current.viewController?.presentedViewController is AutoApproveController == false
-                    else {
-                        return
-                }
-                
-                Current.viewController?.showFailedResponse(errorMessage: errorMessage, session: session)
-            }
+            Notify.presentError(message: errorMessage, request: request, session: session)
         }
     }
 

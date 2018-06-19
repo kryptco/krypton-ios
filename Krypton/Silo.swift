@@ -77,7 +77,7 @@ class Silo {
             teamsOperationMutex.lock()
             defer { teamsOperationMutex.unlock() }
             
-        case .me, .ssh, .git, .hosts, .noOp, .unpair, .readTeam, .decryptLog:
+        case .me, .ssh, .git, .hosts, .noOp, .unpair, .readTeam, .decryptLog, .u2fAuthenticate, .u2fRegister:
             mutex.lock()
             defer { mutex.unlock() }
         }
@@ -96,6 +96,7 @@ class Silo {
             throw Silo.Errors.invalidRequestTime
         }
         
+        
         // check if the request has already been received and cached
         if  let cachedResponseData = requestCache[CacheKey(session, request)] as Data? {
             let json:Object = try JSON.parse(data: cachedResponseData)
@@ -109,6 +110,11 @@ class Silo {
         let nowAgain = Date().timeIntervalSince1970
         if abs(nowAgain - Double(request.unixSeconds)) > Properties.requestTimeTolerance {
             throw Silo.Errors.invalidRequestTime
+        }
+        
+        // pre request processing analytics
+        if case .ssh(let sshRequest) = request.body, sshRequest.verifiedHostAuth == nil {
+            Analytics.postEvent(category: "host", action: "unknown")
         }
         
         // handle special cases
@@ -126,12 +132,15 @@ class Silo {
             
         // typical cases
         case .git,
-                 .ssh,
-                 .hosts,
-                 .me,
-                 .decryptLog,
-                 .teamOperation,
-                 .readTeam:
+             .ssh,
+             .hosts,
+             .me,
+             .decryptLog,
+             .teamOperation,
+             .readTeam,
+             .u2fRegister,
+             .u2fAuthenticate:
+            
             break
         }
         
@@ -142,44 +151,31 @@ class Silo {
             try handleRequestRequiresApproval(request: request, session: session, communicationMedium: communicationMedium, completionHandler: completionHandler)
             return
         }
- 
 
         // otherwise, continue with creating and sending the response
         let response = try responseFor(request: request, session: session, allowed: true)
-        
-        // analytics / notify user on error for signature response
+        try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
+
+        // notify user sent signature or error
         switch response.body {
-        case .ssh(let sign):
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
-
-            if let error = sign.error {
-                Policy.notifyUser(errorMessage: error, session: session)
+        case .ssh, .git, .u2fRegister, .u2fAuthenticate:
+            if let error = response.body.error {
+                Policy.notifyUser(errorMessage: error, request: request, session: session)
             } else {
                 Policy.notifyUser(session: session, request: request)
             }
-            
-            if case .ssh(let sshRequest) = request.body, sshRequest.verifiedHostAuth == nil {
-                Analytics.postEvent(category: "host", action: "unknown")
-            }
-
-        case .git(let gitSign):
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
-
-            if let error = gitSign.error {
-                Policy.notifyUser(errorMessage: error, session: session)
-            } else {
-                Policy.notifyUser(session: session, request: request)
-            }
-        
-        case .hosts, .decryptLog, .teamOperation, .readTeam:
-            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
-            
-        case .me, .ack, .unpair:
+        case .readTeam, .teamOperation, .decryptLog, .me, .ack, .unpair, .hosts:
             break
         }
         
-
-        try TransportControl.shared.send(response, for: session, completionHandler: completionHandler)
+        // analytics
+        switch response.body {
+        case .ssh, .git, .u2fAuthenticate, .u2fRegister, .decryptLog, .teamOperation, .readTeam:
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "automatic approval", label: communicationMedium.rawValue)
+            
+        case .me, .ack, .unpair, .hosts:
+            break
+        }
     }
 
     func handleRequestRequiresApproval(request: Request, session: Session, communicationMedium: CommunicationMedium, completionHandler: (() -> ())?) throws {
@@ -236,7 +232,7 @@ class Silo {
             teamsOperationMutex.lock()
             defer { teamsOperationMutex.unlock() }
             
-        case .me, .ssh, .git, .hosts, .noOp, .unpair, .readTeam, .decryptLog:
+        case .me, .ssh, .git, .hosts, .noOp, .unpair, .readTeam, .decryptLog, .u2fAuthenticate, .u2fRegister:
             mutex.lock()
             defer { mutex.unlock() }
         }
@@ -386,7 +382,30 @@ class Silo {
             responseType = .git(result)
             
         case .me(let meRequest):
-            let keyManager = try KeyManager.sharedInstance()
+            
+            // return a limited resposne for a u2f device
+            guard meRequest.u2fOnly == nil || meRequest.u2fOnly == false else {
+                let me = MeResponse(me: MeResponse.Me(email: (try? IdentityManager.getMe()) ?? UIDevice.current.name,
+                                                      publicKeyWire: Data(),
+                                                      deviceIdentifier: try U2FDevice.deviceIdentifier(),
+                                                      pgpPublicKey: Data(),
+                                                      teamCheckpoint: nil,
+                                                      u2fAccounts: try U2FAccountManager.getAllKnownAccountsLocked().map({ $0.shortName })))
+                responseType = .me(.ok(me))
+                break
+            }
+            
+            // return empty if we don't have a key pair
+            guard let keyManager:KeyManager = try? KeyManager.sharedInstance() else {
+                let me = MeResponse(me: MeResponse.Me(email: (try? IdentityManager.getMe()) ?? UIDevice.current.name,
+                                                      publicKeyWire: Data(),
+                                                      deviceIdentifier: try U2FDevice.deviceIdentifier(),
+                                                      pgpPublicKey: Data(),
+                                                      teamCheckpoint: nil,
+                                                      u2fAccounts: nil))
+                responseType = .me(.ok(me))
+                break
+            }
             
             var pgpPublicKey:Data?
             if let pgpUserID = meRequest.pgpUserId {
@@ -405,8 +424,10 @@ class Silo {
             
             let me = MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(),
                                                   publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(),
+                                                  deviceIdentifier: try U2FDevice.deviceIdentifier(),
                                                   pgpPublicKey: pgpPublicKey,
-                                                  teamCheckpoint: teamCheckpoint))
+                                                  teamCheckpoint: teamCheckpoint,
+                                                  u2fAccounts: nil))
             responseType = .me(.ok(me))
         
         case .hosts:
@@ -435,6 +456,57 @@ class Silo {
             
             let hostResponse = HostsResponse(pgpUserIDs: pgpUserIDs, hosts: [HostsResponse.UserAndHost](userAndHosts))
             responseType = .hosts(.ok(hostResponse))
+            
+        case .u2fRegister(let u2fRegisterRequest):
+            guard allowed else {
+                responseType = .u2fRegister(.error("\(UserRejectedError())"))
+                break
+            }
+
+            let appHash = u2fRegisterRequest.appID.hash
+            
+            let (keypair, keyHandle) = try U2FKeyManager.generate(for: appHash)
+            let publicKey = try keypair.publicKey.export()
+            let cert = try keypair.signU2FAttestationCertificate()
+            
+            let signature = try keypair.signU2FRegistration(application: appHash,
+                                                            keyHandle: keyHandle,
+                                                            challenge: u2fRegisterRequest.challenge)
+            
+            responseType = try .u2fRegister(.ok(U2FRegisterResponse(publicKey: publicKey,
+                                                                    keyHandle: keyHandle,
+                                                                    attestationCertificate: cert.toDER(),
+                                                                    signature: signature)))
+            
+            try U2FAccountManager.add(account: u2fRegisterRequest.appID)
+            
+            LogManager.shared.saveGeneric(theLog: U2FLog(session: session.id,
+                                                  appID: u2fRegisterRequest.appID,
+                                                  isRegister: true,
+                                                  signature: signature.toBase64(),
+                                                  displayName: session.pairing.displayName), deviceName: session.pairing.displayName)
+
+            
+        case .u2fAuthenticate(let u2fAuthRequest):
+            guard allowed else {
+                responseType = .u2fAuthenticate(.error("\(UserRejectedError())"))
+                break
+            }
+
+            let appHash = u2fAuthRequest.appID.hash
+            let keypair = try U2FKeyManager.keyPair(for: appHash, keyHandle: u2fAuthRequest.keyHandle)
+            let counter = try U2FKeyManager.fetchAndIncrementCounter(service: appHash, keyHandle: u2fAuthRequest.keyHandle)
+            let signature = try keypair.signU2FAuthentication(application: appHash, counter: counter, challenge: u2fAuthRequest.challenge)
+            
+            responseType = .u2fAuthenticate(.ok(U2FAuthenticateResponse(counter: counter, signature: signature)))
+
+            try U2FAccountManager.updateLastUsed(account: u2fAuthRequest.appID)
+            
+            LogManager.shared.saveGeneric(theLog: U2FLog(session: session.id,
+                                                  appID: u2fAuthRequest.appID,
+                                                  isRegister: false,
+                                                  signature: signature.toBase64(),
+                                                  displayName: session.pairing.displayName), deviceName: session.pairing.displayName)
 
         case .readTeam(let readTeamRequest):
             

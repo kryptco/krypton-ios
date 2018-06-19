@@ -5,7 +5,6 @@
 //  Created by Alex Grinman on 8/26/16.
 //  Copyright © 2016 KryptCo, Inc. Inc. All rights reserved.
 //
-
 //
 
 import UIKit
@@ -26,9 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if !API.provision() {
             log("API provision failed.", LogType.error)
         }
-        
-        AWSLogger.default().logLevel = .none
-        
+                
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
             let link = try? Link(url: url)
@@ -70,15 +67,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             TransportControl.shared.add(sessions: SessionManager.shared.all)
             Analytics.appLaunch()
         }
-
+        
         return true
     }
-    
-    
+        
     //MARK: Registering Notifications
     func registerPushNotifications(then:(()->())? = nil) {
         DispatchQueue.main.async {
             UNUserNotificationCenter.current().setNotificationCategories([Policy.authorizeCategory,
+                                                                          Policy.authorizeSimpleCategory,
                                                                           Policy.authorizeTemporalCategory,
                                                                           Policy.authorizeTemporalThisCategory,
                                                                           Policy.teamsAlertCategory])
@@ -242,13 +239,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         {
             self.registerPushNotifications()
         }
- 
-        
-        //  Send email again if not sent succesfully
-        if let email = try? IdentityManager.getMe() {
-            dispatchAsync { Analytics.sendEmailToTeamsIfNeeded(email: email) }
-        }
-        
+             
         // look for possible copy tokens
         dispatchAsync {
             if let string = UIPasteboard.general.string {

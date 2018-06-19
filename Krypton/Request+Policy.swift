@@ -29,6 +29,9 @@ extension Request {
         case .git, .decryptLog:
             return .authorizeWithTemporal
             
+        case .u2fAuthenticate, .u2fRegister:
+            return .authorizeSimple
+            
         case .hosts, .readTeam, .teamOperation:
             return .authorize
         }
@@ -38,7 +41,7 @@ extension Request {
         switch self.body {
         case .hosts, .me, .unpair, .noOp:
             return .none
-        case .git, .ssh, .decryptLog, .readTeam, .teamOperation:
+        case .git, .ssh, .decryptLog, .readTeam, .teamOperation, .u2fAuthenticate, .u2fRegister:
             return .autoAuthorized
         }
     }

@@ -31,7 +31,9 @@ class PairApproveController: UIViewController {
     var pairing:Pairing?
 
     var scanController:KRScanController?
-    var tabController:UITabBarController?
+    
+    var didPairSuccessfully:(() -> ())?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,12 +145,16 @@ class PairApproveController: UIViewController {
             
             do {
                 
-                if let existing = SessionManager.shared.get(deviceName: pairing.name) {
-                    SessionManager.shared.remove(session: existing)
+                if let existing = SessionManager.shared.getDuplicate(pairing: pairing) {
+                    SessionManager.shared.remove(session: existing, keepSeedCache: true)
                     TransportControl.shared.remove(session: existing)
                     Analytics.postEvent(category: "device", action: "pair", label: "existing")
                 } else {
-                    Analytics.postEvent(category: "device", action: "pair", label: "new")
+                    if let browser = pairing.browser {
+                        Analytics.postEvent(category: browser.kind.rawValue, action: "pair", label: "new")
+                    } else {
+                        Analytics.postEvent(category: "device", action: "pair", label: "new")
+                    }
                 }
                 
                 let session = try Session(pairing: pairing)
@@ -159,16 +165,17 @@ class PairApproveController: UIViewController {
 
                 dispatchAsync {
                     guard TransportControl.shared.waitForPairing(session: session) else {
-                        SessionManager.shared.remove(session: session)
+                        SessionManager.shared.remove(session: session, keepSeedCache: true)
                         TransportControl.shared.remove(session: session)
                         
-                        self.showWarning(title: "Error Pairing", body: "Timed out. Please make sure Bluetooth is on or you have an internet connection and try again.")
-                        
                         Analytics.postEvent(category: "device", action: "pair", label: "failed")
-                        
-                        dispatchMain {
-                            self.doRejectAnimation()
-                        }
+
+                        self.showWarning(title: "Error Pairing", body: "Timed out. Please make sure Bluetooth is on or you have an internet connection and try again.", then: {
+                            dispatchMain {
+                                self.doRejectAnimation()
+                            }
+
+                        })
                         
                         return
                     }
@@ -182,12 +189,9 @@ class PairApproveController: UIViewController {
                         self.messageLabel.text = "Paired".uppercased()
                         
                         dispatchAfter(delay: 1.0, task: {
-                            self.tabController?.selectedIndex = 2
-                            
-                            dispatchAfter(delay: 0.5, task: {
-                                self.dismiss(animated: true, completion: {
-                                    self.scanController?.canScan = true
-                                })
+                            self.dismiss(animated: true, completion: {
+                                self.didPairSuccessfully?()
+                                self.scanController?.canScan = true
                             })
                         })
                     }

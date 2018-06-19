@@ -123,25 +123,27 @@ class NotificationService: UNNotificationServiceExtension {
                     }
                 }
                 
-                let content = UNMutableNotificationContent()
-                let (noteSubtitle, noteBody) = unsealedRequest.notificationDetails()
+                let cachedResponse:Response? = silo.cachedResponse(for: session, with: unsealedRequest)
                 
-                content.subtitle = noteSubtitle
+                let content = UNMutableNotificationContent()
+                let (noteTitle, noteBody) = unsealedRequest.notificationDetails(autoResponse: cachedResponse != nil)
+                
+                content.title = noteTitle
+                content.subtitle = unsealedRequest.notificationSubtitle(for: session.pairing.displayName,
+                                                                        autoResponse: cachedResponse != nil,
+                                                                        isError: cachedResponse?.body.error != nil)
                 content.body = noteBody
                 
                 // special case: me request
                 if case .me = unsealedRequest.body {
                     content.title = "\(session.pairing.displayName)."
                 }
-                    // cached
-                else if let resp = silo.cachedResponse(for: session, with: unsealedRequest)
+                // cached
+                else if let resp = cachedResponse
                 {
-                    
                     if let error = resp.body.error {
-                        content.title = "Failed approval for \(session.pairing.displayName)."
                         content.body = error
                     } else {
-                        content.title = "Approved request from \(session.pairing.displayName)."
                         content.categoryIdentifier = unsealedRequest.autoNotificationCategory.identifier
                         
                         if !Policy.SessionSettings(for: session).settings.shouldShowApprovedNotifications {
@@ -150,9 +152,8 @@ class NotificationService: UNNotificationServiceExtension {
                         }
                     }
                 }
-                    // pending response
+                // pending response
                 else {
-                    content.title = "Request from \(session.pairing.displayName)."
                     content.categoryIdentifier = unsealedRequest.notificationCategory(for: session).identifier
                 }
                 

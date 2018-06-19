@@ -13,7 +13,7 @@ extension Request {
     /**
         Get a notification subtitle and body message
      */
-    func notificationDetails()  -> (subtitle:String, body:String) {
+    func notificationDetails(autoResponse:Bool = false)  -> (title:String, body:String) {
         switch self.body {
         case .ssh(let sshSign):
             return ("SSH Login", sshSign.display)
@@ -34,10 +34,38 @@ extension Request {
             return ("Team Request", op.operation.summary)
         case .decryptLog:
             return ("Team Request", "Read member audit logs")
+        case .u2fRegister(let u2fRegister):
+            let display = KnownU2FApplication(for: u2fRegister.appID)?.displayName ?? u2fRegister.appID
+            let body = autoResponse ? "Registered successfully" : "Register Krypton for \(display)?"
+            return ("\(display)", body)
+        case .u2fAuthenticate(let u2fAuthenticate):
+            let display = KnownU2FApplication(for: u2fAuthenticate.appID)?.displayName ?? u2fAuthenticate.appID
+            let body = autoResponse ? "signed in" : "Are you trying to sign in?"
+
+            return ("\(display)", body)
         }
     }
     
+    func notificationSubtitle(for sessionDisplayName:String, autoResponse:Bool = false, isError:Bool = false) -> String {
+        switch self.body {
+        case .ssh, .git, .me, .unpair, .hosts, .noOp, .readTeam, .teamOperation, .decryptLog:
+            
+            guard autoResponse else {
+                return "Request from \(sessionDisplayName)"
+            }
+            
+            guard isError else {
+                return "Approved request from \(sessionDisplayName)"
+            }
+            
+            return "Failed request from \(sessionDisplayName)"
+            
+        case .u2fRegister, .u2fAuthenticate: // simplified
+            return ""
+        }
 
+    }
+    
 }
 
 extension RequestableTeamOperation {

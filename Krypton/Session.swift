@@ -53,8 +53,12 @@ struct Session:Jsonable {
         if let verString:String = try? json ~> "version" {
             version = try Version(string: verString)
         }
-
-        pairing = try Pairing(name: json ~> "name", workstationPublicKey: workstationPublicKey, keyPair: Box.KeyPair(publicKey: publicKey, secretKey: privateKey), version: version)
+        
+        pairing = try Pairing(name: json ~> "name",
+                              workstationPublicKey: workstationPublicKey,
+                              keyPair: Box.KeyPair(publicKey: publicKey, secretKey: privateKey),
+                              version: version,
+                              browser: try? Browser(json: json ~> "browser"))
         
         created = Date(timeIntervalSince1970: try json ~> "created")
     }
@@ -67,6 +71,10 @@ struct Session:Jsonable {
         
         if let ver = pairing.version {
             objectMap["version"] = ver.string
+        }
+        
+        if let browser = pairing.browser {
+            objectMap["browser"] = browser.object
         }
         
         return objectMap

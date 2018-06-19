@@ -34,12 +34,14 @@ class ApproveDetailController: UIViewController {
     @IBOutlet weak var commitContainerView:UIView!
     @IBOutlet weak var tagContainerView:UIView!
     @IBOutlet weak var teamOpContainerView:UIView!
+    @IBOutlet weak var u2fContainerView:UIView!
     @IBOutlet weak var errorContainerView:UIView!
 
     var sshController:SSHRequestController?
     var commitController:GitCommitRequestController?
     var tagController:GitTagRequestController?
     var teamOpController:TeamOpRequestController?
+    var u2fController:U2FRequestController?
     var errorController:ErrorRequestController?
     
     override func viewDidLoad() {
@@ -81,6 +83,14 @@ class ApproveDetailController: UIViewController {
                 
                 teamOpController?.set(teamName: name, readTeamRequest: teamReadRequest)
                 removeAllBut(view: teamOpContainerView)
+
+            case .u2fRegister(let u2fRegister):
+                u2fController?.set(register: u2fRegister)
+                removeAllBut(view: u2fContainerView)
+                
+            case .u2fAuthenticate(let u2fAuthenticate):
+                u2fController?.set(authenticate: u2fAuthenticate)
+                removeAllBut(view: u2fContainerView)
 
             case .teamOperation(let teamOpRequest):
                 
@@ -136,7 +146,7 @@ class ApproveDetailController: UIViewController {
 
     }
     func removeAllBut(view:UIView) {
-        for v in [sshContainerView, commitContainerView, tagContainerView, teamOpContainerView, errorContainerView] {
+        for v in [sshContainerView, commitContainerView, tagContainerView, teamOpContainerView, u2fContainerView, errorContainerView] {
             guard v != view else {
                 continue
             }
@@ -157,6 +167,8 @@ class ApproveDetailController: UIViewController {
             self.errorController = error
         } else if let teamOp = segue.destination as? TeamOpRequestController {
             self.teamOpController = teamOp
+        } else if let u2f = segue.destination as? U2FRequestController {
+            self.u2fController = u2f
         }
         
         segue.destination.view.translatesAutoresizingMaskIntoConstraints = false
