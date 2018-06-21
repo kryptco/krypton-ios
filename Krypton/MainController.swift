@@ -155,7 +155,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         updateTeamTabIfNeeded()
     }
     
-    func updateTeamTabIfNeeded() {
+    func updateTeamTabIfNeeded(goToFirstPage:Bool = false) {
         
         var teamIdentity:TeamIdentity?
         var team:Team?
@@ -244,9 +244,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
             }
 
             
-        case .none: // marketing controller
-            self.selectedIndex = TabIndex.sites.index
-            
+        case .none: // marketing controller            
             let marketingController = Resources.Storyboard.Team.instantiateViewController(withIdentifier: "TeamsMarketingController") as! TeamsMarketingController
             let tabBarItem = UITabBarItem(title: "Teams", image: #imageLiteral(resourceName: "teams"), selectedImage: #imageLiteral(resourceName: "teams_selected"))
             
