@@ -405,18 +405,21 @@ extension U2FRegisterResponse:Jsonable {
 }
 
 struct U2FAuthenticateResponse {
+    let publicKey:Data
     let counter:Int32
     let signature:Data
 }
 
 extension U2FAuthenticateResponse:Jsonable {
     init(json: Object) throws {
+        self.publicKey = try ((try json ~> "public_key") as String).fromBase64()
         self.counter = try json ~> "counter"
         self.signature = try ((try json ~> "signature") as String).fromBase64()
     }
     
     var object: Object {
-        return [ "counter": counter,
+        return [ "public_key": publicKey.toBase64(),
+                 "counter": counter,
                  "signature": signature.toBase64()]
     }
 }

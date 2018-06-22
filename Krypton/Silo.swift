@@ -495,10 +495,13 @@ class Silo {
 
             let appHash = u2fAuthRequest.appID.hash
             let keypair = try U2FKeyManager.keyPair(for: appHash, keyHandle: u2fAuthRequest.keyHandle)
+            let publicKey = try keypair.publicKey.export()
             let counter = try U2FKeyManager.fetchAndIncrementCounter(service: appHash, keyHandle: u2fAuthRequest.keyHandle)
             let signature = try keypair.signU2FAuthentication(application: appHash, counter: counter, challenge: u2fAuthRequest.challenge)
             
-            responseType = .u2fAuthenticate(.ok(U2FAuthenticateResponse(counter: counter, signature: signature)))
+            responseType = .u2fAuthenticate(.ok(U2FAuthenticateResponse(publicKey: publicKey,
+                                                                        counter: counter,
+                                                                        signature: signature)))
 
             try U2FAccountManager.updateLastUsed(account: u2fAuthRequest.appID)
             

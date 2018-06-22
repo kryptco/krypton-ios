@@ -47,14 +47,29 @@ class U2FDevice {
 private let KryptonU2FKeyIdentifier:[UInt8] = [0x2c, 0xe5, 0xc8, 0xdf, 0x17, 0xe2, 0x2e, 0xf2,
                                                0x0f, 0xd3, 0x83, 0x03, 0xfd, 0x2d, 0x99, 0x98]
 
-// KeyHandle: 64 bytes
-// [16 Magic Bytes] + [32 bytes device identifier] + [16 bytes of random]
+// KeyHandle: 80 bytes
+// M + R + H(H(D) + H(R))
+// where
+// M = [16 Magic Bytes]
+// R = [32 bytes of random]
+// D = device_identifier
+// H = SHA-256
+
 extension U2FKeyHandle {
     static func new() throws -> U2FKeyHandle {
         var keyHandle = U2FKeyHandle()
+        
+        let random = try Data.random(size: 32)
+        let privateDID = try (U2FDevice.deviceIdentifier().SHA256 + random.SHA256).SHA256
+
+        // M
         keyHandle.append(Data(bytes: KryptonU2FKeyIdentifier))
-        try keyHandle.append(U2FDevice.deviceIdentifier())
-        try keyHandle.append(Data.random(size: 16))
+        
+        // R
+        keyHandle.append(random)
+        
+        // H(H(D) + H(R))
+        try keyHandle.append(privateDID)
         
         return keyHandle
     }
