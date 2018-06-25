@@ -22,6 +22,11 @@ enum KnownU2FApplication:String {
     case vaultBitwarden = "https://vault.bitwarden.com/app-id.json"
     case bitbucket = "https://bitbucket.org"
     
+    // for webauthn
+    static var RPIDMap:[String:KnownU2FApplication] = [
+        "www.dropbox.com": .dropbox
+    ]
+    
     static var common:[KnownU2FApplication] = [.google, .facebook, .stripe, .dropbox, .github, .gitlab, .bitbucket]
     
     var displayName:String {
@@ -91,6 +96,12 @@ extension KnownU2FApplication {
             url.host == "www.facebook.com" && app.hasPrefix(KnownU2FApplication.facebook.rawValue)
         {
             self = .facebook
+            return
+        }
+        
+        // match alternatives
+        if let app = KnownU2FApplication.RPIDMap[app] {
+            self = app
             return
         }
         
