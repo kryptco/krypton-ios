@@ -465,7 +465,7 @@ class Silo {
 
             let appHash = u2fRegisterRequest.appID.hash
             
-            let (keypair, keyHandle) = try U2FKeyManager.generate(for: appHash)
+            let (keypair, keyHandle) = try U2FKeyManager.generate()
             let publicKey = try keypair.publicKey.export()
             let cert = try keypair.signU2FAttestationCertificate()
             
@@ -494,9 +494,9 @@ class Silo {
             }
 
             let appHash = u2fAuthRequest.appID.hash
-            let keypair = try U2FKeyManager.keyPair(for: appHash, keyHandle: u2fAuthRequest.keyHandle)
+            let keypair = try U2FKeyManager.keyPair(for: u2fAuthRequest.keyHandle)
             let publicKey = try keypair.publicKey.export()
-            let counter = try U2FKeyManager.fetchAndIncrementCounter(service: appHash, keyHandle: u2fAuthRequest.keyHandle)
+            let counter = try U2FKeyManager.fetchAndIncrementCounter(keyHandle: u2fAuthRequest.keyHandle)
             let signature = try keypair.signU2FAuthentication(application: appHash, counter: counter, challenge: u2fAuthRequest.challenge)
             
             responseType = .u2fAuthenticate(.ok(U2FAuthenticateResponse(publicKey: publicKey,

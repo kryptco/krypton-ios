@@ -19,11 +19,10 @@ extension U2FAppID {
 }
 
 extension U2FKeyTag {
-    /// key tag is: PREFIX + "." + H(H(service) + H(key_handle))
+    /// key tag is: PREFIX + "." + H(key_handle)
     /// for H = SHA256
-    init(service: U2FAppIDHash, keyHandle: U2FKeyHandle) {
-        let suffix = service.SHA256 + keyHandle.SHA256
-        self = "\(kryptonTagPrefix).\(suffix.SHA256.toBase64(true))"
+    init(keyHandle: U2FKeyHandle) {
+        self = "\(kryptonTagPrefix).\(keyHandle.SHA256.toBase64(true))"
     }
 }
 
@@ -69,7 +68,7 @@ extension U2FKeyHandle {
         keyHandle.append(random)
         
         // H(H(D) + H(R))
-        try keyHandle.append(privateDID)
+        keyHandle.append(privateDID)
         
         return keyHandle
     }
@@ -83,8 +82,8 @@ class U2FKeyManager {
     static let mutex = Mutex()
 
     /// Load a key pair for a service and key hanlde
-    class func keyPair(for service: U2FAppIDHash, keyHandle: U2FKeyHandle) throws -> KeyPair {
-        let tag = U2FKeyTag(service: service, keyHandle: keyHandle)
+    class func keyPair(for keyHandle: U2FKeyHandle) throws -> KeyPair {
+        let tag = U2FKeyTag(keyHandle: keyHandle)
         
         guard let keyPair = try NISTP256KeyPair.load(tag) else {
             throw Errors.keyNotFound
@@ -95,19 +94,19 @@ class U2FKeyManager {
     
     /// Generate a key pair for a service
     /// returns the key pair along with a new keyhandle and attestation
-    class func generate(for service: U2FAppIDHash) throws -> (KeyPair, U2FKeyHandle) {
+    class func generate() throws -> (KeyPair, U2FKeyHandle) {
         let keyHandle = try U2FKeyHandle.new()
-        let tag = U2FKeyTag(service: service, keyHandle: keyHandle)
+        let tag = U2FKeyTag(keyHandle: keyHandle)
         let keypair = try NISTP256KeyPair.generate(tag)
         
         return (keypair, keyHandle)
     }
     
-    class func fetchAndIncrementCounter(service: U2FAppIDHash, keyHandle: U2FKeyHandle) throws -> Int32 {
+    class func fetchAndIncrementCounter(keyHandle: U2FKeyHandle) throws -> Int32 {
         mutex.lock()
         defer { mutex.unlock() }
         
-        let tag = "\(U2FKeyTag(service: service, keyHandle: keyHandle)).counter"
+        let tag = "\(U2FKeyTag(keyHandle: keyHandle)).counter"
         
         var count:Int32
         
