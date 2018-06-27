@@ -19,15 +19,15 @@ enum KnownU2FApplication:String {
     case duoDemo = "https://api-9dcf9b83.duosecurity.com"
     case keeper = "https://keepersecurity.com"
     case fedora = "https://id.fedoraproject.org/u2f-origins.json"
-    case vaultBitwarden = "https://vault.bitwarden.com/app-id.json"
     case bitbucket = "https://bitbucket.org"
+    case sentry = "https://sentry.io/auth/2fa/u2fappid.json"
     
     // for webauthn
     static var RPIDMap:[String:KnownU2FApplication] = [
         "www.dropbox.com": .dropbox
     ]
     
-    static var common:[KnownU2FApplication] = [.google, .facebook, .stripe, .dropbox, .github, .gitlab, .bitbucket]
+    static var common:[KnownU2FApplication] = [.google, .facebook, .stripe, .dropbox, .github, .gitlab, .bitbucket, .sentry]
     
     var displayName:String {
         switch self {
@@ -47,14 +47,14 @@ enum KnownU2FApplication:String {
             return "demo.yubico.com"
         case .duoDemo:
             return "api-9dcf9b83.duosecurity.com"
-        case .vaultBitwarden:
-            return "vault.bitwarden.com"
         case .keeper:
             return "keepersecurity.com"
         case .fedora:
             return "id.fedoraproject.org"
         case .bitbucket:
             return "bitbucket.com"
+        case .sentry:
+            return "sentry.io"
         }
     }
     
@@ -78,12 +78,12 @@ enum KnownU2FApplication:String {
             return "kp"
         case .stripe:
             return "s"
-        case .vaultBitwarden:
-            return "vb"
         case .duoDemo:
             return "dd"
         case .yubicoDemo:
             return "yd"
+        case .sentry:
+            return "sy"
         }
     }
 }
@@ -128,14 +128,12 @@ extension KnownU2FApplication {
             return 5
         case .bitbucket:
             return 6
-        case .keeper:
+        case .sentry:
             return 7
-        case .duoDemo:
+        case .keeper:
             return 8
-        case .fedora:
-            return 9
         default:
-            return 10
+            return 9
         }
     }
 }

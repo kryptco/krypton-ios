@@ -2294,7 +2294,6 @@ Let's upgrade and pair.</string>
                                                     <color key="tintColor" red="0.40000000000000002" green="0.43137254899999999" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="xpe-HM-ntc"/>
-                                                        <constraint firstAttribute="width" secondItem="FV1-n2-KOW" secondAttribute="height" multiplier="1:1" id="yIS-tW-qaf"/>
                                                         <constraint firstAttribute="height" constant="34" id="zyV-Dn-zbh"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
@@ -2360,7 +2359,6 @@ Let's upgrade and pair.</string>
                                                 <constraint firstItem="FV1-n2-KOW" firstAttribute="leading" secondItem="HDe-oU-xZ5" secondAttribute="leading" constant="12" id="axc-16-8a4"/>
                                                 <constraint firstItem="HH6-1V-osK" firstAttribute="top" secondItem="NiU-YP-xui" secondAttribute="bottom" constant="-2" id="eph-wS-Z5s"/>
                                                 <constraint firstItem="NiU-YP-xui" firstAttribute="baseline" secondItem="FV1-n2-KOW" secondAttribute="centerY" id="vke-tk-TBg"/>
-                                                <constraint firstItem="FV1-n2-KOW" firstAttribute="width" secondItem="FV1-n2-KOW" secondAttribute="height" multiplier="1:1" id="x1K-PB-1e2"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -2385,6 +2383,8 @@ Let's upgrade and pair.</string>
                                     <outlet property="colorView" destination="9qp-NF-uFt" id="0pD-Gu-ib9"/>
                                     <outlet property="lastUsed" destination="HH6-1V-osK" id="86Q-NW-4dA"/>
                                     <outlet property="logo" destination="FV1-n2-KOW" id="0jl-1c-VX4"/>
+                                    <outlet property="logoConstraint" destination="xpe-HM-ntc" id="LDz-Ho-5be"/>
+                                    <outlet property="logoSepConstraint" destination="YEI-t1-6rL" id="uGt-xG-GOq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

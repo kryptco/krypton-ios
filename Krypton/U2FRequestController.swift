@@ -76,6 +76,8 @@ extension KnownU2FApplication {
             return #imageLiteral(resourceName: "fedora")
         case .bitbucket:
             return #imageLiteral(resourceName: "bitbucket")
+        case .sentry:
+            return #imageLiteral(resourceName: "sentry")
         default:
             return #imageLiteral(resourceName: "default")
         }

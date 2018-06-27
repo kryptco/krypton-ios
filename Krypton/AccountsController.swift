@@ -177,9 +177,10 @@ class SecuredAccountCell:UITableViewCell {
     @IBOutlet weak var checkBox:M13Checkbox!
     @IBOutlet weak var card:UIView!
     @IBOutlet weak var colorView:UIView!
+    @IBOutlet weak var logoConstraint:NSLayoutConstraint!
+    @IBOutlet weak var logoSepConstraint:NSLayoutConstraint!
 
     var branding:U2FBranding?
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -193,7 +194,15 @@ class SecuredAccountCell:UITableViewCell {
     func set(appID:U2FAppID) {
         let known = KnownU2FApplication(for: appID)
         app.text = known?.displayName ?? appID.simpleDisplay
-        logo.image = known?.logo ?? #imageLiteral(resourceName: "web")
+        
+        if let theLogo = known?.logo {
+            logo.image = theLogo
+            logoConstraint.constant = 34
+            logoSepConstraint.constant = 16
+        } else {
+            logoConstraint.constant = 0
+            logoSepConstraint.constant = 0
+        }
         
         if let timeAgo = U2FAccountManager.getLastUsed(account: appID)?.timeAgoLong() {
             lastUsed.text = "Last login \(timeAgo)"
@@ -202,17 +211,6 @@ class SecuredAccountCell:UITableViewCell {
         }
         
         checkBox.setCheckState(.checked, animated: true)
-        
-//        let branding = known?.branding ?? U2FBranding()
-//
-//        app.textColor = branding.text
-//        lastUsed.textColor = branding.text
-//        checkBox.tintColor = branding.text
-//        checkBox.secondaryCheckmarkTintColor = branding.text
-//        colorView.setBranding(branding)
-//
-//        self.branding = branding
-        
     }
 }
 

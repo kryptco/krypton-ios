@@ -29,6 +29,8 @@ extension KnownU2FApplication {
             return U2FBranding(text: UIColor(hex: 0x3cba54))
         case .dropbox:
             return U2FBranding(text: UIColor(hex: 0x0061FF))
+        case .sentry:
+            return U2FBranding(text: UIColor(hex: 0x2f2936))
         default:
             return nil
         }
