@@ -47,19 +47,27 @@ private let KryptonU2FKeyIdentifier:[UInt8] = [0x2c, 0xe5, 0xc8, 0xdf, 0x17, 0xe
                                                0x0f, 0xd3, 0x83, 0x03, 0xfd, 0x2d, 0x99, 0x98]
 
 // KeyHandle: 80 bytes
-// M + R + H(H(D) + H(R))
+// M + R + H(H(D) + H(S) + H(R))
 // where
 // M = [16 Magic Bytes]
+// S = service_id = app_id or rp_id
 // R = [32 bytes of random]
 // D = device_identifier
 // H = SHA-256
 
+enum U2FKeyHandleErrors:Error {
+    case invalidLength
+    case badMagic
+    case badIdentifier
+}
+
 extension U2FKeyHandle {
-    static func new() throws -> U2FKeyHandle {
+    static func new(for service: String) throws -> U2FKeyHandle {
         var keyHandle = U2FKeyHandle()
         
         let random = try Data.random(size: 32)
-        let privateDID = try (U2FDevice.deviceIdentifier().SHA256 + random.SHA256).SHA256
+        
+        let privateIdentifier = try (U2FDevice.deviceIdentifier().SHA256 + Data([UInt8](service.utf8)).SHA256 + random.SHA256).SHA256
 
         // M
         keyHandle.append(Data(bytes: KryptonU2FKeyIdentifier))
@@ -67,10 +75,30 @@ extension U2FKeyHandle {
         // R
         keyHandle.append(random)
         
-        // H(H(D) + H(R))
-        keyHandle.append(privateDID)
+        // H(H(D) + H(S) + H(R))
+        keyHandle.append(privateIdentifier)
         
         return keyHandle
+    }
+    
+    func validate(for service: String) throws {
+        guard self.count == KryptonU2FKeyIdentifier.count + 64 else {
+            throw U2FKeyHandleErrors.invalidLength
+        }
+        
+        let magic = self[0 ..< KryptonU2FKeyIdentifier.count]
+        let random = self[KryptonU2FKeyIdentifier.count ..< KryptonU2FKeyIdentifier.count + 32]
+        let privateIdentifier = self[KryptonU2FKeyIdentifier.count + 32 ..< KryptonU2FKeyIdentifier.count + 64]
+        
+        let expectedIdentifier = try (U2FDevice.deviceIdentifier().SHA256 + Data([UInt8](service.utf8)).SHA256 + random.SHA256).SHA256
+        
+        guard magic == Data(bytes: KryptonU2FKeyIdentifier) else {
+            throw U2FKeyHandleErrors.badMagic
+        }
+        
+        guard privateIdentifier == expectedIdentifier else {
+            throw U2FKeyHandleErrors.badIdentifier
+        }
     }
 }
 
@@ -94,8 +122,8 @@ class U2FKeyManager {
     
     /// Generate a key pair for a service
     /// returns the key pair along with a new keyhandle and attestation
-    class func generate() throws -> (KeyPair, U2FKeyHandle) {
-        let keyHandle = try U2FKeyHandle.new()
+    class func generate(for service: String) throws -> (KeyPair, U2FKeyHandle) {
+        let keyHandle = try U2FKeyHandle.new(for: service)
         let tag = U2FKeyTag(keyHandle: keyHandle)
         let keypair = try NISTP256KeyPair.generate(tag)
         

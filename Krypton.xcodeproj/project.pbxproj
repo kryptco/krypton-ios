@@ -1724,6 +1724,7 @@
 			buildConfigurationList = FA11A5742031F4A8000E46B1 /* Build configuration list for PBXNativeTarget "SigchainTests" */;
 			buildPhases = (
 				FA546CAA2033F0E90024F94F /* Generate Tests */,
+				FA0781EB20E5472D0028A5A5 /* Pre-compile sources */,
 				FA11A5692031F4A8000E46B1 /* Sources */,
 				FA11A56A2031F4A8000E46B1 /* Frameworks */,
 				FA11A56B2031F4A8000E46B1 /* Resources */,
@@ -1787,6 +1788,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAEE04A11D74BCC3002A7AFD /* Build configuration list for PBXNativeTarget "KryptonTests" */;
 			buildPhases = (
+				FA0781EA20E5463A0028A5A5 /* Pre-compile sources */,
 				FAEE04961D74BCC3002A7AFD /* Sources */,
 				FAEE04981D74BCC3002A7AFD /* Resources */,
 			);
@@ -2202,6 +2204,34 @@
 			shellPath = /bin/bash;
 			shellScript = "cd ${PROJECT_DIR}/ssh-wire\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$HOME/.cargo/bin:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
+		FA0781EA20E5463A0028A5A5 /* Pre-compile sources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre-compile sources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PROJECT_DIR}/pre_compile_sources.sh";
+		};
+		FA0781EB20E5472D0028A5A5 /* Pre-compile sources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre-compile sources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PROJECT_DIR}/pre_compile_sources.sh";
+		};
 		FA1951001E96CF020036B425 /* Compile AWS Core, SQS, SNS */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2325,8 +2355,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/openssl-ios\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$PATH:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
+			shellPath = /bin/bash;
+			shellScript = "cd ${PROJECT_DIR}/openssl-ios\nenv -i PWD=$PWD USER=$USER HOME=$HOME \"./build.sh\"";
 		};
 		FABA2DD3209A425C003AEF64 /* Compile openssl */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2339,8 +2369,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/openssl-ios\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=$PATH:/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
+			shellPath = /bin/bash;
+			shellScript = "cd ${PROJECT_DIR}/openssl-ios\nenv -i PWD=$PWD USER=$USER HOME=$HOME \"./build.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

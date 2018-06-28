@@ -462,14 +462,12 @@ class Silo {
                 responseType = .u2fRegister(.error("\(UserRejectedError())"))
                 break
             }
-
-            let appHash = u2fRegisterRequest.appID.hash
             
-            let (keypair, keyHandle) = try U2FKeyManager.generate()
+            let (keypair, keyHandle) = try U2FKeyManager.generate(for: u2fRegisterRequest.appID)
             let publicKey = try keypair.publicKey.export()
             let cert = try keypair.signU2FAttestationCertificate()
             
-            let signature = try keypair.signU2FRegistration(application: appHash,
+            let signature = try keypair.signU2FRegistration(application: u2fRegisterRequest.appID.hash,
                                                             keyHandle: keyHandle,
                                                             challenge: u2fRegisterRequest.challenge)
             
@@ -492,12 +490,13 @@ class Silo {
                 responseType = .u2fAuthenticate(.error("\(UserRejectedError())"))
                 break
             }
-
-            let appHash = u2fAuthRequest.appID.hash
+            
+            try u2fAuthRequest.keyHandle.validate(for: u2fAuthRequest.appID)
+            
             let keypair = try U2FKeyManager.keyPair(for: u2fAuthRequest.keyHandle)
             let publicKey = try keypair.publicKey.export()
             let counter = try U2FKeyManager.fetchAndIncrementCounter(keyHandle: u2fAuthRequest.keyHandle)
-            let signature = try keypair.signU2FAuthentication(application: appHash, counter: counter, challenge: u2fAuthRequest.challenge)
+            let signature = try keypair.signU2FAuthentication(application: u2fAuthRequest.appID.hash, counter: counter, challenge: u2fAuthRequest.challenge)
             
             responseType = .u2fAuthenticate(.ok(U2FAuthenticateResponse(publicKey: publicKey,
                                                                         counter: counter,
