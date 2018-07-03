@@ -53,10 +53,11 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         blurView.frame = view.frame
 
-        if !KeyManager.hasKey() {
-            self.blurView.isHidden = false
-        } else {
+        if (try? KeyManager.hasKey()) == .some(true) {
             self.blurView.isHidden = true
+        } else {
+            self.blurView.isHidden = false
+
         }
         
         // set the right 4th tab if needed
@@ -78,9 +79,20 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        guard KeychainStorage().isInteractionAllowed() else {
+            self.showWarning(title: "Keychain locked", body: "Please restart Krypton and wait a few seconds.")
+            return
+        }
+
+        
         // if we dont have a keypair but dev mode on
-        if !KeyManager.hasKey() {
-            self.performSegue(withIdentifier: "ShowOnboard", sender: nil)
+        do {
+            if try !KeyManager.hasKey() {
+                self.performSegue(withIdentifier: "ShowOnboard", sender: nil)
+                return
+            }
+        } catch {
+            self.showWarning(title: "Could not check if key exists", body: "Error: \(error).")
             return
         }
         

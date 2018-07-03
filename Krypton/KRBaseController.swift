@@ -194,7 +194,7 @@ extension KRBase {
         
         // check app is registered for push notifications
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
-            if settings.authorizationStatus == .notDetermined && KeyManager.hasKey() && Onboarding.isActive == false  {
+            if settings.authorizationStatus == .notDetermined && ((try? KeyManager.hasKey()) == .some(true)) && Onboarding.isActive == false  {
                 dispatchMain {
                     (UIApplication.shared.delegate as? AppDelegate)?.registerPushNotifications()
                 }

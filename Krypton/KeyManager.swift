@@ -108,20 +108,17 @@ class KeyManager {
         }
     }
     
-    class func hasKey() -> Bool {
-        do {
-            if let _ = try RSAKeyPair.load(KeyTag.me.rawValue) {
-                log("has rsa key is true")
-                return true
-            } else if let _ = try Ed25519KeyPair.load(KeyTag.me.rawValue) {
-                log("has ed25519 key is true")
-                return true
-            }  else if let _ = try NISTP256KeyPair.load(KeyTag.me.rawValue) {
-                log("has nistp256 key is true")
-                return true
-            }
-
-        } catch {}
+    class func hasKey() throws -> Bool {
+        if let _ = try RSAKeyPair.load(KeyTag.me.rawValue) {
+            log("has rsa key is true")
+            return true
+        } else if let _ = try Ed25519KeyPair.load(KeyTag.me.rawValue) {
+            log("has ed25519 key is true")
+            return true
+        }  else if let _ = try NISTP256KeyPair.load(KeyTag.me.rawValue) {
+            log("has nistp256 key is true")
+            return true
+        }
 
         return false
     }
