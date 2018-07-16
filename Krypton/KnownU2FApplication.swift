@@ -11,6 +11,7 @@ import Foundation
 enum KnownU2FApplication:String {
     case google = "https://www.gstatic.com/securitykey/origins.json"
     case facebook = "https://www.facebook.com/u2f/app_id/?uid="
+    case twitter = "https://twitter.com/account/login_verification/u2f_trusted_facets.json"
     case stripe = "https://dashboard.stripe.com/u2f-facets"
     case dropbox = "https://www.dropbox.com/u2f-app-id.json"
     case github = "https://github.com/u2f/trusted_facets"
@@ -27,7 +28,7 @@ enum KnownU2FApplication:String {
         "www.dropbox.com": .dropbox
     ]
     
-    static var common:[KnownU2FApplication] = [.google, .facebook, .stripe, .dropbox, .github, .gitlab, .bitbucket, .sentry]
+    static var common:[KnownU2FApplication] = [.google, .facebook, .dropbox, .twitter, .stripe, .github, .gitlab, .bitbucket, .sentry]
     
     var displayName:String {
         switch self {
@@ -35,6 +36,8 @@ enum KnownU2FApplication:String {
             return "google.com"
         case .facebook:
             return "facebook.com"
+        case .twitter:
+            return "twitter.com"
         case .github:
             return "github.com"
         case .stripe:
@@ -84,6 +87,8 @@ enum KnownU2FApplication:String {
             return "yd"
         case .sentry:
             return "sy"
+        case .twitter:
+            return "tw"
         }
     }
 }
@@ -120,20 +125,22 @@ extension KnownU2FApplication {
             return 1
         case .dropbox:
             return 2
-        case .github:
+        case .twitter:
             return 3
-        case .stripe:
+        case .github:
             return 4
-        case .gitlab:
+        case .stripe:
             return 5
-        case .bitbucket:
+        case .gitlab:
             return 6
-        case .sentry:
+        case .bitbucket:
             return 7
-        case .keeper:
+        case .sentry:
             return 8
-        default:
+        case .keeper:
             return 9
+        default:
+            return 10
         }
     }
 }

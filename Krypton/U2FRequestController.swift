@@ -62,6 +62,8 @@ extension KnownU2FApplication {
             return #imageLiteral(resourceName: "dropbox")
         case .facebook:
             return #imageLiteral(resourceName: "facebook")
+        case .twitter:
+            return #imageLiteral(resourceName: "twitter")
         case .github:
             return #imageLiteral(resourceName: "github")
         case .stripe:

@@ -19,6 +19,8 @@ extension KnownU2FApplication {
             return U2FBranding(text: UIColor(hex: 0x4A67AD))
         case .stripe:
             return U2FBranding(text: UIColor(hex: 0x4E3DF5))
+        case .twitter:
+            return U2FBranding(text: UIColor(hex: 0x1da1f2))
         case .bitbucket:
             return U2FBranding(text: UIColor(hex: 0x5683fb))
         case .gitlab:
