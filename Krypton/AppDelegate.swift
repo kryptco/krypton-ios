@@ -25,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if !API.provision() {
             log("API provision failed.", LogType.error)
         }
-                
+        
+        AWSDDLog.sharedInstance.logLevel = .off
+        
         // check for link
         if  let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL,
             let link = try? Link(url: url)

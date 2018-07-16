@@ -184,7 +184,6 @@ class InstallKrController:UIViewController, KRScanDelegate {
     
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
-        // otherwise must be a pairing
         guard let pairing = try? PairingQR(with: data).pairing else {
             dispatchMain { self.showInvalidPairingQR() }
             return false

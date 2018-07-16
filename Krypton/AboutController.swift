@@ -34,11 +34,7 @@ class AboutController: KRBaseController {
             self.versionLabel.text = "\(version).\(build).\(hashShort)"
         } else {
             log("could not find version, build, and commit information", .error)
-        }
-        
-//        if !KeyManager.hasKey() {
-//            destroyButton.isHidden = true
-//        }
+        }        
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -14,7 +14,7 @@ class SiloTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        if !KeyManager.hasKey() {
+        if try! !KeyManager.hasKey() {
             try! KeyManager.generateKeyPair(type: .RSA)
         }
     }

@@ -189,20 +189,6 @@ extension Int32 {
     }
 }
 
-class U2FSerialNumber {
-    private static let serialNumberBase = "co.krypt.u2f.serial"
-    
-    class func serialNumberFor(publicKeyData: Data) -> Int {
-        var preHash = Data(bytes: [UInt8](serialNumberBase.utf8)).SHA256
-        preHash.append(publicKeyData.SHA256)
-        
-        var serialData = preHash.SHA256
-        let bytesPointer:UnsafeMutablePointer<UInt8>? = serialData.withUnsafeMutableBytes({ $0 })
-        
-        return Int(bitPattern: bytesPointer)
-    }
-}
-
 enum X509Error: Error {
     case initFailed
     case encoding

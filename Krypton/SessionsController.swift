@@ -23,7 +23,6 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.tableFooterView = UIView()        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -60,7 +60,7 @@ class InstallU2FController:KRBaseController, KRScanDelegate{
     @IBAction func allowTapped() {
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { (success) in
             if !success {
-                self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. We need the camera to scan your computer's QR code to pair with it. Pairing enables your computer to ask your phone for SSH logins.")
+                self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. We need the camera to scan your computer's QR code to pair with it. Pairing enables your computer to ask your phone for web logins.")
                 return
             }
             
@@ -91,7 +91,6 @@ class InstallU2FController:KRBaseController, KRScanDelegate{
     
     //MARK: KRScanDelegate
     func onFound(data:String) -> Bool {
-        // otherwise must be a pairing
         guard let pairing = try? PairingQR(with: data).pairing else {
             dispatchMain { self.showInvalidPairingQR() }
             return false

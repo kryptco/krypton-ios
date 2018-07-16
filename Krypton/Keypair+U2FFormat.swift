@@ -16,7 +16,7 @@ extension KeyPair {
     /**
         Create a self-signed attestion certificate
      */
-    func signU2FAttestationCertificate(commonName:String = kryptonCommonName, daysValidFor: Int = 365*10) throws -> U2FAttestationCertificate {
+    func signU2FAttestationCertificate(commonName:String = kryptonCommonName, secondsValidFor:Int = Int(10*365.25*24*3600)) throws -> U2FAttestationCertificate {
         
         guard let x509 = X509_new() else {
             throw X509Error.initFailed
@@ -31,10 +31,10 @@ extension KeyPair {
         let pubkey = try self.publicKey.toOpenSSL()
         try X509_set_pubkey(x509, pubkey).okOr(.publicKey)
         
-        try ASN1_INTEGER_set(X509_get_serialNumber(x509), U2FSerialNumber.serialNumberFor(publicKeyData: self.publicKey.export())).okOr(.serial)
+        try ASN1_INTEGER_set(X509_get_serialNumber(x509), 0).okOr(.serial)
         
         X509_gmtime_adj(x509.pointee.cert_info.pointee.validity.pointee.notBefore, 0)
-        X509_gmtime_adj(x509.pointee.cert_info.pointee.validity.pointee.notAfter, daysValidFor*86400)
+        X509_gmtime_adj(x509.pointee.cert_info.pointee.validity.pointee.notAfter, secondsValidFor)
         
         try "CA:FALSE".withCString { strPtr -> Int32 in
             let ext = X509V3_EXT_conf_nid(nil, nil, NID_basic_constraints, UnsafeMutablePointer<CChar>(mutating: strPtr))

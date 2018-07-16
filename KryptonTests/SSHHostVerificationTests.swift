@@ -92,7 +92,7 @@ class SSHHostVerificationTests: XCTestCase {
 
     func testInvalidSessionData() {
         do {
-            if !KeyManager.hasKey() {
+            if try! !KeyManager.hasKey() {
                 try! KeyManager.generateKeyPair(type: .Ed25519)
             }
             let fp = try KeyManager.sharedInstance().keyPair.publicKey.fingerprint().toBase64()
