@@ -2356,7 +2356,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "cd ${PROJECT_DIR}/openssl-ios\nenv -i PWD=$PWD USER=$USER HOME=$HOME \"./build.sh\"";
+			shellScript = "cd  ${PROJECT_DIR}/openssl-ios/\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
 		FABA2DD3209A425C003AEF64 /* Compile openssl */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2370,7 +2370,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "cd ${PROJECT_DIR}/openssl-ios\nenv -i PWD=$PWD USER=$USER HOME=$HOME \"./build.sh\"";
+			shellScript = "cd  ${PROJECT_DIR}/openssl-ios/\nenv -i PWD=$PWD USER=$USER HOME=$HOME PATH=/usr/bin:/usr/local/bin:/bin \"./build.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

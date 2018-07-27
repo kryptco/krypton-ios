@@ -301,10 +301,10 @@ if [ ! -n "${TVOS_SDKVERSION}" ]; then
 fi
 
 # Determine number of cores for (parallel) build
-BUILD_THREADS=1
-if [ "${PARALLEL}" != "false" ]; then
-  BUILD_THREADS=$(sysctl hw.ncpu | awk '{print $2}')
-fi
+BUILD_THREADS=4
+# if [ "${PARALLEL}" != "false" ]; then
+#   BUILD_THREADS=$(sysctl hw.ncpu | awk '{print $2}')
+# fi
 
 # Determine script directory
 SCRIPTDIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
