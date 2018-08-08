@@ -53,6 +53,8 @@ enum CopyToken {
 enum LinkType:String {
     case app = "krypton"
     case site = "https"
+    case u2fGoogle = "u2f-google"
+    case u2f = "u2f"
 }
             
 enum LinkError:Error {
@@ -66,10 +68,11 @@ struct LinkCommand {
         case joinTeam = "join_team"
         case emailChallenge = "verify_email"
         case emailChallengeRemote = "krypt.co"
+        case auth = "auth"
         
         func matchesPathIfNeeded(of url:URL) -> Bool {
             switch self {
-            case .joinTeam, .emailChallenge:
+            case .joinTeam, .emailChallenge, .auth:
                 return true // url validation done individually
             case .emailChallengeRemote:
                 return url.cleanPathComponents() == ["app", "verify_email.html"]

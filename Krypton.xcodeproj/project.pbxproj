@@ -109,6 +109,7 @@
 		FA2F22A21DC3C3CA0094076E /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F22A11DC3C3CA0094076E /* Onboarding.swift */; };
 		FA2F4172200D51640024507A /* TeamCustomDomainInviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F4171200D51640024507A /* TeamCustomDomainInviteController.swift */; };
 		FA2F4174200D59CD0024507A /* TeamInviteByEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F4173200D59CD0024507A /* TeamInviteByEmailController.swift */; };
+		FA2F6A042118D47E006DA4C2 /* LocalU2FRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F6A032118D47E006DA4C2 /* LocalU2FRequest.swift */; };
 		FA309F421DA42C69006D8D81 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA309F411DA42C69006D8D81 /* HelpController.swift */; };
 		FA33F2A3200E634B0046922D /* teams_invite_email_template.html in Resources */ = {isa = PBXBuildFile; fileRef = FA33F2A2200E634B0046922D /* teams_invite_email_template.html */; };
 		FA33F2B4200E89340046922D /* TeamInviteModalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33F2B3200E89340046922D /* TeamInviteModalController.swift */; };
@@ -754,6 +755,7 @@
 		FA2F22A11DC3C3CA0094076E /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FA2F4171200D51640024507A /* TeamCustomDomainInviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCustomDomainInviteController.swift; sourceTree = "<group>"; };
 		FA2F4173200D59CD0024507A /* TeamInviteByEmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteByEmailController.swift; sourceTree = "<group>"; };
+		FA2F6A032118D47E006DA4C2 /* LocalU2FRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalU2FRequest.swift; sourceTree = "<group>"; };
 		FA309F411DA42C69006D8D81 /* HelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
 		FA33F2A2200E634B0046922D /* teams_invite_email_template.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = teams_invite_email_template.html; sourceTree = "<group>"; };
 		FA33F2B3200E89340046922D /* TeamInviteModalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteModalController.swift; sourceTree = "<group>"; };
@@ -1335,6 +1337,7 @@
 				FACFDE802045E7B6003B2EB5 /* ServerEndpoints.swift */,
 				FAD9532E209BFDE800A112C3 /* KnownU2FApplication.swift */,
 				FAA9598A20A29C6300B598CD /* U2FServiceBranding.swift */,
+				FA2F6A032118D47E006DA4C2 /* LocalU2FRequest.swift */,
 				FAEE048A1D736972002A7AFD /* Crypto */,
 			);
 			name = Core;
@@ -2578,6 +2581,7 @@
 				FAFA115B1F91359F007C3A98 /* Request+Team.swift in Sources */,
 				FA6C5CF81D772B0D00CE2323 /* Log.swift in Sources */,
 				FA443E061FBA924000EB452A /* SecureLocalStorage.swift in Sources */,
+				FA2F6A042118D47E006DA4C2 /* LocalU2FRequest.swift in Sources */,
 				FA42B6FD1FA0D7BC006A89DD /* TeamActvitiyController.swift in Sources */,
 				FA88ACA1209FD3820086E05B /* AccountsController.swift in Sources */,
 				FAE495901DBD89F100A97708 /* M13CheckboxFillController.swift in Sources */,

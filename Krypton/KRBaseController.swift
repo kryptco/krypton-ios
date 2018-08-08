@@ -248,10 +248,74 @@ extension KRBase {
     
     //MARK: React to links
     func onListen(viewController:UIViewController, link:Link) {
-        guard case .app = link.type, case .joinTeam = link.command.host
-        else {
-            log("invalid link type presented: \(link.url)")
+        switch link.type {
+        case .app:
+            self.handleJoinInviteLink(viewController: viewController, link: link)
+        case .u2f, .u2fGoogle:
+            self.handleU2F(viewController: viewController, link: link)
+        default:
+            log("unexpected link: \(link)", .error)
+        }
+
+    }
+    
+    func handleU2F(viewController:UIViewController, link:Link) {
+        log("Got <\(link.path)>: \n\(link.properties)")
+        
+        guard let data = link.properties["data"]?.removingPercentEncoding, let returnURL = link.properties["returnUrl"] else {
+            viewController.showWarning(title: "Invalid Request", body: "This request is using an invalid format. Please send an email to support@krypt.co.")
             return
+        }
+        
+        do {
+            let u2fRequest = try LocalU2FRequest(jsonString: data).toRequest()
+            let localSession = try Session(pairing: Pairing.localDevicePairing())
+            let response = try Silo.shared().lockResponseFor(request: u2fRequest, session: localSession, allowed: true)
+            
+            switch response.body {
+            case .u2fAuthenticate(let authResult):
+                switch authResult {
+                case .ok(let auth):
+                    let authJsonString = try auth.jsonString()
+                    
+                    guard   let authJsonQuery = authJsonString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                            let url = URL(string: "\(returnURL)&data=\(authJsonQuery)")
+                    else {
+                        viewController.showWarning(title: "Error", body: "Cannot open callback URL to website.")
+                        return
+                    }
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                case .error(let error):
+                    viewController.showWarning(title: "Error", body: "Request failed: \(error)")
+                }
+                
+            case .u2fRegister(let registerResult):
+                switch registerResult {
+                case .ok(let register):
+                    break
+                case .error(let error):
+                    viewController.showWarning(title: "Error", body: "Request failed: \(error)")
+                }
+
+            default:
+                viewController.showWarning(title: "Error", body: "Could not create valid response.")
+
+            }
+        
+        } catch LocalU2FRequest.Errors.noKnownKeyHandle {
+            viewController.showWarning(title: "No Krypton Key on this Account", body: "This account does not have a Krypton key registered.")
+        } catch {
+            viewController.showWarning(title: "Error", body: "This request could not be handled: \(error). Please send an email to support@krypt.co.")
+        }
+    
+        
+    }
+    
+    func handleJoinInviteLink(viewController:UIViewController, link: Link) {
+        guard case .joinTeam = link.command.host
+            else {
+                log("invalid link type presented: \(link.url)")
+                return
         }
         
         do {

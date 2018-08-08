@@ -36,13 +36,27 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>Editor</string>
 			<key>CFBundleURLIconFile</key>
 			<string></string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string>co.krypt.krypton.u2f</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>u2f</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>app-icon-nav-green</string>
+			<key>CFBundleURLName</key>
+			<string>co.krypt.krypton.u2f</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>u2f-google</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

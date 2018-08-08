@@ -445,6 +445,8 @@ class TeamInvitationController:UIViewController, UITextFieldDelegate {
             }
             
             nonce = theNonce
+        default:
+            return
         }
         
         

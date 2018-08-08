@@ -122,11 +122,13 @@ extension String {
 
     
     func fromBase64() throws -> Data {
-        var urlDecoded = self
+        let paddedLength = self.count + (4 - (self.count % 4))
+        
+        var urlDecoded = self.padding(toLength: paddedLength, withPad: "=", startingAt: 0)
         urlDecoded = urlDecoded.replacingOccurrences(of: "_", with: "/")
         urlDecoded = urlDecoded.replacingOccurrences(of: "-", with: "+")
         
-        guard let data = Data(base64Encoded: urlDecoded, options: NSData.Base64DecodingOptions(rawValue: 0)) else {
+        guard let data = Data(base64Encoded: urlDecoded) else {
             throw CryptoError.encoding
         }
         

@@ -377,10 +377,12 @@ typealias U2FDeviceIdentifier = Data
 typealias U2FAppID = String
 typealias U2FAppIDHash = Data
 
-struct U2FRegisterRequest:Jsonable {
+struct U2FRegisterRequest {
     let challenge:Data
     let appID:U2FAppID
     
+}
+extension U2FRegisterRequest:Jsonable {
     init(json: Object) throws {
         self.challenge = try ((json ~> "challenge") as String).fromBase64()
         self.appID = try json ~> "app_id"
@@ -392,11 +394,13 @@ struct U2FRegisterRequest:Jsonable {
     }
 }
 
-struct U2FAuthenticateRequest:Jsonable {
+struct U2FAuthenticateRequest {
     let challenge:Data
     let keyHandle:U2FKeyHandle
     let appID:U2FAppID
-    
+}
+
+extension U2FAuthenticateRequest:Jsonable {
     init(json: Object) throws {
         self.challenge = try ((json ~> "challenge") as String).fromBase64()
         self.keyHandle = try ((json ~> "key_handle") as String).fromBase64()
@@ -409,4 +413,6 @@ struct U2FAuthenticateRequest:Jsonable {
                 "app_id": appID]
     }
 }
+
+
 
