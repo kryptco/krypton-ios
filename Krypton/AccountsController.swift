@@ -39,6 +39,7 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
         
         self.tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.tableView.tableHeaderView?.frame.width ?? 0, height: 100)
         self.tableView.tableFooterView = UIView()
+
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 70
@@ -72,6 +73,15 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
             showWarning(title: "Error", body: "Could not get user data. \(error)")
         }
         
+        // user hidden
+        let hidden = UserDefaults.group?.stringArray(forKey: "u2f_account_hide_array") ?? []
+        var hiddenKnown = Set<KnownU2FApplication>()
+        hidden.map({ KnownU2FApplication(for: $0) }).forEach({
+            if let known = $0 {
+                hiddenKnown.insert(known)
+            }
+        })
+
 
         var securedKnown = Set<KnownU2FApplication>()
         secured.map({ KnownU2FApplication(for: $0) }).forEach({
@@ -79,12 +89,27 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
                 securedKnown.insert(known)
             }
         })
+        securedKnown.subtract(hiddenKnown)
         
         let knownSet = Set(known)
-        
-        let unsecured = knownSet.subtracting(securedKnown)
+
+        let unsecured = knownSet.subtracting(securedKnown).subtracting(hiddenKnown)
         
         self.unsecured = [U2FAppID]([KnownU2FApplication](unsecured).sorted(by: ({ $0.order < $1.order })).map({ $0.rawValue }))
+        
+        if hidden.isEmpty {
+            self.tableView.tableFooterView = UIView()
+        } else {
+            let button = UIButton(type: UIButtonType.system)
+            button.setTitle("Show Hidden", for: .normal)
+            button.setTitleColor(UIColor.appBlueGray, for: .normal)
+            button.setTitleColor(UIColor.appBlueGray.withAlphaComponent(0.5), for: .highlighted)
+            button.titleLabel?.font = Resources.appFont(size: 14, style: .regular)
+            button.addTarget(self, action: #selector(AccountsController.deleteHidden), for: .touchUpInside)
+            button.frame.size = CGSize(width: 0, height: 30)
+            self.tableView.tableFooterView = button
+        }
+        
         self.tableView.reloadData()
     }
     
@@ -147,6 +172,55 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
             cell.delegate = self
             return cell
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        guard let section = Section(rawValue: indexPath.section) else {
+            return false
+        }
+        
+        switch section {
+        case .keys:
+            return false
+        case .secured, .unsecured:
+            return true
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard let section = Section(rawValue: indexPath.section) else {
+            return nil
+        }
+        
+        let hide = {(app:U2FAppID) in
+            var hidden = UserDefaults.group?.stringArray(forKey: "u2f_account_hide_array") ?? []
+            hidden.append(app)
+            UserDefaults.group?.set(hidden, forKey: "u2f_account_hide_array")
+            dispatchMain { self.checkForUpdates() }
+        }
+        
+        switch section {
+        case .keys:
+            return nil
+        case .secured:
+            return [UITableViewRowAction(style: .default, title: "Hide", handler: { (action, indexPath) in
+                let secured = self.secured[indexPath.row]
+                hide(secured)
+            })]
+
+        case .unsecured:
+            return [UITableViewRowAction(style: .default, title: "Hide", handler: { (action, indexPath) in
+                let unsecured = self.unsecured[indexPath.row]
+                hide(unsecured)
+            })]
+        }
+
+    }
+    
+    
+    @objc func deleteHidden() {
+        UserDefaults.group?.removeObject(forKey: "u2f_account_hide_array")
+        dispatchMain { self.checkForUpdates() }
     }
     
 

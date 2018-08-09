@@ -117,6 +117,7 @@ class AboutController: KRBaseController {
             IdentityManager.clearMe()
             SessionManager.shared.destroy()
             Onboarding.isActive = true
+            UserDefaults.group?.removeObject(forKey: "u2f_account_hide_array")
             
             // delete team identity if it exists (and leave team)
             if case .some(let hasTeam) = try? IdentityManager.hasTeam(), hasTeam {
