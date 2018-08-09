@@ -64,15 +64,6 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
             showWarning(title: "Error", body: "Could not load key pair. \(error)")
         }
         
-        do {
-            self.secured = try U2FAccountManager.getAllAccountsLocked().sorted(by: ({ $0.order < $1.order }))
-        } catch KeychainStorageError.notFound {
-            self.secured = []
-        } catch {
-            log("error getting me: \(error)", LogType.error)
-            showWarning(title: "Error", body: "Could not get user data. \(error)")
-        }
-        
         // user hidden
         let hidden = UserDefaults.group?.stringArray(forKey: "u2f_account_hide_array") ?? []
         var hiddenKnown = Set<KnownU2FApplication>()
@@ -82,6 +73,18 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
             }
         })
 
+        
+        do {
+            let secured = try U2FAccountManager.getAllAccountsLocked().sorted(by: ({ $0.order < $1.order }))
+            self.secured = [U2FAppID](Set(secured).subtracting(Set(hidden)))
+            
+        } catch KeychainStorageError.notFound {
+            self.secured = []
+        } catch {
+            log("error getting me: \(error)", LogType.error)
+            showWarning(title: "Error", body: "Could not get user data. \(error)")
+        }
+        
 
         var securedKnown = Set<KnownU2FApplication>()
         secured.map({ KnownU2FApplication(for: $0) }).forEach({
@@ -89,7 +92,6 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
                 securedKnown.insert(known)
             }
         })
-        securedKnown.subtract(hiddenKnown)
         
         let knownSet = Set(known)
 
