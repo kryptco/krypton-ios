@@ -9,7 +9,15 @@
 import Foundation
 import UIKit
 
-class MeController:KRBaseController, UITextFieldDelegate {    
+class MeController:KRBaseController, UITextFieldDelegate {
+    
+    @IBOutlet weak var brewButton:UIButton!
+    @IBOutlet weak var curlButton:UIButton!
+    @IBOutlet weak var npmButton:UIButton!
+    @IBOutlet weak var moreButton:UIButton!
+    @IBOutlet weak var installCard:UIView!
+    @IBOutlet weak var installLabel:UILabel!
+
     @IBOutlet var meCommandWindow:UIView!
     @IBOutlet var otherCommandWindow:UIView!
     @IBOutlet var codeSigningWindow:UIView!
@@ -31,10 +39,10 @@ class MeController:KRBaseController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for v in [meCommandWindow, otherCommandWindow, codeSigningWindow] {
+        for v in [installCard, meCommandWindow, otherCommandWindow, codeSigningWindow] {
             v?.setBoxShadow()
         }
-        
+        setCurlState()
         setGitHubState()
     }
     
@@ -50,6 +58,56 @@ class MeController:KRBaseController, UITextFieldDelegate {
         super.viewDidAppear(animated)
     }
     
+    @IBAction func brewTapped() {
+        disableAllInstallButtons()
+        
+        brewButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        installLabel.text = InstallMethod.brew.command
+        
+        Analytics.postEvent(category: "onboard_install", action: "brew")
+    }
+    
+    @IBAction func npmTapped() {
+        disableAllInstallButtons()
+        
+        npmButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        installLabel.text = InstallMethod.npm.command
+        
+        Analytics.postEvent(category: "onboard_install", action: "npm")
+    }
+    
+    func setCurlState() {
+        disableAllInstallButtons()
+        
+        curlButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        installLabel.text = InstallMethod.curl.command
+    }
+    
+    @IBAction func curlTapped() {
+        setCurlState()
+        
+        Analytics.postEvent(category: "onboard_install", action: "curl")
+    }
+    
+    @IBAction func moreTapped() {
+        disableAllInstallButtons()
+        
+        moreButton.setTitleColor(UIColor.app, for: UIControlState.normal)
+        installLabel.text = InstallMethod.more.command
+        
+        Analytics.postEvent(category: "onboard_install", action: "more")
+    }
+    
+    
+    func disableAllInstallButtons() {
+        
+        brewButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        curlButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        npmButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+        moreButton.setTitleColor(inactiveUploadMethodColor, for: UIControlState.normal)
+    }
+    
+
    
     //MARK: Add Public Key Helper
     
@@ -121,7 +179,12 @@ class MeController:KRBaseController, UITextFieldDelegate {
             self.present(self.otherDialogue(for: email, authorizedKey: publicKeyAuthorized), animated: true, completion: nil)
         }
     }
+    
+    @IBAction func editKnownHostsTapped() {
+        let knownHostsController = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "KnownHostsEditController") as! KnownHostsEditController
+        self.navigationController?.pushViewController(knownHostsController, animated: true)
         
+    }
     //MARK: TextField Delegate -> Editing Email
     func textFieldDidBeginEditing(_ textField: UITextField) {
     }

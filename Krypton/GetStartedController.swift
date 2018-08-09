@@ -17,6 +17,7 @@ class GetStartedController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Onboarding.hasStarted = true
         Onboarding.isActive = true
         createButton.setBoxShadow()
         Analytics.postEvent(category: "onboard", action: "start")
@@ -30,10 +31,9 @@ class GetStartedController: UIViewController {
         Analytics.postEvent(category: "onboard", action: "generate tapped easy")
         
         // set me to the device name
-        let email = UIDevice.current.name
-        IdentityManager.setMe(email: email)
+        IdentityManager.setMe(email: UIDevice.current.name)
         
-        let generateController = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "GenerateController") as! GenerateController
-        self.navigationController?.pushViewController(generateController, animated: true)
+        let installController = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "InstallU2FController") as! InstallU2FController
+        self.navigationController?.pushViewController(installController, animated: true)
     }
 }

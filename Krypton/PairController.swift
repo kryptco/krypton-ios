@@ -15,7 +15,11 @@ class PairController: KRBaseController, KRScanDelegate {
     @IBOutlet weak var scanRails:UIImageView!
     @IBOutlet weak var pairCommandHeight:NSLayoutConstraint!
 
+    @IBOutlet weak var instructionBrowserLeft:NSLayoutConstraint!
+    @IBOutlet weak var instructionTermLeft:NSLayoutConstraint!
     
+    
+    @IBOutlet weak var krView:UIView!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -24,12 +28,26 @@ class PairController: KRBaseController, KRScanDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         scanRails.tintColor = UIColor.app
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.scanViewController?.canScan = true
         self.showInstructionForMode()
+        
+        if DeveloperMode.isOn {
+            instructionBrowserLeft.priority = UILayoutPriority(749)
+            instructionTermLeft.priority = UILayoutPriority(751)
+//            krView.isHidden = false
+
+        } else {
+            instructionBrowserLeft.priority = UILayoutPriority(751)
+            instructionTermLeft.priority = UILayoutPriority(749)
+//            krView.isHidden = true
+        }
+        
+        self.view.layoutIfNeeded()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

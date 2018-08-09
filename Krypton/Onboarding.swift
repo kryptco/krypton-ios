@@ -10,15 +10,31 @@ import Foundation
 
 struct Onboarding {
     
-    private static let mutex = Mutex()
-    static let key = "ob_state_key"
+    static let startedKey = "ob_start_key"
+    static let activeKey = "ob_state_key"
     
+    static var hasStarted:Bool {
+        get {
+            guard let _ = try? KeychainStorage().get(key: startedKey)
+                else {
+                    return false
+            }
+            
+            return true
+        }
+        set(active) {
+            if active {
+                try? KeychainStorage().set(key: startedKey, value: "true")
+            } else {
+                try? KeychainStorage().delete(key: startedKey)
+            }
+        }
+    }
+
+        
     static var isActive:Bool {
         get {
-            mutex.lock()
-            defer { mutex.unlock() }
-
-            guard let _ = try? KeychainStorage().get(key: key)
+            guard let _ = try? KeychainStorage().get(key: activeKey)
             else {
                 return false
             }
@@ -26,13 +42,10 @@ struct Onboarding {
             return true
         }
         set(active) {
-            mutex.lock()
-            defer { mutex.unlock() }
-
             if active {
-                try? KeychainStorage().set(key: key, value: "true")
+                try? KeychainStorage().set(key: activeKey, value: "true")
             } else {
-                try? KeychainStorage().delete(key: key)
+                try? KeychainStorage().delete(key: activeKey)
             }
         }
     }

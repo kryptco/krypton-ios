@@ -21,6 +21,7 @@ class KnownHostsEditController:KRBaseTableController {
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
 
+        self.title = "Known Hosts"
         do {
             knownHosts = try KnownHostManager.shared.fetchAll()
             self.tableView.reloadData()

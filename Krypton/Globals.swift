@@ -17,6 +17,8 @@ struct Constants {
     static let keychainAccessGroup = Constants.appGroupSecurityID
     static let pushTokenKey = "device_push_token_key"
     static let u2fRequiresApproval = "u2f_requires_approval_key"
+    static let developerModeKey = "developer_mode_key"
+    static let developerModeTeamsKey = "developer_mode_teams_key"
 
     static let appURLScheme = "krypton://"
     
@@ -47,8 +49,6 @@ struct Platform {
         return sim
     }()
 }
-
-
 
 //MARK: Defaults
 

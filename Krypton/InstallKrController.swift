@@ -96,9 +96,7 @@ class InstallKrController:UIViewController, KRScanDelegate {
     }
     
     @IBAction func skipTapped() {    
-        self.navigationController?.dismiss(animated: true, completion: {
-            MainController.current?.didDismissOnboarding()
-        })
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     //MARK: Install Instructions

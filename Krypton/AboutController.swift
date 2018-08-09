@@ -16,14 +16,20 @@ class AboutController: KRBaseController {
     @IBOutlet weak var versionLabel:UILabel!
     @IBOutlet weak var requireU2FApprovalSwitch:UISwitch!
     @IBOutlet weak var analyticsSwitch:UISwitch!
+    @IBOutlet weak var developerMode:UISwitch!
+
     @IBOutlet weak var destroyButton:UIButton!
+    @IBOutlet weak var aboutButton:UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         requireU2FApprovalSwitch.isOn = Policy.requireUserInteractionU2F
         analyticsSwitch.isOn = !Analytics.enabled
-
+        developerMode.isOn = DeveloperMode.isOn
+        
+        destroyButton.isHidden = !DeveloperMode.isOn
+        
         if  let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
             let buildFilePath = Bundle.main.path(forResource: "BUILD", ofType: nil),
             let build = try? String(contentsOfFile: buildFilePath).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
@@ -58,6 +64,17 @@ class AboutController: KRBaseController {
     @IBAction func analyticsEnabledChanged(sender:UISwitch) {
         Analytics.set(disabled: sender.isOn)
     }
+    
+    @IBAction func developerModeEnabled(sender:UISwitch) {
+        Analytics.postEvent(category: "developer-mode", action: sender.isOn ? "on" : "off")
+        if (try? KeyManager.hasKey()) == .some(true) {
+            DeveloperMode.isOn = sender.isOn
+        } else if sender.isOn {
+            let developerMode = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "DeveloperModeNav")
+            self.present(developerMode, animated: true, completion: nil)
+        }
+    }
+
     
     @IBAction func exportTapped() {
         let logDBPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.appGroupSecurityID)!.appendingPathComponent("logs").appendingPathComponent("KryptoniteCoreDataStore.sqlite")
@@ -94,6 +111,8 @@ class AboutController: KRBaseController {
 
             Analytics.postEvent(category: "keypair", action: "destroy")
             
+            DeveloperMode.reset()
+            Onboarding.hasStarted = false
             let _ = KeyManager.destroyKeyPair()
             IdentityManager.clearMe()
             SessionManager.shared.destroy()

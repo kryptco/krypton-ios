@@ -22,17 +22,19 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
     
     let known = KnownU2FApplication.common
     
+    var keys:[PublicKey] = []
     var secured:[U2FAppID] = []
     var unsecured:[U2FAppID] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+            
+        tagTextField.text = UIDevice.current.name
+
         do {
             tagTextField.text = try IdentityManager.getMe()
         } catch (let e) {
             log("error getting me: \(e)", LogType.error)
-            showWarning(title: "Error", body: "Could not get user data. \(e)")
         }
         
         self.tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.tableView.tableHeaderView?.frame.width ?? 0, height: 100)
@@ -50,8 +52,21 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
     }
     
     func checkForUpdates() {
+        
+        do {
+            self.keys = [try KeyManager.sharedInstance().keyPair.publicKey]
+
+        } catch KeyManager.Errors.keyDoesNotExist {
+            // no keypair
+        } catch {
+            log("error loading key pair: \(error)", LogType.error)
+            showWarning(title: "Error", body: "Could not load key pair. \(error)")
+        }
+        
         do {
             self.secured = try U2FAccountManager.getAllAccountsLocked().sorted(by: ({ $0.order < $1.order }))
+        } catch KeychainStorageError.notFound {
+            self.secured = []
         } catch {
             log("error getting me: \(error)", LogType.error)
             showWarning(title: "Error", body: "Could not get user data. \(error)")
@@ -99,7 +114,7 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
         
         switch section {
         case .keys:
-            return 1
+            return keys.count
         case .secured:
             return secured.count
         case .unsecured:
@@ -119,11 +134,7 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
         switch section {
         case .keys:
             let cell = tableView.dequeueReusableCell(withIdentifier: KeyAccountCell.identifier) as! KeyAccountCell
-            do {
-                cell.keyLabel.text = "Default Key Pair: \(try KeyManager.sharedInstance().keyPair.publicKey.type.description)"
-            } catch {
-                log("\(error)", .error)
-            }
+            cell.keyLabel.text = keys[indexPath.row].type.prettyDescription
             return cell
 
         case .secured:

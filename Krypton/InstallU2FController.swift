@@ -85,8 +85,11 @@ class InstallU2FController:KRBaseController, KRScanDelegate{
     }
     
     @IBAction func skipTapped() {
-        let installKr = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "InstallKrController") as! InstallKrController
-        self.navigationController?.pushViewController(installKr, animated: true)
+        Onboarding.isActive = false
+
+        self.navigationController?.dismiss(animated: true, completion: {
+            MainController.current?.didDismissOnboarding()
+        })
     }
     
     //MARK: KRScanDelegate

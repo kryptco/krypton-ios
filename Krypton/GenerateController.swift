@@ -13,7 +13,7 @@ class GenerateController:UIViewController {
     
     @IBOutlet weak var animationView:UIView!
 
-    var keyType:KeyType = .RSA
+    var keyType:KeyType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +34,7 @@ class GenerateController:UIViewController {
             do {
                 
                 try KeyManager.generateKeyPair(type: self.keyType)
+                DeveloperMode.isOn = true
 
                 let elapsed = Date().timeIntervalSince(startTime)
                 
@@ -71,8 +72,8 @@ class GenerateController:UIViewController {
     }
     
     func goToNextStage() {
-        let installU2F = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "InstallU2FController") as! InstallU2FController
-        self.navigationController?.pushViewController(installU2F, animated: true)
+        let install = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "InstallKrController") as! InstallKrController
+        self.navigationController?.pushViewController(install, animated: true)
     }
     
 }

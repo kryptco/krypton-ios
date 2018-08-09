@@ -52,17 +52,8 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         super.viewWillAppear(animated)
         
         blurView.frame = view.frame
-
-        if (try? KeyManager.hasKey()) == .some(true) {
-            self.blurView.isHidden = true
-        } else {
-            self.blurView.isHidden = false
-
-        }
-        
-        // set the right 4th tab if needed
+        self.blurView.isHidden = !(Onboarding.isActive || !Onboarding.hasStarted)
         updateTabsIfNeeded()
-        
     }
     
     static var current:MainController? {
@@ -71,6 +62,8 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func didDismissOnboarding() {
+        Onboarding.isActive = false
+
         dispatchMain {
             self.blurView.isHidden = true
         }
@@ -82,27 +75,20 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         guard KeychainStorage().isInteractionAllowed() else {
             self.showWarning(title: "Keychain locked", body: "Please restart Krypton and wait a few seconds.")
             return
-        }
+        }        
 
-        
-        // if we dont have a keypair but dev mode on
-        do {
-            if try !KeyManager.hasKey() {
-                self.performSegue(withIdentifier: "ShowOnboard", sender: nil)
+        // if we dont have key pair
+        // and onboarding has never started
+        // show onboarding
+        if (try? KeyManager.hasKey()) != .some(true) {
+            guard Onboarding.hasStarted else {
+                self.performSegue(withIdentifier: "showOnboard", sender: nil)
                 return
             }
-        } catch {
-            self.showWarning(title: "Could not check if key exists", body: "Error: \(error).")
-            return
         }
         
-        guard  let _ = try? IdentityManager.getMe()
-        else {
-            self.performSegue(withIdentifier: "showInstallU2F", sender: nil)
-            return
-        }
-        
-        // resume onboarding if needed
+        // if onboarding is still active
+        // show u2f pair instruction
         guard Onboarding.isActive == false else {
             self.performSegue(withIdentifier: "showInstallU2F", sender: nil)
             return
@@ -114,7 +100,6 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load_new_me"), object: nil)
 
-        
         // Check old version sessions
         let (hasOld, sessionNames) = SessionManager.hasOldSessions()
         if hasOld {
@@ -164,10 +149,37 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     //MARK: Updating tabs
     
     func updateTabsIfNeeded() {
+        displayDeveloperModeTab(isVisible: DeveloperMode.isOn)
         updateTeamTabIfNeeded()
     }
     
+    func displayDeveloperModeTab(isVisible: Bool) {
+        guard isVisible else {
+            self.setViewControllers([UIViewController](viewControllers?[0 ... TabIndex.devices.index] ?? []), animated: true)
+            return
+        }
+        
+        guard case .some(let tabCount) = self.viewControllers?.count, tabCount < TabIndex.developer.index + 1 else {
+            return // already have the developer tab
+        }
+        
+        let controller = Resources.Storyboard.Main.instantiateViewController(withIdentifier: "MeController") as! MeController
+        let tabBarItem = UITabBarItem(title: "Developer", image: #imageLiteral(resourceName: "developer-1"), selectedImage: #imageLiteral(resourceName: "developer-1"))
+        
+        let controllers = viewControllers?[0 ..< TabIndex.developer.index] ?? []
+        self.setViewControllers([UIViewController](controllers + [controller]), animated: true)
+        controller.tabBarItem = tabBarItem
+    }
+    
     func updateTeamTabIfNeeded(goToFirstPage:Bool = false) {
+        guard DeveloperMode.shouldShowTeamsTab() else {
+            if DeveloperMode.isOn {
+                self.setViewControllers([UIViewController](viewControllers?[0 ... TabIndex.developer.index] ?? []), animated: true)
+            } else {
+                self.setViewControllers([UIViewController](viewControllers?[0 ... TabIndex.devices.index] ?? []), animated: true)
+            }
+            return
+        }
         
         var teamIdentity:TeamIdentity?
         var team:Team?
