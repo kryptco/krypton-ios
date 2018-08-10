@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             TransportControl.shared.add(sessions: SessionManager.shared.all)
             Analytics.appLaunch()
         }
-    
+
         DeveloperMode.setIfNeeded()
         
         return true

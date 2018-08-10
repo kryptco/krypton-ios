@@ -20,6 +20,10 @@ extension TeamIdentity {
      */
     mutating func writeAndSendLog(auditLog:Audit.Log) throws {
         
+        guard teamsLogginEnabledFor(locale: Locale.current) else {
+            throw AuditLogSendingErrors.loggingDisabled
+        }
+        
         // first record the audit log data
         try self.dataManager.withTransaction {
             guard  try $0.fetchTeam().commandEncryptedLoggingEnabled

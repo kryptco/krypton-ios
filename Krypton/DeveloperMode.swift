@@ -40,9 +40,9 @@ struct DeveloperMode {
     static func reset() {
         UserDefaults.group?.removeObject(forKey: Constants.developerModeKey)
         UserDefaults.group?.removeObject(forKey: Constants.developerModeTeamsKey)
-
     }
     
+
     static var isSet:Bool {
         return UserDefaults.group?.object(forKey: Constants.developerModeKey) != nil
     }
@@ -66,5 +66,4 @@ struct DeveloperMode {
             UserDefaults.group?.set(v, forKey: Constants.developerModeTeamsKey)
         }
     }
-
 }

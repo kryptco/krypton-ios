@@ -19,6 +19,7 @@ struct Constants {
     static let u2fRequiresApproval = "u2f_requires_approval_key"
     static let developerModeKey = "developer_mode_key"
     static let developerModeTeamsKey = "developer_mode_teams_key"
+    static let developerTeamsLoggingKey = "developer_mode_teams_logging_key"
 
     static let appURLScheme = "krypton://"
     
@@ -70,6 +71,10 @@ func dispatchAsync(task:@escaping ()->Void) {
         task()
     }
     
+}
+
+func teamsLogginEnabledFor(locale: Locale) -> Bool {
+    return locale.identifier != "fr_FR"
 }
 
 func dispatchAfter(delay:Double, task:@escaping ()->Void) {

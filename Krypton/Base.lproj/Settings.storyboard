@@ -304,7 +304,6 @@ Cg
                                                         <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="onTintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <connections>
-                                                            <action selector="analyticsEnabledChangedWithSender:" destination="UnB-Qg-F2t" eventType="touchUpInside" id="x7P-Z5-GTL"/>
                                                             <action selector="developerModeEnabledWithSender:" destination="UnB-Qg-F2t" eventType="valueChanged" id="D1c-x0-2dc"/>
                                                         </connections>
                                                     </switch>
