@@ -268,40 +268,8 @@ extension KRBase {
         }
         
         do {
-            let u2fRequest = try LocalU2FRequest(jsonString: data).toRequest()
-            let localSession = try Session(pairing: Pairing.localDevicePairing())
-            let response = try Silo.shared().lockResponseFor(request: u2fRequest, session: localSession, allowed: true)
-            
-            switch response.body {
-            case .u2fAuthenticate(let authResult):
-                switch authResult {
-                case .ok(let auth):
-                    let authJsonString = try auth.jsonString()
-                    
-                    guard   let authJsonQuery = authJsonString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                            let url = URL(string: "\(returnURL)&data=\(authJsonQuery)")
-                    else {
-                        viewController.showWarning(title: "Error", body: "Cannot open callback URL to website.")
-                        return
-                    }
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                case .error(let error):
-                    viewController.showWarning(title: "Error", body: "Request failed: \(error)")
-                }
-                
-            case .u2fRegister(let registerResult):
-                switch registerResult {
-                case .ok(let register):
-                    break
-                case .error(let error):
-                    viewController.showWarning(title: "Error", body: "Request failed: \(error)")
-                }
-
-            default:
-                viewController.showWarning(title: "Error", body: "Could not create valid response.")
-
-            }
-        
+            let callbackURL = try LocalU2FRequest(jsonString: data).getSignedCallback(returnURL: returnURL)
+            UIApplication.shared.open(callbackURL, options: [:], completionHandler: nil)        
         } catch LocalU2FRequest.Errors.noKnownKeyHandle {
             viewController.showWarning(title: "No Krypton Key on this Account", body: "This account does not have a Krypton key registered.")
         } catch {

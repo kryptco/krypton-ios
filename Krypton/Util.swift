@@ -122,8 +122,17 @@ extension String {
 
     
     func fromBase64() throws -> Data {
-        let paddedLength = self.count + (4 - (self.count % 4))
         
+        let padRemainder = self.count % 4
+        
+        var paddedLength:Int
+        if padRemainder == 0 {
+            paddedLength = self.count
+        } else {
+            paddedLength = self.count + (4 - padRemainder)
+        }
+
+
         var urlDecoded = self.padding(toLength: paddedLength, withPad: "=", startingAt: 0)
         urlDecoded = urlDecoded.replacingOccurrences(of: "_", with: "/")
         urlDecoded = urlDecoded.replacingOccurrences(of: "-", with: "+")
