@@ -22,12 +22,16 @@ extension Data {
         return Data(bytes: result)
     }
     
-    func toBase64(_ urlEncoded:Bool = false) -> String {
+    func toBase64(_ urlEncoded:Bool = false, pad:Bool = true) -> String {
         var result = self.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         if urlEncoded {
             result = result.replacingOccurrences(of: "/", with: "_")
             result = result.replacingOccurrences(of: "+", with: "-")
+        }
+        
+        if !pad {
+            result = result.replacingOccurrences(of: "=", with: "")
         }
         
         return result

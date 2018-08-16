@@ -204,16 +204,16 @@ extension LocalU2FRequest.ResponseData:JsonWritable {
 extension LocalU2FRequest.RegisterResponseData:JsonWritable {
     var object: Object {
         return ["version": version,
-                "registrationData": registrationData.toBase64(true),
-                "clientData": clientData.toBase64(true)]
+                "registrationData": registrationData.toBase64(true, pad: false),
+                "clientData": clientData.toBase64(true, pad: false)]
     }
 }
 
 extension LocalU2FRequest.SignResponseData:JsonWritable {
     var object: Object {
-        return ["keyHandle": keyHandle.toBase64(true),
-                "signatureData": signatureData.toBase64(true),
-                "clientData": clientData.toBase64(true)]
+        return ["keyHandle": keyHandle.toBase64(true, pad: false),
+                "signatureData": signatureData.toBase64(true, pad: false),
+                "clientData": clientData.toBase64(true, pad: false)]
     }
 }
 
