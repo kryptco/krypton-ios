@@ -38,6 +38,14 @@ struct LocalU2FRequest {
         case register = "u2f_register"
         case sign = "u2f_sign"
         
+        init(type:String) throws {
+            guard let reqType = RequestType(rawValue: type.replacingOccurrences(of: "_request", with: "")) else {
+                throw Errors.unknownRequestType
+            }
+            
+            self = reqType
+        }
+        
         var request:String {
             return "\(self.rawValue)_request"
         }
@@ -193,11 +201,7 @@ extension LocalU2FRequest.RegisteredKeys:JsonReadable {
 
 extension LocalU2FRequest:JsonReadable {
     init(json: Object) throws {
-        guard let requestType = try RequestType(rawValue: json ~> "type") else {
-            throw Errors.unknownRequestType
-        }
-        
-        type = requestType
+        type = try RequestType(type: json ~> "type")
         appId = try json ~> "appId"
         challenge = try json ~> "challenge"
         registeredKeys = try? [RegisteredKeys](json: json ~> "registeredKeys")
