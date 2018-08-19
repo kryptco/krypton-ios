@@ -9,6 +9,12 @@
 import Foundation
 import JSON
 
+struct LocalU2FApproval {
+    let request:LocalU2FRequest
+    let trustedFacets:[TrustedFacet]
+    let returnURL:String
+}
+
 struct LocalU2FRequest {
     let type:RequestType
     let appId:String
@@ -16,18 +22,29 @@ struct LocalU2FRequest {
     let registeredKeys:[RegisteredKeys]?
     
     let timeoutSeconds:Double?
-    let requestId:Double?
+    let requestId:Int64?
     let displayIdentifier:String?
     
     enum Errors:Error {
         case unknownRequestType
         case noKnownKeyHandle
         case invalidCallbackURL
+        case unsupportedRequestType
+        case returnURLDoesNotTrustedFacets
+        case invalidReturnURL
     }
     
     enum RequestType:String {
-        case register = "u2f_register_request"
-        case sign = "u2f_sign_request"
+        case register = "u2f_register"
+        case sign = "u2f_sign"
+        
+        var request:String {
+            return "\(self.rawValue)_request"
+        }
+        
+        var response:String {
+            return "\(self.rawValue)_response"
+        }
     }
     
     struct RegisteredKeys {
@@ -39,12 +56,6 @@ struct LocalU2FRequest {
         let challenge:String
         let origin:String
 
-        static func createRegister(challenge:String, origin:String) throws -> String {
-            return try ClientData(typ: "navigator.id.finishEnrollment",
-                                  challenge: challenge,
-                                  origin: origin).jsonString()
-        }
-
         static func createAuthenticate(challenge:String, origin:String) throws -> String {
             return try ClientData(typ: "navigator.id.getAssertion",
                                   challenge: challenge,
@@ -54,7 +65,7 @@ struct LocalU2FRequest {
     
     struct Response {
         let type:String
-        let requestId:Double?
+        let requestId:Int64?
         let responseData:ResponseData
     }
     
@@ -75,19 +86,34 @@ struct LocalU2FRequest {
         let clientData:Data
     }
     
-    func getSignedCallback(returnURL:String) throws -> URL {
+    func verifyReturnOrigin(returnURL:String, trustedFacets:[TrustedFacet]) throws {
+        guard   let url = URL(string: returnURL),
+                let scheme = url.scheme,
+                let host = url.host
+        else {
+            throw Errors.invalidReturnURL
+        }
+        
+        let thisFacet = "\(scheme)://\(host)"
+        
+        for trustedFacet in trustedFacets {
+            if trustedFacet.ids.contains(thisFacet) {
+                return // successfully found facets
+            }
+        }
+        
+        throw Errors.returnURLDoesNotTrustedFacets
+    }
+    
+    func getSignedCallback(returnURL:String, trustedFacets:[TrustedFacet]) throws -> URL{
+        try verifyReturnOrigin(returnURL: returnURL, trustedFacets: trustedFacets)
         
         switch type {
         case .register:
-            let clientData = try ClientData.createRegister(challenge: challenge, origin: appId)
-            let requestChallenge = Data(bytes: [UInt8](clientData.utf8)).SHA256
-            
-            struct Unimpl:Error {}
-            throw Unimpl()
+            throw Errors.unsupportedRequestType
             
         case .sign:
             // find the associated keyHandle
-            
             var matchingKeyHandle:U2FKeyHandle?
             
             for key in self.registeredKeys ?? [] {
@@ -103,7 +129,9 @@ struct LocalU2FRequest {
                 throw Errors.noKnownKeyHandle
             }
             
-            let clientData = try ClientData.createAuthenticate(challenge: challenge, origin: "ios:bundle-id:com.google.GoogleAccounts")
+            let localOrigin = KnownU2FApplication(for: appId)?.localRequestOrigin() ?? appId
+            let clientData = try ClientData.createAuthenticate(challenge: challenge,
+                                                               origin: localOrigin)
             let clientDataBytes = Data(bytes: [UInt8](clientData.utf8))
             let requestChallenge = clientDataBytes.SHA256
             
@@ -125,13 +153,12 @@ struct LocalU2FRequest {
             signatureData.append(UInt8((counter >> 0) & 0xff))
             signatureData.append(signature)
 
-            let response = Response(type: "u2f_sign_response",
+            let response = Response(type: RequestType.sign.response,
                                     requestId: requestId,
                                     responseData: .sign(SignResponseData(keyHandle: keyHandle,
                                                                          signatureData: signatureData,
                                                                          clientData: Data(bytes: [UInt8](clientData.utf8)))))
             
-            try? log("Response JSON: \(response.jsonString(prettyPrinted: true))")
             let responseJson = try response.jsonString()
             
             let returnUrlFixed = returnURL.replacingOccurrences(of: "cid=3", with: "cid=4")
@@ -141,10 +168,20 @@ struct LocalU2FRequest {
                     throw Errors.invalidCallbackURL
             }
             
-            log("Fragment: \(challengeResponseFragment)")
             return url
         }
         
+    }
+}
+
+extension KnownU2FApplication {
+    func localRequestOrigin() -> String? {
+        switch self {
+        case .google:
+            return "ios:bundle-id:com.google.GoogleAccounts"
+        default:
+            return nil
+        }
     }
 }
 
@@ -171,7 +208,13 @@ extension LocalU2FRequest:JsonReadable {
     }
 }
 
-extension LocalU2FRequest.ClientData:JsonWritable {
+extension LocalU2FRequest.ClientData:Jsonable {
+    init(json: Object) throws {
+        typ = try json ~> "typ"
+        challenge = try json ~> "challenge"
+        origin = try json ~> "origin"
+    }
+    
     var object: Object {
         return ["typ": typ,
                 "challenge": challenge,
@@ -179,9 +222,15 @@ extension LocalU2FRequest.ClientData:JsonWritable {
     }
 }
 
-extension LocalU2FRequest.Response:JsonWritable {
+extension LocalU2FRequest.Response:Jsonable {
+    init(json: Object) throws {
+        type = try json ~> "type"
+        requestId = try? json ~> "requestId"
+        responseData = try LocalU2FRequest.ResponseData(json: json ~> "responseData")
+    }
     var object: Object {
-        var obj:Object = ["type": type, "responseData": responseData.object]
+        var obj:Object = ["type": type,
+                          "responseData": responseData.object]
         
         if let requestId = requestId {
             obj["requestId"] = requestId
@@ -190,7 +239,16 @@ extension LocalU2FRequest.Response:JsonWritable {
         return obj
     }
 }
-extension LocalU2FRequest.ResponseData:JsonWritable {
+extension LocalU2FRequest.ResponseData:Jsonable {
+    init(json: Object) throws {
+        if let sign = try? LocalU2FRequest.SignResponseData(json: json) {
+            self = .sign(sign)
+            return
+        }
+        
+        self = try .register(LocalU2FRequest.RegisterResponseData(json: json))
+    }
+    
     var object: Object {
         switch self {
         case .register(let register):
@@ -201,7 +259,13 @@ extension LocalU2FRequest.ResponseData:JsonWritable {
     }
 }
 
-extension LocalU2FRequest.RegisterResponseData:JsonWritable {
+extension LocalU2FRequest.RegisterResponseData:Jsonable {
+    init(json: Object) throws {
+        version = try json ~> "version"
+        registrationData = try ((json ~> "registrationData") as String).fromBase64()
+        clientData = try ((json ~> "clientData") as String).fromBase64()
+    }
+
     var object: Object {
         return ["version": version,
                 "registrationData": registrationData.toBase64(true, pad: false),
@@ -209,7 +273,13 @@ extension LocalU2FRequest.RegisterResponseData:JsonWritable {
     }
 }
 
-extension LocalU2FRequest.SignResponseData:JsonWritable {
+extension LocalU2FRequest.SignResponseData:Jsonable {
+    init(json: Object) throws {
+        keyHandle = try ((json ~> "keyHandle") as String).fromBase64()
+        signatureData = try ((json ~> "signatureData") as String).fromBase64()
+        clientData = try ((json ~> "clientData") as String).fromBase64()
+    }
+
     var object: Object {
         return ["keyHandle": keyHandle.toBase64(true, pad: false),
                 "signatureData": signatureData.toBase64(true, pad: false),

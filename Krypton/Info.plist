@@ -38,7 +38,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLIconFile</key>
-			<string></string>
+			<string>app-icon-nav-green</string>
 			<key>CFBundleURLName</key>
 			<string>co.krypt.krypton.u2f</string>
 			<key>CFBundleURLSchemes</key>
@@ -52,7 +52,7 @@
 			<key>CFBundleURLIconFile</key>
 			<string>app-icon-nav-green</string>
 			<key>CFBundleURLName</key>
-			<string>co.krypt.krypton.u2f</string>
+			<string>co.krypt.krypton.u2fg</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>u2f-google</string>

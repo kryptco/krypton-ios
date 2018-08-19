@@ -38,9 +38,13 @@ class U2FRequestController:UIViewController {
     }
     
     func set(authenticate:U2FAuthenticateRequest) {
+        set(authenticateTo: authenticate.appID)
+    }
+    
+    func set(authenticateTo appId:U2FAppID) {
         action.text = "Login"
         suffix.text = "to"
-        setSiteLogoAndDisplay(app: authenticate.appID)
+        setSiteLogoAndDisplay(app: appId)
     }
 
     func setSiteLogoAndDisplay(app: U2FAppID) {

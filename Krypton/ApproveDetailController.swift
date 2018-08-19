@@ -155,6 +155,10 @@ class ApproveDetailController: UIViewController {
         }
     }
     
+    func setLocalU2FAuthenticateRequest(appId:U2FAppID) {
+        u2fController?.set(authenticateTo: appId)
+        removeAllBut(view: u2fContainerView)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let ssh = segue.destination as? SSHRequestController {

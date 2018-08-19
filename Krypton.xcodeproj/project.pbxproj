@@ -349,6 +349,8 @@
 		FABA4B1B1D9C68F30057A666 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */; };
 		FABFE3621DC1097B0073C0EF /* PairApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE3611DC1097B0073C0EF /* PairApproveController.swift */; };
 		FAC07FCC1E42F5D100FEF117 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC07FCB1E42F5D100FEF117 /* Notify.swift */; };
+		FAC2C0652129B4990099A883 /* TrustedFacet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2C0642129B4990099A883 /* TrustedFacet.swift */; };
+		FAC2C0672129BF460099A883 /* LocalApproveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2C0662129BF460099A883 /* LocalApproveController.swift */; };
 		FAC535D22001604F007C21E4 /* Kryptonite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAB43B951DFF1F9200496114 /* Kryptonite.xcdatamodeld */; };
 		FAC535D32001604F007C21E4 /* KnownHosts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA1682891EB2A8FE00D9CE40 /* KnownHosts.xcdatamodeld */; };
 		FAC5360F2001932C007C21E4 /* Teams.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC5360D2001932C007C21E4 /* Teams.xcdatamodeld */; };
@@ -879,6 +881,8 @@
 		FABA4B1A1D9C68F30057A666 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FABFE3611DC1097B0073C0EF /* PairApproveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairApproveController.swift; sourceTree = "<group>"; };
 		FAC07FCB1E42F5D100FEF117 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
+		FAC2C0642129B4990099A883 /* TrustedFacet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustedFacet.swift; sourceTree = "<group>"; };
+		FAC2C0662129BF460099A883 /* LocalApproveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalApproveController.swift; sourceTree = "<group>"; };
 		FAC535D6200162F6007C21E4 /* Krypton-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Krypton-Bridging-Header.h"; path = "Krypton/Krypton-Bridging-Header.h"; sourceTree = "<group>"; };
 		FAC535D7200162F6007C21E4 /* Krypton.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Krypton.entitlements; path = Krypton/Krypton.entitlements; sourceTree = "<group>"; };
 		FAC535D820016308007C21E4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Krypton/Info.plist; sourceTree = "<group>"; };
@@ -1187,6 +1191,7 @@
 				FAA5362C1D8F3FCA00549710 /* Sharing.swift */,
 				FAAE818E1E576DB8002A9AE6 /* Authorize.swift */,
 				FAE495701DBD741800A97708 /* ApproveController.swift */,
+				FAC2C0662129BF460099A883 /* LocalApproveController.swift */,
 				FA0C13B01DC2A63300C5FE34 /* InstallMethod.swift */,
 				FAD27A1E1FD1C46400F7EFAE /* LoadingController.swift */,
 				FACBEFEC1D779D71005D71B9 /* Onboard */,
@@ -1338,6 +1343,7 @@
 				FAD9532E209BFDE800A112C3 /* KnownU2FApplication.swift */,
 				FAA9598A20A29C6300B598CD /* U2FServiceBranding.swift */,
 				FA2F6A032118D47E006DA4C2 /* LocalU2FRequest.swift */,
+				FAC2C0642129B4990099A883 /* TrustedFacet.swift */,
 				FAEE048A1D736972002A7AFD /* Crypto */,
 			);
 			name = Core;
@@ -2463,6 +2469,7 @@
 				FA2697341D99D05A00FE44D3 /* SwiftSpinner.swift in Sources */,
 				FAE495881DBD89F100A97708 /* M13Checkbox.swift in Sources */,
 				FA1682AA1EB3856600D9CE40 /* KnownHostsEditController.swift in Sources */,
+				FAC2C0672129BF460099A883 /* LocalApproveController.swift in Sources */,
 				FA15EB491DA5C6CC00BED16C /* Properties.swift in Sources */,
 				FAA5362F1D8F43D100549710 /* Links.swift in Sources */,
 				FA16826E1D774D6000A7ED53 /* RSCodeGenerator.swift in Sources */,
@@ -2559,6 +2566,7 @@
 				FACDE4371DA036FD0065E1E1 /* SessionsEmptyController.swift in Sources */,
 				FA2A502420115DE4002748C2 /* TeamService+MainRead.swift in Sources */,
 				FAEE04951D73ECE2002A7AFD /* Util.swift in Sources */,
+				FAC2C0652129B4990099A883 /* TrustedFacet.swift in Sources */,
 				FA42B7051FA0D8BC006A89DD /* KRTeamDataController.swift in Sources */,
 				FA1682751D774D6000A7ED53 /* RSITF14Generator.swift in Sources */,
 				FA16824E1D774C2200A7ED53 /* KRScanController.swift in Sources */,

@@ -52,6 +52,17 @@ extension Request {
 
 extension UIViewController {
     
+    func requestLocalU2FAuthorization(localU2FApprovalRequest:LocalU2FApproval) {
+        let controller = Resources.Storyboard.Approval.instantiateViewController(withIdentifier: "LocalApproveController") as! LocalApproveController
+        controller.localU2FRequest = localU2FApprovalRequest
+        controller.presentingBaseController = self
+        controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        controller.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+
+        dispatchMain {
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
     
     func requestUserAuthorization(session:Session, request:Request) {
         

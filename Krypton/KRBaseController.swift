@@ -260,16 +260,35 @@ extension KRBase {
     }
     
     func handleU2F(viewController:UIViewController, link:Link) {
-        log("Got <\(link.path)>: \n\(link.properties)")
+        log("Got link: \(link.url.absoluteString)")
         
-        guard let data = link.properties["data"]?.removingPercentEncoding, let returnURL = link.properties["returnUrl"] else {
+        guard   let data = link.properties["data"]?.removingPercentEncoding,
+                let returnURL = link.properties["returnUrl"]?.removingPercentEncoding
+        else {
             viewController.showWarning(title: "Invalid Request", body: "This request is using an invalid format. Please send an email to support@krypt.co.")
             return
         }
         
         do {
-            let callbackURL = try LocalU2FRequest(jsonString: data).getSignedCallback(returnURL: returnURL)
-            UIApplication.shared.open(callbackURL, options: [:], completionHandler: nil)        
+            let localU2FRequest = try LocalU2FRequest(jsonString: data)
+            
+            let loading = LoadingController.present(from: viewController)
+            
+            TrustedFacet.load(for: localU2FRequest.appId) { (response) in
+                switch response {
+                case .ok(let trustedFacets):
+                    loading?.showSuccess(hideAfter: 0.5, then: {
+                        let approvalRequest = LocalU2FApproval(request: localU2FRequest,
+                                                               trustedFacets: trustedFacets,
+                                                               returnURL: returnURL)
+                        
+                        viewController.requestLocalU2FAuthorization(localU2FApprovalRequest: approvalRequest)
+                    })
+                case .error(let err):
+                    viewController.showWarning(title: "Error", body: "Could not load trusted facets: \(err).")
+                }
+            }
+
         } catch LocalU2FRequest.Errors.noKnownKeyHandle {
             viewController.showWarning(title: "No Krypton Key on this Account", body: "This account does not have a Krypton key registered.")
         } catch {
