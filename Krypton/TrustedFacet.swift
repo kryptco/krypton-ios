@@ -27,7 +27,7 @@ enum TrustedFacetResponse {
 }
 
 extension TrustedFacet {
-    static func load(for appId:String, onCompletion:@escaping (TrustedFacetResponse) -> Void) {
+    static func load(for appId:String, baseOnReturnURL:String, onCompletion:@escaping (TrustedFacetResponse) -> Void) {
         HTTP.GET(appId) { (response) in
             if let err = response.error {
                 onCompletion(.error(err))

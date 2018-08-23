@@ -568,7 +568,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZ4-YA-6zu" userLabel="pair" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="16" y="280.5" width="343" height="347.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="2. Scan the QR code on the screen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GpZ-nK-IvP">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="2. Scan the QR code" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GpZ-nK-IvP">
                                         <rect key="frame" x="12" y="12" width="319" height="27.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
@@ -595,7 +595,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="341" height="295"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="UI0-PG-6lU">
-                                                        <rect key="frame" x="147" y="77" width="47" height="48"/>
+                                                        <rect key="frame" x="147" y="76.5" width="47" height="48"/>
                                                         <color key="tintColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="47" id="Qg7-8C-f6Y"/>
@@ -603,13 +603,13 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="The camera is used to scan a QR code to pair with a new device" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="5at-wR-mN7">
-                                                        <rect key="frame" x="20" y="126" width="301" height="44"/>
+                                                        <rect key="frame" x="20" y="125.5" width="301" height="44"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9Y-EW-w7Q" customClass="KRButton" customModule="Krypton" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="190" width="301" height="50"/>
+                                                        <rect key="frame" x="20" y="189.5" width="301" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="6JN-wV-C9w"/>
                                                         </constraints>
@@ -895,7 +895,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBp-Yt-VP7" userLabel="pair" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="16" y="275.5" width="343" height="352.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="2. Scan the QR code on the screen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="7oA-0i-pxp">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="2. Scan the QR code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="7oA-0i-pxp">
                                         <rect key="frame" x="12" y="12" width="319" height="27.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                         <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
@@ -1416,7 +1416,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wh3-Mk-ThQ">
-                                        <rect key="frame" x="122" y="489" width="132" height="34"/>
+                                        <rect key="frame" x="122" y="500" width="132" height="34"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                                         <color key="tintColor" red="0.42745098040000001" green="0.49019607840000001" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Edit Known Hosts"/>
@@ -1432,7 +1432,6 @@
                                     <constraint firstItem="ess-4f-QFz" firstAttribute="trailing" secondItem="Tfa-NT-hZv" secondAttribute="trailing" id="6tY-PL-vpD"/>
                                     <constraint firstItem="3Lq-u0-HJT" firstAttribute="trailing" secondItem="5q1-B0-xJU" secondAttribute="trailing" id="77z-jY-gS3"/>
                                     <constraint firstItem="q0W-uV-TqU" firstAttribute="top" secondItem="RM8-vx-TIw" secondAttribute="bottom" constant="-2" id="AgQ-OG-obB"/>
-                                    <constraint firstItem="wh3-Mk-ThQ" firstAttribute="top" secondItem="h4N-gg-Oi4" secondAttribute="bottom" constant="20" id="Ct0-GB-a8e"/>
                                     <constraint firstItem="3Lq-u0-HJT" firstAttribute="leading" secondItem="5q1-B0-xJU" secondAttribute="leading" id="DA6-Ko-fhU"/>
                                     <constraint firstItem="ess-4f-QFz" firstAttribute="leading" secondItem="iUN-2V-sar" secondAttribute="leading" id="GvU-JM-hrn"/>
                                     <constraint firstItem="h4N-gg-Oi4" firstAttribute="trailing" secondItem="iUN-2V-sar" secondAttribute="trailing" id="JFu-lR-3yH"/>
@@ -1469,6 +1468,7 @@
                         <constraints>
                             <constraint firstItem="8lm-Ye-OGM" firstAttribute="leading" secondItem="1nD-98-eKf" secondAttribute="leading" id="Uak-SV-jor"/>
                             <constraint firstItem="8lm-Ye-OGM" firstAttribute="top" secondItem="mRE-ow-Lhg" secondAttribute="bottom" id="WQJ-Ct-m35"/>
+                            <constraint firstItem="aKk-ID-Wah" firstAttribute="top" secondItem="wh3-Mk-ThQ" secondAttribute="bottom" constant="20" id="ZjH-RZ-jEW"/>
                             <constraint firstAttribute="bottom" secondItem="8lm-Ye-OGM" secondAttribute="bottom" id="fkh-3K-NaJ"/>
                             <constraint firstAttribute="trailing" secondItem="8lm-Ye-OGM" secondAttribute="trailing" id="jIu-mO-DMO"/>
                         </constraints>

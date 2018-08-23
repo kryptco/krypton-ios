@@ -272,22 +272,11 @@ extension KRBase {
         do {
             let localU2FRequest = try LocalU2FRequest(jsonString: data)
             
-            let loading = LoadingController.present(from: viewController)
+            let approvalRequest = LocalU2FApproval(request: localU2FRequest,
+                                                   trustedFacets: [],
+                                                   returnURL: returnURL)
             
-            TrustedFacet.load(for: localU2FRequest.appId) { (response) in
-                switch response {
-                case .ok(let trustedFacets):
-                    loading?.showSuccess(hideAfter: 0.5, then: {
-                        let approvalRequest = LocalU2FApproval(request: localU2FRequest,
-                                                               trustedFacets: trustedFacets,
-                                                               returnURL: returnURL)
-                        
-                        viewController.requestLocalU2FAuthorization(localU2FApprovalRequest: approvalRequest)
-                    })
-                case .error(let err):
-                    viewController.showWarning(title: "Error", body: "Could not load trusted facets: \(err).")
-                }
-            }
+            viewController.requestLocalU2FAuthorization(localU2FApprovalRequest: approvalRequest)
 
         } catch LocalU2FRequest.Errors.noKnownKeyHandle {
             viewController.showWarning(title: "No Krypton Key on this Account", body: "This account does not have a Krypton key registered.")

@@ -32,6 +32,7 @@ struct LocalU2FRequest {
         case unsupportedRequestType
         case returnURLDoesNotTrustedFacets
         case invalidReturnURL
+        case onlyGoogleCurrentlySupported
     }
     
     enum RequestType:String {
@@ -102,15 +103,17 @@ struct LocalU2FRequest {
             throw Errors.invalidReturnURL
         }
         
-        let thisFacet = "\(scheme)://\(host)"
-        
-        for trustedFacet in trustedFacets {
-            if trustedFacet.ids.contains(thisFacet) {
-                return // successfully found facets
-            }
+        guard case .some(.google) = KnownU2FApplication(for: appId) else {
+            throw Errors.onlyGoogleCurrentlySupported
         }
         
-        throw Errors.returnURLDoesNotTrustedFacets
+        let thisFacet = "\(scheme)://\(host)"
+        
+        /// Temporary whitelist google as it is the only RP
+        /// that supports U2F auth locally on iOS
+        guard thisFacet == "https://accounts.google.com" else {
+            throw Errors.returnURLDoesNotTrustedFacets
+        }
     }
     
     func getSignedCallback(returnURL:String, trustedFacets:[TrustedFacet]) throws -> URL{
