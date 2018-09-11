@@ -165,7 +165,11 @@ extension AppDelegate {
             policySession.allowAll(request: request, for: Policy.temporaryApprovalInterval.value)
             
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "time", value: UInt(Policy.Interval.threeHours.rawValue))
-            
+        
+        case .dontAskAgain:
+            policySession.setZeroTouch(enabled: true)
+            Analytics.postEvent(category: request.body.analyticsCategory, action: "background approve", label: "zerotouch")
+
         case .reject:
             Analytics.postEvent(category: request.body.analyticsCategory, action: "background reject")
         }

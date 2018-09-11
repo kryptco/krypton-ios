@@ -17,6 +17,7 @@ extension Policy {
         case approve = "approve_identifier"
         case temporaryThis = "approve_temp_this_identifier"
         case temporaryAll = "approve_temp_all_identifier"
+        case dontAskAgain = "approve_all_identifier"
         case reject = "reject_identifier"
         
         var identifier:String {
@@ -26,7 +27,7 @@ extension Policy {
         // helper to know if action was allowed or rejected
         var isAllowed:Bool {
             switch self {
-            case .approve, .temporaryThis, .temporaryAll:
+            case .approve, .temporaryThis, .temporaryAll, .dontAskAgain:
                 return true
             case .reject:
                 return false

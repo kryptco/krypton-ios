@@ -157,6 +157,20 @@ class PairApproveController: UIViewController {
                     }
                 }
                 
+                // trying to developer-pair but no developer mode / developer key pair
+                if pairing.browser == nil && (try? KeyManager.hasKey()) == .some(false) {
+                    dispatchAsync {
+                        do {
+                            try KeyManager.generateKeyPair(type: KeyType.RSA)
+                            dispatchMain {
+                                DeveloperMode.isOn = true
+                            }
+                        } catch {
+                            self.showWarning(title: "Error", body: "Cannot generate developer key pair: \(error)")
+                        }
+                    }
+                }
+                
                 let session = try Session(pairing: pairing)
                 SessionManager.shared.add(session: session, temporary: true)
                 TransportControl.shared.add(session: session, newPairing: true)

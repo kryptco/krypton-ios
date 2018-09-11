@@ -21,7 +21,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Devices-->
+        <!--Computers-->
         <scene sceneID="36J-Aw-Z8K">
             <objects>
                 <viewController id="Mah-te-0DZ" customClass="SessionsController" customModule="Krypton" customModuleProvider="target" sceneMemberID="viewController">
@@ -852,7 +852,7 @@
                                 <rect key="frame" x="0.0" y="671.5" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AkB-7Q-PrW" id="V7J-pB-uPV">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnm-X1-IGG">
@@ -939,7 +939,7 @@
                                 <rect key="frame" x="0.0" y="791.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R4k-TJ-GBk" id="d4H-Tq-IOK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-es-AG2" userLabel="objHashView" customClass="KRView" customModule="Krypton" customModuleProvider="target">
@@ -1064,7 +1064,7 @@
                                 <rect key="frame" x="0.0" y="861.5" width="375" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uTg-IR-NZZ" id="IKn-4t-LnV">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="39.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="753" text="$ ssh git@gitub.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="oux-rK-IhV">
@@ -1101,7 +1101,7 @@
                                 <rect key="frame" x="0.0" y="901.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xK0-4K-ru0" id="PbS-4g-kuF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLW-kX-Sum" userLabel="line">
@@ -2149,21 +2149,21 @@
                         <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="GY4-Pa-F6Q">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="215"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Tap &quot;Revoke&quot; to disable this browser's ability to request logins" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKr-gK-o2H">
-                                    <rect key="frame" x="20" y="96" width="335" height="14"/>
+                                    <rect key="frame" x="20" y="189.5" width="335" height="14"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                     <color key="textColor" red="0.42745098040000001" green="0.49019607840000001" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TYa-eH-NSJ" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                    <rect key="frame" x="20" y="20" width="335" height="68"/>
+                                    <rect key="frame" x="20" y="20" width="335" height="161.5"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ry4-4X-Ccn" customClass="KRButton" customModule="Krypton" customModuleProvider="target">
-                                            <rect key="frame" x="266" y="14" width="59" height="40"/>
+                                            <rect key="frame" x="266" y="16.5" width="59" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="EDW-KT-pgK"/>
                                             </constraints>
@@ -2216,20 +2216,48 @@
                                             <color key="textColor" red="0.42745098040000001" green="0.49019607840000001" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trust this browser?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="3wh-bU-qOx">
+                                            <rect key="frame" x="10" y="98" width="130" height="20.5"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                            <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Enable Zero Touch sign-ins so you don't have to approve every login request." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="t2N-4l-Atj">
+                                            <rect key="frame" x="10" y="118.5" width="256" height="33"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                            <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d5b-lx-XuV">
+                                            <rect key="frame" x="276" y="97.5" width="51" height="31"/>
+                                            <color key="onTintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="changeZeroTouchSettingWithSender:" destination="MFS-5v-vnf" eventType="valueChanged" id="nUj-ch-1xQ"/>
+                                                <action selector="unknownHostApprovalChangedWithSender:" destination="2XW-PV-xjB" eventType="valueChanged" id="ReR-Pa-MYi"/>
+                                            </connections>
+                                        </switch>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="d5b-lx-XuV" firstAttribute="trailing" secondItem="Ry4-4X-Ccn" secondAttribute="trailing" id="1G9-FK-IPA"/>
+                                        <constraint firstItem="3wh-bU-qOx" firstAttribute="top" secondItem="X3K-yf-X7G" secondAttribute="bottom" constant="40" id="3BM-rM-bq8"/>
                                         <constraint firstItem="X3K-yf-X7G" firstAttribute="leading" secondItem="1Ur-Og-qVx" secondAttribute="leading" id="3Wg-0V-fDO"/>
+                                        <constraint firstItem="d5b-lx-XuV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3wh-bU-qOx" secondAttribute="trailing" constant="10" id="7dp-qo-0cQ"/>
+                                        <constraint firstItem="d5b-lx-XuV" firstAttribute="leading" secondItem="t2N-4l-Atj" secondAttribute="trailing" constant="10" id="8dP-1d-znr"/>
                                         <constraint firstAttribute="trailing" secondItem="Ry4-4X-Ccn" secondAttribute="trailing" constant="10" id="AQ1-Yo-we2"/>
                                         <constraint firstItem="X3K-yf-X7G" firstAttribute="centerX" secondItem="1Ur-Og-qVx" secondAttribute="centerX" id="BiB-6A-HV9"/>
+                                        <constraint firstItem="3wh-bU-qOx" firstAttribute="leading" secondItem="nAn-76-rs8" secondAttribute="leading" id="JTg-KK-PJJ"/>
+                                        <constraint firstItem="t2N-4l-Atj" firstAttribute="leading" secondItem="3wh-bU-qOx" secondAttribute="leading" id="Qzw-gU-qXI"/>
+                                        <constraint firstItem="d5b-lx-XuV" firstAttribute="centerY" secondItem="3wh-bU-qOx" secondAttribute="baseline" id="Uu1-SE-3V9"/>
                                         <constraint firstItem="nAn-76-rs8" firstAttribute="leading" secondItem="TYa-eH-NSJ" secondAttribute="leading" constant="10" id="ZYY-3w-86O"/>
+                                        <constraint firstItem="Ry4-4X-Ccn" firstAttribute="centerY" secondItem="1Ur-Og-qVx" secondAttribute="baseline" id="Zib-g6-7s2"/>
                                         <constraint firstItem="1Ur-Og-qVx" firstAttribute="bottom" secondItem="nAn-76-rs8" secondAttribute="bottom" id="buZ-I5-GYX"/>
                                         <constraint firstItem="1Ur-Og-qVx" firstAttribute="leading" secondItem="nAn-76-rs8" secondAttribute="trailing" constant="10" id="buz-2w-6uJ"/>
                                         <constraint firstItem="Ry4-4X-Ccn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1Ur-Og-qVx" secondAttribute="trailing" constant="10" id="dQz-bd-PIF"/>
+                                        <constraint firstItem="t2N-4l-Atj" firstAttribute="top" secondItem="3wh-bU-qOx" secondAttribute="bottom" id="eHI-Vt-OmU"/>
                                         <constraint firstItem="X3K-yf-X7G" firstAttribute="top" secondItem="1Ur-Og-qVx" secondAttribute="bottom" id="fhF-qb-McG"/>
                                         <constraint firstItem="nAn-76-rs8" firstAttribute="top" secondItem="TYa-eH-NSJ" secondAttribute="top" constant="20" id="lx0-Ug-qYg"/>
-                                        <constraint firstItem="Ry4-4X-Ccn" firstAttribute="centerY" secondItem="TYa-eH-NSJ" secondAttribute="centerY" id="pmv-Tr-2FP"/>
-                                        <constraint firstAttribute="bottom" secondItem="X3K-yf-X7G" secondAttribute="bottom" constant="10" id="xiK-Ig-Jgr"/>
+                                        <constraint firstAttribute="bottom" secondItem="t2N-4l-Atj" secondAttribute="bottom" constant="10" id="qk0-wT-cIM"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -2250,7 +2278,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="EmptyU2FCell" rowHeight="160" id="RLm-ju-oPi">
-                                <rect key="frame" x="0.0" y="193.5" width="375" height="160"/>
+                                <rect key="frame" x="0.0" y="270.5" width="375" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RLm-ju-oPi" id="8fH-sT-e3g">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
@@ -2336,7 +2364,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="U2FLogCell" rowHeight="80" id="J15-nl-6La" customClass="U2FLogCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="353.5" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="430.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J15-nl-6La" id="s0t-y8-4sq">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
@@ -2404,6 +2432,7 @@
                         <outlet property="headerView" destination="TYa-eH-NSJ" id="5qy-Z6-SIR"/>
                         <outlet property="lastAccessLabel" destination="X3K-yf-X7G" id="eE5-gq-9ag"/>
                         <outlet property="revokeButton" destination="Ry4-4X-Ccn" id="h0E-H6-8Yq"/>
+                        <outlet property="zeroTouchSwitch" destination="d5b-lx-XuV" id="rvd-hS-fuT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JLf-s7-Ygb" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -94,6 +94,9 @@ class Policy {
         var shouldShowApprovedNotifications:Bool = true
         var shouldPermitUnknownHostsAllowed:Bool = false
         
+        // u2f
+        var u2fZeroTouchEnabled:Bool = false
+        
         // dangerous setting: never ask
         var shouldNeverAsk:Bool = false
         
@@ -105,20 +108,25 @@ class Policy {
         init( allowedUntil:[AllowedUntilTypeKey:UInt64],
               shouldShowApprovedNotifications:Bool,
               shouldPermitUnknownHostsAllowed:Bool,
+              u2fZeroTouchEnabled:Bool = false,
               shouldNeverAsk:Bool,
               hasMigratedOldPolicies:Bool)
         {
             self.allowedUntil = allowedUntil
             self.shouldShowApprovedNotifications = shouldShowApprovedNotifications
             self.shouldPermitUnknownHostsAllowed = shouldPermitUnknownHostsAllowed
+            self.u2fZeroTouchEnabled = u2fZeroTouchEnabled
             self.shouldNeverAsk = shouldNeverAsk
             self.hasMigratedOldPolicies = hasMigratedOldPolicies
         }
         
         init(json: Object) throws {
+            let zeroTouchEnabled:Bool? = try? json ~> "u2f_zero_touch"
+            
             try self.init(allowedUntil: json ~> "allowed_until",
                           shouldShowApprovedNotifications: json ~> "should_show_approved_notifications",
                           shouldPermitUnknownHostsAllowed: json ~> "should_permit_unknownHosts_allowed",
+                          u2fZeroTouchEnabled: zeroTouchEnabled ?? false,
                           shouldNeverAsk: json ~> "should_never_ask",
                           hasMigratedOldPolicies: json ~> "has_migrated_old_policies")
         }
@@ -127,6 +135,7 @@ class Policy {
             return [ "allowed_until": allowedUntil,
                      "should_show_approved_notifications": shouldShowApprovedNotifications,
                      "should_permit_unknownHosts_allowed": shouldPermitUnknownHostsAllowed,
+                     "u2f_zero_touch": u2fZeroTouchEnabled,
                      "should_never_ask": shouldNeverAsk,
                      "has_migrated_old_policies": hasMigratedOldPolicies]
         }
@@ -184,6 +193,11 @@ class Policy {
         
         func setAlwaysAsk(for userAndHost:VerifiedUserAndHostAuth)  {
             sshUserAndHostAllowedUntil?.removeObject(forKey: userAndHost.uniqueID)
+        }
+        
+        func setZeroTouch(enabled:Bool) {
+            _settings.u2fZeroTouchEnabled = enabled
+            save()
         }
         
         func setNeverAsk() {
@@ -273,7 +287,7 @@ class Policy {
                 return true
                 
             case .u2fRegister, .u2fAuthenticate:
-                return !Policy.requireUserInteractionU2F
+                return settings.u2fZeroTouchEnabled
                 
             case .hosts, .readTeam, .teamOperation:
                 return false
@@ -374,6 +388,32 @@ class Policy {
         
         sessionPolicy.setHasMigratedOldPolicySettings()
         sessionPolicy.setNeverAsk()
+    }
+    
+    static func migrateZeroTouchBrowserSettingIfNeeded(for sessions:[Session]) {
+        do {
+            let requireInteractionOldSetting = try KeychainStorage().getData(key: Constants.u2fRequiresApproval)
+            
+            // if zero touch is on (interaction disabled)
+            // migrate all sessions
+            if requireInteractionOldSetting.bytes == [0x00] {
+                sessions.forEach {
+                    // only for browser sessions
+                    guard $0.pairing.browser != nil else {
+                        return
+                    }
+                    
+                    Policy.SessionSettings(for: $0).setZeroTouch(enabled: true)
+                }
+            }
+            
+            Policy.requireUserInteractionU2F = true
+            try KeychainStorage().delete(key: Constants.u2fRequiresApproval)
+            
+        } catch KeychainStorageError.notFound {
+        } catch {
+            log("error migrating zero touch: \(error)", .error)
+        }
     }
 
     

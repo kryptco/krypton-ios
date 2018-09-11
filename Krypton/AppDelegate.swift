@@ -62,9 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Analytics.migrateOldIDIfExists()
             Analytics.migrateAnalyticsDisabled()
             
-            for session in SessionManager.shared.all {
-                Policy.migrateOldPolicySettingsIfNeeded(for: session)
-            }
+            let sessions = SessionManager.shared.all
+            sessions.forEach {
+                Policy.migrateOldPolicySettingsIfNeeded(for: $0)
+            }            
+            Policy.migrateZeroTouchBrowserSettingIfNeeded(for: sessions)
             
             TransportControl.shared.add(sessions: SessionManager.shared.all)
             Analytics.appLaunch()

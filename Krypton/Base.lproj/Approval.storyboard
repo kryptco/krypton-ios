@@ -449,7 +449,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JtY-Mg-Bdy">
-                                            <rect key="frame" x="20" y="10" width="335" height="49.5"/>
+                                            <rect key="frame" x="20" y="10" width="315" height="49.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="Allow">
                                                 <color key="titleColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
@@ -479,7 +479,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frC-LV-mCC">
-                                            <rect key="frame" x="20" y="10" width="335" height="49.5"/>
+                                            <rect key="frame" x="20" y="10" width="315" height="49.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="Yes">
                                                 <color key="titleColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
@@ -501,15 +501,45 @@
                                     <outlet property="button" destination="frC-LV-mCC" id="Oqx-su-Lek"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowOnce" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowOnce" focusStyle="custom" rowHeight="70" id="XwT-H8-uZB" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Yes" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="YesDontAsk" focusStyle="custom" rowHeight="70" id="S7O-gD-bM0" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="168" width="355" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="S7O-gD-bM0" id="Oek-J1-fUY">
+                                    <rect key="frame" x="0.0" y="0.0" width="355" height="69.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spp-n7-u6m">
+                                            <rect key="frame" x="20" y="10" width="315" height="49.5"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                            <state key="normal" title="Yes, don't ask again">
+                                                <color key="titleColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="optionTapped" destination="S7O-gD-bM0" eventType="touchUpInside" id="Fvt-iO-9O2"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="spp-n7-u6m" firstAttribute="top" secondItem="Oek-J1-fUY" secondAttribute="top" constant="10" id="EGm-7h-18F"/>
+                                        <constraint firstItem="spp-n7-u6m" firstAttribute="leading" secondItem="Oek-J1-fUY" secondAttribute="leading" constant="20" id="FiM-Mi-4gn"/>
+                                        <constraint firstAttribute="trailing" secondItem="spp-n7-u6m" secondAttribute="trailing" constant="20" id="Hkh-H5-24M"/>
+                                        <constraint firstAttribute="bottom" secondItem="spp-n7-u6m" secondAttribute="bottom" constant="10" id="fh8-p4-ZWZ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="button" destination="spp-n7-u6m" id="b2x-JL-yeP"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowOnce" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowOnce" focusStyle="custom" rowHeight="70" id="XwT-H8-uZB" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="238" width="355" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XwT-H8-uZB" id="orB-jL-Mfv">
                                     <rect key="frame" x="0.0" y="0.0" width="355" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9n6-Fx-ZrN">
-                                            <rect key="frame" x="20" y="10" width="335" height="49.5"/>
+                                            <rect key="frame" x="20" y="10" width="315" height="49.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="Allow once">
                                                 <color key="titleColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
@@ -532,14 +562,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowThis" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowThis" focusStyle="custom" rowHeight="70" id="l1N-9R-bUD" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="238" width="355" height="70"/>
+                                <rect key="frame" x="0.0" y="308" width="355" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="l1N-9R-bUD" id="Qo9-ym-75l">
                                     <rect key="frame" x="0.0" y="0.0" width="355" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2d-Qi-bkp">
-                                            <rect key="frame" x="20" y="10" width="335" height="49.5"/>
+                                            <rect key="frame" x="20" y="10" width="315" height="49.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="Allow this host for 3 hours">
                                                 <color key="titleColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
@@ -562,14 +592,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AllowAll" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="AllowAll" focusStyle="custom" rowHeight="70" id="Q5w-Zl-sTN" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="308" width="355" height="70"/>
+                                <rect key="frame" x="0.0" y="378" width="355" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q5w-Zl-sTN" id="Cel-Dt-Pa0">
                                     <rect key="frame" x="0.0" y="0.0" width="355" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ML2-ac-Un7">
-                                            <rect key="frame" x="20" y="10" width="335" height="49.5"/>
+                                            <rect key="frame" x="20" y="10" width="315" height="49.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="Allow all for 3 hours">
                                                 <color key="titleColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
@@ -592,14 +622,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Reject" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Reject" focusStyle="custom" rowHeight="70" id="ZeD-kq-8Yp" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="378" width="355" height="70"/>
+                                <rect key="frame" x="0.0" y="448" width="355" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZeD-kq-8Yp" id="PFc-hR-pWB">
                                     <rect key="frame" x="0.0" y="0.0" width="355" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3j-fG-Tla">
-                                            <rect key="frame" x="20" y="10" width="335" height="49"/>
+                                            <rect key="frame" x="20" y="10" width="315" height="49"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="Reject">
                                                 <color key="titleColor" red="1" green="0.38823529410000002" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -622,14 +652,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="No" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="No" focusStyle="custom" rowHeight="70" id="Ipu-9L-Xtc" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="448" width="355" height="70"/>
+                                <rect key="frame" x="0.0" y="518" width="355" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ipu-9L-Xtc" id="11k-qL-UEV">
                                     <rect key="frame" x="0.0" y="0.0" width="355" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoU-mv-cfb">
-                                            <rect key="frame" x="20" y="10" width="335" height="49"/>
+                                            <rect key="frame" x="20" y="10" width="315" height="49"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                             <state key="normal" title="No">
                                                 <color key="titleColor" red="1" green="0.38823529410000002" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

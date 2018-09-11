@@ -60,13 +60,13 @@ extension Policy {
     static var authorizeSimpleCategory:UNNotificationCategory = {
         if #available(iOS 11.0, *) {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeSimple.identifier,
-                                          actions: [Policy.yesAction, Policy.noAction],
+                                          actions: [Policy.yesAction, Policy.yesDontAskAction, Policy.noAction],
                                           intentIdentifiers: [],
                                           hiddenPreviewsBodyPlaceholder: "New \(Properties.appName) request",
                 options: .customDismissAction)
         } else {
             return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeSimple.identifier,
-                                          actions: [Policy.yesAction, Policy.noAction],
+                                          actions: [Policy.yesAction, Policy.yesDontAskAction, Policy.noAction],
                                           intentIdentifiers: [],
                                           options: .customDismissAction)
         }
@@ -96,6 +96,12 @@ extension Policy {
     static var yesAction:UNNotificationAction = {
         return UNNotificationAction(identifier: Action.approve.identifier,
                                     title: "Yes",
+                                    options: .authenticationRequired)
+    }()
+    
+    static var yesDontAskAction:UNNotificationAction = {
+        return UNNotificationAction(identifier: Action.dontAskAgain.identifier,
+                                    title: "Yes, don't ask again",
                                     options: .authenticationRequired)
     }()
     

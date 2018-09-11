@@ -30,9 +30,6 @@ class InstallU2FController:KRBaseController, KRScanDelegate{
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // by default we set u2f user interaction to off
-        Policy.requireUserInteractionU2F = false
-
         installCard.setBoxShadow()
         scanCard.setBoxShadow()
         
@@ -96,6 +93,11 @@ class InstallU2FController:KRBaseController, KRScanDelegate{
     func onFound(data:String) -> Bool {
         guard let pairing = try? PairingQR(with: data).pairing else {
             dispatchMain { self.showInvalidPairingQR() }
+            return false
+        }
+        
+        guard pairing.browser != nil else {
+            self.showWarning(title: "Install Browser Extension", body: "You scanned a developer mode QR code. Please install the browser extension and pair again. You will be able to enable developer mode in settings later.")
             return false
         }
         

@@ -18,6 +18,9 @@ class U2FSessionDetailController: KRBaseTableController, UITextFieldDelegate {
     @IBOutlet var headerView:UIView!
     
     @IBOutlet var browserLogo:UIImageView!
+    
+    @IBOutlet var zeroTouchSwitch:UISwitch!
+
 
     var logs:[U2FLog] = []
     var session:Session?
@@ -28,6 +31,10 @@ class U2FSessionDetailController: KRBaseTableController, UITextFieldDelegate {
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
+        
+        if let session = session {
+            zeroTouchSwitch.isOn = Policy.SessionSettings(for: session).settings.u2fZeroTouchEnabled
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +61,13 @@ class U2FSessionDetailController: KRBaseTableController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func changeZeroTouchSetting(sender:UISwitch) {
+        guard let session = session else {
+            return
+        }
+    
+        Policy.SessionSettings(for: session).setZeroTouch(enabled: sender.isOn)
+    }
     
     // MARK: Updating logs
     func updateLogs() {
@@ -178,7 +192,7 @@ class U2FLogCell:UITableViewCell {
     func set(log:U2FLog) {
         let known = KnownU2FApplication(for: log.appID)
         app.text = known?.displayName ?? log.appID.simpleDisplay
-        action.text = log.isRegister ? "Registered" : "Logged in"
+        action.text = log.isRegister ? "Registered" : "Signed in"
         lastAccessed.text = log.date.trailingTimeAgo()
         logo.image = known?.logo ?? #imageLiteral(resourceName: "default")
     }

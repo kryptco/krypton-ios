@@ -14,7 +14,6 @@ class AboutController: KRBaseController {
 
     
     @IBOutlet weak var versionLabel:UILabel!
-    @IBOutlet weak var requireU2FApprovalSwitch:UISwitch!
     @IBOutlet weak var analyticsSwitch:UISwitch!
     @IBOutlet weak var developerMode:UISwitch!
 
@@ -24,7 +23,6 @@ class AboutController: KRBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        requireU2FApprovalSwitch.isOn = Policy.requireUserInteractionU2F
         analyticsSwitch.isOn = !Analytics.enabled
         developerMode.isOn = DeveloperMode.isOn
         
@@ -54,11 +52,6 @@ class AboutController: KRBaseController {
     
     @IBAction func doneTapped() {
         dismiss(animated: true, completion: nil)
-    }
-
-    
-    @IBAction func requireU2FApprovalChanged(sender:UISwitch) {
-        Policy.requireUserInteractionU2F = sender.isOn
     }
 
     @IBAction func analyticsEnabledChanged(sender:UISwitch) {

@@ -31,10 +31,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G85-kR-mJP" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="791"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="750"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6s-yD-bs0" customClass="KRButton" customModule="Krypton" customModuleProvider="target">
-                                                <rect key="frame" x="148" y="580.33333333333337" width="118" height="40"/>
+                                                <rect key="frame" x="148" y="539.33333333333337" width="118" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Software"/>
                                                 <state key="highlighted">
@@ -76,7 +76,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-U7-8S5" customClass="KRButton" customModule="Krypton" customModuleProvider="target">
-                                                <rect key="frame" x="10" y="580.33333333333337" width="118" height="40"/>
+                                                <rect key="frame" x="10" y="539.33333333333337" width="118" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="fwP-fK-MT7"/>
                                                 </constraints>
@@ -101,7 +101,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n2-Yv-erL" customClass="KRButton" customModule="Krypton" customModuleProvider="target">
-                                                <rect key="frame" x="286" y="580.33333333333337" width="118" height="40"/>
+                                                <rect key="frame" x="286" y="539.33333333333337" width="118" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <state key="normal" title="Privacy"/>
                                                 <state key="highlighted">
@@ -135,7 +135,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="krypt.co " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ow3-ZL-ssG">
-                                                <rect key="frame" x="8" y="720.33333333333337" width="398" height="27.333333333333371"/>
+                                                <rect key="frame" x="8" y="679.33333333333337" width="398" height="27.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -157,7 +157,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QM7-Gk-dCn">
-                                                <rect key="frame" x="8" y="745.66666666666663" width="398" height="35.333333333333371"/>
+                                                <rect key="frame" x="8" y="704.66666666666663" width="398" height="35.333333333333371"/>
                                                 <attributedString key="attributedText">
                                                     <fragment>
                                                         <string key="content">made in boston
@@ -184,7 +184,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcV-IP-0Nd">
-                                                <rect key="frame" x="0.0" y="359.33333333333331" width="414" height="60"/>
+                                                <rect key="frame" x="0.0" y="318.33333333333331" width="414" height="60"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2uy-pH-MZc">
                                                         <rect key="frame" x="357" y="14" width="51" height="31"/>
@@ -243,61 +243,8 @@ Cg
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ya-cL-ByA">
-                                                <rect key="frame" x="0.0" y="298.33333333333331" width="414" height="60"/>
-                                                <subviews>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qoS-s0-8c3">
-                                                        <rect key="frame" x="357" y="14" width="51" height="31"/>
-                                                        <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="onTintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <connections>
-                                                            <action selector="requireU2FApprovalChangedWithSender:" destination="UnB-Qg-F2t" eventType="valueChanged" id="Q70-Ty-Xzx"/>
-                                                        </connections>
-                                                    </switch>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7j9-dS-6NB">
-                                                        <rect key="frame" x="8" y="12.333333333333371" width="345" height="35.666666666666664"/>
-                                                        <attributedString key="attributedText">
-                                                            <fragment content="One Touch Login: Ask me every time?">
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="AvenirNext-Bold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="17" name="AvenirNext-DemiBold"/>
-                                                                    <font key="NSOriginalFont" size="18" name="AvenirNext-DemiBold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment content="Krypton will ask you each time you login to approve a sign in.">
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="12" name="AvenirNext-Regular"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstItem="qoS-s0-8c3" firstAttribute="centerY" secondItem="5Ya-cL-ByA" secondAttribute="centerY" id="1QR-mW-rbW"/>
-                                                    <constraint firstAttribute="height" constant="60" id="OKC-Vk-awh"/>
-                                                    <constraint firstItem="7j9-dS-6NB" firstAttribute="leading" secondItem="5Ya-cL-ByA" secondAttribute="leadingMargin" id="OVP-aI-XM5"/>
-                                                    <constraint firstItem="qoS-s0-8c3" firstAttribute="leading" secondItem="7j9-dS-6NB" secondAttribute="trailing" constant="4" id="Q3k-qK-wWW"/>
-                                                    <constraint firstItem="7j9-dS-6NB" firstAttribute="centerY" secondItem="qoS-s0-8c3" secondAttribute="centerY" id="WnB-9s-qib"/>
-                                                    <constraint firstAttribute="trailingMargin" secondItem="qoS-s0-8c3" secondAttribute="trailing" id="dZV-NR-3bx"/>
-                                                </constraints>
-                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fro-Sf-7Wx">
-                                                <rect key="frame" x="0.0" y="420.33333333333331" width="414" height="60"/>
+                                                <rect key="frame" x="0.0" y="379.33333333333331" width="414" height="60"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9Ia-Hg-4Ol">
                                                         <rect key="frame" x="357" y="14" width="51" height="31"/>
@@ -353,10 +300,10 @@ Cg
                                         <constraints>
                                             <constraint firstItem="EcV-IP-0Nd" firstAttribute="width" secondItem="G85-kR-mJP" secondAttribute="width" id="09p-C9-jru"/>
                                             <constraint firstItem="Q6s-yD-bs0" firstAttribute="width" secondItem="R4q-U7-8S5" secondAttribute="width" id="4k5-7b-1bw"/>
+                                            <constraint firstItem="EcV-IP-0Nd" firstAttribute="top" secondItem="tUx-ht-5nK" secondAttribute="bottom" constant="100" id="6yN-l1-5fR"/>
                                             <constraint firstItem="fro-Sf-7Wx" firstAttribute="leading" secondItem="G85-kR-mJP" secondAttribute="leading" id="8Yc-Nu-t0V"/>
                                             <constraint firstItem="8n2-Yv-erL" firstAttribute="height" secondItem="Q6s-yD-bs0" secondAttribute="height" id="8oS-ir-KXe"/>
                                             <constraint firstAttribute="trailing" secondItem="EcV-IP-0Nd" secondAttribute="trailing" id="B4Z-FV-BBM"/>
-                                            <constraint firstItem="5Ya-cL-ByA" firstAttribute="leading" secondItem="G85-kR-mJP" secondAttribute="leading" id="BFm-6C-pyf"/>
                                             <constraint firstAttribute="trailing" secondItem="fro-Sf-7Wx" secondAttribute="trailing" id="C8S-t8-huF"/>
                                             <constraint firstItem="Q6s-yD-bs0" firstAttribute="centerY" secondItem="R4q-U7-8S5" secondAttribute="centerY" id="FK1-hL-HRb"/>
                                             <constraint firstItem="R4q-U7-8S5" firstAttribute="top" secondItem="fro-Sf-7Wx" secondAttribute="bottom" constant="100" id="Fp0-HX-47n"/>
@@ -372,11 +319,8 @@ Cg
                                             <constraint firstItem="AgI-vX-s9D" firstAttribute="top" secondItem="G85-kR-mJP" secondAttribute="top" constant="40" id="Uld-xP-v3d"/>
                                             <constraint firstItem="Q6s-yD-bs0" firstAttribute="leading" secondItem="R4q-U7-8S5" secondAttribute="trailing" constant="20" id="Wuz-Al-Cuu"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="Ow3-ZL-ssG" secondAttribute="trailing" id="bDo-rP-QyD"/>
-                                            <constraint firstAttribute="trailing" secondItem="5Ya-cL-ByA" secondAttribute="trailing" id="c53-Ap-B5e"/>
                                             <constraint firstItem="Ow3-ZL-ssG" firstAttribute="top" secondItem="Q6s-yD-bs0" secondAttribute="bottom" constant="100" id="cCM-NE-2OJ"/>
                                             <constraint firstAttribute="trailing" secondItem="8n2-Yv-erL" secondAttribute="trailing" constant="10" id="cum-e1-ztw"/>
-                                            <constraint firstItem="5Ya-cL-ByA" firstAttribute="top" secondItem="tUx-ht-5nK" secondAttribute="bottom" constant="80" id="dH6-ME-a5R"/>
-                                            <constraint firstItem="EcV-IP-0Nd" firstAttribute="top" secondItem="5Ya-cL-ByA" secondAttribute="bottom" constant="1" id="e2k-zQ-SrS"/>
                                             <constraint firstAttribute="bottom" secondItem="QM7-Gk-dCn" secondAttribute="bottom" priority="999" constant="10" id="eYH-Ad-XMi"/>
                                             <constraint firstItem="LRD-U0-XOp" firstAttribute="top" secondItem="gMp-eB-XXN" secondAttribute="bottom" constant="10" id="eaN-p2-UHP"/>
                                             <constraint firstItem="EcV-IP-0Nd" firstAttribute="leading" secondItem="G85-kR-mJP" secondAttribute="leading" id="ete-DC-jcW"/>
@@ -415,7 +359,6 @@ Cg
                         <outlet property="analyticsSwitch" destination="2uy-pH-MZc" id="5Sm-bf-HIe"/>
                         <outlet property="destroyButton" destination="yFf-5E-5mv" id="620-65-ZGJ"/>
                         <outlet property="developerMode" destination="9Ia-Hg-4Ol" id="CgJ-e3-rvo"/>
-                        <outlet property="requireU2FApprovalSwitch" destination="qoS-s0-8c3" id="UCm-Af-1Gj"/>
                         <outlet property="versionLabel" destination="tUx-ht-5nK" id="pad-39-oKo"/>
                     </connections>
                 </viewController>

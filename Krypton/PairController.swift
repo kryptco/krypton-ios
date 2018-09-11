@@ -114,10 +114,8 @@ class PairController: KRBaseController, KRScanDelegate {
             return true
         }
         
-        
         dispatchMain { self.showPairing(pairing: pairing) }
 
-        
         return true
     }
     
@@ -127,7 +125,7 @@ class PairController: KRBaseController, KRScanDelegate {
     }
     
     func showInvalidPairingQR() {
-        let invalidQRAlert = UIAlertController(title: "Invalid Code", message: "The QR you scanned is invalid. Please tap help for assistance installing and using the kr command line utility to pair with \(Properties.appName).", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let invalidQRAlert = UIAlertController(title: "Invalid Code", message: "The QR you scanned is invalid. Tap Help for instructions on pairing \(Properties.appName) with your computer.", preferredStyle: UIAlertControllerStyle.actionSheet)
         
         invalidQRAlert.addAction(UIAlertAction(title: "Help", style: UIAlertActionStyle.default, handler: { (_) in
             dispatchMain { self.tabBarController?.performSegue(withIdentifier: "showInstall", sender: nil) }

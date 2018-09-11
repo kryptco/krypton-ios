@@ -112,7 +112,7 @@ class ApproveController:UIViewController {
         case .readTeam, .teamOperation:
             responseOptions = [.allow]
         case .u2fAuthenticate, .u2fRegister:
-            return [.yes, .no]
+            return [.yes, .yesDontAsk, .no]
         case .hosts, .me, .unpair, .noOp:
             break
         }
@@ -200,7 +200,18 @@ class ApproveController:UIViewController {
                 
                 Analytics.postEvent(category: self.category, action: "foreground approve", label: "time", value: UInt(Policy.temporaryApprovalInterval.value))
             }
-            
+        
+        case .yesDontAsk:
+            approve(option: option, request: request, session: session) { success in
+                guard success else {
+                    self.isEnabled = true
+                    return
+                }
+                
+                policySession.setZeroTouch(enabled: true)
+                Analytics.postEvent(category: self.category, action: "foreground approve", label: "zerotouch")
+            }
+
         case .reject, .no:
             self.dismissReject()
         }

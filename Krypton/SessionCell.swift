@@ -115,7 +115,7 @@ class BrowserSessionCell: UITableViewCell {
             action.text = "Registered"
             suffix.text = "with"
         } else {
-            action.text = "Logged"
+            action.text = "Signed"
             suffix.text = "in"
         }
         
