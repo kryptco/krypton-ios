@@ -54,6 +54,7 @@ enum LinkType:String {
     case app = "krypton"
     case site = "https"
     case u2fGoogle = "u2f-google"
+    case u2fGoogleChrome = "u2f-x-callback"
     case u2f = "u2f"
 }
             
@@ -69,11 +70,14 @@ struct LinkCommand {
         case emailChallenge = "verify_email"
         case emailChallengeRemote = "krypt.co"
         case auth = "auth"
+        case googleChromeCallback = "x-callback-url"
         
         func matchesPathIfNeeded(of url:URL) -> Bool {
             switch self {
             case .joinTeam, .emailChallenge, .auth:
                 return true // url validation done individually
+            case .googleChromeCallback:
+                return url.cleanPathComponents() == ["auth"]
             case .emailChallengeRemote:
                 return url.cleanPathComponents() == ["app", "verify_email.html"]
             }
@@ -99,10 +103,10 @@ class Link {
     let command:LinkCommand
     let path:[String]
     let properties:[String:String]
-    
+    let sourceAppBundleID:String?
     let url:URL
     
-    init(url:URL) throws {
+    init(url:URL, sourceAppBundleID:String? = nil) throws {
         guard
             let scheme = url.scheme,
             let type = LinkType(rawValue: scheme)
@@ -111,6 +115,7 @@ class Link {
         }
         
         self.url = url
+        self.sourceAppBundleID = sourceAppBundleID
         self.type = type
         self.command = try LinkCommand(url: url)
         self.properties = url.queryItems()

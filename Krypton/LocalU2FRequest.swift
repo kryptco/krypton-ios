@@ -12,7 +12,20 @@ import JSON
 struct LocalU2FApproval {
     let request:LocalU2FRequest
     let trustedFacets:[TrustedFacet]
-    let returnURL:String
+    let callback:Callback
+    
+    struct ChromeCallback {
+        let successCallbackURL:String
+        let errorCallbackURL:String
+        let originURL:String
+    }
+    
+    typealias ReturnURL = String
+    
+    enum Callback {
+        case https(ReturnURL)
+        case googleChrome(ChromeCallback)
+    }
 }
 
 struct LocalU2FRequest {
@@ -25,6 +38,7 @@ struct LocalU2FRequest {
     let requestId:Int64?
     let displayIdentifier:String?
     
+    
     enum Errors:Error {
         case unknownRequestType
         case noKnownKeyHandle
@@ -34,6 +48,9 @@ struct LocalU2FRequest {
         case invalidReturnURL
         case onlyGoogleCurrentlySupported
     }
+    
+
+
     
     enum RequestType:String {
         case register = "u2f_register"
@@ -116,8 +133,16 @@ struct LocalU2FRequest {
         }
     }
     
-    func getSignedCallback(returnURL:String, trustedFacets:[TrustedFacet]) throws -> URL{
-        try verifyReturnOrigin(returnURL: returnURL, trustedFacets: trustedFacets)
+    func verifyOriginAndGetSignedCallbackURL(callback:LocalU2FApproval.Callback, trustedFacets:[TrustedFacet]) throws -> URL {
+        
+        // verify the origin
+        switch callback {
+        case .https(let returnURL):
+            try verifyReturnOrigin(returnURL: returnURL, trustedFacets: trustedFacets)
+
+        case .googleChrome(let chromeCallback):
+            try verifyReturnOrigin(returnURL: chromeCallback.originURL, trustedFacets: trustedFacets)
+        }
         
         switch type {
         case .register:
@@ -164,24 +189,41 @@ struct LocalU2FRequest {
             signatureData.append(UInt8((counter >> 0) & 0xff))
             signatureData.append(signature)
 
-            let response = Response(type: RequestType.sign.response,
-                                    requestId: requestId,
-                                    responseData: .sign(SignResponseData(keyHandle: keyHandle,
-                                                                         signatureData: signatureData,
-                                                                         clientData: Data(bytes: [UInt8](clientData.utf8)))))
             
-            let responseJson = try response.jsonString()
-            
-            let returnUrlFixed = returnURL.replacingOccurrences(of: "cid=3", with: "cid=4")
-            guard   let challengeResponseFragment = responseJson.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
-                    let url = URL(string: "\(returnUrlFixed)#chaldt=\(challengeResponseFragment)")
-            else {
+            switch callback {
+            case .https(let returnURL):
+                let response = Response(type: RequestType.sign.response,
+                                        requestId: requestId,
+                                        responseData: .sign(SignResponseData(keyHandle: keyHandle,
+                                                                             signatureData: signatureData,
+                                                                             clientData: Data(bytes: [UInt8](clientData.utf8)))))
+                
+                let responseJson = try response.jsonString()
+                
+                guard
+                    let challengeResponseFragment = responseJson.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
+                    let url = URL(string: "\(returnURL)#chaldt=\(challengeResponseFragment)")
+                    else {
+                        throw Errors.invalidCallbackURL
+                }
+                
+                return url
+
+            case .googleChrome(let chromeCallback):
+                
+                let keyHandleParam = keyHandle.toBase64(true, pad: false)
+                let signatureDataParam = signatureData.toBase64(true, pad: false)
+                let clientDataParam = Data(bytes: [UInt8](clientData.utf8)).toBase64(true, pad: false)
+                
+                guard   let requestId = self.requestId,
+                        let url = URL(string: "\(chromeCallback.successCallbackURL)&keyHandle=\(keyHandleParam)&requestId=\(requestId)&signatureData=\(signatureDataParam)&clientData=\(clientDataParam)")
+                else {
                     throw Errors.invalidCallbackURL
+                }
+                
+                return url
             }
-            
-            return url
         }
-        
     }
 }
 

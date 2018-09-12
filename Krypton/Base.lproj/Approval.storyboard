@@ -26,22 +26,22 @@
                                 <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnG-qN-IfJ" customClass="KRView" customModule="Krypton" customModuleProvider="target">
-                                        <rect key="frame" x="-0.5" y="120" width="375" height="771"/>
+                                        <rect key="frame" x="10" y="120" width="355" height="771"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REQUEST FROM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AtN-i3-krO">
-                                                <rect key="frame" x="157" y="108" width="62" height="11"/>
+                                                <rect key="frame" x="147" y="108" width="62" height="11"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="8"/>
                                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPINNY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0W-7f-ATi">
-                                                <rect key="frame" x="20" y="116" width="335" height="25"/>
+                                                <rect key="frame" x="20" y="116" width="315" height="25"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
                                                 <color key="textColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCZ-cb-ijv" customClass="M13Checkbox" customModule="Krypton" customModuleProvider="target">
-                                                <rect key="frame" x="148" y="8" width="80" height="80"/>
+                                                <rect key="frame" x="138" y="8" width="80" height="80"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -65,7 +65,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eeh-tD-PoY">
-                                                <rect key="frame" x="148" y="8" width="80" height="80"/>
+                                                <rect key="frame" x="138" y="8" width="80" height="80"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-HX-c1k" customClass="KRView" customModule="Krypton" customModuleProvider="target">
                                                         <rect key="frame" x="30" y="30" width="20" height="20"/>
@@ -90,14 +90,14 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AGg-HO-s4n">
-                                                <rect key="frame" x="0.0" y="370" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="370" width="355" height="1"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="GCk-ui-574"/>
                                                 </constraints>
                                             </view>
                                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="400" translatesAutoresizingMaskIntoConstraints="NO" id="Mal-qM-pdX">
-                                                <rect key="frame" x="0.0" y="371" width="375" height="400"/>
+                                                <rect key="frame" x="0.0" y="371" width="355" height="400"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="400" id="2SL-K6-0ws"/>
                                                 </constraints>
@@ -106,10 +106,10 @@
                                                 </connections>
                                             </containerView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Vn-r6-u2i" customClass="RoundedView" customModule="Krypton" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="371" width="375" height="30"/>
+                                                <rect key="frame" x="0.0" y="371" width="355" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="APPROVED" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.0099999997764825821" translatesAutoresizingMaskIntoConstraints="NO" id="Ypm-ai-5yB">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="355" height="30"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="22"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -134,7 +134,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <containerView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="QCo-GB-Fnv">
-                                                <rect key="frame" x="0.0" y="151" width="375" height="200"/>
+                                                <rect key="frame" x="0.0" y="151" width="355" height="200"/>
                                                 <connections>
                                                     <segue destination="lzh-go-t6u" kind="embed" id="sn5-Xl-MjY"/>
                                                 </connections>
@@ -178,7 +178,7 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="xnG-qN-IfJ" firstAttribute="leading" secondItem="wYZ-70-qbu" secondAttribute="leading" id="9Vh-As-StB"/>
+                                    <constraint firstItem="xnG-qN-IfJ" firstAttribute="leading" secondItem="wYZ-70-qbu" secondAttribute="leading" constant="10" id="9Vh-As-StB"/>
                                     <constraint firstAttribute="trailing" secondItem="xnG-qN-IfJ" secondAttribute="trailing" id="DYd-Cu-DmQ"/>
                                     <constraint firstAttribute="bottom" secondItem="xnG-qN-IfJ" secondAttribute="bottom" id="cXX-jF-d4T"/>
                                     <constraint firstItem="xnG-qN-IfJ" firstAttribute="top" secondItem="wYZ-70-qbu" secondAttribute="top" constant="120" id="vf9-GX-U0Q"/>
@@ -191,7 +191,7 @@
                             <constraint firstItem="wYZ-70-qbu" firstAttribute="width" secondItem="UDo-fH-1z8" secondAttribute="width" id="GOR-xP-Dgj"/>
                             <constraint firstItem="wYZ-70-qbu" firstAttribute="centerY" secondItem="UDo-fH-1z8" secondAttribute="centerY" id="Or6-wx-7fI"/>
                             <constraint firstItem="wYZ-70-qbu" firstAttribute="centerX" secondItem="UDo-fH-1z8" secondAttribute="centerX" id="TAf-7F-5c4"/>
-                            <constraint firstItem="xnG-qN-IfJ" firstAttribute="width" secondItem="UDo-fH-1z8" secondAttribute="width" id="ofn-zv-9bo"/>
+                            <constraint firstItem="xnG-qN-IfJ" firstAttribute="width" secondItem="UDo-fH-1z8" secondAttribute="width" constant="-20" id="ofn-zv-9bo"/>
                         </constraints>
                     </view>
                     <connections>
@@ -501,7 +501,7 @@
                                     <outlet property="button" destination="frC-LV-mCC" id="Oqx-su-Lek"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Yes" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="YesDontAsk" focusStyle="custom" rowHeight="70" id="S7O-gD-bM0" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="YesDontAsk" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="YesDontAsk" focusStyle="custom" rowHeight="70" id="S7O-gD-bM0" customClass="ApproveOptionsCell" customModule="Krypton" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="168" width="355" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="S7O-gD-bM0" id="Oek-J1-fUY">
@@ -697,8 +697,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="l1A-k5-eTz"/>
-        <segue reference="F9l-es-9LW"/>
+        <segue reference="xpd-Fa-yuP"/>
+        <segue reference="sn5-Xl-MjY"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1215686275" green="0.69411764710000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

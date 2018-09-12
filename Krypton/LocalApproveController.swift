@@ -158,8 +158,8 @@ class LocalApproveController:UIViewController {
         dispatchAsync {
             do {
                 
-                let signedCallbackURL = try request.request.getSignedCallback(returnURL: request.returnURL,
-                                                                              trustedFacets: request.trustedFacets)
+                let signedCallbackURL = try request.request.verifyOriginAndGetSignedCallbackURL(callback: request.callback, trustedFacets: request.trustedFacets)
+                
                 dispatchMain {
                     UIApplication.shared.open(signedCallbackURL, options: [:], completionHandler: { (success) in
                         // call result handler

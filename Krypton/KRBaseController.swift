@@ -253,12 +253,44 @@ extension KRBase {
             self.handleJoinInviteLink(viewController: viewController, link: link)
         case .u2f, .u2fGoogle:
             self.handleU2F(viewController: viewController, link: link)
+        case .u2fGoogleChrome:
+            self.handleChromeU2F(viewController: viewController, link: link)
         default:
             log("unexpected link: \(link)", .error)
         }
 
     }
     
+    func handleChromeU2F(viewController:UIViewController, link:Link) {
+        log("Got link: \(link.url.absoluteString)")
+
+        guard   let data = link.properties["data"]?.removingPercentEncoding,
+                let origin = link.properties["origin"]?.removingPercentEncoding,
+                let successURL = link.properties["x-success"]?.removingPercentEncoding,
+                let errorURL = link.properties["x-error"]?.removingPercentEncoding,
+                let sourceApp = link.sourceAppBundleID,
+                sourceApp == "com.google.chrome.ios" // verifies that this is from the google chrome app
+        else {
+            viewController.showWarning(title: "Invalid Request", body: "This request is using an invalid format. Please send an email to support@krypt.co.")
+            return
+        }
+        
+        do {
+            let localU2FRequest = try LocalU2FRequest(jsonString: data)
+            
+            let approvalRequest = LocalU2FApproval(request: localU2FRequest,
+                                                   trustedFacets: [],
+                                                   callback: .googleChrome(LocalU2FApproval.ChromeCallback(successCallbackURL: successURL, errorCallbackURL: errorURL, originURL: origin)))
+            
+            viewController.requestLocalU2FAuthorization(localU2FApprovalRequest: approvalRequest)
+            
+        } catch LocalU2FRequest.Errors.noKnownKeyHandle {
+            viewController.showWarning(title: "No Krypton Key on this Account", body: "This account does not have a Krypton key registered.")
+        } catch {
+            viewController.showWarning(title: "Error", body: "This request could not be handled: \(error). Please send an email to support@krypt.co.")
+        }
+
+    }
     func handleU2F(viewController:UIViewController, link:Link) {
         log("Got link: \(link.url.absoluteString)")
         
@@ -274,7 +306,7 @@ extension KRBase {
             
             let approvalRequest = LocalU2FApproval(request: localU2FRequest,
                                                    trustedFacets: [],
-                                                   returnURL: returnURL)
+                                                   callback: .https(returnURL))
             
             viewController.requestLocalU2FAuthorization(localU2FApprovalRequest: approvalRequest)
 
@@ -283,8 +315,6 @@ extension KRBase {
         } catch {
             viewController.showWarning(title: "Error", body: "This request could not be handled: \(error). Please send an email to support@krypt.co.")
         }
-    
-        
     }
     
     func handleJoinInviteLink(viewController:UIViewController, link: Link) {
