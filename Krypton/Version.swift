@@ -79,6 +79,3 @@ func ==(lhs:Version, rhs:Version) -> Bool {
             lhs.minor == rhs.minor &&
             lhs.patch == rhs.patch
 }
-
-
-
