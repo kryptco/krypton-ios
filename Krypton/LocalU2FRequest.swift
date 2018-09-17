@@ -112,7 +112,7 @@ struct LocalU2FRequest {
         let clientData:Data
     }
     
-    func verifyReturnOrigin(returnURL:String, trustedFacets:[TrustedFacet]) throws {
+    func verifyOrigin(returnURL:String, trustedFacets:[TrustedFacet]) throws {
         guard   let url = URL(string: returnURL),
                 let scheme = url.scheme,
                 let host = url.host
@@ -138,10 +138,10 @@ struct LocalU2FRequest {
         // verify the origin
         switch callback {
         case .https(let returnURL):
-            try verifyReturnOrigin(returnURL: returnURL, trustedFacets: trustedFacets)
+            try verifyOrigin(returnURL: returnURL, trustedFacets: trustedFacets)
 
         case .googleChrome(let chromeCallback):
-            try verifyReturnOrigin(returnURL: chromeCallback.originURL, trustedFacets: trustedFacets)
+            try verifyOrigin(returnURL: chromeCallback.originURL, trustedFacets: trustedFacets)
         }
         
         switch type {

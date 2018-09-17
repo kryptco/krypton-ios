@@ -12,8 +12,6 @@ import JSON
 
 typealias QueueName = String
 
-let localDevicePairingIdBytes:[UInt8] = [0xaa, 0x04, 0x91, 0x2d, 0xa4, 0x18, 0x32, 0x1b, 0xe1, 0x8b, 0xf0, 0x77, 0xd4, 0xe0, 0xf8, 0x1b,0x25, 0x64, 0xe5, 0x6c, 0x9f, 0x77, 0x27, 0x69, 0xb4, 0xec, 0x0c, 0x09, 0x67, 0xc6, 0x6e, 0x77]
-
 struct Pairing:JsonReadable {
 
     var name:String
@@ -99,10 +97,6 @@ struct Pairing:JsonReadable {
         let browser:Browser? = try? Browser(json: json)
         
         try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey, version:version, browser: browser)
-    }
-    
-    static func localDevicePairing() throws -> Pairing {
-        return try Pairing(name: UIDevice.current.name, workstationPublicKey: Data(bytes: localDevicePairingIdBytes))
     }
 }
 
