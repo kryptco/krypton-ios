@@ -76,7 +76,7 @@ extension RSAPublicKey:PGPPublicKeyConvertible {
 
 extension Sign.PublicKey:PGPPublicKeyConvertible {
     func pgpPublicKeyData() throws -> PGPFormat.PublicKeyData {
-        return PGPFormat.ECPublicKey(curve: .ed25519, rawData: self)
+        return PGPFormat.ECPublicKey(curve: .ed25519, rawData: self.data)
     }
 }
 

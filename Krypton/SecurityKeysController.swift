@@ -8,14 +8,14 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
-class AccountsController:KRBaseTableController, UITextFieldDelegate {
+class SecurityKeysController:KRBaseTableController {
     
-    @IBOutlet var tagTextField:UITextField!
-    @IBOutlet var headerView:UIView!
+    @IBOutlet var sectionImageView:UIImageView!
 
     enum Section:Int {
-        case keys = 0
+        case developerKeys = 0
         case secured = 1
         case unsecured = 2
     }
@@ -28,44 +28,50 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-            
-        tagTextField.text = UIDevice.current.name
-
-        do {
-            tagTextField.text = try IdentityManager.getMe()
-        } catch (let e) {
-            log("error getting me: \(e)", LogType.error)
-        }
-        
+                    
         self.tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: self.tableView.tableHeaderView?.frame.width ?? 0, height: 100)
         self.tableView.tableFooterView = UIView()
-
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 70
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AccountsController.newLog), name: NSNotification.Name(rawValue: "new_log"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(SecurityKeysController.newLog),
+                                               name: NSNotification.Name(rawValue: "new_log"), object: nil)
         
+        sectionImageView.tintColor = UIColor.lightGray
+        updateView()
     }
     
     @objc func newLog() {
         dispatchMain { self.checkForUpdates() }
     }
     
+    
+    func updateView() {
+        self.tableView.reloadData()
+    }
+    
     func checkForUpdates() {
         
-        do {
-            self.keys = [try KeyManager.sharedInstance().keyPair.publicKey]
+        // user hidden
+        let hidden = UserDefaults.group?.stringArray(forKey: "u2f_account_hide_array") ?? []
 
+        do {
+            let developerPublicKey = try KeyManager.sharedInstance().keyPair.publicKey
+            if !hidden.contains(try developerPublicKey.export().toBase64()) {
+                self.keys = [developerPublicKey]
+            } else {
+                self.keys = []
+            }
         } catch KeyManager.Errors.keyDoesNotExist {
             // no keypair
+            self.keys = []
         } catch {
             log("error loading key pair: \(error)", LogType.error)
             showWarning(title: "Error", body: "Could not load key pair. \(error)")
         }
         
-        // user hidden
-        let hidden = UserDefaults.group?.stringArray(forKey: "u2f_account_hide_array") ?? []
         var hiddenKnown = Set<KnownU2FApplication>()
         hidden.map({ KnownU2FApplication(for: $0) }).forEach({
             if let known = $0 {
@@ -75,8 +81,8 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
 
         
         do {
-            let secured = try U2FAccountManager.getAllAccountsLocked().sorted(by: ({ $0.order < $1.order }))
-            self.secured = [U2FAppID](Set(secured).subtracting(Set(hidden)))
+            let secured = try U2FAccountManager.getAllAccountsLocked()
+            self.secured = [U2FAppID](Set(secured).subtracting(Set(hidden))).sorted(by: ({ $0.order < $1.order }))
             
         } catch KeychainStorageError.notFound {
             self.secured = []
@@ -107,25 +113,20 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
             button.setTitleColor(UIColor.appBlueGray, for: .normal)
             button.setTitleColor(UIColor.appBlueGray.withAlphaComponent(0.5), for: .highlighted)
             button.titleLabel?.font = Resources.appFont(size: 14, style: .regular)
-            button.addTarget(self, action: #selector(AccountsController.deleteHidden), for: .touchUpInside)
+            button.addTarget(self, action: #selector(SecurityKeysController.deleteHidden), for: .touchUpInside)
             button.frame.size = CGSize(width: 0, height: 30)
             self.tableView.tableFooterView = button
         }
         
         self.tableView.reloadData()
     }
-    
-    @IBAction func editNameTapped() {
-        tagTextField.becomeFirstResponder()
-    }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        headerView.setBoxShadow()
         checkForUpdates()
     }
     //MARK: TableView
@@ -140,7 +141,7 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
         }
         
         switch section {
-        case .keys:
+        case .developerKeys:
             return keys.count
         case .secured:
             return secured.count
@@ -157,13 +158,13 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
         guard let section = Section(rawValue: indexPath.section) else {
             return UITableViewCell()
         }
-
+        
         switch section {
-        case .keys:
+        case .developerKeys:
             let cell = tableView.dequeueReusableCell(withIdentifier: KeyAccountCell.identifier) as! KeyAccountCell
             cell.keyLabel.text = keys[indexPath.row].type.prettyDescription
             return cell
-
+            
         case .secured:
             let cell = tableView.dequeueReusableCell(withIdentifier: SecuredAccountCell.identifier) as! SecuredAccountCell
             cell.set(appID: secured[indexPath.row])
@@ -177,16 +178,7 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard let section = Section(rawValue: indexPath.section) else {
-            return false
-        }
-        
-        switch section {
-        case .keys:
-            return false
-        case .secured, .unsecured:
-            return true
-        }
+        return true
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -202,8 +194,14 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
         }
         
         switch section {
-        case .keys:
-            return nil
+        case .developerKeys:
+            return [UITableViewRowAction(style: .default, title: "Hide", handler: { (action, indexPath) in
+                let publicKey = self.keys[indexPath.row]
+                do {
+                    hide(try publicKey.export().toBase64())
+                } catch {}
+            })]
+
         case .secured:
             return [UITableViewRowAction(style: .default, title: "Hide", handler: { (action, indexPath) in
                 let secured = self.secured[indexPath.row]
@@ -218,35 +216,10 @@ class AccountsController:KRBaseTableController, UITextFieldDelegate {
         }
 
     }
-    
-    
+        
     @objc func deleteHidden() {
         UserDefaults.group?.removeObject(forKey: "u2f_account_hide_array")
         dispatchMain { self.checkForUpdates() }
-    }
-    
-
-    //MARK: TextField Delegate -> Editing Email
-    func textFieldDidBeginEditing(_ textField: UITextField) {}
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        guard let email = textField.text else {
-            return false
-        }
-        
-        if email.isEmpty {
-            tagTextField.text = (try? IdentityManager.getMe()) ?? ""
-        } else {
-            IdentityManager.setMe(email: email)
-        }
-        
-        textField.resignFirstResponder()
-        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -300,8 +273,6 @@ class SecuredAccountCell:UITableViewCell {
         checkBox.setCheckState(.checked, animated: true)
     }
 }
-
-import AVFoundation
 
 class KeyAccountCell:UITableViewCell {
     static let identifier = "KeyAccountCell"
@@ -387,4 +358,3 @@ class U2FSetupHelpController:KRBaseController {
         self.dismiss(animated: true, completion: nil)
     }
 }
-

@@ -25,13 +25,13 @@ extension SigChain {
                 throw Errors.invalidPath
             }
             
-            let key = try path[0].fromBase64()
+            let key = try path[0].fromBase64().bytes
             
             self = JoinTeamInvite(symmetricKey: key)
         }
         
         var path:[String] {
-            return [symmetricKey.toBase64(true)]
+            return [symmetricKey.data.toBase64(true)]
         }
     }
     enum Link {

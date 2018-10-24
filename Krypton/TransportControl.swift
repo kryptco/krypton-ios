@@ -92,6 +92,7 @@ class TransportControl {
         catch {
             log("error: \(error)\nfor handling request: \(request), session id: \(session.id) -- on medium \(medium)", .error)
             errorHandler?(error)
+            return
         }
         
         mutex.lock()
@@ -158,7 +159,7 @@ class TransportControl {
         if newPairing {
             do {
                 let wrappedKeyMessage = try NetworkMessage(
-                    localData: session.pairing.keyPair.publicKey.wrap(to: session.pairing.workstationPublicKey),
+                    localData: session.pairing.keyPair.publicKey.data.wrap(to: session.pairing.workstationPublicKey),
                     header: .wrappedPublicKey)
                 
                 transports.forEach({

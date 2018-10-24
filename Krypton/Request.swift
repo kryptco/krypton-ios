@@ -64,7 +64,7 @@ enum RequestBody:Jsonable {
     case readTeam(ReadTeamRequest)
     case teamOperation(TeamOperationRequest)
     case decryptLog(LogDecryptionRequest)
-
+    
     
     var isApprovable:Bool {
         switch self {
@@ -413,6 +413,3 @@ extension U2FAuthenticateRequest:Jsonable {
                 "app_id": appID]
     }
 }
-
-
-

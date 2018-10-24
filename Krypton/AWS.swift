@@ -185,6 +185,7 @@ class API {
         
         request.queueUrl = on.url
         request.waitTimeSeconds = 10
+        request.maxNumberOfMessages = 10
         
         sqsClient.receiveMessage(request) { (result, err) in
             guard err == nil else {

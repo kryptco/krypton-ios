@@ -1,15 +1,14 @@
 language: swift
-xcode_project: Kryptonite.xcodeproj
+xcode_project: Krypton.xcodeproj
 xcode_scheme: Debug
-osx_image: xcode10
+xcode_destination: platform=iOS Simulator,name=iPhone X
+osx_image: xcode10.2
 git:
     submodules: false
 # travis work around
 before_install:
   - sed -i '' -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init
-  - sed -i '' -e 's/git@github.com:/https:\/\/github.com\//' swift-sodium/.gitmodules
-  - cd swift-sodium/ && git submodule update --init && cd ..
   - sed -i '' -e 's/git@github.com:/https:\/\/github.com\//' SigchainTests/sigchain/.gitmodules
   - cd SigchainTests/sigchain/ && git submodule update --init && cd ../..
 

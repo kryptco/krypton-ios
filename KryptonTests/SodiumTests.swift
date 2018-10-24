@@ -39,7 +39,7 @@ class SodiumTests: XCTestCase {
         log("pk length \(kp.publicKey.count)")
 
         
-        guard let sealed = box.seal(message: ptxt, recipientPublicKey: kp.publicKey) else {
+        guard let sealed = box.seal(message: ptxt.bytes, recipientPublicKey: kp.publicKey) else {
             XCTFail()
             return
         }
@@ -51,7 +51,7 @@ class SodiumTests: XCTestCase {
             return
         }
 
-        XCTAssert(opened == ptxt)
+        XCTAssert(opened == ptxt.bytes)
 
     }
 }

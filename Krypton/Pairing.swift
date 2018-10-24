@@ -49,7 +49,7 @@ struct Pairing:JsonReadable {
         do {
             let keyPairSeed = try Pairing.keychain.getData(key: Pairing.keychainKey(for: workstationPublicKey))
             
-            guard let kp = KRSodium.instance().box.keyPair(seed: keyPairSeed) else {
+            guard let kp = KRSodium.instance().box.keyPair(seed: keyPairSeed.bytes) else {
                 throw CryptoError.generate(KeyType.Ed25519, nil)
             }
             
@@ -59,7 +59,7 @@ struct Pairing:JsonReadable {
             let keyPairSeed = try Data.random(size: KRSodium.instance().box.SeedBytes)
             try Pairing.keychain.setData(key: Pairing.keychainKey(for: workstationPublicKey), data: keyPairSeed)
             
-            guard let kp = KRSodium.instance().box.keyPair(seed: keyPairSeed) else {
+            guard let kp = KRSodium.instance().box.keyPair(seed: keyPairSeed.bytes) else {
                 throw CryptoError.generate(KeyType.Ed25519, nil)
             }
             
@@ -96,7 +96,7 @@ struct Pairing:JsonReadable {
 
         let browser:Browser? = try? Browser(json: json)
         
-        try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey, version:version, browser: browser)
+        try self.init(name: json ~> "n", workstationPublicKey: workstationPublicKey.bytes, version:version, browser: browser)
     }
 }
 

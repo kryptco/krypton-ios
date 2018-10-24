@@ -23,3 +23,17 @@ class KRSodium {
         return Sodium()
     }
 }
+
+extension Array where Element == UInt8 {
+    var data:Data {
+        return Data(bytes: self)
+    }
+    
+    var SHA256:Data {
+        return self.data.SHA256
+    }
+    
+    func toBase64() -> String {
+        return self.data.toBase64()
+    }
+}

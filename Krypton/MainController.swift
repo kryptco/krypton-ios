@@ -21,11 +21,12 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     }()
     
     enum TabIndex:Int  {
-        case sites = 0
-        case pair = 1
-        case devices = 2
-        case developer = 3
-        case teams = 4
+        case securityKeys = 0
+        case backupCodes = 1
+        case pair = 2
+        case devices = 3
+        case developer = 4
+        case teams = 5
         
         var index:Int { return rawValue }
     }
@@ -132,7 +133,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     @IBAction func didDeleteTeam(segue: UIStoryboardSegue) {
         updateTabsIfNeeded()
-        self.selectedIndex = TabIndex.sites.index
+        self.selectedIndex = TabIndex.securityKeys.index
     }
 
     

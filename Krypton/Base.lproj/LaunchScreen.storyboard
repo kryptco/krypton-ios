@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,28 +32,14 @@
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" ">
-                                        <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <font key="NSFont" size="42" name="AvenirNext-Medium"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Core">
-                                        <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <font key="NSFont" size="42" name="AvenirNext-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo240" translatesAutoresizingMaskIntoConstraints="NO" id="P0I-gH-TDZ">
-                                <rect key="frame" x="134.5" y="273.5" width="106" height="120"/>
+                                <rect key="frame" x="81.5" y="213.5" width="212" height="240"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kryptco" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KN6-Nn-F8u">
-                                <rect key="frame" x="133.5" y="596" width="109.5" height="41"/>
+                                <rect key="frame" x="133" y="596" width="109.5" height="41"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -65,18 +50,35 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXV-zG-mQ8">
+                                <rect key="frame" x="36" y="97.5" width="303" height="38.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Authenticator">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="28" name="AvenirNext-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.35686274509803922" green="0.78431372549019607" blue="0.58039215686274503" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.35686274509999999" green="0.7843137255" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="VXV-zG-mQ8" firstAttribute="centerX" secondItem="opU-J5-hI7" secondAttribute="centerX" id="0kO-RZ-zAp"/>
                             <constraint firstItem="LtE-BP-W9x" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9Qf-Je-kqc"/>
                             <constraint firstItem="KN6-Nn-F8u" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="DRH-Rg-V06"/>
                             <constraint firstItem="P0I-gH-TDZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="QgU-c7-Jwi"/>
+                            <constraint firstItem="VXV-zG-mQ8" firstAttribute="top" secondItem="opU-J5-hI7" secondAttribute="bottom" constant="-2" id="Uzd-90-DhN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="opU-J5-hI7" secondAttribute="trailing" constant="20" id="XP6-kn-FlV"/>
+                            <constraint firstItem="VXV-zG-mQ8" firstAttribute="trailing" secondItem="opU-J5-hI7" secondAttribute="trailing" id="ZPY-OF-Vh8"/>
                             <constraint firstItem="LtE-BP-W9x" firstAttribute="top" secondItem="KN6-Nn-F8u" secondAttribute="bottom" id="dAK-fE-LTQ"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="LtE-BP-W9x" secondAttribute="bottom" constant="12" id="fFK-zg-0xI"/>
                             <constraint firstItem="opU-J5-hI7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="gZv-dn-Aau"/>
                             <constraint firstItem="P0I-gH-TDZ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="h1D-6p-a6K"/>
+                            <constraint firstItem="VXV-zG-mQ8" firstAttribute="leading" secondItem="opU-J5-hI7" secondAttribute="leading" id="hGm-Us-zXQ"/>
                             <constraint firstItem="opU-J5-hI7" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="22" id="pKJ-pW-oQ1"/>
                         </constraints>
                     </view>
@@ -87,6 +89,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppLogo240" width="106" height="120"/>
+        <image name="AppLogo240" width="212" height="240"/>
     </resources>
 </document>

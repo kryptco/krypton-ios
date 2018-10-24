@@ -37,10 +37,10 @@ struct Session:Jsonable {
         
         var workstationPublicKey:Box.PublicKey
         do {
-            workstationPublicKey = try KeychainStorage().get(key: KeychainKey.workstationPub.tag(for: id)).fromBase64()
+            workstationPublicKey = try KeychainStorage().get(key: KeychainKey.workstationPub.tag(for: id)).fromBase64().bytes
         } catch KeychainStorageError.notFound {
             // get from json
-            workstationPublicKey = try ((try json ~> "workstation_public_key") as String).fromBase64()
+            workstationPublicKey = try ((try json ~> "workstation_public_key") as String).fromBase64().bytes
             
             // migrate key to keychain
             try KeychainStorage().set(key: KeychainKey.workstationPub.tag(for: id), value: workstationPublicKey.toBase64())
@@ -56,7 +56,7 @@ struct Session:Jsonable {
         
         pairing = try Pairing(name: json ~> "name",
                               workstationPublicKey: workstationPublicKey,
-                              keyPair: Box.KeyPair(publicKey: publicKey, secretKey: privateKey),
+                              keyPair: Box.KeyPair(publicKey: publicKey.bytes, secretKey: privateKey.bytes),
                               version: version,
                               browser: try? Browser(json: json ~> "browser"))
         

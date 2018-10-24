@@ -255,6 +255,8 @@ extension KRBase {
             self.handleU2F(viewController: viewController, link: link)
         case .u2fGoogleChrome:
             self.handleChromeU2F(viewController: viewController, link: link)
+        case .otp:
+            self.handleAddOTP(viewController: viewController, link: link)
         default:
             log("unexpected link: \(link)", .error)
         }
@@ -314,6 +316,26 @@ extension KRBase {
             viewController.showWarning(title: "No Krypton Key on this Account", body: "This account does not have a Krypton key registered.")
         } catch {
             viewController.showWarning(title: "Error", body: "This request could not be handled: \(error). Please send an email to support@krypt.co.")
+        }
+    }
+    
+    func handleAddOTP(viewController:UIViewController, link: Link) {
+        guard let otpAuth = try? OTPAuth(urlString: link.url.absoluteString) else {
+            viewController.showWarning(title: "Error", body: "Invalid backup code.")
+            return
+        }
+        
+        do {
+            try OTPAuthManager.add(otpAuth: otpAuth)
+            let loading = LoadingController.present(from: viewController)
+            loading?.showSuccess(hideAfter: 1.0, then: {
+                // navigate to backup codes
+                UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+                viewController.tabBarController?.selectedIndex = MainController.TabIndex.backupCodes.index
+                (viewController.tabBarController?.selectedViewController as? BackupCodesController)?.showNewBackupCode()
+            })
+        } catch {
+            viewController.showWarning(title: "Error", body: "Could not add backup code: \(error).")
         }
     }
     

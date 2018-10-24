@@ -271,6 +271,59 @@ class KRSimpleButton:UIButton {
     }
 }
 
+class RoundedButton:UIButton {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+        }
+    }
+    
+    @IBInspectable var borderWidth: CGFloat = 1.0 {
+        didSet {
+            layer.borderWidth = borderWidth
+        }
+    }
+    
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+    
+    var oldBorderColor:UIColor?
+    @objc func highlight() {
+        oldBorderColor = borderColor
+        let newColor = self.borderColor.withAlphaComponent(0.1)
+        self.borderColor = newColor
+        self.setTitleColor(newColor, for: .highlighted)
+        
+    }
+    
+    @objc func unhighlight() {
+        if let previousColor = oldBorderColor {
+            self.borderColor = previousColor
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addHighlighting()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addHighlighting()
+    }
+    
+    func addHighlighting() {
+        self.addTarget(self, action: #selector(RoundedButton.highlight), for: UIControl.Event.touchDown)
+        self.addTarget(self, action: #selector(RoundedButton.unhighlight), for: UIControl.Event.touchUpInside)
+        self.addTarget(self, action: #selector(RoundedButton.unhighlight), for: UIControl.Event.touchDragExit)
+    }
+}
+
+
 
 class KRImageView:UIImageView {
     

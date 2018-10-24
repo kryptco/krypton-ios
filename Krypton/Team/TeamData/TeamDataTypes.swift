@@ -126,8 +126,8 @@ extension DataRemovedMember {
     convenience init(helper context: NSManagedObjectContext, identity:SigChain.Identity) {
         self.init(helper: context)
         self.email = identity.email
-        self.publicKey = identity.publicKey
-        self.encryptionPublicKey = identity.encryptionPublicKey
+        self.publicKey = identity.publicKey.data
+        self.encryptionPublicKey = identity.encryptionPublicKey.data
         self.sshPublicKey = identity.sshPublicKey
         self.pgpPublicKey = identity.pgpPublicKey
     }
@@ -143,8 +143,8 @@ extension DataRemovedMember {
                 throw TeamDataManager.Errors.missingObjectField
         }
         
-        return SigChain.Identity(publicKey: publicKey,
-                                 encryptionPublicKey: encryptionPublicKey,
+        return SigChain.Identity(publicKey: publicKey.bytes,
+                                 encryptionPublicKey: encryptionPublicKey.bytes,
                                  email: email,
                                  sshPublicKey: sshPublicKey,
                                  pgpPublicKey: pgpPublicKey)
@@ -162,8 +162,8 @@ extension DataMember {
     convenience init(helper context: NSManagedObjectContext, member:SigChain.Identity) {
         self.init(helper: context)
         self.email = member.email
-        self.publicKey = member.publicKey
-        self.encryptionPublicKey = member.encryptionPublicKey
+        self.publicKey = member.publicKey.data
+        self.encryptionPublicKey = member.encryptionPublicKey.data
         self.sshPublicKey = member.sshPublicKey
         self.pgpPublicKey = member.pgpPublicKey
     }
@@ -179,8 +179,8 @@ extension DataMember {
                 throw TeamDataManager.Errors.missingObjectField
         }
         
-        return SigChain.Identity(publicKey: publicKey,
-                                 encryptionPublicKey: encryptionPublicKey,
+        return SigChain.Identity(publicKey: publicKey.bytes,
+                                 encryptionPublicKey: encryptionPublicKey.bytes,
                                  email: email,
                                  sshPublicKey: sshPublicKey,
                                  pgpPublicKey: pgpPublicKey)
@@ -211,7 +211,7 @@ extension DataTeam {
 extension DataDomainMemberInvitation {
     convenience init(helper context: NSManagedObjectContext, invite:SigChain.IndirectInvitation, domain:String) {
         self.init(helper: context)
-        self.noncePublicKey = invite.noncePublicKey
+        self.noncePublicKey = invite.noncePublicKey.data
         self.inviteCiphertext = invite.inviteCiphertext
         self.inviteSymmetricKeyHash = invite.inviteSymmetricKeyHash
         self.domain = domain
@@ -227,7 +227,7 @@ extension DataDomainMemberInvitation {
                 throw TeamDataManager.Errors.missingObjectField
         }
         
-        return SigChain.IndirectInvitation(noncePublicKey: noncePublicKey,
+        return SigChain.IndirectInvitation(noncePublicKey: noncePublicKey.bytes,
                                          inviteSymmetricKeyHash: inviteSymmetricKeyHash,
                                          inviteCiphertext: inviteCiphertext,
                                          restriction: .domain(domain))
@@ -249,7 +249,7 @@ extension DataDomainMemberInvitation {
 extension DataIndividualMemberInvitation {
     convenience init(helper context: NSManagedObjectContext, invite:SigChain.IndirectInvitation, emails:[String]) {
         self.init(helper: context)
-        self.noncePublicKey = invite.noncePublicKey
+        self.noncePublicKey = invite.noncePublicKey.data
         self.inviteCiphertext = invite.inviteCiphertext
         self.inviteSymmetricKeyHash = invite.inviteSymmetricKeyHash
         self.emails = emails.joined(separator: ",")
@@ -267,7 +267,7 @@ extension DataIndividualMemberInvitation {
         
         let parsedEmails = emailList.components(separatedBy: ",")
         
-        return SigChain.IndirectInvitation(noncePublicKey: noncePublicKey,
+        return SigChain.IndirectInvitation(noncePublicKey: noncePublicKey.bytes,
                                          inviteSymmetricKeyHash: inviteSymmetricKeyHash,
                                          inviteCiphertext: inviteCiphertext,
                                          restriction: .emails(parsedEmails))
@@ -288,7 +288,7 @@ extension DataIndividualMemberInvitation {
 extension DataDirectMemberInvitation {
     convenience init(helper context: NSManagedObjectContext, invite:SigChain.DirectInvitation) {
         self.init(helper: context)
-        self.publicKey = invite.publicKey
+        self.publicKey = invite.publicKey.data
         self.email = invite.email
     }
     
@@ -300,7 +300,7 @@ extension DataDirectMemberInvitation {
             throw TeamDataManager.Errors.missingObjectField
         }
         
-        return SigChain.DirectInvitation(publicKey: publicKey, email: email)
+        return SigChain.DirectInvitation(publicKey: publicKey.bytes, email: email)
         
     }
     
@@ -318,7 +318,7 @@ extension DataDirectMemberInvitation {
 extension DataPublicKeyWrappedLogEncryptionTo {
     convenience init(helper context: NSManagedObjectContext, publicKey:SodiumBoxPublicKey) {
         self.init(helper: context)
-        self.publicKey = publicKey
+        self.publicKey = publicKey.data
     }
     
     func toPublicKey() throws -> SodiumBoxPublicKey {
@@ -326,7 +326,7 @@ extension DataPublicKeyWrappedLogEncryptionTo {
             throw TeamDataManager.Errors.missingObjectField
         }
         
-        return publicKey
+        return publicKey.bytes
     }
     
     convenience init(helper context: NSManagedObjectContext) {

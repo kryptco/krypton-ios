@@ -62,6 +62,7 @@ class PairController: KRBaseController, KRScanDelegate {
         {
             self.showSettings(with: "Camera Access", message: "Please enable camera access by tapping Settings. \(Properties.appName) needs the camera to scan your computer's QR code and pair. Pairing enables your computer to ask your phone for SSH logins.")
         }
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -99,6 +100,33 @@ class PairController: KRBaseController, KRScanDelegate {
             controller.didSkipScan = true
             
             dispatchMain { self.present(controller, animated: true, completion: nil) }
+            
+            return true
+        }
+        
+        // next see if a totp code
+        if let otpAuth = try? OTPAuth(urlString: data) {
+            do {
+                try OTPAuthManager.add(otpAuth: otpAuth)
+                
+                // move to the backup code controller
+                let loading = LoadingController.present(from: self)
+                loading?.showSuccess(hideAfter: 0.75) {
+                    if let mainController = MainController.current {
+                        if MainController.TabIndex.backupCodes.index < mainController.viewControllers?.count ?? 0,
+                            let backupCodeController = mainController.viewControllers?[MainController.TabIndex.backupCodes.index] as? BackupCodesController
+                        {
+                            dispatchAfter(delay: 0.5) { dispatchMain { backupCodeController.showNewBackupCode() }}
+                            
+                        }
+                        mainController.selectedIndex = MainController.TabIndex.backupCodes.index
+                    }
+                }
+        
+            } catch {
+                showWarning(title: "Error", body: "Could not add backup code: \(error).")
+                return false
+            }
             
             return true
         }

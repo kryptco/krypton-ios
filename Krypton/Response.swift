@@ -73,7 +73,7 @@ enum ResponseBody {
     case readTeam(ResponseResult<SigChain.SignedMessage>)
     case teamOperation(ResponseResult<TeamOperationResponse>)
     case decryptLog(ResponseResult<LogDecryptionResponse>)
-
+    
     init(json:Object) throws {
         
         var responses:[ResponseBody] = []
@@ -122,7 +122,6 @@ enum ResponseBody {
         if let json:Object = try? json ~> "u2f_authenticate_response" {
             responses.append(.u2fAuthenticate(try ResponseResult<U2FAuthenticateResponse>(json: json)))
         }
-
 
         // if more than one response, it's an error
         if responses.count > 1 {
@@ -189,7 +188,7 @@ enum ResponseBody {
             
         case .u2fAuthenticate(let u2fAuth):
             return u2fAuth.error
-        
+            
         case .me, .unpair, .ack:
             return nil
         }
@@ -289,6 +288,7 @@ extension MeResponse.Me:Jsonable {
         self.pgpPublicKey = try? ((json ~> "pgp_pk") as String).fromBase64()
         self.teamCheckpoint = try? TeamCheckpoint(json: json ~> "team_checkpoint")
         self.u2fAccounts = try? json ~> "u2f_accounts"
+
     }
     
     var object: Object {
@@ -305,7 +305,7 @@ extension MeResponse.Me:Jsonable {
         if let u2fAccounts = u2fAccounts {
             json["u2f_accounts"] = u2fAccounts
         }
-        
+                
         return json
     }
 }

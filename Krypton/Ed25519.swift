@@ -79,7 +79,7 @@ class Ed25519KeyPair:KeyPair {
             throw CryptoError.load(.Ed25519, pubStatus)
         }
         
-        return Ed25519KeyPair(keypair: Sign.KeyPair(publicKey: pubData, secretKey: privData))
+        return Ed25519KeyPair(keypair: Sign.KeyPair(publicKey: pubData.bytes, secretKey: privData.bytes))
     }
     
     static func generate(_ tag: String) throws -> KeyPair {
@@ -87,8 +87,8 @@ class Ed25519KeyPair:KeyPair {
             throw CryptoError.generate(.Ed25519, nil)
         }
         
-        let priv = newKeypair.secretKey
-        let pub = newKeypair.publicKey
+        let priv = newKeypair.secretKey.data
+        let pub = newKeypair.publicKey.data
         
         // save the private key
         let privParams:[String : Any] = [String(kSecClass): kSecClassGenericPassword,
@@ -166,11 +166,11 @@ class Ed25519KeyPair:KeyPair {
         guard digestType == .ed25519 else {
             throw CryptoError.unsupportedSignatureDigestAlgorithmType
         }
-        guard let sig = KRSodium.instance().sign.signature(message: data, secretKey: self.edKeyPair.secretKey) else {
+        guard let sig = KRSodium.instance().sign.signature(message: data.bytes, secretKey: self.edKeyPair.secretKey) else {
             throw CryptoError.sign(.Ed25519, nil)
         }
         
-        return sig
+        return sig.data
     }
 }
 
@@ -181,14 +181,14 @@ extension Sign.PublicKey:PublicKey {
     
     // ignore digest type as hashes are performed internally by libsodium
     func verify(_ message:Data, signature:Data, digestType:DigestType) throws -> Bool {
-        return KRSodium.instance().sign.verify(message: message, publicKey: self, signature: signature)
+        return KRSodium.instance().sign.verify(message: message.bytes, publicKey: self, signature: signature.bytes)
     }
     func export() throws -> Data {
-        return self as Data
+        return self.data
     }
     
     static func importFrom(_ tag:String, publicKeyRaw:Data) throws -> PublicKey {
-        return publicKeyRaw as Sign.PublicKey
+        return publicKeyRaw.bytes as Sign.PublicKey
     }
 }
 extension Sign.SecretKey:PrivateKey {}

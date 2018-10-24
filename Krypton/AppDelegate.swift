@@ -71,7 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             TransportControl.shared.add(sessions: SessionManager.shared.all)
             Analytics.appLaunch()
         }
-
+        
+        
         DeveloperMode.setIfNeeded()
         
         return true
@@ -152,7 +153,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     //MARK: Links
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        guard   userActivity.activityType ==  NSUserActivityTypeBrowsingWeb,
+            let url = userActivity.webpageURL
+            else {
+                log("invalid user activity incoming: \(userActivity)", .error)
+                return false
+        }
 
+        do {
+            self.pendingLink = try Link(url: url)
+            NotificationCenter.default.post(name: Link.notificationName, object: self.pendingLink, userInfo: nil)
+            return true
+        } catch {
+            log("invalid link: \(url.absoluteString)", .error)
+            return false
+        }
+
+    }
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         do {

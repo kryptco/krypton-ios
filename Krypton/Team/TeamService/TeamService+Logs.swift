@@ -19,8 +19,8 @@ extension TeamService {
         if let hash = logBlockHash {
             pointer = .lastBlockHash(hash)
         } else {
-            pointer = .genesisBlock(SigChain.LogChainGenesisPointer(teamPublicKey: self.teamIdentity.initialTeamPublicKey,
-                                                                    memberPublicKey: self.teamIdentity.publicKey))
+            pointer = .genesisBlock(SigChain.LogChainGenesisPointer(teamPublicKey: self.teamIdentity.initialTeamPublicKey.data,
+                                                                    memberPublicKey: self.teamIdentity.publicKey.data))
         }
         
         let readRequest = try SigChain.ReadLogBlocksRequest(nonce: Data.random(size: 32), filter: .member(pointer))

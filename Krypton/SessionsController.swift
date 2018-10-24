@@ -65,7 +65,7 @@ class SessionsController: KRBaseController, UITableViewDelegate, UITableViewData
  
     
     @IBAction func addDevice() {
-        (self.parent as? UITabBarController)?.selectedIndex = 1
+        (self.parent as? UITabBarController)?.selectedIndex = MainController.TabIndex.pair.index
     }
     
     //MARK: TableView

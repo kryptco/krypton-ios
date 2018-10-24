@@ -35,6 +35,7 @@ class ApproveDetailController: UIViewController {
     @IBOutlet weak var tagContainerView:UIView!
     @IBOutlet weak var teamOpContainerView:UIView!
     @IBOutlet weak var u2fContainerView:UIView!
+    
     @IBOutlet weak var errorContainerView:UIView!
 
     var sshController:SSHRequestController?
@@ -42,6 +43,7 @@ class ApproveDetailController: UIViewController {
     var tagController:GitTagRequestController?
     var teamOpController:TeamOpRequestController?
     var u2fController:U2FRequestController?
+    
     var errorController:ErrorRequestController?
     
     override func viewDidLoad() {
@@ -91,7 +93,7 @@ class ApproveDetailController: UIViewController {
             case .u2fAuthenticate(let u2fAuthenticate):
                 u2fController?.set(authenticate: u2fAuthenticate)
                 removeAllBut(view: u2fContainerView)
-
+                
             case .teamOperation(let teamOpRequest):
                 
                 guard let identity = try IdentityManager.getTeamIdentity() else {

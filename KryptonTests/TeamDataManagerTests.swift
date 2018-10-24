@@ -41,7 +41,7 @@ class TeamDataManagerTests: XCTestCase {
         teamPublicKey = try! Data.random(size: 32)
         let users = ["eve@acme.co", "don@acme.co", "carlos@acme.co", "bob@acme.co", "alice@acme.co"]
         members = users.map {
-            return try! SigChain.Identity(publicKey: Data.random(size: 32), encryptionPublicKey: Data.random(size: 32), email: $0, sshPublicKey: Data.random(size: 32), pgpPublicKey: Data.random(size: 32))
+            return try! SigChain.Identity(publicKey: Data.random(size: 32).bytes, encryptionPublicKey: Data.random(size: 32).bytes, email: $0, sshPublicKey: Data.random(size: 32), pgpPublicKey: Data.random(size: 32))
         }
         
         team = Team(info: SigChain.TeamInfo(name: "test team"))
@@ -298,7 +298,7 @@ class TeamDataManagerTests: XCTestCase {
         let createBlock = SigChain.GenesisBlock(creator: members[0], teamInfo: team.info)
         let message = try! SigChain.Message(body: .main(.create(createBlock))).jsonString()
         let createSignature = try! Data.random(size: 64)
-        let createSignedMessage = SigChain.SignedMessage(publicKey: members[0].publicKey, message: message, signature: createSignature)
+        let createSignedMessage = SigChain.SignedMessage(publicKey: members[0].publicKey.data, message: message, signature: createSignature)
         
         do {
             let dm = try defaultTeamDataManager()

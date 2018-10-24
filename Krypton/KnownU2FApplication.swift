@@ -22,13 +22,14 @@ enum KnownU2FApplication:String {
     case fedora = "https://id.fedoraproject.org/u2f-origins.json"
     case bitbucket = "https://bitbucket.org"
     case sentry = "https://sentry.io/auth/2fa/u2fappid.json"
-    
+    case godaddy = "https://sso.godaddy.com/api/u2forigins"
+
     // for webauthn
     static var RPIDMap:[String:KnownU2FApplication] = [
         "www.dropbox.com": .dropbox
     ]
     
-    static var common:[KnownU2FApplication] = [.google, .facebook, .dropbox, .twitter, .stripe, .github, .gitlab, .bitbucket, .sentry]
+    static var common:[KnownU2FApplication] = [.google, .facebook, .dropbox, .twitter, .stripe, .github, .gitlab, .bitbucket, .sentry, .keeper, .godaddy]
     
     var displayName:String {
         switch self {
@@ -58,6 +59,8 @@ enum KnownU2FApplication:String {
             return "bitbucket.com"
         case .sentry:
             return "sentry.io"
+        case .godaddy:
+            return "godaddy.com"
         }
     }
     
@@ -89,6 +92,8 @@ enum KnownU2FApplication:String {
             return "sy"
         case .twitter:
             return "tw"
+        case .godaddy:
+            return "gd"
         }
     }
 }

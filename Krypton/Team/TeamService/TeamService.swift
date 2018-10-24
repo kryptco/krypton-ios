@@ -224,7 +224,7 @@ class TeamService {
                                           pgpPublicKey: keyManager.loadPGPPublicKey(for: teamIdentity.email).packetData)
         
         // use the invite `seed` to create a nonce sodium keypair
-        guard let nonceKeypair = KRSodium.instance().sign.keyPair(seed: invite.nonceKeypairSeed) else {
+        guard let nonceKeypair = KRSodium.instance().sign.keyPair(seed: invite.nonceKeypairSeed.bytes) else {
             throw Errors.badInviteSeed
         }
         
@@ -241,15 +241,15 @@ class TeamService {
         // sign the payload json
         // Note: in this special case the nonce key pair is used to sign the payload
         
-        guard let signature = KRSodium.instance().sign.signature(message: messageData, secretKey: nonceKeypair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: messageData.bytes, secretKey: nonceKeypair.secretKey)
             else {
                 throw Errors.payloadSignature
         }
         
         let serializedString = try messageData.utf8String()
-        let signedMessage = SigChain.SignedMessage(publicKey: nonceKeypair.publicKey,
+        let signedMessage = SigChain.SignedMessage(publicKey: nonceKeypair.publicKey.data,
                                                message: serializedString,
-                                               signature: signature)
+                                               signature: signature.data)
 
 
         
@@ -399,12 +399,12 @@ class TeamService {
                 
             case .success(let inviteCiphertext):
                 do {
-                    guard let inviteJson:Data = KRSodium.instance().secretBox.open(nonceAndAuthenticatedCipherText: inviteCiphertext.ciphertext, secretKey: partialInvite.symmetricKey)
+                    guard let inviteJson:[UInt8] = KRSodium.instance().secretBox.open(nonceAndAuthenticatedCipherText: inviteCiphertext.ciphertext.bytes, secretKey: partialInvite.symmetricKey)
                     else {
                         throw InviteLinkCiphertextResponse.Errors.badCiphertext
                     }
                     
-                    let invite = try SigChain.IndirectInvitation.Secret(jsonData: inviteJson)
+                    let invite = try SigChain.IndirectInvitation.Secret(jsonData: inviteJson.data)
                     completionHandler(TeamServiceResult.result(invite))
                 } catch {
                     completionHandler(TeamServiceResult.error(error))

@@ -32,7 +32,7 @@ class TeamDataTransaction {
     }
     
     func withTransaction<T>(dbType: DBType = InstanceDBType, _ transaction:(TeamDataManager) throws -> T) throws -> T {
-        let dataManager = try TeamDataManager(name: dbType.name(for: identity.publicKey))
+        let dataManager = try TeamDataManager(name: dbType.name(for: identity.publicKey.data))
         
         do {
             let result:T = try transaction(dataManager)
@@ -46,7 +46,7 @@ class TeamDataTransaction {
     
     
     func withReadOnlyTransaction<T>(dbType: DBType = InstanceDBType, _ transaction:(TeamDataManager) throws -> T) throws -> T {
-        let dataManager = try TeamDataManager(name: dbType.name(for: identity.publicKey), readOnly: true)
+        let dataManager = try TeamDataManager(name: dbType.name(for: identity.publicKey.data), readOnly: true)
         let result:T = try transaction(dataManager)
         return result
     }

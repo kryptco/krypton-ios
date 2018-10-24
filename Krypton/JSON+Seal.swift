@@ -15,13 +15,13 @@ typealias Sealed = Data
 extension JsonWritable {
     func seal(to pairing:Pairing) throws -> Sealed {
         
-        let sealedResult:Data? = try KRSodium.instance().box.seal(message: self.jsonData(), recipientPublicKey: pairing.workstationPublicKey, senderSecretKey: pairing.keyPair.secretKey)
+        let sealedResult:Bytes? = try KRSodium.instance().box.seal(message: self.jsonData().bytes, recipientPublicKey: pairing.workstationPublicKey, senderSecretKey: pairing.keyPair.secretKey)
         
         guard let sealed = sealedResult else {
             throw CryptoError.encrypt
         }
         
-        return sealed
+        return sealed.data
     }
 }
 
@@ -32,13 +32,13 @@ extension JsonReadable {
     }
 
     init(from pairing:Pairing, sealed:Sealed) throws {
-        let unsealedResult = KRSodium.instance().box.open(nonceAndAuthenticatedCipherText: sealed, senderPublicKey: pairing.workstationPublicKey, recipientSecretKey: pairing.keyPair.secretKey)
+        let unsealedResult = KRSodium.instance().box.open(nonceAndAuthenticatedCipherText: sealed.bytes, senderPublicKey: pairing.workstationPublicKey, recipientSecretKey: pairing.keyPair.secretKey)
         
         guard let unsealed = unsealedResult else {
             throw CryptoError.decrypt
         }
         
-        let json:Object = try JSON.parse(data: unsealed)
+        let json:Object = try JSON.parse(data: unsealed.data)
         self = try Self.init(json: json)
     }
     

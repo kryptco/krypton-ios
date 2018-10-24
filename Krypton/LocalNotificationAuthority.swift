@@ -32,17 +32,15 @@ class LocalNotificationAuthority {
     static func getOrCreateSigningKey() throws -> Auth.SecretKey {
         do {
             let signingKey = try KeychainStorage().getData(key: signingKeyIdentifier)
-            return signingKey
+            return signingKey.bytes
 
         } catch KeychainStorageError.notFound {
             // create the key
             log("local notification signing key not found...creating one now", .warning)
             
-            guard let signingKey = KRSodium.instance().auth.key() else {
-                throw Errors.signingKeyGenFailed
-            }
+            let signingKey = KRSodium.instance().auth.key()
             
-            try KeychainStorage().setData(key: signingKeyIdentifier, data: signingKey)
+            try KeychainStorage().setData(key: signingKeyIdentifier, data: signingKey.data)
             return signingKey
         }
     }
@@ -50,7 +48,7 @@ class LocalNotificationAuthority {
     static func getSigningKey() throws -> Auth.SecretKey {
         do {
             let signingKey = try KeychainStorage().getData(key: signingKeyIdentifier)
-            return signingKey
+            return signingKey.bytes
         } catch KeychainStorageError.notFound {
             throw Errors.missingSigningKey
         }
@@ -63,11 +61,11 @@ class LocalNotificationAuthority {
         let jsonData = try jsonString.utf8Data()
         let signingKey = try getOrCreateSigningKey()
         
-        guard let signature = KRSodium.instance().auth.tag(message: jsonData, secretKey: signingKey) else {
+        guard let signature = KRSodium.instance().auth.tag(message: jsonData.bytes, secretKey: signingKey) else {
             throw Errors.signatureCreationFailed
         }
         
-        let localRequest = SignedLocalRequest(localRequestJSON: jsonString, signature: signature)
+        let localRequest = SignedLocalRequest(localRequestJSON: jsonString, signature: signature.data)
         return localRequest.object
     }
     
@@ -78,7 +76,7 @@ class LocalNotificationAuthority {
         
         let signingKey = try getSigningKey()
         
-        guard KRSodium.instance().auth.verify(message: rawRequestData, secretKey: signingKey, tag: rawRequest.signature)
+        guard KRSodium.instance().auth.verify(message: rawRequestData.bytes, secretKey: signingKey, tag: rawRequest.signature.bytes)
         else {
             throw Errors.badLocalRequestSignature
         }

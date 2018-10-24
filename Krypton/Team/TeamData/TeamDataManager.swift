@@ -322,7 +322,9 @@ class TeamDataManager {
         return try self.fetchMemberUnlocked(for: publicKey)
     }
     
-    private func fetchMemberUnlocked (for publicKey:SodiumSignPublicKey) throws -> DataMember? {
+    private func fetchMemberUnlocked (for sodiumPublicKey:SodiumSignPublicKey) throws -> DataMember? {
+        let publicKey = sodiumPublicKey.data
+
         let request:NSFetchRequest<DataMember> = DataMember.fetchRequest()
         
         let memberPredicate = NSComparisonPredicate(
@@ -379,7 +381,7 @@ class TeamDataManager {
         
         let memberPredicate = NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: #keyPath(DataRemovedMember.publicKey)),
-            rightExpression: NSExpression(forConstantValue: publicKey),
+            rightExpression: NSExpression(forConstantValue: publicKey.data),
             modifier: .direct,
             type: .equalTo,
             options: NSComparisonPredicate.Options(rawValue: 0)
@@ -427,7 +429,7 @@ class TeamDataManager {
         
         let memberPredicate = NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.publicKey)),
-            rightExpression: NSExpression(forConstantValue: member as NSData),
+            rightExpression: NSExpression(forConstantValue: member.data as NSData),
             modifier: .direct,
             type: .equalTo,
             options: NSComparisonPredicate.Options(rawValue: 0)
@@ -493,7 +495,7 @@ class TeamDataManager {
         
         let memberPredicate = NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: #keyPath(DataMember.publicKey)),
-            rightExpression: NSExpression(forConstantValue: publicKey as NSData),
+            rightExpression: NSExpression(forConstantValue: publicKey.data as NSData),
             modifier: .direct,
             type: .equalTo,
             options: NSComparisonPredicate.Options(rawValue: 0)
@@ -516,10 +518,11 @@ class TeamDataManager {
 
     
     //MARK: Invitations
-    func fetchInvitationsFor(publicKey:SodiumSignPublicKey) throws -> [SigChain.Invitation] {
+    func fetchInvitationsFor(sodiumPublicKey:SodiumSignPublicKey) throws -> [SigChain.Invitation] {
         defer { mutex.unlock() }
         mutex.lock()
         
+        let publicKey = sodiumPublicKey.data
         var invitations = [SigChain.Invitation]()
         
         // search direct
@@ -602,9 +605,11 @@ class TeamDataManager {
 
     }
     
-    func removeDirectInvitations(for publicKey:SodiumSignPublicKey) throws {
+    func removeDirectInvitations(for sodiumPublicKey:SodiumSignPublicKey) throws {
         defer { mutex.unlock() }
         mutex.lock()
+        
+        let publicKey = sodiumPublicKey.data
         
         // search individual email invites
         let directRequest:NSFetchRequest<DataDirectMemberInvitation> = DataDirectMemberInvitation.fetchRequest()
@@ -796,7 +801,7 @@ class TeamDataManager {
         mutex.lock()
 
         let request:NSFetchRequest<DataSSHHostKey> = DataSSHHostKey.fetchRequest()
-        request.predicate = self.sshHostKeyEqualsPredicate(host: sshHostKey.host, publicKey: sshHostKey.publicKey)
+        request.predicate = self.sshHostKeyEqualsPredicate(host: sshHostKey.host, publicKey: sshHostKey.publicKey.bytes)
         
         try performAndWait {
             for result in try self.managedObjectContext.fetch(request) {
@@ -832,7 +837,7 @@ class TeamDataManager {
         var key:SodiumSecretBoxKey?
         try performAndWait {
             let dataTeam = try self.fetchCoreDataTeam()
-            key = dataTeam.logEncryptionKey
+            key = dataTeam.logEncryptionKey?.bytes
         }
 
         return key
@@ -844,7 +849,7 @@ class TeamDataManager {
         
         try performAndWait {
             let dataTeam = try self.fetchCoreDataTeam()
-            dataTeam.logEncryptionKey = key
+            dataTeam.logEncryptionKey = key.data
         }
     }
     
@@ -1071,7 +1076,7 @@ class TeamDataManager {
         
         let publicKeyPredicate = NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: #keyPath(DataSSHHostKey.publicKey)),
-            rightExpression: NSExpression(forConstantValue: publicKey as NSData),
+            rightExpression: NSExpression(forConstantValue: publicKey.data as NSData),
             modifier: .direct,
             type: .equalTo,
             options: NSComparisonPredicate.Options(rawValue: 0)

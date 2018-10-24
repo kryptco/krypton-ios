@@ -72,15 +72,25 @@ class Silo {
     func handle(request:Request, session:Session, communicationMedium: CommunicationMedium, completionHandler: (()->Void)? = nil) throws {
         
         // lock based on the request type
+        var isTeamOperation:Bool
         switch request.body {
         case .teamOperation:
+            isTeamOperation = true
             teamsOperationMutex.lock()
-            defer { teamsOperationMutex.unlock() }
             
         case .me, .ssh, .git, .hosts, .noOp, .unpair, .readTeam, .decryptLog, .u2fAuthenticate, .u2fRegister:
+            isTeamOperation = false
             mutex.lock()
-            defer { mutex.unlock() }
         }
+        
+        defer {
+            if isTeamOperation {
+                teamsOperationMutex.unlock()
+            } else {
+                mutex.unlock()
+            }
+        }
+
         
         // remove expired request as cleanup
         requestCache.removeExpiredObjects()
@@ -227,14 +237,25 @@ class Silo {
     // MARK: Response
     
     func lockResponseFor(request:Request, session:Session, allowed:Bool) throws -> Response {
+        
+        var isTeamOperation:Bool
         switch request.body {
         case .teamOperation:
             teamsOperationMutex.lock()
-            defer { teamsOperationMutex.unlock() }
+            isTeamOperation = true
+
             
         case .me, .ssh, .git, .hosts, .noOp, .unpair, .readTeam, .decryptLog, .u2fAuthenticate, .u2fRegister:
             mutex.lock()
-            defer { mutex.unlock() }
+            isTeamOperation = false
+        }
+        
+        defer {
+            if isTeamOperation {
+                teamsOperationMutex.unlock()
+            } else {
+                mutex.unlock()
+            }
         }
         
         return try responseFor(request: request, session: session, allowed: allowed)
@@ -385,6 +406,7 @@ class Silo {
             
             // return a limited resposne for a u2f device
             guard meRequest.u2fOnly == nil || meRequest.u2fOnly == false else {
+
                 let me = MeResponse(me: MeResponse.Me(email: IdentityManager.getMeFallback(),
                                                       publicKeyWire: Data(),
                                                       deviceIdentifier: try U2FDevice.deviceIdentifier(),
@@ -582,7 +604,7 @@ class Silo {
             
             
             responseType = .decryptLog(.ok(LogDecryptionResponse(logDecryptionKey: logEncryptionKey)))
-        
+    
         case .noOp, .unpair:
             throw Silo.Errors.responseNotNeeded
         }

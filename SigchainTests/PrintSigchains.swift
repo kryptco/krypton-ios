@@ -18,8 +18,8 @@ class PrintSigchains: XCTestCase {
     let pgpPlaceholder = Data(bytes: [0x04, 0x04, 0x04])
     
     func identity(for email:String) -> SigChain.Identity {
-        return SigChain.Identity(publicKey: publicKeyPlaceholder,
-                          encryptionPublicKey: publicKeyPlaceholder,
+        return SigChain.Identity(publicKey: publicKeyPlaceholder.bytes,
+                          encryptionPublicKey: publicKeyPlaceholder.bytes,
                           email: email,
                           sshPublicKey: sshPlaceholder,
                           pgpPublicKey: pgpPlaceholder)
@@ -38,12 +38,12 @@ class PrintSigchains: XCTestCase {
 
         let operations:[SigChain.Operation] = [
             SigChain.Operation.setPolicy(SigChain.Policy(temporaryApprovalSeconds: 60*60*5)),
-            SigChain.Operation.invite(try! .indirect(SigChain.IndirectInvitation(noncePublicKey: Data.random(size: 32),
+            SigChain.Operation.invite(try! .indirect(SigChain.IndirectInvitation(noncePublicKey: Data.random(size: 32).bytes,
                                                                             inviteSymmetricKeyHash: Data.random(size: 32),
                                                                             inviteCiphertext: Data.random(size: 64),
                                                                             restriction: .domain("acme.co")))),
             SigChain.Operation.acceptInvite(identity(for: emails[2])),
-            SigChain.Operation.promote(publicKeyPlaceholder),
+            SigChain.Operation.promote(publicKeyPlaceholder.bytes),
         ]
 
 

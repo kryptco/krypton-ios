@@ -150,8 +150,8 @@ extension Sign.PublicKey:SSHPublicKey {
         var wireBytes:[UInt8] = [0x00, 0x00, 0x00, 0x0B]
         wireBytes.append(contentsOf: try self.type.sshHeaderBytes())
         
-        wireBytes.append(contentsOf: self.bigEndianByteSize())
-        wireBytes.append(contentsOf: self.bytes)
+        wireBytes.append(contentsOf: self.data.bigEndianByteSize())
+        wireBytes.append(contentsOf: self.data.bytes)
         
         return Data(bytes: wireBytes)
     }

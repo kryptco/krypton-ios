@@ -71,7 +71,7 @@ extension TeamService {
     internal func getTeamSyncUnlocked(using invite:SigChain.IndirectInvitation.Secret, dataManager:TeamDataManager) throws -> TeamServiceResult<TeamService> {
         
         // use the invite `seed` to create a nonce sodium keypair
-        guard let nonceKeypair = KRSodium.instance().sign.keyPair(seed: invite.nonceKeypairSeed) else {
+        guard let nonceKeypair = KRSodium.instance().sign.keyPair(seed: invite.nonceKeypairSeed.bytes) else {
             throw Errors.badInviteSeed
         }
         
@@ -82,15 +82,15 @@ extension TeamService {
         let message = SigChain.Message(body: .main(.read(readBlocksRequest)))
         let messageData = try message.jsonData()
         
-        guard let signature = KRSodium.instance().sign.signature(message: messageData, secretKey: nonceKeypair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: messageData.bytes, secretKey: nonceKeypair.secretKey)
             else {
                 throw Errors.payloadSignature
         }
         
         let serializedMessage = try messageData.utf8String()
-        let signedMessage = SigChain.SignedMessage(publicKey: nonceKeypair.publicKey,
+        let signedMessage = SigChain.SignedMessage(publicKey: nonceKeypair.publicKey.data,
                                                    message: serializedMessage,
-                                                   signature: signature)
+                                                   signature: signature.data)
         
         
         

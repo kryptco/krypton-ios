@@ -42,9 +42,9 @@ extension TeamIdentity {
             }
 
             // 2. verify the block signature
-            guard try KRSodium.instance().sign.verify(message: createMessageBlock.message.utf8Data(),
+            guard try KRSodium.instance().sign.verify(message: createMessageBlock.message.utf8Data().bytes,
                                                       publicKey: initialTeamPublicKey,
-                                                      signature: createMessageBlock.signature)
+                                                      signature: createMessageBlock.signature.bytes)
             else {
                 throw SigChain.Errors.badSignature
             }
@@ -54,7 +54,7 @@ extension TeamIdentity {
             // ensure that the creator's public key matches the initial public key
             // and that the block public key matches the creator public key
             guard   genesisBlock.creator.publicKey == initialTeamPublicKey &&
-                    genesisBlock.creator.publicKey == createMessageBlock.publicKey
+                    genesisBlock.creator.publicKey.data == createMessageBlock.publicKey
             else {
                 throw SigChain.Errors.teamPublicKeyMismatch
             }
@@ -93,7 +93,7 @@ extension TeamIdentity {
             if case .acceptInvite(let identity) = appendBlock.operation {
                 
                 // look for matching invitation
-                let invitations = try dataManager.fetchInvitationsFor(publicKey: nextBlock.publicKey)
+                let invitations = try dataManager.fetchInvitationsFor(sodiumPublicKey: nextBlock.publicKey.bytes)
                 
                 guard let matchingInvitation = invitations.filter({
                     switch $0 {
@@ -106,7 +106,7 @@ extension TeamIdentity {
                         
                         return true
                     case .indirect(let indirect):
-                        guard indirect.noncePublicKey == nextBlock.publicKey else {
+                        guard indirect.noncePublicKey.data == nextBlock.publicKey else {
                             return false
                         }
                         
@@ -129,13 +129,13 @@ extension TeamIdentity {
                 publicKey = matchingInvitation.publicKey
                 
             } else if case .leave = appendBlock.operation {
-                publicKey = nextBlock.publicKey
+                publicKey = nextBlock.publicKey.bytes
             } else {
-                guard try dataManager.isAdmin(for: nextBlock.publicKey) else {
+                guard try dataManager.isAdmin(for: nextBlock.publicKey.bytes) else {
                     throw SigChain.Errors.signerNotAdmin
                 }
                 
-                publicKey = nextBlock.publicKey
+                publicKey = nextBlock.publicKey.bytes
             }
             
             // 3. Ensure last hash matches
@@ -145,9 +145,9 @@ extension TeamIdentity {
             
             
             // 4. Ensure signature verifies
-            let verified = try KRSodium.instance().sign.verify(message: nextBlock.message.utf8Data(),
+            let verified = try KRSodium.instance().sign.verify(message: nextBlock.message.utf8Data().bytes,
                                                                publicKey: publicKey,
-                                                               signature: nextBlock.signature)
+                                                               signature: nextBlock.signature.bytes)
             guard verified else {
                 throw SigChain.Errors.badSignature
             }
@@ -157,7 +157,7 @@ extension TeamIdentity {
             switch appendBlock.operation {
             case .invite(let invite):
                 // invitations must have unique public keys
-                guard try dataManager.fetchInvitationsFor(publicKey: invite.publicKey).isEmpty else {
+                guard try dataManager.fetchInvitationsFor(sodiumPublicKey: invite.publicKey).isEmpty else {
                     throw SigChain.Errors.invitePublicKeyAlreadyExists
                 }
                 
@@ -200,7 +200,7 @@ extension TeamIdentity {
                 }
                 
                 // remove direct invite if exists
-                try dataManager.fetchInvitationsFor(publicKey: member.publicKey).forEach {
+                try dataManager.fetchInvitationsFor(sodiumPublicKey: member.publicKey).forEach {
                     if case .direct = $0 {
                         try dataManager.removeDirectInvitations(for: member.publicKey)
                     }
@@ -238,7 +238,7 @@ extension TeamIdentity {
                 try dataManager.add(admin: admin, block: nextBlock)
                 
             case .leave:
-                let memberPublicKey = nextBlock.publicKey
+                let memberPublicKey = nextBlock.publicKey.bytes
                 
                 guard try dataManager.fetchMemberIdentity(for: memberPublicKey) != nil else {
                     throw SigChain.Errors.memberDoesNotExist
@@ -249,7 +249,7 @@ extension TeamIdentity {
             case .remove(let memberPublicKey):
                 
                 // check that admin is not removing self
-                guard memberPublicKey != nextBlock.publicKey else {
+                guard memberPublicKey.data != nextBlock.publicKey else {
                     throw SigChain.Errors.signerCannotRemoveSelf
                 }
                 

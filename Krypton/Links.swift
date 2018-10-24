@@ -29,7 +29,7 @@ enum CopyToken {
         
         switch Prefix(rawValue: String(string.prefix(Prefix.length))) {
         case .some(.joinTeam):
-            self = try .joinTeam(String(string.suffix(from: string.index(string.startIndex, offsetBy: Prefix.length))).fromBase64())
+            self = try .joinTeam(String(string.suffix(from: string.index(string.startIndex, offsetBy: Prefix.length))).fromBase64().bytes)
         case .none:
             throw Errors.badPrefix
         }
@@ -56,6 +56,7 @@ enum LinkType:String {
     case u2fGoogle = "u2f-google"
     case u2fGoogleChrome = "u2f-x-callback"
     case u2f = "u2f"
+    case otp = "otpauth"
 }
             
 enum LinkError:Error {
@@ -71,10 +72,12 @@ struct LinkCommand {
         case emailChallengeRemote = "krypt.co"
         case auth = "auth"
         case googleChromeCallback = "x-callback-url"
+        case totp = "totp"
+        case hotp = "hotp"
         
         func matchesPathIfNeeded(of url:URL) -> Bool {
             switch self {
-            case .joinTeam, .emailChallenge, .auth:
+            case .joinTeam, .emailChallenge, .auth, .totp, .hotp:
                 return true // url validation done individually
             case .googleChromeCallback:
                 return url.cleanPathComponents() == ["auth"]
@@ -163,30 +166,4 @@ class LinkListener {
         
         self.onListen(link)
     }
-}
-
-
-extension URL {
-    func cleanPathComponents() -> [String] {
-        return self.pathComponents.filter({ $0 != "/" }).filter({ !$0.isEmpty })
-    }
-    func queryItems() -> [String:String] {
-        guard
-            let components = URLComponents(url: self, resolvingAgainstBaseURL: false),
-            let queryItems = components.queryItems
-        else {
-            return [:]
-        }
-            
-        var found:[String:String] = [:]
-        
-        for queryItem in queryItems {
-            if queryItem.value != nil {
-                found[queryItem.name] = queryItem.value!
-            }
-        }
-        
-        return found
-    }
-
 }

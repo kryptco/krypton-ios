@@ -14,4 +14,5 @@
 
 #import "sshwire.h"
 #import "openssl-bridging.h"
+
 #endif /* Notify_Bridging_Header_h */

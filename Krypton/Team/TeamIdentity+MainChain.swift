@@ -144,7 +144,7 @@ extension TeamIdentity {
     
         // create an invitation nonce keypair
         let nonceKeyPairSeed = try Data.random(size: KRSodium.instance().sign.SeedBytes)
-        guard let nonceKeyPair = KRSodium.instance().sign.keyPair(seed: nonceKeyPairSeed) else {
+        guard let nonceKeyPair = KRSodium.instance().sign.keyPair(seed: nonceKeyPairSeed.bytes) else {
             throw TeamChainBlockCreateError.seedToKeyPair
         }
         
@@ -157,12 +157,12 @@ extension TeamIdentity {
         let inviteJson = try invite.jsonData()
 
         // create a secret box symmetric key
-        let symmetricKey = try Data.random(size: KRSodium.instance().secretBox.KeyBytes)
-        let symmetricKeyHash = symmetricKey.SHA256
+        let symmetricKey = try Data.random(size: KRSodium.instance().secretBox.KeyBytes).bytes
+        let symmetricKeyHash = symmetricKey.data.SHA256
 
         
         // encrypt the invite
-        guard let inviteCiphertext:Data = KRSodium.instance().secretBox.seal(message: inviteJson,
+        guard let inviteCiphertext:[UInt8] = KRSodium.instance().secretBox.seal(message: inviteJson.bytes,
                                                                         secretKey: symmetricKey)
         else {
             throw SigChain.Errors.inviteEncryptionFailed
@@ -171,7 +171,7 @@ extension TeamIdentity {
         // sodium secret box encrypt an invite
         let membershipInvitation = SigChain.IndirectInvitation(noncePublicKey: nonceKeyPair.publicKey,
                                                              inviteSymmetricKeyHash: symmetricKeyHash,
-                                                             inviteCiphertext: inviteCiphertext,
+                                                             inviteCiphertext: inviteCiphertext.data,
                                                              restriction: restriction)
         
         

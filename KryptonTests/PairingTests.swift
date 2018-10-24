@@ -41,11 +41,11 @@ class PairingTests: XCTestCase {
             let kp = KRSodium.instance().box.keyPair()!
             let pairing = try Pairing(name: "test", workstationPublicKey: kp.publicKey)
             
-            let wrappedPub = try pairing.keyPair.publicKey.wrap(to: kp.publicKey)
+            let wrappedPub = try pairing.keyPair.publicKey.data.wrap(to: kp.publicKey)
             
             // unwrapp pub
             
-            let unwrapped = KRSodium.instance().box.open(anonymousCipherText: wrappedPub, recipientPublicKey: kp.publicKey, recipientSecretKey: kp.secretKey)!
+            let unwrapped = KRSodium.instance().box.open(anonymousCipherText: wrappedPub.bytes, recipientPublicKey: kp.publicKey, recipientSecretKey: kp.secretKey)!
             
             // ensure unwrapped == pairing.publicKey
             
@@ -69,9 +69,9 @@ class PairingTests: XCTestCase {
             
             let sealed = try dataStruct.seal(to: pairing)
     
-            let unsealed = KRSodium.instance().box.open(nonceAndAuthenticatedCipherText: sealed, senderPublicKey: pairing.keyPair.publicKey, recipientSecretKey: kp.secretKey)!
+            let unsealed = KRSodium.instance().box.open(nonceAndAuthenticatedCipherText: sealed.bytes, senderPublicKey: pairing.keyPair.publicKey, recipientSecretKey: kp.secretKey)!
             
-            let dataStructUnsealed = try TestStruct(jsonData: unsealed)
+            let dataStructUnsealed = try TestStruct(jsonData: unsealed.data)
             // ensure sealed == unsealed
             
             guard dataStruct == dataStructUnsealed else {
@@ -92,9 +92,9 @@ class PairingTests: XCTestCase {
             
             let dataStruct = TestStruct(p1: "hello", p2: "world")
             
-            let sealed:Data = KRSodium.instance().box.seal(message: try dataStruct.jsonData(), recipientPublicKey: pairing.keyPair.publicKey, senderSecretKey: kp.secretKey)!
+            let sealed:[UInt8] = KRSodium.instance().box.seal(message: try dataStruct.jsonData().bytes, recipientPublicKey: pairing.keyPair.publicKey, senderSecretKey: kp.secretKey)!
             
-            let unsealed = try TestStruct(from: pairing, sealed: sealed)
+            let unsealed = try TestStruct(from: pairing, sealed: sealed.data)
             
             // ensure sealed == unsealed
             guard dataStruct == unsealed else {

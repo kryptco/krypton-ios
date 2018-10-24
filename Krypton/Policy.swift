@@ -288,7 +288,7 @@ class Policy {
                 
             case .u2fRegister, .u2fAuthenticate:
                 return settings.u2fZeroTouchEnabled
-                
+                            
             case .hosts, .readTeam, .teamOperation:
                 return false
                 

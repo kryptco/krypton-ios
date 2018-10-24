@@ -25,7 +25,7 @@ struct ReadTeamRequest:Jsonable {
     let publicKey:SodiumSignPublicKey
 
     init(json: Object) throws {
-        publicKey = try ((json ~> "public_key") as String).fromBase64()
+        publicKey = try ((json ~> "public_key") as String).fromBase64().bytes
     }
     
     var object: Object {
@@ -85,7 +85,7 @@ enum RequestableTeamOperation:Jsonable {
             self = .leave
         }
         else if let remove:String = try? json ~> "remove" {
-            self = try .remove(remove.fromBase64())
+            self = try .remove(remove.fromBase64().bytes)
         }
         else if let policy:Object = try? json ~> "set_policy" {
             self = try .setPolicy(SigChain.Policy(json: policy))
@@ -106,10 +106,10 @@ enum RequestableTeamOperation:Jsonable {
             self = try .removeLoggingEndpoint(SigChain.LoggingEndpoint(json: endpoint))
         }
         else if let publicKeyString:String = try? json ~> "promote" {
-            self = try .promote(publicKeyString.fromBase64())
+            self = try .promote(publicKeyString.fromBase64().bytes)
         }
         else if let publicKeyString:String = try? json ~> "demote" {
-            self = try .demote(publicKeyString.fromBase64())
+            self = try .demote(publicKeyString.fromBase64().bytes)
         }
         else {
             throw Errors.badRequestableOperation

@@ -18,7 +18,7 @@ struct  AdminQRPayload {
 extension AdminQRPayload:Jsonable {
     init(json: Object) throws {
         let object:Object = try json ~> "aqp"
-        teamPublicKey = try ((object ~> "tpk") as String).fromBase64()
+        teamPublicKey = try ((object ~> "tpk") as String).fromBase64().bytes
         lastBlockHash = try ((object ~> "lbh") as String).fromBase64()
         teamName = try object ~> "n"
     }

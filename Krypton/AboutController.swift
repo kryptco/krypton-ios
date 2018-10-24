@@ -10,9 +10,10 @@ import UIKit
 import LocalAuthentication
 import MessageUI
 
-class AboutController: KRBaseController {
+class AboutController: KRBaseController, UITextFieldDelegate {
 
-    
+    @IBOutlet var tagTextField:UITextField!
+
     @IBOutlet weak var versionLabel:UILabel!
     @IBOutlet weak var analyticsSwitch:UISwitch!
     @IBOutlet weak var developerMode:UISwitch!
@@ -22,6 +23,14 @@ class AboutController: KRBaseController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tagTextField.text = UIDevice.current.name
+        
+        do {
+            tagTextField.text = try IdentityManager.getMe()
+        } catch (let e) {
+            log("error getting me: \(e)", LogType.error)
+        }
 
         analyticsSwitch.isOn = !Analytics.enabled
         developerMode.isOn = DeveloperMode.isOn
@@ -49,6 +58,34 @@ class AboutController: KRBaseController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func editNameTapped() {
+        tagTextField.becomeFirstResponder()
+    }
+
+    //MARK: TextField Delegate -> Editing Email
+    func textFieldDidBeginEditing(_ textField: UITextField) {}
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        guard let email = textField.text else {
+            return false
+        }
+        
+        if email.isEmpty {
+            tagTextField.text = (try? IdentityManager.getMe()) ?? ""
+        } else {
+            IdentityManager.setMe(email: email)
+        }
+        
+        textField.resignFirstResponder()
+        return true
+    }
+
     
     @IBAction func doneTapped() {
         dismiss(animated: true, completion: nil)

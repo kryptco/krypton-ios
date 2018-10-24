@@ -47,9 +47,9 @@ class TeamActivityController: KRBaseTableController {
             
             try identity.dataManager.withTransaction {
                 var signer:String
-                if let member = try $0.fetchMemberIdentity(for: signedMessage.publicKey) {
+                if let member = try $0.fetchMemberIdentity(for: signedMessage.publicKey.bytes) {
                     signer = member.email
-                } else if let member = try $0.fetchDeletedMemberIdentity(for: signedMessage.publicKey) {
+                } else if let member = try $0.fetchDeletedMemberIdentity(for: signedMessage.publicKey.bytes) {
                     signer = member.email
                 } else if case .main(.append(let block)) = message.body, case .acceptInvite(let identity) = block.operation {
                     signer = "\(identity.email) invited"
@@ -57,7 +57,7 @@ class TeamActivityController: KRBaseTableController {
                     throw SigChain.Errors.memberDoesNotExist
                 }
                 
-                let (title, detail) = try self.eventLogDetails(for: message, signer: signedMessage.publicKey, dataManager: $0)
+                let (title, detail) = try self.eventLogDetails(for: message, signer: signedMessage.publicKey.bytes, dataManager: $0)
                 cell.set(title: title, detail: detail, signer: signer, time: time, index: indexPath.row, count: blocks.count)
             }
             

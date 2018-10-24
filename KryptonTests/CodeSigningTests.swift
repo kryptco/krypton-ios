@@ -26,13 +26,15 @@ class CodeSigningTests: XCTestCase {
     
     override func setUp() {
         keypairClasses = [RSAKeyPair.self, Ed25519KeyPair.self]
-        
+
         if Platform.isSimulator {
             keypairClasses.append(UnsafeNISTP256KeyPair.self)
         } else {
             keypairClasses.append(NISTP256KeyPair.self)
         }
-        
+
+        keypairClasses = [Ed25519KeyPair.self]
+
         publicKeyClasses = [RSAPublicKey.self, Sign.PublicKey.self, NISTP256PublicKey.self]
         super.setUp()
     }

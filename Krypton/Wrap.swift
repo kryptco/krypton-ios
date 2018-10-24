@@ -12,10 +12,10 @@ import Sodium
 
 extension Data {
     func wrap(to pk: Box.PublicKey) throws -> Data {
-        guard let wrappedPublicKey = KRSodium.instance().box.seal(message: self, recipientPublicKey: pk)
+        guard let wrappedPublicKey = KRSodium.instance().box.seal(message: self.bytes, recipientPublicKey: pk)
         else {
             throw CryptoError.encrypt
         }
-        return wrappedPublicKey
+        return wrappedPublicKey.data
     }
 }

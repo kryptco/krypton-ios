@@ -17,7 +17,7 @@ struct  NewMemberQRPayload {
 extension NewMemberQRPayload:Jsonable {
     init(json: Object) throws {
         let object:Object = try json ~> "mqp"
-        publicKey = try ((object ~> "pk") as String).fromBase64()
+        publicKey = try ((object ~> "pk") as String).fromBase64().bytes
         email = try object ~> "e"
     }
     

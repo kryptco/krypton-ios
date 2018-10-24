@@ -19,8 +19,8 @@ struct TeamCheckpoint {
 
 extension TeamCheckpoint:Jsonable {
     init(json:Object) throws {
-        try self.init(publicKey: ((json ~> "public_key") as String).fromBase64(),
-                      teamPublicKey: ((json ~> "team_public_key") as String).fromBase64(),
+        try self.init(publicKey: ((json ~> "public_key") as String).fromBase64().bytes,
+                      teamPublicKey: ((json ~> "team_public_key") as String).fromBase64().bytes,
                       lastBlockHash: ((json ~> "last_block_hash") as String).fromBase64(),
                       serverEndpoints: ServerEndpoints(json: json ~> "server_endpoints"))
     }
@@ -110,7 +110,7 @@ struct LogDecryptionResponse:Jsonable {
     }
     
     init(json:Object) throws {
-        try self.init(logDecryptionKey: ((json ~> "log_decryption_key") as String).fromBase64())
+        try self.init(logDecryptionKey: ((json ~> "log_decryption_key") as String).fromBase64().bytes)
     }
     
     var object:Object {

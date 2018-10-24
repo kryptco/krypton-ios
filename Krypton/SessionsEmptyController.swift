@@ -32,6 +32,6 @@ class SessionsEmptyController:KRBaseController {
     
     @IBAction func addDevice() {
         Analytics.postEvent(category: "button", action: "empty device pair")
-        (self.parent?.parent as? UITabBarController)?.selectedIndex = 1
+        (self.parent?.parent as? UITabBarController)?.selectedIndex = MainController.TabIndex.pair.index
     }
 }

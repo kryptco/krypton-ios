@@ -66,7 +66,7 @@ extension TeamIdentity {
             return ("", "\(member.email) joined the team")
             
         case .leave:
-            guard let member = try dataManager.fetchDeletedMemberIdentity(for: signedMessage.publicKey)
+            guard let member = try dataManager.fetchDeletedMemberIdentity(for: signedMessage.publicKey.bytes)
             else {
                 throw NotificationDetailsError.noSuchMember
             }

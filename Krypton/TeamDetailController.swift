@@ -92,7 +92,7 @@ class TeamDetailController: KRBaseTableController, KRTeamDataControllerDelegate,
         teamTextField.delegate = self
         approvalWindowTextField.isEnabled = false
         
-        if  let billingJson = UserDefaults.group?.data(forKey: "cached_billing_info_\(identity.initialTeamPublicKey.toBase64(true))"),
+        if  let billingJson = UserDefaults.group?.data(forKey: "cached_billing_info_\(identity.initialTeamPublicKey.data.toBase64(true))"),
             let billing:SigChainBilling.BillingInfo = try? SigChainBilling.BillingInfo(jsonData: billingJson)
         {
             self.currentBillingInfo = billing
@@ -266,7 +266,7 @@ class TeamDetailController: KRBaseTableController, KRTeamDataControllerDelegate,
     
     func update(billingInfo: SigChainBilling.BillingInfo) {
         self.currentBillingInfo = billingInfo
-        try? UserDefaults.group?.set(billingInfo.jsonData(), forKey: "cached_billing_info_\(identity.initialTeamPublicKey.toBase64(true))")
+        try? UserDefaults.group?.set(billingInfo.jsonData(), forKey: "cached_billing_info_\(identity.initialTeamPublicKey.data.toBase64(true))")
     }
     
     // MARK: Billing Helpers
@@ -358,8 +358,8 @@ class TeamDetailController: KRBaseTableController, KRTeamDataControllerDelegate,
         
         if !isPaid {
             if let team = self.team, let url = URL(string: Properties.billingURL(for: team.name,
-                                                                                 teamInitialPublicKey: _teamIdentity.initialTeamPublicKey,
-                                                                                 adminPublicKey: _teamIdentity.publicKey,
+                                                                                 teamInitialPublicKey: _teamIdentity.initialTeamPublicKey.data,
+                                                                                 adminPublicKey: _teamIdentity.publicKey.data,
                                                                                  adminEmail: _teamIdentity.email))
             {
                 self.present(SFSafariViewController(url: url), animated: true, completion: nil)

@@ -71,6 +71,22 @@ extension Policy {
                                           options: .customDismissAction)
         }
     }()
+    
+    static var authorizeSyncSimpleCategory:UNNotificationCategory = {
+        if #available(iOS 11.0, *) {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeSimple.identifier,
+                                          actions: [Policy.yesAction, Policy.yesDontAskAction, Policy.noAction],
+                                          intentIdentifiers: [],
+                                          hiddenPreviewsBodyPlaceholder: "New \(Properties.appName) request",
+                options: .customDismissAction)
+        } else {
+            return UNNotificationCategory(identifier: Policy.NotificationCategory.authorizeSimple.identifier,
+                                          actions: [Policy.yesAction, Policy.noAction],
+                                          intentIdentifiers: [],
+                                          options: .customDismissAction)
+        }
+    }()
+
 
     static var teamsAlertCategory:UNNotificationCategory = {
         if #available(iOS 11.0, *) {

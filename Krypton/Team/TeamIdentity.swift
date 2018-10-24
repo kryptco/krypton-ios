@@ -69,13 +69,13 @@ struct TeamIdentity:Jsonable {
      */
     func sign(message:SigChain.Message) throws -> SigChain.SignedMessage {
         let messageData = try message.jsonData()
-        guard let signature = KRSodium.instance().sign.signature(message: messageData, secretKey: keyPair.secretKey) else {
+        guard let signature = KRSodium.instance().sign.signature(message: messageData.bytes, secretKey: keyPair.secretKey) else {
             throw Errors.signingError
         }
         
         let serializedMessage = try messageData.utf8String()
         
-        return SigChain.SignedMessage(publicKey: self.publicKey, message: serializedMessage, signature: signature)
+        return SigChain.SignedMessage(publicKey: self.publicKey.data, message: serializedMessage, signature: signature.data)
     }
     
     /**
@@ -84,7 +84,7 @@ struct TeamIdentity:Jsonable {
     func seal(plaintextBody:SigChain.PlaintextBody, recipientPublicKey:SodiumBoxPublicKey) throws -> SigChain.BoxedMessage {
         let plaintextData = try plaintextBody.jsonData()
         
-        guard let ciphertext:Data = KRSodium.instance().box.seal(message: plaintextData,
+        guard let ciphertext:[UInt8] = KRSodium.instance().box.seal(message: plaintextData.bytes,
                                                             recipientPublicKey: recipientPublicKey,
                                                             senderSecretKey: self.encryptionKeyPair.secretKey)
         else {
@@ -93,18 +93,18 @@ struct TeamIdentity:Jsonable {
 
         return SigChain.BoxedMessage(recipientPublicKey: recipientPublicKey,
                                      senderPublicKey: self.encryptionPublicKey,
-                                     ciphertext: ciphertext)
+                                     ciphertext: ciphertext.data)
     }
     
     func open(boxedMessage:SigChain.BoxedMessage) throws -> SigChain.PlaintextBody {
-        guard let plaintext = KRSodium.instance().box.open(nonceAndAuthenticatedCipherText: boxedMessage.ciphertext,
+        guard let plaintext = KRSodium.instance().box.open(nonceAndAuthenticatedCipherText: boxedMessage.ciphertext.bytes,
                                                            senderPublicKey: boxedMessage.senderPublicKey,
                                                            recipientSecretKey: self.encryptionKeyPair.secretKey)
         else {
             throw Errors.openingError
         }
         
-        return try SigChain.PlaintextBody(jsonData: plaintext)
+        return try SigChain.PlaintextBody(jsonData: plaintext.data)
     }
 
     /**
@@ -131,11 +131,11 @@ struct TeamIdentity:Jsonable {
         let keyPairSeed = try Data.random(size: KRSodium.instance().sign.SeedBytes)
         let boxKeyPairSeed = try Data.random(size: KRSodium.instance().box.SeedBytes)
 
-        guard let keyPair = KRSodium.instance().sign.keyPair(seed: keyPairSeed) else {
+        guard let keyPair = KRSodium.instance().sign.keyPair(seed: keyPairSeed.bytes) else {
             throw Errors.keyPairFromSeed
         }
         
-        guard let boxKeyPair = KRSodium.instance().box.keyPair(seed: boxKeyPairSeed) else {
+        guard let boxKeyPair = KRSodium.instance().box.keyPair(seed: boxKeyPairSeed.bytes) else {
             throw Errors.keyPairFromSeed
         }
         
@@ -155,13 +155,13 @@ struct TeamIdentity:Jsonable {
         let messageData = try message.jsonData()
         
         // sign the message
-        guard let signature = KRSodium.instance().sign.signature(message: messageData, secretKey: keyPair.secretKey)
+        guard let signature = KRSodium.instance().sign.signature(message: messageData.bytes, secretKey: keyPair.secretKey)
         else {
             throw Errors.signingError
         }
         
         // create the signed message
-        let signedMessage = try SigChain.SignedMessage(publicKey: keyPair.publicKey, message: messageData.utf8String(), signature: signature)
+        let signedMessage = try SigChain.SignedMessage(publicKey: keyPair.publicKey.data, message: messageData.utf8String(), signature: signature.data)
         let checkpoint = signedMessage.hash()
         
         let mutableData = MutableData(checkpoint: checkpoint)
@@ -190,11 +190,11 @@ struct TeamIdentity:Jsonable {
         self.keyPairSeed = keyPairSeed
         self.boxKeyPairSeed = boxKeyPairSeed
         
-        guard let keyPair = KRSodium.instance().sign.keyPair(seed: keyPairSeed) else {
+        guard let keyPair = KRSodium.instance().sign.keyPair(seed: keyPairSeed.bytes) else {
             throw Errors.keyPairFromSeed
         }
         self.keyPair = keyPair
-        guard let boxKeyPair = KRSodium.instance().box.keyPair(seed: boxKeyPairSeed) else {
+        guard let boxKeyPair = KRSodium.instance().box.keyPair(seed: boxKeyPairSeed.bytes) else {
             throw Errors.keyPairFromSeed
         }
         
@@ -216,7 +216,7 @@ struct TeamIdentity:Jsonable {
                       keyPairSeed: keyPairSeed,
                       boxKeyPairSeed: boxKeyPairSeed,
                       teamID: teamID,
-                      initialTeamPublicKey: ((json ~> "initial_team_public_key") as String).fromBase64(),
+                      initialTeamPublicKey: ((json ~> "initial_team_public_key") as String).fromBase64().bytes,
                       mutableData: MutableData(json: json ~> "mutable_data"))
     }
     

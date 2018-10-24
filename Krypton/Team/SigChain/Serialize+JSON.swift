@@ -222,7 +222,7 @@ extension SigChain.Operation:Jsonable {
             self = .leave
             
         case "remove":
-            self = try .remove((jsonEnum.value() as String).fromBase64())
+            self = try .remove((jsonEnum.value() as String).fromBase64().bytes)
 
         case "set_policy":
             self = try .setPolicy(SigChain.Policy(json: jsonEnum.value()))
@@ -241,9 +241,9 @@ extension SigChain.Operation:Jsonable {
             self = try .removeLoggingEndpoint(SigChain.LoggingEndpoint(json: jsonEnum.value()))
 
         case "promote":
-            self = try .promote((jsonEnum.value() as String).fromBase64())
+            self = try .promote((jsonEnum.value() as String).fromBase64().bytes)
         case "demote":
-            self = try .demote((jsonEnum.value() as String).fromBase64())
+            self = try .demote((jsonEnum.value() as String).fromBase64().bytes)
 
         default:
             throw SigChain.Errors.badOperation
@@ -309,7 +309,7 @@ extension SigChain.Invitation:Jsonable {
 
 extension SigChain.DirectInvitation:Jsonable {
     init(json: Object) throws {
-        publicKey = try ((json ~> "public_key") as String).fromBase64()
+        publicKey = try ((json ~> "public_key") as String).fromBase64().bytes
         email = try json ~> "email"
     }
     
@@ -320,7 +320,7 @@ extension SigChain.DirectInvitation:Jsonable {
 
 extension SigChain.IndirectInvitation:Jsonable {
     init(json: Object) throws {
-        try self.init(noncePublicKey: ((json ~> "nonce_public_key") as String).fromBase64(),
+        try self.init(noncePublicKey: ((json ~> "nonce_public_key") as String).fromBase64().bytes,
                       inviteSymmetricKeyHash: ((json ~> "invite_symmetric_key_hash") as String).fromBase64(),
                       inviteCiphertext: ((json ~> "invite_ciphertext") as String).fromBase64(),
                       restriction: Restriction(json: json ~> "restriction"))
@@ -360,7 +360,7 @@ extension SigChain.IndirectInvitation.Restriction:Jsonable {
 
 extension SigChain.IndirectInvitation.Secret:Jsonable {
     init(json: Object) throws {
-        try self.init(initialTeamPublicKey: ((json ~> "initial_team_public_key") as String).fromBase64(),
+        try self.init(initialTeamPublicKey: ((json ~> "initial_team_public_key") as String).fromBase64().bytes,
                       lastBlockHash: ((json ~> "last_block_hash") as String).fromBase64(),
                       nonceKeypairSeed: ((json ~> "nonce_keypair_seed") as String).fromBase64(),
                       restriction: SigChain.IndirectInvitation.Restriction(json: json ~> "restriction"))
@@ -408,7 +408,7 @@ extension SigChain.ReadBlocksResponse:JsonReadable {
 extension SigChain.TeamPointer:Jsonable {
     init(json:Object) throws {
         if let publicKey:String = try? json ~> "public_key" {
-            self = try .publicKey(publicKey.fromBase64())
+            self = try .publicKey(publicKey.fromBase64().bytes)
         }
         else if let blockHash:String = try? json ~> "last_block_hash" {
             self = try .lastBlockHash(blockHash.fromBase64())
@@ -443,7 +443,7 @@ extension SigChain.ReadToken:Jsonable {
 
 extension SigChain.TimeToken:Jsonable {
     init(json:Object) throws {
-        try self.init(readerPublicKey: ((json ~> "reader_public_key") as String).fromBase64(),
+        try self.init(readerPublicKey: ((json ~> "reader_public_key") as String).fromBase64().bytes,
                       expiration: json ~> "expiration")
     }
     
@@ -630,7 +630,7 @@ extension SigChain.LogChainGenesisPointer: Jsonable {
 // Boxed Message
 extension SigChain.WrappedKey:Jsonable {
     init(json: Object) throws {
-        recipientPublicKey  = try ((json ~> "recipient_public_key") as String).fromBase64()
+        recipientPublicKey  = try ((json ~> "recipient_public_key") as String).fromBase64().bytes
         ciphertext          = try ((json ~> "ciphertext") as String).fromBase64()
     }
     
@@ -642,8 +642,8 @@ extension SigChain.WrappedKey:Jsonable {
 
 extension SigChain.BoxedMessage:Jsonable {
     init(json: Object) throws {
-        recipientPublicKey  = try ((json ~> "recipient_public_key") as String).fromBase64()
-        senderPublicKey     = try ((json ~> "sender_public_key") as String).fromBase64()
+        recipientPublicKey  = try ((json ~> "recipient_public_key") as String).fromBase64().bytes
+        senderPublicKey     = try ((json ~> "sender_public_key") as String).fromBase64().bytes
         ciphertext          = try ((json ~> "ciphertext") as String).fromBase64()
     }
     
@@ -660,7 +660,7 @@ extension SigChain.PlaintextBody:Jsonable {
         
         switch jsonEnum.type {
         case "log_encryption_key":
-            self = try .logEncryptionKey((jsonEnum.value() as String).fromBase64())
+            self = try .logEncryptionKey((jsonEnum.value() as String).fromBase64().bytes)
         default:
             throw SigChain.Errors.badPlaintextBody
         }
@@ -757,7 +757,7 @@ extension SigChain.PushDevice:Jsonable {
 extension SigChain.ReadBillingInfo:Jsonable {
     init(json: Object) throws {
         let token:Object? = try? json ~> "token"
-        try self.init(teamPublicKey: ((json ~> "team_public_key") as String).fromBase64(),
+        try self.init(teamPublicKey: ((json ~> "team_public_key") as String).fromBase64().bytes,
                       token: token.map { try SigChain.SignedMessage(json: $0) })
     }
     

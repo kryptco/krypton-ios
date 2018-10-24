@@ -67,14 +67,14 @@ extension TeamIdentity {
         }
         
         // 2. verify it's authored by me
-        guard block.publicKey == self.publicKey else {
+        guard block.publicKey == self.publicKey.data else {
             throw SigChain.Errors.signerNotLogChainAuthor
         }
         
         // 3. verify the block signature
-        guard try KRSodium.instance().sign.verify(message: block.message.utf8Data(),
+        guard try KRSodium.instance().sign.verify(message: block.message.utf8Data().bytes,
                                                   publicKey: self.publicKey,
-                                                  signature: block.signature)
+                                                  signature: block.signature.bytes)
         else {
             throw SigChain.Errors.badSignature
         }
@@ -175,9 +175,7 @@ extension TeamIdentity {
         // Do we need to create a  genesis block
         guard let lastLogBlockHash = try dataManager.lastLogBlockHash() else {
             
-            guard let newLogEncryptionKey = KRSodium.instance().secretBox.key() else {
-                throw SigChain.Errors.rotateKeyGeneration
-            }
+            let newLogEncryptionKey = KRSodium.instance().secretBox.key()
             
             try dataManager.setLogEncryptionKey(key: newLogEncryptionKey)
             let signedMessage = try genesisLogBlockSignedMessage(logEncryptionKey: newLogEncryptionKey, dataManager: dataManager)
@@ -195,9 +193,7 @@ extension TeamIdentity {
                 currentlyWrappedTo.subtracting(adminsAndMe).isEmpty
         else { // ROTATE
             // rotate the log encryption key
-            guard let newLogEncryptionKey = KRSodium.instance().secretBox.key() else {
-                throw SigChain.Errors.rotateKeyGeneration
-            }
+            let newLogEncryptionKey = KRSodium.instance().secretBox.key()
             
             // set the new log encryption key
             try dataManager.setLogEncryptionKey(key: newLogEncryptionKey)
@@ -282,11 +278,11 @@ extension TeamIdentity {
     func encryptLogBlockSignedMessage(for data:Data, logEncryptionKey:SodiumSecretBoxKey, lastLogBlockHash: Data, dataManager: TeamDataManager) throws -> SigChain.SignedMessage {
         
         // log the actual data now
-        guard let logCiphertext:Data = KRSodium.instance().secretBox.seal(message: data, secretKey: logEncryptionKey) else {
+        guard let logCiphertext:[UInt8] = KRSodium.instance().secretBox.seal(message: data.bytes, secretKey: logEncryptionKey) else {
             throw SigChain.Errors.logEncryptionFailed
         }
         
-        let signedMessage = try self.sign(logOperation: .encryptLog(SigChain.EncryptedLog(ciphertext: logCiphertext)),
+        let signedMessage = try self.sign(logOperation: .encryptLog(SigChain.EncryptedLog(ciphertext: logCiphertext.data)),
                                           lastLogBlockHash: lastLogBlockHash)
         return signedMessage
     }

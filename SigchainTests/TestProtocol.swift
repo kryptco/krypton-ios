@@ -75,14 +75,14 @@ extension TestBlock:JsonReadable {
 extension ExpectedResult:JsonReadable {
     init(json: Object) throws {
         valid = try json ~> "valid"
-        teamPublicKey = try ((json ~> "team_public_key") as String).fromBase64()
+        teamPublicKey = try ((json ~> "team_public_key") as String).fromBase64().bytes
     }
 }
 
 extension Client:JsonReadable {
     init(json: Object) throws {
         signKeyPairSeed = try ((json ~> "sign_key_pair_seed") as String).fromBase64()
-        teamPublicKey = try ((json ~> "team_public_key") as String).fromBase64()
+        teamPublicKey = try ((json ~> "team_public_key") as String).fromBase64().bytes
     }
 }
 

@@ -84,6 +84,8 @@ extension KnownU2FApplication {
             return #imageLiteral(resourceName: "bitbucket")
         case .sentry:
             return #imageLiteral(resourceName: "sentry")
+        case .godaddy:
+            return #imageLiteral(resourceName: "godaddy")
         default:
             return #imageLiteral(resourceName: "default")
         }

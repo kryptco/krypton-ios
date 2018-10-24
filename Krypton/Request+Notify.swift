@@ -41,7 +41,6 @@ extension Request {
         case .u2fAuthenticate(let u2fAuthenticate):
             let display = KnownU2FApplication(for: u2fAuthenticate.appID)?.displayName ?? u2fAuthenticate.appID
             let body = autoResponse ? "signed in" : "Are you trying to sign in?"
-
             return ("\(display)", body)
         }
     }
@@ -63,9 +62,7 @@ extension Request {
         case .u2fRegister, .u2fAuthenticate: // simplified
             return ""
         }
-
     }
-    
 }
 
 extension RequestableTeamOperation {
