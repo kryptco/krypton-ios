@@ -105,6 +105,7 @@ struct Browser {
         case chrome = "chrome"
         case safari = "safari"
         case firefox = "firefox"
+        case edge = "edge"
     }
     
     enum Errors:Error {

@@ -32,6 +32,14 @@ class IdentityManager {
         return try KeychainStorage().get(key: Storage.defaultIdentity.key)
     }
     
+    class func getMeFallback() -> String {
+        do {
+            return try getMe()
+        } catch {
+            return UIDevice.current.name
+        }
+    }
+    
     class func setMe(email:String) {
         mutex.lock {
             do {

@@ -385,7 +385,7 @@ class Silo {
             
             // return a limited resposne for a u2f device
             guard meRequest.u2fOnly == nil || meRequest.u2fOnly == false else {
-                let me = MeResponse(me: MeResponse.Me(email: (try? IdentityManager.getMe()) ?? UIDevice.current.name,
+                let me = MeResponse(me: MeResponse.Me(email: IdentityManager.getMeFallback(),
                                                       publicKeyWire: Data(),
                                                       deviceIdentifier: try U2FDevice.deviceIdentifier(),
                                                       pgpPublicKey: Data(),
@@ -397,7 +397,7 @@ class Silo {
             
             // return empty if we don't have a key pair
             guard let keyManager:KeyManager = try? KeyManager.sharedInstance() else {
-                let me = MeResponse(me: MeResponse.Me(email: (try? IdentityManager.getMe()) ?? UIDevice.current.name,
+                let me = MeResponse(me: MeResponse.Me(email: IdentityManager.getMeFallback(),
                                                       publicKeyWire: Data(),
                                                       deviceIdentifier: try U2FDevice.deviceIdentifier(),
                                                       pgpPublicKey: Data(),
@@ -422,7 +422,7 @@ class Silo {
 
             }
             
-            let me = MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(),
+            let me = MeResponse(me: MeResponse.Me(email: IdentityManager.getMeFallback(),
                                                   publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(),
                                                   deviceIdentifier: try U2FDevice.deviceIdentifier(),
                                                   pgpPublicKey: pgpPublicKey,

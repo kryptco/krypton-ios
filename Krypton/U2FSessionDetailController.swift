@@ -207,6 +207,8 @@ extension Browser.Kind {
             return #imageLiteral(resourceName: "safari")
         case .firefox:
             return #imageLiteral(resourceName: "firefox")
+        case .edge:
+            return #imageLiteral(resourceName: "edge")
         }
     }
 }
