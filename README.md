@@ -1,3 +1,7 @@
+# DEPRECATED
+
+**This project is not maintained.** Please migrate to [Akamai MFA](https://mfa.akamai.com/help).
+
 [![Build Status](https://travis-ci.org/kryptco/krypton-ios.svg?branch=master)](https://travis-ci.org/kryptco/krypton-ios)
 
 <div style="text-align:center">
